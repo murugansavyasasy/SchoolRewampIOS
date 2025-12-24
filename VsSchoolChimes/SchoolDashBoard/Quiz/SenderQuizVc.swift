@@ -29,7 +29,7 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     var isChecked = false
     var placeholderLabel: UILabel!
     var editQuiz: EditQuiz?
-
+    var Common_request_params: [String:Any] = [:]
     override func viewDidLoad() {
         super.viewDidLoad()
         fullView.layer.cornerRadius = 10
@@ -151,9 +151,15 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             QuizRequestStringFile.level_flag: isChecked
         ]
 
-        let vc = RecipientVc(nibName: nil, bundle: nil)
-        vc.ScreenType = Menu_id.quiz
+//        let vc = RecipientVc(nibName: nil, bundle: nil)
+//        vc.ScreenType = Menu_id.quiz
+//        vc.Common_request_params = params
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
+        
+        let vc = CreateQuizQutionVc(nibName: nil, bundle: nil)
         vc.Common_request_params = params
+        vc.noOfQuestion = Int(numberOfQuestionText.text ?? "0") ?? 0
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

@@ -81,7 +81,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IA3-FT-p4N">
                                                 <rect key="frame" x="0.0" y="0.0" width="299" height="34.333333333333336"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" image="photo" catalog="system" imagePlacement="leading" title="Add Image to Question" imagePadding="5"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="photo" catalog="system" imagePlacement="leading" title="Add files to Question" imagePadding="5"/>
                                                 <connections>
                                                     <action selector="QuestionImageBtnAct:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Np9-He-pqy"/>
                                                 </connections>
@@ -423,6 +423,7 @@
                 <outlet property="QuestionImageCv" destination="Mbu-Fh-KVA" id="XKX-Qo-6dI"/>
                 <outlet property="addAnotherName" destination="hx9-gk-TB2" id="ezY-0R-7Yg"/>
                 <outlet property="addAnotherStack" destination="lS4-27-Z72" id="jYf-cg-4jK"/>
+                <outlet property="addFileBtnName" destination="IA3-FT-p4N" id="bGd-xe-O9A"/>
                 <outlet property="attachmentBtnName" destination="mg2-Dd-0t0" id="bX2-wD-Yfi"/>
                 <outlet property="chapterDltLbl" destination="KiY-r3-yaq" id="8ds-Ww-1UV"/>
                 <outlet property="checkBoxBtn" destination="lbW-dc-qXg" id="Dwp-ym-pY0"/>

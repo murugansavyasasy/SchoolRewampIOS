@@ -76,6 +76,13 @@ class RecipientVc: UIViewController{
     var SEND_ASSIGNMENT = "SEND_ASSIGNMENT"
     var SEND_TEXT = "SEND_TEXT"
     var SEND_VOICE = "SEND_VOICE"
+    var questions: [QuizQuestiondata] = [QuizQuestiondata()]
+    var QuestionBankData: [QuestionItem] = []
+    var localImages: [QuizLocalImages] = [QuizLocalImages()]
+    var localAttachments: [[QuizAttachmentItem]] = [[]]
+    var uploadedFiles1: [[String: String]] = []
+    var file_path: [FilePath] = []
+    var uploadedCount = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         nodataFound.isHidden = true
@@ -262,8 +269,8 @@ class RecipientVc: UIViewController{
                     message: AlertstringFile.Choose_any_section,
                     on: self)
                 return}
-            CreateQuiz()
             
+            uploadAllQuestionsAndCreateQuiz()
         case Menu_id.AttachmentMenuId:
             sendAttachmentFlow(
                 via: comm,
@@ -294,55 +301,50 @@ class RecipientVc: UIViewController{
         }
     }
     
-    func uploadMultipleImages(_ attachments: [QuizAttachmentItem], completion: @escaping ([[String: String]]) -> Void) {
+    func detectType(url: String) -> String {
+        let ext = URL(string: url)?.pathExtension.lowercased()
 
-        let images = attachments.compactMap { $0.image }
-        
-        uploadMedia(
-            file: images,           // 🚀 Multiple images
-            viewController: self,
-            title: "",
-            description: ""
-        ) { urls, iframe, fileSize, embedUrl in
-            
-            var formatted: [[String: String]] = []
-            
-            for urlString in urls {
-                guard let url = URL(string: urlString) else { continue }
-                
-                let ext = url.pathExtension.lowercased()
-                var type = ""
-
-                if ["jpg", "jpeg", "png", "gif", "heic"].contains(ext) {
-                    type = CommonStringFile.IMAGE
-                } else if urlString.contains("vimeo.com") {
-                    type = CommonStringFile.VIDEO
-                } else {
-                    type = ext.uppercased()
-                }
-                
-                formatted.append([
-                    "url": urlString,
-                    "type": type
-                ])
-            }
-            
-            completion(formatted)
-        }
+        if url.contains("vimeo.com") { return "video" }
+        if ["jpg","jpeg","png","gif","heic"].contains(ext) { return "image" }
+        if ext == "pdf" { return "pdf" }
+        return "document"
     }
     
-    func uploadSingleImage(_ image: UIImage, completion: @escaping (String?) -> Void) {
+    func uploadAllQuestionsAndCreateQuiz() {
+        let total = questions.count
+        uploadedCount = 0
+        uploadForQuestion(index: 0)
+    }
+
+
+    func uploadForQuestion(index: Int) {
+        if index >= questions.count {
+            // 🔥 ALL DONE → Now call API
+            uploadAllQuestionsOptionImages {
+                let params = self.buildQuizParams()
+                self.CreateQuiz(QuestionParams: params)
+            }
+            return
+        }
+        
+        let q = questions[index]
         uploadMedia(
-            file: [image],                // 🚀 Single image only
+            file: q.q_file_path ?? [],
             viewController: self,
             title: "",
             description: ""
-        ) { urls, iframe, fileSize, embedUrl in
-            // Return first URL
-            completion(urls.first)
+        ) { [weak self] urls, iframe, fileSize, embedUrl in
+            guard let self = self else { return }
+            // 🔥 Save uploaded URLs in this specific question
+            var updated = q
+            updated.q_file_path = urls.map {
+                FilePath(url: $0, type: self.detectType(url: $0))
+            }
+            self.questions[index] = updated
+            // Go to NEXT question
+            self.uploadForQuestion(index: index + 1)
         }
     }
-
 
     private func uploadMedia(
         file: Any,
@@ -351,164 +353,292 @@ class RecipientVc: UIViewController{
         description: String = "",
         completion: @escaping (_ urls: [String], _ iframeHTML: String?, _ fileSize: Int?, _ embedUrl: String?) -> Void
     ) {
+
+        guard let items = file as? [FilePath], items.count > 0 else {
+            completion([], nil, nil, nil)
+            return
+        }
+
         var uploadedURLs: [String] = []
         var completed = 0
         var iframeValue: String?
         var fileSizeValue: Int?
         var embedUrlValue: String?
-        
-        func updateAndCheckCompletion(total: Int) {
+
+        CircularProgressLoader.shared.show(style: .circle)
+        CircularProgressLoader.shared.updateProgress(to: 0)
+
+        func finishOne(total: Int) {
+            completed += 1
             let progress = (Double(completed) / Double(total)) * 100
             CircularProgressLoader.shared.updateProgress(to: progress)
+
             if completed == total {
                 CircularProgressLoader.shared.hide()
                 completion(uploadedURLs, iframeValue, fileSizeValue, embedUrlValue)
             }
         }
-        
-        switch file {
-        case let attachments as [AttachmentItem]:
-            let uploadableItems = attachments.filter { $0.image != nil || $0.imageURL != nil }
-            let total = uploadableItems.count
-            guard total > 0 else {
-                completion([], nil, nil, nil)
+
+        let total = items.count
+
+        for item in items {
+
+            // 1️⃣ Already uploaded (remote URL) → NO Upload needed
+            if !item.isBase64 {
+                uploadedURLs.append(item.url ?? "")
+                finishOne(total: total)
+                continue
+            }
+
+            // 2️⃣ BASE64 → IMAGE
+            if item.type == "image" || item.type == CommonStringFile.IMAGE,
+               let base = item.url,
+               let data = Data(base64Encoded: base),
+               let image = UIImage(data: data) {
+
+                AWSUploadManager.shared.uploadFileToAWS(file: image) { url in
+                    if let url = url { uploadedURLs.append(url) }
+                    finishOne(total: total)
+                }
+                continue
+            }
+
+            // 3️⃣ BASE64 → PDF / DOC
+            if item.type == "pdf" || item.type == "document" || item.type ==  "PDF",
+               let base = item.url,
+               let data = Data(base64Encoded: base) {
+
+                AWSUploadManager.shared.uploadFileToAWS(file: data) { url in
+                    if let url = url { uploadedURLs.append(url) }
+                    finishOne(total: total)
+                }
+                continue
+            }
+
+            // 4️⃣ BASE64 → VIDEO → Vimeo Upload
+            if item.type == CommonStringFile.VIDEO,
+               let base = item.url,
+               let data = Data(base64Encoded: base) {
+
+                let tempURL = FileManager.default.temporaryDirectory
+                    .appendingPathComponent("temp_video.mp4")
+
+                try? data.write(to: tempURL)
+
+                let uploader = VimeoUploader(
+                    accessToken: YOUR_VIMEO_TOKEN,
+                    presentingViewController: viewController
+                )
+
+                uploader.upload(
+                    videoFileURL: tempURL,
+                    title: title,
+                    description: description,
+                    progress: { progress in
+                        CircularProgressLoader.shared.updateProgress(to: progress * 100)
+                    },
+                    completion: { videoURL, iframeHTML, fileSize, embedUrl in
+
+                        if let embed = embedUrl {
+                            uploadedURLs.append(embed)
+                        }
+
+                        iframeValue = iframeHTML
+                        fileSizeValue = fileSize
+                        embedUrlValue = embedUrl
+
+                        finishOne(total: total)
+                    }
+                )
+                continue
+            }
+
+            // 5️⃣ Unknown → skip
+            finishOne(total: total)
+        }
+    }
+
+    
+    func buildQuizParams() -> [String: Any] {
+
+        let dictArray: [[String: Any]] = questions.enumerated().map{ (index, q) in
+            let fp = (q.q_file_path ?? []).map {
+                      ["url": $0.url ?? "", "type": $0.type ?? ""]
+                  }
+            return [
+                QuizKeys.ques_no: "\(index + 1)",   // 🔥 AUTO NUMBERING HERE
+                QuizKeys.chapter: q.chapter,
+                QuizKeys.question: q.question,
+                QuizKeys.a_option: q.a_option,
+                QuizKeys.b_option: q.b_option,
+                QuizKeys.c_option: q.c_option,
+                QuizKeys.d_option: q.d_option,
+                QuizKeys.answer: q.answer ?? "",
+                QuizKeys.mark: q.mark ?? 0,
+                QuizKeys.iframe: "",
+                QuizKeys.file_size: "",
+                QuizKeys.thumbnail: "",
+                QuizKeys.a_image : q.a_image ?? "",
+                QuizKeys.b_image : q.b_image ?? "",
+                QuizKeys.c_image : q.c_image ?? "",
+                QuizKeys.d_image : q.d_image ?? "",
+                QuizKeys.file_path : fp
+            ]
+        }
+
+        // -------- IMPORTED QUESTION BANK HANDLING ----------
+        let qBankDict = Dictionary(uniqueKeysWithValues:
+            QuestionBankData.compactMap { qb in qb.id.map { ($0, qb) } }
+        )
+
+        let updateArray: [[String: Any]] = questions.compactMap { q in
+            guard let id = q.id, let bank = qBankDict[id] else { return nil }
+            return [
+                QuizKeys.ques_no: id,
+                QuizKeys.subject_id: bank.subject_id ?? "",
+                QuizKeys.chapter: q.chapter,
+                QuizKeys.question: q.question,
+                QuizKeys.a_option: q.a_option,
+                QuizKeys.b_option: q.b_option,
+                QuizKeys.c_option: q.c_option,
+                QuizKeys.d_option: q.d_option,
+                QuizKeys.answer: q.answer ?? "",
+                QuizKeys.mark: q.mark ?? 0
+            ]
+        }
+
+        let totalMarks = questions.compactMap { $0.mark }.reduce(0, +)
+
+        return [
+            QuizKeys.questions: dictArray,
+            QuizKeys.max_mark: totalMarks,
+            QuizKeys.ok_flag: false,
+            QuizKeys.update_question_bank: updateArray
+        ]
+    }
+    func uploadAllQuestionsOptionImages(completion: @escaping ()->Void) {
+
+        var index = 0
+
+        func next() {
+            if index >= questions.count {
+                completion()
                 return
             }
-            
-            CircularProgressLoader.shared.show(style: .circle)
-            CircularProgressLoader.shared.updateProgress(to: 0)
-            
-            for item in uploadableItems {
-                if let image = item.image {
-                    // 🖼 Local image → upload to AWS
-                    AWSUploadManager.shared.uploadFileToAWS(
-                        file: image,
-                        progressHandler: nil
-                    ) { url in
-                        if let uploadedURL = url {
-                            uploadedURLs.append(uploadedURL)
-                        }
-                        completed += 1
-                        updateAndCheckCompletion(total: total)
-                    }
-                    
-                } else if let fileURLStr = item.imageURL,
-                          let fileURL = URL(string: fileURLStr) {
-                    
-                    if item.fileType.uppercased() == CommonStringFile.VIDEO {
-                        if fileURLStr.contains("vimeo.com") {
-                            uploadedURLs.append(fileURLStr)
-                            completed += 1
-                            updateAndCheckCompletion(total: total)
+
+            uploadOptionImages(for: questions[index]) { updated in
+                self.questions[index] = updated
+                index += 1
+                next()
+            }
+        }
+
+        next()
+    }
+
+    func uploadOptionImages(for q: QuizQuestiondata,
+                            completion: @escaping (QuizQuestiondata)->Void) {
+
+        var updated = q
+
+        let items = [
+            ("a_image", q.a_image),
+            ("b_image", q.b_image),
+            ("c_image", q.c_image),
+            ("d_image", q.d_image)
+        ]
+
+        var results: [String: String] = [:]
+        var done = 0
+
+        func finish() {
+            done += 1
+            if done == 4 {
+                updated.a_image = results["a_image"]
+                updated.b_image = results["b_image"]
+                updated.c_image = results["c_image"]
+                updated.d_image = results["d_image"]
+
+                completion(updated)
+            }
+        }
+
+        for (key, value) in items {
+
+            // EMPTY → ""
+            if value == nil || value!.isEmpty {
+                results[key] = ""
+                finish()
+                continue
+            }
+
+            let str = value!
+
+            // ALREADY URL → no upload
+            if str.lowercased().hasPrefix("http") {
+                results[key] = str
+                finish()
+                continue
+            }
+
+            // BASE64 → convert → upload AWS
+            if let data = Data(base64Encoded: str),
+               let img = UIImage(data: data) {
+
+                AWSUploadManager.shared.uploadFileToAWS(file: img) { url in
+                    results[key] = url ?? ""
+                    finish()
+                }
+            }
+            else {
+                results[key] = ""
+                finish()
+            }
+        }
+    }
+
+    
+    func CreateQuiz(QuestionParams : [String: Any]) {
+            var params: [String: Any] = [
+                createQuizStringFile.target_type: target_type ?? 0,
+                createQuizStringFile.target_code: array_selectedId,
+                createQuizStringFile.subject_id : subjectId ?? "",
+                createQuizStringFile.class_id : classID ?? "",
+                "open_to_student" : true
+            ]
+
+            params.merge(Common_request_params) { _, new in new }
+            params.merge(QuestionParams) { _, new in new }
+            APIService.shared.makeApi(
+                url: ServiceUrl.quiz_create_quiz,
+                parameters: params,
+                type: ApitTypeSringFile.POST,
+                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            ) { [self] (result: Result<CommonApiSuc, Error>) in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let res):
+                        if res.status == true {
+                            CustomAlert.showAlertWithOkAction(
+                                title: AlertstringFile.Success,
+                                message: res.message ?? "",
+                                on: self
+                            ) { self.gotoDashboard() }
                         } else {
-                            CircularProgressLoader.shared.show()
-                            vimeoUploader = VimeoUploader(
-                                accessToken: YOUR_VIMEO_TOKEN,
-                                presentingViewController: viewController
-                            )
-                            vimeoUploader?.upload(
-                                videoFileURL: fileURL,
-                                title: title,
-                                description: description,
-                                progress: { progress in
-                                    CircularProgressLoader.shared.updateProgress(to: progress * 100)
-                                },
-                                completion: { videoURL, iframeHTML, fileSize, finalEmbedUrl in
-                                    if let finalEmbedUrl = finalEmbedUrl {
-                                        uploadedURLs.append(finalEmbedUrl)
-                                    }
-                                    iframeValue = iframeHTML
-                                    fileSizeValue = fileSize
-                                    embedUrlValue = finalEmbedUrl
-                                    
-                                    completed += 1
-                                    updateAndCheckCompletion(total: total)
-                                }
+                            self.alert.showAlert(
+                                title: AlertstringFile.Alert_title,
+                                message: res.message ?? "",
+                                on: self
                             )
                         }
                         
-                    } else {
-                        if fileURLStr.lowercased().starts(with: "http") {
-                            uploadedURLs.append(fileURLStr)
-                            completed += 1
-                            updateAndCheckCompletion(total: total)
-                        } else {
-                            let path = item.fileType.uppercased() != CommonStringFile.IMAGE
-                            ? "uploads/Documents/"
-                            : "uploads/images/"
-                            
-                            AWSUploadManager.shared.uploadFileToAWS(
-                                file: fileURL,
-                                progressHandler: nil
-                            ) { url in
-                                if let uploadedURL = url {
-                                    uploadedURLs.append(uploadedURL)
-                                }
-                                completed += 1
-                                updateAndCheckCompletion(total: total)
-                            }
-                        }
-                    }
-                    
-                } else {
-                    print("❌ Invalid fileURL: \(item.imageURL ?? "nil")")
-                    completed += 1
-                    updateAndCheckCompletion(total: total)
-                }
-            }
-            
-        default:
-            print("❌ Unsupported file type")
-            completion([], nil, nil, nil)
-        }
-    }
-    
-    func CreateQuiz(){
-        let params: [String: Any] = [
-            createQuizStringFile.target_type: target_type ?? 0,
-            createQuizStringFile.target_code: array_selectedId,
-            createQuizStringFile.subject_id : subjectId ?? "",
-            createQuizStringFile.class_id : classID ?? ""
-        ]
-        var finalParams = params
-        finalParams.merge(Common_request_params ?? [:]) { (_, new) in new }
-        APIService.shared
-            .makeApi(url: ServiceUrl.quiz_create_quiz, parameters: finalParams
-                     , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
-                        result : Result<CommonApiSuc,
-                        Error>
-                     ) in
-                switch result {
-                case.success(let succesmessage) :
-                    if succesmessage.status == true {
-                        DispatchQueue.main.async { [self] in
-                            CustomAlert
-                                .showAlertWithOkAction(
-                                    title: AlertstringFile.Success,
-                                    message: succesmessage.message ?? "",
-                                    on: self
-                                ) {
-                                    self.gotoDashboard()
-                                }
-                        }
-                    }else {
-                        DispatchQueue.main.async {
-                            self.alert
-                                .showAlert(
-                                    title: AlertstringFile.Alert_title,
-                                    message: succesmessage.message ?? "" ,
-                                    on: self)
-                        }
-                    }
-                    
-                case.failure(let error) :
-                    
-                    DispatchQueue.main.async {
-                        print(error.localizedDescription)
+                    case .failure(let err):
+                        print("❌ ERROR:", err.localizedDescription)
                     }
                 }
             }
     }
+
     
     func paketApiCall(params:[String:Any]) {
         APIService.shared.makeApi(
