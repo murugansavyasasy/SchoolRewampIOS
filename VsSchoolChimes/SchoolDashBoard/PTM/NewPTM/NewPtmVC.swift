@@ -8,7 +8,7 @@
 struct SectionData {
     let title: String
     let type : SectionType
-    let events: [Any]
+    var events: [Any]
 }
 
 enum SectionType {
@@ -54,6 +54,9 @@ class NewPtmVC: UIViewController, Datepicker {
     
     var expandedIndex: IndexPath?
     var pushNotiMsgId:String?
+    var slotIndexMap: [String: IndexPath] = [:]
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -251,6 +254,8 @@ class NewPtmVC: UIViewController, Datepicker {
                             let slots = completedSlots.compactMap{$0}
                             self.sections.append(SectionData(title:  PTMString.completed_slots.translated(), type: .slots, events: slots))
                         }
+                        
+                        self.buildSlotIndexMap()
                         self.tv.reloadData()
                         if self.pushNotiMsgId != ""{
                             DispatchQueue.main.async {
@@ -426,6 +431,23 @@ class NewPtmVC: UIViewController, Datepicker {
             underline.bottomAnchor.constraint(equalTo: selectedButton.bottomAnchor)
         ])
     }
+    
+    func buildSlotIndexMap() {
+        slotIndexMap.removeAll()
+
+        for (sectionIndex, section) in sections.enumerated() {
+            guard section.type == .slots,
+                  let slots = section.events as? [BookedSlot] else { continue }
+
+            for (rowIndex, slot) in slots.enumerated() {
+                slotIndexMap[slot.slot_id ?? ""] = IndexPath(
+                    row: rowIndex,
+                    section: sectionIndex
+                )
+            }
+        }
+    }
+
 }
 
 
@@ -821,26 +843,19 @@ extension NewPtmVC: BookingCellDelegate, SelectedId {
                 case .success(let success):
                     if success.status == true {
                         
-//                        let indexPath = self.slotIndexMap[SlotId]
-//                        var slots = self.sections[indexPath.section].events as? [BookedSlot]
-//                        
-//                        
-//                        // 2. Modify slot safely
-//                        var slot = slots[indexPath.row]
-//                        slot.is_booked = false
-//                        slot.is_cancelled = false
-//                        slot.is_cancelled_by_staff = false
-//                        
-//                        // 3. Assign back to original source
-//                        slots[indexPath.row] = slot
-//                        self.sections[indexPath.section] = SectionData(
-//                            title: self.sections[indexPath.section].title,
-//                            type: .slots,
-//                            events: slots
-//                        )
-//                        
-//                        // 4. Reload only affected row
-//                        self.tv.reloadRows(at: [indexPath], with: .automatic)
+                        guard let indexPath = self.slotIndexMap[SlotId] else { return }
+                        
+                        var section = self.sections[indexPath.section]
+                        guard var slots = section.events as? [BookedSlot] else { return }
+
+                        slots[indexPath.row].is_booked = false
+                        slots[indexPath.row].is_cancelled = false
+                        slots[indexPath.row].is_cancelled_by_staff = false
+                        
+                        section.events = slots
+                        self.sections[indexPath.section] = section
+
+                        self.tv.reloadRows(at: [indexPath], with: .automatic)
                         
                     }else {
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
@@ -868,11 +883,19 @@ extension NewPtmVC: BookingCellDelegate, SelectedId {
                 case .success(let success):
                     if success.status == true {
                         
-                        guard let indexpath = self.indexPathForSlot(slotId: SlotId),
-                              var slots = self.sections[indexpath.section].events as? [BookedSlot]
-                        else { return}
-                        slots[indexpath.row].is_cancelled_by_staff = true
-                        self.tv.reloadRows(at: [indexpath], with: .automatic)
+                        guard let indexPath = self.slotIndexMap[SlotId] else { return }
+                        
+                        var section = self.sections[indexPath.section]
+                        guard var slots = section.events as? [BookedSlot] else { return }
+
+                        slots[indexPath.row].is_booked = false
+                        slots[indexPath.row].is_cancelled = true
+                        slots[indexPath.row].is_cancelled_by_staff = true
+                        
+                        section.events = slots
+                        self.sections[indexPath.section] = section
+
+                        self.tv.reloadRows(at: [indexPath], with: .automatic)
                         
                     }else {
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
