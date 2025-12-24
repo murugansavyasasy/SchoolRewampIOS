@@ -220,7 +220,9 @@ class AWSUploadManager {
         case Menu_id.communicationMenuId:
             Bucket = BucketName.schoolchimes_communication
             Path = "\(Awsmenu.voice)/\(school_id)/\(today_date)"
-           
+        case Menu_id.quiz:
+            Bucket = BucketName.schoolchimes_activities
+            Path = "\(Awsmenu.marksheets)/\(school_id)/\(today_date)"
         case Menu_id.AttachmentMenuId:
             Bucket = BucketName.schoolchimes_communication
             Path = "\(Awsmenu.files)/\(school_id)/\(today_date)"
@@ -248,7 +250,6 @@ class AWSUploadManager {
         case Menu_id.Upload_Marks:
             Bucket = BucketName.schoolchimes_activities
             Path = "\(Awsmenu.marksheets)/\(school_id)/\(today_date)"
-            
         case -1:
             if AWSUploadManager.iSprofile{
                 Bucket = BucketName.schoolchimes_studentphotos
