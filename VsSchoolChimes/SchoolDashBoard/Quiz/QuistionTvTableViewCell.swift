@@ -81,6 +81,8 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     var C_option: String?
     var D_option: String?
     var file_path: [FilePath] = []
+    weak var parentTableView: UITableView?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         collectionViewHeight.constant = 0
@@ -170,20 +172,60 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         }
     }
 
+//    func reloadAttachmentUI() {
+//        self.QuestionImageCv.imageCollectionview.reloadData()
+//        DispatchQueue.main.async {
+//            let totalItems = self.file_path.count
+//            self.collectionViewHeight.constant =
+//                totalItems <= 2 ? 120 :
+//                self.QuestionImageCv.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
+//        }
+//        if let table = self.superview as? UITableView {
+//            table.beginUpdates()
+//            table.endUpdates()
+//        }
+//    }
+    
     func reloadAttachmentUI() {
-        self.QuestionImageCv.imageCollectionview.reloadData()
-        DispatchQueue.main.async {
+        
+        QuestionImageCv.imageCollectionview.reloadData()
+      
             let totalItems = self.file_path.count
+
             self.collectionViewHeight.constant =
-                totalItems <= 2 ? 120 :
-                self.QuestionImageCv.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
-        }
-        if let table = self.superview as? UITableView {
-            table.beginUpdates()
-            table.endUpdates()
-        }
+            totalItems <= 2
+            ? 120
+            : self.calculatedCollectionHeight()
+
+            self.contentView.layoutIfNeeded()
+
+        parentTableView?.beginUpdates()
+        parentTableView?.endUpdates()
+//
+//            if let tableView = self.parentTableView,
+//               let indexPath = tableView.indexPath(for: self) {
+//                tableView.reloadRows(at: [indexPath], with: .none)
+//            }
+        
+       
     }
 
+    
+    func calculatedCollectionHeight() -> CGFloat {
+        let items = file_path.count
+        guard items > 0 else { return 0 }
+
+        let columns = 3
+        let itemHeight: CGFloat = 100
+        let lineSpacing: CGFloat = 10
+        let sectionInsets: CGFloat = 20 // top + bottom
+
+        let rows = ceil(CGFloat(items) / CGFloat(columns))
+
+        return (rows * itemHeight)
+             + ((rows - 1) * lineSpacing)
+             + sectionInsets
+    }
 
     func setupUI() {
         fullView.layer.cornerRadius = 10
@@ -442,7 +484,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         if let index = indexPath {
             delegate?.updateQuestion(at: index, model: captureModel())
         }
-        if let tableView = self.superview as? UITableView {
+        if let tableView =  self.parentTableView {
             UIView.setAnimationsEnabled(false)
             tableView.beginUpdates()
             tableView.endUpdates()
@@ -478,7 +520,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                 A_option = ""
                 optionAView.isHidden = true
                 sender.setTitle("Add Image", for: .normal)
-                if let table = self.superview as? UITableView {
+                if let table =  self.parentTableView {
                     table.beginUpdates()
                     table.endUpdates()
                 }
@@ -497,7 +539,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                 B_option = ""
                 optionBview.isHidden = true
                 sender.setTitle("Add Image", for: .normal)
-                if let table = self.superview as? UITableView {
+                if let table = self.parentTableView {
                     table.beginUpdates()
                     table.endUpdates()
                 }
@@ -516,7 +558,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                 C_option = ""
                 optionCView.isHidden = true
                 sender.setTitle("Add Image", for: .normal)
-                if let table = self.superview as? UITableView {
+                if let table =  self.parentTableView {
                     table.beginUpdates()
                     table.endUpdates()
                 }
@@ -535,7 +577,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                 D_option = ""
                 optionDView.isHidden = true
                 sender.setTitle("Add Image", for: .normal)
-                if let table = self.superview as? UITableView {
+                if let table =  self.parentTableView {
                     table.beginUpdates()
                     table.endUpdates()
                 }
@@ -854,6 +896,7 @@ extension QuistionTvTableViewCell: UICollectionViewDelegate,UICollectionViewData
                     self.optionAImageView.kf.setImage(with: URL(string: url ?? ""))
                     self.A_option = url ?? ""   // URL saving
                 } else if let img = image {
+                    self.optionAImageView.isHidden = false
                     self.optionAImageView.image = img
                     self.A_option = img.toBase64()  // base64 saving
                 }
@@ -866,6 +909,7 @@ extension QuistionTvTableViewCell: UICollectionViewDelegate,UICollectionViewData
                     self.optionBImageView.kf.setImage(with: URL(string: url ?? ""))
                     self.B_option = url ?? ""
                 } else if let img = image {
+                    self.optionBImageView.isHidden = false
                     self.optionBImageView.image = img
                     self.B_option = img.toBase64()
                 }
@@ -878,6 +922,7 @@ extension QuistionTvTableViewCell: UICollectionViewDelegate,UICollectionViewData
                     self.optionCImageView.kf.setImage(with: URL(string: url ?? ""))
                     self.C_option = url ?? ""
                 } else if let img = image {
+                    self.optionCImageView.isHidden = false
                     self.optionCImageView.image = img
                     self.C_option = img.toBase64()
                 }
@@ -890,12 +935,13 @@ extension QuistionTvTableViewCell: UICollectionViewDelegate,UICollectionViewData
                     self.optionDImageView.kf.setImage(with: URL(string: url ?? ""))
                     self.D_option = url ?? ""
                 } else if let img = image {
+                    self.optionDImageView.isHidden = false
                     self.optionDImageView.image = img
                     self.D_option = img.toBase64()
                 }
             }
             // Update table layout
-            if let table = self.superview as? UITableView {
+            if let table =  self.parentTableView {
                 table.beginUpdates()
                 table.endUpdates()
             }
