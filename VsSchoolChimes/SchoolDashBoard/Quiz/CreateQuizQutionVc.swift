@@ -845,10 +845,10 @@ extension CreateQuizQutionVc: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuistionTvTableViewCell, for: indexPath) as? QuistionTvTableViewCell else {
                 return UITableViewCell()
             }
-            cell.layoutIfNeeded()
             
             let model = questions[indexPath.row]
             let isLastCell = (indexPath.row == questions.count - 1)
+            cell.parentTableView = tableView
             cell.indexPath = indexPath
             cell.delegate = self
             cell.parentVC = self
@@ -863,8 +863,6 @@ extension CreateQuizQutionVc: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuistionTvTableViewCell, for: indexPath) as? QuistionTvTableViewCell else {
                 return UITableViewCell()
             }
-            
-            cell.layoutIfNeeded()
             
             let model = QuestionBankData[indexPath.row]
             cell.indexPath = indexPath
