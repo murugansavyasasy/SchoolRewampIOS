@@ -2175,6 +2175,7 @@ struct senderQuizListData: Codable {
     var submitted_count: Int?
     var can_edit: Bool?
     var can_delete: Bool?
+    var open_to_student: Bool?
 }
 struct QstDetail: Codable {
     let id: String?
