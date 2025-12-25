@@ -8,7 +8,7 @@
 struct SectionData {
     let title: String
     let type : SectionType
-    let events: [Any]
+    var events: [Any]
 }
 
 enum SectionType {
@@ -54,6 +54,9 @@ class NewPtmVC: UIViewController, Datepicker {
     
     var expandedIndex: IndexPath?
     var pushNotiMsgId:String?
+    var slotIndexMap: [String: IndexPath] = [:]
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -251,6 +254,8 @@ class NewPtmVC: UIViewController, Datepicker {
                             let slots = completedSlots.compactMap{$0}
                             self.sections.append(SectionData(title:  PTMString.completed_slots.translated(), type: .slots, events: slots))
                         }
+                        
+                        self.buildSlotIndexMap()
                         self.tv.reloadData()
                         if self.pushNotiMsgId != ""{
                             DispatchQueue.main.async {
@@ -426,6 +431,23 @@ class NewPtmVC: UIViewController, Datepicker {
             underline.bottomAnchor.constraint(equalTo: selectedButton.bottomAnchor)
         ])
     }
+    
+    func buildSlotIndexMap() {
+        slotIndexMap.removeAll()
+
+        for (sectionIndex, section) in sections.enumerated() {
+            guard section.type == .slots,
+                  let slots = section.events as? [BookedSlot] else { continue }
+
+            for (rowIndex, slot) in slots.enumerated() {
+                slotIndexMap[slot.slot_id ?? ""] = IndexPath(
+                    row: rowIndex,
+                    section: sectionIndex
+                )
+            }
+        }
+    }
+
 }
 
 
@@ -801,9 +823,104 @@ extension NewPtmVC: BookingCellDelegate, SelectedId {
     
     func selectId(id: String?, edit: Bool?) {
         if edit ?? false{
-            //Cancel_and_Reopen_Slot_api(SlotId: id ?? "")
+            Cancel_and_Reopen_Slot_api(SlotId: id ?? "")
         }else{
-            //cancel_and_close_slot_Api(SlotId: id ?? "")
+            cancel_and_close_slot_Api(SlotId: id ?? "")
         }
     }
+    
+    func Cancel_and_Reopen_Slot_api(SlotId:String){
+        
+        let param : [String:Any] = ["slot_id":SlotId]
+        
+        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_and_reopen_slot, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
+            
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let success):
+                    if success.status == true {
+                        
+                        guard let indexPath = self.slotIndexMap[SlotId] else { return }
+                        
+                        var section = self.sections[indexPath.section]
+                        guard var slots = section.events as? [BookedSlot] else { return }
+
+                        slots[indexPath.row].is_booked = false
+                        slots[indexPath.row].is_cancelled = false
+                        slots[indexPath.row].is_cancelled_by_staff = false
+                        
+                        section.events = slots
+                        self.sections[indexPath.section] = section
+
+                        self.tv.reloadRows(at: [indexPath], with: .automatic)
+                        
+                    }else {
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                    }
+                case .failure(let failure):
+                    print("Error: ",failure.localizedDescription)
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+                }
+                
+            }
+        }
+    }
+    
+    func cancel_and_close_slot_Api(SlotId:String){
+        let slot_id = [SlotId]
+        let param : [String:Any] = ["slot_ids":slot_id]
+        
+        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_and_close_slot, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
+            
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let success):
+                    if success.status == true {
+                        
+                        guard let indexPath = self.slotIndexMap[SlotId] else { return }
+                        
+                        var section = self.sections[indexPath.section]
+                        guard var slots = section.events as? [BookedSlot] else { return }
+
+                        slots[indexPath.row].is_booked = false
+                        slots[indexPath.row].is_cancelled = true
+                        slots[indexPath.row].is_cancelled_by_staff = true
+                        
+                        section.events = slots
+                        self.sections[indexPath.section] = section
+
+                        self.tv.reloadRows(at: [indexPath], with: .automatic)
+                        
+                    }else {
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                    }
+                case .failure(let failure):
+                    print("Error: ",failure.localizedDescription)
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+                }
+                
+            }
+            
+        }
+    }
+    
+    func indexPathForSlot(slotId: String) -> IndexPath? {
+        for (sectionIndex, section) in sections.enumerated() {
+            guard section.type == .slots,
+                  let slots = section.events as? [BookedSlot] else { continue }
+
+            if let rowIndex = slots.firstIndex(where: { $0.slot_id == slotId }) {
+                return IndexPath(row: rowIndex, section: sectionIndex)
+            }
+        }
+        return nil
+    }
+    
+   
 }

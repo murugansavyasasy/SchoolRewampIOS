@@ -23,6 +23,9 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
             return
         }
         questions.insert(QuizQuestiondata(), at: indexPath.row + 1)
+        localImages.insert(QuizLocalImages(), at: indexPath.row + 1)
+           localAttachments.insert([], at: indexPath.row + 1)
+
         tv.reloadData()
         self.QuestionNoLbl.text = QuizListStringFile.Question_Limit.translated() + String(self.questions.count) + "/" + String(self.noOfQuestion)
     }
@@ -47,24 +50,48 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
         existing.b_option = model.b_option
         existing.c_option = model.c_option
         existing.d_option = model.d_option
+        existing.a_image = model.a_image
+        existing.b_image = model.b_image
+        existing.c_image = model.c_image
+        existing.d_image = model.d_image
         existing.mark = model.mark
-        existing.file_path = model.file_path
+        existing.ques_no = model.ques_no
+        existing.q_file_path = model.q_file_path
         questions[indexPath.row] = existing
         
     }
-    
+    func updateQuestionOptionImage(at indexPath: IndexPath, image: UIImage?, type: OptionType) {
+
+        switch type {
+        case .optionA:
+            localImages[indexPath.row].a = image
+            questions[indexPath.row].a_image = image == nil ? "" : questions[indexPath.row].a_image
+
+        case .optionB:
+            localImages[indexPath.row].b = image
+            questions[indexPath.row].b_image = image == nil ? "" : questions[indexPath.row].b_image
+
+        case .optionC:
+            localImages[indexPath.row].c = image
+            questions[indexPath.row].c_image = image == nil ? "" : questions[indexPath.row].c_image
+
+        case .optionD:
+            localImages[indexPath.row].d = image
+            questions[indexPath.row].d_image = image == nil ? "" : questions[indexPath.row].d_image
+        }
+    }
+
     func removeCell(at indexPath: IndexPath) {
         guard questions.count > 1 else { return }
         questions.remove(at: indexPath.row)
+        localImages.remove(at: indexPath.row)
+           localAttachments.remove(at: indexPath.row)
         tv.reloadData()
         self.QuestionNoLbl.text = QuizListStringFile.Question_Limit.translated() + String(self.questions.count) + "/" + String(self.noOfQuestion)
     }
     
-    func addAttachment(at indexPath: IndexPath, file: FilePaths) {
-        // append the file into question model
-        if questions[indexPath.row].file_path == nil {
-            questions[indexPath.row].file_path = []
-        }
+    func updateQuestionAttachments(at indexPath: IndexPath, attachments: [QuizAttachmentItem]) {
+        localAttachments[indexPath.row] = attachments
     }
 }
 
@@ -90,7 +117,11 @@ class CreateQuizQutionVc: UIViewController {
     var QuestionBankData: [QuestionItem] = []
     var selectedQuestionIds: Set<String> = []
     var titleString = ""
-    
+    var localImages: [QuizLocalImages] = [QuizLocalImages()]
+    var localAttachments: [[QuizAttachmentItem]] = [[]]
+    var file_path: [FilePaths] = []
+    var Common_request_params: [String:Any] = [:]
+    var uploadedCount = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         popupBGview.isHidden = true
@@ -136,16 +167,78 @@ class CreateQuizQutionVc: UIViewController {
     
     
     @IBAction func btnAct(_ sender: UIButton) {
-        
         if let errorMessage = validateQuestions() {
             CustomAlert.showAlertWithOkAction(title: AlertstringFile.Missing_Information.translated(), message: errorMessage, on: self)
             return
         }
-        submitQuestions()
+
+        if id == ""{
+            let remaining = noOfQuestion - questions.count
+            let msg =
+            """
+            Almost there! You’ve created \(questions.count) out of \(noOfQuestion) questions.
+
+            You still need to add \(remaining) more question(s) to complete the quiz — but don’t worry, you can add them later.
+
+            Note: The quiz will be visible to students only after all questions are filled
+            """
+            CustomAlert().showAlertCancel(
+                title: AlertstringFile.Confirm,
+                message: msg,
+                actionLbl1: AlertstringFile.OK,
+                actionLbl2: AlertstringFile.Cancel,
+                on: self
+            ) { [self] in
+                let vc = RecipientVc(nibName: nil, bundle: nil)
+                vc.ScreenType = Menu_id.quiz
+                vc.questions = questions
+                vc.QuestionBankData = QuestionBankData
+                vc.Common_request_params = Common_request_params
+                vc.isQuiz_open_to_students = noOfQuestion == questions.count ? true : false
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+                
+            } onNo: {}
+        }else{
+            if noOfQuestion == questions.count {
+                // ✔ Full question count filled → SEND
+                CustomAlert().showAlertCancel(
+                    title: AlertstringFile.Confirm,
+                    message: "Are you sure want to submit this Quiz?",
+                    actionLbl1: AlertstringFile.Yes,
+                    actionLbl2: AlertstringFile.Cancel,
+                    on: self
+                ) {
+                    self.uploadAllQuestionsAndCreateQuiz()
+                } onNo: {}
+
+            } else {
+                // ❗ Not fully filled → Show your custom message
+                let remaining = noOfQuestion - questions.count
+                let msg =
+                """
+                Almost there! You’ve created \(questions.count) out of \(noOfQuestion) questions.
+
+                You still need to add \(remaining) more question(s) to complete the quiz — but don’t worry, you can add them later.
+
+                Note: The quiz will be visible to students only after all questions are filled
+                """
+                CustomAlert().showAlertCancel(
+                    title: AlertstringFile.Confirm,
+                    message: msg,
+                    actionLbl1: AlertstringFile.OK,
+                    actionLbl2: AlertstringFile.Cancel,
+                    on: self
+                ) {
+                    self.uploadAllQuestionsAndCreateQuiz()
+                } onNo: {}
+            }
+
+        }
+       
     }
     
     func addQuestion(id :String) {
-        
         APIService.shared.makeApi(
             url: ServiceUrl.quiz_questions_report,
             parameters: ["id": id ],
@@ -173,17 +266,14 @@ class CreateQuizQutionVc: UIViewController {
         }
     }
     
-    func submitQuestions() {
-        let params = buildQuizParams()
+    func submitQuestions(params : [String:Any]) {
         APIService.shared.makeApi(
             url: ServiceUrl.quiz_add_question,
             parameters:params,
             type: ApitTypeSringFile.POST,
             token: staffDetails?.access_token ?? ""
         ) { [weak self] (result: Result<QuizaddQuestionSuc, Error>) in
-            
             guard let self = self else { return }
-            
             DispatchQueue.main.async {
                 switch result {
                 case .success(let res):
@@ -202,11 +292,157 @@ class CreateQuizQutionVc: UIViewController {
         }
     }
     
+    func detectType(url: String) -> String {
+        let ext = URL(string: url)?.pathExtension.lowercased()
+        if url.contains("vimeo.com") { return "video" }
+        if ["jpg","jpeg","png","gif","heic"].contains(ext) { return "image" }
+        if ext == "pdf" { return "pdf" }
+        return "document"
+    }
+    
+    func uploadAllQuestionsAndCreateQuiz() {
+        uploadedCount = 0
+        uploadForQuestion(index: 0)
+    }
+
+    func uploadForQuestion(index: Int) {
+        if index >= questions.count {
+            // 🔥 ALL DONE → Now call API
+            uploadAllQuestionsOptionImages {
+                let params = self.buildQuizParams()
+                self.submitQuestions(params: params)
+            }
+            return
+        }
+        
+        let q = questions[index]
+        uploadMedia(
+            file: q.q_file_path ?? [],
+            viewController: self,
+            title: "",
+            description: ""
+        ) { [weak self] urls, iframe, fileSize, embedUrl in
+            guard let self = self else { return }
+            // 🔥 Save uploaded URLs in this specific question
+            var updated = q
+            updated.q_file_path = urls.map {
+                FilePath(url: $0, type: self.detectType(url: $0))
+            }
+            self.questions[index] = updated
+            // Go to NEXT question
+            self.uploadForQuestion(index: index + 1)
+        }
+    }
+
+    private func uploadMedia(
+        file: Any,
+        viewController: UIViewController,
+        title: String = "",
+        description: String = "",
+        completion: @escaping (_ urls: [String], _ iframeHTML: String?, _ fileSize: Int?, _ embedUrl: String?) -> Void
+    ) {
+
+        guard let items = file as? [FilePath], items.count > 0 else {
+            completion([], nil, nil, nil)
+            return
+        }
+
+        var uploadedURLs: [String] = []
+        var completed = 0
+        var iframeValue: String?
+        var fileSizeValue: Int?
+        var embedUrlValue: String?
+
+        CircularProgressLoader.shared.show(style: .circle)
+        CircularProgressLoader.shared.updateProgress(to: 0)
+
+        func finishOne(total: Int) {
+            completed += 1
+            let progress = (Double(completed) / Double(total)) * 100
+            CircularProgressLoader.shared.updateProgress(to: progress)
+
+            if completed == total {
+                CircularProgressLoader.shared.hide()
+                completion(uploadedURLs, iframeValue, fileSizeValue, embedUrlValue)
+            }
+        }
+
+        let total = items.count
+
+        for item in items {
+            // 1️⃣ Already uploaded (remote URL) → NO Upload needed
+            if !item.isBase64 {
+                uploadedURLs.append(item.url ?? "")
+                finishOne(total: total)
+                continue
+            }
+            // 2️⃣ BASE64 → IMAGE
+            if item.type == "image" || item.type == CommonStringFile.IMAGE,
+               let base = item.url,
+               let data = Data(base64Encoded: base),
+               let image = UIImage(data: data) {
+
+                AWSUploadManager.shared.uploadFileToAWS(file: image) { url in
+                    if let url = url { uploadedURLs.append(url) }
+                    finishOne(total: total)
+                }
+                continue
+            }
+            // 3️⃣ BASE64 → PDF / DOC
+            if item.type == "pdf" || item.type == CommonStringFile.pdf || item.type == "document" ,
+               let base = item.url,
+               let data = Data(base64Encoded: base) {
+
+                AWSUploadManager.shared.uploadFileToAWS(file: data) { url in
+                    if let url = url { uploadedURLs.append(url) }
+                    finishOne(total: total)
+                }
+                continue
+            }
+            // 4️⃣ BASE64 → VIDEO → Vimeo Upload
+            if item.type == CommonStringFile.Video,
+               let base = item.url,
+               let data = Data(base64Encoded: base) {
+                let tempURL = FileManager.default.temporaryDirectory
+                    .appendingPathComponent("temp_video.mp4")
+                try? data.write(to: tempURL)
+                let uploader = VimeoUploader(
+                    accessToken: YOUR_VIMEO_TOKEN,
+                    presentingViewController: viewController
+                )
+                uploader.upload(
+                    videoFileURL: tempURL,
+                    title: title,
+                    description: description,
+                    progress: { progress in
+                        CircularProgressLoader.shared.updateProgress(to: progress * 100)
+                    },
+                    completion: { videoURL, iframeHTML, fileSize, embedUrl in
+
+                        if let embed = embedUrl {
+                            uploadedURLs.append(embed)
+                        }
+                        iframeValue = iframeHTML
+                        fileSizeValue = fileSize
+                        embedUrlValue = embedUrl
+                        finishOne(total: total)
+                    }
+                )
+                continue
+            }
+            // 5️⃣ Unknown → skip
+            finishOne(total: total)
+        }
+    }
+
+    
     func buildQuizParams() -> [String: Any] {
-        // 1. Convert all QuizQuestiondata → questions
-        let dictArray: [[String: Any]] = questions.map { q in
-            [
-                QuizKeys.ques_no: q.id ?? "",
+        let dictArray: [[String: Any]] = questions.enumerated().map { (index, q) in
+            let fp = (q.q_file_path ?? []).map {
+                      ["url": $0.url ?? "", "type": $0.type ?? ""]
+                  }
+            return [
+                QuizKeys.ques_no: "\(index + 1)",   // 🔥 AUTO NUMBERING HERE
                 QuizKeys.chapter: q.chapter,
                 QuizKeys.question: q.question,
                 QuizKeys.a_option: q.a_option,
@@ -218,34 +454,22 @@ class CreateQuizQutionVc: UIViewController {
                 QuizKeys.iframe: "",
                 QuizKeys.file_size: "",
                 QuizKeys.thumbnail: "",
-                QuizKeys.file_path:
-                    (q.file_path?.isEmpty ?? true)
-                ? []
-                : q.file_path!.map { [QuizKeys.url: $0.url, QuizKeys.type: $0.type] }
+                QuizKeys.a_image : q.a_image ?? "",
+                QuizKeys.b_image : q.b_image ?? "",
+                QuizKeys.c_image : q.c_image ?? "",
+                QuizKeys.d_image : q.d_image ?? "",
+                QuizKeys.file_path : fp
             ]
         }
-        // 2. Lookup QuestionBankData by id
-        let questionBankLookup: [String: QuestionItem] = Dictionary(
-            uniqueKeysWithValues: QuestionBankData.compactMap { item in
-                guard let id = item.id else { return nil }
-                return (id, item)
-            }
+        // -------- IMPORTED QUESTION BANK HANDLING ----------
+        let qBankDict = Dictionary(uniqueKeysWithValues:
+            QuestionBankData.compactMap { qb in qb.id.map { ($0, qb) } }
         )
-        
-        // 3. Only imported questions (id present in QuestionBankData)
-        let importedQuestions = questions.filter { q in
-            if let qid = q.id {
-                return questionBankLookup[qid] != nil
-            }
-            return false
-        }
-        
-        // 4. Map imported questions → update_question_bank
-        let updateArray: [[String: Any]] = importedQuestions.compactMap { q in
-            guard let qid = q.id, let bankItem = questionBankLookup[qid] else { return nil }
+        let updateArray: [[String: Any]] = questions.compactMap { q in
+            guard let id = q.id, let bank = qBankDict[id] else { return nil }
             return [
-                QuizKeys.ques_no: qid,
-                QuizKeys.subject_id: bankItem.subject_id ?? "",
+                QuizKeys.ques_no: id,
+                QuizKeys.subject_id: bank.subject_id ?? "",
                 QuizKeys.chapter: q.chapter,
                 QuizKeys.question: q.question,
                 QuizKeys.a_option: q.a_option,
@@ -256,22 +480,168 @@ class CreateQuizQutionVc: UIViewController {
                 QuizKeys.mark: q.mark ?? 0
             ]
         }
-        
-        
-        // 5. Calculate total marks
+
         let totalMarks = questions.compactMap { $0.mark }.reduce(0, +)
-        
-        // 6. Build final params
+//
         return [
-            QuizKeys.quiz_id: id ?? "",
             QuizKeys.questions: dictArray,
             QuizKeys.max_mark: totalMarks,
             QuizKeys.ok_flag: false,
-            QuizKeys.update_question_bank: updateArray
+            QuizKeys.update_question_bank: updateArray,
+            QuizKeys.open_to_student: noOfQuestion == questions.count ? true : false
         ]
-        
     }
+    func uploadAllQuestionsOptionImages(completion: @escaping ()->Void) {
+
+        var index = 0
+
+        func next() {
+            if index >= questions.count {
+                completion()
+                return
+            }
+
+            uploadOptionImages(for: questions[index]) { updated in
+                self.questions[index] = updated
+                index += 1
+                next()
+            }
+        }
+
+        next()
+    }
+
+    func uploadOptionImages(for q: QuizQuestiondata,
+                            completion: @escaping (QuizQuestiondata)->Void) {
+        var updated = q
+        let items = [
+            ("a_image", q.a_image),
+            ("b_image", q.b_image),
+            ("c_image", q.c_image),
+            ("d_image", q.d_image)
+        ]
+        var results: [String: String] = [:]
+        var done = 0
+        func finish() {
+            done += 1
+            if done == 4 {
+                updated.a_image = results["a_image"]
+                updated.b_image = results["b_image"]
+                updated.c_image = results["c_image"]
+                updated.d_image = results["d_image"]
+
+                completion(updated)
+            }
+        }
+
+        for (key, value) in items {
+            // EMPTY → ""
+            if value == nil || value!.isEmpty {
+                results[key] = ""
+                finish()
+                continue
+            }
+
+            let str = value!
+
+            // ALREADY URL → no upload
+            if str.lowercased().hasPrefix("http") {
+                results[key] = str
+                finish()
+                continue
+            }
+
+            // BASE64 → convert → upload AWS
+            if let data = Data(base64Encoded: str),
+               let img = UIImage(data: data) {
+
+                AWSUploadManager.shared.uploadFileToAWS(file: img) { url in
+                    results[key] = url ?? ""
+                    finish()
+                }
+            }
+            else {
+                results[key] = ""
+                finish()
+            }
+        }
+    }
+
     
+//    func buildQuizParams() -> [String: Any] {
+//        // 1. Convert all QuizQuestiondata → questions
+//        let dictArray: [[String: Any]] = questions.map { q in
+//            [
+//                QuizKeys.ques_no: q.id ?? "",
+//                QuizKeys.chapter: q.chapter,
+//                QuizKeys.question: q.question,
+//                QuizKeys.a_option: q.a_option,
+//                QuizKeys.b_option: q.b_option,
+//                QuizKeys.c_option: q.c_option,
+//                QuizKeys.d_option: q.d_option,
+//                QuizKeys.answer: q.answer ?? "",
+//                QuizKeys.mark: q.mark ?? 0,
+//                QuizKeys.iframe: "",
+//                QuizKeys.file_size: "",
+//                QuizKeys.thumbnail: "",
+//                QuizKeys.a_image : q.a_image ?? "",
+//                QuizKeys.b_image : q.b_image ?? "",
+//                QuizKeys.c_image : q.c_image ?? "",
+//                QuizKeys.d_image : q.d_image ?? "",
+//                QuizKeys.file_path:
+//                    (q.q_file_path?.isEmpty ?? true)
+//                ? []
+//                : q.q_file_path!.map { [QuizKeys.url: $0.url, QuizKeys.type: $0.type] }
+//            ]
+//        }
+//        // 2. Lookup QuestionBankData by id
+//        let questionBankLookup: [String: QuestionItem] = Dictionary(
+//            uniqueKeysWithValues: QuestionBankData.compactMap { item in
+//                guard let id = item.id else { return nil }
+//                return (id, item)
+//            }
+//        )
+//        
+//        // 3. Only imported questions (id present in QuestionBankData)
+//        let importedQuestions = questions.filter { q in
+//            if let qid = q.id {
+//                return questionBankLookup[qid] != nil
+//            }
+//            return false
+//        }
+//        
+//        // 4. Map imported questions → update_question_bank
+//        let updateArray: [[String: Any]] = importedQuestions.compactMap { q in
+//            guard let qid = q.id, let bankItem = questionBankLookup[qid] else { return nil }
+//            return [
+//                QuizKeys.ques_no: qid,
+//                QuizKeys.subject_id: bankItem.subject_id ?? "",
+//                QuizKeys.chapter: q.chapter,
+//                QuizKeys.question: q.question,
+//                QuizKeys.a_option: q.a_option,
+//                QuizKeys.b_option: q.b_option,
+//                QuizKeys.c_option: q.c_option,
+//                QuizKeys.d_option: q.d_option,
+//                QuizKeys.answer: q.answer ?? "",
+//                QuizKeys.mark: q.mark ?? 0
+//            ]
+//        }
+//        
+//        
+//        // 5. Calculate total marks
+//        let totalMarks = questions.compactMap { $0.mark }.reduce(0, +)
+//        
+//        // 6. Build final params
+//        return [
+//            QuizKeys.quiz_id: id ?? "",
+//            QuizKeys.questions: dictArray,
+//            QuizKeys.max_mark: totalMarks,
+//            QuizKeys.ok_flag: false,
+//            QuizKeys.update_question_bank: updateArray
+//        ]
+//        
+//    }
+//    
     func get_QuestionBank_Api(){
         APIService.shared.makeApi(url: ServiceUrl.lms_api_quiz_pick_from_qbank, parameters: [QuizKeys.subject_id: subject_Id ?? ""], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<QuestionsResponse,Error>) in
             guard let self = self else {return}
@@ -475,20 +845,13 @@ extension CreateQuizQutionVc: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuistionTvTableViewCell, for: indexPath) as? QuistionTvTableViewCell else {
                 return UITableViewCell()
             }
-            cell.layoutIfNeeded()
             
             let model = questions[indexPath.row]
             let isLastCell = (indexPath.row == questions.count - 1)
+            cell.parentTableView = tableView
             cell.indexPath = indexPath
             cell.delegate = self
             cell.parentVC = self
-            cell.onAttachmentsUpdated = { [weak self] in
-                DispatchQueue.main.async {
-                    self?.tv.beginUpdates()
-                    self?.tv.endUpdates()
-                }
-            }
-
             cell.configureCell(
                 with: model,
                 isLast: isLastCell,
@@ -500,8 +863,6 @@ extension CreateQuizQutionVc: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuistionTvTableViewCell, for: indexPath) as? QuistionTvTableViewCell else {
                 return UITableViewCell()
             }
-            
-            cell.layoutIfNeeded()
             
             let model = QuestionBankData[indexPath.row]
             cell.indexPath = indexPath
@@ -532,3 +893,9 @@ struct QuestionModel {
     var question: String
 }
 
+struct QuizLocalImages {
+    var a: UIImage?
+    var b: UIImage?
+    var c: UIImage?
+    var d: UIImage?
+}

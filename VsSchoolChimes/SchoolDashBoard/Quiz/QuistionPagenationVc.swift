@@ -7,7 +7,7 @@
 
 import UIKit
 
-class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIPageViewControllerDelegate,SelectNotice {
+class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIPageViewControllerDelegate,SelectNotice, ReportsQuizDelegate {
     
     @IBOutlet weak var createBtn: UIButton!
     @IBOutlet weak var reportsBtn: UIButton!
@@ -85,6 +85,14 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
         }
         updateTabUI(for: index)
         let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
+        if index == 0 && currentIndex != 0 {
+            if let senderVC = pages.first as? SenderQuizVc {
+                senderVC.editQuiz = nil
+                senderVC.isReset = true
+               }
+        }else if index == 1{
+            createBtn.setTitle("Create", for: .normal)
+        }
         let direction: UIPageViewController.NavigationDirection = index > currentIndex ? .forward : .reverse
         pageViewController.setViewControllers([pages[index]], direction: direction, animated: true, completion: nil)
     }
@@ -101,9 +109,23 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
         if #available(iOS 14.0, *) {
             if let page2 = CV[1] as? ReportsQuizVc {
                 page2.selectNotice = self
+                page2.delegate = self
             }
         }
         pages = CV
+    }
+    
+    func didSelectQuizForEdit(quiz: EditQuiz) {
+        
+        createBtn.setTitle("Edit", for: .normal)
+        updateTabUI(for: 0)
+        
+        if let senderVC = pages.first as? SenderQuizVc {
+            senderVC.editQuiz = quiz
+            let currentIndex = pageViewController.viewControllers?.first.flatMap{pages.firstIndex(of: $0)} ?? 0
+            let direction: UIPageViewController.NavigationDirection = 0 > currentIndex ? .forward : .reverse
+            pageViewController.setViewControllers([senderVC],direction: direction,animated: true)
+        }
     }
     
     

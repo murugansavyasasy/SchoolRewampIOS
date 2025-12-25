@@ -11,23 +11,22 @@ protocol QuestionCellDelegate: AnyObject {
     func addAnotherCell(at indexPath: IndexPath)
     func updateQuestion(at indexPath: IndexPath, model: QuizQuestiondata)
     func removeCell(at indexPath: IndexPath)
-    func addAttachment(at indexPath: IndexPath, file: FilePaths)   // ✅ New
     func checkboxAction(id : String, isSelected: Bool)
+    func updateQuestionOptionImage(at indexPath: IndexPath, image: UIImage?, type: OptionType)
+    func updateQuestionAttachments(at indexPath: IndexPath, attachments: [QuizAttachmentItem])
 }
-
-
 
 @available(iOS 14.0, *)
 class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDelegate, DeleteImge {
     func deleteImage(index: Int) {
-        attachments.remove(at: index)
+        file_path.remove(at: index)
         QuestionImageCv.imageCollectionview.reloadData()
-        if attachments.count == 0{
+        if file_path.count == 0{
             collectionViewHeight.constant = 0
         }
     }
     
-    
+    @IBOutlet weak var addFileBtnName: UIButton!
     @IBOutlet weak var OptionAImgBtn: UIButton!
     @IBOutlet weak var OptionBImgBtn: UIButton!
     @IBOutlet weak var OptionCImgBtn: UIButton!
@@ -73,16 +72,17 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     var isChecked = false
     var options = [MenuStringFile.optionA.translated(), MenuStringFile.optionB.translated(), MenuStringFile.optionC.translated(), MenuStringFile.optionD.translated()]
     var answerIndex: Int?
-    var attachments: [QuizAttachmentItem] = []
     private var placeholderLabels: [UITextView: UILabel] = [:]
     weak var parentVC: UIViewController?
     let  video = "video"
-    var onAttachmentsUpdated: (() -> Void)?
     var selectedOption: OptionType?
     var A_option: String?
     var B_option: String?
     var C_option: String?
     var D_option: String?
+    var file_path: [FilePath] = []
+    weak var parentTableView: UITableView?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         collectionViewHeight.constant = 0
@@ -111,79 +111,121 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         }
     }
     
+    
     func imageSelection() {
+        // 1️⃣ CAMERA IMAGE
         PhotoPickerManager.shared.onCameraImagePicked = { [weak self] image in
             guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.attachments.append(QuizAttachmentItem(image: image, imageURL: nil, fileType: "image"))
-                self.QuestionImageCv.imageCollectionview.reloadData()
-                DispatchQueue.main.async {
-                    let totalItems = self.attachments.count
-                    self.collectionViewHeight.constant = totalItems <= 2 ? 120 : self.QuestionImageCv.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
-                }
-                
-                if let table = self.superview as? UITableView {
-                    table.beginUpdates()
-                    table.endUpdates()
+            DispatchQueue.main.async { [self] in
+                // Backend
+                let fp = FilePath(url: image.toBase64(), type: CommonStringFile.IMAGE)
+                self.file_path.append(fp)
+                // UI reload
+                self.reloadAttachmentUI()
+                // Update parent VC
+                if let indexPath = self.indexPath {
+                    self.delegate?.updateQuestion(at: indexPath, model: self.captureModel())
                 }
             }
         }
-        
+        // 2️⃣ MULTIPLE IMAGES
         PhotoPickerManager.shared.onImagesPicked = { [weak self] images in
             guard let self = self else { return }
-            DispatchQueue.main.async {
-                let imageItems = images.map {
-                    QuizAttachmentItem(image: $0, imageURL: nil, fileType: "image")
+            DispatchQueue.main.async { [self] in
+                for img in images {
+                    self.file_path.append(
+                        FilePath(url: img.toBase64(), type: CommonStringFile.IMAGE))
                 }
-                self.attachments.append(contentsOf: imageItems)
-                self.QuestionImageCv.imageCollectionview.reloadData()
-                DispatchQueue.main.async {
-                    let totalItems = self.attachments.count
-                    self.collectionViewHeight.constant = totalItems <= 2 ? 120 : self.QuestionImageCv.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
-                }
-                if let table = self.superview as? UITableView {
-                    table.beginUpdates()
-                    table.endUpdates()
+                self.reloadAttachmentUI()
+                if let indexPath = self.indexPath {
+                    self.delegate?.updateQuestion(at: indexPath, model: self.captureModel())
                 }
             }
         }
-        
+        // 3️⃣ DOCUMENT PDF/DOC
         PhotoPickerManager.shared.onFilePicked = { [weak self] url in
             guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.attachments.append(QuizAttachmentItem(image: nil, imageURL: url.absoluteString, fileType: "pdf"))
-                self.QuestionImageCv.imageCollectionview.reloadData()
-                DispatchQueue.main.async {
-                    let totalItems = self.attachments.count
-                    self.collectionViewHeight.constant = totalItems <= 2 ? 120 : self.QuestionImageCv.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
-                }
-                
-                if let table = self.superview as? UITableView {
-                    table.beginUpdates()
-                    table.endUpdates()
-                }
+            DispatchQueue.main.async { [self] in
+                let base64 = self.fileURLToBase64(url)
+                let ext = url.pathExtension.lowercased()
+                self.file_path.append(
+                    FilePath(url: base64, type: CommonStringFile.pdf)
+                )
+                self.reloadAttachmentUI()
+                if let indexPath = self.indexPath {
+                    self.delegate?.updateQuestion(at: indexPath, model: self.captureModel())}
             }
         }
-        
+        // 4️⃣ VIDEO
         PhotoPickerManager.shared.onVideoPicked = { [weak self] url in
             guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.attachments.append(QuizAttachmentItem(image: nil, imageURL: nil, fileType: "video", VideoURl: url))
-                self.QuestionImageCv.imageCollectionview.reloadData()
-                DispatchQueue.main.async {
-                    let totalItems = self.attachments.count
-                    self.collectionViewHeight.constant = totalItems <= 2 ? 120 : self.QuestionImageCv.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
-                }
-                
-                if let table = self.superview as? UITableView {
-                    table.beginUpdates()
-                    table.endUpdates()
+            DispatchQueue.main.async { [self] in
+                let base64 = self.videoToBase64(url)
+                self.file_path.append(
+                    FilePath(url: base64, type: CommonStringFile.VIDEO)
+                )
+                self.reloadAttachmentUI()
+                if let indexPath = self.indexPath {
+                    self.delegate?.updateQuestion(at: indexPath, model: self.captureModel())
                 }
             }
         }
     }
 
+//    func reloadAttachmentUI() {
+//        self.QuestionImageCv.imageCollectionview.reloadData()
+//        DispatchQueue.main.async {
+//            let totalItems = self.file_path.count
+//            self.collectionViewHeight.constant =
+//                totalItems <= 2 ? 120 :
+//                self.QuestionImageCv.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
+//        }
+//        if let table = self.superview as? UITableView {
+//            table.beginUpdates()
+//            table.endUpdates()
+//        }
+//    }
     
+    func reloadAttachmentUI() {
+        
+        QuestionImageCv.imageCollectionview.reloadData()
+      
+            let totalItems = self.file_path.count
+
+            self.collectionViewHeight.constant =
+            totalItems <= 2
+            ? 120
+            : self.calculatedCollectionHeight()
+
+            self.contentView.layoutIfNeeded()
+
+        parentTableView?.beginUpdates()
+        parentTableView?.endUpdates()
+//
+//            if let tableView = self.parentTableView,
+//               let indexPath = tableView.indexPath(for: self) {
+//                tableView.reloadRows(at: [indexPath], with: .none)
+//            }
+        
+       
+    }
+
+    
+    func calculatedCollectionHeight() -> CGFloat {
+        let items = file_path.count
+        guard items > 0 else { return 0 }
+
+        let columns = 3
+        let itemHeight: CGFloat = 100
+        let lineSpacing: CGFloat = 10
+        let sectionInsets: CGFloat = 20 // top + bottom
+
+        let rows = ceil(CGFloat(items) / CGFloat(columns))
+
+        return (rows * itemHeight)
+             + ((rows - 1) * lineSpacing)
+             + sectionInsets
+    }
 
     func setupUI() {
         fullView.layer.cornerRadius = 10
@@ -197,6 +239,11 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         correctOptionView.layer.borderColor = UIColor.lightGray.cgColor
         addAnotherName.setTitleFont(style: .body, size: FontSize.BodySize)
         addAnotherName.setTitle(MenuStringFile.addQuestion.translated(), for: .normal)
+        OptionAImgBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        OptionBImgBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        OptionCImgBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        OptionDImgBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        addFileBtnName.setTitleFont(style: .body, size: FontSize.BodySize)
         attachmentBtnName.layer.cornerRadius = 10
         attachmentBtnName.setTitleFont(style: .body, size: FontSize.BodySize)
         chapterDltLbl.setRequiredText(QuizListStringFile.Chapter)
@@ -243,7 +290,6 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         QuestionImageCv.imageCollectionview.backgroundColor = .clear
     }
     
-
     func setPlaceholder(_ placeholder: String, for textView: UITextView) {
         if let existing = placeholderLabels[textView] {
             existing.text = placeholder
@@ -305,17 +351,44 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         } else {
             correctAnsLbl.text = MenuStringFile.selectCorrectAnswer.translated()
         }
-        if let attachments = model.file_path, !attachments.isEmpty {
-            attachmentBtnName.setTitle("Attachment (\(attachments.count))", for: .normal)
-            attachmentBtnName.backgroundColor = .black
-            attachmentBtnName.isEnabled = false   // disable click
-            attachmentBtnName.alpha = 0.6
+        if let attachments = model.q_file_path, !attachments.isEmpty {
+            self.file_path  = attachments
+            self.QuestionImageCv.imageCollectionview.reloadData()
+            DispatchQueue.main.async {
+                let totalItems = self.file_path.count
+                self.collectionViewHeight.constant =
+                    totalItems <= 2 ? 120 :
+                    self.QuestionImageCv.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
+            }
         } else {
-            attachmentBtnName.setTitle(MenuStringFile.addAttachment.translated(), for: .normal)
-            attachmentBtnName.backgroundColor = .black
-            attachmentBtnName.isEnabled = true
-            attachmentBtnName.alpha = 1.0
+           collectionViewHeight.constant = 0
         }
+        if model.a_image != ""{
+            selectedOption = .optionA
+            assignOptionImage(nil, url: model.a_image)
+        }else{
+            optionAImageView.isHidden = true
+            
+        }
+        if model.b_image != ""{
+            selectedOption = .optionB
+            assignOptionImage(nil, url: model.b_image)
+        }else{
+            optionBImageView.isHidden = true
+        }
+        if model.c_image != ""{
+            selectedOption = .optionC
+            assignOptionImage(nil, url: model.c_image)
+        }else{
+            optionCImageView.isHidden = true
+        }
+        if model.d_image != ""{
+            selectedOption = .optionD
+            assignOptionImage(nil, url: model.d_image)
+        }else{
+            optionDImageView.isHidden = true
+        }
+      
         if totalQuestion == numberofQuestion {
             addAnotherName.isHidden = true
         }else {
@@ -331,6 +404,8 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         }
     }
     
+ 
+
     func configureQuestionBankCell(with model: QuestionItem, isChecked:Bool) {
         ChapterTxtFld.text = model.chapter
         markTxtFild.text   = model.mark == nil ? "" : "\(model.mark ?? 0)"
@@ -375,7 +450,6 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     func captureModel() -> QuizQuestiondata {
         var answerString: String? = nil
         var correctAnswerText: String? = nil
-        
         if let idx = answerIndex {
             answerString = String(idx + 1)
             switch idx {
@@ -386,7 +460,6 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
             default: break
             }
         }
-        
         return QuizQuestiondata(
             chapter: ChapterTxtFld.text ?? "",
             question: questionTxtView.text ?? "",
@@ -397,10 +470,13 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
             d_option: opDTxtView.text ?? "",
             mark: Int(markTxtFild.text ?? ""),
             correct_answer_text: correctAnswerText,
-            a_image: "",
-            b_image: "",
-            c_image: "",
-            d_image: ""
+            q_file_path : self.file_path,
+            a_image: A_option ?? "",
+            b_image: B_option ?? "",
+            c_image: C_option ?? "",
+            d_image: D_option ?? "",
+            ques_no: String((indexPath?.row ?? 0) + 1 )
+            
         )
     }
     func textViewDidChange(_ textView: UITextView) {
@@ -408,7 +484,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         if let index = indexPath {
             delegate?.updateQuestion(at: index, model: captureModel())
         }
-        if let tableView = self.superview as? UITableView {
+        if let tableView =  self.parentTableView {
             UIView.setAnimationsEnabled(false)
             tableView.beginUpdates()
             tableView.endUpdates()
@@ -425,6 +501,10 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     }
     
     @IBAction func AddAnotherAct(_ sender: UIButton) {
+        A_option = ""
+        B_option = ""
+        C_option = ""
+        D_option = ""
         if let index = indexPath {
             delegate?.updateQuestion(at: index, model: captureModel())
         }
@@ -437,9 +517,10 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         DispatchQueue.main.async { [self] in
             if optionAImageView.image != nil {
                 optionAImageView.image = nil
+                A_option = ""
                 optionAView.isHidden = true
                 sender.setTitle("Add Image", for: .normal)
-                if let table = self.superview as? UITableView {
+                if let table =  self.parentTableView {
                     table.beginUpdates()
                     table.endUpdates()
                 }
@@ -455,9 +536,10 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         DispatchQueue.main.async { [self] in
             if optionBImageView.image != nil {
                 optionBImageView.image = nil
+                B_option = ""
                 optionBview.isHidden = true
                 sender.setTitle("Add Image", for: .normal)
-                if let table = self.superview as? UITableView {
+                if let table = self.parentTableView {
                     table.beginUpdates()
                     table.endUpdates()
                 }
@@ -473,9 +555,10 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         DispatchQueue.main.async { [self] in
             if optionCImageView.image != nil {
                 optionCImageView.image = nil
+                C_option = ""
                 optionCView.isHidden = true
                 sender.setTitle("Add Image", for: .normal)
-                if let table = self.superview as? UITableView {
+                if let table =  self.parentTableView {
                     table.beginUpdates()
                     table.endUpdates()
                 }
@@ -491,9 +574,10 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         DispatchQueue.main.async { [self] in
             if optionDImageView.image != nil {
                 optionDImageView.image = nil
+                D_option = ""
                 optionDView.isHidden = true
                 sender.setTitle("Add Image", for: .normal)
-                if let table = self.superview as? UITableView {
+                if let table =  self.parentTableView {
                     table.beginUpdates()
                     table.endUpdates()
                 }
@@ -516,7 +600,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 
         if let image = info[.originalImage] as? UIImage {
-            assignOptionImage(image)
+            assignOptionImage(image, url: "")
             picker.dismiss(animated: true)
             return
         }
@@ -529,7 +613,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                   print("❌ parentVC is nil")
                   return
               }
-        let remaining = Filecount.SelectImageAndDocumetCount - attachments.count
+        let remaining = Filecount.SelectImageAndDocumetCount - file_path.count
         if remaining > 0 {
             let alertController = UIAlertController(title: AlertstringFile.Select.translated(), message: AlertstringFile.Chooseanoption.translated(), preferredStyle: .actionSheet)
             // Camera option
@@ -551,8 +635,8 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
             let VideoAction = UIAlertAction(title:
                                                 CommonStringFile.Video, style: .default) { [self] _ in
                 
-                let totalRemaining = Filecount.SelectImageAndDocumetCount - attachments.count
-                let videoCount = attachments.filter { $0.fileType.lowercased() == video }.count
+                let totalRemaining = Filecount.SelectImageAndDocumetCount - file_path.count
+                let videoCount = file_path.filter { $0.type?.lowercased() == video }.count
                 let videoRemaining = Filecount.SelectVideoCount - videoCount
                 if totalRemaining <= 0 {
                     CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: parentVC)
@@ -586,7 +670,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                   print("❌ parentVC is nil")
                   return
               }
-        let remaining = 10 - attachments.count
+        let remaining = 10 - file_path.count
         if remaining > 0 {
             let limit = max(remaining , 0)
             if limit > 0 {
@@ -610,7 +694,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                   print("❌ parentVC is nil")
                   return
               }
-        let remaining = 10 - attachments.count
+        let remaining = 10 - file_path.count
         if remaining > 0 {
             PhotoPickerManager.shared.limiSelection = remaining
             PhotoPickerManager.shared.presentPicker(ofType: .file, from: parentVC)
@@ -623,8 +707,8 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                   print("❌ parentVC is nil")
                   return
               }
-        let totalRemaining = 10 - attachments.count
-        let videoCount = attachments.filter { $0.fileType.lowercased() == video }.count
+        let totalRemaining = 10 - file_path.count
+        let videoCount = file_path.filter { $0.type?.lowercased() == video }.count
         let videoRemaining = 2 - videoCount
         if totalRemaining <= 0 {
             CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: parentVC)
@@ -701,9 +785,9 @@ extension QuistionTvTableViewCell: UIImagePickerControllerDelegate, UINavigation
             fileURL: url,
             fileType: .document
         )
-        if let index = indexPath {
-            delegate?.addAttachment(at: index, file: file)
-        }
+//        if let index = indexPath {
+//            delegate?.addAttachment(at: index, file: file)
+//        }
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
@@ -713,85 +797,172 @@ extension QuistionTvTableViewCell: UIImagePickerControllerDelegate, UINavigation
 
 @available(iOS 14.0, *)
 extension QuistionTvTableViewCell: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: CellConfingName.ImageCvCell,
             for: indexPath
         ) as! ImageCvCell
 
-        let item = attachments[indexPath.item]
         cell.delegate = self
         cell.deleteBtn.tag = indexPath.row
         cell.imageViews.tintColor = .clear
-        if let image = item.image {
-            cell.imageViews.image = image
-        } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
-            if item.fileType.uppercased() != CommonStringFile.IMAGE {
-                let iconName = getFileIconName(for: url)
-                cell.imageViews.image = UIImage(named: iconName)
-            } else {
-                cell.imageViews.kf.setImage(with: url)
+        cell.imageViews.image = nil  // reset
+        // ---------------------------------------------------------------------
+        // 1️⃣ Base64 (Local converted data always first priority)
+        // ---------------------------------------------------------------------
+        let item = file_path[indexPath.item]
+        if item.isBase64 {
+            if item.type == "image",
+               let data = Data(base64Encoded: item.url ?? ""),
+               let img = UIImage(data: data) {
+                cell.imageViews.image = img
+                return cell
+    }
+        if item.type == "pdf" {
+                cell.imageViews.image = UIImage(named: "pdf (1)")
+                return cell
             }
-        } else if let vido = item.VideoURl{
-            let iconName = getFileIconName(for: vido)
-            cell.imageViews.image = UIImage(named: iconName)
-            cell.imageViews.tintColor = .black
+        if item.type == "txt"{
+            cell.imageViews.image = UIImage(named: "txt-file")
+            return cell
         }
-        else if let vido = URL(string: item.VimeoVideoURL ?? ""){
-            let iconName = getFileIconName(for: vido)
-            cell.imageViews.image = UIImage(named: iconName)
-            cell.imageViews.tintColor = .black
+        if item.type == "rtf"{
+            cell.imageViews.image = UIImage(named: "rtf-file")
+            return cell
         }
-        else{
-            cell.imageViews.image = nil
+        if item.type == "doc"{
+            cell.imageViews.image = UIImage(named: "microsoft-word")
+            return cell
+        }
+        if item.type == "xls"{
+            cell.imageViews.image = UIImage(named: "exel")
+            return cell
+        }
+        if item.type == "ppt" || item.type == "pptx"{
+            cell.imageViews.image = UIImage(named: "ppt")
+            return cell
+        }
+        if item.type == "document" {
+                cell.imageViews.image = UIImage(named: "doc_icon")
+                return cell
+            }
+        if item.type == "video" {
+                cell.imageViews.image = UIImage(named: "video (1)")
+                return cell
+            }
+        }
+        
+        else {
+            if let url = URL(string: item.url ?? "") {
+                if item.type  == CommonStringFile.IMAGE || item.type == "image" {
+                    cell.imageViews.kf.setImage(with: url)
+                }else{
+                    let iconName = getFileIconName(for: url)
+                    cell.imageViews.image = UIImage(named: iconName)
+                }
+            }
         }
         return cell
     }
-    
+    func base64ToImage(_ base64: String) -> UIImage? {
+        guard let data = Data(base64Encoded: base64) else { return nil }
+        return UIImage(data: data)
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return attachments.count
+        return file_path.count
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (QuestionImageCv.imageCollectionview.frame.width - 30) / 3
         return CGSize(width: width, height: 100)
     }
     
-    func assignOptionImage(_ image: UIImage) {
-        DispatchQueue.main.async { [self] in
-        switch selectedOption {
-        case .optionA:
-            optionAImageView.image = image
-            optionAView.isHidden = false
-            optionAView.layer.borderColor = UIColor.clear.cgColor
-            // Change button title
-            OptionAImgBtn.setTitle("Remove Image", for: .normal)
-            if let table = self.superview as? UITableView {
+
+    func assignOptionImage(_ image: UIImage?, url: String?) {
+        guard let index = indexPath, let option = selectedOption else { return }
+
+        DispatchQueue.main.async {
+            let isRemote =
+                url?.lowercased().hasPrefix("http://") == true ||
+                url?.lowercased().hasPrefix("https://") == true
+
+            switch option {
+            case .optionA:
+                self.optionAView.isHidden = false
+                self.OptionAImgBtn.setTitle("Remove Image", for: .normal)
+
+                if isRemote {
+                    self.optionAImageView.kf.setImage(with: URL(string: url ?? ""))
+                    self.A_option = url ?? ""   // URL saving
+                } else if let img = image {
+                    self.optionAImageView.isHidden = false
+                    self.optionAImageView.image = img
+                    self.A_option = img.toBase64()  // base64 saving
+                }
+
+            case .optionB:
+                self.optionBview.isHidden = false
+                self.OptionBImgBtn.setTitle("Remove Image", for: .normal)
+
+                if isRemote {
+                    self.optionBImageView.kf.setImage(with: URL(string: url ?? ""))
+                    self.B_option = url ?? ""
+                } else if let img = image {
+                    self.optionBImageView.isHidden = false
+                    self.optionBImageView.image = img
+                    self.B_option = img.toBase64()
+                }
+
+            case .optionC:
+                self.optionCView.isHidden = false
+                self.OptionCImgBtn.setTitle("Remove Image", for: .normal)
+
+                if isRemote {
+                    self.optionCImageView.kf.setImage(with: URL(string: url ?? ""))
+                    self.C_option = url ?? ""
+                } else if let img = image {
+                    self.optionCImageView.isHidden = false
+                    self.optionCImageView.image = img
+                    self.C_option = img.toBase64()
+                }
+
+            case .optionD:
+                self.optionDView.isHidden = false
+                self.OptionDImgBtn.setTitle("Remove Image", for: .normal)
+
+                if isRemote {
+                    self.optionDImageView.kf.setImage(with: URL(string: url ?? ""))
+                    self.D_option = url ?? ""
+                } else if let img = image {
+                    self.optionDImageView.isHidden = false
+                    self.optionDImageView.image = img
+                    self.D_option = img.toBase64()
+                }
+            }
+            // Update table layout
+            if let table =  self.parentTableView {
                 table.beginUpdates()
                 table.endUpdates()
             }
-            
-        case .optionB:
-            optionBImageView.image = image
-            optionBview.isHidden = false
-            OptionBImgBtn.setTitle("Remove Image", for: .normal)
-            
-        case .optionC:
-            optionCImageView.image = image
-            optionCView.isHidden = false
-            OptionCImgBtn.setTitle("Remove Image", for: .normal)
-            
-        case .optionD:
-            optionDImageView.image = image
-            optionDView.isHidden = false
-            OptionDImgBtn.setTitle("Remove Image", for: .normal)
-            
-        case .none:
-            break
+            // Notify parent VC
+            self.delegate?.updateQuestion(at: index, model: self.captureModel())
         }
-            
-            
     }
+
+    func fileURLToBase64(_ url: URL) -> String? {
+        if let data = try? Data(contentsOf: url) {
+            return data.base64EncodedString()
+        }
+        return nil
     }
+    func videoToBase64(_ url: URL) -> String? {
+        if let data = try? Data(contentsOf: url) {
+            return data.base64EncodedString()
+        }
+        return nil
+    }
+
 
 }
 enum OptionType {
@@ -832,5 +1003,11 @@ extension UIView {
 extension CGRect {
     var maxYPoint: CGPoint {
         return CGPoint(x: midX, y: maxY)
+    }
+}
+extension UIImage {
+    func toBase64() -> String? {
+        return self.jpegData(compressionQuality: 0.7)?
+            .base64EncodedString()
     }
 }

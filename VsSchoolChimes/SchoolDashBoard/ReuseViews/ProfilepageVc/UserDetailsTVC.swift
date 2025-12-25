@@ -159,7 +159,6 @@ class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge, UITextFieldDelega
             txtField.placeholder = item.title
             txtField.text = item.value
             txtField.isEnabled = item.is_editable ?? false
-            
         case .address:
             txtView.isHidden = false
             txtViewHeight.constant = 100
@@ -427,7 +426,6 @@ extension UserDetailsTVC: UICollectionViewDataSource, UICollectionViewDelegate, 
         } else {
             cell.imageNameLbl.text = "File \(indexPath.item + 1)"
         }
-        
         // Fetch and display file size
         if let urlString = file.imageURL, let sizeURL = URL(string: urlString) {
             getRemoteFileSize(from: sizeURL) { sizeString in

@@ -326,6 +326,9 @@ class createQuizStringFile{
     static let  target_code = "target_code"
     static let  subject_id = "subject_id"
     static let  class_id = "class_id"
+    static let  questions = "questions"
+    static let  open_to_student = "open_to_student"
+    
 }
 
 class addPonintsPackut{
@@ -350,10 +353,15 @@ class QuizRequestStringFile{
 
 class QuizKeys {
     static let quiz_id = "quiz_id"
+    static let a_image = "a_image"
+    static let b_image = "b_image"
+    static let c_image = "c_image"
+    static let d_image = "d_image"
     static let questions = "questions"
     static let max_mark = "max_mark"
     static let ok_flag = "ok_flag"
     static let update_question_bank = "update_question_bank"
+    static let open_to_student = "open_to_student"
 
     // Question keys
     static let ques_no = "ques_no"
@@ -370,7 +378,7 @@ class QuizKeys {
     static let iframe = "iframe"
     static let file_size = "file_size"
     static let thumbnail = "thumbnail"
-    static let file_path = "file_path"
+    static let file_path = "q_file_path"
     static let url = "url"
     static let type = "type"
     static let status_type = "status_type"

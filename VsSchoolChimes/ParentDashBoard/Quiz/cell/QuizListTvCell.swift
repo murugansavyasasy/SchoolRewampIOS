@@ -11,7 +11,7 @@ protocol addQuestionAndSubmitedListDelegate {
     func addQuestionAndSubmitedList(index : Int)
     func submitedList(index : Int)
 }
-class QuizListTvCell: UITableViewCell {
+class QuizListTvCell: UITableViewCell, SelectedId, UIPopoverPresentationControllerDelegate {
     
     @IBOutlet weak var addQuestionBtnName: UIButton!
     @IBOutlet weak var submittedListBtnName: UIButton!
@@ -27,8 +27,16 @@ class QuizListTvCell: UITableViewCell {
     @IBOutlet weak var PlayBtn: UIButton!
     @IBOutlet weak var LevelView: UIView!
     @IBOutlet weak var levelLbl: UILabel!
+    @IBOutlet weak var optionsBtn: UIButton!
+    @IBOutlet weak var pendingView: UIView!
+    
     
     var delegate : addQuestionAndSubmitedListDelegate?
+    var edit:Bool?
+    var delete:Bool?
+    var PopupDelegate:SelectedId?
+    var selectedId:String?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         CellView.layer.cornerRadius = 10
@@ -36,11 +44,12 @@ class QuizListTvCell: UITableViewCell {
         addQuestionBtnName.layer.cornerRadius = 10
         submittedListBtnName.layer.cornerRadius = 10
         LevelView.layer.cornerRadius = 15
-        LevelView.layer.maskedCorners = [.layerMinXMaxYCorner]
+        LevelView.layer.maskedCorners = [.layerMaxXMaxYCorner]
         LevelView.clipsToBounds = true
         LevelView.layer.masksToBounds = true
         CellView.clipsToBounds = true
         
+        optionsBtn.transform = CGAffineTransform(rotationAngle: .pi/2)
     }
 
     @IBAction func addQestBtn(_ sender: UIButton) {
@@ -49,5 +58,53 @@ class QuizListTvCell: UITableViewCell {
     
     @IBAction func submitedList(_ sender: UIButton) {
         delegate?.submitedList(index: sender.tag)
+    }
+    
+    @IBAction func optionsBtnAct(_ sender: UIButton) {
+    
+        let popoverContentVC = PopupVC(edit: edit ?? false, delete: delete ?? false, selectedId: selectedId)
+        popoverContentVC.delegate = self
+        popoverContentVC.preferredContentSize = CGSize(width: 120, height: 80)
+        popoverContentVC.modalPresentationStyle = .popover
+        if let popoverController = popoverContentVC.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+            popoverController.permittedArrowDirections = .right
+            popoverController.delegate = self
+        }
+        
+        // For iPhones: Present as a pop-up instead of full-screen
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            popoverContentVC.modalPresentationStyle = .overFullScreen
+            popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3) // Optional dim effect
+        }
+        if let topVC = getCurrentViewController() {
+            topVC.present(popoverContentVC, animated: true, completion: nil)
+        }
+    }
+    
+    func selectId(id: String?, edit: Bool?) {
+        PopupDelegate?.selectId(id: id, edit: edit)
+    }
+    
+    func edit(edit:Bool,delete:Bool,selectedId:String){
+        self.selectedId = selectedId
+        self.delete = delete
+        self.edit = edit
+        optionsBtn.isHidden = !(edit || delete)
+    }
+    
+    private func getCurrentViewController() -> UIViewController? {
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first { $0.isKeyWindow }?
+            .rootViewController?
+            .topMostViewController()
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        // Ensure the popup style is maintained on iPhone
+        return .none
     }
 }

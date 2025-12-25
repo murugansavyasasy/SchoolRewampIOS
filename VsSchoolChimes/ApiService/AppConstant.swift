@@ -194,6 +194,8 @@ struct ServiceUrl{
     static let ptm_api_ptm_schedule_datewise_booked_slots = "ptm/api/ptm-schedule/datewise-booked-slots"
     static let exam_api_exam_get_staff_wise_exam = "exam/api/exam/get-staff-wise-exam"
     static let exam_get_subject_wise_activities = "exam/api/exam/get-subject-wise-activities"
+    static let lms_api_quiz_delete = "lms/api/quiz/delete"
+    static let lms_api_quiz_update = "lms/api/quiz/update"
 }
 
 struct localData{

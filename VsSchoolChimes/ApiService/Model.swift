@@ -410,8 +410,12 @@ struct HomeworkList: Codable {
 struct FilePath: Codable {
     let url: String?
     let type: String?
-    
+    var isBase64: Bool {
+           return !(url?.lowercased().hasPrefix("http") ?? false)
+       }
 }
+
+
 
 struct AwsResps: Codable {
     let status: Int
@@ -2152,23 +2156,26 @@ struct QuizStudentReportData : Codable{
 }
 
 
-struct senderQuizListData : Codable{
-    var id : String?
-    var sent_time : String?
-    var title : String?
-    var description : String?
-    var standard : String?
-    var section : String?
-    var level : Int?
-    var subject_id : String?
-    var subject : String?
-    var sent_by : String?
-    var submission_date : String?
-    var type_name : String?
-    var no_of_questions : Int?
-    var submitted_count : Int?
-    var mark : String?
-    
+struct senderQuizListData: Codable {
+    var id: String?
+    var sent_time: String?
+    var title: String?
+    var description: String?
+    var standard: String?
+    var section: String?
+    var level: Int?
+    var level_flag: Bool?
+    var subject_id: String?
+    var subject: String?
+    var sent_by: String?
+    var submission_date: String?
+    var mark: String?
+    var type_name: String?
+    var no_of_questions: Int?
+    var submitted_count: Int?
+    var can_edit: Bool?
+    var can_delete: Bool?
+    var open_to_student: Bool?
 }
 struct QstDetail: Codable {
     let id: String?
@@ -2243,11 +2250,12 @@ struct QuizQuestiondata: Codable {
     var correct_answer_counts: Int?
     var incorrect_answer_counts: Int?
     var correct_answer_text: String?
-    var file_path: [FilePath]?
+    var q_file_path: [FilePath]?
     var a_image : String?
     var b_image : String?
     var c_image : String?
     var d_image : String?
+    var ques_no : String?
     init(
         id: String? = nil,
         quiz_id: String? = nil,
@@ -2266,11 +2274,13 @@ struct QuizQuestiondata: Codable {
         correct_answer_counts: Int? = nil,
         incorrect_answer_counts: Int? = nil,
         correct_answer_text: String? = nil,
-        file_path: [FilePath]? = nil,
+        q_file_path: [FilePath]? = nil,
         a_image : String = "",
         b_image : String = "",
         c_image : String = "",
-        d_image : String = ""
+        d_image : String = "",
+        ques_no : String = "",
+        
         
     ) {
         self.id = id
@@ -2290,11 +2300,12 @@ struct QuizQuestiondata: Codable {
         self.correct_answer_counts = correct_answer_counts
         self.incorrect_answer_counts = incorrect_answer_counts
         self.correct_answer_text = correct_answer_text
-        self.file_path = file_path
+        self.q_file_path = q_file_path
         self.a_image = a_image
         self.b_image = b_image
         self.c_image = c_image
         self.d_image = d_image
+        self.ques_no = ques_no
     }
 }
 

@@ -60,7 +60,7 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
         let item = dispalyArray[indexPath.row]
         cell.roles.text = item.name.translated()
         cell.updateProgress(male: item.boys, female: item.Girl, others: item.others, name: item.name)
-        cell.OverAllcountLbl.text = "\(item.count)"
+        cell.OverAllcountLbl.text = "\(item.Total)"
         
         // MARK: - Role-based Setup
         
@@ -68,7 +68,7 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
             case "Staff":
                 configureCell(cell, icon: "teachers", tint: .aproved,
                               progressTint: .maleClr, trackTint: .femaleClr,
-                              present: item.count, previous: item.previousYear,girls: item.Girl,boys: item.boys, message: item.message)
+                              present: item.Total, previous: item.previousYear,girls: item.Girl,boys: item.boys, message: item.message)
                 
                 cell.girlCount.isHidden = false
                 cell.boyCountLbl.textColor = .primery
@@ -83,7 +83,7 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
             case "Students":
                 configureCell(cell, icon: "person.2.fill", tint: .link.withAlphaComponent(0.5),
                               progressTint: .maleClr, trackTint: .femaleClr,
-                              present: item.count, previous: item.previousYear,girls: item.Girl,boys: item.boys,message: item.message)
+                              present: item.Total, previous: item.previousYear,girls: item.Girl,boys: item.boys,message: item.message)
                 
                 cell.girlCount.isHidden = false
                 cell.boyCountLbl.textColor = .primery
@@ -99,7 +99,7 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
                 configureCell(cell, icon: "School Needs", tint: .button,
                               progressTint: .aproved.withAlphaComponent(0.7),
                               trackTint: .primery.withAlphaComponent(0.7),
-                              present: item.count, previous: item.previousYear,girls: item.boys,boys: item.Girl,message: item.message)
+                              present: item.Total, previous: item.previousYear,girls: item.boys,boys: item.Girl,message: item.message)
                 
                 cell.girlCount.isHidden = true
                 cell.boyCountLbl.textColor = .aproved
