@@ -79,7 +79,7 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
     var profile: Bool = false
     // MARK: - Navigation Wrapped Controllers
     private lazy var firstVCNav = UINavigationController(
-        rootViewController: CustomDasboard(
+        rootViewController: CustomDashboard(
             comefromNotification: comfromNotification,
             menuId: menuId ?? "",
             messageId: messageId ?? ""
@@ -231,7 +231,7 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
             settingsVC.passVale = login_astype ?? 0
         } else if let profileVC = topVC as? CustomParentDashboardVC, login_astype == 2 {
             profileVC.delegate = self
-        } else if let dashboardVC = topVC as? CustomDasboard {
+        } else if let dashboardVC = topVC as? CustomDashboard {
             dashboardVC.delegate = self
         } else if let holidayVC = topVC as? HolidayVC {
             holidayVC.passValue = login_astype ?? 0

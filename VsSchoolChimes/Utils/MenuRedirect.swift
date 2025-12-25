@@ -247,7 +247,8 @@ class MenuRedirectHandler {
     }
     
     func senderExamMarkNavigate(from viewController: UIViewController) {
-        let vc = staffExamMarkVC(nibName: nil, bundle: nil)
+//        let vc = staffExamMarkVC(nibName: nil, bundle: nil)
+        let vc = MarkReviewVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

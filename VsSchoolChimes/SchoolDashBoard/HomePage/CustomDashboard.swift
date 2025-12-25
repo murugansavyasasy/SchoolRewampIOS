@@ -7,7 +7,7 @@
 import UIKit
 
 @available(iOS 14.0, *)
-class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SideMenuDelegate, SwitchRollDelegate {
+class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SideMenuDelegate, SwitchRollDelegate {
     func didTapProfileImage(from imageView: UIImageView?) {
         guard let tappedImageView = imageView else { return }
         let cellFrameInSuperview = tappedImageView.convert(tappedImageView.bounds, to: nil)
@@ -33,6 +33,8 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var menuButton: UIButton!
+    @IBOutlet weak var searchBtn: UIButton!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var pagecontroller: UIPageControl!
     @IBOutlet weak var recentActiveMenuCollection: UICollectionView!
     @IBOutlet weak var MenuCollection: UICollectionView!
@@ -40,6 +42,8 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     // MARK: - Properties
     var recentMenuItems: [MenuDetail]?
     var menu_details: [MenuDetail]?
+    var filteredMenu: [MenuDetail] = []
+    var filteredRecentMenu: [MenuDetail] = []
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     let is_staff = UserDefaultFileManager.getUserDetails()?.user_details?.is_staff
@@ -86,6 +90,17 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                 PushNotiMsg : pushNotificationId ?? ""
             )
         }
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.backgroundImage = UIImage()
+        searchBar.searchTextField.layer.cornerRadius = 8
+        searchBar.searchTextField.backgroundColor = .white
+        searchBar.searchTextField.backgroundColor = .systemGray5
+        searchBar.layer.cornerRadius = 8
+        searchBar.searchTextField.layer.masksToBounds = true
+        searchBar.placeholder = "Search"
+        searchBar.delegate = self
+        searchBar.searchTextField.addDoneButton()
+        
     }
     init(
         comefromNotification: Bool = false,
@@ -99,6 +114,24 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+    @IBAction func search(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        sender.setImage(UIImage(systemName: icon), for: .normal)
+        searchBar.isHidden = !sender.isSelected
+
+        if sender.isSelected {
+            searchBar.becomeFirstResponder()
+        } else {
+            searchBar.text = ""
+            filteredMenu = menu_details ?? []
+            filteredRecentMenu = recentMenuItems ?? []
+            MenuCollection.reloadData()
+            recentActiveMenuCollection.reloadData()
+            searchBar.resignFirstResponder()
+        }
+    }
+
     @IBAction func notificationBtn(_ sender: UIButton) {
         let vc = NotificationViewController(nibName: nil, bundle: nil)
         vc.token = staffDetails?.access_token ?? ""
@@ -138,7 +171,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                 let vc = LogoutViewController(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .overFullScreen
                 present(vc, animated: false)
-            }else if vc is CustomDasboard {
+            }else if vc is CustomDashboard {
                 hideSideMenu()
             }else{
                 delegate?.back(logout: false)
@@ -167,6 +200,15 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
                         self.refreshCount = true
                         self.get_MenuCount()
                         self.recentMenuItems = details.frequently_used
+                        self.filteredRecentMenu = details.frequently_used ?? []
+                        
+                        if let frequent = details.frequently_used{
+//                            self.pagecontroller.isHidden = frequent.count < 1
+                        }else{
+//                            self.pagecontroller.isHidden = true
+                        }
+                        self.pagecontroller.numberOfPages = details.frequently_used?.count ?? 0
+                        self.filteredMenu = details.menus ?? []
                         self.MenuCollection.reloadData()
                         self.recentActiveMenuCollection.isHidden = details.frequently_used?.isEmpty ?? true
                         self.recentActiveMenuCollection.reloadData()
@@ -241,22 +283,52 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func updateMenuCounts(with newDetails: [MenuCountDetail]) -> [IndexPath] {
-        guard let currentDetails = menu_details else { return [] }
-        var updatedDetails = currentDetails
-        var changedIndexPaths: [IndexPath] = []
-        
+
+        guard let menuList = menu_details else { return [] }
+
+        var updatedMenu = menuList
+        var updatedRecent = recentMenuItems ?? []
+        var updatedFilteredMenu = filteredMenu
+        var updatedFilteredRecent = filteredRecentMenu
+
+        var changedMainIndex: [IndexPath] = []
+        var changedRecentIndex: [IndexPath] = []
+
         for newItem in newDetails {
-            guard let newId = newItem.id,
-                  let index = updatedDetails.firstIndex(where: { $0.id == newId }) else { continue }
-            
-            if updatedDetails[index].unread_count != newItem.unread_count {
-                updatedDetails[index].unread_count = newItem.unread_count
-                changedIndexPaths.append(IndexPath(item: index, section: 0))
+            guard let newId = newItem.id else { continue }
+
+            if let index = updatedMenu.firstIndex(where: { $0.id == newId }) {
+                if updatedMenu[index].unread_count != newItem.unread_count {
+                    updatedMenu[index].unread_count = newItem.unread_count
+                    changedMainIndex.append(IndexPath(item: index, section: 0))
+                }
+            }
+
+            if let index = updatedRecent.firstIndex(where: { $0.id == newId }) {
+                updatedRecent[index].unread_count = newItem.unread_count
+                changedRecentIndex.append(IndexPath(item: index, section: 0))
+            }
+
+            if let index = updatedFilteredMenu.firstIndex(where: { $0.id == newId }) {
+                updatedFilteredMenu[index].unread_count = newItem.unread_count
+            }
+
+            if let index = updatedFilteredRecent.firstIndex(where: { $0.id == newId }) {
+                updatedFilteredRecent[index].unread_count = newItem.unread_count
             }
         }
-        self.menu_details = updatedDetails
-        return changedIndexPaths
+
+        self.menu_details = updatedMenu
+        self.recentMenuItems = updatedRecent
+        self.filteredMenu = updatedFilteredMenu
+        self.filteredRecentMenu = updatedFilteredRecent
+
+        self.MenuCollection.reloadItems(at: changedMainIndex)
+        self.recentActiveMenuCollection.reloadItems(at: changedRecentIndex)
+
+        return changedMainIndex
     }
+
     
     
     
@@ -478,26 +550,24 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     // MARK: - CollectionView DataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionView == recentActiveMenuCollection ? (recentMenuItems?.count ?? 0) : (menu_details?.count ?? 0)
+        return collectionView == recentActiveMenuCollection ? (filteredRecentMenu.count) : (filteredMenu.count)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == recentActiveMenuCollection {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.TopCVCell, for: indexPath) as! TopCVCell
-            if let item = recentMenuItems?[indexPath.item] {
+            let item = filteredRecentMenu[indexPath.item]
                 cell.configure(with: item)
-            }
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.CustomMenuCVC, for: indexPath) as! CustomMenuCVC
-            if let item = menu_details?[indexPath.item] {
+            let item = filteredMenu[indexPath.item]
                 let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == item.id }
                 let img = UIImage(named: filteredItems.first?.name ?? "school_chimes 2")
                 cell.iconBtn.setImage(img, for: .normal)
                 cell.imenuName.text = item.name
                 cell.menuCondent.text = item.description
                 cell.readVieaw.isHidden = (item.unread_count ?? 0) == 0
-            }
             return cell
         }
     }
@@ -507,17 +577,15 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let selectedItem = collectionView == recentActiveMenuCollection
-        ? recentMenuItems?[indexPath.row]
-        : menu_details?[indexPath.row]
-        
-        guard let item = selectedItem else { return }
-        Menu_id.staffSelectedMenuId = item.id ?? 0
-        self.handleMenuSelection(menuId: item.id ?? 0, PushNotiMsg: "")
+        ? filteredRecentMenu[indexPath.row]
+        : filteredMenu[indexPath.row]
+        Menu_id.staffSelectedMenuId = selectedItem.id ?? 0
+        self.handleMenuSelection(menuId: selectedItem.id ?? 0, PushNotiMsg: "")
     }
     
     
     func handleMenuSelection(menuId: Int,PushNotiMsg : String) {
-        let menuName = menu_details?.first(where: { $0.id == menuId })?.name ?? ""
+        let menuName = filteredMenu.first(where: { $0.id == menuId })?.name ?? ""
         MenuStringFile.selectedMenuName = menuName
         // MENU IDs that need navigateOrSchoolList check
         let needSchoolCheck: Set<Int> = [
@@ -627,7 +695,7 @@ class CustomDasboard: UIViewController, UICollectionViewDelegate, UICollectionVi
 }
 
 @available(iOS 14.0, *)
-extension CustomDasboard: UICollectionViewDelegateFlowLayout {
+extension CustomDashboard: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView == recentActiveMenuCollection
         ? CGSize(width: 200, height: 90)
@@ -739,3 +807,37 @@ extension UIDevice {
         return map[identifier] ?? identifier
     }
 }
+extension CustomDashboard: UISearchBarDelegate {
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+
+        let text = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard !text.isEmpty else {
+            filteredMenu = menu_details ?? []
+            filteredRecentMenu = recentMenuItems ?? []
+            MenuCollection.reloadData()
+            recentActiveMenuCollection.reloadData()
+            return
+        }
+
+        filteredMenu = menu_details?.filter {
+            ($0.name?.localizedCaseInsensitiveContains(text) ?? false) ||
+            ($0.description?.localizedCaseInsensitiveContains(text) ?? false)
+        } ?? []
+
+        filteredRecentMenu = recentMenuItems?.filter {
+            ($0.name?.localizedCaseInsensitiveContains(text) ?? false) ||
+            ($0.description?.localizedCaseInsensitiveContains(text) ?? false)
+        } ?? []
+
+        MenuCollection.reloadData()
+        recentActiveMenuCollection.reloadData()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+}
+
+

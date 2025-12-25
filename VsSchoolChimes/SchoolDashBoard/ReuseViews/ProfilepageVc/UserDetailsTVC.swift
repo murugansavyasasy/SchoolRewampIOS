@@ -43,6 +43,7 @@ class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge, UITextFieldDelega
     var attachments: [AttachmentItem] = []
     var sectionList: [String] = []
     var delegate: UpdateProfileDelegate?
+    var deleteDelegate : reloadDelegate?
     var node: String?
     var updateParams: [String: Any]?
     var onValueChanged: ((String, Any?) -> Void)?
@@ -357,10 +358,7 @@ class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge, UITextFieldDelega
         attachments.remove(at: index)
         reloadCollectionAndUpdateHeight()
         valueChanged(attachments)
-//        if let table = self.superview as? UITableView {
-//            table.beginUpdates()
-//            table.endUpdates()
-//        }
+        deleteDelegate?.deleteDelegate(index: index)
     }
     
     private func reloadCollectionAndUpdateHeight() {
@@ -406,7 +404,7 @@ extension UserDetailsTVC: UICollectionViewDataSource, UICollectionViewDelegate, 
             cell.deleteBtn.isHidden = false
         }
         cell.delegate = self
-//        cell.deleteBtn.tag = indexPath.item
+        cell.deleteBtn.tag = indexPath.item
         // Configure cell based on file type
         switch file.fileType.uppercased() {
         case CommonStringFile.IMAGE:

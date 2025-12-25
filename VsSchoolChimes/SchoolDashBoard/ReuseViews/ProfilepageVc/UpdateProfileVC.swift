@@ -9,7 +9,16 @@ import UIKit
 import PhotosUI
 
 @available(iOS 14.0, *)
-class UpdateProfileVC: UIViewController {
+class UpdateProfileVC: UIViewController, reloadDelegate {
+    func reload(index: Int) {
+        ""
+    }
+    
+    func deleteDelegate(index: Int) {
+        attachments.remove(at: index)
+        detailTable.reloadData()
+    }
+    
     
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var editBtn: UIButton!
@@ -290,10 +299,10 @@ class UpdateProfileVC: UIViewController {
         transitionDelegate.originFrame = cellFrameInSuperview
         
         vc.type = "IMAGE"
-        if let img = changeProfileImg {
-            vc.img = img
+        if let img = changeProfileUrl {
+            vc.selectedFileURL = img
         } else {
-            vc.selectedFileURL = changeProfileUrl
+            vc.img = changeProfileImg
         }
         
         present(vc, animated: true)
@@ -389,6 +398,7 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
         } else {
             let item = items[indexPath.row]
             cell.configure(with: item, attachments: attachments)
+            cell.deleteDelegate = self
             cell.onValueChanged = { [weak self] changedKey, value in
                 guard let self = self else { return }
                 if let value = value {
