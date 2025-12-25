@@ -42,7 +42,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                 let vc = LogoutViewController(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .overFullScreen
                 present(vc, animated: false)
-            }else if vc is CustomDasboard {
+            }else if vc is CustomDashboard {
                 hideSideMenu()
             }else{
                 delegate?.back(logout: false)
@@ -57,11 +57,15 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var pagecontroller: UIPageControl!
     @IBOutlet weak var recentActiveMenuCollection: UICollectionView!
+    @IBOutlet weak var searchBtn: UIButton!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var MenuCollection: UICollectionView!
     let transitionDelegate = TransitioningDelegate()
     // MARK: - Properties
     var recentMenuItems: [MenuDetail]?
     var menu_details: [MenuDetail] = []
+    var filteredMenu: [MenuDetail] = []
+    var filteredRecentMenu: [MenuDetail] = []
     var refreshCount = false
     var childDetailscount = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
     var childDetails = UserDefaultFileManager.get_child_Details()
@@ -76,9 +80,6 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-      
             
             // Register cells
             recentActiveMenuCollection.register(UINib(nibName: "TopCVCell", bundle: nil), forCellWithReuseIdentifier: "TopCVCell")
@@ -97,6 +98,16 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         if let id = messageId ,id != "" {
             handleMenuSelection(menuId: Int(menuId ?? "-1") ?? 0 , messageId: messageId ?? "")
         }
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.backgroundImage = UIImage()
+        searchBar.searchTextField.layer.cornerRadius = 8
+        searchBar.searchTextField.backgroundColor = .white
+        searchBar.searchTextField.backgroundColor = .systemGray5
+        searchBar.layer.cornerRadius = 8
+        searchBar.searchTextField.layer.masksToBounds = true
+        searchBar.placeholder = "Search"
+        searchBar.delegate = self
+        searchBar.searchTextField.addDoneButton()
     }
     
     init(
@@ -127,7 +138,23 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
-    
+    @IBAction func search(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        sender.setImage(UIImage(systemName: icon), for: .normal)
+        searchBar.isHidden = !sender.isSelected
+
+        if sender.isSelected {
+            searchBar.becomeFirstResponder()
+        } else {
+            searchBar.text = ""
+            filteredMenu = menu_details ?? []
+            filteredRecentMenu = recentMenuItems ?? []
+            MenuCollection.reloadData()
+            recentActiveMenuCollection.reloadData()
+            searchBar.resignFirstResponder()
+        }
+    }
     
     // MARK: - API Calls
     func get_dashboard_details() {
@@ -153,8 +180,15 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         self.MenuCollection.reloadData()
                         self.refreshCount = true
                         self.recentActiveMenuCollection.isHidden = (details.frequently_used?.isEmpty ?? true)
-//                        self.pagecontroller.isHidden = (details.frequently_used?.count ?? 0) < 2
-//                        self.pagecontroller.numberOfPages = self.recentMenuItems?.count ?? 0
+                        self.filteredRecentMenu = details.frequently_used ?? []
+                        
+                        if let frequent = details.frequently_used{
+//                            self.pagecontroller.isHidden = frequent.count < 1
+                        }else{
+//                            self.pagecontroller.isHidden = true
+                        }
+                        self.pagecontroller.numberOfPages = details.frequently_used?.count ?? 0
+                        self.filteredMenu = details.menus ?? []
                         self.recentActiveMenuCollection.reloadData()
                         self.get_MenuCount() // 🔹 after menus loaded
                         user_inputs.menuList = self.menu_details.compactMap{$0.name}
@@ -253,20 +287,29 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
 
 
     func updateMenuCounts(with newDetails: [MenuCountDetail]) -> [IndexPath] {
+
         var changedIndexPaths: [IndexPath] = []
-        
+
         for newItem in newDetails {
-            if let newId = newItem.id,
-               let index = menu_details.firstIndex(where: { $0.id == newId }) {
-                
+            guard let newId = newItem.id else { continue }
+
+            // Main menu
+            if let index = menu_details.firstIndex(where: { $0.id == newId }) {
                 if menu_details[index].unread_count != newItem.unread_count {
                     menu_details[index].unread_count = newItem.unread_count
                     changedIndexPaths.append(IndexPath(item: index, section: 0))
                 }
             }
+
+            // Recent menu also update
+            if let recentIndex = recentMenuItems?.firstIndex(where: { $0.id == newId }) {
+                recentMenuItems?[recentIndex].unread_count = newItem.unread_count
+            }
         }
+
         return changedIndexPaths
     }
+
 
     // MARK: - Setup UI
     private func setupHeaderView() {
@@ -387,19 +430,18 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     
     // MARK: - CollectionView DataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionView == recentActiveMenuCollection ? (recentMenuItems?.count ?? 0) : menu_details.count
+        return collectionView == recentActiveMenuCollection ? (filteredRecentMenu.count) : filteredMenu.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == recentActiveMenuCollection {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TopCVCell", for: indexPath) as! TopCVCell
-            if let item = recentMenuItems?[indexPath.item] {
+           let item = filteredRecentMenu[indexPath.item]
                 cell.configure(with: item)
-            }
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomMenuCVC", for: indexPath) as! CustomMenuCVC
-            let item = menu_details[indexPath.item]
+            let item = filteredMenu[indexPath.item]
             if let id = item.id {
                 let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == id }
                 let img = UIImage(named: filteredItems.first?.name ?? "school_chimes 2")
@@ -417,11 +459,11 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         var menuName: String = ""
 
         if collectionView == MenuCollection {
-            menuItem = menu_details[indexPath.row].id
-            menuName = menu_details[indexPath.row].name ?? ""
+            menuItem = filteredMenu[indexPath.row].id
+            menuName = filteredMenu[indexPath.row].name ?? ""
         } else {
-            menuItem = recentMenuItems?[indexPath.row].id
-            menuName = recentMenuItems?[indexPath.row].name ?? ""
+            menuItem = filteredRecentMenu[indexPath.row].id
+            menuName = filteredRecentMenu[indexPath.row].name ?? ""
         }
         Menu_id.staffSelectedMenuId = menuItem ?? 0
         MenuStringFile.selectedMenuName = menuName
@@ -498,5 +540,37 @@ extension CustomParentDashboardVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 5
+    }
+}
+extension CustomParentDashboardVC: UISearchBarDelegate {
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+
+        let text = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard !text.isEmpty else {
+            filteredMenu = menu_details
+            filteredRecentMenu = recentMenuItems ?? []
+            MenuCollection.reloadData()
+            recentActiveMenuCollection.reloadData()
+            return
+        }
+
+        filteredMenu = menu_details.filter {
+            ($0.name?.localizedCaseInsensitiveContains(text) ?? false) ||
+            ($0.description?.localizedCaseInsensitiveContains(text) ?? false)
+        }
+
+        filteredRecentMenu = recentMenuItems?.filter {
+            ($0.name?.localizedCaseInsensitiveContains(text) ?? false) ||
+            ($0.description?.localizedCaseInsensitiveContains(text) ?? false)
+        } ?? []
+
+        MenuCollection.reloadData()
+        recentActiveMenuCollection.reloadData()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }

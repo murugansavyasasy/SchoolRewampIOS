@@ -139,7 +139,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             delegate?.meunu(viewController: LogoutViewController())
             
         default:
-            delegate?.meunu(viewController: CustomDasboard())
+            delegate?.meunu(viewController: CustomDashboard())
         }
     }
 }
