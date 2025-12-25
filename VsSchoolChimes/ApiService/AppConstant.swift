@@ -196,6 +196,7 @@ struct ServiceUrl{
     static let exam_get_subject_wise_activities = "exam/api/exam/get-subject-wise-activities"
     static let lms_api_quiz_delete = "lms/api/quiz/delete"
     static let lms_api_quiz_update = "lms/api/quiz/update"
+    static let lms_api_quiz_delete_question = "lms/api/quiz/delete-question"
 }
 
 struct localData{
