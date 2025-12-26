@@ -133,10 +133,8 @@ class RecipientVc: UIViewController{
         var defaultIndex = 0
         segmentName
             .setTitleTextAttributes(
-                [
-                    .font: UIFont.boldSystemFont(ofSize: 10),
-                    .foregroundColor: UIColor.black
-                ],
+                [.font: UIFont.boldSystemFont(ofSize: 10),
+                    .foregroundColor: UIColor.black],
                 for: .normal
             )
         
@@ -267,7 +265,7 @@ class RecipientVc: UIViewController{
 //    }
     
     func handleSegmentSelection(index: Int) {
-            // Index 0 → hide & height = 0
+        segment_selected_index = index
         if index == 0 {
             segmentName.isHidden = false
             heightSegment.constant = 40
@@ -279,8 +277,8 @@ class RecipientVc: UIViewController{
                 segmentName.isHidden = false
                 target_type = TargetTypes.standard
                 circular_types =  circular_type.standard
-                getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
                 selectStandardDropDown.isHidden = true
+                self.getStandardsAPI(academic_year_id: self.selectedAcadimicYearId ?? 0)
             }
         }
     }
@@ -319,7 +317,6 @@ class RecipientVc: UIViewController{
     
     
     @IBAction func backbtn(_ sender: Any) {
-        
         dismiss(animated: true)
     }
     

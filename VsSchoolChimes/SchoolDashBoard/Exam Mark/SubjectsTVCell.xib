@@ -27,8 +27,8 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="nrM-kM-ObC">
                                         <rect key="frame" x="15" y="15" width="270" height="41"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0A0-o2-Bp2">
-                                                <rect key="frame" x="0.0" y="3" width="35" height="35"/>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0A0-o2-Bp2">
+                                                <rect key="frame" x="-35" y="3" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="5TO-M0-iCV"/>
                                                     <constraint firstAttribute="height" constant="35" id="6rw-z9-WLa"/>
@@ -38,16 +38,16 @@
                                                 <state key="normal" image="circle" catalog="system"/>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="FAX-Qd-Erh">
-                                                <rect key="frame" x="40" y="0.66666666666666785" width="190" height="40"/>
+                                                <rect key="frame" x="0.0" y="0.66666666666666785" width="230" height="40"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mathematics" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A09-ag-wPb">
-                                                        <rect key="frame" x="0.0" y="0.0" width="190" height="18"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="230" height="18"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not started" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWd-Pt-yrm">
-                                                        <rect key="frame" x="0.0" y="22.999999999999996" width="190" height="17.000000000000004"/>
+                                                        <rect key="frame" x="0.0" y="22.999999999999996" width="230" height="17.000000000000004"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>

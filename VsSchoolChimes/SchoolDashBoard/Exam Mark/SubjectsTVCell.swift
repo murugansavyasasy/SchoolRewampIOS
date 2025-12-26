@@ -13,7 +13,7 @@ struct activity {
 
 import UIKit
 
-class SubjectsTVCell: UITableViewCell {
+class SubjectsTVCell: UITableViewCell, checkExamlists {
 
     @IBOutlet weak var baseView: UIView!
     @IBOutlet weak var subjectView: UIView!
@@ -34,7 +34,29 @@ class SubjectsTVCell: UITableViewCell {
         activity(name: "Gamma", value: 0),
         activity(name: "Delta", value: 0)
     ]
-    
+    var  splitup_details_data: [SplitDetail]?
+    var come_from_AI : Bool = false
+    var selectedSplitupIDs: [String] = []
+
+    func checkExamlist(isChecked: Bool, index: Int,come_from_AI : Bool) {
+        guard let id = splitup_details_data?[index].id else { return }
+        splitup_details_data?[index].isChecked = isChecked
+        if isChecked {
+            // ADD ID
+            if !selectedSplitupIDs.contains(id) {
+                selectedSplitupIDs.append(id)
+            }
+        } else {
+            // REMOVE ID
+            selectedSplitupIDs.removeAll { $0 == id }
+        }
+        print("Selected IDs: \(selectedSplitupIDs)")
+        let total = splitup_details_data?.count ?? 0
+        let selected = selectedSplitupIDs.count
+        let remaining = total - selected
+        statusLbl.text = "\(remaining) of \(total) activities mapped"
+
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -95,6 +117,14 @@ class SubjectsTVCell: UITableViewCell {
         }
     }
     
+    func cellConfig(come_from_AI : Bool,Subject_modal : SubjectExamData){
+        subjectLbl.text = Subject_modal.subject_name
+        self.come_from_AI = come_from_AI
+        splitup_details_data = Subject_modal.splitup_details
+        tableview.reloadData()
+    }
+    
+    
 //    func configureExpandState() {
 //
 //        if isExpand {
@@ -140,15 +170,20 @@ class SubjectsTVCell: UITableViewCell {
 extension SubjectsTVCell: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return samples.count
+        return splitup_details_data?.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActivitiesTVCell", for: indexPath) as! ActivitiesTVCell
-        
-        let data = samples[indexPath.row]
-        cell.confugure(value: data.value)
-        
+        if let data = splitup_details_data?[indexPath.row]{
+            cell.cellConfig(come_from_AI: come_from_AI, actitvityDetails: data)
+        }
+        let isChecked = splitup_details_data?[indexPath.row].isChecked ?? false
+
+        cell.CheckBoxBtnName.isSelected = isChecked
+        cell.updateCheckboxUI(isChecked: isChecked)
+        cell.CheckBoxBtnName.tag = indexPath.row
+        cell.delegate = self
         return cell
     }
 }
