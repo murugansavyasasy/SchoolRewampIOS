@@ -104,6 +104,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             handleNormalNotification(userInfo: userInfo, from: topVC)
         } else if type == "call" {
             let vc = NotificationCallVC()
+            vc.userInfo = userInfo
             vc.voiceUrl = voiceUrl
             vc.welcomeFileUrl = welcomeURL
             vc.modalPresentationStyle = .fullScreen
