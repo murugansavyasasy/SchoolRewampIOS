@@ -24,9 +24,11 @@ class ExamImgUploadVC: UIViewController {
     @IBOutlet weak var ContinuewithUploadBtn: UIButton!
     @IBOutlet weak var uploadIconImage: UIImageView!
     @IBOutlet weak var documentIcon: UIImageView!
-    
+    var staffDetails = UserDefaultFileManager.get_staff_Details()
     var attachments: [AttachmentItem] = []
-    
+    var SubjectList : [SubjectExamData] = []
+    var is_aiViewCliked : Bool = false
+    var examId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -73,7 +75,7 @@ class ExamImgUploadVC: UIViewController {
         
         AIview.layer.borderColor = UIColor.staffExamColour.cgColor
         manualView.layer.borderColor = UIColor.systemGray5.cgColor
-        
+        is_aiViewCliked = true
         AiInstructionView.isHidden = false
         uploadView.isHidden = false
         separatorView.isHidden = false
@@ -85,7 +87,7 @@ class ExamImgUploadVC: UIViewController {
         
         manualView.layer.borderColor = UIColor.staffExamColour.cgColor
         AIview.layer.borderColor = UIColor.systemGray5.cgColor
-        
+        is_aiViewCliked = false
         AiInstructionView.isHidden = true
         uploadView.isHidden = true
         separatorView.isHidden = true
@@ -205,7 +207,6 @@ class ExamImgUploadVC: UIViewController {
     }
     
     @IBAction func ContinueManuallyAct(_ sender: Any) {
-        
         let vc = EnterMarkVC()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
@@ -214,12 +215,45 @@ class ExamImgUploadVC: UIViewController {
     
     @IBAction func continueWithUploadAct(_ sender: Any) {
         
-        let vc = ExamActivitySelectionVC()
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        loadSubjectList(for: examId ?? "") { [self] (isSuccess) in
+            if isSuccess {
+                let vc = ExamActivitySelectionVC()
+                vc.SubjectList = self.SubjectList
+                vc.come_from_AI = is_aiViewCliked
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }
+        }
+       
     }
     
     
+    
+    func loadSubjectList(for examId: String,completion: @escaping (Bool)->Void) {
+        SubjectList.removeAll()
+        let param:[String:Any] = ["exam_id": examId]
+
+        APIService.shared.makeApi(
+            url: ServiceUrl.exam_get_subject_wise_activities,
+            parameters: param,
+            type: ApitTypeSringFile.GET,
+            token: staffDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<SubjectWiseExamResponse, Error>) in
+
+            guard let self = self else { return }
+
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    self.SubjectList = response.data ?? []
+                    completion(true)
+                case .failure(let error):
+                    print("Error loading subjects: \(error)")
+                    completion(false)
+                }
+            }
+        }
+    }
     @IBAction func BackAct(_ sender: Any) {
         dismiss(animated: true)
     }

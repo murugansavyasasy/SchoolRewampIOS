@@ -22,6 +22,8 @@ class ExamListVC: UIViewController {
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var ExamList : [StaffExamData] = []
     var SubjectList : [SubjectExamData] = []
+    var examIds : String?
+    var apiCalledForIndex: IndexPath?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +74,7 @@ class ExamListVC: UIViewController {
     }
     
     func loadSubjectList(for examId: String, reloadIndex: IndexPath) {
-        
+        SubjectList.removeAll()
         let param:[String:Any] = ["exam_id": examId]
 
         APIService.shared.makeApi(
@@ -106,6 +108,7 @@ class ExamListVC: UIViewController {
     @IBAction func continueAct(_ sender: Any) {
         
         let vc = ExamImgUploadVC()
+        vc.examId = examIds
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -168,6 +171,7 @@ extension ExamListVC: UITableViewDelegate, UITableViewDataSource {
             if self.expandedRow == indexPath {
                 let examId = self.ExamList[indexPath.row].id ?? ""
                 self.loadSubjectList(for: examId, reloadIndex: indexPath)
+                examIds = examId
             }
 
             var reload: [IndexPath] = [indexPath]
@@ -190,7 +194,7 @@ extension ExamListVC: UITableViewDelegate, UITableViewDataSource {
 
         let previousSelected = selectedRow        // save old selection
         selectedRow = indexPath                   // update to new selection
-
+        examIds = ExamList[indexPath.row].id
         continueBtn.isUserInteractionEnabled = true
         continueBtn.alpha = 1
         bottomSlectInfoLbl.isHidden = true

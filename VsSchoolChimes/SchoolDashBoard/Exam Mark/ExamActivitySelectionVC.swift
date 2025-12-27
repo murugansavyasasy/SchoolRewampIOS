@@ -18,7 +18,8 @@ class ExamActivitySelectionVC: UIViewController {
     var expandedIndex: IndexPath?
     var didInitialHeightSet = false
 
-    
+    var SubjectList : [SubjectExamData] = []
+    var come_from_AI: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -74,7 +75,7 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return SubjectList.count
     }
 
     func tableView(_ tableView: UITableView,
@@ -85,9 +86,12 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
             for: indexPath
         ) as! SubjectsTVCell
 
+        let data = SubjectList[indexPath.row]
+        
         cell.isExpanded = (expandedIndex == indexPath)
         cell.configureExpandState()
-
+        cell.cellConfig(come_from_AI: come_from_AI, Subject_modal: data)
+//        cell.subjectLbl.text = data.subject_name
         cell.onHeightChange = { [weak self] in
             guard let self = self else { return }
             self.tableview.beginUpdates()

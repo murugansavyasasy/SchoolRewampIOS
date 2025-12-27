@@ -83,6 +83,7 @@ class RecipientVc: UIViewController{
     var uploadedFiles1: [[String: String]] = []
     var file_path: [FilePath] = []
     var uploadedCount = 0
+    var isQuiz_open_to_students: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         nodataFound.isHidden = true
@@ -129,12 +130,11 @@ class RecipientVc: UIViewController{
     func configureRecipientTabs() {
         segmentName.removeAllSegments()
         cv_itemsarry.removeAll()
+        var defaultIndex = 0
         segmentName
             .setTitleTextAttributes(
-                [
-                    .font: UIFont.boldSystemFont(ofSize: 10),
-                    .foregroundColor: UIColor.black
-                ],
+                [.font: UIFont.boldSystemFont(ofSize: 10),
+                    .foregroundColor: UIColor.black],
                 for: .normal
             )
         
@@ -150,8 +150,9 @@ class RecipientVc: UIViewController{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
                 getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             }
-            segmentName.isHidden = false
-            heightSegment.constant = 40
+//            segmentName.isHidden = false
+//            heightSegment.constant = 40
+            defaultIndex = 0
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
             if Menu_id.event == Menu_id.staffSelectedMenuId {
                 cv_itemsarry = [
@@ -175,11 +176,7 @@ class RecipientVc: UIViewController{
                 .append(
                     UserDefaultFileManager.get_staff_Details()?.school_id ?? ""
                 )
-            nodataFound.isHidden = false
-            segmentName.isHidden = false
-            heightSegment.constant = 40
-            nodataFound.image = ImageName.girl_and_boy_are
-            noRecordLbl.isHidden = false
+            defaultIndex = 1
         default:
             print("Unhandled staff role")
         }
@@ -187,8 +184,106 @@ class RecipientVc: UIViewController{
         for (index, title) in cv_itemsarry.enumerated() {
             segmentName.insertSegment(withTitle: title, at: index, animated: false)
         }
-        segmentName.selectedSegmentIndex = 0
+        segmentName.selectedSegmentIndex = defaultIndex
+        handleSegmentSelection(index: defaultIndex)
     }
+    
+//    func configureRecipientTabs() {
+//        segmentName.removeAllSegments()
+//        cv_itemsarry.removeAll()
+//
+//        segmentName.setTitleTextAttributes([
+//            .font: UIFont.boldSystemFont(ofSize: 10),
+//            .foregroundColor: UIColor.black
+//        ], for: .normal)
+//
+//        var defaultIndex = 0   // Default tab index
+//
+//        switch staff_role {
+//
+//        case PriorityType.is_staff:
+//            cv_itemsarry = [
+//                recipeint_tabBarName.Standard,
+//                recipeint_tabBarName.Section_Student,
+//                recipeint_tabBarName.Group
+//            ]
+//
+//            target_type = TargetTypes.standard
+//            circular_types = circular_type.standard
+//
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
+//                getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
+//            }
+//
+//            segmentName.isHidden = false
+//            heightSegment.constant = 40
+//
+//        case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+//
+//            cv_itemsarry = Menu_id.event == Menu_id.staffSelectedMenuId ?
+//            [
+//                recipeint_tabBarName.Entier_School,
+//                recipeint_tabBarName.Standard,
+//                recipeint_tabBarName.Group
+//            ] :
+//            [
+//                recipeint_tabBarName.Entier_School,
+//                recipeint_tabBarName.Standard,
+//                recipeint_tabBarName.Section_Student,
+//                recipeint_tabBarName.Group,
+//                recipeint_tabBarName.Staff
+//            ]
+//
+//            circular_types = circular_type.school
+//            target_type = TargetTypes.school
+//
+//            noRecordLbl.text = CommonStringFile.Tap_SEND_to_share_this
+//
+//            array_selectedId.append(
+//                UserDefaultFileManager.get_staff_Details()?.school_id ?? ""
+//            )
+//
+//            nodataFound.isHidden = false
+//            noRecordLbl.isHidden = false
+//            segmentName.isHidden = false
+//            heightSegment.constant = 40
+//            nodataFound.image = ImageName.girl_and_boy_are
+//
+//            defaultIndex = 1  // ❗ Admin / Principal / GroupHead → Default select index 1
+//
+//        default:
+//            print("Unhandled staff role")
+//        }
+//
+//        // Add segments
+//        cv_itemsarry.enumerated().forEach { index, title in
+//            segmentName.insertSegment(withTitle: title, at: index, animated: false)
+//        }
+//
+//        // Set default selection
+//        segmentName.selectedSegmentIndex = defaultIndex
+//    }
+    
+    func handleSegmentSelection(index: Int) {
+        segment_selected_index = index
+        if index == 0 {
+            segmentName.isHidden = false
+            heightSegment.constant = 40
+        }else{
+            DispatchQueue.main.async { [self] in
+                nodataFound.isHidden = true
+                noRecordLbl.isHidden = true
+                heightSegment.constant = 40
+                segmentName.isHidden = false
+                target_type = TargetTypes.standard
+                circular_types =  circular_type.standard
+                selectStandardDropDown.isHidden = true
+                self.getStandardsAPI(academic_year_id: self.selectedAcadimicYearId ?? 0)
+            }
+        }
+    }
+
+
     func homeWorkShowProps(onSuccess: @escaping (Bool) -> Void) {
         guard accedmicYrEligible else { return }
         nodataFound.isHidden = true
@@ -222,7 +317,6 @@ class RecipientVc: UIViewController{
     
     
     @IBAction func backbtn(_ sender: Any) {
-        
         dismiss(animated: true)
     }
     
@@ -311,7 +405,6 @@ class RecipientVc: UIViewController{
     }
     
     func uploadAllQuestionsAndCreateQuiz() {
-        let total = questions.count
         uploadedCount = 0
         uploadForQuestion(index: 0)
     }
@@ -604,7 +697,7 @@ class RecipientVc: UIViewController{
                 createQuizStringFile.target_code: array_selectedId,
                 createQuizStringFile.subject_id : subjectId ?? "",
                 createQuizStringFile.class_id : classID ?? "",
-                "open_to_student" : true
+                createQuizStringFile.open_to_student : isQuiz_open_to_students
             ]
 
             params.merge(Common_request_params) { _, new in new }
