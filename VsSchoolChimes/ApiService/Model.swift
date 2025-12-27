@@ -2784,4 +2784,17 @@ struct SubjectExamData: Codable {
 struct SplitDetail: Codable {
     let id: String?
     let name: String?
+    let max_mark: String?
+    var isChecked: Bool?
 }
+//"section_id": "90828",
+//      "section_name": "B",
+//      "class_id": "32588",
+//      "class_name": "I",
+//      "subject_id": "112616",
+//      "subject_name": "ENGLISH",
+//      "splitup_details": [
+//        {
+//          "id": "3062",
+//          "name": "Paper 1",
+//          "max_mark": "100"

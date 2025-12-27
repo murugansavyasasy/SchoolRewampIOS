@@ -22,7 +22,7 @@
                         <rect key="frame" x="10" y="10" width="300" height="153"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ChC-bX-vbg">
-                                <rect key="frame" x="15" y="14.999999999999998" width="270" height="20.333333333333329"/>
+                                <rect key="frame" x="15" y="14.999999999999998" width="234" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -82,16 +82,32 @@
                                     </view>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QfR-w9-jgK">
+                                <rect key="frame" x="260" y="0.0" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="35" id="Owp-fg-BMc"/>
+                                    <constraint firstAttribute="height" constant="35" id="cph-ni-r86"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemGrayColor"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="circle" catalog="system"/>
+                                <connections>
+                                    <action selector="CheckBoxBtnAct:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="hAX-7a-IOM"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="ChC-bX-vbg" firstAttribute="top" secondItem="goS-MN-MLf" secondAttribute="top" constant="15" id="7LV-QX-IZQ"/>
-                            <constraint firstAttribute="trailing" secondItem="ChC-bX-vbg" secondAttribute="trailing" constant="15" id="7l1-CY-GX0"/>
+                            <constraint firstAttribute="trailing" secondItem="ChC-bX-vbg" secondAttribute="trailing" constant="51" id="7l1-CY-GX0"/>
                             <constraint firstItem="X41-sr-bUc" firstAttribute="leading" secondItem="goS-MN-MLf" secondAttribute="leading" constant="15" id="BQS-TO-nWb"/>
                             <constraint firstItem="X41-sr-bUc" firstAttribute="top" secondItem="ChC-bX-vbg" secondAttribute="bottom" constant="20" id="Jch-e9-SJ0"/>
                             <constraint firstAttribute="bottom" secondItem="X41-sr-bUc" secondAttribute="bottom" constant="20" id="NwP-Zw-NOZ"/>
                             <constraint firstItem="ChC-bX-vbg" firstAttribute="leading" secondItem="goS-MN-MLf" secondAttribute="leading" constant="15" id="Qfk-ap-4f4"/>
+                            <constraint firstItem="ChC-bX-vbg" firstAttribute="top" secondItem="QfR-w9-jgK" secondAttribute="bottom" constant="-20" id="clO-tU-Ldf"/>
+                            <constraint firstItem="QfR-w9-jgK" firstAttribute="top" secondItem="goS-MN-MLf" secondAttribute="top" id="htO-Cf-LzU"/>
                             <constraint firstAttribute="trailing" secondItem="X41-sr-bUc" secondAttribute="trailing" constant="15" id="j57-kK-xi6"/>
+                            <constraint firstAttribute="trailing" secondItem="QfR-w9-jgK" secondAttribute="trailing" constant="5" id="jLR-nf-SEa"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -106,6 +122,7 @@
             <connections>
                 <outlet property="ActivityStatusView" destination="zyo-2D-yA2" id="ogM-C5-2O3"/>
                 <outlet property="ActivitystatusLbl" destination="UL5-Hy-wg4" id="lFz-D6-saE"/>
+                <outlet property="CheckBoxBtnName" destination="QfR-w9-jgK" id="tEA-oY-x8H"/>
                 <outlet property="activityNameLbl" destination="ChC-bX-vbg" id="qd5-2L-vMy"/>
                 <outlet property="dropdownLbl" destination="cJP-vy-MEL" id="bID-XO-iZU"/>
                 <outlet property="dropdownView" destination="kow-tF-ezP" id="TF2-Hf-W9Y"/>
@@ -115,11 +132,15 @@
     </objects>
     <resources>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
+        <image name="circle" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

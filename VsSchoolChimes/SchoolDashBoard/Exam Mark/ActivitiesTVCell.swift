@@ -6,9 +6,12 @@
 //
 
 import UIKit
-
+protocol checkExamlists: AnyObject {
+    func checkExamlist(isChecked: Bool, index: Int,come_from_AI : Bool)
+}
 class ActivitiesTVCell: UITableViewCell {
 
+    @IBOutlet weak var CheckBoxBtnName: UIButton!
     @IBOutlet weak var activityNameLbl: UILabel!
     @IBOutlet weak var dropdownView: UIView!
     @IBOutlet weak var dropdownLbl: UILabel!
@@ -16,7 +19,7 @@ class ActivitiesTVCell: UITableViewCell {
     @IBOutlet weak var ActivitystatusLbl: UILabel!
     
     let dropdown = DropDown()
-    
+    var delegate : checkExamlists?
     let items: [String] = [
         "HEADER_ACTIONS",
         "🚫 Ignore (Skip this activity)",
@@ -29,6 +32,23 @@ class ActivitiesTVCell: UITableViewCell {
         "Geometry"
     ]
     
+    @IBAction func CheckBoxBtnAct(_ sender: UIButton) {
+        sender.isSelected.toggle()
+
+           updateCheckboxUI(isChecked: sender.isSelected)
+
+        delegate?.checkExamlist(isChecked: sender.isSelected, index: sender.tag, come_from_AI: dropdownView.isHidden )
+       }
+
+       func updateCheckboxUI(isChecked: Bool) {
+           if isChecked {
+               CheckBoxBtnName.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+               CheckBoxBtnName.tintColor = .systemBlue
+           } else {
+               CheckBoxBtnName.setImage(UIImage(systemName: "square"), for: .normal)
+               CheckBoxBtnName.tintColor = .lightGray
+           }
+       }
     override func awakeFromNib() {
         super.awakeFromNib()
        
@@ -41,32 +61,37 @@ class ActivitiesTVCell: UITableViewCell {
         ActivityStatusView.layer.borderColor = UIColor.lightGray.cgColor
         
         ActivityStatusView.isHidden = true
-        
+        dropdownView.isHidden = true
         dropdownView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showDropdown)))
         
         setupDropdown()
     }
     
-    func confugure(value:Int){
+    func cellConfig(come_from_AI:Bool,actitvityDetails:SplitDetail){
         
-        switch value{
-            
-        case 0:
-            ActivityStatusView.isHidden = true
-            
-        case 1:
-            ActivityStatusView.isHidden = false
-            ActivityStatusView.backgroundColor = .staffExamColour.withAlphaComponent(0.06)
-            
-        case 2:
-            ActivityStatusView.isHidden = false
-            ActivityStatusView.backgroundColor = .systemBlue.withAlphaComponent(0.06)
-            
-        default:
-            ActivityStatusView.isHidden = true
-            
-        }
+        dropdownView.isHidden = !come_from_AI
+        activityNameLbl.text = actitvityDetails.name
     }
+//    func confugure(value:Int){
+//        
+//        switch value{
+//            
+//        case 0:
+//            ActivityStatusView.isHidden = true
+//            
+//        case 1:
+//            ActivityStatusView.isHidden = false
+//            ActivityStatusView.backgroundColor = .staffExamColour.withAlphaComponent(0.06)
+//            
+//        case 2:
+//            ActivityStatusView.isHidden = false
+//            ActivityStatusView.backgroundColor = .systemBlue.withAlphaComponent(0.06)
+//            
+//        default:
+//            ActivityStatusView.isHidden = true
+//            
+//        }
+//    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

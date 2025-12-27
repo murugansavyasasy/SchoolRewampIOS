@@ -82,15 +82,26 @@ extension UIView {
 
 extension UIView {
     
+    // Public entry point
     func addDoneButton() {
         if #available(iOS 26.0, *) {
-            applyLiquidToolbar()   // New custom rounded design
+            applyLiquidToolbar()
         } else {
-            applyClassicToolbar()  // Old UIToolbar
+            applyClassicToolbar()
         }
     }
     
-    // MARK: - Classic iOS 15 toolbar
+    // MARK: - Shared logic for both toolbars
+    private func applyAccessory(_ accessory: UIView) {
+        if let tf = self as? UITextField {
+            tf.inputAccessoryView = accessory
+            tf.autocapitalizationType = .sentences
+        } else if let tv = self as? UITextView {
+            tv.inputAccessoryView = accessory
+        }
+    }
+    
+    // MARK: - Classic iOS 15 Toolbar
     private func applyClassicToolbar() {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -100,16 +111,15 @@ extension UIView {
         
         toolbar.items = [flex, done]
         
-        if let tf = self as? UITextField { tf.inputAccessoryView = toolbar }
-        if let tv = self as? UITextView { tv.inputAccessoryView = toolbar }
+        applyAccessory(toolbar)
     }
     
-    // MARK: - Custom Liquid toolbar (iOS 26+)
+    // MARK: - Custom Liquid Toolbar (iOS 26+)
     private func applyLiquidToolbar() {
         let width = UIScreen.main.bounds.width
         let height: CGFloat = 44
         let radius: CGFloat = 14
-        let rightPadding: CGFloat = 20   // << increase this as much as you want
+        let rightPadding: CGFloat = 20
         
         let keyboardBackground = UIColor { trait in
             trait.userInterfaceStyle == .dark
@@ -119,13 +129,11 @@ extension UIView {
         
         let container = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
         container.backgroundColor = keyboardBackground
-        
-        // Rounded TOP corners only
         container.layer.cornerRadius = radius
         container.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         container.clipsToBounds = true
         
-        // Bottom separator
+        // Separator line
         let separator = UIView()
         separator.backgroundColor = UIColor { trait in
             trait.userInterfaceStyle == .dark
@@ -157,16 +165,14 @@ extension UIView {
             done.centerYAnchor.constraint(equalTo: container.centerYAnchor)
         ])
         
-        // Apply to view
-        if let tf = self as? UITextField { tf.inputAccessoryView = container }
-        if let tv = self as? UITextView { tv.inputAccessoryView = container }
+        applyAccessory(container)
     }
-    
     
     @objc private func dismissKeyboard() {
         endEditing(true)
     }
 }
+
 
 
 class Custom:UIButton{

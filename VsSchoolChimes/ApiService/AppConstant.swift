@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 struct ServiceUrl{
-    static var baseurl = "http://apiv7.schoolchimes.net/"
+    static var baseurl = "http://apiv8.schoolchimes.net/"
     static var Pacukt_baseurl = "https://api.pauket.com/api/partner/"
     static var report_url = ""
     static var token = ""
@@ -196,6 +196,8 @@ struct ServiceUrl{
     static let exam_get_subject_wise_activities = "exam/api/exam/get-subject-wise-activities"
     static let lms_api_quiz_delete = "lms/api/quiz/delete"
     static let lms_api_quiz_update = "lms/api/quiz/update"
+    static let lms_api_quiz_delete_question = "lms/api/quiz/delete-question"
+    static let update_notification_call_log = "comm/api/voice/update-notification-call-log"
 }
 
 struct localData{
