@@ -666,12 +666,16 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         }
     }
     func noticeBordHistory(_ defaultAction: () -> Void) {
-        if checkMutipleSchool() {
-            let vc = NoticeBoardVc(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
-        } else {
-            defaultAction()
+        
+        if staffDetailsCount?.count ?? 0 > 0 {
+            switch staff_roll {
+            case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+                defaultAction()
+            default:
+                let vc = NoticeBoardVc(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }
         }
     }
     

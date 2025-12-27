@@ -8,24 +8,41 @@
 import UIKit
 
 class StudentNameTVC: UITableViewCell {
-        
-        @IBOutlet weak var nameLabel: UILabel!
-        @IBOutlet weak var rollNoLabel: UILabel!
-        
-        override func awakeFromNib() {
-            super.awakeFromNib()
-            setupUI()
-        }
-        
-        private func setupUI() {
-            nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-            rollNoLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-            rollNoLabel.textColor = .gray
-            selectionStyle = .none
-        }
-        
-        func configure(name: String, rollNo: String) {
-            nameLabel.text = name
-            rollNoLabel.text = rollNo
-        }
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var rollNoLabel: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setupUI()
     }
+    
+    private func setupUI() {
+        // Name label styling
+        nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        nameLabel.textColor = .label
+        nameLabel.numberOfLines = 0
+        nameLabel.adjustsFontSizeToFitWidth = true
+        nameLabel.minimumScaleFactor = 0.8
+        
+        // Roll number label styling
+        rollNoLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        rollNoLabel.textColor = .secondaryLabel
+        rollNoLabel.numberOfLines = 1
+        
+        // Cell styling
+        selectionStyle = .none
+        backgroundColor = .systemBackground
+    }
+    
+    func configure(name: String, rollNo: String) {
+        nameLabel.text = name
+        rollNoLabel.text = "Reg: \(rollNo)"
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        nameLabel.text = ""
+        rollNoLabel.text = ""
+    }
+}
