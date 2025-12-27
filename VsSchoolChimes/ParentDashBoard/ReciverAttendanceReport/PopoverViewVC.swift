@@ -112,7 +112,7 @@ class PopoverViewVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     // MARK: - Row Height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 30
+        return UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         

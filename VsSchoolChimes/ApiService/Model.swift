@@ -2279,10 +2279,7 @@ struct QuizQuestiondata: Codable {
         b_image : String = "",
         c_image : String = "",
         d_image : String = "",
-        ques_no : String = "",
-        
-        
-    ) {
+        ques_no : String = "") {
         self.id = id
         self.quiz_id = quiz_id
         self.chapter = chapter
