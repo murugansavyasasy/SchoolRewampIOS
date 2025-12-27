@@ -50,7 +50,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let staffCount = staffDetailsCount?.count ?? 0
         let studentCount = childCount?.count ?? 0
         if (staffCount + studentCount) > 1 {
-            menuArray.append(MenuItem(name: "Switch Role".translated(), icon: "arrow.2.squarepath"))
+            menuArray.append(MenuItem(name: "Switch Login".translated(), icon: "arrow.2.squarepath"))
         }
         menuArray.append(MenuItem(name: "Logout".translated(), icon: "iphone.and.arrow.forward"))
         menuTable.delegate = self
@@ -110,8 +110,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.iconBtn.tintColor = .link
         }
         return cell
-        
-        return UITableViewCell()
+    
     }
     
     // MARK: - TableView Delegate
@@ -129,7 +128,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         case "Settings".translated():
             delegate?.meunu(viewController: SettingsViewController())
             
-        case "Switch Role".translated():
+        case "Switch Login".translated():
             delegate?.meunu(viewController: UIViewController())
             
         case "Help".translated():
