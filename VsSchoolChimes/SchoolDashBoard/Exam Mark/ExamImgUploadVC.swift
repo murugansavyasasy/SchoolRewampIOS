@@ -29,6 +29,7 @@ class ExamImgUploadVC: UIViewController {
     var SubjectList : [SubjectExamData] = []
     var is_aiViewCliked : Bool = false
     var examId : String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -207,7 +208,9 @@ class ExamImgUploadVC: UIViewController {
     }
     
     @IBAction func ContinueManuallyAct(_ sender: Any) {
-        let vc = EnterMarkVC()
+        let vc = ExamActivitySelectionVC()
+        vc.ExamID = examId ?? ""
+        vc.isAIFlow = false
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -215,16 +218,21 @@ class ExamImgUploadVC: UIViewController {
     
     @IBAction func continueWithUploadAct(_ sender: Any) {
         
-        loadSubjectList(for: examId ?? "") { [self] (isSuccess) in
-            if isSuccess {
-                let vc = ExamActivitySelectionVC()
-                vc.SubjectList = self.SubjectList
-                vc.come_from_AI = is_aiViewCliked
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
-            }
-        }
-       
+        let vc = ExamActivitySelectionVC()
+        vc.ExamID = examId ?? ""
+        vc.isAIFlow = true
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+        
+//        loadSubjectList(for: examId ?? "") { [self] (isSuccess) in
+//            if isSuccess {
+//                let vc = ExamActivitySelectionVC()
+//                vc.SubjectList = self.SubjectList
+//                vc.come_from_AI = is_aiViewCliked
+//                vc.modalPresentationStyle = .fullScreen
+//                present(vc, animated: true)
+//            }
+//        }
     }
     
     

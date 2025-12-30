@@ -4,17 +4,15 @@
 //
 //  Created by Lakshmanan on 26/11/25.
 //
-struct activity {
-    var name: String
-    var value: Int
+
+protocol SubjectCellDelegate: AnyObject {
+    func didUpdateSplit(subjectIndex: Int, splitIndex: Int, split: SplitDetail)
 }
-
-
 
 import UIKit
 
-class SubjectsTVCell: UITableViewCell, checkExamlists {
-
+class SubjectsTVCell: UITableViewCell {
+   
     @IBOutlet weak var baseView: UIView!
     @IBOutlet weak var subjectView: UIView!
     @IBOutlet weak var checkCircleBtn: UIButton!
@@ -26,37 +24,12 @@ class SubjectsTVCell: UITableViewCell, checkExamlists {
     
     var isExpanded = false
     var onHeightChange: (() -> Void)?
-    var activitiesCount = 2
+    private var subjectIndex = 0
+    var splits: [SplitDetail] = []
+    var isAI : Bool = false
+    weak var delegate: SubjectCellDelegate?
+    var selectionHandler: ((Int, Bool) -> Void)?
     
-    let samples: [activity] = [
-        activity(name: "Alpha", value: 0),
-        activity(name: "Beta", value: 0),
-        activity(name: "Gamma", value: 0),
-        activity(name: "Delta", value: 0)
-    ]
-    var  splitup_details_data: [SplitDetail]?
-    var come_from_AI : Bool = false
-    var selectedSplitupIDs: [String] = []
-
-    func checkExamlist(isChecked: Bool, index: Int,come_from_AI : Bool) {
-        guard let id = splitup_details_data?[index].id else { return }
-        splitup_details_data?[index].isChecked = isChecked
-        if isChecked {
-            // ADD ID
-            if !selectedSplitupIDs.contains(id) {
-                selectedSplitupIDs.append(id)
-            }
-        } else {
-            // REMOVE ID
-            selectedSplitupIDs.removeAll { $0 == id }
-        }
-        print("Selected IDs: \(selectedSplitupIDs)")
-        let total = splitup_details_data?.count ?? 0
-        let selected = selectedSplitupIDs.count
-        let remaining = total - selected
-        statusLbl.text = "\(remaining) of \(total) activities mapped"
-
-    }
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -90,13 +63,6 @@ class SubjectsTVCell: UITableViewCell, checkExamlists {
         tableview.removeObserver(self, forKeyPath: "contentSize")
         }
     
-//    func updateInnerHeight() {
-//        DispatchQueue.main.async {
-//            self.tableview.layoutIfNeeded()
-//            self.tableviewHeight.constant = self.tableview.contentSize.height
-//        }
-//    }
-    
     override func observeValue(forKeyPath keyPath: String?,
                                   of object: Any?,
                                   change: [NSKeyValueChangeKey : Any]?,
@@ -117,31 +83,6 @@ class SubjectsTVCell: UITableViewCell, checkExamlists {
         }
     }
     
-    func cellConfig(come_from_AI : Bool,Subject_modal : SubjectExamData){
-        subjectLbl.text = Subject_modal.subject_name
-        self.come_from_AI = come_from_AI
-        splitup_details_data = Subject_modal.splitup_details
-        tableview.reloadData()
-    }
-    
-    
-//    func configureExpandState() {
-//
-//        if isExpand {
-//            
-//            tableview.isHidden = false
-//            tableview.reloadData()
-//
-//            updateInnerHeight()
-//            notifyParentToUpdate()
-//
-//        } else {
-//            
-//            tableview.isHidden = true
-//            tableviewHeight.constant = 0
-//            notifyParentToUpdate()
-//        }
-//    }
     
     func configureExpandState() {
 
@@ -170,21 +111,75 @@ class SubjectsTVCell: UITableViewCell, checkExamlists {
 extension SubjectsTVCell: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return splitup_details_data?.count ?? 0
+        return splits.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActivitiesTVCell", for: indexPath) as! ActivitiesTVCell
-        if let data = splitup_details_data?[indexPath.row]{
-            cell.cellConfig(come_from_AI: come_from_AI, actitvityDetails: data)
-        }
-        let isChecked = splitup_details_data?[indexPath.row].isChecked ?? false
-
-        cell.CheckBoxBtnName.isSelected = isChecked
-        cell.updateCheckboxUI(isChecked: isChecked)
-        cell.CheckBoxBtnName.tag = indexPath.row
+        
+       // cell.dropdownView.isHidden = true
+        cell.ActivityStatusView.isHidden = true
+        cell.configure(subjectIndex: subjectIndex, splitIndex: indexPath.row, split: splits[indexPath.row], isAi: true)
         cell.delegate = self
+    
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isAI{
+            
+        }else{
+            
+        }
+    }
+}
+
+extension SubjectsTVCell: ActivityCellDelegate {
+
+    func didToggleSplit(
+        subjectIndex: Int,
+        splitIndex: Int,
+        isChecked: Bool
+    ) {
+        splits[splitIndex].isChecked = isChecked
+        if !isChecked {
+            splits[splitIndex].selectedAIOption = nil
+        }
+
+        tableview.reloadRows(
+            at: [IndexPath(row: splitIndex, section: 0)],
+            with: .automatic
+        )
+
+        delegate?.didUpdateSplit(
+            subjectIndex: subjectIndex,
+            splitIndex: splitIndex,
+            split: splits[splitIndex]
+        )
+        
+        if let parentTable = self.superview as? UITableView {
+                               parentTable.beginUpdates()
+                               parentTable.endUpdates()
+                           }
+    }
+
+    func didSelectAIOption(
+        subjectIndex: Int,
+        splitIndex: Int,
+        option: String
+    ) {
+        splits[splitIndex].selectedAIOption = option
+
+        delegate?.didUpdateSplit(
+            subjectIndex: subjectIndex,
+            splitIndex: splitIndex,
+            split: splits[splitIndex]
+        )
+        
+        if let parentTable = self.superview as? UITableView {
+                               parentTable.beginUpdates()
+                               parentTable.endUpdates()
+                           }
     }
 }
 

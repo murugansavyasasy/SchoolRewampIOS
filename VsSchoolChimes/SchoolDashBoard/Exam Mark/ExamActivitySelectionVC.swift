@@ -17,9 +17,12 @@ class ExamActivitySelectionVC: UIViewController {
     
     var expandedIndex: IndexPath?
     var didInitialHeightSet = false
-
     var SubjectList : [SubjectExamData] = []
-    var come_from_AI: Bool = false
+    var isAIFlow: Bool = false
+    var ExamID = ""
+    let staffDetails = UserDefaultFileManager.get_staff_Details()
+    var selectedSplits: [SelectedSplit] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,17 +44,36 @@ class ExamActivitySelectionVC: UIViewController {
         
         tableview.delegate = self
         tableview.dataSource = self
+        
+        Get_exam_activities_Api(for: ExamID)
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
-//            self.updateMainHeight()
-//        }
-//    }
 
+    func Get_exam_activities_Api(for examId: String) {
+        SubjectList.removeAll()
+        let param:[String:Any] = ["exam_id": examId]
 
+        APIService.shared.makeApi(
+            url: ServiceUrl.exam_get_subject_wise_activities,
+            parameters: param,
+            type: ApitTypeSringFile.GET,
+            token: staffDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<SubjectWiseExamResponse, Error>) in
+
+            guard let self = self else { return }
+
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    self.SubjectList = response.data ?? []
+                    self.tableview.reloadData()
+                   
+                case .failure(let error):
+                    print("Error loading subjects: \(error)")
+                }
+            }
+        }
+    }
     
     private func updateMainHeight() {
            DispatchQueue.main.async {
@@ -73,37 +95,33 @@ class ExamActivitySelectionVC: UIViewController {
 
 extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
 
-    func tableView(_ tableView: UITableView,
-                   numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return SubjectList.count
     }
 
-    func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: "SubjectsTVCell",
-            for: indexPath
-        ) as! SubjectsTVCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SubjectsTVCell", for: indexPath) as! SubjectsTVCell
 
         let data = SubjectList[indexPath.row]
         
+        cell.splits = data.splitup_details ?? []
         cell.isExpanded = (expandedIndex == indexPath)
+        cell.tableview.reloadData()
         cell.configureExpandState()
-        cell.cellConfig(come_from_AI: come_from_AI, Subject_modal: data)
-//        cell.subjectLbl.text = data.subject_name
         cell.onHeightChange = { [weak self] in
             guard let self = self else { return }
             self.tableview.beginUpdates()
             self.tableview.endUpdates()
             self.updateMainHeight()
         }
+        
+        cell.delegate = self
 
         return cell
     }
 
-    func tableView(_ tableView: UITableView,
-                   didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         let previous = expandedIndex
 
@@ -125,8 +143,7 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    func tableView(_ tableView: UITableView,
-                   heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
@@ -134,5 +151,51 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
         DispatchQueue.main.async {
             self.updateMainHeight()
         }
+    }
+}
+
+extension ExamActivitySelectionVC: SubjectCellDelegate {
+
+    func didUpdateSplit(
+        subjectIndex: Int,
+        splitIndex: Int,
+        split: SplitDetail
+    ) {
+        let subject = SubjectList[subjectIndex]
+
+        guard
+            let subjectId = subject.subject_id,
+            let subjectName = subject.subject_name,
+            let splitId = split.id,
+            let splitName = split.name
+        else { return }
+
+        let keyMatch: (SelectedSplit) -> Bool = {
+            $0.subjectId == subjectId && $0.splitId == splitId
+        }
+
+        // 🔹 UNCHECKED → REMOVE
+        if !(split.isChecked ?? false) {
+            selectedSplits.removeAll(where: keyMatch)
+            return
+        }
+
+        // 🔹 CHECKED → ADD OR UPDATE
+        if let index = selectedSplits.firstIndex(where: keyMatch) {
+            // UPDATE (dropdown change)
+            selectedSplits[index].aiOption = split.selectedAIOption
+        } else {
+            // ADD NEW
+            selectedSplits.append(
+                SelectedSplit(
+                    subjectId: subjectId,
+                    subjectName: subjectName,
+                    splitId: splitId,
+                    splitName: splitName,
+                    aiOption: split.selectedAIOption
+                )
+            )
+        }
+
     }
 }

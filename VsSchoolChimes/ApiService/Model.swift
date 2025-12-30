@@ -431,22 +431,22 @@ struct AwsData: Codable {
 //MARK: - Get Communication List(Reciver)
 import AVFoundation
 struct CommunicationReciverResponse: Codable {
-    let status: Bool
-    let message: String
-    let data: [CommunicationReciverData]
+    let status: Bool?
+    let message: String?
+    let data: [CommunicationReciverData]?
 }
 
 class CommunicationReciverData: Codable {
-    let type: String
-    let id: String
-    let header_id: String
-    let content: String
-    let title: String
-    let date: String
-    let time: String
-    let sender_info: String
-    let is_emergency : Bool
-    var is_unread: Bool
+    let type: String?
+    let id: String?
+    let header_id: String?
+    let content: String?
+    let title: String?
+    let date: String?
+    let time: String?
+    let sender_info: String?
+    let is_emergency : Bool?
+    var is_unread: Bool?
     var isExpand:Bool?
     let is_archive: Bool?
     let duration : Int?
@@ -2785,16 +2785,16 @@ struct SplitDetail: Codable {
     let id: String?
     let name: String?
     let max_mark: String?
-    var isChecked: Bool?
+    
+    // UI STATE
+    var isChecked: Bool? = false
+    var selectedAIOption: String? = nil
 }
-//"section_id": "90828",
-//      "section_name": "B",
-//      "class_id": "32588",
-//      "class_name": "I",
-//      "subject_id": "112616",
-//      "subject_name": "ENGLISH",
-//      "splitup_details": [
-//        {
-//          "id": "3062",
-//          "name": "Paper 1",
-//          "max_mark": "100"
+
+struct SelectedSplit {
+    let subjectId: String
+    let subjectName: String
+    let splitId: String
+    let splitName: String
+    var aiOption: String?   // nil for Manual
+}
