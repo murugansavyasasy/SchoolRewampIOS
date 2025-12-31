@@ -36,6 +36,10 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     private var selectedImageData: Data?
     private var selectedImage: UIImage?
     
+    let selectedColumns: [String] = []
+    let reviewFlags : [ReviewFlag] = []
+   // let selectedColumns: [] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -217,58 +221,71 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
             
             DispatchQueue.main.async {
                 
-                self.hideActivityLoader()
-                
                 switch result {
                 case .success(let success):
                     
                     if success.status == true {
                         
-                        let select = success.data.selectedColumns
-                        let record  = self.convertRecords(data: success.data)
-                        
-                        print("Reord", record)
-                        print("error", success.message!)
+                        let records: [ConvertedStudentRecord] = success.data.records.isEmpty
+                            ? []
+                            : success.data.records.map { self.convertDynamicRecord($0) }
+
+                        let vc = ExamActivitySelectionVC()
+                        vc.ExamID = self.examId ?? ""
+                        vc.isAIFlow = true
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                       
                     }
                     
                 case .failure(let failure):
                     print("failure",failure.localizedDescription)
                 }
+                
+                self.hideActivityLoader()
             }
             
         }
     }
-    
-    func convertRecords(
-        data: markAiData
-    ) -> [ConvertedStudentRecord] {
 
-        let selectedColumns = data.selectedColumns ?? []
-        let records = data.records
+    func convertDynamicRecord(_ record: DynamicRecord) -> ConvertedStudentRecord {
 
-        return records.map { record in
+        var sNo = ""
+        var regNo = ""
+        var studentName = ""
+        var marks: [RecordItem] = []
 
-            let sNo = record.values["S.no"]?.stringValue ?? ""
-            let regNo = record.values["Reg No"]?.stringValue ?? ""
-            let studentName = record.values["Student Name"]?.stringValue ?? ""
+        for (key, value) in record.values {
 
-            let marks: [RecordItem] = selectedColumns.compactMap { column in
-                guard let value = record.values[column] else { return nil }
-                return RecordItem(
-                    name: column,
-                    value: value.stringValue
+            switch key {
+
+            case "S.no":
+                sNo = value.stringValue
+
+            case "Reg No":
+                regNo = value.stringValue
+
+            case "Student Name":
+                studentName = value.stringValue
+
+            default:
+                // ✅ All subject marks come here
+                marks.append(
+                    RecordItem(
+                        name: key,
+                        value: value.stringValue
+                    )
                 )
             }
-
-            return ConvertedStudentRecord(
-                sNo: sNo,
-                regNo: regNo,
-                studentName: studentName,
-                marks: marks
-            )
         }
-    }
 
+        return ConvertedStudentRecord(
+            sNo: sNo,
+            regNo: regNo,
+            studentName: studentName,
+            marks: marks
+        )
+    }
 
     
     func loadSubjectList(for examId: String,completion: @escaping (Bool)->Void) {
