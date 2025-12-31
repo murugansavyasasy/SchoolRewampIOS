@@ -198,6 +198,8 @@ struct ServiceUrl{
     static let lms_api_quiz_update = "lms/api/quiz/update"
     static let lms_api_quiz_delete_question = "lms/api/quiz/delete-question"
     static let update_notification_call_log = "comm/api/voice/update-notification-call-log"
+    static let exam_api_exam_get_mark_details = "exam/api/exam/get-mark-details"
+    static let exam_api_exam_upload_marks = "exam/api/exam/upload-marks"
 }
 
 struct localData{

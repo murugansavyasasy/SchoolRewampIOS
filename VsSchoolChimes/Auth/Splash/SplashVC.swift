@@ -587,8 +587,7 @@ class SplashVC: UIViewController, ViewAttachments {
             COMMON_PARAMETER.device_type: API_PARAMS_HOTCODE.device_type,
             COMMON_PARAMETER.version_code: API_PARAMS_HOTCODE.Version_Code,
             COMMON_PARAMETER.country_id: countryId ?? 0,
-            COMMON_PARAMETER.mobile_number: UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? ""
-        ]
+            COMMON_PARAMETER.mobile_number: UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? ""]
         
         APIService.shared.makeApi(
             url: ServiceUrl.version_check,
