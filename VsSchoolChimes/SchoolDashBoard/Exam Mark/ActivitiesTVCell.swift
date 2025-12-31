@@ -8,7 +8,7 @@
 import UIKit
 protocol ActivityCellDelegate: AnyObject {
     func didToggleSplit(subjectIndex: Int, splitIndex: Int, isChecked: Bool)
-    func didSelectAIOption(subjectIndex: Int, splitIndex: Int, option: String)
+    func didUpdateAISplit(subjectIndex: Int, splitIndex: Int, isChecked: Bool, aiOption: String?)
 }
 
 class ActivitiesTVCell: UITableViewCell {
@@ -19,19 +19,15 @@ class ActivitiesTVCell: UITableViewCell {
     @IBOutlet weak var dropdownLbl: UILabel!
     @IBOutlet weak var ActivityStatusView: UIView!
     @IBOutlet weak var ActivitystatusLbl: UILabel!
+    @IBOutlet weak var clearBtn: UIButton!
     
     let dropdown = DropDown()
     weak var delegate: ActivityCellDelegate?
     private var subjectIndex = 0
     private var splitIndex = 0
-    let isAi = false
+    private var isAIFlow = false
     
     let items: [String] = [
-        "HEADER_ACTIONS",
-        "🚫 Ignore (Skip this activity)",
-        "✏️ Enter marks manually",
-        "SEPARATOR",
-        "HEADER_COLUMNS",
         "Student_Name",
         "Roll_No",
         "Algebra",
@@ -50,6 +46,7 @@ class ActivitiesTVCell: UITableViewCell {
         ActivityStatusView.layer.borderColor = UIColor.lightGray.cgColor
         
         ActivityStatusView.isHidden = true
+        ActivitystatusLbl.isHidden = true
         dropdownView.isHidden = true
         dropdownView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showDropdown)))
         
@@ -61,38 +58,92 @@ class ActivitiesTVCell: UITableViewCell {
     }
     
     func configure(
-            subjectIndex: Int,
-            splitIndex: Int,
-            split: SplitDetail,
-            isAi: Bool
-        ) {
-            self.subjectIndex = subjectIndex
-            self.splitIndex = splitIndex
+        subjectIndex: Int,
+        splitIndex: Int,
+        split: SplitDetail,
+        isAi: Bool
+    ) {
+        self.subjectIndex = subjectIndex
+        self.splitIndex = splitIndex
+        self.isAIFlow = isAi
 
-            activityNameLbl.text = split.name
-            CheckBoxBtnName.isSelected = split.isChecked ?? false
+        let nameText = split.name ?? ""
+        let maxText = " (Max: \(split.max_mark ?? ""))"
+        
+        let fullText = nameText + maxText
+        
+        let attributedString = NSMutableAttributedString(string: fullText)
+        
+        attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length: nameText.count))
+        
+        attributedString.addAttributes([.foregroundColor: UIColor.darkGray, .font : UIFont(name: "Poppins-Medium", size: 12) ?? UIFont.systemFont(ofSize: 12)], range: NSRange(location: nameText.count, length: maxText.count))
+        
+        activityNameLbl.attributedText = attributedString
+        
+        //activityNameLbl.text = (split.name ?? "") + " (Max: " + (split.max_mark ?? "") + ")"
 
-            dropdownView.isHidden = !(isAi && split.isChecked ?? false)
-            dropdownLbl.text = split.selectedAIOption
+        let isSelected = split.isChecked == true
+        CheckBoxBtnName.isSelected = isSelected
+        updateCheckboxUI(isChecked: isSelected)
+
+        // ✅ STATUS
+        ActivitystatusLbl.text = split.selectedAIOption.map { "Mapped to: \($0)" }
+        ActivitystatusLbl.isHidden = split.selectedAIOption == nil
+        clearBtn.isHidden = split.selectedAIOption == nil
+
+        // ✅ BACKGROUND — SINGLE SOURCE OF TRUTH
+        if split.selectedAIOption != nil {
+            contentView.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.07)
+        } else {
+            contentView.backgroundColor = .systemBackground
         }
+    }
+
     
     @IBAction func CheckBoxBtnAct(_ sender: UIButton) {
+
+        if isAIFlow {
+            showDropdown()
+            return
+        }
+
+        // MANUAL FLOW
         sender.isSelected.toggle()
         updateCheckboxUI(isChecked: sender.isSelected)
-        dropdownView.isHidden = !(isAi && sender.isSelected)
-        delegate?.didToggleSplit(subjectIndex: subjectIndex, splitIndex: splitIndex, isChecked: sender.isSelected)
-        if let parentTable = self.superview as? UITableView {
-                               parentTable.beginUpdates()
-                               parentTable.endUpdates()
-                           }
-       }
+
+        delegate?.didToggleSplit(
+            subjectIndex: subjectIndex,
+            splitIndex: splitIndex,
+            isChecked: sender.isSelected
+        )
+    }
+
+
+    @IBAction func clearSelection() {
+
+        // UI reset
+            CheckBoxBtnName.isSelected = false
+            updateCheckboxUI(isChecked: false)
+            dropdownView.isHidden = true
+            ActivitystatusLbl.isHidden = true
+            clearBtn.isHidden = true
+
+            // MODEL reset
+            delegate?.didUpdateAISplit(
+                subjectIndex: subjectIndex,
+                splitIndex: splitIndex,
+                isChecked: false,
+                aiOption: nil
+            )
+    }
+
 
        func updateCheckboxUI(isChecked: Bool) {
            if isChecked {
-               CheckBoxBtnName.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
-               CheckBoxBtnName.tintColor = .systemBlue
+               CheckBoxBtnName.setImage(UIImage(systemName: "record.circle.fill"), for: .normal)
+               CheckBoxBtnName.tintColor = .staffExamColour
            } else {
-               CheckBoxBtnName.setImage(UIImage(systemName: "square"), for: .normal)
+               CheckBoxBtnName.setImage(UIImage(systemName: "circle"), for: .normal)
                CheckBoxBtnName.tintColor = .lightGray
            }
        }
@@ -108,85 +159,42 @@ class ActivitiesTVCell: UITableViewCell {
             // Automatically chooses up or down depending on available space
             dropdown.direction = .any
         
-        dropdown.customCellConfiguration = { [weak self] index, item, cell in
-            
-            // Clear default styling
-            cell.separatorInset = UIEdgeInsets(top: 0, left: 5000, bottom: 0, right: 0)
-
-            // ===== HEADER: ACTIONS =====
-            if item == "HEADER_ACTIONS" {
-                cell.optionLabel.text = "ACTIONS"
-                cell.optionLabel.font = UIFont.boldSystemFont(ofSize: 14)
-                cell.optionLabel.textColor = .systemGray
-                cell.isUserInteractionEnabled = false
-
-                // Extra top padding for header
-                cell.layoutMargins.top = 8
-                cell.layoutMargins.bottom = 4
-                return
-            }
-            
-            // ===== HEADER: Columns =====
-            if item == "HEADER_COLUMNS" {
-                cell.optionLabel.text = "📄 Columns from uploaded image"
-                cell.optionLabel.font = UIFont.boldSystemFont(ofSize: 14)
-                cell.optionLabel.textColor = .staffExamColour
-                cell.isUserInteractionEnabled = false
-                
-                cell.layoutMargins.top = 4
-                cell.layoutMargins.bottom = 4
-                return
-            }
-            
-            // ===== SECTION SEPARATOR =====
-            if item == "SEPARATOR" {
-                cell.optionLabel.text = ""   // hide text
-                cell.isUserInteractionEnabled = false
-                
-                // Draw a custom separator
-                let line = UIView(frame: CGRect(x: 16, y: 4, width: cell.frame.width - 32, height: 1))
-                line.backgroundColor = UIColor.systemGray4
-                cell.addSubview(line)
-                
-                return
-            }
-
-            // ===== NORMAL SELECTABLE ITEMS =====
-            cell.optionLabel.text = item
-            cell.optionLabel.font = UIFont.systemFont(ofSize: 14)
-            cell.optionLabel.textColor = .label
-            cell.isUserInteractionEnabled = true
-        }
-
-        
         }
     
     @IBAction func showDropdown(){
         
         guard let window = UIApplication.shared.connectedScenes
-                    .compactMap({ $0 as? UIWindowScene })
-                    .flatMap({ $0.windows })
-                    .first(where: { $0.isKeyWindow }) else { return }
-                
-                // Convert dropdownView frame to window coords
-                let frame = dropdownView.convert(dropdownView.bounds, to: window)
-                let screenHeight = UIScreen.main.bounds.height
-                
-                // Set direction manually
-                dropdown.direction = (frame.maxY > screenHeight * 0.7) ? .top : .bottom
-
-                // Handle selection
-                dropdown.selectionAction = { [weak self] (index, item) in
-                    guard let self = self else { return }
-
-                    self.dropdownLbl.text = item
-                    self.ActivityStatusView.isHidden = false
-                    if let parentTable = self.superview as? UITableView {
-                        parentTable.beginUpdates()
-                        parentTable.endUpdates()
-                    }
-                }
-
-                dropdown.show()
+            .compactMap({ $0 as? UIWindowScene })
+            .flatMap({ $0.windows })
+            .first(where: { $0.isKeyWindow }) else { return }
+        
+        // Convert dropdownView frame to window coords
+        let frame = dropdownView.convert(dropdownView.bounds, to: window)
+        let screenHeight = UIScreen.main.bounds.height
+        
+        // Set direction manually
+        dropdown.direction = (frame.maxY > screenHeight * 0.7) ? .top : .bottom
+        
+        dropdown.selectionAction = { [weak self] (_, item) in
+            guard let self = self else { return }
+            
+            // UI
+            self.CheckBoxBtnName.isSelected = true
+            self.updateCheckboxUI(isChecked: true)
+            self.ActivitystatusLbl.text = "Mapped to: \(item)"
+            self.ActivitystatusLbl.isHidden = false
+            self.clearBtn.isHidden = false
+            
+            // MODEL (single delegate call)
+            self.delegate?.didUpdateAISplit(
+                subjectIndex: self.subjectIndex,
+                splitIndex: self.splitIndex,
+                isChecked: true,
+                aiOption: item
+            )
+        }
+        
+        
+        dropdown.show()
     }
 }
