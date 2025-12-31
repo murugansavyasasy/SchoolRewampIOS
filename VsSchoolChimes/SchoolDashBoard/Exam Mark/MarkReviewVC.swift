@@ -551,7 +551,52 @@ class MarkReviewVC: UIViewController {
             )
         }
     }
-    
+    func moveToNextColumn(row: Int, column: Int) {
+        focusTextField(row: row, column: column + 1)
+    }
+
+    func moveToPreviousColumn(row: Int, column: Int) {
+        focusTextField(row: row, column: max(column - 1, 0))
+    }
+
+    func moveToNextRow(row: Int, column: Int) {
+        focusTextField(row: row + 1, column: column)
+    }
+
+    func moveToPreviousRow(row: Int, column: Int) {
+        focusTextField(row: max(row - 1, 0), column: column)
+    }
+
+    func focusTextField(row: Int, column: Int) {
+
+        guard row < studentRecords.count,
+              column < subjectColumns.count else { return }
+
+        let indexPath = IndexPath(row: row, section: 0)
+        studentTableView.scrollToRow(at: indexPath, at: .middle, animated: false)
+        let colIndexPath = IndexPath(item: column, section: 0)
+        subjectsCollectionView.scrollToItem(at: colIndexPath,
+                                            at: .centeredHorizontally,
+                                            animated: false)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+
+            guard let columnCell = self.subjectsCollectionView.cellForItem(at: colIndexPath) as? MarkReviewCVC else {
+                return
+            }
+            self.restoreVerticalPosition(for: columnCell.listTable)
+            columnCell.listTable.scrollToRow(at: indexPath, at: .middle, animated: false)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+
+                if let markCell = columnCell.listTable.cellForRow(at: indexPath) as? MarkReviewTVC {
+                    markCell.markTxt.becomeFirstResponder()
+                }
+            }
+        }
+    }
+
+
     func updateMark(row: Int, column: Int, value: String, reson: String) {
         
         guard row < studentRecords.count,

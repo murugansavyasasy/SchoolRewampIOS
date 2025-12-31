@@ -29,12 +29,16 @@ class MarkReviewTVC: UITableViewCell {
     
     private func setupTextField() {
         markTxt.delegate = self
-//        markTxt.keyboardType = .numberPad
         markTxt.textAlignment = .center
         markTxt.borderStyle = .roundedRect
         markTxt.placeholder = "--"
         markTxt.font = UIFont.systemFont(ofSize: 15)
-        markTxt.addDoneButton()
+
+        let keyboard = MarkKeyboardView(frame: CGRect(x: 0, y: 0,
+                                                      width: UIScreen.main.bounds.width,
+                                                      height: 120))
+        keyboard.delegate = self
+        markTxt.inputView = keyboard
     }
     
     private func setupInfoButton() {
@@ -237,10 +241,136 @@ extension MarkReviewTVC: UITextFieldDelegate {
         infoBtn.isHidden = true
         markTxt.layer.borderWidth = 0
     }
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        parentVC?.activeTextField = textField
-    }
 
 
 }
+extension MarkReviewTVC {
 
+    func setupKeyboard() {
+
+        markTxt.keyboardType = .numberPad
+
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+
+        let left   = UIBarButtonItem(title: "⬅️", style: .plain, target: self, action: #selector(prevCol))
+        let right  = UIBarButtonItem(title: "➡️", style: .plain, target: self, action: #selector(nextCol))
+        let up     = UIBarButtonItem(title: "⬆️", style: .plain, target: self, action: #selector(prevRow))
+        let down   = UIBarButtonItem(title: "⬇️", style: .plain, target: self, action: #selector(nextRow))
+        let ab     = UIBarButtonItem(title: "AB", style: .done, target: self, action: #selector(setAB))
+        let space  = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let done   = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneTap))
+
+        toolbar.items = [left, right, up, down, space, ab, done]
+        markTxt.inputAccessoryView = toolbar
+    }
+
+    @objc func prevCol()  { parentVC?.moveToPreviousColumn(row: rowIndex, column: columnIndex) }
+    @objc func nextCol()  { parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex) }
+    @objc func prevRow()  { parentVC?.moveToPreviousRow(row: rowIndex, column: columnIndex) }
+    @objc func nextRow()  { parentVC?.moveToNextRow(row: rowIndex, column: columnIndex) }
+
+    @objc func setAB() {
+        markTxt.text = "AB"
+        parentVC?.updateMark(row: rowIndex, column: columnIndex, value: "AB", reson: "Absent")
+    }
+
+    @objc func doneTap() {
+        markTxt.resignFirstResponder()
+    }
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        parentVC?.activeTextField = textField
+    }
+}
+
+extension MarkReviewTVC: MarkKeyboardDelegate {
+
+    func didTapAB() {
+        markTxt.text = "AB"
+        delegate?.markDidChange(row: rowIndex,
+                                column: columnIndex,
+                                value: "AB",
+                                reason: "Absent")
+        parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex)
+    }
+
+    func didTapLeft()  { parentVC?.moveToPreviousColumn(row: rowIndex, column: columnIndex) }
+    func didTapRight() { parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex) }
+    func didTapUp()    { parentVC?.moveToPreviousRow(row: rowIndex, column: columnIndex) }
+    func didTapDown()  { parentVC?.moveToNextRow(row: rowIndex, column: columnIndex) }
+}
+
+
+protocol MarkKeyboardDelegate: AnyObject {
+    func didTapAB()
+    func didTapLeft()
+    func didTapRight()
+    func didTapUp()
+    func didTapDown()
+}
+
+class MarkKeyboardView: UIView {
+
+    weak var delegate: MarkKeyboardDelegate?
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupUI()
+        setupGestures()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupUI()
+        setupGestures()
+    }
+
+    private func setupUI() {
+
+        backgroundColor = .systemGray6
+
+        let abBtn = UIButton(type: .system)
+        abBtn.setTitle("AB", for: .normal)
+        abBtn.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        abBtn.backgroundColor = .systemRed.withAlphaComponent(0.1)
+        abBtn.layer.cornerRadius = 10
+        abBtn.addTarget(self, action: #selector(abTapped), for: .touchUpInside)
+
+        addSubview(abBtn)
+        abBtn.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            abBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
+            abBtn.centerYAnchor.constraint(equalTo: centerYAnchor),
+            abBtn.widthAnchor.constraint(equalToConstant: 120),
+            abBtn.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+
+    private func setupGestures() {
+
+        let directions: [UISwipeGestureRecognizer.Direction] = [.left,.right,.up,.down]
+
+        for dir in directions {
+            let swipe = UISwipeGestureRecognizer(target: self,
+                                                 action: #selector(handleSwipe(_:)))
+            swipe.direction = dir
+            addGestureRecognizer(swipe)
+        }
+    }
+
+    @objc private func abTapped() {
+        delegate?.didTapAB()
+    }
+
+    @objc private func handleSwipe(_ g: UISwipeGestureRecognizer) {
+        switch g.direction {
+        case .left:  delegate?.didTapLeft()
+        case .right: delegate?.didTapRight()
+        case .up:    delegate?.didTapUp()
+        case .down:  delegate?.didTapDown()
+        default: break
+        }
+    }
+}
