@@ -6,9 +6,11 @@
 //
 
 import UIKit
-protocol checkExamlists: AnyObject {
-    func checkExamlist(isChecked: Bool, index: Int,come_from_AI : Bool)
+protocol ActivityCellDelegate: AnyObject {
+    func didToggleSplit(subjectIndex: Int, splitIndex: Int, isChecked: Bool)
+    func didSelectAIOption(subjectIndex: Int, splitIndex: Int, option: String)
 }
+
 class ActivitiesTVCell: UITableViewCell {
 
     @IBOutlet weak var CheckBoxBtnName: UIButton!
@@ -19,7 +21,11 @@ class ActivitiesTVCell: UITableViewCell {
     @IBOutlet weak var ActivitystatusLbl: UILabel!
     
     let dropdown = DropDown()
-    var delegate : checkExamlists?
+    weak var delegate: ActivityCellDelegate?
+    private var subjectIndex = 0
+    private var splitIndex = 0
+    let isAi = false
+    
     let items: [String] = [
         "HEADER_ACTIONS",
         "🚫 Ignore (Skip this activity)",
@@ -32,23 +38,6 @@ class ActivitiesTVCell: UITableViewCell {
         "Geometry"
     ]
     
-    @IBAction func CheckBoxBtnAct(_ sender: UIButton) {
-        sender.isSelected.toggle()
-
-           updateCheckboxUI(isChecked: sender.isSelected)
-
-        delegate?.checkExamlist(isChecked: sender.isSelected, index: sender.tag, come_from_AI: dropdownView.isHidden )
-       }
-
-       func updateCheckboxUI(isChecked: Bool) {
-           if isChecked {
-               CheckBoxBtnName.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
-               CheckBoxBtnName.tintColor = .systemBlue
-           } else {
-               CheckBoxBtnName.setImage(UIImage(systemName: "square"), for: .normal)
-               CheckBoxBtnName.tintColor = .lightGray
-           }
-       }
     override func awakeFromNib() {
         super.awakeFromNib()
        
@@ -67,36 +56,46 @@ class ActivitiesTVCell: UITableViewCell {
         setupDropdown()
     }
     
-    func cellConfig(come_from_AI:Bool,actitvityDetails:SplitDetail){
-        
-        dropdownView.isHidden = !come_from_AI
-        activityNameLbl.text = actitvityDetails.name
-    }
-//    func confugure(value:Int){
-//        
-//        switch value{
-//            
-//        case 0:
-//            ActivityStatusView.isHidden = true
-//            
-//        case 1:
-//            ActivityStatusView.isHidden = false
-//            ActivityStatusView.backgroundColor = .staffExamColour.withAlphaComponent(0.06)
-//            
-//        case 2:
-//            ActivityStatusView.isHidden = false
-//            ActivityStatusView.backgroundColor = .systemBlue.withAlphaComponent(0.06)
-//            
-//        default:
-//            ActivityStatusView.isHidden = true
-//            
-//        }
-//    }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
     }
+    
+    func configure(
+            subjectIndex: Int,
+            splitIndex: Int,
+            split: SplitDetail,
+            isAi: Bool
+        ) {
+            self.subjectIndex = subjectIndex
+            self.splitIndex = splitIndex
+
+            activityNameLbl.text = split.name
+            CheckBoxBtnName.isSelected = split.isChecked ?? false
+
+            dropdownView.isHidden = !(isAi && split.isChecked ?? false)
+            dropdownLbl.text = split.selectedAIOption
+        }
+    
+    @IBAction func CheckBoxBtnAct(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        updateCheckboxUI(isChecked: sender.isSelected)
+        dropdownView.isHidden = !(isAi && sender.isSelected)
+        delegate?.didToggleSplit(subjectIndex: subjectIndex, splitIndex: splitIndex, isChecked: sender.isSelected)
+        if let parentTable = self.superview as? UITableView {
+                               parentTable.beginUpdates()
+                               parentTable.endUpdates()
+                           }
+       }
+
+       func updateCheckboxUI(isChecked: Bool) {
+           if isChecked {
+               CheckBoxBtnName.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+               CheckBoxBtnName.tintColor = .systemBlue
+           } else {
+               CheckBoxBtnName.setImage(UIImage(systemName: "square"), for: .normal)
+               CheckBoxBtnName.tintColor = .lightGray
+           }
+       }
     
     func setupDropdown() {
             dropdown.anchorView = dropdownView

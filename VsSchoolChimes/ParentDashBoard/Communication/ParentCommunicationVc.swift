@@ -161,12 +161,12 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
                 }
             }
             
-            if message.is_unread{
+            if message.is_unread ?? false{
                 currentCell.NewImageView.isHidden = true
                 if message.is_archive ?? false{
-                    ReadStatusUpdate(type: message.type, detail_id: message.id)
+                    ReadStatusUpdate(type: message.type ?? "", detail_id: message.id ?? "")
                 }else{
-                    ReadStatusUpdateArchive(type: message.type, detail_id: message.id)
+                    ReadStatusUpdateArchive(type: message.type ?? "", detail_id: message.id ?? "")
                 }
             }
         }
@@ -280,7 +280,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
             case .success(let SuccessMessage):
                 if SuccessMessage.status == true {
                     DispatchQueue.main.async {
-                        self.allMessages = SuccessMessage.data
+                        self.allMessages = SuccessMessage.data ?? []
                         self.displayedMessages = self.allMessages
                         self.NodataLbl.isHidden = true
                         self.NodataImage.isHidden = true
@@ -350,8 +350,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
                 
             case .success(let response):
                 DispatchQueue.main.async {
-                    if response.status {
-                        self.allMessages.append(contentsOf: response.data)
+                    if response.status == true {
+                        self.allMessages.append(contentsOf: response.data ?? [])
                         self.applyFilters()
                         self.NodataLbl.isHidden = true
                         self.NodataImage.isHidden = true
@@ -372,7 +372,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
                             self.NodataImage.isHidden = false
                             self.NodataLbl.isHidden = false
                         } else {
-                            self.ArchiveMessage = response.message
+                            self.ArchiveMessage = response.message ?? ""
                             self.shouldShowFooterLabel = true
                         }
                     }
@@ -482,7 +482,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         
         let message = displayedMessages[indexPath.row]
         
-        switch message.type.uppercased() {
+        switch message.type?.uppercased() {
             
         case "TEXT":
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
@@ -494,9 +494,9 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.descriptContent.tag = indexPath.row
             cell.descriptContent.isUserInteractionEnabled = true
             cell.MessageTitle.text = message.title
-            let formattedDateString = dateFormatter.convertDate(message.date) ?? ""
+            let formattedDateString = dateFormatter.convertDate(message.date ?? "") ?? ""
             cell.DateLabel.setStyledDateTime(dateString: formattedDateString, timeString: message.time)
-            cell.descriptContent.attributedText = self.descript(for:message.content, expanded: message.isExpand ?? false)
+            cell.descriptContent.attributedText = self.descript(for:message.content ?? "", expanded: message.isExpand ?? false)
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleLabelTap(_:)))
             cell.descriptContent.addGestureRecognizer(tapGesture)
             cell.layoutIfNeeded()
@@ -514,7 +514,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.HistoryTC, for: indexPath) as! HistoryTC
             let isPlaying = (playIndex == indexPath.row)
             let voiceData = message
-            cell.emergencyMessageBtn.isHidden = !(voiceData.is_emergency)
+            cell.emergencyMessageBtn.isHidden = !(voiceData.is_emergency ?? false)
             cell.sendbtn.isHidden = true
             cell.sentBtnHeight.constant = 0
             cell.sentBtnWidth.constant = 0
@@ -525,7 +525,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.FinishPlayingdelegate = self
             cell.NewImageView.isHidden = true
             cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
-            let formattedDateString = dateFormatter.convertDate(message.date) ?? ""
+            let formattedDateString = dateFormatter.convertDate(message.date ?? "") ?? ""
             cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: message.time)
             cell.contentlbl.text = voiceData.title
             let duration = voiceData.duration ?? 0
@@ -555,7 +555,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
                 cell.configureShimmer()
             }
             
-            cell.NewImageView.isHidden = !(message.is_unread)
+            cell.NewImageView.isHidden = !(message.is_unread ?? false)
             
             return cell
             
@@ -800,11 +800,26 @@ extension ParentCommunicationVc : UISearchBarDelegate {
         if trimmedText.isEmpty {
             displayedMessages = baseList
         } else {
+//            displayedMessages = baseList.filter { msg in
+//                let date = dateFormatter.convertDate(msg.date ?? "")?.lowercased() ?? ""
+//                return [msg.title, msg.content, msg.type, date]
+//                    .map { $0?.lowercased() }
+//                    .contains { $0.contains(trimmedText) }
+//            }
             displayedMessages = baseList.filter { msg in
-                let date = dateFormatter.convertDate(msg.date)?.lowercased() ?? ""
-                return [msg.title, msg.content, msg.type, date]
-                    .map { $0.lowercased() }
-                    .contains { $0.contains(trimmedText) }
+                let date = dateFormatter
+                    .convertDate(msg.date ?? "")?
+                    .lowercased() ?? ""
+
+                let searchableFields = [
+                    msg.title,
+                    msg.content,
+                    msg.type,
+                    date
+                ]
+                .compactMap { $0?.lowercased() }
+
+                return searchableFields.contains { $0.contains(trimmedText) }
             }
         }
         
@@ -825,11 +840,11 @@ extension ParentCommunicationVc : UISearchBarDelegate {
 extension Array where Element == CommunicationReciverData {
     func filtered(readStatus: Int, type: String?) -> [CommunicationReciverData] {
         self.filter { msg in
-            let matchesType = type == nil || msg.type.caseInsensitiveCompare(type!) == .orderedSame
+            let matchesType = type == nil || msg.type?.caseInsensitiveCompare(type!) == .orderedSame
             let matchesReadStatus: Bool = {
                 switch readStatus {
-                case 1: return !msg.is_unread
-                case 2: return msg.is_unread
+                case 1: return !(msg.is_unread ?? false)
+                case 2: return msg.is_unread ?? false
                 default: return true
                 }
             }()

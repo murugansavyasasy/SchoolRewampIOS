@@ -402,7 +402,7 @@ class ChatAPIKeys {
     static let student_id = "student_id"
     static let is_block = "is_block"
     static let reason = "reason"
-    static let Types = "Type"
+    static let Types = "type"
     static let section_id = "section_id"
     static let detail_id = "detail_id"
 }
