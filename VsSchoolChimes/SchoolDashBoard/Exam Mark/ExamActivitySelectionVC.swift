@@ -83,10 +83,39 @@ class ExamActivitySelectionVC: UIViewController {
        }
     
     @IBAction func continueAct(_ sender: Any) {
+        print("payload", buildPayload())
         let vc = EnterMarkVC()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
+    
+    func buildPayload() -> [String: Any] {
+
+        let selectedActivities = SubjectList.compactMap { subject -> [String: Any]? in
+            let selected = subject.splitup_details?.filter { $0.isChecked == true } ?? []
+            guard !selected.isEmpty else { return nil }
+
+            return [
+                "subject_id": subject.subject_id ?? "",
+                "subject_name": subject.subject_name ?? "",
+                "activities": selected.map {
+                    var dict: [String: Any] = ["activity_id": $0.id ?? "", "activity_name": $0.name ?? "", "max_mark": $0.max_mark ?? ""]
+                    if isAIFlow == true {
+                        dict["ai_option"] = $0.selectedAIOption ?? ""
+                    }
+                    return dict
+                }
+            ]
+        }
+
+        return [
+            "class_id": SubjectList.first?.class_id ?? "",
+            "section_id": SubjectList.first?.section_id ?? "",
+            "exam_id": ExamID,
+            "selected_activities": selectedActivities
+        ]
+    }
+
     
     @IBAction func BackAct(_ sender: Any) {
         dismiss(animated: true)
@@ -104,21 +133,20 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SubjectsTVCell", for: indexPath) as! SubjectsTVCell
 
         let data = SubjectList[indexPath.row]
-        
-        cell.splits = data.splitup_details ?? []
-        cell.isExpanded = (expandedIndex == indexPath)
-        cell.tableview.reloadData()
-        cell.configureExpandState()
-        cell.onHeightChange = { [weak self] in
-            guard let self = self else { return }
-            self.tableview.beginUpdates()
-            self.tableview.endUpdates()
-            self.updateMainHeight()
-        }
-        
-        cell.delegate = self
 
-        return cell
+            cell.subjectIndex = indexPath.row
+            cell.isAI = isAIFlow
+            cell.delegate = self
+            cell.isExpanded = (expandedIndex == indexPath)
+            cell.splits = data.splitup_details ?? []
+            cell.updateStatusLabel()
+            cell.configureExpandState()
+
+            cell.onHeightChange = { [weak self] in
+                self?.updateMainHeight()
+            }
+
+            return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -154,48 +182,10 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+
 extension ExamActivitySelectionVC: SubjectCellDelegate {
-
-    func didUpdateSplit(
-        subjectIndex: Int,
-        splitIndex: Int,
-        split: SplitDetail
-    ) {
-        let subject = SubjectList[subjectIndex]
-
-        guard
-            let subjectId = subject.subject_id,
-            let subjectName = subject.subject_name,
-            let splitId = split.id,
-            let splitName = split.name
-        else { return }
-
-        let keyMatch: (SelectedSplit) -> Bool = {
-            $0.subjectId == subjectId && $0.splitId == splitId
+        func didUpdateSplit(subjectIndex: Int, splitIndex: Int, split: SplitDetail) {
+            SubjectList[subjectIndex].splitup_details?[splitIndex] = split
         }
-
-        // 🔹 UNCHECKED → REMOVE
-        if !(split.isChecked ?? false) {
-            selectedSplits.removeAll(where: keyMatch)
-            return
-        }
-
-        // 🔹 CHECKED → ADD OR UPDATE
-        if let index = selectedSplits.firstIndex(where: keyMatch) {
-            // UPDATE (dropdown change)
-            selectedSplits[index].aiOption = split.selectedAIOption
-        } else {
-            // ADD NEW
-            selectedSplits.append(
-                SelectedSplit(
-                    subjectId: subjectId,
-                    subjectName: subjectName,
-                    splitId: splitId,
-                    splitName: splitName,
-                    aiOption: split.selectedAIOption
-                )
-            )
-        }
-
     }
-}
+

@@ -19,6 +19,7 @@
                 <outlet property="cancelBtn" destination="yb3-TX-q4z" id="DaR-WC-Vcq"/>
                 <outlet property="documentIcon" destination="S9h-YR-ltQ" id="Ep3-Tz-uMZ"/>
                 <outlet property="manualView" destination="MAI-wC-n4t" id="sbA-Gp-svL"/>
+                <outlet property="pickedFilenameLbl" destination="oKQ-tv-kop" id="KmO-uA-m3j"/>
                 <outlet property="popupBaseVIew" destination="DuN-0e-8Ws" id="dlF-N2-cML"/>
                 <outlet property="popupView" destination="mxt-cQ-s7v" id="lpm-c8-Al3"/>
                 <outlet property="separatorView" destination="GMm-3K-Lt9" id="VxQ-Ya-mB9"/>
@@ -207,7 +208,7 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PNG, JPG, PDF up to 10MB" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z7a-hG-mNN">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PNG, JPG up to 10MB" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z7a-hG-mNN">
                                                                     <rect key="frame" x="10" y="118" width="293" height="15.666666666666657"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

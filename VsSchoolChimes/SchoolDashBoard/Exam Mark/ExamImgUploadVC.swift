@@ -7,9 +7,10 @@
 
 import UIKit
 import VisionKit
+import Photos
 
 @available(iOS 14.0, *)
-class ExamImgUploadVC: UIViewController {
+class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     
     @IBOutlet weak var AIview: UIView!
@@ -24,11 +25,16 @@ class ExamImgUploadVC: UIViewController {
     @IBOutlet weak var ContinuewithUploadBtn: UIButton!
     @IBOutlet weak var uploadIconImage: UIImageView!
     @IBOutlet weak var documentIcon: UIImageView!
+    @IBOutlet weak var pickedFilenameLbl: UILabel!
+    
+    
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var attachments: [AttachmentItem] = []
     var SubjectList : [SubjectExamData] = []
     var is_aiViewCliked : Bool = false
     var examId : String?
+    private var selectedImageData: Data?
+    private var selectedImage: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,9 +73,6 @@ class ExamImgUploadVC: UIViewController {
         cancelBtn.layer.borderWidth = 1
         cancelBtn.layer.borderColor = UIColor.staffExamColour.cgColor
         ContinueManuallyBtn.layer.cornerRadius = 10
-        
-        imageSelection()
-        
     }
    
     @IBAction func AiTap(){
@@ -80,7 +83,7 @@ class ExamImgUploadVC: UIViewController {
         AiInstructionView.isHidden = false
         uploadView.isHidden = false
         separatorView.isHidden = false
-        ContinuewithUploadBtn.isHidden = false
+       // ContinuewithUploadBtn.isHidden = false
         documentIcon.tintColor = .staffExamColour
     }
     
@@ -105,102 +108,67 @@ class ExamImgUploadVC: UIViewController {
         
         // Camera option
         let cameraAction = UIAlertAction(title: CommonStringFile.Camera, style: .default) { [self] _ in
-           
-            //openCamera()
-            openDocumentScanner(from: self)
+           openCamera()
         }
         alertController.addAction(cameraAction)
         
         // Gallery option
         let galleryAction = UIAlertAction(title: CommonStringFile.Photos, style: .default) { [self] _ in
-            selectImages()
-            //
+           openImagePicker()
         }
         alertController.addAction(galleryAction)
         
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func selectImages() {
-        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
-        if attachments.count != 10{
-            PhotoPickerManager.shared
-                .presentPicker(
-                    ofType: .gallery(selectionLimit: 10 - attachments.count),
-                    from: self
-                )
-            
-        }else{
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
+    private func openImagePicker() {
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.sourceType = .photoLibrary
+            picker.allowsEditing = false
+            present(picker, animated: true)
         }
-        
-    }
-    func openCamera(){
-        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
-        if attachments.count != 10{
-            PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
-        }else{
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
-        }
-    }
     
-    func openDocumentScanner(from viewController: UIViewController) {
-        let scanner = VNDocumentCameraViewController()
-        scanner.delegate = self
-        viewController.present(scanner, animated: true)
+    private func openCamera() {
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+            print("Camera not available")
+            return
+        }
+
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = .camera
+        picker.allowsEditing = false
+        present(picker, animated: true)
     }
 
-    
-    func imageSelection(){
-        
-        // handle picked image from camera
-        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-            
-            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-            
-            user_inputs.selectedFileType = CommonStringFile.IMAGE
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+    ) {
+        picker.dismiss(animated: true)
+
+        if let image = info[.originalImage] as? UIImage {
+            selectedImage = image
+            selectedImageData = image.jpegData(compressionQuality: 0.9)
         }
-        
-        // handle picked image from gallery
-        PhotoPickerManager.shared.onImagesPicked = { [self] images in
-            
-            let imageItems = images.map {
-                AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
-            }
-            attachments.append(contentsOf: imageItems)
-            
-            user_inputs.selectedFileType = CommonStringFile.IMAGE
-            
+
+        var selectedImageName = ""
+
+        if let asset = info[.phAsset] as? PHAsset {
+            let resources = PHAssetResource.assetResources(for: asset)
+            selectedImageName = resources.first?.originalFilename ?? ""
+        } else {
+            // Camera images do NOT have PHAsset
+            selectedImageName = "camera_image.jpg"
         }
-        
-        // handle picked PDF
-        PhotoPickerManager.shared.onFilePicked = { [self] data in
-           
-            attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
-            
-            user_inputs.selectedFileType = CommonStringFile.pdf
-            
-        }
-        
-        // handle picked video
-        PhotoPickerManager.shared.onVideoPicked = { [self] data in
-            
-            user_inputs.selectedFileType = CommonStringFile.VIDEO
-            attachments.append(AttachmentItem(
-                image:nil,
-                imageURL: nil,
-                fileType: CommonStringFile.VIDEO,
-                VideoURl: data
-            )
-            )
-        }
+
+        pickedFilenameLbl.text = selectedImageName
+        ContinuewithUploadBtn.isHidden = false
     }
-    
-    
+
     @IBAction func popupCancelAct(_ sender: Any) {
         
         hidePopup()
@@ -218,11 +186,12 @@ class ExamImgUploadVC: UIViewController {
     
     @IBAction func continueWithUploadAct(_ sender: Any) {
         
-        let vc = ExamActivitySelectionVC()
-        vc.ExamID = examId ?? ""
-        vc.isAIFlow = true
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        uploadImageForAI()
+//        let vc = ExamActivitySelectionVC()
+//        vc.ExamID = examId ?? ""
+//        vc.isAIFlow = true
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
         
 //        loadSubjectList(for: examId ?? "") { [self] (isSuccess) in
 //            if isSuccess {
@@ -235,7 +204,72 @@ class ExamImgUploadVC: UIViewController {
 //        }
     }
     
+    func uploadImageForAI(){
+        
+      showActivityLoader()
+        
+        guard let image = selectedImage else { return }
+        
+        APIService.shared.uploadImageApi(url: ServiceUrl.ocr_api_upload_marks, image: image){ [weak self] (result: Result<MarksAIresponse, Error>) in
+            
+            
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                
+                self.hideActivityLoader()
+                
+                switch result {
+                case .success(let success):
+                    
+                    if success.status == true {
+                        
+                        let select = success.data.selectedColumns
+                        let record  = self.convertRecords(data: success.data)
+                        
+                        print("Reord", record)
+                        print("error", success.message!)
+                    }
+                    
+                case .failure(let failure):
+                    print("failure",failure.localizedDescription)
+                }
+            }
+            
+        }
+    }
     
+    func convertRecords(
+        data: markAiData
+    ) -> [ConvertedStudentRecord] {
+
+        let selectedColumns = data.selectedColumns ?? []
+        let records = data.records
+
+        return records.map { record in
+
+            let sNo = record.values["S.no"]?.stringValue ?? ""
+            let regNo = record.values["Reg No"]?.stringValue ?? ""
+            let studentName = record.values["Student Name"]?.stringValue ?? ""
+
+            let marks: [RecordItem] = selectedColumns.compactMap { column in
+                guard let value = record.values[column] else { return nil }
+                return RecordItem(
+                    name: column,
+                    value: value.stringValue
+                )
+            }
+
+            return ConvertedStudentRecord(
+                sNo: sNo,
+                regNo: regNo,
+                studentName: studentName,
+                marks: marks
+            )
+        }
+    }
+
+
     
     func loadSubjectList(for examId: String,completion: @escaping (Bool)->Void) {
         SubjectList.removeAll()

@@ -473,12 +473,7 @@ struct Subjects: Codable {
     let reason: String
 }
 
-struct ReviewFlag {
-    let studentId: String
-    let field: String
-    let value: String
-    let reason: String
-}
+
 extension String {
     func width(usingFont font: UIFont) -> CGFloat {
         let size = (self as NSString).size(withAttributes: [.font: font])

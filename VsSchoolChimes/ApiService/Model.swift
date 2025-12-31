@@ -2778,7 +2778,7 @@ struct SubjectExamData: Codable {
     let class_name: String?
     let subject_id: String?
     let subject_name: String?
-    let splitup_details: [SplitDetail]?
+    var splitup_details: [SplitDetail]?
 }
 
 struct SplitDetail: Codable {
@@ -2798,3 +2798,92 @@ struct SelectedSplit {
     let splitName: String
     var aiOption: String?   // nil for Manual
 }
+
+//MARK: mark upload AI Api response
+
+struct MarksAIresponse: Codable {
+    
+    let status: Bool?
+    let message: String?
+    let data: markAiData
+}
+
+struct markAiData: Codable {
+    
+    let selectedColumns: [String]?
+    let reviewFlags: [ReviewFlag]?
+    let records: [DynamicRecord]
+}
+
+struct ReviewFlag: Codable {
+    let studentId: String?
+    let field: String?
+    let value: String?
+    let reason: String?
+}
+
+enum RecordValue: Codable {
+    case int(Int)
+    case string(String)
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let intValue = try? container.decode(Int.self) {
+            self = .int(intValue)
+        } else {
+            self = .string(try container.decode(String.self))
+        }
+    }
+
+    var stringValue: String {
+        switch self {
+        case .int(let value):
+            return String(value)
+        case .string(let value):
+            return value
+        }
+    }
+}
+
+struct DynamicCodingKey: CodingKey {
+    var stringValue: String
+    var intValue: Int? { nil }
+
+    init?(stringValue: String) {
+        self.stringValue = stringValue
+    }
+
+    init?(intValue: Int) { nil }
+}
+
+struct DynamicRecord: Codable {
+    let values: [String: RecordValue]
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: DynamicCodingKey.self)
+
+        var temp: [String: RecordValue] = [:]
+        for key in container.allKeys {
+            temp[key.stringValue] = try container.decode(
+                RecordValue.self,
+                forKey: key
+            )
+        }
+        values = temp
+    }
+}
+
+
+struct RecordItem {
+    let name: String
+    let value: String
+}
+
+struct ConvertedStudentRecord {
+    let sNo: String
+    let regNo: String
+    let studentName: String
+    let marks: [RecordItem]
+}
+
+//-------------------------------------------------------------------------------------------------------

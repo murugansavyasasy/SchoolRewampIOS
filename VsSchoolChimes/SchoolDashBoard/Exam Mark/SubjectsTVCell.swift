@@ -24,7 +24,7 @@ class SubjectsTVCell: UITableViewCell {
     
     var isExpanded = false
     var onHeightChange: (() -> Void)?
-    private var subjectIndex = 0
+    var subjectIndex:Int = 0
     var splits: [SplitDetail] = []
     var isAI : Bool = false
     weak var delegate: SubjectCellDelegate?
@@ -38,6 +38,8 @@ class SubjectsTVCell: UITableViewCell {
         baseView.layer.shadowOpacity = 0.15
         baseView.layer.shadowRadius = 4
         baseView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        baseView.layer.borderWidth = 1.5
+        baseView.layer.borderColor = UIColor.lightGray.cgColor
 
         subjectView.layer.cornerRadius = 10
         subjectView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
@@ -50,8 +52,7 @@ class SubjectsTVCell: UITableViewCell {
         tableview.isHidden = true
         tableviewHeight.constant = 0
         
-        tableview.register(UINib(nibName: "ActivitiesTVCell", bundle: nil),
-                           forCellReuseIdentifier: "ActivitiesTVCell")
+        tableview.register(UINib(nibName: "ActivitiesTVCell", bundle: nil),forCellReuseIdentifier: "ActivitiesTVCell")
         
         tableview.delegate = self
         tableview.dataSource = self
@@ -83,9 +84,33 @@ class SubjectsTVCell: UITableViewCell {
         }
     }
     
+    func updateStatusLabel() {
+        let selected = splits.filter { $0.isChecked == true }.count
+        
+        if isAI{
+            if selected == 0{
+                statusLbl.text = "Not started"
+                statusLbl.textColor = .darkGray
+                subjectView.backgroundColor = .systemBackground
+                baseView.layer.borderColor = UIColor.lightGray.cgColor
+            }else if selected < splits.count {
+                statusLbl.text = "\(selected) of \(splits.count) activities mapped"
+                statusLbl.textColor = .systemBrown
+                subjectView.backgroundColor = .systemYellow.withAlphaComponent(0.05)
+                baseView.layer.borderColor = UIColor.systemOrange.cgColor
+            }else{
+                statusLbl.text = "All \(splits.count) activities mapped"
+                statusLbl.textColor = .systemGreen
+                subjectView.backgroundColor = .systemGreen.withAlphaComponent(0.05)
+                baseView.layer.borderColor = UIColor.systemGreen.cgColor
+            }
+        }else{
+            statusLbl.text = "\(selected) of \(splits.count) activities selected"
+        }
+    }
     
     func configureExpandState() {
-
+        
             if isExpanded {
                 expandIconBtn.setImage(UIImage(systemName: "chevron.up"), for: .normal)
 
@@ -117,9 +142,7 @@ extension SubjectsTVCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActivitiesTVCell", for: indexPath) as! ActivitiesTVCell
         
-       // cell.dropdownView.isHidden = true
-        cell.ActivityStatusView.isHidden = true
-        cell.configure(subjectIndex: subjectIndex, splitIndex: indexPath.row, split: splits[indexPath.row], isAi: true)
+        cell.configure(subjectIndex: subjectIndex, splitIndex: indexPath.row, split: splits[indexPath.row], isAi: isAI)
         cell.delegate = self
     
         return cell
@@ -136,52 +159,52 @@ extension SubjectsTVCell: UITableViewDelegate, UITableViewDataSource {
 
 extension SubjectsTVCell: ActivityCellDelegate {
 
+    func didUpdateAISplit(
+        subjectIndex: Int,
+        splitIndex: Int,
+        isChecked: Bool,
+        aiOption: String?
+    ) {
+        splits[splitIndex].isChecked = isChecked
+        splits[splitIndex].selectedAIOption = aiOption
+
+        updateStatusLabel()
+
+        delegate?.didUpdateSplit(
+            subjectIndex: subjectIndex,
+            splitIndex: splitIndex,
+            split: splits[splitIndex]
+        )
+
+        tableview.reloadRows(
+            at: [IndexPath(row: splitIndex, section: 0)],
+            with: .none
+        )
+    }
+
     func didToggleSplit(
         subjectIndex: Int,
         splitIndex: Int,
         isChecked: Bool
     ) {
         splits[splitIndex].isChecked = isChecked
-        if !isChecked {
-            splits[splitIndex].selectedAIOption = nil
-        }
+        splits[splitIndex].selectedAIOption = nil
+
+        updateStatusLabel()
+
+        delegate?.didUpdateSplit(
+            subjectIndex: subjectIndex,
+            splitIndex: splitIndex,
+            split: splits[splitIndex]
+        )
 
         tableview.reloadRows(
             at: [IndexPath(row: splitIndex, section: 0)],
-            with: .automatic
+            with: .none
         )
-
-        delegate?.didUpdateSplit(
-            subjectIndex: subjectIndex,
-            splitIndex: splitIndex,
-            split: splits[splitIndex]
-        )
-        
-        if let parentTable = self.superview as? UITableView {
-                               parentTable.beginUpdates()
-                               parentTable.endUpdates()
-                           }
-    }
-
-    func didSelectAIOption(
-        subjectIndex: Int,
-        splitIndex: Int,
-        option: String
-    ) {
-        splits[splitIndex].selectedAIOption = option
-
-        delegate?.didUpdateSplit(
-            subjectIndex: subjectIndex,
-            splitIndex: splitIndex,
-            split: splits[splitIndex]
-        )
-        
-        if let parentTable = self.superview as? UITableView {
-                               parentTable.beginUpdates()
-                               parentTable.endUpdates()
-                           }
     }
 }
+
 
 
 class ContentSizedTableView: UITableView {
