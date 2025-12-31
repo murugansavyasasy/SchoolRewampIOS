@@ -87,7 +87,6 @@ class MarkReviewCVC: UICollectionViewCell {
         // Reload table
         listTable.reloadData()
         
-        // 🔑 Restore vertical position from parent AFTER reload
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
@@ -122,10 +121,13 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
         return studentRecords.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MarkReviewTVC",
-                                                 for: indexPath) as! MarkReviewTVC
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: "MarkReviewTVC",
+            for: indexPath
+        ) as! MarkReviewTVC
         
         guard indexPath.row < studentRecords.count else {
             print("❌ Index out of bounds")
@@ -141,22 +143,21 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
         var hasFlaggedIssue = false
         var reasonText = ""
         
-        if let subjectName = columnConfig.subjectName,
-           let subject = studentMarks?.first(where: { $0.subject_name == subjectName }) {
-            if let activityId = columnConfig.activityId,
-               let activity = subject.activities?.first(where: { $0.id == activityId }) {
+        if let subject = studentMarks?.first(where: {
+            $0.subject_name == columnConfig.subjectName
+        }) {
+            if let activity = subject.activities?.first(where: {
+                ($0.name ?? "") == columnConfig.activityName
+            }) {
                 
                 displayValue = activity.mark ?? ""
+                
                 if !activity.cnfidenceLvl {
                     hasFlaggedIssue = true
                     reasonText = activity.reason
                 }
-                
-            } else {
-                displayValue = ""
             }
         }
-        
         if hasFlaggedIssue {
             flagReasons[indexPath.row] = reasonText
         }
@@ -170,14 +171,17 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
             parentVC: parentVC,
             hasFlaggedIssue: hasFlaggedIssue
         )
-        cell.delegate = self
         
+        cell.delegate = self
         cell.infoBtn.removeTarget(nil, action: nil, for: .allEvents)
         cell.infoBtn.tag = indexPath.row
-        cell.infoBtn.addTarget(self, action: #selector(infoBtnTapped(_:)), for: .touchUpInside)
+        cell.infoBtn.addTarget(self,
+                               action: #selector(infoBtnTapped(_:)),
+                               for: .touchUpInside)
         
         return cell
     }
+
     
     @objc func infoBtnTapped(_ sender: UIButton) {
         let rowIndex = sender.tag
@@ -233,18 +237,22 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView,
                    heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        let subject = studentRecords[indexPath.row]
-        
-        let text = subject.student_name ?? ""
-        let font = UIFont.systemFont(ofSize: 16, weight: .medium)
+
+        let student = studentRecords[indexPath.row]
+
+        let name = student.student_name ?? ""
+        let rollNo = student.roll_no ?? ""
+
+        let nameFont = UIFont.systemFont(ofSize: 16, weight: .medium)
+        let rollFont = UIFont.systemFont(ofSize: 13, weight: .regular)
+
         let labelWidth: CGFloat = 160
-        
-        let dynamicHeight = textHeight(text: text,
-                                       font: font,
-                                       width: labelWidth)
-        
-        return max(50, dynamicHeight + 20)
+
+        let nameHeight = textHeight(text: name, font: nameFont, width: labelWidth)
+        let rollHeight = textHeight(text: "Reg: \(rollNo)", font: rollFont, width: labelWidth)
+
+        let totalHeight = nameHeight + rollHeight + 24
+        return max(50, totalHeight)
     }
     
     func textHeight(text: String, font: UIFont, width: CGFloat) -> CGFloat {

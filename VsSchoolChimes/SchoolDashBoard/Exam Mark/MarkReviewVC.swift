@@ -21,18 +21,17 @@ class MarkReviewVC: UIViewController {
     var subjectColumns: [ColumnConfig] = []
     private var isSyncing = false
     private var editedMarks: [String: [String: String]] = [:]
-    
-    // 🔑 Store current vertical offset to maintain position
     private var currentVerticalOffset: CGFloat = 0
-    
+    var payload:[String:Any]?
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         if #available(iOS 15.0, *) {
             studentTableView.sectionHeaderTopPadding = 0
         }
+        setupColumnsFromPayload(payload ?? [:])
         saveMarksBtn.layer.cornerRadius = 8
-        Get_Marks()
+        Get_Marks(parameters: payload ?? [:])
     }
     
     var activeTextField: UITextField?
@@ -92,69 +91,132 @@ class MarkReviewVC: UIViewController {
         keyboardHeight = 0
     }
     
-    func Get_Marks() {
-        let parameters: [String: Any] = [
-            "class_id": "32588",
-            "section_id": "90831",
-            "exam_id": "11027",
-            "selected_activities": [
-                [
-                    "subject_id": "112625",
-                    "activities": ["3062", "3063"]
-                ]
-            ]
-        ]
-        
+    func Get_Marks(parameters payload: [String: Any]) {
+
+        let parameters = buildGetMarksParams(from: payload)
+
         APIService.shared.makeApi(
             url: ServiceUrl.exam_api_exam_get_mark_details,
-            parameters:parameters,
+            parameters: parameters,
             type: ApitTypeSringFile.POST,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<MarkDetailsResponse, Error>) in
-            
             DispatchQueue.main.async {
-                
+
                 guard let self = self else { return }
-                
+
                 switch result {
+
                 case .success(let response):
-                    
                     if let data = response.data, !data.isEmpty {
                         self.studentRecords = data
                     } else {
                         self.studentRecords = self.generateDummyStudents(count: 30)
                     }
                     
-                    self.setupColumnsFromActivities()
-                    
                     self.studentTableView.reloadData()
                     self.subjectsCollectionView.reloadData()
-                    DispatchQueue.main.asyncAfter(deadline: .now()){
+                    DispatchQueue.main.asyncAfter(deadline: .now()) {
+
                         self.subjectsCollectionView.layoutIfNeeded()
-                        
+
                         let frameWidth = self.view.frame.width
                         let contentWidth = self.subjectsCollectionView.contentSize.width
                         let extra: CGFloat = 160
                         let referenceWidth = frameWidth - extra
                         let balance = referenceWidth - contentWidth
-                        
+
+                        print("📏 Frame Width        :", frameWidth)
+                        print("📏 Content Width      :", contentWidth)
+                        print("📏 Extra              :", extra)
+                        print("📏 Reference Width    :", referenceWidth)
+                        print("📏 Balance            :", balance)
+
                         if contentWidth < referenceWidth {
                             self.nameWith.constant = balance + extra
+                            print("✅ nameWith updated to:", balance + extra)
+                        } else {
+                            print("⛔ nameWith not changed")
                         }
+
                         let errorReason = self.getFormattedReasonSummary()
                         self.errorDeclarationLbl.text = "⚠️ \(errorReason)"
                     }
-                    
                 case .failure(let error):
                     print("❌ Error:", error.localizedDescription)
                     self.studentRecords = self.generateDummyStudents(count: 30)
-                    self.setupColumnsFromActivities()
                     self.studentTableView.reloadData()
                     self.subjectsCollectionView.reloadData()
+                    DispatchQueue.main.asyncAfter(deadline: .now()) {
+
+                        self.subjectsCollectionView.layoutIfNeeded()
+
+                        let frameWidth = self.view.frame.width
+                        let contentWidth = self.subjectsCollectionView.contentSize.width
+                        let extra: CGFloat = 160
+                        let referenceWidth = frameWidth - extra
+                        let balance = referenceWidth - contentWidth
+
+                        print("📏 Frame Width        :", frameWidth)
+                        print("📏 Content Width      :", contentWidth)
+                        print("📏 Extra              :", extra)
+                        print("📏 Reference Width    :", referenceWidth)
+                        print("📏 Balance            :", balance)
+
+                        if contentWidth < referenceWidth {
+                            self.nameWith.constant = balance + extra
+                            print("✅ nameWith updated to:", balance + extra)
+                        } else {
+                            print("⛔ nameWith not changed")
+                        }
+
+                        let errorReason = self.getFormattedReasonSummary()
+                        self.errorDeclarationLbl.text = "⚠️ \(errorReason)"
+                    }
                 }
             }
         }
     }
+    func buildGetMarksParams(from payload: [String: Any]) -> [String: Any] {
+
+        let classId   = payload["class_id"] as? String ?? ""
+        let sectionId = payload["section_id"] as? String ?? ""
+        let examId    = payload["exam_id"] as? String ?? ""
+
+        var resultActivities: [[String: Any]] = []
+
+        guard let selected = payload["selected_activities"] as? [[String: Any]] else {
+            return [:]
+        }
+
+        for subject in selected {
+
+            let subjectId = subject["subject_id"] as? String ?? ""
+            var activityIds: [String] = []
+
+            if let activities = subject["activities"] as? [[String: Any]] {
+
+                for act in activities {
+                    if let actId = act["activity_id"] as? String {
+                        activityIds.append(actId)
+                    }
+                }
+            }
+
+            resultActivities.append([
+                "subject_id": subjectId,
+                "activities": activityIds
+            ])
+        }
+
+        return [
+            "class_id": classId,
+            "section_id": sectionId,
+            "exam_id": examId,
+            "selected_activities": resultActivities
+        ]
+    }
+
     
     private func generateDummyStudents(count: Int) -> [StudentMark] {
         
@@ -222,38 +284,54 @@ class MarkReviewVC: UIViewController {
         return students
     }
     
-    private func setupColumnsFromActivities() {
-        
+    private func setupColumnsFromPayload(_ payload: [String: Any]) {
+
         subjectColumns.removeAll()
         var uniqueKeys = Set<String>()
-        
-        for student in studentRecords {
-            
-            for subject in student.marks ?? [] {
-                
-                for activity in subject.activities ?? [] {
-                    
-                    let key = "\(subject.subject_name ?? "")_\(activity.id ?? "")"
-                    
-                    if !uniqueKeys.contains(key) {
-                        
-                        uniqueKeys.insert(key)
-                        
-                        subjectColumns.append(
-                            ColumnConfig(
-                                displayName: activity.name ?? "",
-                                subjectName: subject.subject_name ?? "",
-                                subjectId: subject.subject_id ?? "",
-                                activityId: activity.id ?? "",
-                                maxMarks: Int(activity.max_mark ?? "100") ?? 100
-                            )
+
+        guard let selectedActivities = payload["selected_activities"] as? [[String: Any]] else {
+            return
+        }
+
+        for subjectDict in selectedActivities {
+
+            let subjectId   = subjectDict["subject_id"] as? String ?? ""
+            let subjectName = subjectDict["subject_name"] as? String ?? ""
+
+            guard let activities = subjectDict["activities"] as? [[String: Any]] else { continue }
+
+            for activity in activities {
+
+                let activityId   = activity["activity_id"] as? String ?? ""
+                let activityName = activity["activity_name"] as? String ?? ""
+                let aiOption     = activity["ai_option"] as? String ?? ""
+                let maxMarkStr   = activity["max_mark"] as? String ?? "100"
+                let maxMark      = Int(maxMarkStr) ?? 100
+                let displayName = aiOption.isEmpty ? activityName : aiOption
+
+                let uniqueKey = "\(subjectId)_\(activityId)"
+
+                if !uniqueKeys.contains(uniqueKey) {
+
+                    uniqueKeys.insert(uniqueKey)
+
+                    subjectColumns.append(
+                        ColumnConfig(
+                            displayName: displayName,
+                            subjectName: subjectName,
+                            subjectId: subjectId,
+                            activityId: activityId, activityName: activityName,
+                            maxMarks: maxMark
                         )
-                    }
+                    )
                 }
             }
         }
-        subjectColumns.sort { $0.displayName ?? "" < $1.displayName ?? "" }
+
+        subjectColumns.sort { $0.subjectName ?? "" < $1.subjectName ?? ""}
     }
+
+
     
     @IBAction func saveAllMarks(_ sender: UIButton) {
         
@@ -409,7 +487,7 @@ class MarkReviewVC: UIViewController {
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
-        
+        layout.sectionInset = .zero
         subjectsCollectionView.collectionViewLayout = layout
         subjectsCollectionView.register(UINib(nibName: "MarkReviewCVC", bundle: nil),
                                         forCellWithReuseIdentifier: "MarkReviewCVC")
@@ -419,6 +497,12 @@ class MarkReviewVC: UIViewController {
         subjectsCollectionView.showsHorizontalScrollIndicator = true
         subjectsCollectionView.bounces = true
         subjectsCollectionView.backgroundColor = .systemBackground
+        subjectsCollectionView.contentInsetAdjustmentBehavior = .never
+        subjectsCollectionView.contentInset = .zero
+
+        if #available(iOS 15.0, *) {
+            subjectsCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
     }
     
     // MARK: - Scroll Synchronization (KEY FIX)
@@ -428,11 +512,7 @@ class MarkReviewVC: UIViewController {
         // Prevent recursive calls
         guard !isSyncing else { return }
         isSyncing = true
-        
-        // Store the current vertical offset
         currentVerticalOffset = offset.y
-        
-        // Sync student table (only Y axis)
         if studentTableView != sender {
             studentTableView.setContentOffset(
                 CGPoint(x: 0, y: offset.y),
@@ -552,18 +632,22 @@ extension MarkReviewVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView,
                    heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        let subject = studentRecords[indexPath.row]
-        
-        let text = subject.student_name ?? ""
-        let font = UIFont.systemFont(ofSize: 16, weight: .medium)
+
+        let student = studentRecords[indexPath.row]
+
+        let name = student.student_name ?? ""
+        let rollNo = student.roll_no ?? ""
+
+        let nameFont = UIFont.systemFont(ofSize: 16, weight: .medium)
+        let rollFont = UIFont.systemFont(ofSize: 13, weight: .regular)
+
         let labelWidth: CGFloat = 160
-        
-        let dynamicHeight = textHeight(text: text,
-                                       font: font,
-                                       width: labelWidth)
-        
-        return max(50, dynamicHeight + 20)
+
+        let nameHeight = textHeight(text: name, font: nameFont, width: labelWidth)
+        let rollHeight = textHeight(text: "Reg: \(rollNo)", font: rollFont, width: labelWidth)
+
+        let totalHeight = nameHeight + rollHeight + 24
+        return max(50, totalHeight)
     }
     
     func textHeight(text: String, font: UIFont, width: CGFloat) -> CGFloat {
@@ -667,7 +751,11 @@ extension MarkReviewVC: UICollectionViewDataSource, UICollectionViewDelegate, UI
         return CGSize(width: finalWidth,
                       height: collectionView.frame.height)
     }
-
+    func collectionView(_ collectionView: UICollectionView,
+                            layout collectionViewLayout: UICollectionViewLayout,
+                            insetForSectionAt section: Int) -> UIEdgeInsets {
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
 }
 
 extension MarkReviewVC {
@@ -712,6 +800,7 @@ struct ColumnConfig {
     let subjectName: String?
     let subjectId: String?
     let activityId: String?
+    let activityName: String?
     let maxMarks: Int?
 }
 
@@ -739,6 +828,7 @@ struct ActivityMark: Codable {
     let id: String?
     let name: String?
     var mark: String?
+    var change_mark: String?
     let max_mark: String?
     var cnfidenceLvl: Bool
     var reason: String
