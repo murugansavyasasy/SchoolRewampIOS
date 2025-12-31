@@ -83,8 +83,7 @@ class ExamActivitySelectionVC: UIViewController {
        }
     
     @IBAction func continueAct(_ sender: Any) {
-        print("payload", buildPayload())
-        let vc = EnterMarkVC()
+        let vc = MarkReviewVC()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

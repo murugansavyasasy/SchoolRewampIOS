@@ -18,6 +18,7 @@ class MarkReviewTVC: UITableViewCell {
     private var isEditable = true
     private var hasFlaggedIssue = false
     weak var parentVC: MarkReviewVC?
+    weak var delegate: MarkReviewTVCDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,7 +29,7 @@ class MarkReviewTVC: UITableViewCell {
     
     private func setupTextField() {
         markTxt.delegate = self
-        markTxt.keyboardType = .numberPad
+//        markTxt.keyboardType = .numberPad
         markTxt.textAlignment = .center
         markTxt.borderStyle = .roundedRect
         markTxt.placeholder = "--"
@@ -54,27 +55,12 @@ class MarkReviewTVC: UITableViewCell {
                    isEditable: Bool,
                    alignment: NSTextAlignment = .center,
                    parentVC: MarkReviewVC?,
-                   hasFlaggedIssue: Bool = false,
-                   columnType: ColumnType = .subject) {
+                   hasFlaggedIssue: Bool = false) {
         self.rowIndex = rowIndex
         self.columnIndex = columnIndex
         self.isEditable = isEditable
         self.parentVC = parentVC
         self.hasFlaggedIssue = hasFlaggedIssue
-        
-        // Roll number or Student name - use tittleLbl (non-editable)
-        if columnType == .rollNumber || columnType == .studentName {
-            tittleLbl.isHidden = false
-            tittleLbl.text = mark
-            tittleLbl.textAlignment = alignment
-            tittleLbl.textColor = .label
-            tittleLbl.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-            
-            markTxt.isHidden = true
-            markTxt.text = ""
-            infoBtn.isHidden = true
-            return
-        }
         
         // Subject marks - use markTxt (editable)
         tittleLbl.isHidden = true
@@ -96,16 +82,14 @@ class MarkReviewTVC: UITableViewCell {
         
         // Subject mark styling
         markTxt.borderStyle = .roundedRect
-        
-        // Check for flagged issues first (highest priority)
         if hasFlaggedIssue {
-            markTxt.textColor = .systemRed
+            markTxt.textColor = .orange
             markTxt.layer.borderWidth = 2
-            markTxt.layer.borderColor = UIColor.systemRed.cgColor
+            markTxt.layer.borderColor = UIColor.orange.withAlphaComponent(0.4).cgColor
             markTxt.layer.cornerRadius = 6
-            markTxt.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
+            markTxt.backgroundColor = UIColor.orange.withAlphaComponent(0.1)
             infoBtn.isHidden = false
-            infoBtn.tintColor = .systemRed
+            infoBtn.tintColor = .orange
             return
         }
         
@@ -117,7 +101,7 @@ class MarkReviewTVC: UITableViewCell {
             infoBtn.isHidden = false
             infoBtn.tintColor = .systemRed
             markTxt.layer.borderWidth = 1
-            markTxt.layer.borderColor = UIColor.systemRed.cgColor
+            markTxt.layer.borderColor = UIColor.systemRed.withAlphaComponent(0.4).cgColor
         }else {
             // Valid marks - normal styling
             markTxt.backgroundColor = UIColor.systemGray6
@@ -128,17 +112,17 @@ class MarkReviewTVC: UITableViewCell {
             infoBtn.isHidden = true
             markTxt.layer.borderWidth = 0
             if let markValue = Int(mark), markValue > 100 {
-                markTxt.textColor = .systemRed
+                markTxt.textColor = .orange
                 markTxt.layer.borderWidth = 2
-                markTxt.layer.borderColor = UIColor.systemRed.cgColor
+                markTxt.layer.borderColor = UIColor.orange.cgColor
                 markTxt.layer.cornerRadius = 6
-                markTxt.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
+                markTxt.backgroundColor = UIColor.orange.withAlphaComponent(0.1)
                 infoBtn.isHidden = false
                 infoBtn.tintColor = .systemRed
             }
         }
     }
-    
+
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -160,24 +144,103 @@ class MarkReviewTVC: UITableViewCell {
 extension MarkReviewTVC: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+
         let value = textField.text ?? ""
-        parentVC?.updateMark(row: rowIndex, column: columnIndex, value: value)
-        print("📝 Mark updated - Row: \(rowIndex), Column: \(columnIndex), Value: \(value)")
+        var reason = ""
+        var isValid = true
+
+        if let maxStr = parentVC?.subjectColumns[columnIndex].maxMarks,
+           let entered = Int(value),
+           entered > maxStr {
+
+            isValid = false
+            reason = "Maximum mark exceeded"
+        }
+        delegate?.markDidChange(row: rowIndex,
+                                column: columnIndex,
+                                value: value,
+                                reason: reason)
     }
-    
+
+
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
-        if string.isEmpty { return true }
-        
-        let allowedCharacters = CharacterSet.decimalDigits
-        let characterSet = CharacterSet(charactersIn: string)
-        return allowedCharacters.isSuperset(of: characterSet)
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+
+        // Allow only digits
+        if !string.isEmpty {
+            let allowed = CharacterSet.decimalDigits
+            let set = CharacterSet(charactersIn: string)
+            if !allowed.isSuperset(of: set) { return false }
+        }
+
+        let currentText = textField.text ?? ""
+        guard let textRange = Range(range, in: currentText) else { return true }
+
+        let updatedText = currentText.replacingCharacters(in: textRange, with: string)
+
+        var reason = ""
+        var isValid = true
+
+        if let max = parentVC?.subjectColumns[columnIndex].maxMarks,
+           let entered = Int(updatedText),
+           entered > max {
+
+            isValid = false
+            reason = "Maximum mark exceeded"
+        }
+
+        applyValidationUI(mark: updatedText,
+                          maxMark: parentVC?.subjectColumns[columnIndex].maxMarks ?? 0)
+        delegate?.markDidChange(row: rowIndex,
+                                column: columnIndex,
+                                value: updatedText,
+                                reason: reason)
         return true
     }
+
+
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            textField.resignFirstResponder()
+            return true
+        }
+    func applyValidationUI(mark: String, maxMark: Int) {
+
+        let trimmed = mark.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            showErrorUI()
+            return
+        }
+
+        let entered = Int(trimmed) ?? -1
+        if entered < 0 || entered > maxMark {
+            showErrorUI()
+        } else {
+            showNormalUI()
+        }
+    }
+    func showErrorUI() {
+        markTxt.textColor = .orange
+        markTxt.layer.borderWidth = 2
+        markTxt.layer.borderColor = UIColor.orange.withAlphaComponent(0.4).cgColor
+        markTxt.layer.cornerRadius = 6
+        markTxt.backgroundColor = UIColor.orange.withAlphaComponent(0.1)
+        infoBtn.isHidden = false
+        infoBtn.tintColor = .orange
+    }
+    func showNormalUI() {
+        markTxt.backgroundColor = UIColor.systemGray6
+        markTxt.textColor = .label
+        markTxt.font = UIFont.systemFont(ofSize: 15)
+        markTxt.isUserInteractionEnabled = true
+        markTxt.borderStyle = .roundedRect
+        infoBtn.isHidden = true
+        markTxt.layer.borderWidth = 0
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        parentVC?.activeTextField = textField
+    }
+
+
 }
 

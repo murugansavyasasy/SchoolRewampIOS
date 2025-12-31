@@ -30,6 +30,7 @@ class UpdateProfileVC: UIViewController, reloadDelegate {
     var attachments: [AttachmentItem] = []
     let transitionDelegate = TransitioningDelegate()
     var changedParams: [String: Any] = [:]
+    private var editedValues: [String: String] = [:]
     var attachmentNode: String?
     var changeProfileImg: UIImage? = UIImage(systemName: "person.fill")
     var changeProfileUrl: URL?
@@ -390,23 +391,42 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
         
         let isLastSection = indexPath.section == profileSections.count - 1
         let isLastRow = indexPath.row == items.count
+        
         cell.addAttachmentBtn.addTarget(self, action: #selector(addDocs(_:)), for: .touchUpInside)
-        // Show update button only if it's the last section, last row, and isStudent is true
+        
         if isLastSection && isLastRow && isStudent {
             cell.configure(with: nil, attachments: nil)
             cell.updateBtn.addTarget(self, action: #selector(updateButtonTapped(_:)), for: .touchUpInside)
         } else {
             let item = items[indexPath.row]
-            cell.configure(with: item, attachments: attachments)
+            
+            // 🔑 Create unique key for this cell
+            let cellKey = "\(indexPath.section)_\(indexPath.row)_\(item.node ?? "")"
+            
+            // 🔑 Check if we have edited value for this cell
+            var modifiedItem = item
+            if let editedValue = editedValues[cellKey] {
+                modifiedItem.value = editedValue
+            }
+            
+            cell.configure(with: modifiedItem, attachments: attachments)
             cell.deleteDelegate = self
+            
             cell.onValueChanged = { [weak self] changedKey, value in
                 guard let self = self else { return }
                 if let value = value {
                     print(changedKey)
                     print(value)
-                    if item.node != "documents" { // Corrected from "document" to "documents"
+                    
+                    // 🔑 Store the edited value
+                    self.editedValues[cellKey] = "\(value)"
+                    
+                    if item.node != "documents" {
                         if "\(value)" != "\(item.value ?? "")" {
                             self.changedParams[changedKey] = value
+                        } else {
+                            // If value restored to original, remove from changedParams
+                            self.changedParams.removeValue(forKey: changedKey)
                         }
                     }
                 }
@@ -578,13 +598,19 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
                             message: response.message,
                             on: self
                         ) {
-                            if response.status == true{
-                                if user_inputs.clearTempData(){
-                                    let parms = [ "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",
-                                                  "activity": "VIEW_EVENTS",
-                                                  "user_type": 1,
-                                                  "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
-                                    self.paketApiCall(params:parms)
+                            if response.status == true {
+                                // 🔑 Clear edited values after successful update
+                                self.editedValues.removeAll()
+                                self.changedParams.removeAll()
+                                
+                                if user_inputs.clearTempData() {
+                                    let parms = [
+                                        "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",
+                                        "activity": "VIEW_EVENTS",
+                                        "user_type": 1,
+                                        "menu_id": Menu_id.staffSelectedMenuId
+                                    ] as [String : Any]
+                                    self.paketApiCall(params: parms)
                                 }
                             }
                         }
