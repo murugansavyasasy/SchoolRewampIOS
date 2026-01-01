@@ -27,12 +27,7 @@ class ActivitiesTVCell: UITableViewCell {
     private var splitIndex = 0
     private var isAIFlow = false
     
-    let items: [String] = [
-        "Student_Name",
-        "Roll_No",
-        "Algebra",
-        "Geometry"
-    ]
+    var items: [String] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()

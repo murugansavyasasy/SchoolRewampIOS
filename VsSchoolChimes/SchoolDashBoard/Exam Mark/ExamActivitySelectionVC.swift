@@ -139,6 +139,7 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
 
             cell.subjectIndex = indexPath.row
             cell.isAI = isAIFlow
+            cell.DropdownData = selectedColoumns
             cell.delegate = self
             cell.isExpanded = (expandedIndex == indexPath)
             cell.splits = data.splitup_details ?? []
