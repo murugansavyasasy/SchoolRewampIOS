@@ -18,7 +18,7 @@ class MarkReviewVC: UIViewController {
     @IBOutlet weak var subjectsCollectionView: UICollectionView!
     
     var studentRecords: [StudentMark] = []
-    var aiRecords: [StudentMark] = []
+    var aiRecords: [ConvertedStudentRecord] = []
     var subjectColumns: [ColumnConfig] = []
     private var isSyncing = false
     var editedMarks: [String: [String: String]] = [:]
@@ -106,66 +106,73 @@ class MarkReviewVC: UIViewController {
                 guard let self = self else { return }
                 switch result {
                 case .success(let response):
+                    
                     if let data = response.data, !data.isEmpty {
                         self.studentRecords = data
-                        for studentIndex in 0..<self.studentRecords.count {
-
-                            guard let aiStudent = self.aiRecords.first(where: {
-                                $0.student_id == self.studentRecords[studentIndex].student_id
-                            }) else { continue }
-
-                            guard let aiSubjects = aiStudent.marks,
-                                  let subjects = self.studentRecords[studentIndex].marks else { continue }
-
-                            for subjectIndex in 0..<subjects.count {
-
-                                let subjectId = subjects[subjectIndex].subject_id
-
-                                guard let aiSubject = aiSubjects.first(where: {
-                                    $0.subject_id == subjectId
-                                }),
-                                let aiActivities = aiSubject.activities,
-                                let activities = self.studentRecords[studentIndex].marks?[subjectIndex].activities
-                                else { continue }
-
-                                for activityIndex in 0..<activities.count {
-
-                                    let activityId = activities[activityIndex].id
-
-                                    guard let aiActivity = aiActivities.first(where: {
-                                        $0.id == activityId
-                                    }) else { continue }
-
-                                    let studentMark = activities[activityIndex].mark ?? ""
-                                    let aiMark = aiActivity.mark ?? ""
-
-                                    if !studentMark.isEmpty,
-                                       !aiMark.isEmpty,
-                                       studentMark != aiMark {
+                        
+                        if !self.aiRecords.isEmpty {
+                            
+                            for studentIndex in 0..<self.studentRecords.count {
+                                
+                                let studentId = self.studentRecords[studentIndex].student_id ?? ""
+                                
+                                guard let aiStudent = self.aiRecords.first(where: {
+                                    $0.studentId == studentId
+                                }) else { continue }
+                                
+                                for subjectIndex in 0..<(self.studentRecords[studentIndex].marks?.count ?? 0) {
+                                    
+                                    guard let activities = self.studentRecords[studentIndex]
+                                        .marks?[subjectIndex].activities else { continue }
+                                    
+                                    for activityIndex in 0..<activities.count {
+                                        
+                                        let studentActivityName = self.normalizeName(
+                                            activities[activityIndex].name ?? ""
+                                        )
+                                        
+                                        guard let aiRecord = aiStudent.marks.first(where: {
+                                            self.normalizeName($0.name) == studentActivityName
+                                        }) else { continue }
+                                        
+                                        let studentMark = activities[activityIndex].mark ?? ""
+                                        let aiMark = aiRecord.value
+                                        
+                                        if !studentMark.isEmpty,
+                                           !aiMark.isEmpty,
+                                           studentMark != aiMark {
+                                            
+                                            self.studentRecords[studentIndex]
+                                                .marks?[subjectIndex]
+                                                .activities?[activityIndex]
+                                                .change_mark = studentMark
+                                            
+                                            self.studentRecords[studentIndex]
+                                                .marks?[subjectIndex]
+                                                .activities?[activityIndex]
+                                                .mark = aiMark
+                                        }
+                                        
+                                        // confidence + reason
                                         self.studentRecords[studentIndex]
                                             .marks?[subjectIndex]
                                             .activities?[activityIndex]
-                                            .change_mark = studentMark
+                                            .cnfidenceLvl = !aiRecord.isReview
+                                        
                                         self.studentRecords[studentIndex]
                                             .marks?[subjectIndex]
                                             .activities?[activityIndex]
-                                            .mark = aiMark
+                                            .reason = aiRecord.reason ?? ""
                                     }
                                 }
                             }
                         }
-
-                    } else {
-                        self.studentRecords = self.generateDummyStudents(count: 30)
+                        
                     }
-
                     self.studentTableView.reloadData()
                     self.subjectsCollectionView.reloadData()
-
+                    
                     DispatchQueue.main.asyncAfter(deadline: .now()) {
-                        
-                        self.subjectsCollectionView.layoutIfNeeded()
-                        
                         let frameWidth = self.view.frame.width
                         let contentWidth = self.subjectsCollectionView.contentSize.width
                         let extra: CGFloat = 160
@@ -177,32 +184,22 @@ class MarkReviewVC: UIViewController {
                         }
                         let errorReason = self.getFormattedReasonSummary()
                         self.errorDeclarationLbl.text = "⚠️ \(errorReason)"
-                    }                case .failure(let error):
+                    }
+                case .failure(let error):
                     print("❌ Error:", error.localizedDescription)
-                    self.studentRecords = self.generateDummyStudents(count: 30)
-                    self.studentTableView.reloadData()
-                    self.subjectsCollectionView.reloadData()
-                    DispatchQueue.main.asyncAfter(deadline: .now()) {
-                        
-                        self.subjectsCollectionView.layoutIfNeeded()
-                        
-                        let frameWidth = self.view.frame.width
-                        let contentWidth = self.subjectsCollectionView.contentSize.width
-                        let extra: CGFloat = 160
-                        let referenceWidth = frameWidth - extra
-                        let balance = referenceWidth - contentWidth
-                        
-                        if contentWidth < referenceWidth {
-                            self.nameWith.constant = balance + extra
-                        }
-                        
-                        let errorReason = self.getFormattedReasonSummary()
-                        self.errorDeclarationLbl.text = "⚠️ \(errorReason)"
-                    }
                 }
             }
         }
     }
+    func normalizeName(_ text: String) -> String {
+        return text
+            .lowercased()
+            .replacingOccurrences(of: " ", with: "")
+            .replacingOccurrences(of: "-", with: "")
+            .replacingOccurrences(of: "_", with: "")
+            .replacingOccurrences(of: ".", with: "")
+    }
+    
     func buildGetMarksParams(from payload: [String: Any]) -> [String: Any] {
         
         let classId   = payload["class_id"] as? String ?? ""
@@ -243,72 +240,72 @@ class MarkReviewVC: UIViewController {
         ]
     }
     
-    
-    private func generateDummyStudents(count: Int) -> [StudentMark] {
-        
-        let subjects: [(id: String, name: String)] = [
-            ("112625", "TAMIL"),
-            ("112626", "ENGLISH"),
-            ("112627", "MATHS"),
-            ("112628", "SCIENCE"),
-            ("112629", "SOCIAL")
-        ]
-        
-        let activities: [(id: String, name: String)] = [
-            ("3062", "Activity 1"),
-            ("3063", "Activity 2")
-        ]
-        
-        let flaggedIndexes = Set((0..<count).shuffled().prefix(5))
-        
-        var students: [StudentMark] = []
-        
-        for i in 0..<count {
-            
-            var subjectMarks: [SubjectMarks] = []
-            
-            for subject in subjects {
-                
-                var activityMarks: [ActivityMark] = []
-                
-                for activity in activities {
-                    
-                    let isFlagged = flaggedIndexes.contains(i) && Bool.random()
-                    
-                    let activityMark = ActivityMark(
-                        id: activity.id,
-                        name: activity.name,
-                        mark: "\(Int.random(in: 40...100))",
-                        max_mark: "100",
-                        cnfidenceLvl: !isFlagged,
-                        reason: isFlagged ? "Please verify the entered mark." : ""
-                    )
-                    
-                    activityMarks.append(activityMark)
-                }
-                
-                subjectMarks.append(
-                    SubjectMarks(
-                        subject_id: subject.id,
-                        subject_name: subject.name,
-                        activities: activityMarks
-                    )
-                )
-            }
-            
-            let student = StudentMark(
-                student_id: "\(1001 + i)",
-                student_name: "Student \(i + 1)",
-                roll_no: "\(i + 1)",
-                admission_no: "AD-\(1001 + i)",
-                marks: subjectMarks
-            )
-            
-            students.append(student)
-        }
-        
-        return students
-    }
+//    
+//    private func generateDummyStudents(count: Int) -> [StudentMark] {
+//        
+//        let subjects: [(id: String, name: String)] = [
+//            ("112625", "TAMIL"),
+//            ("112626", "ENGLISH"),
+//            ("112627", "MATHS"),
+//            ("112628", "SCIENCE"),
+//            ("112629", "SOCIAL")
+//        ]
+//        
+//        let activities: [(id: String, name: String)] = [
+//            ("3062", "Activity 1"),
+//            ("3063", "Activity 2")
+//        ]
+//        
+//        let flaggedIndexes = Set((0..<count).shuffled().prefix(5))
+//        
+//        var students: [StudentMark] = []
+//        
+//        for i in 0..<count {
+//            
+//            var subjectMarks: [SubjectMarks] = []
+//            
+//            for subject in subjects {
+//                
+//                var activityMarks: [ActivityMark] = []
+//                
+//                for activity in activities {
+//                    
+//                    let isFlagged = flaggedIndexes.contains(i) && Bool.random()
+//                    
+//                    let activityMark = ActivityMark(
+//                        id: activity.id,
+//                        name: activity.name,
+//                        mark: "\(Int.random(in: 40...100))",
+//                        max_mark: "100",
+//                        cnfidenceLvl: !isFlagged,
+//                        reason: isFlagged ? "Please verify the entered mark." : ""
+//                    )
+//                    
+//                    activityMarks.append(activityMark)
+//                }
+//                
+//                subjectMarks.append(
+//                    SubjectMarks(
+//                        subject_id: subject.id,
+//                        subject_name: subject.name,
+//                        activities: activityMarks
+//                    )
+//                )
+//            }
+//            
+//            let student = StudentMark(
+//                student_id: "\(1001 + i)",
+//                student_name: "Student \(i + 1)",
+//                roll_no: "\(i + 1)",
+//                admission_no: "AD-\(1001 + i)",
+//                marks: subjectMarks
+//            )
+//            
+//            students.append(student)
+//        }
+//        
+//        return students
+//    }
     
     private func setupColumnsFromPayload(_ payload: [String: Any]) {
         
@@ -363,35 +360,43 @@ class MarkReviewVC: UIViewController {
         
         var marksPayload: [[String: Any]] = []
         var invalidMarkCount = 0
-        
-        for student in studentRecords {
-            
+        for studentIndex in 0..<studentRecords.count {
+            var student = studentRecords[studentIndex]
             var studentMarks: [[String: Any]] = []
-            
-            for subject in student.marks ?? [] {
-                
+            for subjectIndex in 0..<(student.marks?.count ?? 0) {
+                guard var subject = student.marks?[subjectIndex] else { continue }
                 var activitiesArray: [[String: Any]] = []
-                
-                for activity in subject.activities ?? [] {
+                for activityIndex in 0..<(subject.activities?.count ?? 0) {
+                    guard var activity = subject.activities?[activityIndex] else { continue }
                     
                     let key = "\(subject.subject_id ?? "")_\(activity.id ?? "")"
                     let editedMark = editedMarks[student.roll_no ?? ""]?[key]
                     
                     let finalMarkStr = editedMark ?? activity.mark ?? ""
-                    let maxMarkStr  = activity.max_mark ?? ""
+                    let maxMarkStr   = activity.max_mark ?? ""
                     
                     let finalMark = Double(finalMarkStr) ?? 0
                     let maxMark   = Double(maxMarkStr) ?? 0
                     
                     if finalMark > maxMark {
                         invalidMarkCount += 1
+                        activity.cnfidenceLvl = false
+                        activity.reason = "Mark exceeds maximum (\(maxMarkStr))"
+                    } else {
+                        activity.cnfidenceLvl = true
+                        activity.reason = ""
                     }
+                    
+                    activity.change_mark = finalMarkStr
+                    subject.activities?[activityIndex] = activity
                     
                     activitiesArray.append([
                         "id": activity.id ?? "",
                         "name": activity.name ?? "",
                         "mark": finalMarkStr,
-                        "max_mark": maxMarkStr
+                        "max_mark": maxMarkStr,
+                        "cnfidenceLvl": activity.cnfidenceLvl,
+                        "reason": activity.reason
                     ])
                 }
                 
@@ -399,7 +404,11 @@ class MarkReviewVC: UIViewController {
                     "subject_id": subject.subject_id ?? "",
                     "activities": activitiesArray
                 ])
+                
+                student.marks?[subjectIndex] = subject
             }
+            
+            studentRecords[studentIndex] = student
             
             marksPayload.append([
                 "student_id": student.student_id ?? "",
@@ -423,7 +432,7 @@ class MarkReviewVC: UIViewController {
             actionLbl2: AlertstringFile.Cancel,
             on: self,
             onOk: {
-                self.sendMarksToAPI(with: ["records": marksPayload])
+                self.sendMarksToAPI(with: marksPayload)
             },
             onNo: {
                 print("User canceled upload")
@@ -432,7 +441,8 @@ class MarkReviewVC: UIViewController {
     }
     
     
-    func sendMarksToAPI(with parameters: [String: Any]) {
+    
+    func sendMarksToAPI(with parameters: [[String: Any]]) {
         
         guard !isSyncing else {
             print("⚠️ Already syncing")
@@ -443,12 +453,7 @@ class MarkReviewVC: UIViewController {
         
         let loadingAlert = UIAlertController(title: "Saving Marks", message: "Please wait...", preferredStyle: .alert)
         present(loadingAlert, animated: true)
-        APIService.shared.makeApi(
-            url: ServiceUrl.exam_api_exam_upload_marks,
-            parameters: parameters,
-            type: ApitTypeSringFile.POST,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
-        ) { [weak self] (result: Result<Send_AttachmentResponse, Error>) in
+        APIService.shared.PtmApi(url:  ServiceUrl.exam_api_exam_upload_marks, parameters: parameters, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [weak self] (result: Result<Send_AttachmentResponse, Error>) in
             guard let self = self else { return }
             
             DispatchQueue.main.async {
@@ -834,11 +839,11 @@ extension MarkReviewVC {
             for subject in student.marks ?? [] {
                 for activity in subject.activities ?? [] {
                     
-                    let reason = activity.reason.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let reason = activity.reason?.trimmingCharacters(in: .whitespacesAndNewlines)
                     
-                    guard !reason.isEmpty else { continue }
+                    guard ((reason?.isEmpty) == nil) else { continue }
                     
-                    reasonMap[reason, default: 0] += 1
+                    reasonMap[reason ?? "", default: 0] += 1
                 }
             }
         }
@@ -896,8 +901,8 @@ struct ActivityMark: Codable {
     var mark: String?
     var change_mark: String?
     let max_mark: String?
-    var cnfidenceLvl: Bool
-    var reason: String
+    var cnfidenceLvl: Bool?
+    var reason: String?
 }
 
 extension String {

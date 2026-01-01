@@ -154,9 +154,9 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
             }) {
                 displayValue = activity.mark ?? ""
                 
-                if !activity.cnfidenceLvl {
+                if !(activity.cnfidenceLvl ?? false) {
                     hasFlaggedIssue = true
-                    reasonText = activity.reason
+                    reasonText = activity.reason ?? ""
                 }
             }
         }
@@ -208,8 +208,8 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
            let subject = studentRecords[rowIndex].marks?.first(where: { $0.subject_name == subjectName }),
            let activity = subject.activities?.first(where: { $0.id == activityId }) {
             
-            if !activity.reason.isEmpty {
-                reason = activity.reason
+            if ((activity.reason?.isEmpty) == nil) {
+                reason = activity.reason ?? ""
             }
         }
         
