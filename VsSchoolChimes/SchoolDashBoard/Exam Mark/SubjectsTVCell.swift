@@ -29,6 +29,7 @@ class SubjectsTVCell: UITableViewCell {
     var isAI : Bool = false
     weak var delegate: SubjectCellDelegate?
     var selectionHandler: ((Int, Bool) -> Void)?
+    var DropdownData : [String] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -144,7 +145,7 @@ extension SubjectsTVCell: UITableViewDelegate, UITableViewDataSource {
         
         cell.configure(subjectIndex: subjectIndex, splitIndex: indexPath.row, split: splits[indexPath.row], isAi: isAI)
         cell.delegate = self
-    
+        cell.items = DropdownData
         return cell
     }
     
