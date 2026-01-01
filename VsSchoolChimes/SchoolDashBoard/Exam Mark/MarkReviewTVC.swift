@@ -1,10 +1,3 @@
-//
-//  MarkReviewTVC.swift
-//  School Chimes
-//
-//  Created by Chandhru on 25/12/25.
-//
-
 import UIKit
 
 class MarkReviewTVC: UITableViewCell {
@@ -28,18 +21,88 @@ class MarkReviewTVC: UITableViewCell {
     }
     
     private func setupTextField() {
+
         markTxt.delegate = self
         markTxt.textAlignment = .center
         markTxt.borderStyle = .roundedRect
         markTxt.placeholder = "--"
         markTxt.font = UIFont.systemFont(ofSize: 15)
+        markTxt.keyboardType = .numberPad
+        markTxt.layer.cornerRadius = 8
 
-        let keyboard = MarkKeyboardView(frame: CGRect(x: 0, y: 0,
-                                                      width: UIScreen.main.bounds.width,
-                                                      height: 120))
-        keyboard.delegate = self
-        markTxt.inputView = keyboard
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+
+        let abBtn    = UIBarButtonItem(customView: createKeyButton(title: "AB", action: #selector(abTapped)))
+        let upBtn    = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.up", action: #selector(upTapped)))
+        let downBtn  = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.down", action: #selector(downTapped)))
+        let leftBtn  = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.left", action: #selector(leftTapped)))
+        let rightBtn = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.right", action: #selector(rightTapped)))
+
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: markTxt, action: #selector(UITextField.resignFirstResponder))
+        
+        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+
+        toolbar.items = [
+            abBtn,
+            space(8),
+            upBtn,
+            space(6),
+            downBtn,
+            space(6),
+            leftBtn,
+            space(6),
+            rightBtn,
+            flex,
+            doneBtn
+        ]
+        markTxt.inputAccessoryView = toolbar
     }
+    func space(_ width: CGFloat) -> UIBarButtonItem {
+        let sp = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        sp.width = width
+        return sp
+    }
+
+    private func createKeyButton(title: String? = nil,
+                                 imageName: String? = nil,
+                                 action: Selector) -> UIButton {
+
+        let button = UIButton(type: .system)
+
+        if let title = title {
+            button.setTitle(title, for: .normal)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+            button.backgroundColor = .systemOrange
+            button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        }
+        else if let imageName = imageName {
+            // 🔷 Arrow Buttons (BLUE)
+            let config = UIImage.SymbolConfiguration(pointSize: 14, weight: .bold)
+            let image = UIImage(systemName: imageName, withConfiguration: config)
+            button.setImage(image, for: .normal)
+
+            button.backgroundColor = UIColor.systemBlue
+            button.contentEdgeInsets = UIEdgeInsets(top: 6, left: 14, bottom: 6, right: 14)
+            button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 2)
+        }
+
+        button.tintColor = .white
+        button.frame = CGRect(x: 0, y: 0, width: 44, height: 34)
+        button.layer.cornerRadius = 8
+        button.clipsToBounds = true
+
+        // Shadow
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.2
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowRadius = 3
+
+        button.addTarget(self, action: action, for: .touchUpInside)
+        return button
+    }
+
+
     
     private func setupInfoButton() {
         infoBtn.isHidden = true
@@ -66,13 +129,11 @@ class MarkReviewTVC: UITableViewCell {
         self.parentVC = parentVC
         self.hasFlaggedIssue = hasFlaggedIssue
         
-        // Subject marks - use markTxt (editable)
         tittleLbl.isHidden = true
         markTxt.isHidden = false
         markTxt.text = mark
         markTxt.textAlignment = alignment
         
-        // Subject mark styling
         if !isEditable {
             markTxt.textColor = .label
             markTxt.font = UIFont.systemFont(ofSize: 15, weight: .medium)
@@ -84,7 +145,6 @@ class MarkReviewTVC: UITableViewCell {
             return
         }
         
-        // Subject mark styling
         markTxt.borderStyle = .roundedRect
         if hasFlaggedIssue {
             markTxt.textColor = .orange
@@ -97,7 +157,6 @@ class MarkReviewTVC: UITableViewCell {
             return
         }
         
-        // Invalid marks (AB or text-based)
         if mark == "AB" {
             markTxt.textColor = .systemRed
             markTxt.isUserInteractionEnabled = false
@@ -106,8 +165,7 @@ class MarkReviewTVC: UITableViewCell {
             infoBtn.tintColor = .systemRed
             markTxt.layer.borderWidth = 1
             markTxt.layer.borderColor = UIColor.systemRed.withAlphaComponent(0.4).cgColor
-        }else {
-            // Valid marks - normal styling
+        } else {
             markTxt.backgroundColor = UIColor.systemGray6
             markTxt.textColor = .label
             markTxt.font = UIFont.systemFont(ofSize: 15)
@@ -115,6 +173,7 @@ class MarkReviewTVC: UITableViewCell {
             markTxt.borderStyle = .roundedRect
             infoBtn.isHidden = true
             markTxt.layer.borderWidth = 0
+            
             if let markValue = Int(mark), markValue > 100 {
                 markTxt.textColor = .orange
                 markTxt.layer.borderWidth = 2
@@ -127,7 +186,6 @@ class MarkReviewTVC: UITableViewCell {
         }
     }
 
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         markTxt.text = ""
@@ -148,7 +206,6 @@ class MarkReviewTVC: UITableViewCell {
 extension MarkReviewTVC: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-
         let value = textField.text ?? ""
         var reason = ""
         var isValid = true
@@ -156,7 +213,6 @@ extension MarkReviewTVC: UITextFieldDelegate {
         if let maxStr = parentVC?.subjectColumns[columnIndex].maxMarks,
            let entered = Int(value),
            entered > maxStr {
-
             isValid = false
             reason = "Maximum mark exceeded"
         }
@@ -166,12 +222,10 @@ extension MarkReviewTVC: UITextFieldDelegate {
                                 reason: reason)
     }
 
-
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
 
-        // Allow only digits
         if !string.isEmpty {
             let allowed = CharacterSet.decimalDigits
             let set = CharacterSet(charactersIn: string)
@@ -180,7 +234,6 @@ extension MarkReviewTVC: UITextFieldDelegate {
 
         let currentText = textField.text ?? ""
         guard let textRange = Range(range, in: currentText) else { return true }
-
         let updatedText = currentText.replacingCharacters(in: textRange, with: string)
 
         var reason = ""
@@ -189,7 +242,6 @@ extension MarkReviewTVC: UITextFieldDelegate {
         if let max = parentVC?.subjectColumns[columnIndex].maxMarks,
            let entered = Int(updatedText),
            entered > max {
-
             isValid = false
             reason = "Maximum mark exceeded"
         }
@@ -203,26 +255,26 @@ extension MarkReviewTVC: UITextFieldDelegate {
         return true
     }
 
-
-        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            textField.resignFirstResponder()
-            return true
-        }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     func applyValidationUI(mark: String, maxMark: Int) {
-
         let trimmed = mark.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
             showErrorUI()
             return
         }
 
-        let entered = Int(trimmed) ?? -1
+        let entered = Int(trimmed) ?? 0
         if entered < 0 || entered > maxMark {
             showErrorUI()
         } else {
             showNormalUI()
         }
     }
+    
     func showErrorUI() {
         markTxt.textColor = .orange
         markTxt.layer.borderWidth = 2
@@ -232,6 +284,7 @@ extension MarkReviewTVC: UITextFieldDelegate {
         infoBtn.isHidden = false
         infoBtn.tintColor = .orange
     }
+    
     func showNormalUI() {
         markTxt.backgroundColor = UIColor.systemGray6
         markTxt.textColor = .label
@@ -242,51 +295,32 @@ extension MarkReviewTVC: UITextFieldDelegate {
         markTxt.layer.borderWidth = 0
     }
 
-
-}
-extension MarkReviewTVC {
-
-    func setupKeyboard() {
-
-        markTxt.keyboardType = .numberPad
-
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-
-        let left   = UIBarButtonItem(title: "⬅️", style: .plain, target: self, action: #selector(prevCol))
-        let right  = UIBarButtonItem(title: "➡️", style: .plain, target: self, action: #selector(nextCol))
-        let up     = UIBarButtonItem(title: "⬆️", style: .plain, target: self, action: #selector(prevRow))
-        let down   = UIBarButtonItem(title: "⬇️", style: .plain, target: self, action: #selector(nextRow))
-        let ab     = UIBarButtonItem(title: "AB", style: .done, target: self, action: #selector(setAB))
-        let space  = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let done   = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneTap))
-
-        toolbar.items = [left, right, up, down, space, ab, done]
-        markTxt.inputAccessoryView = toolbar
-    }
-
-    @objc func prevCol()  { parentVC?.moveToPreviousColumn(row: rowIndex, column: columnIndex) }
-    @objc func nextCol()  { parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex) }
-    @objc func prevRow()  { parentVC?.moveToPreviousRow(row: rowIndex, column: columnIndex) }
-    @objc func nextRow()  { parentVC?.moveToNextRow(row: rowIndex, column: columnIndex) }
-
-    @objc func setAB() {
-        markTxt.text = "AB"
-        parentVC?.updateMark(row: rowIndex, column: columnIndex, value: "AB", reson: "Absent")
-    }
-
-    @objc func doneTap() {
-        markTxt.resignFirstResponder()
-    }
-
     func textFieldDidBeginEditing(_ textField: UITextField) {
         parentVC?.activeTextField = textField
     }
 }
 
-extension MarkReviewTVC: MarkKeyboardDelegate {
+// MARK: - Toolbar Actions
 
-    func didTapAB() {
+extension MarkReviewTVC {
+    
+    @objc func upTapped() {
+        parentVC?.moveToPreviousRow(row: rowIndex, column: columnIndex)
+    }
+    
+    @objc func downTapped() {
+        parentVC?.moveToNextRow(row: rowIndex, column: columnIndex)
+    }
+    
+    @objc func leftTapped() {
+        parentVC?.moveToPreviousColumn(row: rowIndex, column: columnIndex)
+    }
+    
+    @objc func rightTapped() {
+        parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex)
+    }
+    
+    @objc func abTapped() {
         markTxt.text = "AB"
         delegate?.markDidChange(row: rowIndex,
                                 column: columnIndex,
@@ -294,83 +328,6 @@ extension MarkReviewTVC: MarkKeyboardDelegate {
                                 reason: "Absent")
         parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex)
     }
-
-    func didTapLeft()  { parentVC?.moveToPreviousColumn(row: rowIndex, column: columnIndex) }
-    func didTapRight() { parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex) }
-    func didTapUp()    { parentVC?.moveToPreviousRow(row: rowIndex, column: columnIndex) }
-    func didTapDown()  { parentVC?.moveToNextRow(row: rowIndex, column: columnIndex) }
 }
 
 
-protocol MarkKeyboardDelegate: AnyObject {
-    func didTapAB()
-    func didTapLeft()
-    func didTapRight()
-    func didTapUp()
-    func didTapDown()
-}
-
-class MarkKeyboardView: UIView {
-
-    weak var delegate: MarkKeyboardDelegate?
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupUI()
-        setupGestures()
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupUI()
-        setupGestures()
-    }
-
-    private func setupUI() {
-
-        backgroundColor = .systemGray6
-
-        let abBtn = UIButton(type: .system)
-        abBtn.setTitle("AB", for: .normal)
-        abBtn.titleLabel?.font = .boldSystemFont(ofSize: 20)
-        abBtn.backgroundColor = .systemRed.withAlphaComponent(0.1)
-        abBtn.layer.cornerRadius = 10
-        abBtn.addTarget(self, action: #selector(abTapped), for: .touchUpInside)
-
-        addSubview(abBtn)
-        abBtn.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            abBtn.centerXAnchor.constraint(equalTo: centerXAnchor),
-            abBtn.centerYAnchor.constraint(equalTo: centerYAnchor),
-            abBtn.widthAnchor.constraint(equalToConstant: 120),
-            abBtn.heightAnchor.constraint(equalToConstant: 50)
-        ])
-    }
-
-    private func setupGestures() {
-
-        let directions: [UISwipeGestureRecognizer.Direction] = [.left,.right,.up,.down]
-
-        for dir in directions {
-            let swipe = UISwipeGestureRecognizer(target: self,
-                                                 action: #selector(handleSwipe(_:)))
-            swipe.direction = dir
-            addGestureRecognizer(swipe)
-        }
-    }
-
-    @objc private func abTapped() {
-        delegate?.didTapAB()
-    }
-
-    @objc private func handleSwipe(_ g: UISwipeGestureRecognizer) {
-        switch g.direction {
-        case .left:  delegate?.didTapLeft()
-        case .right: delegate?.didTapRight()
-        case .up:    delegate?.didTapUp()
-        case .down:  delegate?.didTapDown()
-        default: break
-        }
-    }
-}
