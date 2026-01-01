@@ -22,6 +22,8 @@ class ExamActivitySelectionVC: UIViewController {
     var ExamID = ""
     let staffDetails = UserDefaultFileManager.get_staff_Details()
     var selectedSplits: [SelectedSplit] = []
+    var selectedColoumns:[String] = []
+    var convertedRecords:[ConvertedStudentRecord] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()

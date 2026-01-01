@@ -2805,14 +2805,14 @@ struct MarksAIresponse: Codable {
     
     let status: Bool?
     let message: String?
-    let data: markAiData
+    let data: markAiData?
 }
 
 struct markAiData: Codable {
     
     let selectedColumns: [String]?
     let reviewFlags: [ReviewFlag]?
-    let records: [DynamicRecord]
+    let records: [DynamicRecord]?
 }
 
 struct ReviewFlag: Codable {
@@ -2877,9 +2877,12 @@ struct DynamicRecord: Codable {
 struct RecordItem {
     let name: String
     let value: String
+    let isReview: Bool
+    let reason: String?
 }
 
 struct ConvertedStudentRecord {
+    let studentId: String
     let sNo: String
     let regNo: String
     let studentName: String
