@@ -36,9 +36,9 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     private var selectedImageData: Data?
     private var selectedImage: UIImage?
     
-    let selectedColumns: [String] = []
-    let reviewFlags : [ReviewFlag] = []
-   // let selectedColumns: [] = []
+    var selectedColumns: [String] = []
+    var reviewFlags : [ReviewFlag] = []
+    var convertedRecords: [ConvertedStudentRecord] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -190,22 +190,13 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     
     @IBAction func continueWithUploadAct(_ sender: Any) {
         
-        uploadImageForAI()
-//        let vc = ExamActivitySelectionVC()
-//        vc.ExamID = examId ?? ""
-//        vc.isAIFlow = true
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
+        //uploadImageForAI()
+        let vc = ExamActivitySelectionVC()
+        vc.ExamID = examId ?? ""
+        vc.isAIFlow = true
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
         
-//        loadSubjectList(for: examId ?? "") { [self] (isSuccess) in
-//            if isSuccess {
-//                let vc = ExamActivitySelectionVC()
-//                vc.SubjectList = self.SubjectList
-//                vc.come_from_AI = is_aiViewCliked
-//                vc.modalPresentationStyle = .fullScreen
-//                present(vc, animated: true)
-//            }
-//        }
     }
     
     func uploadImageForAI(){
@@ -226,13 +217,31 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
                     
                     if success.status == true {
                         
-                        let records: [ConvertedStudentRecord] = success.data.records.isEmpty
-                            ? []
-                            : success.data.records.map { self.convertDynamicRecord($0) }
+                        guard let data = success.data,
+                            let records = data.records
+                        else {
+                            print("Invalid API data")
+                            return
+                        }
+
+                        var reviewFlags = data.reviewFlags ?? []
+
+                        let converted = self.convertRecordsWithReviews(
+                            records: records,
+                            reviewFlags: reviewFlags
+                        )
+
+                        print("Converted:", converted)
+
+                        self.selectedColumns = data.selectedColumns ?? []
+                        self.convertedRecords = converted
+                        
 
                         let vc = ExamActivitySelectionVC()
                         vc.ExamID = self.examId ?? ""
                         vc.isAIFlow = true
+                        vc.selectedColoumns = self.selectedColumns
+                        vc.convertedRecords = self.convertedRecords
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true)
                        
@@ -247,45 +256,73 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
             
         }
     }
+    
+    // Key format: "studentId|field"
+    func buildReviewLookup(
+        reviewFlags: [ReviewFlag]
+    ) -> [String: ReviewFlag] {
 
-    func convertDynamicRecord(_ record: DynamicRecord) -> ConvertedStudentRecord {
+        var dict: [String: ReviewFlag] = [:]
 
-        var sNo = ""
-        var regNo = ""
-        var studentName = ""
-        var marks: [RecordItem] = []
-
-        for (key, value) in record.values {
-
-            switch key {
-
-            case "S.no":
-                sNo = value.stringValue
-
-            case "Reg No":
-                regNo = value.stringValue
-
-            case "Student Name":
-                studentName = value.stringValue
-
-            default:
-                // ✅ All subject marks come here
-                marks.append(
-                    RecordItem(
-                        name: key,
-                        value: value.stringValue
-                    )
-                )
-            }
+        for flag in reviewFlags {
+            let key = "\(flag.studentId)|\(flag.field)"
+            dict[key] = flag
         }
 
-        return ConvertedStudentRecord(
-            sNo: sNo,
-            regNo: regNo,
-            studentName: studentName,
-            marks: marks
-        )
+        return dict
     }
+
+    
+    func convertRecordsWithReviews(
+        records: [DynamicRecord],
+        reviewFlags: [ReviewFlag]
+    ) -> [ConvertedStudentRecord] {
+
+        // Build lookup: "studentId|field" → ReviewFlag
+        let reviewLookup: [String: ReviewFlag] =
+            Dictionary(uniqueKeysWithValues: reviewFlags.map {
+                ("\($0.studentId ?? "")|\($0.field ?? "")", $0)
+            })
+
+        // Static (non-mark) keys
+        let staticKeys: Set<String> = [
+            "S.no",
+            "Reg No",
+            "Student Name",
+            "student_id"
+        ]
+
+        return records.map { record in
+
+            let studentId = record.values["student_id"]?.stringValue ?? ""
+            let sNo = record.values["S.no"]?.stringValue ?? ""
+            let regNo = record.values["Reg No"]?.stringValue ?? ""
+            let studentName = record.values["Student Name"]?.stringValue ?? ""
+
+            let marks: [RecordItem] = record.values
+                .filter { !staticKeys.contains($0.key) }
+                .map { key, value in
+
+                    let review = reviewLookup["\(studentId)|\(key)"]
+
+                    return RecordItem(
+                        name: key,
+                        value: value.stringValue,
+                        isReview: review != nil,
+                        reason: review?.reason
+                    )
+                }
+
+            return ConvertedStudentRecord(
+                studentId: studentId,
+                sNo: sNo,
+                regNo: regNo,
+                studentName: studentName,
+                marks: marks
+            )
+        }
+    }
+
 
     
     func loadSubjectList(for examId: String,completion: @escaping (Bool)->Void) {
