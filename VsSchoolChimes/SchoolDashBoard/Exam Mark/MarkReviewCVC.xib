@@ -47,9 +47,6 @@
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLG-g8-eBX">
                                                 <rect key="frame" x="0.0" y="44" width="194" height="20"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="20" id="Yhp-g0-kgJ"/>
-                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -61,6 +58,7 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Sjj-gb-LnP" secondAttribute="trailing" constant="3" id="aQD-PU-cJu"/>
                                     <constraint firstItem="Sjj-gb-LnP" firstAttribute="leading" secondItem="oit-B2-wma" secondAttribute="leading" constant="3" id="dXS-u6-meW"/>
+                                    <constraint firstAttribute="height" constant="72" id="gUx-hh-wOw"/>
                                     <constraint firstAttribute="bottom" secondItem="Sjj-gb-LnP" secondAttribute="bottom" constant="3" id="hce-x0-WBW"/>
                                     <constraint firstItem="Sjj-gb-LnP" firstAttribute="top" secondItem="oit-B2-wma" secondAttribute="top" constant="5" id="o0h-8Z-bry"/>
                                 </constraints>
@@ -75,6 +73,7 @@
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" red="1" green="0.57288144360000004" blue="0.94249001519999998" alpha="0.82146863869999998" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="CKs-Ly-wgV" firstAttribute="leading" secondItem="ZTg-uK-7eu" secondAttribute="leading" id="Xlk-Nz-rbl"/>
                 <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" secondItem="CKs-Ly-wgV" secondAttribute="trailing" id="Zff-3L-Zdi"/>
