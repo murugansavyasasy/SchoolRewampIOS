@@ -35,7 +35,7 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         noDataImage.isHidden = true
         noDataLbl.isHidden = true
 
-        tv.register(UINib(nibName: CellConfingName.Exam_ClassListTV, bundle: nil), forCellReuseIdentifier: "Exam_ClassListTV")
+        tv.register(UINib(nibName: CellConfingName.Exam_ClassListTV, bundle: nil), forCellReuseIdentifier: CellConfingName.Exam_ClassListTV)
         
         tv.delegate = self
         tv.dataSource = self
@@ -82,7 +82,7 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                     for standard in standardData{
                         for section in standard.sections ?? [] {
                             
-                            let displayName = "Grade \(standard.name ?? "") - Section \(section.name ?? "")"
+                            let displayName = "Standard \(standard.name ?? "") - Section \(section.name ?? "")"
                             classList.append(ClassDisplayItem(displayName: displayName, standardId: standard.id ?? "", sectionId: section.id ?? ""))
                         }
                     }
@@ -116,7 +116,7 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tv.dequeueReusableCell(withIdentifier: "Exam_ClassListTV", for: indexPath) as! Exam_ClassListTV
+        let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.Exam_ClassListTV, for: indexPath) as! Exam_ClassListTV
         
         let standard = classList[indexPath.row]
         cell.classNameLbl.text = standard.displayName

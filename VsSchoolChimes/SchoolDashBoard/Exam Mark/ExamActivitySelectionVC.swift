@@ -14,6 +14,10 @@ class ExamActivitySelectionVC: UIViewController {
     @IBOutlet weak var bottomInfoView: UIView!
     @IBOutlet weak var continueBtn: UIButton!
     @IBOutlet weak var tableviewHeight: NSLayoutConstraint!
+    @IBOutlet weak var examNAmeLBl: UILabel!
+    @IBOutlet weak var examDateLbl: UILabel!
+    @IBOutlet weak var topInfoLbl: UILabel!
+    @IBOutlet weak var bottomInfoLbl: UILabel!
     
     var expandedIndex: IndexPath?
     var didInitialHeightSet = false
@@ -24,6 +28,7 @@ class ExamActivitySelectionVC: UIViewController {
     var selectedSplits: [SelectedSplit] = []
     var selectedColoumns:[String] = []
     var convertedRecords:[ConvertedStudentRecord] = []
+    var SelectedExam : StaffExamData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +44,9 @@ class ExamActivitySelectionVC: UIViewController {
         bottomInfoView.layer.borderColor = UIColor.lightGray.cgColor
         
         continueBtn.layer.cornerRadius = 10
+        
+        examNAmeLBl.text = SelectedExam?.name
+        examDateLbl.text = SelectedExam?.date
         
         tableview.isScrollEnabled = false
         tableview.register(UINib(nibName: "SubjectsTVCell", bundle: nil),
@@ -137,6 +145,7 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
 
         let data = SubjectList[indexPath.row]
 
+        cell.subjectLbl.text = data.subject_name
             cell.subjectIndex = indexPath.row
             cell.isAI = isAIFlow
         cell.config(dropDown:selectedColoumns)

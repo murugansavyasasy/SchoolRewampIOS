@@ -2820,7 +2820,7 @@ struct TableStructure: Codable {
 
 
 struct ReviewFlag: Codable {
-    let studentId: String?
+    let student_id: String?
     let field: String?
     let value: String?
     let reason: String?

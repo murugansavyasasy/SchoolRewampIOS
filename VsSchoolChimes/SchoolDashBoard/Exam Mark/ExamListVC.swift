@@ -15,6 +15,8 @@ class ExamListVC: UIViewController {
     @IBOutlet weak var bottomSlectInfoLbl: UILabel!
     @IBOutlet weak var classNameLbl: UILabel!
     @IBOutlet weak var SelectExamDefLbl: UILabel!
+    @IBOutlet weak var noDataImage: UIImageView!
+    @IBOutlet weak var noDataLbl: UILabel!
     
     var standard : ClassDisplayItem?
     var expandedRow: IndexPath? = nil
@@ -22,7 +24,7 @@ class ExamListVC: UIViewController {
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var ExamList : [StaffExamData] = []
     var SubjectList : [SubjectExamData] = []
-    var examIds : String?
+    var selectedExam : StaffExamData?
     var apiCalledForIndex: IndexPath?
 
     override func viewDidLoad() {
@@ -36,14 +38,16 @@ class ExamListVC: UIViewController {
         bottomSlectInfoLbl.setFont(style: .body, size: FontSize.BodySize)
         bottomSlectInfoLbl.alpha = 0.7
         
+        continueBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         continueBtn.alpha = 0.7
         continueBtn.layer.cornerRadius = 10
         continueBtn.isUserInteractionEnabled = false
+        
+        noDataImage.isHidden = true
+        noDataLbl.isHidden = true
 
-        tv.register(UINib(nibName: "ExamListHeader", bundle: nil),
-                    forHeaderFooterViewReuseIdentifier: "ExamListHeader")
-        tv.register(UINib(nibName: "ExamListCell", bundle: nil),
-                    forCellReuseIdentifier: "ExamListCell")
+        tv.register(UINib(nibName: CellConfingName.ExamListHeader, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.ExamListHeader)
+        tv.register(UINib(nibName: CellConfingName.ExamListCell, bundle: nil),forCellReuseIdentifier: CellConfingName.ExamListCell)
 
         tv.delegate = self
         tv.dataSource = self
@@ -64,10 +68,20 @@ class ExamListVC: UIViewController {
                 case .success(let success):
                     
                     self.ExamList = success.data ?? []
+                    let hide = self.ExamList.isEmpty
+                    self.noDataLbl.text = success.message ?? ""
+                    self.noDataImage.isHidden = !hide
+                    self.noDataLbl.isHidden = !hide
+                    self.continueBtn.isHidden = hide
+                    self.bottomSlectInfoLbl.isHidden = hide
                     self.tv.reloadData()
                     
                 case .failure(let failure):
-                    ""
+                    self.noDataLbl.text = failure.localizedDescription
+                    self.noDataImage.isHidden = false
+                    self.noDataLbl.isHidden = false
+                    self.continueBtn.isHidden = true
+                    self.bottomSlectInfoLbl.isHidden = true
                 }
             }
         }
@@ -108,7 +122,7 @@ class ExamListVC: UIViewController {
     @IBAction func continueAct(_ sender: Any) {
         
         let vc = ExamImgUploadVC()
-        vc.examId = examIds
+        vc.SelectedExam = selectedExam
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -132,7 +146,7 @@ extension ExamListVC: UITableViewDelegate, UITableViewDataSource {
         let exam = ExamList[indexPath.row]
         
         cell.examNameLbl.text = exam.name
-        cell.examDateLbl.text = exam.date
+        cell.examDateLbl.text = formatDateString(exam.date ?? "")
 
         let isSelected = (selectedRow == indexPath)
         
@@ -171,7 +185,7 @@ extension ExamListVC: UITableViewDelegate, UITableViewDataSource {
             if self.expandedRow == indexPath {
                 let examId = self.ExamList[indexPath.row].id ?? ""
                 self.loadSubjectList(for: examId, reloadIndex: indexPath)
-                examIds = examId
+               // selectedExam = examId
             }
 
             var reload: [IndexPath] = [indexPath]
@@ -194,7 +208,7 @@ extension ExamListVC: UITableViewDelegate, UITableViewDataSource {
 
         let previousSelected = selectedRow        // save old selection
         selectedRow = indexPath                   // update to new selection
-        examIds = ExamList[indexPath.row].id
+        selectedExam = ExamList[indexPath.row]
         continueBtn.isUserInteractionEnabled = true
         continueBtn.alpha = 1
         bottomSlectInfoLbl.isHidden = true
@@ -211,4 +225,26 @@ extension ExamListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView,heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }
+    
+    func formatDateString(
+        _ dateString: String,
+        from inputFormat: String = "dd-MM-yyyy hh:mm a",
+        to outputFormat: String = "dd MMM yyyy hh:mm a"
+    ) -> String? {
+
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = inputFormat
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+
+        guard let date = inputFormatter.date(from: dateString) else {
+            return nil
+        }
+
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = outputFormat
+        outputFormatter.locale = Locale(identifier: "en_US_POSIX")
+
+        return outputFormatter.string(from: date)
+    }
+
 }

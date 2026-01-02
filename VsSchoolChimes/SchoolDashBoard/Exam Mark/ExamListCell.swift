@@ -45,7 +45,7 @@ class ExamListCell: UITableViewCell {
         tableview.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
         examNameLbl.setFont(style: .body, size: 17)
-        examNameLbl.setFont(style: .body, size: 13)
+        examDateLbl.setFont(style: .body, size: 13)
         
         selectionStyle = .none
         tableview.isScrollEnabled = false

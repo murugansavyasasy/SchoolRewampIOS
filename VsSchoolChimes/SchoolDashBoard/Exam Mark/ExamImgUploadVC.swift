@@ -26,13 +26,25 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     @IBOutlet weak var uploadIconImage: UIImageView!
     @IBOutlet weak var documentIcon: UIImageView!
     @IBOutlet weak var pickedFilenameLbl: UILabel!
-    
+    @IBOutlet weak var PopupAlertTitleLbl: UILabel!
+    @IBOutlet weak var popupAlertDescriptionLbl: UILabel!
+    @IBOutlet weak var uploadMarkSheetLbl: UILabel!
+    @IBOutlet weak var uploadImageForAIDescLbl: UILabel!
+    @IBOutlet weak var AiPowerdUploadLbl: UILabel!
+    @IBOutlet weak var AutoDetectionLbl: UILabel!
+    @IBOutlet weak var autoDetectBtn: UIButton!
+    @IBOutlet weak var studentNamesAndRollnoLbl: UILabel!
+    @IBOutlet weak var subjectColoumsAndMarksLbl: UILabel!
+    @IBOutlet weak var tableStructureAndLayoutLbl: UILabel!
+    @IBOutlet weak var fileTypesAndSizeLimitLbl: UILabel!
+    @IBOutlet weak var manualEntryLbl: UILabel!
+    @IBOutlet weak var SkipUploadLbl: UILabel!
     
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var attachments: [AttachmentItem] = []
     var SubjectList : [SubjectExamData] = []
     var is_aiViewCliked : Bool = false
-    var examId : String?
+    var SelectedExam : StaffExamData?
     private var selectedImageData: Data?
     private var selectedImage: UIImage?
     
@@ -181,8 +193,9 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     
     @IBAction func ContinueManuallyAct(_ sender: Any) {
         let vc = ExamActivitySelectionVC()
-        vc.ExamID = examId ?? ""
+        vc.ExamID = SelectedExam?.id ?? ""
         vc.isAIFlow = false
+        vc.SelectedExam = SelectedExam
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -240,10 +253,11 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
                         
 
                         let vc = ExamActivitySelectionVC()
-                        vc.ExamID = self.examId ?? ""
+                        vc.ExamID = self.SelectedExam?.id ?? ""
                         vc.isAIFlow = true
                         vc.selectedColoumns = self.selectedColumns
                         vc.convertedRecords = self.convertedRecords
+                        vc.SelectedExam = self.SelectedExam
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true)
                        
@@ -267,7 +281,7 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         var dict: [String: ReviewFlag] = [:]
 
         for flag in reviewFlags {
-            let key = "\(flag.studentId)|\(flag.field)"
+            let key = "\(flag.student_id ?? "")|\(flag.field ?? "")"
             dict[key] = flag
         }
 
@@ -283,7 +297,7 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         // Build lookup: "studentId|field" → ReviewFlag
         let reviewLookup: [String: ReviewFlag] =
             Dictionary(uniqueKeysWithValues: reviewFlags.map {
-                ("\($0.studentId ?? "")|\($0.field ?? "")", $0)
+                ("\($0.student_id ?? "")|\($0.field ?? "")", $0)
             })
 
         // Static (non-mark) keys
@@ -291,12 +305,12 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
             "S.no",
             "Reg No",
             "Student Name",
-            "student_id"
+            "Student ID"
         ]
 
         return records.map { record in
 
-            let studentId = record.values["student_id"]?.stringValue ?? ""
+            let studentId = record.values["Student ID"]?.stringValue ?? ""
             let sNo = record.values["S.no"]?.stringValue ?? ""
             let regNo = record.values["Reg No"]?.stringValue ?? ""
             let studentName = record.values["Student Name"]?.stringValue ?? ""
