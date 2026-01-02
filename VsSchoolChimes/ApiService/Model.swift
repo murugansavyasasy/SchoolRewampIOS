@@ -2805,15 +2805,19 @@ struct MarksAIresponse: Codable {
     
     let status: Bool?
     let message: String?
-    let data: markAiData?
+    let data: MarkAiData?
 }
 
-struct markAiData: Codable {
-    
-    let selectedColumns: [String]?
-    let reviewFlags: [ReviewFlag]?
+struct MarkAiData: Codable {
+    let table_structure: TableStructure?
+    let review_flags: [ReviewFlag]?
     let records: [DynamicRecord]?
 }
+
+struct TableStructure: Codable {
+    let selected_columns: [String]?
+}
+
 
 struct ReviewFlag: Codable {
     let studentId: String?

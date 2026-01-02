@@ -9,8 +9,14 @@ import UIKit
 
 class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var academicYearBtn: UIButton!
+    @IBOutlet weak var selectYourClassLbl: UILabel!
+    @IBOutlet weak var chooseClassLbl: UILabel!
+    @IBOutlet weak var noDataImage: UIImageView!
+    @IBOutlet weak var noDataLbl: UILabel!
+    
     
     var AcadimicYears: [AcadimicYearData] = []
     var AcademicDropdown = DropDown()
@@ -19,8 +25,17 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        selectYourClassLbl.setFont(style: .title, size: FontSize.TitleSize)
+        chooseClassLbl.setFont(style: .body, size: FontSize.BodySize)
+        noDataLbl.setFont(style: .body, size: FontSize.TitleSize)
+        academicYearBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        titleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        
+        noDataImage.isHidden = true
+        noDataLbl.isHidden = true
 
-        tv.register(UINib(nibName: "Exam_ClassListTV", bundle: nil), forCellReuseIdentifier: "Exam_ClassListTV")
+        tv.register(UINib(nibName: CellConfingName.Exam_ClassListTV, bundle: nil), forCellReuseIdentifier: "Exam_ClassListTV")
         
         tv.delegate = self
         tv.dataSource = self
@@ -61,32 +76,29 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                 switch result {
                 case .success(let success):
                     
-                    if success.status == true {
-                        
-                        classList.removeAll()
-                        let standardData =  success.data ?? []
-                        
-                        for standard in standardData{
-                            for section in standard.sections ?? [] {
-                                
-                                let displayName = "Grade \(standard.name ?? "") - Section \(section.name ?? "")"
-                                classList.append(ClassDisplayItem(displayName: displayName, standardId: standard.id ?? "", sectionId: section.id ?? ""))
-                            }
-                        }
-                        
-                        tv.reloadData()
-                       
-                        
-                    }else {
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
-                            self.dismiss(animated: true)
+                    classList.removeAll()
+                    let standardData =  success.data ?? []
+                    
+                    for standard in standardData{
+                        for section in standard.sections ?? [] {
+                            
+                            let displayName = "Grade \(standard.name ?? "") - Section \(section.name ?? "")"
+                            classList.append(ClassDisplayItem(displayName: displayName, standardId: standard.id ?? "", sectionId: section.id ?? ""))
                         }
                     }
                     
+                    noDataImage.isHidden = !classList.isEmpty
+                    noDataLbl.isHidden = !classList.isEmpty
+                    noDataLbl.text = success.message ?? ""
+                    tv.reloadData()
+                    
+                    
                 case .failure(let failure):
-                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {
-                        self.dismiss(animated: true)
-                    }
+                    classList.removeAll()
+                    noDataImage.isHidden = false
+                    noDataLbl.isHidden = false
+                    noDataLbl.text = failure.localizedDescription
+                    tv.reloadData()
                 }
             }
             
