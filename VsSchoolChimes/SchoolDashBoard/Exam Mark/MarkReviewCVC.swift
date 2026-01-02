@@ -152,14 +152,13 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
         
         if !displayValue.isEmpty {
             let trimmed = displayValue.trimmingCharacters(in: .whitespaces)
-            if trimmed.uppercased() != "AB" {
-                if let entered = Int(trimmed), let maxMark = columnConfig.maxMarks {
-                    if entered > maxMark {
-                        hasFlaggedIssue = true
-                        reasonText = "Maximum mark exceeded"
-                    }
+            if let entered = Int(trimmed), let maxMark = columnConfig.maxMarks {
+                if entered > maxMark {
+                    hasFlaggedIssue = true
+                    reasonText = "Maximum mark exceeded"
                 }
             }
+            
         }
         
         if hasFlaggedIssue {
@@ -319,12 +318,10 @@ extension MarkReviewCVC: MarkReviewTVCDelegate {
                 guard studentRecords[row].marks?[s].activities?[a].name == col?.activityName else { continue }
 
                 let maxMarks = col?.maxMarks ?? 0
-                let isError = trimmed.isEmpty ||
-                              trimmed.uppercased() == "AB" ||
-                              (Int(trimmed) ?? 0) > maxMarks
+                let isError = (Int(trimmed) ?? 0) > maxMarks
 
                 studentRecords[row].marks?[s].activities?[a].mark = value
-                studentRecords[row].marks?[s].activities?[a].isReview = !isError
+                studentRecords[row].marks?[s].activities?[a].isReview = isError
                 studentRecords[row].marks?[s].activities?[a].reason = reason
 
                 parentVC?.updateMark(row: row, column: columnIndex, value: value, reson: reason)
