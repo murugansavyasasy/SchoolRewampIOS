@@ -11,7 +11,6 @@ class MarkReviewVC: UIViewController {
     
     @IBOutlet weak var errorDeclarationLbl: UILabel!
     @IBOutlet weak var nameWith: NSLayoutConstraint!
-    @IBOutlet weak var headerHeight: NSLayoutConstraint!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var studentTableView: UITableView!
     @IBOutlet weak var saveMarksBtn: UIButton!
@@ -24,15 +23,14 @@ class MarkReviewVC: UIViewController {
     var editedMarks: [String: [String: String]] = [:]
     private var currentVerticalOffset: CGFloat = 0
     var payload:[String:Any]?
+    private var isNameWidthCalculated = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        if #available(iOS 15.0, *) {
-            studentTableView.sectionHeaderTopPadding = 0
-        }
-        setupColumnsFromPayload(payload ?? [:])
-        saveMarksBtn.layer.cornerRadius = 8
-        Get_Marks(parameters: payload ?? [:])
+            setupColumnsFromPayload(payload ?? [:])
+            saveMarksBtn.layer.cornerRadius = 8
+            Get_Marks(parameters: payload ?? [:])
     }
     
     var activeTextField: UITextField?
@@ -53,7 +51,15 @@ class MarkReviewVC: UIViewController {
             object: nil
         )
     }
-    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        guard !isNameWidthCalculated else { return }
+        isNameWidthCalculated = true
+
+        updateNameColumnWidth()
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
@@ -157,7 +163,7 @@ class MarkReviewVC: UIViewController {
                                         self.studentRecords[studentIndex]
                                             .marks?[subjectIndex]
                                             .activities?[activityIndex]
-                                            .cnfidenceLvl = !aiRecord.isReview
+                                            .isReview = !aiRecord.isReview
                                         
                                         self.studentRecords[studentIndex]
                                             .marks?[subjectIndex]
@@ -169,28 +175,36 @@ class MarkReviewVC: UIViewController {
                         }
                         
                     }
+                    self.errorDeclarationLbl.text = "⚠️ \(self.getFormattedReasonSummary())"
+                    self.isNameWidthCalculated = false
                     self.studentTableView.reloadData()
                     self.subjectsCollectionView.reloadData()
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now()) {
-                        let frameWidth = self.view.frame.width
-                        let contentWidth = self.subjectsCollectionView.contentSize.width
-                        let extra: CGFloat = 160
-                        let referenceWidth = frameWidth - extra
-                        let balance = referenceWidth - contentWidth
-                        
-                        if contentWidth < referenceWidth {
-                            self.nameWith.constant = balance + extra
-                        }
-                        let errorReason = self.getFormattedReasonSummary()
-                        self.errorDeclarationLbl.text = "⚠️ \(errorReason)"
-                    }
+                    self.view.setNeedsLayout()
                 case .failure(let error):
                     print("❌ Error:", error.localizedDescription)
                 }
             }
         }
     }
+    private func updateNameColumnWidth() {
+
+        subjectsCollectionView.layoutIfNeeded()
+
+        let frameWidth = view.bounds.width
+        let contentWidth = subjectsCollectionView
+            .collectionViewLayout
+            .collectionViewContentSize.width
+
+        let baseNameWidth: CGFloat = 160
+        let availableWidth = frameWidth - baseNameWidth
+
+        if contentWidth < availableWidth {
+            nameWith.constant = baseNameWidth + (availableWidth - contentWidth)
+        } else {
+            nameWith.constant = baseNameWidth
+        }
+    }
+
     func normalizeName(_ text: String) -> String {
         return text
             .lowercased()
@@ -239,73 +253,6 @@ class MarkReviewVC: UIViewController {
             "selected_activities": resultActivities
         ]
     }
-    
-//    
-//    private func generateDummyStudents(count: Int) -> [StudentMark] {
-//        
-//        let subjects: [(id: String, name: String)] = [
-//            ("112625", "TAMIL"),
-//            ("112626", "ENGLISH"),
-//            ("112627", "MATHS"),
-//            ("112628", "SCIENCE"),
-//            ("112629", "SOCIAL")
-//        ]
-//        
-//        let activities: [(id: String, name: String)] = [
-//            ("3062", "Activity 1"),
-//            ("3063", "Activity 2")
-//        ]
-//        
-//        let flaggedIndexes = Set((0..<count).shuffled().prefix(5))
-//        
-//        var students: [StudentMark] = []
-//        
-//        for i in 0..<count {
-//            
-//            var subjectMarks: [SubjectMarks] = []
-//            
-//            for subject in subjects {
-//                
-//                var activityMarks: [ActivityMark] = []
-//                
-//                for activity in activities {
-//                    
-//                    let isFlagged = flaggedIndexes.contains(i) && Bool.random()
-//                    
-//                    let activityMark = ActivityMark(
-//                        id: activity.id,
-//                        name: activity.name,
-//                        mark: "\(Int.random(in: 40...100))",
-//                        max_mark: "100",
-//                        cnfidenceLvl: !isFlagged,
-//                        reason: isFlagged ? "Please verify the entered mark." : ""
-//                    )
-//                    
-//                    activityMarks.append(activityMark)
-//                }
-//                
-//                subjectMarks.append(
-//                    SubjectMarks(
-//                        subject_id: subject.id,
-//                        subject_name: subject.name,
-//                        activities: activityMarks
-//                    )
-//                )
-//            }
-//            
-//            let student = StudentMark(
-//                student_id: "\(1001 + i)",
-//                student_name: "Student \(i + 1)",
-//                roll_no: "\(i + 1)",
-//                admission_no: "AD-\(1001 + i)",
-//                marks: subjectMarks
-//            )
-//            
-//            students.append(student)
-//        }
-//        
-//        return students
-//    }
     
     private func setupColumnsFromPayload(_ payload: [String: Any]) {
         
@@ -360,62 +307,53 @@ class MarkReviewVC: UIViewController {
         
         var marksPayload: [[String: Any]] = []
         var invalidMarkCount = 0
+
         for studentIndex in 0..<studentRecords.count {
-            var student = studentRecords[studentIndex]
+            let student = studentRecords[studentIndex]
             var studentMarks: [[String: Any]] = []
-            for subjectIndex in 0..<(student.marks?.count ?? 0) {
-                guard var subject = student.marks?[subjectIndex] else { continue }
+
+            for subject in student.marks ?? [] {
                 var activitiesArray: [[String: Any]] = []
-                for activityIndex in 0..<(subject.activities?.count ?? 0) {
-                    guard var activity = subject.activities?[activityIndex] else { continue }
-                    
+
+                for activity in subject.activities ?? [] {
+
                     let key = "\(subject.subject_id ?? "")_\(activity.id ?? "")"
                     let editedMark = editedMarks[student.roll_no ?? ""]?[key]
-                    
+
                     let finalMarkStr = editedMark ?? activity.mark ?? ""
                     let maxMarkStr   = activity.max_mark ?? ""
-                    
+
                     let finalMark = Double(finalMarkStr) ?? 0
                     let maxMark   = Double(maxMarkStr) ?? 0
-                    
+
                     if finalMark > maxMark {
                         invalidMarkCount += 1
-                        activity.cnfidenceLvl = false
-                        activity.reason = "Mark exceeds maximum (\(maxMarkStr))"
-                    } else {
-                        activity.cnfidenceLvl = true
-                        activity.reason = ""
                     }
-                    
-                    activity.change_mark = finalMarkStr
-                    subject.activities?[activityIndex] = activity
-                    
+
                     activitiesArray.append([
                         "id": activity.id ?? "",
                         "name": activity.name ?? "",
                         "mark": finalMarkStr,
-                        "max_mark": maxMarkStr,
-                        "cnfidenceLvl": activity.cnfidenceLvl,
-                        "reason": activity.reason
+                        "max_mark": maxMarkStr
                     ])
                 }
-                
+
                 studentMarks.append([
                     "subject_id": subject.subject_id ?? "",
+                    "subject_name": subject.subject_name ?? "",
                     "activities": activitiesArray
                 ])
-                
-                student.marks?[subjectIndex] = subject
             }
-            
-            studentRecords[studentIndex] = student
-            
+
             marksPayload.append([
                 "student_id": student.student_id ?? "",
+                "student_name": student.student_name ?? "",
+                "roll_no": student.roll_no ?? "",
+                "admission_no": student.admission_no ?? "",
                 "marks": studentMarks
             ])
         }
-        
+
         if invalidMarkCount > 0 {
             CustomAlert().showAlert(
                 title: "Invalid Marks",
@@ -424,7 +362,7 @@ class MarkReviewVC: UIViewController {
             )
             return
         }
-        
+
         CustomAlert().showAlertCancel(
             title: AlertstringFile.Confirm,
             message: AlertstringFile.uploadMark,
@@ -439,6 +377,7 @@ class MarkReviewVC: UIViewController {
             }
         )
     }
+
     
     
     
@@ -514,27 +453,21 @@ class MarkReviewVC: UIViewController {
     }
     
     private func setupSubjectsCollection() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        layout.sectionInset = .zero
-        subjectsCollectionView.collectionViewLayout = layout
-        subjectsCollectionView.register(UINib(nibName: "MarkReviewCVC", bundle: nil),
+         let layout = UICollectionViewFlowLayout()
+         layout.scrollDirection = .horizontal
+         layout.minimumLineSpacing = 0
+         layout.minimumInteritemSpacing = 0
+         
+         subjectsCollectionView.collectionViewLayout = layout
+         subjectsCollectionView.register(UINib(nibName: "MarkReviewCVC", bundle: nil),
                                         forCellWithReuseIdentifier: "MarkReviewCVC")
-        
-        subjectsCollectionView.dataSource = self
-        subjectsCollectionView.delegate = self
-        subjectsCollectionView.showsHorizontalScrollIndicator = true
-        subjectsCollectionView.bounces = true
-        subjectsCollectionView.backgroundColor = .systemBackground
-        subjectsCollectionView.contentInsetAdjustmentBehavior = .never
-        subjectsCollectionView.contentInset = .zero
-        
-        if #available(iOS 15.0, *) {
-            subjectsCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        }
-    }
+         
+         subjectsCollectionView.dataSource = self
+         subjectsCollectionView.delegate = self
+         subjectsCollectionView.showsHorizontalScrollIndicator = true
+         subjectsCollectionView.bounces = true
+         subjectsCollectionView.backgroundColor = .systemBackground
+     }
     
     // MARK: - Scroll Synchronization (KEY FIX)
     func syncVerticalScroll(from sender: UIScrollView, offset: CGPoint) {
@@ -660,7 +593,7 @@ class MarkReviewVC: UIViewController {
                 let original = activity?.mark ?? ""
                 
                 studentRecords[row].marks?[s].activities?[a].mark = trimmed
-                studentRecords[row].marks?[s].activities?[a].cnfidenceLvl = !hasError
+                studentRecords[row].marks?[s].activities?[a].isReview = !hasError
                 studentRecords[row].marks?[s].activities?[a].reason = reson
                 
                 errorDeclarationLbl.text = "⚠️ \(getFormattedReasonSummary())"
@@ -705,7 +638,6 @@ extension MarkReviewVC: UITableViewDataSource, UITableViewDelegate {
                    heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let student = studentRecords[indexPath.row]
-        
         let name = student.student_name ?? ""
         let rollNo = student.roll_no ?? ""
         
@@ -822,11 +754,6 @@ extension MarkReviewVC: UICollectionViewDataSource, UICollectionViewDelegate, UI
         return CGSize(width: finalWidth,
                       height: collectionView.frame.height)
     }
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    }
 }
 
 extension MarkReviewVC {
@@ -839,11 +766,11 @@ extension MarkReviewVC {
             for subject in student.marks ?? [] {
                 for activity in subject.activities ?? [] {
                     
-                    let reason = activity.reason?.trimmingCharacters(in: .whitespacesAndNewlines)
+                    guard let reason = activity.reason?
+                            .trimmingCharacters(in: .whitespacesAndNewlines),
+                          !reason.isEmpty else { continue }
                     
-                    guard ((reason?.isEmpty) == nil) else { continue }
-                    
-                    reasonMap[reason ?? "", default: 0] += 1
+                    reasonMap[reason, default: 0] += 1
                 }
             }
         }
@@ -901,7 +828,7 @@ struct ActivityMark: Codable {
     var mark: String?
     var change_mark: String?
     let max_mark: String?
-    var cnfidenceLvl: Bool?
+    var isReview: Bool?
     var reason: String?
 }
 

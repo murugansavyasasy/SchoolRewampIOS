@@ -116,7 +116,7 @@ class MarkReviewTVC: UITableViewCell {
         tittleLbl.textColor = .label
     }
     
-    func configure(mark: String,
+    func configure(mark: String,channgeMark: String? = nil,
                    rowIndex: Int,
                    columnIndex: Int,
                    isEditable: Bool,
@@ -128,12 +128,10 @@ class MarkReviewTVC: UITableViewCell {
         self.isEditable = isEditable
         self.parentVC = parentVC
         self.hasFlaggedIssue = hasFlaggedIssue
-        
         tittleLbl.isHidden = true
         markTxt.isHidden = false
         markTxt.text = mark
         markTxt.textAlignment = alignment
-        
         if !isEditable {
             markTxt.textColor = .label
             markTxt.font = UIFont.systemFont(ofSize: 15, weight: .medium)
@@ -144,7 +142,19 @@ class MarkReviewTVC: UITableViewCell {
             markTxt.layer.borderWidth = 0
             return
         }
-        
+        if let changemark = channgeMark{
+            tittleLbl.text = changemark
+            tittleLbl.isHidden = false
+            markTxt.textColor = .systemGreen
+            markTxt.layer.borderWidth = 2
+            markTxt.layer.borderColor = UIColor.systemGreen.withAlphaComponent(0.4).cgColor
+            markTxt.layer.cornerRadius = 6
+            markTxt.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.1)
+            infoBtn.isHidden = false
+            infoBtn.tintColor = .systemGreen
+        }else{
+            tittleLbl.isHidden = true
+        }
         markTxt.borderStyle = .roundedRect
         if hasFlaggedIssue {
             markTxt.textColor = .orange
@@ -157,15 +167,15 @@ class MarkReviewTVC: UITableViewCell {
             return
         }
         
-        if mark == "AB" {
-            markTxt.textColor = .systemRed
-            markTxt.isUserInteractionEnabled = false
-            markTxt.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
-            infoBtn.isHidden = false
-            infoBtn.tintColor = .systemRed
-            markTxt.layer.borderWidth = 1
-            markTxt.layer.borderColor = UIColor.systemRed.withAlphaComponent(0.4).cgColor
-        } else {
+//        if mark == "AB" {
+//            markTxt.textColor = .systemRed
+//            markTxt.isUserInteractionEnabled = false
+//            markTxt.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
+//            infoBtn.isHidden = false
+//            infoBtn.tintColor = .systemRed
+//            markTxt.layer.borderWidth = 1
+//            markTxt.layer.borderColor = UIColor.systemRed.withAlphaComponent(0.4).cgColor
+//        } else {
             markTxt.backgroundColor = UIColor.systemGray6
             markTxt.textColor = .label
             markTxt.font = UIFont.systemFont(ofSize: 15)
@@ -183,7 +193,7 @@ class MarkReviewTVC: UITableViewCell {
                 infoBtn.isHidden = false
                 infoBtn.tintColor = .systemRed
             }
-        }
+//        }
     }
 
     override func prepareForReuse() {
@@ -245,7 +255,9 @@ extension MarkReviewTVC: UITextFieldDelegate {
             isValid = false
             reason = "Maximum mark exceeded"
         }
-
+        if "AB" == updatedText{
+            reason = "Absent"
+        }
         applyValidationUI(mark: updatedText,
                           maxMark: parentVC?.subjectColumns[columnIndex].maxMarks ?? 0)
         delegate?.markDidChange(row: rowIndex,
@@ -263,12 +275,12 @@ extension MarkReviewTVC: UITextFieldDelegate {
     func applyValidationUI(mark: String, maxMark: Int) {
         let trimmed = mark.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
-            showErrorUI()
+//            showErrorUI()
             return
         }
 
         let entered = Int(trimmed) ?? 0
-        if entered < 0 || entered > maxMark {
+        if entered > maxMark {
             showErrorUI()
         } else {
             showNormalUI()

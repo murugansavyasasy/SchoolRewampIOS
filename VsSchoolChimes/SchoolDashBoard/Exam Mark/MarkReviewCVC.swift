@@ -79,27 +79,15 @@ class MarkReviewCVC: UICollectionViewCell {
         headerLbl.text = "\(columnConfig.displayName ?? "")"
         subjectLbl.text = "\(columnConfig.subjectName ?? "")"
         maxMarkLbl.text = "Max: \(columnConfig.maxMarks!)"
-        
-        // Force layout before reload
-        self.layoutIfNeeded()
-        listTable.layoutIfNeeded()
-        
-        // Reload table
         listTable.reloadData()
         
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            
-            // Get stored vertical offset from parent
             let storedOffset = self.parentVC?.getCurrentVerticalOffset() ?? 0
-            
-            // Restore position without animation
             self.listTable.setContentOffset(
                 CGPoint(x: 0, y: storedOffset),
                 animated: false
             )
-            
-            // Reset configuring flag
             self.isConfiguring = false
         }
     }
@@ -153,10 +141,11 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
                 ($0.name ?? "") == columnConfig.activityName
             }) {
                 displayValue = activity.mark ?? ""
-                
-                if !(activity.cnfidenceLvl ?? false) {
-                    hasFlaggedIssue = true
-                    reasonText = activity.reason ?? ""
+                if let isReview = activity.isReview{
+                    if isReview {
+                        hasFlaggedIssue = true
+                        reasonText = activity.reason ?? ""
+                    }
                 }
             }
         }
@@ -254,15 +243,13 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
                    heightForRowAt indexPath: IndexPath) -> CGFloat {
 
         let student = studentRecords[indexPath.row]
-
         let name = student.student_name ?? ""
         let rollNo = student.roll_no ?? ""
 
         let nameFont = UIFont.systemFont(ofSize: 16, weight: .medium)
         let rollFont = UIFont.systemFont(ofSize: 13, weight: .regular)
 
-        let labelWidth: CGFloat = 160
-
+        let labelWidth: CGFloat = 160 
         let nameHeight = textHeight(text: name, font: nameFont, width: labelWidth)
         let rollHeight = textHeight(text: "Reg: \(rollNo)", font: rollFont, width: labelWidth)
 
@@ -287,12 +274,8 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     }
     
-    // 🔑 Sync vertical scroll - but ONLY when not configuring
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // Don't sync if we're currently configuring (prevents jumping)
         guard !isConfiguring else { return }
-        
-        // Only sync if this is a user-initiated scroll
         parentVC?.syncVerticalScroll(from: scrollView, offset: scrollView.contentOffset)
     }
 }
@@ -341,7 +324,7 @@ extension MarkReviewCVC: MarkReviewTVCDelegate {
                               (Int(trimmed) ?? 0) > maxMarks
 
                 studentRecords[row].marks?[s].activities?[a].mark = value
-                studentRecords[row].marks?[s].activities?[a].cnfidenceLvl = !isError
+                studentRecords[row].marks?[s].activities?[a].isReview = !isError
                 studentRecords[row].marks?[s].activities?[a].reason = reason
 
                 parentVC?.updateMark(row: row, column: columnIndex, value: value, reson: reason)
