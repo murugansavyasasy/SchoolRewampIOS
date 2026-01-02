@@ -291,12 +291,12 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
             "S.no",
             "Reg No",
             "Student Name",
-            "student_id"
+            "Student ID"
         ]
 
         return records.map { record in
 
-            let studentId = record.values["student_id"]?.stringValue ?? ""
+            let studentId = record.values["Student ID"]?.stringValue ?? ""
             let sNo = record.values["S.no"]?.stringValue ?? ""
             let regNo = record.values["Reg No"]?.stringValue ?? ""
             let studentName = record.values["Student Name"]?.stringValue ?? ""
