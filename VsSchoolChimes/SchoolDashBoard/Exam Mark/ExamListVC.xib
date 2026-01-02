@@ -16,6 +16,8 @@
                 <outlet property="bottomSlectInfoLbl" destination="uPP-DT-l4N" id="Qli-V2-kTa"/>
                 <outlet property="classNameLbl" destination="yzt-Ry-aVv" id="5sw-2e-PMF"/>
                 <outlet property="continueBtn" destination="rbA-xi-bTf" id="4oy-ST-pbW"/>
+                <outlet property="noDataImage" destination="Jgd-cv-Xw5" id="cak-1P-1zA"/>
+                <outlet property="noDataLbl" destination="dSw-TZ-nbj" id="386-rB-3W3"/>
                 <outlet property="titleLbl" destination="Nvc-Ny-NJL" id="X12-6P-JrK"/>
                 <outlet property="tv" destination="Hbp-6n-LtI" id="fdI-iR-rZA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -27,13 +29,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jF7-v5-pts" customClass="BottomRoundedView" customModule="School_Chimes" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="183"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="404"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Xzi-qI-npb">
-                            <rect key="frame" x="10" y="128" width="373" height="35"/>
+                            <rect key="frame" x="10" y="128" width="373" height="256"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o3C-Ex-Umg">
-                                    <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                    <rect key="frame" x="0.0" y="110.66666666666666" width="35" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="35" id="fuT-Ga-zfX"/>
                                         <constraint firstAttribute="height" constant="35" id="sDc-Yv-21m"/>
@@ -48,7 +50,7 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exam Mark" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nvc-Ny-NJL">
-                                    <rect key="frame" x="35" y="7.9999999999999982" width="338" height="19.333333333333329"/>
+                                    <rect key="frame" x="35" y="118.33333333333333" width="338" height="19.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
@@ -64,7 +66,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bOQ-o7-9EH">
-                    <rect key="frame" x="0.0" y="183" width="393" height="601"/>
+                    <rect key="frame" x="0.0" y="404" width="393" height="380"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grade 10 - Section A" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yzt-Ry-aVv">
                             <rect key="frame" x="15" y="20" width="363" height="20.333333333333329"/>
@@ -73,20 +75,37 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select an Exam to continue" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RbA-Bx-EY2">
-                            <rect key="frame" x="15" y="55.333333333333343" width="363" height="18"/>
+                            <rect key="frame" x="15" y="55.333333333333314" width="363" height="18"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Hbp-6n-LtI">
-                            <rect key="frame" x="0.0" y="88.333333333333343" width="393" height="424.33333333333326"/>
-                        </tableView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Bx8-kZ-Brh">
+                            <rect key="frame" x="0.0" y="88.333333333333329" width="393" height="203.33333333333337"/>
+                            <subviews>
+                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="missing-file" translatesAutoresizingMaskIntoConstraints="NO" id="Jgd-cv-Xw5">
+                                    <rect key="frame" x="0.0" y="-300" width="393" height="300"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="300" id="40c-zw-hub"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Exam Found!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dSw-TZ-nbj">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="20.333333333333332"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Hbp-6n-LtI">
+                                    <rect key="frame" x="0.0" y="20.333333333333314" width="393" height="183"/>
+                                </tableView>
+                            </subviews>
+                        </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Thn-oT-dS7">
-                            <rect key="frame" x="10" y="522.66666666666663" width="373" height="68.333333333333371"/>
+                            <rect key="frame" x="10" y="301.66666666666663" width="373" height="68.333333333333314"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rbA-xi-bTf">
                                     <rect key="frame" x="20" y="0.0" width="333" height="40"/>
-                                    <color key="backgroundColor" name="staffExamColour"/>
+                                    <color key="backgroundColor" name="BackGroundClr"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="YtQ-EY-PsL"/>
                                     </constraints>
@@ -118,17 +137,17 @@
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="Thn-oT-dS7" secondAttribute="bottom" constant="10" id="1wR-qq-uyE"/>
                         <constraint firstAttribute="trailing" secondItem="Thn-oT-dS7" secondAttribute="trailing" constant="10" id="5M8-iM-kiH"/>
-                        <constraint firstItem="Hbp-6n-LtI" firstAttribute="leading" secondItem="bOQ-o7-9EH" secondAttribute="leading" id="9q8-PP-QhI"/>
                         <constraint firstAttribute="trailing" secondItem="RbA-Bx-EY2" secondAttribute="trailing" constant="15" id="Amt-rZ-12D"/>
                         <constraint firstItem="yzt-Ry-aVv" firstAttribute="leading" secondItem="bOQ-o7-9EH" secondAttribute="leading" constant="15" id="Au8-dG-dDr"/>
                         <constraint firstAttribute="trailing" secondItem="yzt-Ry-aVv" secondAttribute="trailing" constant="15" id="Idd-Df-iiw"/>
-                        <constraint firstItem="Hbp-6n-LtI" firstAttribute="top" secondItem="RbA-Bx-EY2" secondAttribute="bottom" constant="15" id="JLl-YX-WoM"/>
                         <constraint firstItem="RbA-Bx-EY2" firstAttribute="leading" secondItem="bOQ-o7-9EH" secondAttribute="leading" constant="15" id="Jxb-Ss-dzg"/>
                         <constraint firstItem="RbA-Bx-EY2" firstAttribute="top" secondItem="yzt-Ry-aVv" secondAttribute="bottom" constant="15" id="L5g-F8-hNC"/>
-                        <constraint firstItem="Thn-oT-dS7" firstAttribute="top" secondItem="Hbp-6n-LtI" secondAttribute="bottom" constant="10" id="Lrk-aI-V0V"/>
+                        <constraint firstItem="Bx8-kZ-Brh" firstAttribute="top" secondItem="RbA-Bx-EY2" secondAttribute="bottom" constant="15" id="Odc-uD-BUh"/>
                         <constraint firstItem="Thn-oT-dS7" firstAttribute="leading" secondItem="bOQ-o7-9EH" secondAttribute="leading" constant="10" id="Qqi-BV-GtT"/>
                         <constraint firstItem="yzt-Ry-aVv" firstAttribute="top" secondItem="bOQ-o7-9EH" secondAttribute="top" constant="20" id="SC7-YS-f3d"/>
-                        <constraint firstAttribute="trailing" secondItem="Hbp-6n-LtI" secondAttribute="trailing" id="crq-h5-5yL"/>
+                        <constraint firstItem="Bx8-kZ-Brh" firstAttribute="leading" secondItem="bOQ-o7-9EH" secondAttribute="leading" id="SGg-fa-FrH"/>
+                        <constraint firstItem="Thn-oT-dS7" firstAttribute="top" secondItem="Bx8-kZ-Brh" secondAttribute="bottom" constant="10" id="htG-ra-lVq"/>
+                        <constraint firstAttribute="trailing" secondItem="Bx8-kZ-Brh" secondAttribute="trailing" id="m7Z-tm-MRc"/>
                     </constraints>
                 </view>
             </subviews>
@@ -150,6 +169,7 @@
     <resources>
         <image name="arrow.right" catalog="system" width="128" height="95"/>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
+        <image name="missing-file" width="360" height="360"/>
         <namedColor name="BackGroundClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

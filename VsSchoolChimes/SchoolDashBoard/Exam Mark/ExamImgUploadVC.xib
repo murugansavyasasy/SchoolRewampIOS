@@ -14,16 +14,29 @@
             <connections>
                 <outlet property="AIview" destination="Nnm-gx-Qxz" id="ifc-54-gA3"/>
                 <outlet property="AiInstructionView" destination="Soc-3r-pf8" id="EMu-NM-jhW"/>
+                <outlet property="AiPowerdUploadLbl" destination="zbx-Vs-Uw6" id="YbY-L2-Q5a"/>
+                <outlet property="AutoDetectionLbl" destination="8X2-Ug-cXH" id="v1w-3q-ews"/>
                 <outlet property="ContinueManuallyBtn" destination="Tnj-Gv-uZz" id="jXf-hx-xNd"/>
                 <outlet property="ContinuewithUploadBtn" destination="AJm-Ue-acc" id="TJm-6O-HUA"/>
+                <outlet property="PopupAlertTitleLbl" destination="TSE-xp-hzz" id="Gw4-VG-Nru"/>
+                <outlet property="SkipUploadLbl" destination="49X-3r-4UA" id="Hxk-6h-123"/>
+                <outlet property="autoDetectBtn" destination="muk-Mr-lun" id="l5h-mB-SmW"/>
                 <outlet property="cancelBtn" destination="yb3-TX-q4z" id="DaR-WC-Vcq"/>
                 <outlet property="documentIcon" destination="S9h-YR-ltQ" id="Ep3-Tz-uMZ"/>
+                <outlet property="fileTypesAndSizeLimitLbl" destination="z7a-hG-mNN" id="uOX-vM-cKG"/>
+                <outlet property="manualEntryLbl" destination="zby-I3-dsA" id="n3z-iz-N7K"/>
                 <outlet property="manualView" destination="MAI-wC-n4t" id="sbA-Gp-svL"/>
                 <outlet property="pickedFilenameLbl" destination="oKQ-tv-kop" id="KmO-uA-m3j"/>
+                <outlet property="popupAlertDescriptionLbl" destination="dXx-zq-bIy" id="Yg2-7h-CjX"/>
                 <outlet property="popupBaseVIew" destination="DuN-0e-8Ws" id="dlF-N2-cML"/>
                 <outlet property="popupView" destination="mxt-cQ-s7v" id="lpm-c8-Al3"/>
                 <outlet property="separatorView" destination="GMm-3K-Lt9" id="VxQ-Ya-mB9"/>
+                <outlet property="studentNamesAndRollnoLbl" destination="VRX-MT-ELb" id="zQB-v4-EW7"/>
+                <outlet property="subjectColoumsAndMarksLbl" destination="9Ob-a7-xO0" id="9bX-mQ-eSn"/>
+                <outlet property="tableStructureAndLayoutLbl" destination="gWZ-I1-w9F" id="wCo-wz-pPi"/>
                 <outlet property="uploadIconImage" destination="5HN-Ex-Cta" id="4sN-oi-UFx"/>
+                <outlet property="uploadImageForAIDescLbl" destination="h1U-EH-ZmD" id="4n9-0S-Pdj"/>
+                <outlet property="uploadMarkSheetLbl" destination="NQn-aG-Siw" id="hRi-fB-Wud"/>
                 <outlet property="uploadView" destination="eD5-iE-tqJ" id="agu-aS-irU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -202,7 +215,7 @@
                                                                         <constraint firstAttribute="height" constant="45" id="ly5-rh-eeh"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click to upload or drag and drop" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oKQ-tv-kop">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click to upload" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oKQ-tv-kop">
                                                                     <rect key="frame" x="10" y="90" width="293" height="18"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <nil key="textColor"/>

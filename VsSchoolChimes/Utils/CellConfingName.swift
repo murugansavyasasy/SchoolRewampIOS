@@ -150,4 +150,6 @@ class CellConfingName {
     static let  QuizCompletedFirstTv = "QuizCompletedFirstTv"
     static let  AttendanceRepCv = "AttendanceRepCv"
     static let  Exam_ClassListTV = "Exam_ClassListTV"
+    static let  ExamListHeader = "ExamListHeader"
+    static let  ExamListCell = "ExamListCell"
 }
