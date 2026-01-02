@@ -24,7 +24,7 @@ class MarkReviewVC: UIViewController {
     private var currentVerticalOffset: CGFloat = 0
     var payload:[String:Any]?
     private var isNameWidthCalculated = false
-
+    private var isAdjustingForKeyboard = false
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -66,37 +66,42 @@ class MarkReviewVC: UIViewController {
     }
     
     @objc func keyboardWillShow(notification: Notification) {
+
         guard let userInfo = notification.userInfo,
               let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-        
-        keyboardHeight = keyboardFrame.height
-        
-        guard let textField = activeTextField else { return }
-        
-        // Find the parent cell and collection view
-        if let cell = textField.superview(of: MarkReviewTVC.self),
-           let collectionCell = cell.superview(of: MarkReviewCVC.self),
-           let indexPath = collectionCell.listTable.indexPath(for: cell) {
-            
-            let visibleRect = collectionCell.listTable.convert(cell.frame, to: self.view)
-            let bottomY = visibleRect.maxY
-            let screenHeight = UIScreen.main.bounds.height - keyboardHeight
-            
-            if bottomY > screenHeight {
-                let offsetY = bottomY - screenHeight + 20
-                let newOffset = CGPoint(x: 0, y: collectionCell.listTable.contentOffset.y + offsetY)
-                collectionCell.listTable.setContentOffset(newOffset, animated: true)
-                
-                // Update stored offset and sync
-                currentVerticalOffset = newOffset.y
-                syncVerticalScroll(from: collectionCell.listTable, offset: newOffset)
+        let inset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height, right: 0)
+        isAdjustingForKeyboard = true
+        studentTableView.scrollIndicatorInsets = inset
+        for cell in subjectsCollectionView.visibleCells {
+            if let colCell = cell as? MarkReviewCVC {
+                colCell.listTable.contentInset = inset
+                colCell.listTable.scrollIndicatorInsets = inset
             }
         }
+
+        isAdjustingForKeyboard = false
     }
+
     
     @objc func keyboardWillHide(notification: Notification) {
-        keyboardHeight = 0
+
+        let inset = UIEdgeInsets.zero
+
+        isAdjustingForKeyboard = true
+
+        studentTableView.contentInset = inset
+        studentTableView.scrollIndicatorInsets = inset
+
+        for cell in subjectsCollectionView.visibleCells {
+            if let colCell = cell as? MarkReviewCVC {
+                colCell.listTable.contentInset = inset
+                colCell.listTable.scrollIndicatorInsets = inset
+            }
+        }
+
+        isAdjustingForKeyboard = false
     }
+
     
     func Get_Marks(parameters payload: [String: Any]) {
         
@@ -569,9 +574,7 @@ class MarkReviewVC: UIViewController {
         let trimmed = value.trimmingCharacters(in: .whitespaces)
         
         var hasError = false
-        if trimmed.isEmpty || trimmed.uppercased() == "AB" {
-            hasError = true
-        } else if let entered = Int(trimmed) {
+        if let entered = Int(trimmed) {
             hasError = entered < 0 || entered > (col.maxMarks ?? 0)
         } else {
             hasError = true
