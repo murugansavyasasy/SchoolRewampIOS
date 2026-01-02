@@ -148,7 +148,6 @@ class MarkReviewTVC: UITableViewCell {
             markTxt.textColor = .systemGreen
             markTxt.layer.borderWidth = 2
             markTxt.layer.borderColor = UIColor.systemGreen.withAlphaComponent(0.4).cgColor
-            markTxt.layer.cornerRadius = 6
             markTxt.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.1)
             infoBtn.isHidden = false
             infoBtn.tintColor = .systemGreen
@@ -160,7 +159,6 @@ class MarkReviewTVC: UITableViewCell {
             markTxt.textColor = .orange
             markTxt.layer.borderWidth = 2
             markTxt.layer.borderColor = UIColor.orange.withAlphaComponent(0.4).cgColor
-            markTxt.layer.cornerRadius = 6
             markTxt.backgroundColor = UIColor.orange.withAlphaComponent(0.1)
             infoBtn.isHidden = false
             infoBtn.tintColor = .orange
@@ -291,7 +289,6 @@ extension MarkReviewTVC: UITextFieldDelegate {
         markTxt.textColor = .orange
         markTxt.layer.borderWidth = 2
         markTxt.layer.borderColor = UIColor.orange.withAlphaComponent(0.4).cgColor
-        markTxt.layer.cornerRadius = 6
         markTxt.backgroundColor = UIColor.orange.withAlphaComponent(0.1)
         infoBtn.isHidden = false
         infoBtn.tintColor = .orange
