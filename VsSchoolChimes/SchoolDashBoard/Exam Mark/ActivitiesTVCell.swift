@@ -27,7 +27,7 @@ class ActivitiesTVCell: UITableViewCell {
     private var splitIndex = 0
     private var isAIFlow = false
     
-    var items: [String] = []
+    var items:[String]?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -56,15 +56,15 @@ class ActivitiesTVCell: UITableViewCell {
         subjectIndex: Int,
         splitIndex: Int,
         split: SplitDetail,
-        isAi: Bool
+        isAi: Bool,items: [String]
     ) {
         self.subjectIndex = subjectIndex
         self.splitIndex = splitIndex
         self.isAIFlow = isAi
-
+        dropdown.dataSource = items
         let nameText = split.name ?? ""
         let maxText = " (Max: \(split.max_mark ?? ""))"
-        
+        print(items)
         let fullText = nameText + maxText
         
         let attributedString = NSMutableAttributedString(string: fullText)
@@ -145,9 +145,6 @@ class ActivitiesTVCell: UITableViewCell {
     
     func setupDropdown() {
             dropdown.anchorView = dropdownView
-            
-            dropdown.dataSource = items
-            
             dropdown.backgroundColor = .white
             dropdown.cornerRadius = 10
 
@@ -187,6 +184,8 @@ class ActivitiesTVCell: UITableViewCell {
                 isChecked: true,
                 aiOption: item
             )
+            
+            self.superview?.layoutIfNeeded()
         }
         
         

@@ -149,4 +149,5 @@ class CellConfingName {
     static let  TargetCvCell = "TargetCvCell"
     static let  QuizCompletedFirstTv = "QuizCompletedFirstTv"
     static let  AttendanceRepCv = "AttendanceRepCv"
+    static let  Exam_ClassListTV = "Exam_ClassListTV"
 }

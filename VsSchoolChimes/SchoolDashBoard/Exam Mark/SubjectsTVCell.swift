@@ -29,7 +29,7 @@ class SubjectsTVCell: UITableViewCell {
     var isAI : Bool = false
     weak var delegate: SubjectCellDelegate?
     var selectionHandler: ((Int, Bool) -> Void)?
-    var DropdownData : [String] = []
+    var DropdownData : [String]?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -75,7 +75,10 @@ class SubjectsTVCell: UITableViewCell {
                onHeightChange?()
            }
        }
-
+    func config(dropDown:[String]?){
+        DropdownData = dropDown
+        print(DropdownData)
+    }
     func notifyParentToUpdate() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             if let parentTable = self.superview(of: UITableView.self) {
@@ -143,9 +146,8 @@ extension SubjectsTVCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ActivitiesTVCell", for: indexPath) as! ActivitiesTVCell
         
-        cell.configure(subjectIndex: subjectIndex, splitIndex: indexPath.row, split: splits[indexPath.row], isAi: isAI)
+        cell.configure(subjectIndex: subjectIndex, splitIndex: indexPath.row, split: splits[indexPath.row], isAi: isAI, items: DropdownData ?? [])
         cell.delegate = self
-        cell.items = DropdownData
         return cell
     }
     
@@ -155,6 +157,10 @@ extension SubjectsTVCell: UITableViewDelegate, UITableViewDataSource {
         }else{
             
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
 
@@ -177,10 +183,12 @@ extension SubjectsTVCell: ActivityCellDelegate {
             split: splits[splitIndex]
         )
 
-        tableview.reloadRows(
-            at: [IndexPath(row: splitIndex, section: 0)],
-            with: .none
-        )
+        tableview.reloadRows( at: [IndexPath(row: splitIndex, section: 0)],with: .none)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.tableviewHeight.constant = self.tableview.contentSize.height
+            self.onHeightChange?()
+        }
     }
 
     func didToggleSplit(
@@ -199,10 +207,7 @@ extension SubjectsTVCell: ActivityCellDelegate {
             split: splits[splitIndex]
         )
 
-        tableview.reloadRows(
-            at: [IndexPath(row: splitIndex, section: 0)],
-            with: .none
-        )
+        tableview.reloadRows(at: [IndexPath(row: splitIndex, section: 0)], with: .none)
     }
 }
 

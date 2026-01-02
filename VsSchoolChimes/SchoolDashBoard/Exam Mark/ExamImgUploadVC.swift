@@ -190,12 +190,12 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     
     @IBAction func continueWithUploadAct(_ sender: Any) {
         
-        //uploadImageForAI()
-        let vc = ExamActivitySelectionVC()
-        vc.ExamID = examId ?? ""
-        vc.isAIFlow = true
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        uploadImageForAI()
+//        let vc = ExamActivitySelectionVC()
+//        vc.ExamID = examId ?? ""
+//        vc.isAIFlow = true
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
         
     }
     
@@ -224,7 +224,7 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
                             return
                         }
 
-                        var reviewFlags = data.reviewFlags ?? []
+                        var reviewFlags = data.review_flags ?? []
 
                         let converted = self.convertRecordsWithReviews(
                             records: records,
@@ -232,8 +232,10 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
                         )
 
                         print("Converted:", converted)
+                        print("reviewFlags:", reviewFlags)
+                        print("selected_columns:", data.table_structure?.selected_columns ?? [])
 
-                        self.selectedColumns = data.selectedColumns ?? []
+                        self.selectedColumns = data.table_structure?.selected_columns ?? []
                         self.convertedRecords = converted
                         
 
