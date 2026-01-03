@@ -23,7 +23,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
 
     func switchRoll(userToken: String) {
         self.get_dashboard_details(token: userToken)
-        setupLabels(name: staffDetails?.name, school: staffDetails?.school_name)
+        setupLabels(name: staffDetails?.name, school: staffDetails?.school_name, roll: staffDetails?.role)
         setupProfileImage()
     }
 
@@ -69,10 +69,10 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             profileImageView.isHidden = true
             setupLabels(
                 name: staffDetails?.name,
-                school: staffDetails?.role)
+                school: staffDetails?.school_name, roll:staffDetails?.role)
         } else {
             profileImageView.isHidden = false
-            setupLabels(name: staffDetails?.name, school: staffDetails?.school_name)
+            setupLabels(name: staffDetails?.name, school: staffDetails?.school_name, roll: nil)
         }
         // Delegates and DataSources
         recentActiveMenuCollection.delegate = self
@@ -416,14 +416,31 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         headerView.setNeedsDisplay()
     }
     
-    private func setupLabels(name:String?,school:String?) {
-        welcomeLabel.text = school
+    private func setupLabels(name: String?, school: String?, roll: String?) {
+
+        let schoolText = school?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let rollText = roll?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+
+        if !schoolText.isEmpty && !rollText.isEmpty {
+            welcomeLabel.text = "\(schoolText)\n \(rollText)"
+        } else if !schoolText.isEmpty {
+            welcomeLabel.text = schoolText
+        } else if !rollText.isEmpty {
+            welcomeLabel.text = "\(rollText)"
+        } else {
+            welcomeLabel.text = ""
+        }
+
+        welcomeLabel.numberOfLines = 0
         welcomeLabel.textColor = UIColor.white.withAlphaComponent(0.9)
         welcomeLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+
         nameLabel.text = name
         nameLabel.textColor = UIColor.white
         nameLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
     }
+
+
     
     private func setupProfileImage() {
         profileImageView.kf.setImage(with: URL(string: staffDetails?.school_logo ?? ""),placeholder:UIImage(systemName: "School Needs"))

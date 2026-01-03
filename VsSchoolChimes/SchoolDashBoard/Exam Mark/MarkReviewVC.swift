@@ -25,12 +25,13 @@ class MarkReviewVC: UIViewController {
     var payload:[String:Any]?
     private var isNameWidthCalculated = false
     private var isAdjustingForKeyboard = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-            setupColumnsFromPayload(payload ?? [:])
-            saveMarksBtn.layer.cornerRadius = 8
-            Get_Marks(parameters: payload ?? [:])
+        saveMarksBtn.layer.cornerRadius = 8
+        // ✅ Don't setup columns here - wait for data
+        Get_Marks(parameters: payload ?? [:])
     }
     
     var activeTextField: UITextField?
@@ -51,12 +52,12 @@ class MarkReviewVC: UIViewController {
             object: nil
         )
     }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         guard !isNameWidthCalculated else { return }
         isNameWidthCalculated = true
-
         updateNameColumnWidth()
     }
 
@@ -106,7 +107,6 @@ class MarkReviewVC: UIViewController {
 
     
     func Get_Marks(parameters payload: [String: Any]) {
-
         let parameters = buildGetMarksParams(from: payload)
 
         APIService.shared.makeApi(
@@ -121,105 +121,20 @@ class MarkReviewVC: UIViewController {
 
                 switch result {
                 case .success(let response):
-
                     if let data = response.data, !data.isEmpty {
-
                         self.studentRecords = data
-                        self.mapActivityNamesFromColumns()
-                        self.printStudentRecordsJSON()
-                        self.printaiRecordsJSON()
+                        self.setupColumnsFromPayload(self.payload ?? [:])
                         
+                        self.mapActivityNamesFromColumns()
                         if !self.aiRecords.isEmpty {
-                            for studentIndex in 0..<self.studentRecords.count {
-
-                                let studentId = self.studentRecords[studentIndex].student_id ?? ""
-
-                                guard let aiStudent = self.aiRecords.first(where: {
-                                    $0.studentId == studentId
-                                }) else {
-                                    print("⚠️ No AI record found for student: \(studentId)")
-                                    continue
-                                }
-
-                                for subjectIndex in 0..<(self.studentRecords[studentIndex].marks?.count ?? 0) {
-
-                                    guard let activities = self.studentRecords[studentIndex]
-                                        .marks?[subjectIndex].activities else { continue }
-
-                                    for activityIndex in 0..<activities.count {
-
-                                        // ✅ Use ActivityName (mapped from columns, e.g., "English")
-                                        let studentActivityName = activities[activityIndex].ActivityName ?? ""
-                                        let currentStudentMark = activities[activityIndex].mark ?? ""
-                                        
-                                        print("🔍 Looking for activity: '\(studentActivityName)' for student: \(studentId)")
-
-                                        // ✅ Match by ActivityName (e.g., "English")
-                                        guard let aiRecord = aiStudent.marks.first(where: {
-                                            $0.name == studentActivityName
-                                        }) else {
-                                            print("❌ No AI record found for activity: '\(studentActivityName)'")
-                                            continue
-                                        }
-
-                                        let aiMark = aiRecord.value ?? ""
-                                        
-                                        print("✅ Found match! Activity: '\(studentActivityName)', Student Mark: '\(currentStudentMark)', AI Mark: '\(aiMark)'")
-
-                                        // Only process if AI mark exists and is not empty
-                                        if !aiMark.isEmpty {
-                                            if !currentStudentMark.isEmpty && currentStudentMark != aiMark {
-                                                self.studentRecords[studentIndex]
-                                                    .marks?[subjectIndex]
-                                                    .activities?[activityIndex]
-                                                    .change_mark = currentStudentMark
-                                                
-                                                // Replace with AI mark
-                                                self.studentRecords[studentIndex]
-                                                    .marks?[subjectIndex]
-                                                    .activities?[activityIndex]
-                                                    .mark = aiMark
-                                            }
-                                            // Case 2: Student mark is empty
-                                            else if currentStudentMark.isEmpty {
-                                                print("➕ Setting empty mark to '\(aiMark)'")
-                                                // Set AI mark
-                                                self.studentRecords[studentIndex]
-                                                    .marks?[subjectIndex]
-                                                    .activities?[activityIndex]
-                                                    .mark = aiMark
-                                            } else {
-                                                print("✓ Marks match, no update needed")
-                                            }
-                                        } else {
-                                            print("⚠️ AI mark is empty, skipping")
-                                        }
-
-                                        // Set review status (inverted from AI record)
-                                        self.studentRecords[studentIndex]
-                                            .marks?[subjectIndex]
-                                            .activities?[activityIndex]
-                                            .isReview = !(aiRecord.isReview)
-
-                                        // Set reason from AI record
-                                        self.studentRecords[studentIndex]
-                                            .marks?[subjectIndex]
-                                            .activities?[activityIndex]
-                                            .reason = aiRecord.reason ?? ""
-                                    }
-                                }
-                            }
-                            
-                            print("\n✅ Mark update complete!")
-                            self.printStudentRecordsJSON()
+                            self.updateMarksWithAIData()
+                        } else {
+                            self.errorDeclarationLbl.text = "⚠️ \(self.getFormattedReasonSummary())"
+                            self.isNameWidthCalculated = false
+                            self.studentTableView.reloadData()
+                            self.subjectsCollectionView.reloadData()
                         }
                     }
-
-                    self.errorDeclarationLbl.text = "⚠️ \(self.getFormattedReasonSummary())"
-                    self.isNameWidthCalculated = false
-                    self.studentTableView.reloadData()
-                    self.subjectsCollectionView.reloadData()
-                    self.view.setNeedsLayout()
 
                 case .failure(let error):
                     print("❌ Error:", error.localizedDescription)
@@ -228,7 +143,142 @@ class MarkReviewVC: UIViewController {
         }
     }
     
-    func printStudentRecordsJSON() {
+    private func updateMarksWithAIData() {
+
+        // STEP 1: Map activityId → displayName
+        for studentIndex in 0..<studentRecords.count {
+            for subjectIndex in 0..<(studentRecords[studentIndex].marks?.count ?? 0) {
+                for activityIndex in 0..<(studentRecords[studentIndex].marks?[subjectIndex].activities?.count ?? 0) {
+
+                    let activityId = studentRecords[studentIndex]
+                        .marks?[subjectIndex]
+                        .activities?[activityIndex]
+                        .id ?? ""
+
+                    if let matchingColumn = subjectColumns.first(where: { $0.activityId == activityId }) {
+                        let displayName = matchingColumn.activityName ?? matchingColumn.displayName ?? ""
+                        studentRecords[studentIndex]
+                            .marks?[subjectIndex]
+                            .activities?[activityIndex]
+                            .selectedName = displayName
+                    }
+                }
+            }
+        }
+
+        // STEP 2: Merge AI marks safely
+        for studentIndex in 0..<studentRecords.count {
+
+            guard let studentId = studentRecords[studentIndex].student_id,
+                  let aiStudent = aiRecords.first(where: { $0.studentId == studentId }) else {
+                continue
+            }
+
+            for subjectIndex in 0..<(studentRecords[studentIndex].marks?.count ?? 0) {
+
+                guard let activities = studentRecords[studentIndex].marks?[subjectIndex].activities else {
+                    continue
+                }
+
+                for activityIndex in 0..<activities.count {
+
+                    let currentMark = studentRecords[studentIndex]
+                        .marks?[subjectIndex]
+                        .activities?[activityIndex]
+                        .mark ?? ""
+
+                    let selectedName = studentRecords[studentIndex]
+                        .marks?[subjectIndex]
+                        .activities?[activityIndex]
+                        .selectedName ?? ""
+
+                    guard let aiMark = aiStudent.marks.first(where: {
+                        normalizeName($0.name) == normalizeName(selectedName)
+                    }) else { continue }
+
+                    let aiValue = aiMark.value
+                    let aiReason = aiMark.reason ?? ""
+                    let aiReviewStatus = aiMark.isReview
+                    if !aiValue.isEmpty {
+
+                        // Only accept valid numeric AI values
+                        if let _ = Int(aiValue) {
+
+                            if !currentMark.isEmpty && currentMark != aiValue {
+
+                                studentRecords[studentIndex]
+                                    .marks?[subjectIndex]
+                                    .activities?[activityIndex]
+                                    .change_mark = currentMark
+
+                                studentRecords[studentIndex]
+                                    .marks?[subjectIndex]
+                                    .activities?[activityIndex]
+                                    .mark = aiValue
+
+                                studentRecords[studentIndex]
+                                    .marks?[subjectIndex]
+                                    .activities?[activityIndex]
+                                    .reason = "Existing marks differ from the newly uploaded data."
+
+                            } else if currentMark.isEmpty {
+
+                                studentRecords[studentIndex]
+                                    .marks?[subjectIndex]
+                                    .activities?[activityIndex]
+                                    .mark = aiValue
+                            }
+
+                        } else {
+                            studentRecords[studentIndex]
+                                .marks?[subjectIndex]
+                                .activities?[activityIndex]
+                                .change_mark = currentMark
+
+                            studentRecords[studentIndex]
+                                .marks?[subjectIndex]
+                                .activities?[activityIndex]
+                                .mark = ""
+
+                            studentRecords[studentIndex]
+                                .marks?[subjectIndex]
+                                .activities?[activityIndex]
+                                .reason = aiValue
+                        }
+
+                        studentRecords[studentIndex]
+                            .marks?[subjectIndex]
+                            .activities?[activityIndex]
+                            .isReview = aiReviewStatus
+
+                    } else if !currentMark.isEmpty, !aiReason.isEmpty {
+
+                        studentRecords[studentIndex]
+                            .marks?[subjectIndex]
+                            .activities?[activityIndex]
+                            .isReview = aiReviewStatus
+
+                        studentRecords[studentIndex]
+                            .marks?[subjectIndex]
+                            .activities?[activityIndex]
+                            .reason = aiReason
+                    }
+                }
+            }
+        }
+
+        // STEP 3: Reload UI
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.errorDeclarationLbl.text = "⚠️ \(self.getFormattedReasonSummary())"
+            self.isNameWidthCalculated = false
+            self.studentTableView.reloadData()
+            self.subjectsCollectionView.reloadData()
+            self.printaiRecordsJSON()
+        }
+    }
+
+    func printaiRecordsJSON() {
 
         do {
             let encoder = JSONEncoder()
@@ -237,24 +287,7 @@ class MarkReviewVC: UIViewController {
             let jsonData = try encoder.encode(self.studentRecords)
 
             if let jsonString = String(data: jsonData, encoding: .utf8) {
-                print("\n=========== STUDENT RECORDS JSON ===========\n")
-                print(jsonString)
-                print("\n===========================================\n")
-            }
-        } catch {
-            print("❌ JSON Encode Error:", error.localizedDescription)
-        }
-    }
-    func printaiRecordsJSON() {
-
-        do {
-            let encoder = JSONEncoder()
-            encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-
-            let jsonData = try encoder.encode(self.aiRecords)
-
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                print("\n=========== AI RECORDS JSON ===========\n")
+                print("\n=========== Student RECORDS JSON ===========\n")
                 print(jsonString)
                 print("\n===========================================\n")
             }
@@ -275,14 +308,14 @@ class MarkReviewVC: UIViewController {
 
                 for activityIndex in 0..<activities.count {
 
-                    let activityId = activities[activityIndex].id ?? ""
+                    let activityId = activities[activityIndex].name ?? ""
 
-                    if let column = self.subjectColumns.first(where: { $0.activityId == activityId }) {
+                    if let column = self.subjectColumns.first(where: { $0.activityName == activityId }) {
 
                         self.studentRecords[studentIndex]
                             .marks?[subjectIndex]
                             .activities?[activityIndex]
-                            .ActivityName = column.activityName ?? column.displayName
+                            .selectedName = column.activityName ?? column.displayName
                     }
                 }
             }
@@ -393,7 +426,8 @@ class MarkReviewVC: UIViewController {
                             displayName: activityName,
                             subjectName: subjectName,
                             subjectId: subjectId,
-                            activityId: activityId, activityName: displayName,
+                            activityId: activityId,
+                            activityName: displayName,
                             maxMarks: maxMark
                         )
                     )
@@ -403,7 +437,6 @@ class MarkReviewVC: UIViewController {
         
         subjectColumns.sort { $0.subjectName ?? "" < $1.subjectName ?? ""}
     }
-    
     
     
     @IBAction func saveAllMarks(_ sender: UIButton) {
@@ -480,9 +513,6 @@ class MarkReviewVC: UIViewController {
             }
         )
     }
-
-    
-    
     
     func sendMarksToAPI(with parameters: [[String: Any]]) {
         
@@ -524,7 +554,6 @@ class MarkReviewVC: UIViewController {
                 }
             }
         }
-        
     }
     
     @IBAction func back(_ sender: UIButton) {
@@ -572,7 +601,7 @@ class MarkReviewVC: UIViewController {
          subjectsCollectionView.backgroundColor = .systemBackground
      }
     
-    // MARK: - Scroll Synchronization (KEY FIX)
+    // MARK: - Scroll Synchronization
     func syncVerticalScroll(from sender: UIScrollView, offset: CGPoint) {
         guard !isSyncing else { return }
         isSyncing = true
@@ -609,6 +638,7 @@ class MarkReviewVC: UIViewController {
             )
         }
     }
+    
     func moveToNextColumn(row: Int, column: Int) {
         focusTextField(row: row, column: column + 1)
     }
@@ -709,6 +739,7 @@ class MarkReviewVC: UIViewController {
             }
         }
     }
+    
     func makeMarkKey(col: ColumnConfig) -> String {
         return "AN:\(col.activityName ?? UUID().uuidString)"
     }
@@ -748,7 +779,7 @@ extension MarkReviewVC: UITableViewDataSource, UITableViewDelegate {
         let labelWidth: CGFloat = 160
         
         let nameHeight = textHeight(text: name, font: nameFont, width: labelWidth)
-        let rollHeight = textHeight(text: "Reg: \(rollNo)", font: rollFont, width: labelWidth)
+        let rollHeight = textHeight(text: "Roll No: \(rollNo)", font: rollFont, width: labelWidth)
         
         let totalHeight = nameHeight + rollHeight + 24
         return max(50, totalHeight)
@@ -894,7 +925,7 @@ extension MarkReviewVC {
     }
 }
 
-struct ColumnConfig {
+struct ColumnConfig: Codable {
     let displayName: String?
     let subjectName: String?
     let subjectId: String?
@@ -926,7 +957,7 @@ struct SubjectMarks: Codable {
 struct ActivityMark: Codable {
     let id: String?
     let name: String?
-    var ActivityName: String?
+    var selectedName: String?
     var mark: String?
     var change_mark: String?
     let max_mark: String?

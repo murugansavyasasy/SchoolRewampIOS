@@ -60,8 +60,38 @@ class PriorityVC: UIViewController {
         tableview.delegate = self
         tableview.dataSource = self
         tableview.layoutIfNeeded()
+        if user_inputs.clearTempData(){
+            let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
+                          "activity": "HOMEWORK",
+                          "user_type": 1,
+                          "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
+            paketApiCall(params:parms)
+        }
     }
-
+    func paketApiCall(params:[String:Any]){
+        APIService.shared.makeApi(
+            url: ServiceUrl.dashboard_api_pauket_add_points,
+            parameters: params,
+            type: ApitTypeSringFile.POST,
+            token:  UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<EventResponse, Error>) in
+            DispatchQueue.main.async {
+                
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let response):
+                    if let window = UIApplication.shared.windows.first {
+                        window.makeToast(response.message, duration: 2.0, position: .bottom)
+                    }
+                case .failure(let error):
+                    if let window = UIApplication.shared.windows.first {
+                        window.makeToast(error.localizedDescription, duration: 2.0, position: .bottom)
+                    }
+                }
+            }
+        }
+    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -315,7 +345,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             if let color1 = colour1, let color2 = colour2 {
                 cell.setGradientColors([color2.cgColor, color1.cgColor])
             }
-            
+            cell.AddressLbl.text = staffDetails?[indexPath.row].school_address
             cell.arrowImage.isHidden = PriorityType.is_staff == staff_role ? false : true
             DispatchQueue.main.async {
                 self.containerViewHeightConstraint.constant = self.tableview.contentSize.height
