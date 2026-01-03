@@ -37,7 +37,7 @@ class StudentNameTVC: UITableViewCell {
     
     func configure(name: String, rollNo: String) {
         nameLabel.text = name
-        rollNoLabel.text = "Reg: \(rollNo)"
+        rollNoLabel.text = "Roll No: \(rollNo)"
     }
     
     override func prepareForReuse() {

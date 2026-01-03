@@ -17,6 +17,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - IBOutlets
     @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var profileImgaView: UIImageView!
     @IBOutlet weak var menuTable: UITableView!
     weak var delegate: SideMenuDelegate?
@@ -26,7 +27,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var menuArray: [MenuItem] = [
         MenuItem(name: "Home".translated(), icon: "house"),
         MenuItem(name: "Profile".translated(), icon: "person.circle"),
-        MenuItem(name: "Settings".translated(), icon: "gear"),
+        MenuItem(name: "Settings".translated(), icon: "gearshape.fill"),
         MenuItem(name: "Help".translated(), icon: "questionmark.circle")
     ]
     
@@ -41,9 +42,11 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         if isStudent ?? false{
             userName.text = childeDetail?.name
+            welcomeLabel.text = "\(childeDetail?.school_name ?? "")"
             setupProfileImage(url: URL(string: childeDetail?.profile ?? ""))
         }else{
             userName.text = staffDetails?.name
+            welcomeLabel.text = "\(staffDetails?.school_name ?? "")\n \(staffDetails?.role ?? "")"
             setupProfileImage(url: URL(string: staffDetails?.staff_profile ?? ""))
         }
         menuTable.register(UINib(nibName: "SideTvcell", bundle: nil), forCellReuseIdentifier: "SideTvcell")

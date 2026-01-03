@@ -2878,14 +2878,14 @@ struct DynamicRecord: Codable {
 }
 
 
-struct RecordItem {
+struct RecordItem:Codable {
     let name: String
     let value: String
     let isReview: Bool
     let reason: String?
 }
 
-struct ConvertedStudentRecord {
+struct ConvertedStudentRecord:Codable {
     let studentId: String
     let sNo: String
     let regNo: String

@@ -19,8 +19,8 @@ class MarkReviewCVC: UICollectionViewCell {
     @IBOutlet weak var listTable: UITableView!
     
     private var columnIndex = 0
-    private var columnConfig: ColumnConfig!
-    private var studentRecords: [StudentMark] = []
+    var columnConfig: ColumnConfig!
+    var studentRecords: [StudentMark] = []
     private var flagReasons: [Int: String] = [:]
     weak var parentVC: MarkReviewVC?
     private var isConfiguring = false
@@ -35,8 +35,8 @@ class MarkReviewCVC: UICollectionViewCell {
     }
     
     private func setupTable() {
-        listTable.register(UINib(nibName: "MarkReviewTVC", bundle: nil),
-                           forCellReuseIdentifier: "MarkReviewTVC")
+        listTable.register(UINib(nibName: CellConfingName.MarkReviewTVC, bundle: nil),
+                           forCellReuseIdentifier: CellConfingName.MarkReviewTVC)
         listTable.dataSource = self
         listTable.delegate = self
         listTable.separatorStyle = .singleLine
@@ -72,7 +72,7 @@ class MarkReviewCVC: UICollectionViewCell {
         
         self.columnIndex = columnIndex
         self.columnConfig = columnConfig
-        self.studentRecords = studentRecords
+        self.studentRecords = studentRecords  // ✅ Store reference directly
         self.parentVC = parentVC
         self.flagReasons.removeAll()
         
@@ -80,6 +80,7 @@ class MarkReviewCVC: UICollectionViewCell {
         subjectLbl.text = "\(columnConfig.subjectName ?? "")"
         maxMarkLbl.text = "Max: \(columnConfig.maxMarks!)"
         listTable.reloadData()
+        listTable.layoutIfNeeded()  // ✅ Force layout
         
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -97,7 +98,7 @@ class MarkReviewCVC: UICollectionViewCell {
         isConfiguring = true
         studentRecords = []
         flagReasons.removeAll()
-        listTable.reloadData()
+        // Don't reload here - just clear
     }
 }
 
@@ -113,7 +114,7 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: "MarkReviewTVC",
+            withIdentifier: CellConfingName.MarkReviewTVC,
             for: indexPath
         ) as! MarkReviewTVC
         
@@ -126,30 +127,42 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
         let studentMarks = studentRecord.marks
         
         var displayValue = ""
-        var isEditable = true
         var alignment: NSTextAlignment = .center
         var hasFlaggedIssue = false
         var reasonText = ""
+        var changeMark: String? = nil
+        
         let rollNo = studentRecord.roll_no ?? ""
         let key = "\(columnConfig.subjectId ?? "")_\(columnConfig.activityId ?? "")"
+        
         if let editedValue = parentVC?.editedMarks[rollNo]?[key] {
             displayValue = editedValue
-        } else if let subject = studentMarks?.first(where: {
-            $0.subject_name == columnConfig.subjectName
-        }) {
-            if let activity = subject.activities?.first(where: {
-                ($0.name ?? "") == columnConfig.activityName
-            }) {
-                displayValue = activity.mark ?? ""
-                if let isReview = activity.isReview{
-                    if isReview {
-                        hasFlaggedIssue = true
-                        reasonText = activity.reason ?? ""
+        } else {
+            let columnActivityName = columnConfig.activityName ?? columnConfig.displayName ?? ""
+            
+            for subject in studentMarks ?? [] {
+                if subject.subject_name == columnConfig.subjectName {
+                    
+                    for activity in subject.activities ?? [] {
+                        let activitySelectedName = activity.selectedName ?? ""
+                        if !activitySelectedName.isEmpty &&
+                           parentVC?.normalizeName(activitySelectedName) == parentVC?.normalizeName(columnActivityName) {
+                            
+                            displayValue = activity.mark ?? ""
+                            changeMark = activity.change_mark
+                            
+                            if let isReview = activity.isReview, isReview {
+                                hasFlaggedIssue = true
+                                reasonText = activity.reason ?? ""
+                            }
+                            break
+                        }
                     }
                 }
             }
         }
         
+        // Validate mark
         if !displayValue.isEmpty {
             let trimmed = displayValue.trimmingCharacters(in: .whitespaces)
             if let entered = Int(trimmed), let maxMark = columnConfig.maxMarks {
@@ -158,18 +171,16 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
                     reasonText = "Maximum mark exceeded"
                 }
             }
-            
         }
         
         if hasFlaggedIssue {
             flagReasons[indexPath.row] = reasonText
         }
-        
         cell.configure(
             mark: displayValue,
+            channgeMark: changeMark,
             rowIndex: indexPath.row,
             columnIndex: columnIndex,
-            isEditable: isEditable,
             alignment: alignment,
             parentVC: parentVC,
             hasFlaggedIssue: hasFlaggedIssue
@@ -181,23 +192,29 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
         cell.infoBtn.addTarget(self,
                                action: #selector(infoBtnTapped(_:)),
                                for: .touchUpInside)
-        
         return cell
     }
-
     
     @objc func infoBtnTapped(_ sender: UIButton) {
         let rowIndex = sender.tag
         var reason = "Issue detected"
         
-        if rowIndex < studentRecords.count,
-           let subjectName = columnConfig.subjectName,
-           let activityId = columnConfig.activityId,
-           let subject = studentRecords[rowIndex].marks?.first(where: { $0.subject_name == subjectName }),
-           let activity = subject.activities?.first(where: { $0.id == activityId }) {
+        if rowIndex < studentRecords.count {
+            let columnActivityName = columnConfig.activityName ?? columnConfig.displayName ?? ""
             
-            if ((activity.reason?.isEmpty) == nil) {
-                reason = activity.reason ?? ""
+            for subject in studentRecords[rowIndex].marks ?? [] {
+                if subject.subject_name == columnConfig.subjectName {
+                    
+                    for activity in subject.activities ?? [] {
+                        let activitySelectedName = activity.selectedName ?? ""
+                        
+                        if !activitySelectedName.isEmpty &&
+                           parentVC?.normalizeName(activitySelectedName) == parentVC?.normalizeName(columnActivityName) {
+                            reason = activity.reason ?? "Issue detected"
+                            break
+                        }
+                    }
+                }
             }
         }
         
@@ -232,41 +249,37 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
         
         let textWidth = boundingRect.width + 70
         let finalWidth = max(minWidth, min(textWidth, maxWidth))
-        
-        let finalHeight = boundingRect.height + 50
+        let finalHeight = boundingRect.height + 30
         
         return (width: finalWidth, height: finalHeight)
     }
     
     func tableView(_ tableView: UITableView,
                    heightForRowAt indexPath: IndexPath) -> CGFloat {
-
+        
         let student = studentRecords[indexPath.row]
         let name = student.student_name ?? ""
         let rollNo = student.roll_no ?? ""
-
+        
         let nameFont = UIFont.systemFont(ofSize: 16, weight: .medium)
         let rollFont = UIFont.systemFont(ofSize: 13, weight: .regular)
-
-        let labelWidth: CGFloat = 160 
+        
+        let labelWidth: CGFloat = 160
         let nameHeight = textHeight(text: name, font: nameFont, width: labelWidth)
-        let rollHeight = textHeight(text: "Reg: \(rollNo)", font: rollFont, width: labelWidth)
-
+        let rollHeight = textHeight(text: "Roll No: \(rollNo)", font: rollFont, width: labelWidth)
+        
         let totalHeight = nameHeight + rollHeight + 24
         return max(50, totalHeight)
     }
     
     func textHeight(text: String, font: UIFont, width: CGFloat) -> CGFloat {
-        
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-        
         let boundingBox = text.boundingRect(
             with: constraintRect,
             options: [.usesLineFragmentOrigin, .usesFontLeading],
             attributes: [.font: font],
             context: nil
         )
-        
         return ceil(boundingBox.height)
     }
     
@@ -303,30 +316,43 @@ extension MarkReviewCVC: UIPopoverPresentationControllerDelegate {
     }
 }
 
+// MARK: - Delegate
 
 extension MarkReviewCVC: MarkReviewTVCDelegate {
     func markDidChange(row: Int, column: Int, value: String, reason: String) {
-
+        
         guard row < studentRecords.count else { return }
-
-        let col = columnConfig
+        
         let trimmed = value.trimmingCharacters(in: .whitespaces)
-
+        let columnActivityName = columnConfig.activityName ?? columnConfig.displayName ?? ""
+        
+        // ✅ Match by selectedName!
         for s in 0..<(studentRecords[row].marks?.count ?? 0) {
-            for a in 0..<(studentRecords[row].marks?[s].activities?.count ?? 0) {
-
-                guard studentRecords[row].marks?[s].activities?[a].name == col?.activityName else { continue }
-
-                let maxMarks = col?.maxMarks ?? 0
-                let isError = (Int(trimmed) ?? 0) > maxMarks
-
-                studentRecords[row].marks?[s].activities?[a].mark = value
-                studentRecords[row].marks?[s].activities?[a].isReview = isError
-                studentRecords[row].marks?[s].activities?[a].reason = reason
-
-                parentVC?.updateMark(row: row, column: columnIndex, value: value, reson: reason)
-                return
+            
+            // Check subject name match
+            if studentRecords[row].marks?[s].subject_name == columnConfig.subjectName {
+                
+                for a in 0..<(studentRecords[row].marks?[s].activities?.count ?? 0) {
+                    
+                    let activitySelectedName = studentRecords[row].marks?[s].activities?[a].selectedName ?? ""
+                    
+                    if !activitySelectedName.isEmpty &&
+                       parentVC?.normalizeName(activitySelectedName) == parentVC?.normalizeName(columnActivityName) {
+                        
+                        let maxMarks = columnConfig.maxMarks ?? 0
+                        let isError = (Int(trimmed) ?? 0) > maxMarks
+                        
+                        studentRecords[row].marks?[s].activities?[a].mark = value
+                        studentRecords[row].marks?[s].activities?[a].isReview = isError
+                        studentRecords[row].marks?[s].activities?[a].reason = reason
+                        
+                        parentVC?.updateMark(row: row, column: columnIndex, value: value, reson: reason)
+                        return
+                    }
+                }
             }
         }
+        
+        print("⚠️ No matching activity found for: '\(columnActivityName)' in row \(row)")
     }
 }

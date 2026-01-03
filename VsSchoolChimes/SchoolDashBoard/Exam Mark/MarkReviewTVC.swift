@@ -8,7 +8,6 @@ class MarkReviewTVC: UITableViewCell {
 
     private var rowIndex = 0
     private var columnIndex = 0
-    private var isEditable = true
     private var hasFlaggedIssue = false
     weak var parentVC: MarkReviewVC?
     weak var delegate: MarkReviewTVCDelegate?
@@ -116,82 +115,74 @@ class MarkReviewTVC: UITableViewCell {
         tittleLbl.textColor = .label
     }
     
-    func configure(mark: String,channgeMark: String? = nil,
+    func configure(mark: String,
+                   channgeMark: String? = nil,
                    rowIndex: Int,
                    columnIndex: Int,
-                   isEditable: Bool,
                    alignment: NSTextAlignment = .center,
                    parentVC: MarkReviewVC?,
                    hasFlaggedIssue: Bool = false) {
+        
         self.rowIndex = rowIndex
         self.columnIndex = columnIndex
-        self.isEditable = isEditable
         self.parentVC = parentVC
         self.hasFlaggedIssue = hasFlaggedIssue
         tittleLbl.isHidden = true
         markTxt.isHidden = false
         markTxt.text = mark
         markTxt.textAlignment = alignment
-        if !isEditable {
-            markTxt.textColor = .label
-            markTxt.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-            markTxt.isUserInteractionEnabled = false
-            markTxt.backgroundColor = .clear
-            markTxt.borderStyle = .none
-            infoBtn.isHidden = true
-            markTxt.layer.borderWidth = 0
-            return
-        }
-        if let changemark = channgeMark{
-            tittleLbl.text = changemark
+        markTxt.layer.borderWidth = 0
+        markTxt.borderStyle = .none
+        markTxt.backgroundColor = .clear
+        infoBtn.isHidden = true
+        
+        if let changemark = channgeMark, !changemark.isEmpty {
+            tittleLbl.text = "was : \(changemark)"
             tittleLbl.isHidden = false
             markTxt.textColor = .systemGreen
             markTxt.layer.borderWidth = 2
             markTxt.layer.borderColor = UIColor.systemGreen.withAlphaComponent(0.4).cgColor
             markTxt.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.1)
+            markTxt.borderStyle = .roundedRect
             infoBtn.isHidden = false
             infoBtn.tintColor = .systemGreen
-        }else{
-            tittleLbl.isHidden = true
+            markTxt.font = UIFont.systemFont(ofSize: 15)
+            markTxt.isUserInteractionEnabled = true
+            return 
         }
-        markTxt.borderStyle = .roundedRect
+        
         if hasFlaggedIssue {
             markTxt.textColor = .orange
             markTxt.layer.borderWidth = 2
             markTxt.layer.borderColor = UIColor.orange.withAlphaComponent(0.4).cgColor
             markTxt.backgroundColor = UIColor.orange.withAlphaComponent(0.1)
+            markTxt.borderStyle = .roundedRect
             infoBtn.isHidden = false
             infoBtn.tintColor = .orange
-            return
-        }
-        
-//        if mark == "AB" {
-//            markTxt.textColor = .systemRed
-//            markTxt.isUserInteractionEnabled = false
-//            markTxt.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
-//            infoBtn.isHidden = false
-//            infoBtn.tintColor = .systemRed
-//            markTxt.layer.borderWidth = 1
-//            markTxt.layer.borderColor = UIColor.systemRed.withAlphaComponent(0.4).cgColor
-//        } else {
-            markTxt.backgroundColor = UIColor.systemGray6
-            markTxt.textColor = .label
             markTxt.font = UIFont.systemFont(ofSize: 15)
             markTxt.isUserInteractionEnabled = true
+            return
+        }
+        if let markValue = Int(mark), !mark.isEmpty, markValue > 100 {
+            markTxt.textColor = .orange
+            markTxt.layer.borderWidth = 2
+            markTxt.layer.borderColor = UIColor.orange.cgColor
+            markTxt.backgroundColor = UIColor.orange.withAlphaComponent(0.1)
             markTxt.borderStyle = .roundedRect
-            infoBtn.isHidden = true
-            markTxt.layer.borderWidth = 0
-            
-            if let markValue = Int(mark), markValue > 100 {
-                markTxt.textColor = .orange
-                markTxt.layer.borderWidth = 2
-                markTxt.layer.borderColor = UIColor.orange.cgColor
-                markTxt.layer.cornerRadius = 6
-                markTxt.backgroundColor = UIColor.orange.withAlphaComponent(0.1)
-                infoBtn.isHidden = false
-                infoBtn.tintColor = .systemRed
-            }
-//        }
+            infoBtn.isHidden = false
+            infoBtn.tintColor = .systemRed
+            markTxt.font = UIFont.systemFont(ofSize: 15)
+            markTxt.isUserInteractionEnabled = true
+            return
+        }
+
+        markTxt.backgroundColor = UIColor.systemGray6
+        markTxt.textColor = .label
+        markTxt.font = UIFont.systemFont(ofSize: 15)
+        markTxt.isUserInteractionEnabled = true
+        markTxt.borderStyle = .roundedRect
+        infoBtn.isHidden = true
+        markTxt.layer.borderWidth = 0
     }
 
     override func prepareForReuse() {
