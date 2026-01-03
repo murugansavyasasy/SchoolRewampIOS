@@ -18,6 +18,7 @@
                 <outlet property="LoadingView" destination="Xs7-2g-bgG" id="iAr-E4-Tdv"/>
                 <outlet property="Pdfview" destination="bYm-At-cav" id="Tqw-Ln-88r"/>
                 <outlet property="outerView" destination="ErB-Et-4YM" id="nue-4O-uHf"/>
+                <outlet property="topview" destination="zmx-HJ-eGt" id="eI1-HJ-DqZ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -26,7 +27,7 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zmx-HJ-eGt" customClass="BottomRoundedView" customModule="School_Chimes" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zmx-HJ-eGt">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="183"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pYC-cU-X4S">
@@ -45,7 +46,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" name="BackGroundClr"/>
+                    <color key="backgroundColor" name="PrimeryColor"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="pYC-cU-X4S" secondAttribute="bottom" constant="20" id="Dok-Lt-QQ9"/>
                         <constraint firstAttribute="trailing" secondItem="pYC-cU-X4S" secondAttribute="trailing" constant="10" id="NsN-nP-hjp"/>
@@ -53,10 +54,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ErB-Et-4YM">
-                    <rect key="frame" x="0.0" y="183" width="393" height="669"/>
+                    <rect key="frame" x="0.0" y="183" width="393" height="601"/>
                     <subviews>
                         <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bYm-At-cav">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="591"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="601"/>
                             <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <wkWebViewConfiguration key="configuration">
                                 <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -64,7 +65,7 @@
                             </wkWebViewConfiguration>
                         </wkWebView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xs7-2g-bgG">
-                            <rect key="frame" x="118" y="272" width="157" height="125"/>
+                            <rect key="frame" x="118" y="238" width="157" height="125"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VYm-Nt-bQk">
                                     <rect key="frame" x="32.999999999999993" y="88" width="91.333333333333314" height="30"/>
@@ -92,7 +93,7 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="backgroundColor" name="PrimeryColor"/>
                     <constraints>
                         <constraint firstItem="bYm-At-cav" firstAttribute="top" secondItem="ErB-Et-4YM" secondAttribute="top" id="0On-69-zRT"/>
                         <constraint firstItem="Xs7-2g-bgG" firstAttribute="centerX" secondItem="ErB-Et-4YM" secondAttribute="centerX" id="8Nl-gg-hJt"/>
@@ -106,15 +107,15 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="ErB-Et-4YM" firstAttribute="top" secondItem="zmx-HJ-eGt" secondAttribute="bottom" id="81i-mT-YQ4"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="bYm-At-cav" secondAttribute="bottom" constant="10" id="9zm-5H-37U"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="bYm-At-cav" secondAttribute="bottom" id="9zm-5H-37U"/>
                 <constraint firstItem="ErB-Et-4YM" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="JWE-G3-icf"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ErB-Et-4YM" secondAttribute="bottom" id="KB3-Ds-LZ7"/>
                 <constraint firstItem="ErB-Et-4YM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="OuJ-n7-DC2"/>
                 <constraint firstAttribute="trailing" secondItem="zmx-HJ-eGt" secondAttribute="trailing" id="Prz-78-0Kr"/>
                 <constraint firstItem="zmx-HJ-eGt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Sb4-LU-rsW"/>
                 <constraint firstItem="zmx-HJ-eGt" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="TXf-7t-dft"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ErB-Et-4YM" secondAttribute="trailing" id="V15-e2-e9q"/>
                 <constraint firstItem="ErB-Et-4YM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kPh-o8-7Aj"/>
-                <constraint firstAttribute="bottom" secondItem="ErB-Et-4YM" secondAttribute="bottom" id="pyp-Mh-V05"/>
                 <constraint firstItem="pYC-cU-X4S" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="u3O-OK-4kw"/>
             </constraints>
             <point key="canvasLocation" x="136.64122137404578" y="19.718309859154932"/>
@@ -122,8 +123,8 @@
     </objects>
     <resources>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
-        <namedColor name="BackGroundClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="PrimeryColor">
+            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -11,6 +11,7 @@ import WebKit
 //"https://schoolchimes.com/vs_web/terms_conditions/"
 class TermsAndCondVC: UIViewController,WKNavigationDelegate {
     
+    @IBOutlet weak var topview: UIView!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var LoadingLbl: UILabel!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
@@ -19,8 +20,15 @@ class TermsAndCondVC: UIViewController,WKNavigationDelegate {
     @IBOutlet weak var Pdfview: WKWebView!
     var url : String?
     var tittleString:String?
+    var isSetCorner = true
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if isSetCorner == true{
+            topview.layer.cornerRadius = 20
+            topview.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        }
+       
         Pdfview.navigationDelegate = self
         BackBtn.setTitle(tittleString ?? "", for: .normal)
         if let pdfURL = URL(string: url ?? "https://schoolchimes.com/vs_web/terms_conditions/") {

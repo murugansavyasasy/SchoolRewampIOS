@@ -183,12 +183,17 @@ extension SubjectsTVCell: ActivityCellDelegate {
             split: splits[splitIndex]
         )
 
-        tableview.reloadRows( at: [IndexPath(row: splitIndex, section: 0)],with: .none)
+        tableview.beginUpdates()
+        tableview.reloadRows(at: [IndexPath(row: splitIndex, section: 0)], with: .automatic)
+        tableview.endUpdates()
+
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+        DispatchQueue.main.async {
+            self.tableview.layoutIfNeeded()
             self.tableviewHeight.constant = self.tableview.contentSize.height
             self.onHeightChange?()
         }
+
     }
 
     func didToggleSplit(

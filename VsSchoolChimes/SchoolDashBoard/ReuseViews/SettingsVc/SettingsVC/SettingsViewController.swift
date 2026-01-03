@@ -278,12 +278,14 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         case menuname.aboutApp.translated():
             let vc = TermsAndCondVC()
             vc.modalPresentationStyle = .overFullScreen
+            vc.isSetCorner = false
             vc.tittleString = "About the App"
             vc.url = UserDefaultFileManager.get_globalSelection()?.about_the_app
             present(vc, animated: true)
         case menuname.howToUse.translated():
             let vc = TermsAndCondVC()
             vc.modalPresentationStyle = .overFullScreen
+            vc.isSetCorner = false
             vc.tittleString = "How to Use?"
             vc.url = UserDefaultFileManager.get_globalSelection()?.how_to_use
             present(vc, animated: true)
