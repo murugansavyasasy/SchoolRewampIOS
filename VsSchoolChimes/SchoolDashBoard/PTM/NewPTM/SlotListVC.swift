@@ -49,7 +49,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         //var slot = slotData?.slots?[indexpath.row]
         let param : [String:Any] = ["slot_id":SlotId]
         
-        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_and_reopen_slot, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_and_reopen_slot, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result:Result<CommonApiSuc,Error>) in
             
             guard let self = self else { return }
             
@@ -84,7 +84,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
         let slot_id = [SlotId]
         let param : [String:Any] = ["slot_ids":slot_id]
         
-        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_and_close_slot, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_and_close_slot, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result:Result<CommonApiSuc,Error>) in
             
             guard let self = self else { return }
             

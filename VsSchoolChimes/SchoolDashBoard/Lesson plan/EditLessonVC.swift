@@ -106,7 +106,7 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         }
         let param: [String: Any] = [LessonPlanStringFile.particular_id: particular_Id ?? "",LessonPlanStringFile.request_type: ReqestType ?? ""]
         
-        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_get_data_for_edit, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") {[ weak self] (result: Result<LessonEditResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_get_data_for_edit, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false) {[ weak self] (result: Result<LessonEditResponse,Error>) in
             DispatchQueue.main.async {[weak self] in
                 guard let self = self else {return}
                 if #available(iOS 15.0, *) {
@@ -144,9 +144,10 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         let LessonPlanid = isCreate ? LessonPlanStringFile.section_subject_id : LessonPlanStringFile.particular_id
         let type = isCreate ? ApitTypeSringFile.POST : ApitTypeSringFile.PUT
         let baseUrl = isCreate ? ServiceUrl.lms_api_lesson_plan_add : ServiceUrl.lms_api_lesson_plan_update
+        let isBaseUrl = isCreate ? false : true
         let param : [String: Any] = [LessonPlanid: particular_Id ?? "",LessonPlanStringFile.key_value_data:converted]
         APIService.shared
-            .makeApi(url:baseUrl, parameters: param, type: type, token: staffDetails?.access_token ?? "") {[weak self] (
+            .makeApi(url:baseUrl, parameters: param, type: type, token: staffDetails?.access_token ?? "", isBaseUrl: isBaseUrl) {[weak self] (
                 result: Result<CommonApiSuc,
                 Error>
             ) in
@@ -184,7 +185,7 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             url: ServiceUrl.dashboard_api_pauket_add_points,
             parameters: params,
             type: ApitTypeSringFile.POST,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }

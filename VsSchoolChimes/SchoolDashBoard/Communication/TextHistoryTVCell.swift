@@ -9,6 +9,9 @@ import UIKit
 protocol SelectedTextDelegate{
     func select(Tittle:String,descriptContent:String)
 }
+protocol SelectedTexts :AnyObject{
+    func selectedTxt(index:Int)
+}
 
 protocol TextExpandCellDelegate: AnyObject {
     func didTapExpand(in cell: TextHistoryTVCell)
@@ -30,6 +33,7 @@ class TextHistoryTVCell: UITableViewCell {
     private var isExpanded = false
     private var fullText: String = ""
     var descriptiontext = ""
+    weak var SelectedTextDelegate: SelectedTexts?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

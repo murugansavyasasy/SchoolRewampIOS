@@ -153,7 +153,7 @@ class ReciverAttendanceReportVC: UIViewController {
     
     //MARK: Api call
     func get_student_stats() {
-        APIService.shared.makeApi(url: ServiceUrl.stud_attd_api_attendance_student_stats, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") {[weak self] (result: Result<StudentStatisticsResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.stud_attd_api_attendance_student_stats, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "", isBaseUrl: false) {[weak self] (result: Result<StudentStatisticsResponse,Error>) in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else {return}
                 switch result{

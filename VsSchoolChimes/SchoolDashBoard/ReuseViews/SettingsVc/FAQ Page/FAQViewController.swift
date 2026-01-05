@@ -49,7 +49,7 @@ class FAQViewController: UIViewController {
             url: ServiceUrl.dashboard_api_dashboard_faqs,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: token
+            token: token, isBaseUrl: false
         ) { [weak self] (result: Result<FAQResponse, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) { self?.hideActivityLoader() }

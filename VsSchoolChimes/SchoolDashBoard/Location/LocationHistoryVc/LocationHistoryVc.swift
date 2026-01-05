@@ -105,7 +105,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             url: ServiceUrl.comm_recipient_get_academic_year_list,
             parameters: [:],
             type: ApitTypeSringFile.GET, // make sure this is not a typo
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<get_academic_yearSuc, Error>) in
             switch result {
             case .success(let successMessage):
@@ -452,7 +452,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             ]
         }
         
-        APIService.shared.makeApi(url: ServiceUrl.geometric_principal_attendance_report, parameters: param, type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result: Result<StaffAttendanceResponse, Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.geometric_principal_attendance_report, parameters: param, type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false) { [self] (result: Result<StaffAttendanceResponse, Error>) in
             switch result {
             case .success(let successMessage):
                 DispatchQueue.main.async { [self] in
@@ -487,7 +487,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             url: ServiceUrl.recipient_get_staff_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { (result: Result<GetStafflistSuc, Error>) in
             DispatchQueue.main.async {
                 switch result {

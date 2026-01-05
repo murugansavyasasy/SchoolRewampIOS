@@ -66,7 +66,7 @@ class LogoutViewController: UIViewController {
         
         let token = (IsParent == true ? childDetails?.access_token : staffDetails?.access_token) ?? ""
         
-        APIService.shared.makeApi(url: ServiceUrl.app_api_auth_logout, parameters: param, type: ApitTypeSringFile.POST, token: token) { [weak self] (result: Result<CommonApiSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.app_api_auth_logout, parameters: param, type: ApitTypeSringFile.POST, token: token, isBaseUrl: true) { [weak self] (result: Result<CommonApiSuc,Error>) in
             
             guard let self = self else {return}
             

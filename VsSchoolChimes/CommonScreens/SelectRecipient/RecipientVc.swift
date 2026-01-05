@@ -172,10 +172,6 @@ class RecipientVc: UIViewController{
             circular_types = circular_type.school
             target_type = TargetTypes.school
             noRecordLbl.text = CommonStringFile.Tap_SEND_to_share_this
-            array_selectedId
-                .append(
-                    UserDefaultFileManager.get_staff_Details()?.school_id ?? ""
-                )
             defaultIndex = 1
         default:
             print("Unhandled staff role")
@@ -353,7 +349,7 @@ class RecipientVc: UIViewController{
             sendAttachmentFlow(
                 via: comm,
                 url: baseURL,
-                subjectId: subjectId
+                subjectId: subjectId, isBaseUrl: true
             )
             
         case Menu_id.quiz:
@@ -369,7 +365,7 @@ class RecipientVc: UIViewController{
             sendAttachmentFlow(
                 via: comm,
                 url: ServiceUrl.comm_attachment_send_attachment,
-                subjectId: subjectId ?? "")
+                subjectId: subjectId ?? "", isBaseUrl: true)
         case Menu_id.lsrw:
             guard let subjectId = subjectId, !subjectId.isEmpty else {
                 alert.showAlert(
@@ -382,13 +378,13 @@ class RecipientVc: UIViewController{
             sendAttachmentFlow(
                 via: comm,
                 url: ServiceUrl.lms_api_lsrw_create_skill,
-                subjectId: subjectId
+                subjectId: subjectId, isBaseUrl: true
             )
         case Menu_id.event:
             sendAttachmentFlow(
                 via: comm,
                 url: ServiceUrl.api_school_event_send_event,
-                subjectId: subjectId ?? "")
+                subjectId: subjectId ?? "", isBaseUrl: true)
             
         default:
             print("⚠️ Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
@@ -706,7 +702,7 @@ class RecipientVc: UIViewController{
                 url: ServiceUrl.quiz_create_quiz,
                 parameters: params,
                 type: ApitTypeSringFile.POST,
-                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true
             ) { [self] (result: Result<CommonApiSuc, Error>) in
                 DispatchQueue.main.async {
                     switch result {
@@ -738,7 +734,7 @@ class RecipientVc: UIViewController{
             url: ServiceUrl.dashboard_api_pauket_add_points,
             parameters: params,
             type: ApitTypeSringFile.POST,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }
@@ -762,7 +758,8 @@ class RecipientVc: UIViewController{
     private func sendAttachmentFlow(
         via comm: commonApi_forSending,
         url baseURL: String,
-        subjectId: String
+        subjectId: String,
+        isBaseUrl: Bool
     ) {
         comm.SendingAttachmentFlow(
             selectedAcadimicYearId: selectedAcadimicYearId ?? 0,
@@ -772,7 +769,8 @@ class RecipientVc: UIViewController{
             subjectId: subjectId,
             message: acidmicYearOrNotAlertMessage(),
             from: self,
-            Common_request_params: Common_request_params
+            Common_request_params: Common_request_params,
+            isBaseUrl : isBaseUrl
         ) { response in
             DispatchQueue.main.async {
                 CircularProgressLoader.shared.hide()
@@ -1343,7 +1341,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 url: ServiceUrl.recipient_get_group_list,
                 parameters: [COMMON_PARAMETER.academic_year_id:academic_year_id],
                 type: ApitTypeSringFile.GET ,
-                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
             ) {
                 [self] (result: Result<GrouplistSuc,Error>) in
                 switch result {
@@ -1381,7 +1379,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     
     func getStandardsAPI(academic_year_id:Int){
         dropDownArray.removeAll()
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id : academic_year_id], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id : academic_year_id], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false) { [self] (result:Result <GetStandardsSuc,Error>) in
             switch result {
             case .success(let successMessage):
                 if successMessage.status == true{
@@ -1444,7 +1442,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     }
     func getStaffListAPI(){
         APIService.shared
-            .makeApi(url: ServiceUrl.recipient_get_staff_list, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+            .makeApi(url: ServiceUrl.recipient_get_staff_list, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false){ [self] (
                 result:Result <GetStafflistSuc,
                 Error>
             ) in
@@ -1490,7 +1488,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         APIService.shared.makeApi(url: ServiceUrl.check_level , parameters: [
             get_quizLevel.class_id : ClassId,
             get_quizLevel.subject_id : SubjectId
-        ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <checkQuizLevelSuc,Error>) in
+        ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false){ [self] (result:Result <checkQuizLevelSuc,Error>) in
             switch result {
             case .success(let successMessage):
                 if successMessage.status == true{
@@ -1521,7 +1519,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         subjectList.removeAll()
         APIService.shared.makeApi(url: ServiceUrl.recipient_get_subject_list , parameters: [
             COMMON_PARAMETER.section_ids: id
-        ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <GetSubjectlistSuc,Error>) in
+        ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false){ [self] (result:Result <GetSubjectlistSuc,Error>) in
             switch result {
             case .success(let successMessage):
                 if successMessage.status == true{
@@ -1661,7 +1659,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 send_textmessageStringFile.target_code: array_selectedId,
                 send_textmessageStringFile.target_type: target_type ?? 0,
                 send_textmessageStringFile.academic_year_id: selectedAcadimicYearId ?? 0
-            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
             ) in switch result {
@@ -1723,7 +1721,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 send_voicemeassageStringFile.circular_type : circular_types ?? "",
                 send_voicemeassageStringFile.academic_year_id: selectedAcadimicYearId ?? 0
                 
-            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
             ) in

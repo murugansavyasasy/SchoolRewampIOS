@@ -122,7 +122,7 @@ class LSRWSubmisionListVC: UIViewController,
                 url: ServiceUrl.lms_api_lsrw_remark,
                 parameters: parameters,
                 type: ApitTypeSringFile.PUT,
-                token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+                token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true
             ) { [weak self] (result: Result<Send_AttachmentResponse, Error>) in
                 guard let self = self else { return }
                 

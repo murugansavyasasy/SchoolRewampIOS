@@ -196,6 +196,8 @@ class OTPVc: UIViewController {
         attributed.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: resendRange)
         
         ResendLbl.attributedText = attributed
+        
+//        ForgotPasswordAPIcall()
     }
     
     @objc func labelTapped(_ gesture: UITapGestureRecognizer) {
@@ -230,7 +232,7 @@ class OTPVc: UIViewController {
     func Validate_OTP(mobileNumber : String , otp : String) {
         APIService.shared.makeApi(url: ServiceUrl.validate_validate_otp, parameters: [
             COMMON_PARAMETER.mobile_number :  mobileNumber,
-            OTP_PARAMETER.otp :  otp], type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
+            OTP_PARAMETER.otp :  otp], type: ApitTypeSringFile.POST, token: ServiceUrl.token, isBaseUrl: true) { [self] (
                 result: Result<ValidateOTPSuc,
                 Error>) in
                 switch result {
@@ -356,15 +358,15 @@ class OTPVc: UIViewController {
         let secureID = SecureIDManager.getSecureID()
         
         let parameters: [String: Any] = [
-            mobileNumber.mobile_number: credentials.mobile_number ?? "",
+            mobileNumber.mobile_number: credentials.mobile_number,
             mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
             mobileNumber.secure_id: secureID,
-            mobileNumber.password: credentials.pwd ?? ""
+            mobileNumber.password: credentials.pwd
         ]
         
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
-                     , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
+                     , type: ApitTypeSringFile.POST, token: ServiceUrl.token, isBaseUrl: true) { [self] (
                         result: Result<UserValidationResponseSuc,
                         Error>
                      ) in

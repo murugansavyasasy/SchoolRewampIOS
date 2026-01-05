@@ -198,7 +198,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
             url: ServiceUrl.comm_api_attachment_report,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: staffdetails?.access_token ?? ""
+            token: staffdetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<AttachmentsResponse, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -236,7 +236,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
                     url: ServiceUrl.comm_api_attachment_delete,
                     parameters: [SendAttachmentStringFile.id: attachmentId],
                     type: ApitTypeSringFile.PUT,
-                    token: self.staffdetails?.access_token ?? ""
+                    token: self.staffdetails?.access_token ?? "", isBaseUrl: true
                 ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
                     DispatchQueue.main.async {
                         guard let self = self else { return }

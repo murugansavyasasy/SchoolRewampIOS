@@ -943,7 +943,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     
     func Get_Standards_Api(){
         
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id:academicId ?? 0], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<GetStandardsSuc , Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id:academicId ?? 0], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<GetStandardsSuc , Error>) in
             
             DispatchQueue.main.sync { [weak self] in
                 
@@ -1018,7 +1018,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
             return allParam
         }
         
-        APIService.shared.PtmApi(url: ServiceUrl.ptm_api_ptm_schedule_validate_slots_for_staff, parameters: finalParams, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<SlotValidationResponse,Error>) in
+        APIService.shared.PtmApi(url: ServiceUrl.ptm_api_ptm_schedule_validate_slots_for_staff, parameters: finalParams, token: staffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<SlotValidationResponse,Error>) in
             
             DispatchQueue.main.async { [weak self] in
                 

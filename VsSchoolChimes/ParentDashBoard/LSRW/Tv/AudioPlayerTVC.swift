@@ -94,7 +94,7 @@ class AudioPlayerTVC: UITableViewCell {
 @available(iOS 15.0, *)
 class AudioMessageView: UIView, AVAudioPlayerDelegate {
     private let waveformView = UIStackView()
-    private let durationLabel = UILabel()
+    let durationLabel = UILabel()
     private let progressView = UIView()
     var parentCell: Any?
     private var waveformBars: [UIView] = []
@@ -102,7 +102,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
 
     private var timer: Timer?
     private var audioPlayer: AVAudioPlayer?
-    
+    var onDurationUpdate: ((String) -> Void)?
     var isPlaying = false {
         didSet {
             updatePlayingState()
@@ -125,7 +125,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
             DispatchQueue.main.async {
                 self.progressView.alpha = 0
                 self.durationLabel.text = "0:00"
-                self.waveformBars.forEach { $0.backgroundColor = .systemBlue }
+//                self.waveformBars.forEach { $0.backgroundColor = .systemBlue }
             }
             
             loadAudio()
@@ -218,7 +218,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
 
         for _ in 0..<numberOfBars {
             let bar = UIView()
-            bar.backgroundColor = .systemBlue
+            bar.backgroundColor = .systemGray4
             bar.layer.cornerRadius = 1
             bar.translatesAutoresizingMaskIntoConstraints = false
 
@@ -328,13 +328,35 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
         }
     }
 
+//    private func updateUI() {
+//        guard let player = audioPlayer, player.isPlaying else { return }
+//        
+//        let remainingTime = player.duration - player.currentTime
+//        durationLabel.text = formatTime(remainingTime)
+//        
+//        let progress = player.currentTime / player.duration
+//        DispatchQueue.main.async {
+//            self.progressView.frame = CGRect(
+//                x: 0,
+//                y: 0,
+//                width: self.bounds.width * progress,
+//                height: self.bounds.height
+//            )
+//        }
+//        
+//        updateWaveformColor(progress: progress)
+//    }
+    
     private func updateUI() {
-        guard let player = audioPlayer, player.isPlaying else { return }
+        guard let player = audioPlayer else { return }
         
         let remainingTime = player.duration - player.currentTime
-        durationLabel.text = formatTime(remainingTime)
+        let timeText = formatTime(remainingTime)
+        durationLabel.text = timeText
         
+        onDurationUpdate?(timeText)
         let progress = player.currentTime / player.duration
+        
         DispatchQueue.main.async {
             self.progressView.frame = CGRect(
                 x: 0,
@@ -346,6 +368,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
         
         updateWaveformColor(progress: progress)
     }
+
 
     private func updateWaveformColor(progress: Double) {
         let index = Int(progress * Double(waveformBars.count))
@@ -365,19 +388,41 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
         seekToLocation(location.x)
     }
 
+//    @objc private func handleWaveformPan(_ gesture: UIPanGestureRecognizer) {
+//        let location = gesture.location(in: waveformView)
+//        switch gesture.state {
+//        case .began:
+//            let wasPlaying = isPlaying
+//            stopPlaybackAnimation()
+//            gesture.view?.tag = wasPlaying ? 1 : 0
+//        case .changed:
+//            seekToLocation(location.x)
+//        case .ended, .cancelled:
+//            if gesture.view?.tag == 1 {
+//                startPlaybackAnimation()
+//            }
+//        default:
+//            break
+//        }
+//    }
+    
     @objc private func handleWaveformPan(_ gesture: UIPanGestureRecognizer) {
         let location = gesture.location(in: waveformView)
+
         switch gesture.state {
         case .began:
             let wasPlaying = isPlaying
             stopPlaybackAnimation()
             gesture.view?.tag = wasPlaying ? 1 : 0
+
         case .changed:
-            seekToLocation(location.x)
+            seekToLocation(location.x)   // live seek + color update
+
         case .ended, .cancelled:
             if gesture.view?.tag == 1 {
                 startPlaybackAnimation()
             }
+
         default:
             break
         }
@@ -416,7 +461,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
         DispatchQueue.main.async {
             // ✅ Just reset bar colors, DON'T remove bars
             self.waveformBars.forEach { bar in
-                bar.backgroundColor = .systemBlue
+//                bar.backgroundColor = .systemBlue
                 bar.layer.removeAllAnimations()
                 bar.alpha = 1.0
             }

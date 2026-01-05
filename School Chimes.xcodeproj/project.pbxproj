@@ -76,6 +76,16 @@
 		18926D322D04140B002BBB97 /* PendingFeeReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926D222D04140B002BBB97 /* PendingFeeReportViewController.xib */; };
 		18926D372D041D74002BBB97 /* ImportantInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D352D041D74002BBB97 /* ImportantInfoViewController.swift */; };
 		18926D382D041D74002BBB97 /* ImportantInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926D362D041D74002BBB97 /* ImportantInfoViewController.xib */; };
+		18D09A3E2EFFECF700D1930D /* VoiceCellTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D09A3D2EFFECF700D1930D /* VoiceCellTV.xib */; };
+		18D09A3F2EFFECF700D1930D /* VoiceCellTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D09A3C2EFFECF700D1930D /* VoiceCellTV.swift */; };
+		18D09A422F00055E00D1930D /* VoiceMessagesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D09A412F00055E00D1930D /* VoiceMessagesVC.xib */; };
+		18D09A432F00055E00D1930D /* VoiceMessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D09A402F00055E00D1930D /* VoiceMessagesVC.swift */; };
+		18D09A462F023AA500D1930D /* VoicePreviewTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D09A452F023AA500D1930D /* VoicePreviewTvCell.xib */; };
+		18D09A472F023AA500D1930D /* VoicePreviewTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D09A442F023AA500D1930D /* VoicePreviewTvCell.swift */; };
+		18D09A522F02640900D1930D /* SendMsgTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D09A512F02640900D1930D /* SendMsgTvCell.xib */; };
+		18D09A532F02640900D1930D /* SendMsgTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D09A502F02640900D1930D /* SendMsgTvCell.swift */; };
+		18D09B3F2F0288FE00D1930D /* schoolchimes_tone.wav in Resources */ = {isa = PBXBuildFile; fileRef = 18D09B3E2F0288FE00D1930D /* schoolchimes_tone.wav */; };
+		18D09B412F02894500D1930D /* emergency_voice.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 18D09B402F02894500D1930D /* emergency_voice.mp3 */; };
 		18D718562D0D471A00E9EDA3 /* NewDailyCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718402D0D471A00E9EDA3 /* NewDailyCollectionViewController.swift */; };
 		18D718632D0D471A00E9EDA3 /* NewDailyCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718412D0D471A00E9EDA3 /* NewDailyCollectionViewController.xib */; };
 		18D7189B2D0D477900E9EDA3 /* LocationHistoryVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7188E2D0D477900E9EDA3 /* LocationHistoryVc.swift */; };
@@ -254,7 +264,6 @@
 		84444C532E66D3FF00B4B8EB /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C502E66D3FF00B4B8EB /* UserDetailsTVC.swift */; };
 		84444C562E66EE3B00B4B8EB /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */; };
 		84444C572E66EE3B00B4B8EB /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */; };
-		8449D8D22ED4646C00822FAC /* emergency_voice.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8449D8D12ED4646C00822FAC /* emergency_voice.mp3 */; };
 		8449D8D42ED4647300822FAC /* normal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8449D8D32ED4647300822FAC /* normal.mp3 */; };
 		844DEDE42E549A0B0016A347 /* CreateQuizQutionVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844DEDE22E549A0B0016A347 /* CreateQuizQutionVc.swift */; };
 		844DEDE52E549A0B0016A347 /* CreateQuizQutionVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844DEDE32E549A0B0016A347 /* CreateQuizQutionVc.xib */; };
@@ -813,6 +822,16 @@
 		189E991D2CE3286600FE98A5 /* VsSchoolChimes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VsSchoolChimes.entitlements; sourceTree = "<group>"; };
 		189E997F2CE3794A00FE98A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		189E99802CE3794A00FE98A5 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		18D09A3C2EFFECF700D1930D /* VoiceCellTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCellTV.swift; sourceTree = "<group>"; };
+		18D09A3D2EFFECF700D1930D /* VoiceCellTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoiceCellTV.xib; sourceTree = "<group>"; };
+		18D09A402F00055E00D1930D /* VoiceMessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMessagesVC.swift; sourceTree = "<group>"; };
+		18D09A412F00055E00D1930D /* VoiceMessagesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoiceMessagesVC.xib; sourceTree = "<group>"; };
+		18D09A442F023AA500D1930D /* VoicePreviewTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoicePreviewTvCell.swift; sourceTree = "<group>"; };
+		18D09A452F023AA500D1930D /* VoicePreviewTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoicePreviewTvCell.xib; sourceTree = "<group>"; };
+		18D09A502F02640900D1930D /* SendMsgTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMsgTvCell.swift; sourceTree = "<group>"; };
+		18D09A512F02640900D1930D /* SendMsgTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendMsgTvCell.xib; sourceTree = "<group>"; };
+		18D09B3E2F0288FE00D1930D /* schoolchimes_tone.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = schoolchimes_tone.wav; sourceTree = "<group>"; };
+		18D09B402F02894500D1930D /* emergency_voice.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = emergency_voice.mp3; sourceTree = "<group>"; };
 		18D718402D0D471A00E9EDA3 /* NewDailyCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDailyCollectionViewController.swift; sourceTree = "<group>"; };
 		18D718412D0D471A00E9EDA3 /* NewDailyCollectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewDailyCollectionViewController.xib; sourceTree = "<group>"; };
 		18D7186E2D0D477900E9EDA3 /* LocationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationTableViewCell.xib; sourceTree = "<group>"; };
@@ -1000,7 +1019,6 @@
 		84444C512E66D3FF00B4B8EB /* UserDetailsTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDetailsTVC.xib; sourceTree = "<group>"; };
 		84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileVC.swift; sourceTree = "<group>"; };
 		84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateProfileVC.xib; sourceTree = "<group>"; };
-		8449D8D12ED4646C00822FAC /* emergency_voice.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = emergency_voice.mp3; sourceTree = "<group>"; };
 		8449D8D32ED4647300822FAC /* normal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = normal.mp3; sourceTree = "<group>"; };
 		844DEDE22E549A0B0016A347 /* CreateQuizQutionVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQuizQutionVc.swift; sourceTree = "<group>"; };
 		844DEDE32E549A0B0016A347 /* CreateQuizQutionVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQuizQutionVc.xib; sourceTree = "<group>"; };
@@ -1640,6 +1658,7 @@
 		18887AB02EFFAAFB008B71FF /* Message */ = {
 			isa = PBXGroup;
 			children = (
+				18D09A3B2EFFECC600D1930D /* New Group */,
 				18887AA62EFFAAFB008B71FF /* CommonPagenationVc.swift */,
 				18887AA72EFFAAFB008B71FF /* CommonPagenationVc.xib */,
 				18887AA82EFFAAFB008B71FF /* EmergencyVoiceRecordCel.swift */,
@@ -1650,6 +1669,8 @@
 				18887AAD2EFFAAFB008B71FF /* TextMessageVC.xib */,
 				18887AAE2EFFAAFB008B71FF /* VoiceMessageVc.swift */,
 				18887AAF2EFFAAFB008B71FF /* VoiceMessageVc.xib */,
+				18D09A402F00055E00D1930D /* VoiceMessagesVC.swift */,
+				18D09A412F00055E00D1930D /* VoiceMessagesVC.xib */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -1778,6 +1799,19 @@
 				189E99802CE3794A00FE98A5 /* NotificationService.swift */,
 			);
 			path = ImageNotificationService;
+			sourceTree = "<group>";
+		};
+		18D09A3B2EFFECC600D1930D /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				18D09A3C2EFFECF700D1930D /* VoiceCellTV.swift */,
+				18D09A3D2EFFECF700D1930D /* VoiceCellTV.xib */,
+				18D09A442F023AA500D1930D /* VoicePreviewTvCell.swift */,
+				18D09A452F023AA500D1930D /* VoicePreviewTvCell.xib */,
+				18D09A502F02640900D1930D /* SendMsgTvCell.swift */,
+				18D09A512F02640900D1930D /* SendMsgTvCell.xib */,
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		18D718542D0D471A00E9EDA3 /* DailyCollection */ = {
@@ -2730,6 +2764,8 @@
 		84A5BE7E2C1973F400E32496 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				18D09B402F02894500D1930D /* emergency_voice.mp3 */,
+				18D09B3E2F0288FE00D1930D /* schoolchimes_tone.wav */,
 				188EBD8D2ED5632F00BEA524 /* DropDown */,
 				84C829F92D086A490024A46A /* Fireworks */,
 				84C829C02D0807CD0024A46A /* Confetti */,
@@ -2755,7 +2791,6 @@
 				84127DBD2E152DDB0092159D /* chatAttachmentPicker.swift */,
 				843BCD832E2FB1B700D4364A /* CustomTransition.swift */,
 				8449D8D32ED4647300822FAC /* normal.mp3 */,
-				8449D8D12ED4646C00822FAC /* emergency_voice.mp3 */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -3569,6 +3604,7 @@
 				84EFFAEA2CCFA4A100C11C26 /* ReportBugVcViewController.xib in Resources */,
 				84444C562E66EE3B00B4B8EB /* UpdateProfileVC.xib in Resources */,
 				18887AB62EFFAAFB008B71FF /* VoiceMessageVc.xib in Resources */,
+				18D09A462F023AA500D1930D /* VoicePreviewTvCell.xib in Resources */,
 				18887AB72EFFAAFB008B71FF /* CommonPagenationVc.xib in Resources */,
 				18887AB82EFFAAFB008B71FF /* ScheduleCallVC.xib in Resources */,
 				18887AB92EFFAAFB008B71FF /* EmergencyVoiceRecordCel.xib in Resources */,
@@ -3610,6 +3646,7 @@
 				849757112D2BA575006A27FD /* RecipientTvCell.xib in Resources */,
 				849757122D2BA575006A27FD /* Std_Grp_header.xib in Resources */,
 				FA82918C2E4379960051844E /* CountryTvcell.xib in Resources */,
+				18D09A422F00055E00D1930D /* VoiceMessagesVC.xib in Resources */,
 				846CF73A2E2F5654000361CE /* ReciverEventTVC.xib in Resources */,
 				FAF4C7AE2E54614E0092B938 /* MeetingDataTV.xib in Resources */,
 				848126D82D91820500BE6979 /* CountryListVC.xib in Resources */,
@@ -3714,6 +3751,7 @@
 				FAF43B632E02A09200F28A16 /* EditLessonVC.xib in Resources */,
 				849F4C752D24010300C9F4BF /* addCvCell.xib in Resources */,
 				84D32C972D55CE2300A420A9 /* QuizListTvCell.xib in Resources */,
+				18D09A522F02640900D1930D /* SendMsgTvCell.xib in Resources */,
 				84D85FF02DE5815200633784 /* SectionStregnthCVC.xib in Resources */,
 				8472BEBF2EF6737E00D3F6F5 /* descriptionCVC.xib in Resources */,
 				846CF7462E2F5B01000361CE /* OngoingTVC.xib in Resources */,
@@ -3736,7 +3774,6 @@
 				848047722E02A7D90042BC5D /* AssignmentReport.xib in Resources */,
 				84017F792E447559006CB477 /* certificateReqTVCell.xib in Resources */,
 				84174EA92E717FA100AC7092 /* QuizSubmissionVc.xib in Resources */,
-				8449D8D22ED4646C00822FAC /* emergency_voice.mp3 in Resources */,
 				84E12C3B2ECC71F200FF614B /* PopoverTVC.xib in Resources */,
 				84235A0E2E1E27F4002F2E1D /* RecorderTVC.xib in Resources */,
 				849E57372C1FF6BD006119DA /* RobotoSlab-Bold.ttf in Resources */,
@@ -3791,6 +3828,7 @@
 				8442A9062CDC8A820006068E /* LogoutViewController.xib in Resources */,
 				849AD03E2D1A845E002DEC07 /* MarkAttendenceVC.xib in Resources */,
 				84E70DD22D49F61900E916D1 /* DatePickerVC.xib in Resources */,
+				18D09B3F2F0288FE00D1930D /* schoolchimes_tone.wav in Resources */,
 				84EFFACD2CCF90DE00C11C26 /* SettingsViewController.xib in Resources */,
 				FA3230BF2D9556160070BA51 /* ExameMarVC.xib in Resources */,
 				84F34C8F2CFDBECD007BCF9C /* ImageSelection.xib in Resources */,
@@ -3822,6 +3860,8 @@
 				84B2E0612CEB412900561E4F /* SenderNoticeBoardVC.xib in Resources */,
 				84666AE82CE866E30010DA24 /* NoticeBoardVc.xib in Resources */,
 				84C00E6D2CF6D7C500E34A83 /* TermsAndCondVC.xib in Resources */,
+				18D09B412F02894500D1930D /* emergency_voice.mp3 in Resources */,
+				18D09A3E2EFFECF700D1930D /* VoiceCellTV.xib in Resources */,
 				849AD02C2D1A840E002DEC07 /* OnlineMeetingVC.xib in Resources */,
 				843BCD882E2FBCBA00D4364A /* PreviewCell.xib in Resources */,
 				FAAC9F472E4B006600203F04 /* PtmCV.xib in Resources */,
@@ -4052,6 +4092,7 @@
 				84A5BE882C197B4A00E32496 /* AWSS3Manager.swift in Sources */,
 				84EFFA3D2CCCB49200C11C26 /* ContactUsTVCell.swift in Sources */,
 				18926C4D2D02DE81002BBB97 /* TestTVC.swift in Sources */,
+				18D09A532F02640900D1930D /* SendMsgTvCell.swift in Sources */,
 				84174DF42E70061C00AC7092 /* QuizCompletedVc.swift in Sources */,
 				84235A0F2E1E27F4002F2E1D /* RecorderTVC.swift in Sources */,
 				849D72312D14270D0060E222 /* SubscriptionView.swift in Sources */,
@@ -4073,6 +4114,7 @@
 				FABA6E872ED5AB8A00278807 /* ExamListCell.swift in Sources */,
 				FAFFBD072E336F8600F8B150 /* ExamListTV.swift in Sources */,
 				84FBAA872E3BA05300A3FC31 /* CustomMenuCVC.swift in Sources */,
+				18D09A3F2EFFECF700D1930D /* VoiceCellTV.swift in Sources */,
 				FA3230BE2D9556160070BA51 /* ExameMarVC.swift in Sources */,
 				840177DD2E3A2238006CB477 /* FooterCvCell.swift in Sources */,
 				84DE949D2E53252E008E1BF4 /* SenderQuizVc.swift in Sources */,
@@ -4147,6 +4189,7 @@
 				8442A9052CDC8A820006068E /* LogoutViewController.swift in Sources */,
 				84BCE7DF2E9E1868002C8068 /* PreviewTargetTVC.swift in Sources */,
 				84127AC92E03C8F00092159D /* CVCell.swift in Sources */,
+				18D09A472F023AA500D1930D /* VoicePreviewTvCell.swift in Sources */,
 				84127ACA2E03C8F00092159D /* ActivateCoupenTVC.swift in Sources */,
 				84127ACB2E03C8F00092159D /* AddCoupenTVC.swift in Sources */,
 				84127ACC2E03C8F00092159D /* CoupenCvCell.swift in Sources */,
@@ -4280,6 +4323,7 @@
 				84C829C12D0807CD0024A46A /* ConfettiEmitter.swift in Sources */,
 				84C829C22D0807CD0024A46A /* ConfettiView.swift in Sources */,
 				84C829C32D0807CD0024A46A /* ConfettiLayer.swift in Sources */,
+				18D09A432F00055E00D1930D /* VoiceMessagesVC.swift in Sources */,
 				84F9118C2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.swift in Sources */,
 				FAFB40BE2ED6E75A00783142 /* SubjectsTVCell.swift in Sources */,
 				187CF5C02D13F009001422CE /* WeekDaysNameCollectionViewCell.swift in Sources */,

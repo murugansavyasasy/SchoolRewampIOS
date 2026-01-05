@@ -218,7 +218,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
                 Daily_collectionStringFile.to_date : todate,
                 Daily_collectionStringFile.type : type
                 
-            ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+            ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false){ [self] (
                 result:Result <DailyCollectionResponse,
                 Error>
             ) in

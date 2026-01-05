@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TextMessageVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="selectFromHstoryLbl" destination="4n3-8p-WVg" id="HVv-Mi-RPp"/>
+                <outlet property="tv" destination="Mhr-m4-fZf" id="l4N-Hm-6tR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,28 +22,54 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3o5-6G-YVd">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w4k-T2-OKS">
                     <rect key="frame" x="0.0" y="118" width="393" height="666"/>
-                    <color key="backgroundColor" systemColor="systemGreenColor"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6JY-8K-Ck1">
+                            <rect key="frame" x="10" y="9.9999999999999982" width="373" height="20.333333333333329"/>
+                            <subviews>
+                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;&lt;Select from history" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4n3-8p-WVg">
+                                    <rect key="frame" x="0.0" y="0.0" width="373" height="20.333333333333332"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" name="PrimeryColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Mhr-m4-fZf">
+                            <rect key="frame" x="10" y="50.333333333333314" width="373" height="605.66666666666674"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="Mhr-m4-fZf" secondAttribute="bottom" constant="10" id="BQP-CJ-VL5"/>
+                        <constraint firstItem="Mhr-m4-fZf" firstAttribute="leading" secondItem="w4k-T2-OKS" secondAttribute="leading" constant="10" id="UNj-SE-uWA"/>
+                        <constraint firstItem="6JY-8K-Ck1" firstAttribute="top" secondItem="w4k-T2-OKS" secondAttribute="top" constant="10" id="dSp-AY-MdS"/>
+                        <constraint firstItem="6JY-8K-Ck1" firstAttribute="leading" secondItem="w4k-T2-OKS" secondAttribute="leading" constant="10" id="eTe-BA-LcM"/>
+                        <constraint firstAttribute="trailing" secondItem="Mhr-m4-fZf" secondAttribute="trailing" constant="10" id="had-Nk-VgU"/>
+                        <constraint firstItem="Mhr-m4-fZf" firstAttribute="top" secondItem="6JY-8K-Ck1" secondAttribute="bottom" constant="20" id="o31-t1-PTO"/>
+                        <constraint firstAttribute="trailing" secondItem="6JY-8K-Ck1" secondAttribute="trailing" constant="10" id="wt8-de-a3s"/>
+                    </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="3o5-6G-YVd" secondAttribute="bottom" id="B4t-bF-Pf0"/>
-                <constraint firstItem="3o5-6G-YVd" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="WTc-q4-SM9"/>
-                <constraint firstItem="3o5-6G-YVd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="eRW-ZD-r3T"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3o5-6G-YVd" secondAttribute="trailing" id="yv5-Kr-JXY"/>
+                <constraint firstItem="w4k-T2-OKS" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="7VQ-dQ-wq2"/>
+                <constraint firstItem="w4k-T2-OKS" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="JSR-ez-npH"/>
+                <constraint firstItem="w4k-T2-OKS" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ooP-wu-mmQ"/>
+                <constraint firstItem="w4k-T2-OKS" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="x4K-ci-95d"/>
             </constraints>
             <point key="canvasLocation" x="138" y="99"/>
         </view>
     </objects>
     <resources>
+        <namedColor name="PrimeryColor">
+            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

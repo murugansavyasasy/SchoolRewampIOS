@@ -340,7 +340,7 @@ class LeveCreateVC: UIViewController{
     
     func Get_Leave_Categories(){
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_leave_categories, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (result: Result<LeaveTypesResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_leave_categories, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<LeaveTypesResponse,Error>) in
             
             DispatchQueue.main.async { [weak self] in
                 
@@ -392,7 +392,7 @@ class LeveCreateVC: UIViewController{
                               
             onOk: {
                   
-            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_apply, parameters: param, type: ApitTypeSringFile.POST, token: self.childDetails?.access_token ?? "") {[weak self] (result: Result<CommonApiSuc,Error>) in
+            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_apply, parameters: param, type: ApitTypeSringFile.POST, token: self.childDetails?.access_token ?? "", isBaseUrl: true) {[weak self] (result: Result<CommonApiSuc,Error>) in
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else {return}
                     switch result{
@@ -428,7 +428,7 @@ class LeveCreateVC: UIViewController{
             url: ServiceUrl.dashboard_api_pauket_add_points,
             parameters: params,
             type: ApitTypeSringFile.POST,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
 
@@ -478,7 +478,7 @@ class LeveCreateVC: UIViewController{
                               
             onOk: {
                   
-            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_update, parameters: param, type: ApitTypeSringFile.PUT, token: self.childDetails?.access_token ?? "") {[weak self] (result: Result<CommonApiSuc,Error>) in
+            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_update, parameters: param, type: ApitTypeSringFile.PUT, token: self.childDetails?.access_token ?? "", isBaseUrl: true) {[weak self] (result: Result<CommonApiSuc,Error>) in
                 
                 DispatchQueue.main.async { [weak self] in
                     

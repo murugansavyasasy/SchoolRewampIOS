@@ -80,7 +80,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         if #available(iOS 15.0, *) {
             showActivityLoader()
         }
-        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_slot_history_for_student, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (result: Result<SlotDetailsResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_slot_history_for_student, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<SlotDetailsResponse,Error>) in
             
             guard let self = self else {return}
             
@@ -139,7 +139,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         let param: [String:Any] = [PTMRequestStringFile.slot_id:cancelId ?? "", PTMRequestStringFile.cancelled_reason: reasonTextfield.text ?? ""]
         
-        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_slot_by_student, parameters: param, type: ApitTypeSringFile.PUT, token: childDetails?.access_token ?? "") {[weak self] (result:Result<CommonApiSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_slot_by_student, parameters: param, type: ApitTypeSringFile.PUT, token: childDetails?.access_token ?? "", isBaseUrl: true) {[weak self] (result:Result<CommonApiSuc,Error>) in
             
             guard let self = self else {return}
             

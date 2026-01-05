@@ -91,7 +91,7 @@ class CooponViewVC: UIViewController,UICollectionViewDelegate, UICollectionViewD
         
         let param: [String: Any] = [PaucketHeader.source_link:source_Link ?? "", PaucketHeader.mobile_no: UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? ""]
         
-        APIService.shared.makeApi(url: ServiceUrl.get_campaign_details, parameters: param, type: ApitTypeSringFile.GET, token: PaucketHeader.Paucket) {[self] (result: Result<CampaignResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.get_campaign_details, parameters: param, type: ApitTypeSringFile.GET, token: PaucketHeader.Paucket, isBaseUrl: false) {[self] (result: Result<CampaignResponse,Error>) in
             
             switch result{
                 

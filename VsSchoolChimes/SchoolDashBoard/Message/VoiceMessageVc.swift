@@ -207,18 +207,13 @@ extension VoiceMessageVc  {
     
     func get_Voice_History(){
         APIService.shared
-            .makeApi(url:  ServiceUrl.comm_voice_get_voice_history, parameters: [:] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
+            .makeApi(url:  ServiceUrl.comm_voice_get_voice_history, parameters: [:] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false){ [self] (
                 result : Result<VoiceResponse,
                 Error>
             ) in
-                
                 switch result {
-                    
                 case.success(let succesmessage) :
-                    
-                    print("succesmessagesdsds",succesmessage)
                     if succesmessage.status == true {
-                        
                         DispatchQueue.main.async { [weak self] in
 //                            no_recordLbl.isHidden = true
                             guard let self = self else { return }

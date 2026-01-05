@@ -93,6 +93,7 @@ struct MenuStringFile{
     static let  CreateOn   = "Created On "
     static let  Update   = "Update"
     static let  DaysApplication   = " Days Application"
+    static let  Taptoviewlocationhistory   = "Tap to view location history"
     
 }
 

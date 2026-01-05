@@ -68,7 +68,7 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
             url: ServiceUrl.comm_recipient_get_academic_year_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [self] (result: Result<get_academic_yearSuc, Error>) in
             switch result {
             case .success(let response):
@@ -93,7 +93,7 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
             url: ServiceUrl.api_fee_report_detailed_pending_report,
             parameters: ["academic_year_id": academic_year_id],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [self] (result: Result<PendingReportsResponse, Error>) in
             switch result {
             case .success(let response):
@@ -119,7 +119,7 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
             url: ServiceUrl.api_fee_report_detailed_class_wise_pending_report,
             parameters: ["academic_year_id": academic_year_id],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [self] (result: Result<PendingReportsResponse, Error>) in
             switch result {
             case .success(let response):

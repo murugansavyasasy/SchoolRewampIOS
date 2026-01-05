@@ -53,7 +53,7 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
             url: ServiceUrl.exam_api_exam_get_exams,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<DetailedExamListResponse, Error>) in
             
             guard let self = self else {return}

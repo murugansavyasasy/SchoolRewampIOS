@@ -230,7 +230,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             .makeApi(url: ServiceUrl.recipient_get_student_list, parameters: [
                 speficStudentStringFile.section_id : selected_sectionId
                 ,speficStudentStringFile.academic_year_id : academic_year_id
-            ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+            ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false){ [self] (
                 result:Result <GetStudentlistSuc,
                 Error>
             ) in
@@ -295,13 +295,13 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             sendAttachmentFlow(
                 via: comm,
                 url:  ServiceUrl.comm_attachment_send_attachment,
-                subjectId: ""
+                subjectId: "", isBaseUrl: true
             )
         case Menu_id.isAssaignment:
             sendAttachmentFlow(
                 via: comm,
                 url:  ServiceUrl.comm_assignment_send_assignment,
-                subjectId: selected_subjectID ?? ""
+                subjectId: selected_subjectID ?? "", isBaseUrl: true
             )
             
         default:
@@ -314,7 +314,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     private func sendAttachmentFlow(
         via comm: commonApi_forSending,
         url baseURL: String,
-        subjectId: String
+        subjectId: String,
+        isBaseUrl: Bool
     ) {
         let message : String?
         if AlertMessageContent ?? false{
@@ -332,7 +333,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             subjectId: subjectId,
             message: message ?? "",
             from: self,
-            Common_request_params: Common_request_params
+            Common_request_params: Common_request_params,
+            isBaseUrl : isBaseUrl
         ) { response in
             DispatchQueue.main.async {
                 CircularProgressLoader.shared.hide()
@@ -522,7 +524,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 send_textmessageStringFile.target_type: target_type ?? 0,
                 send_textmessageStringFile.academic_year_id: selectedAcadimicYearId ?? 0
                 
-            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (result : Result<CommonApiSuc,Error>) in
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true ){ [self] (result : Result<CommonApiSuc,Error>) in
                 
                 switch result {
                 case.success(let succesmessage) :
@@ -587,7 +589,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 send_voicemeassageStringFile.circular_type  : circular_type.student,
                 send_voicemeassageStringFile.academic_year_id  : selectedAcadimicYearId ?? 0
                 
-            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
             ) in
@@ -651,7 +653,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 MarkAttendenceStringFile.session_type: user_inputs.session_type,
                 MarkAttendenceStringFile.attendance_date: user_inputs.attendance_date
                 
-            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
             ) in

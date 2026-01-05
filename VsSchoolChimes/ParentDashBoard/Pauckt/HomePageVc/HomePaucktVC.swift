@@ -306,7 +306,7 @@ class HomePaucktVC: UIViewController
         
         let param: [String: Any] = [:]
         
-        APIService.shared.makeApi(url: ServiceUrl.get_category_list, parameters: param, type: ApitTypeSringFile.GET, token: PaucketHeader.Paucket) {[self] (result: Result<CategoriesResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.get_category_list, parameters: param, type: ApitTypeSringFile.GET, token: PaucketHeader.Paucket, isBaseUrl: false) {[self] (result: Result<CategoriesResponse,Error>) in
             
             switch result{
                 
@@ -358,7 +358,7 @@ class HomePaucktVC: UIViewController
             showActivityLoader()
         }
         APIService.shared
-            .makeApi(url: ServiceUrl.get_campaigns, parameters: parameter, type: ApitTypeSringFile.POST, token: PaucketHeader.Paucket) {[self] (
+            .makeApi(url: ServiceUrl.get_campaigns, parameters: parameter, type: ApitTypeSringFile.POST, token: PaucketHeader.Paucket, isBaseUrl: false) {[self] (
                 result: Result<CampaignsResponse,
                 Error>
             ) in

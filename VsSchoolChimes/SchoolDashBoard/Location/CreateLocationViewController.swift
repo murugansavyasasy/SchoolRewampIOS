@@ -80,6 +80,10 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         locationDefaultLbl.setRequiredText(CommonStringFile.Location_name)
         distaceDefaultLbl.setRequiredText(CommonStringFile.Distance)
         getLocationDefaultLbl.setRequiredText(CommonStringFile.Get_Location)
+        getLocationBtn.setAttributedTitle(nil, for: .normal)
+        getLocationBtn.setTitle(MenuStringFile.Taptoviewlocationhistory, for: .normal)
+        saveBtn.setAttributedTitle(nil, for: .normal)
+        saveBtn.setTitle(AlertstringFile.Submit, for: .normal)
     }
     
     
@@ -299,7 +303,7 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
                                    punchDetaiShapeStringFile.latitude: latitude,
                                    punchDetaiShapeStringFile.distance: distanceTxt.text ?? ""],
                     type: ApitTypeSringFile.POST,
-                    token:staffDetails?.access_token ?? ""
+                    token:staffDetails?.access_token ?? "", isBaseUrl: true
                 ) { [self] (result: Result<StaffGeometricLocation, Error>) in
                     DispatchQueue.main.async {
                         if #available(iOS 15.0, *) {

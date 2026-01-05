@@ -237,7 +237,7 @@ class ExamImgUploadVC: UIViewController {
             url: ServiceUrl.exam_get_subject_wise_activities,
             parameters: param,
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<SubjectWiseExamResponse, Error>) in
 
             guard let self = self else { return }

@@ -286,13 +286,13 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             sendAttachmentFlow(
                 via: comm,
                 url: ServiceUrl.api_notice_board_send_notice,
-                subjectId:""
+                subjectId:"", isBaseUrl: true
             )
         case Menu_id.AttachmentMenuId:
             sendAttachmentFlow(
                 via: comm,
                 url: ServiceUrl.comm_attachment_send_attachment,
-                subjectId:""
+                subjectId:"", isBaseUrl: true
             )
         default:
             print("❗️Unhandled menu ID: \(screenType.staffSelectedMenuId)")
@@ -302,7 +302,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     private func sendAttachmentFlow(
         via comm: commonApi_forSending,
         url baseURL: String,
-        subjectId: String
+        subjectId: String,
+        isBaseUrl:Bool
     ) {
         var message : String?
         if accadmicDefaultYrName == acidmicYrLbl.text{
@@ -319,7 +320,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             subjectId: subjectId,
             message: message ?? "",
             from: self,
-            Common_request_params: Common_request_params
+            Common_request_params: Common_request_params,
+            isBaseUrl : isBaseUrl
         ) { response in
             DispatchQueue.main.async {
                 CircularProgressLoader.shared.hide()
@@ -665,7 +667,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 send_textmessageStringFile.target_type: TargetTypes.school,
                 send_textmessageStringFile.academic_year_id: selectedAcadimicYearId ?? 0
                 
-            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
             ) in
@@ -726,7 +728,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 send_voicemeassageStringFile.circular_type : circular_type.school,
                 send_voicemeassageStringFile.academic_year_id: selectedAcadimicYearId ?? 0
                 
-            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
             ) in
@@ -812,7 +814,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                         SendNoticeStringFile.file_path : uploadedFiles,
                     ]
                     
-                    APIService.shared.makeApi(url: ServiceUrl.api_notice_board_send_notice, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result: Result<NoticeResponse,Error>) in
+                    APIService.shared.makeApi(url: ServiceUrl.api_notice_board_send_notice, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true) { [self] (result: Result<NoticeResponse,Error>) in
                         
                         switch result {
                             

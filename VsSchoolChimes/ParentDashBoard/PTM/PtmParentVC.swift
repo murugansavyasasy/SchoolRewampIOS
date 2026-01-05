@@ -171,7 +171,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_subject_list_with_class_teacher,
                                   parameters: [:],
                                   type: ApitTypeSringFile.GET,
-                                  token: childDetails?.access_token ?? "") { [weak self] (result: Result<SubjectListResponse,Error>) in
+                                  token: childDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<SubjectListResponse,Error>) in
             guard let self = self else {return}
             DispatchQueue.main.async {
                 switch result {
@@ -199,7 +199,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_teacherwise_slots_availability_for_student,
                                   parameters: param,
                                   type: ApitTypeSringFile.GET,
-                                  token: childDetails?.access_token ?? "") { [weak self] (result: Result<StudentSlotResponse,Error>) in
+                                  token: childDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<StudentSlotResponse,Error>) in
             guard let self = self else {return}
             DispatchQueue.main.async {
                 switch result {
@@ -252,7 +252,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_book_slots_for_student,
                                   parameters: param,
                                   type: ApitTypeSringFile.PUT,
-                                  token: childDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
+                                  token: childDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result:Result<CommonApiSuc,Error>) in
             guard let self = self else {return}
             DispatchQueue.main.async {
                 switch result {
@@ -281,7 +281,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         APIService.shared.makeApi(url:ServiceUrl.ptm_api_ptm_schedule_available_slots_count_for_student,
                                   parameters: [:],
                                   type: ApitTypeSringFile.GET,
-                                  token: childDetails?.access_token ?? "") { [weak self] (result:Result<AvailableSlotsResponse , Error>) in
+                                  token: childDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result:Result<AvailableSlotsResponse , Error>) in
             guard let self = self else {return}
             DispatchQueue.main.async {
                 switch result {

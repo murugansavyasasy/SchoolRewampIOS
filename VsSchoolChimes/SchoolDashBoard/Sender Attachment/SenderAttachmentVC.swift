@@ -298,7 +298,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                     subjectId: "",
                     message:"",
                     from: self,
-                    Common_request_params: params
+                    Common_request_params: params, isBaseUrl: true
                 ) { response in
                     DispatchQueue.main.async {
                         CircularProgressLoader.shared.hide()

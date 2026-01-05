@@ -151,7 +151,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                 mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
                 mobileNumber.secure_id: secureID,
                 mobileNumber.password : passwordTxtFld.text ?? ""
-            ], type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (result: Result<UserValidationResponseSuc,Error>) in
+            ], type: ApitTypeSringFile.POST, token: ServiceUrl.token, isBaseUrl: true) { [self] (result: Result<UserValidationResponseSuc,Error>) in
                 switch result {
                 case .success(let response):
                     if response.status == true {
@@ -249,7 +249,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     
     func ForgotPasswordAPIcall() {
         
-        APIService.shared.makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : mobile_number ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (result : Result<ForgotPasswordResponeSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : mobile_number ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token, isBaseUrl: true){[self] (result : Result<ForgotPasswordResponeSuc,Error>) in
             
             switch result {
             case.success(let successmessage):

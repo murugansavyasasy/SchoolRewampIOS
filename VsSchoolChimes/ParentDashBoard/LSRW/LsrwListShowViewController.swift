@@ -69,7 +69,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
             url: ServiceUrl.lms_api_lsrw_skill_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: childDetails?.access_token ?? ""
+            token: childDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<LSRWListResponse, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {

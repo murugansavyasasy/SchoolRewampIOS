@@ -189,7 +189,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             url: ServiceUrl.get_dashboard_details,
             parameters: [COMMON_PARAMETER.member_type: API_PARAMS_HOTCODE.staff, COMMON_PARAMETER.mobile_number: mobile_num ?? ""],
             type: ApitTypeSringFile.GET,
-            token:token
+            token:token, isBaseUrl: false
         ) { [weak self] (result: Result<MenuResponse, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -237,7 +237,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             url: ServiceUrl.dashboard_api_dashboard_menu_counts,
             parameters: [COMMON_PARAMETER.member_type:API_PARAMS_HOTCODE.staff],
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<MenuCountResponse, Error>) in
             guard let self = self else { return }
             
@@ -337,7 +337,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             url: ServiceUrl.comm_recipient_get_academic_year_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { (result: Result<get_academic_yearSuc, Error>) in
             switch result {
             case .success(let successMessage):
@@ -375,7 +375,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                 ]
             ],
             type: ApitTypeSringFile.POST,
-            token: ServiceUrl.token
+            token: ServiceUrl.token, isBaseUrl: true
         ) { (result: Result<DeviceTokenResponseSuc, Error>) in
             switch result {
             case .success(let successMessage):
@@ -395,7 +395,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             url: ServiceUrl.global_global_variables,
             parameters: ["key_names" : []],
             type: ApitTypeSringFile.POST,
-            token: ""
+            token: "", isBaseUrl: false
         ) { (result: Result<GlobalVariablesResponse, Error>) in
             switch result {
                 

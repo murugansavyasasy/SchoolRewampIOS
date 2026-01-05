@@ -92,7 +92,7 @@ class NewPlayQuizVC: UIViewController {
     
     func submitQuiz() {
         APIService.shared
-            .makeApi(url: ServiceUrl.quiz_submit, parameters: [QuizKeys.id : selectedQuizId ?? "","answers":answers], type: ApitTypeSringFile.PUT, token: UserDefaultFileManager.get_child_Details()?.access_token ?? "") { [weak self] (
+            .makeApi(url: ServiceUrl.quiz_submit, parameters: [QuizKeys.id : selectedQuizId ?? "","answers":answers], type: ApitTypeSringFile.PUT, token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true) { [weak self] (
                 result: Result<CommonApiSuc,
                 Error>
             ) in
@@ -123,7 +123,7 @@ class NewPlayQuizVC: UIViewController {
     }
     func Get_QuizQuestion() {
         APIService.shared
-            .makeApi(url: ServiceUrl.quiz_get_questions, parameters: [QuizKeys.id : selectedQuizId ?? "" ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_child_Details()?.access_token ?? "") { [weak self] (
+            .makeApi(url: ServiceUrl.quiz_get_questions, parameters: [QuizKeys.id : selectedQuizId ?? "" ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true) { [weak self] (
                 result: Result<QuizQuestionSuc,
                 Error>
             ) in

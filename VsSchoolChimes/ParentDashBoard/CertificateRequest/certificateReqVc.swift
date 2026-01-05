@@ -100,7 +100,7 @@ class certificateReqVc: UIViewController,UITableViewDelegate,UITableViewDataSour
                 "reason": reason
             ],
             type: ApitTypeSringFile.POST,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<ChangePasswordSuc, Error>) in
             DispatchQueue.main.async {
                 switch result {
@@ -125,7 +125,7 @@ class certificateReqVc: UIViewController,UITableViewDelegate,UITableViewDataSour
             url: ServiceUrl.comm_api_certificate_request_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<CertificateResponse, Error>) in
             DispatchQueue.main.async {
                 switch result {

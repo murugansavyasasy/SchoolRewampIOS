@@ -20,8 +20,8 @@ class CommonPagenationVc: UIViewController {
     @IBOutlet weak var scheduleMessageLbl: UILabel!
     @IBOutlet weak var TextMessageLbl: UILabel!
     
-    lazy var voiceMessageVC: VoiceMessageVc = {
-        let vc = VoiceMessageVc()
+    lazy var voiceMessageVC: VoiceMessagesVC = {
+        let vc = VoiceMessagesVC()
         return vc
     }()
 

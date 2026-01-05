@@ -412,7 +412,7 @@ class MarkAttendenceVC: UIViewController {
             MarkAttendenceStringFile.attendance_type: user_inputs.attendance_type,
             MarkAttendenceStringFile.session_type: user_inputs.session_type,
             MarkAttendenceStringFile.attendance_date: user_inputs.attendance_date
-        ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (result : Result<CommonApiSuc,Error>) in
+        ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true ){ [self] (result : Result<CommonApiSuc,Error>) in
             switch result {
             case.success(let succesmessage) :
                 if succesmessage.status == true {
@@ -454,7 +454,7 @@ class MarkAttendenceVC: UIViewController {
     }
     
     func Get_Standards(yearid: Int) {
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id : yearid], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id : yearid], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) { [self] (result:Result <GetStandardsSuc,Error>) in
             switch result {
             case .success(let successMessage):
                 DispatchQueue.main.async { [self] in
@@ -497,7 +497,7 @@ class MarkAttendenceVC: UIViewController {
     }
     
     func get_Academic_year() {
-        APIService.shared.makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list, parameters: [:], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") {[self] (result: Result<get_academic_yearSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list, parameters: [:], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) {[self] (result: Result<get_academic_yearSuc,Error>) in
             switch result{
             case .success(let SuccessMessage):
                 if SuccessMessage.status == true {
@@ -533,7 +533,7 @@ class MarkAttendenceVC: UIViewController {
             AttendanceReportStringFile.standard_id : StandardId,
             AttendanceReportStringFile.section_id : sectionId,
         ]
-        APIService.shared.makeApi(url: ServiceUrl.attendance_student_attendance_report, parameters: Param, type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") { [self] (result:Result<AttendanceReportResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.attendance_student_attendance_report, parameters: Param, type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) { [self] (result:Result<AttendanceReportResponse,Error>) in
             switch result {
             case .success(let successMessage):
                 if successMessage.status == true {

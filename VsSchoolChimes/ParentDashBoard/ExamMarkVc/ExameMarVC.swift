@@ -43,7 +43,7 @@ class ExameMarVC: UIViewController {
             url: ServiceUrl.exam_api_exam_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<ExamListResponse, Error>) in
             
             guard let self = self else {return}
@@ -84,7 +84,7 @@ class ExameMarVC: UIViewController {
             url: ServiceUrl.dashboard_api_pauket_add_points,
             parameters: params,
             type: ApitTypeSringFile.POST,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
 
@@ -108,7 +108,7 @@ class ExameMarVC: UIViewController {
             url: ServiceUrl.exam_api_get_progress_card,
             parameters: ["exam_id": exam_id],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<CommonApiSuc, Error>) in
             
             guard let self = self else {return}

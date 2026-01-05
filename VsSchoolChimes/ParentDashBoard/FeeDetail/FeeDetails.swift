@@ -98,7 +98,7 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
     
     func Get_Fee_Invoice_Api(){
         
-        APIService.shared.makeApi(url: ServiceUrl.fee_api_fee_details_student_invoice, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "") {[weak self] (result: Result<InvoiceDetailsResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.fee_api_fee_details_student_invoice, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "", isBaseUrl: false) {[weak self] (result: Result<InvoiceDetailsResponse,Error>) in
             guard let self = self else {return}
             DispatchQueue.main.async {
                 switch result {
@@ -119,7 +119,7 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
     }
     
     func Get_Invoice_Receipt_Api(invoiceId: String){
-        APIService.shared.makeApi(url: ServiceUrl.fee_api_fee_details_invoice_details, parameters: ["invoice_id": invoiceId], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "") {[weak self] (result: Result<CommonApiSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.fee_api_fee_details_invoice_details, parameters: ["invoice_id": invoiceId], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "", isBaseUrl: false) {[weak self] (result: Result<CommonApiSuc,Error>) in
             guard let self = self else {return}
             DispatchQueue.main.async {
                 switch result {

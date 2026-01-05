@@ -9,7 +9,19 @@ import UIKit
 //import DropDown
 import AVFoundation
 
-class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPalyingDelegate{
+class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPalyingDelegate, AudioPlaybackDelegate1{
+    func audioCell(_ cell: CommunicationTVC, willStartPlayingAtIndex index: Int) {
+        if let audioCell = cell as? CommunicationTVC,
+           audioCell.cellIndex != index {
+            audioCell.stopPlayback()
+        }
+    }
+    
+    func audioCell(_ cell: CommunicationTVC, didStopPlayingAtIndex index: Int) {
+        ""
+    }
+    
+   
     
     @IBOutlet weak var ReadUnreadStack: UIStackView!
     @IBOutlet weak var UnreadBtn: UIButton!
@@ -114,8 +126,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
         let nib = UINib(nibName: CellConfingName.TextHistoryTVCell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier: CellConfingName.TextHistoryTVCell)
         
-        let nib2 = UINib(nibName: CellConfingName.HistoryTC, bundle: nil)
-        tv.register(nib2, forCellReuseIdentifier: CellConfingName.HistoryTC)
+        let nib2 = UINib(nibName: "CommunicationTVC", bundle: nil)
+        tv.register(nib2, forCellReuseIdentifier: "CommunicationTVC")
         
         let footerNib = UINib(nibName:CellConfingName.SeeMoreFooterView , bundle: nil)
         tv.register(footerNib, forHeaderFooterViewReuseIdentifier: CellConfingName.SeeMoreFooterView)
@@ -273,7 +285,10 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
     
     
     func getCommunicationList() {
-        APIService.shared.makeApi(url: ServiceUrl.comm_communication_list, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "") { [weak self] (result : Result<CommunicationReciverResponse,Error>) in
+        if #available(iOS 15.0, *) {
+            self.showActivityLoader()
+        }
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_list, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result : Result<CommunicationReciverResponse,Error>) in
             
             guard let self = self else {return}
             switch result {
@@ -303,12 +318,18 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
                         self.searchBtn.isHidden = true
                         self.tv.isScrollEnabled = false
                         self.tv.reloadData()
+                        if #available(iOS 15.0, *) {
+                            self.hideActivityLoader()
+                        }
                     }
                 }
                 
             case .failure(let error):
                 DispatchQueue.main.async {
                     print(error.localizedDescription)
+                    if #available(iOS 15.0, *) {
+                        self.hideActivityLoader()
+                    }
                 }
             }
         }
@@ -341,7 +362,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
             url: ServiceUrl.comm_communication_list_archive,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: studentDetails?.access_token ?? ""
+            token: studentDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<CommunicationReciverResponse, Error>) in
             
             guard let self = self else { return }
@@ -403,7 +424,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
     
     func ReadStatusUpdate(type: String,detail_id: String) {
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "", isBaseUrl: true) { [self] (result : Result<ReadStatusResponse,Error>) in
             
             switch result {
             case .success(let SuccessMessage):
@@ -424,7 +445,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
     }
     
     func ReadStatusUpdateArchive(type: String,detail_id: String){
-        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update_archive, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update_archive, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "", isBaseUrl: true) { [self] (result : Result<ReadStatusResponse,Error>) in
             
             switch result {
             case .success(let SuccessMessage):
@@ -511,57 +532,40 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             return cell
             
         case "VOICE":
-            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.HistoryTC, for: indexPath) as! HistoryTC
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommunicationTVC", for: indexPath) as! CommunicationTVC
             let isPlaying = (playIndex == indexPath.row)
             let voiceData = message
-            cell.emergencyMessageBtn.isHidden = !(voiceData.is_emergency)
-            cell.sendbtn.isHidden = true
-            cell.sentBtnHeight.constant = 0
-            cell.sentBtnWidth.constant = 0
-            cell.updatePlayState(isPlaying: isPlaying, url: voiceData.content)
-            cell.playBtn.tag = indexPath.row
-            cell.sendbtn.tag = indexPath.row
-            cell.delegate = self
-            cell.FinishPlayingdelegate = self
-            cell.NewImageView.isHidden = true
-            cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
+            cell.emergencyBtnName.isHidden = !(voiceData.is_emergency)
             let formattedDateString = dateFormatter.convertDate(message.date) ?? ""
-            cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: message.time)
-            cell.contentlbl.text = voiceData.title
+            cell.dateLbl.setStyledDateTime(dateString: formattedDateString, timeString: message.time)
+            cell.waveView.durationLabel.isHidden = true
+            
+            cell.titleLbl.text = voiceData.title
             let duration = voiceData.duration ?? 0
             let formattedDuration = formatDuration(duration)
-            let elapsedSeconds = voiceData.playbackSeconds ?? 0
-            let formattedElapsed = formatDuration(Int(elapsedSeconds))
-            
-            cell.totaltime.text = "\(formattedElapsed) / \(formattedDuration)"
-            if let pausedSeconds = voiceData.playbackSeconds, pausedSeconds > 0 {
-                let seekTime = CMTime(seconds: pausedSeconds, preferredTimescale: 600)
-                cell.player?.seek(to: seekTime)
-                let duration = voiceData.duration ?? 1
-                let progress = pausedSeconds / Double(duration)
-                cell.playerView.progress = CGFloat(progress)
-                cell.playerView.setNeedsDisplay()
-            } else {
-                cell.playerView.progress = 0.0
-                cell.playerView.updateWithLevel(0.0)
-            }
-            
+            cell.tottalDurationLbl.text = formattedDuration
+//              cell.runningDurationLbl.isHidden = true
             if !isPlaying {
             }else{
-                cell.NewImageView.isHidden = true
+                cell.newImageView.isHidden = true
             }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                cell.configureShimmer()
-            }
-            
-            cell.NewImageView.isHidden = !(message.is_unread)
-            
+         cell.newImageView.isHidden = !(message.is_unread)
+            configureAudioCell(cell, at: indexPath)
             return cell
             
         default:
             return UITableViewCell()
         }
+    }
+    
+    private func configureAudioCell(_ cell: CommunicationTVC, at indexPath: IndexPath) {
+        let file = displayedMessages[indexPath.item]
+           let url = URL(string: file.content)
+            cell.audioURL = url
+        cell.audioDelegate = self
+        cell.cellIndex = indexPath.item
+        cell.waveView.setParentCell(cell)
+       
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

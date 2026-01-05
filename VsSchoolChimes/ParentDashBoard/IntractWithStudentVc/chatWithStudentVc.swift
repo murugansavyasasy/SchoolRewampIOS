@@ -83,7 +83,7 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
     //MARK: Api Call functions
     func getChat(){
         APIService.shared
-            .makeApi(url: ServiceUrl.interaction_staff_get_questions , parameters: [ChatAPIKeys.section_id : staffMembersData.section_id ?? "",ChatAPIKeys.subjectId:staffMembersData.subject_id ?? "",ChatAPIKeys.offset:0,ChatAPIKeys.isClassTeacher:staffMembersData.is_class_teacher ?? false], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
+            .makeApi(url: ServiceUrl.interaction_staff_get_questions , parameters: [ChatAPIKeys.section_id : staffMembersData.section_id ?? "",ChatAPIKeys.subjectId:staffMembersData.subject_id ?? "",ChatAPIKeys.offset:0,ChatAPIKeys.isClassTeacher:staffMembersData.is_class_teacher ?? false], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false){ [self] (
                 result:Result <StaffChatResponse,Error>
             ) in
                 switch result {
@@ -129,7 +129,7 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
                 url: ServiceUrl.comm_api_interaction_staff_ans_question,
                 parameters: parameters,
                 type: ApitTypeSringFile.POST,
-                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true
             ) { [weak self] (result: Result<StaffAnswerResponse, Error>) in
                 guard let self = self else { return }
                 switch result {
@@ -160,7 +160,7 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
             ChatAPIKeys.is_block : !(selectedMessage?.is_blocked ?? false),
             ChatAPIKeys.reason : reasonTextfield.text ?? ""
         ]
-        APIService.shared.makeApi(url: ServiceUrl.comm_api_interaction_block_student, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self]
+        APIService.shared.makeApi(url: ServiceUrl.comm_api_interaction_block_student, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "", isBaseUrl: true) { [weak self]
             (result: Result<CommonApiSuc,Error>) in
             guard let self = self else {return}
             DispatchQueue.main.async {

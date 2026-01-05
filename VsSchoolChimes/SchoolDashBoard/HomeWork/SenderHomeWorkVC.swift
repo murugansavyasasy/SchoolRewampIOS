@@ -254,7 +254,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
             url: ServiceUrl.comm_recipient_get_academic_year_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<get_academic_yearSuc, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -281,7 +281,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
             url: ServiceUrl.recipient_get_standards,
             parameters: [homeWorkViewStringFile.academic_year_id: academicId],
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<GetStandardsSuc, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -322,7 +322,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
             url: ServiceUrl.comm_homework_get_homework_report,
             parameters: [homeWorkViewStringFile.section_id: sectionId ?? "", homeWorkViewStringFile.date: dateFormatted, homeWorkViewStringFile.academic_year_id: acodemicId ?? 0],
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<HomeworkResponse, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -450,7 +450,7 @@ extension SenderHomeWorkVC:Datepicker, UISearchBarDelegate {
                     url: ServiceUrl.comm_api_homework_delete,
                     parameters: [homeWorkViewStringFile.id: homeWorkID],
                     type: ApitTypeSringFile.PUT,
-                    token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                    token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true
                 ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
                     DispatchQueue.main.async {
                         guard let self = self else { return }

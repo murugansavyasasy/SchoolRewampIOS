@@ -64,7 +64,7 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
             url: ServiceUrl.quiz_report,
             parameters: [QuizKeys.type: "2"],
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<senderQuizListSuc, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }
@@ -172,7 +172,7 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
     func delete_Quiz_Api(id :String){
         
         let param : [String:Any] = ["id":id]
-        APIService.shared.makeApi(url: ServiceUrl.lms_api_quiz_delete, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<CommonApiSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_quiz_delete, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result: Result<CommonApiSuc,Error>) in
             
             guard let self = self else {return}
             
