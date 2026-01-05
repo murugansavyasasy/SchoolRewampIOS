@@ -66,7 +66,7 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
     }
     func getMySubmission(){
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_api_my_submissions, parameters: ["id":id ?? ""], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_child_Details()?.access_token ?? "") { [self] (result : Result<SubmissionResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.comm_api_my_submissions, parameters: ["id":id ?? ""], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: false) { [self] (result : Result<SubmissionResponse,Error>) in
             
             switch result {
             case .success(let SuccessMessage):
@@ -104,7 +104,7 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
                     url: ServiceUrl.comm_api_assignment_delete_submission,
                     parameters: ["id": targetID],
                     type: ApitTypeSringFile.PUT,
-                    token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+                    token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true
                 ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
                     DispatchQueue.main.async {
                         guard let self = self else { return }

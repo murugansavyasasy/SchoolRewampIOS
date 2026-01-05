@@ -10,6 +10,19 @@ import AVFAudio
 import AVFoundation
 import MediaPlayer
 
+struct NotificationData {
+    var ei1 = ""
+    var ei2 = ""
+    var ei3 = ""
+    var ei4 = "iPhone"
+    var ei5 = ""
+    var receiver_id = ""
+    var circular_id = ""
+    var retrycount = ""
+    var diallist_id = ""
+    var url = ""
+}
+
 class NotificationCallVC: UIViewController {
     
     // MARK: - IBOutlets
@@ -37,15 +50,18 @@ class NotificationCallVC: UIViewController {
     private var audioTimer: Timer?
     private var ringtoneTimeoutTimer: Timer?
     private var vibrationTimer: Timer?
-    
+    var startTime : String = ""
+    var call_status: String = "NO"
     var voiceUrl: String = ""
     var ringTone: String = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/communication/7043/2025-10-23/Communication_20251023_161939.wav"
     var welcomeFileUrl : String = ""
+    var noti = NotificationData()
     private var audioPlayer: AVAudioPlayer?
     private var ringtonePlayer: AVAudioPlayer?
     private var volumeObserver: NSKeyValueObservation?
     private var totalQueueDuration: Double = 0
-    
+    var userInfo = [AnyHashable : Any]()
+    var duration = "0"
     // Cache for downloaded audio to reduce I/O
     private static var audioCache: NSCache<NSString, NSData> = {
         let cache = NSCache<NSString, NSData>()
@@ -73,7 +89,7 @@ class NotificationCallVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        stopLocalRingtone()
         setupModernUI()
         setupCallerInfo()
         setupSlideToAnswerAnimation()
@@ -88,9 +104,9 @@ class NotificationCallVC: UIViewController {
         
         configureAudioSessionForRingtone()
         
-        if let url = URL(string: ringTone) {
-            playRingtone(from: url)
-        }
+//        if let url = URL(string: ringTone) {
+            playLocalRingtone(named: "schoolchimes_tone", ext: "wav")
+//        }
         
         setupVolumeObserver()
         setupPowerButtonObserver()
@@ -102,6 +118,34 @@ class NotificationCallVC: UIViewController {
             object: nil
         )
         
+        if let ei1 = userInfo["ei1"] as? String {
+            noti.ei1 = ei1
+        }
+        if let ei2 = userInfo["ei2"] as? String {
+            noti.ei2 = ei2
+        }
+        if let ei3 = userInfo["ei3"] as? String {
+            noti.ei3 = ei3
+        }
+        if let ei4 = userInfo["ei4"] as? String {
+            noti.ei4 = ei4
+        }
+        if let ei5 = userInfo["ei5"] as? String {
+            noti.ei5 = ei5
+            noti.diallist_id = ei5
+        }
+        if let retrycount = userInfo["retry_count"] as? String {
+            noti.retrycount = retrycount
+        }
+        if let circularId = userInfo["circular_id"] as? String {
+            noti.circular_id = circularId
+        }
+        if let receiverId = userInfo["receiver_id"] as? String {
+            noti.receiver_id = receiverId
+        }
+        if let receiverId = userInfo["url"] as? String {
+            noti.url = receiverId
+        }
     }
     
     @objc private func queueDidFinish() {
@@ -221,38 +265,61 @@ class NotificationCallVC: UIViewController {
             return false
         }
     }
-    private func playRingtone(from url: URL) {
-        let cacheKey = url.absoluteString as NSString
-        // Check cache first
-        if let cachedData = Self.audioCache.object(forKey: cacheKey) {
-            playRingtoneData(cachedData as Data)
+//    private func playRingtone(from url: URL) {
+//        let cacheKey = url.absoluteString as NSString
+//        // Check cache first
+//        if let cachedData = Self.audioCache.object(forKey: cacheKey) {
+//            playRingtoneData(cachedData as Data)
+//            return
+//        }
+//        // Download if not cached
+//        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+//            guard let self = self else { return }
+//            if let error = error {
+//                DispatchQueue.main.async {
+//                    self.playSystemDefaultTone()
+//                }
+//                return
+//            }
+//            guard let data = data else {
+//                DispatchQueue.main.async {
+//                    self.playSystemDefaultTone()
+//                }
+//                return
+//            }
+//            // Cache the downloaded data
+//            Self.audioCache.setObject(data as NSData, forKey: cacheKey, cost: data.count)
+//            
+//            DispatchQueue.main.async {
+//                self.playRingtoneData(data)
+//            }
+//        }
+//        task.resume()
+//    }
+//
+    private func playLocalRingtone(named name: String, ext: String) {
+        guard let path = Bundle.main.url(forResource: name, withExtension: ext) else {
+            print("❌ schoolchimes_tone.wav not found")
+            playSystemDefaultTone()
             return
         }
-        // Download if not cached
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            guard let self = self else { return }
-            if let error = error {
-                DispatchQueue.main.async {
-                    self.playSystemDefaultTone()
-                }
-                return
-            }
-            guard let data = data else {
-                DispatchQueue.main.async {
-                    self.playSystemDefaultTone()
-                }
-                return
-            }
-            // Cache the downloaded data
-            Self.audioCache.setObject(data as NSData, forKey: cacheKey, cost: data.count)
-            
-            DispatchQueue.main.async {
-                self.playRingtoneData(data)
-            }
+
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: path)
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.numberOfLoops = -1   // infinite loop
+            audioPlayer?.play()
+        } catch {
+            print("❌ Local audio play failed:", error)
+            playSystemDefaultTone()
         }
-        task.resume()
     }
-    
+
+    private func stopLocalRingtone() {
+        audioPlayer?.stop()
+        audioPlayer = nil
+    }
+
     private func playRingtoneData(_ data: Data) {
         guard !isPhoneInSilentMode() else {
             return
@@ -616,14 +683,14 @@ class NotificationCallVC: UIViewController {
     // MARK: - Actions
     private func answerCallAction() {
         guard callState == .ringing else { return }
-        
+        stopLocalRingtone()
         stopAllAnimations()
         stopVibration()
         ringtonePlayer?.stop()
         ringtonePlayer = nil
         ringtoneTimeoutTimer?.invalidate()
         ringtoneTimeoutTimer = nil
-        
+        call_status = "OC"
         let generator = UIImpactFeedbackGenerator(style: .medium)
         generator.impactOccurred()
         
@@ -636,6 +703,7 @@ class NotificationCallVC: UIViewController {
             self.declineCallImg.alpha = 0
             self.slideLabel.alpha = 0
         }) { _ in
+            self.startTime = self.getCurrentDateTimeString()
             self.navigateToCallScreen()
         }
     }
@@ -644,6 +712,7 @@ class NotificationCallVC: UIViewController {
         guard callState == .ringing else { return }
         
         stopAllAnimations()
+        stopLocalRingtone()
         stopVibration()
         ringtonePlayer?.stop()
         ringtonePlayer = nil
@@ -660,11 +729,24 @@ class NotificationCallVC: UIViewController {
             self.declineCallImg.alpha = 1.0
             self.answerCallImg.alpha = 0
             self.slideLabel.alpha = 0
-        }) { _ in
+        }) { [self] _ in
+            call_status = "NO"
             self.dismissCallScreen()
         }
     }
     
+    @objc private func cutCallAction() {
+        guard callState == .active else { return }
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.warning)
+        callState = .ended
+        UIView.animate(withDuration: 0.3) {
+            self.cutCallBtn.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        } completion: { _ in
+            self.call_status = "NO"
+            self.dismissCallScreen()
+        }
+    }
     // MARK: - Call Handling
     private func navigateToCallScreen() {
         // Configure audio session for call (earpiece routing)
@@ -694,17 +776,7 @@ class NotificationCallVC: UIViewController {
         }
     }
     
-    @objc private func cutCallAction() {
-        guard callState == .active else { return }
-        let generator = UINotificationFeedbackGenerator()
-        generator.notificationOccurred(.warning)
-        callState = .ended
-        UIView.animate(withDuration: 0.3) {
-            self.cutCallBtn.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-        } completion: { _ in
-            self.dismissCallScreen()
-        }
-    }
+    
     
     @objc private func toggleSpeaker() {
         speakerBtn.isSelected.toggle()
@@ -737,8 +809,10 @@ class NotificationCallVC: UIViewController {
     }
     
     private func dismissCallScreen() {
+        Update_NotificationStatus()
+        stopLocalRingtone()
         cleanup()
-        
+      
         UIView.animate(withDuration: 0.4, animations: {
             self.view.alpha = 0
             self.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
@@ -753,115 +827,140 @@ class NotificationCallVC: UIViewController {
     
     // MARK: - Audio Player
     private func setupAudioPlayer() {
-        var urlsArray: [String] = []
-        if !voiceUrl.isEmpty {
-            urlsArray.append(voiceUrl)
-        }
-        if !welcomeFileUrl.isEmpty {
-            urlsArray.append(welcomeFileUrl)
-        }
-        let finalVoiceUrl = urlsArray.joined(separator: ",")
-        // ✅ Split comma-separated voice URLs
-        let urls = finalVoiceUrl
-            .split(separator: ",")
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .compactMap { URL(string: $0) }
-        
-        guard !urls.isEmpty else {
-            print("⚠️ No valid voice URLs")
-            handleAudioPlaybackError()
-            return
-        }
+
+        stopLocalRingtone()   // stop ringing when answered
+
         audioQueuePlayer = AVQueuePlayer()
         queueItems.removeAll()
+        totalQueueDuration = 0
+
+        var orderedUrls: [URL] = []
+
+        if let w = URL(string: welcomeFileUrl), !welcomeFileUrl.isEmpty {
+            orderedUrls.append(w)
+        }
+
+        if let v = URL(string: voiceUrl), !voiceUrl.isEmpty {
+            orderedUrls.append(v)
+        }
+
+        guard !orderedUrls.isEmpty else {
+            dismissCallScreen()
+            return
+        }
+
         let dispatchGroup = DispatchGroup()
-        for url in urls {
+
+        for url in orderedUrls {
             dispatchGroup.enter()
+
             let cacheKey = url.absoluteString as NSString
-            // ✅ Use cache if available
+
             if let cachedData = Self.audioCache.object(forKey: cacheKey) {
                 let item = createQueueItem(from: cachedData as Data)
-                queueItems.append(item)
+                self.queueItems.append(item)
                 dispatchGroup.leave()
             } else {
                 URLSession.shared.dataTask(with: url) { data, _, error in
                     defer { dispatchGroup.leave() }
-                    guard let data = data, error == nil else {
-                        print("⚠️ Failed to download voice file")
-                        return
-                    }
-                    Self.audioCache.setObject(
-                        data as NSData,
-                        forKey: cacheKey,
-                        cost: data.count
-                    )
+
+                    guard let data = data, error == nil else { return }
+
+                    Self.audioCache.setObject(data as NSData, forKey: cacheKey, cost: data.count)
+
                     let item = self.createQueueItem(from: data)
                     self.queueItems.append(item)
+
                 }.resume()
             }
         }
-        
-        // ✅ Start playing once all files ready
+
         dispatchGroup.notify(queue: .main) {
             guard let player = self.audioQueuePlayer else { return }
-            
+
             self.totalQueueDuration = 0
+
+            for item in self.queueItems {
+                player.insert(item, after: nil)
+
+                let sec = CMTimeGetSeconds(item.asset.duration)
+                if sec.isFinite { self.totalQueueDuration += sec }
+            }
+
+            self.startQueueTimer()
+            self.observeQueueFinish()
+            player.play()
+        }
+    }
+    private func observeQueueFinish() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(queueFinished),
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: nil
+        )
+    }
+
+    @objc private func queueFinished(notification: Notification) {
+
+        guard let player = audioQueuePlayer,
+              let item = notification.object as? AVPlayerItem else { return }
+
+        if player.items().last == item {
+            audioTimer?.invalidate()
+            duration = durationStringToSeconds(durationLbl.text ?? "")
             
-            self.queueItems.forEach {
-                player.insert($0, after: nil)
-                
-                let seconds = CMTimeGetSeconds($0.asset.duration)
-                if seconds.isFinite {
-                    self.totalQueueDuration += seconds
+            DispatchQueue.main.async {
+                self.durationLbl.text = "Call ended"
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.dismissCallScreen()
                 }
             }
-            
-            self.startQueueTimer()
-            player.play()
-            
-            print("▶️ Total voice duration:", self.totalQueueDuration)
         }
-        
     }
-    
+
     
     private func createQueueItem(from data: Data) -> AVPlayerItem {
         let tempURL = FileManager.default.temporaryDirectory
             .appendingPathComponent(UUID().uuidString)
             .appendingPathExtension("m4a")
+
         try? data.write(to: tempURL)
+
         let asset = AVURLAsset(url: tempURL)
-        // ✅ Preload duration
-        asset.loadValuesAsynchronously(forKeys: ["duration"]) { }
+        asset.loadValuesAsynchronously(forKeys: ["duration"])
+
         let item = AVPlayerItem(asset: asset)
-        // ✅ Helps buffering & smoother queue playback
         item.preferredForwardBufferDuration = 5
         return item
     }
+
     
     
     private func startQueueTimer() {
         audioTimer?.invalidate()
-        audioTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+
+        audioTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             guard let self = self,
                   let player = self.audioQueuePlayer else { return }
-            
-            let current = Int(CMTimeGetSeconds(player.currentTime()))
+
+            let seconds = CMTimeGetSeconds(player.currentTime())
+            guard seconds.isFinite, !seconds.isNaN else { return }
+
+            guard self.totalQueueDuration > 0 else { return }
+
+            let cur = Int(seconds)
             let total = Int(self.totalQueueDuration)
-            
-            guard total > 0 else { return }
-            
-            let cMin = current / 60
-            let cSec = current % 60
-            let tMin = total / 60
-            let tSec = total % 60
-            
+
             self.durationLbl.text = String(
                 format: "Connected\n\n%02d:%02d / %02d:%02d",
-                cMin, cSec, tMin, tSec
+                cur/60, cur%60, total/60, total%60
             )
         }
     }
+
+
     
     
     
@@ -987,4 +1086,70 @@ extension NotificationCallVC: AVAudioPlayerDelegate {
             self.handleAudioPlaybackError()
         }
     }
+    
+    func durationStringToSeconds(_ time: String) -> String {
+        let parts = time.split(separator: ":").map { Int($0) ?? 0 }
+
+        var seconds = 0
+
+        if parts.count == 3 {           // hh:mm:ss
+            seconds = parts[0] * 3600 + parts[1] * 60 + parts[2]
+        } else if parts.count == 2 {    // mm:ss
+            seconds = parts[0] * 60 + parts[1]
+        } else if parts.count == 1 {    // ss
+            seconds = parts[0]
+        }
+
+        return "\(seconds)"
+    }
+
+    func Update_NotificationStatus(){
+        
+        let param : [String:Any] = [
+            "ei1": noti.ei1,
+            "ei2":  noti.ei2,
+            "ei3":  noti.ei3,
+            "ei4" : noti.ei4,
+            "ei5" : noti.ei5,
+            "receiver_id" : noti.receiver_id,
+            "circular_id" : noti.circular_id,
+            "duration" : Int(duration) ?? 0,
+            "start_time" : startTime,
+            "end_time" : getCurrentDateTimeString(),
+            "retry_count" : noti.retrycount,
+            "phone" : UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "",
+            "diallist_id" : noti.ei5,
+            "call_status" : call_status,
+            "url" : noti.url
+        ]
+        
+        APIService.shared.makeApi(url: ServiceUrl.update_notification_call_log, parameters: param, type: ApitTypeSringFile.POST, token: "", isBaseUrl: true) { [weak self] (result: Result<CommonApiSuc,Error>) in
+            
+            guard let self = self else {return}
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let success):
+                    if success.status == true{
+                       
+                    }else{
+                        
+                    }
+                case .failure(let failure):
+                    
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+                }
+            }
+        }
+    }
+
+    func getCurrentDateTimeString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+
+        return formatter.string(from: Date())
+    }
 }
+
+
+

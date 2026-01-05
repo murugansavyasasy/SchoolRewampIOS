@@ -148,7 +148,7 @@ class NewPtmVC: UIViewController, Datepicker {
             url: ServiceUrl.ptm_api_ptm_schedule_slot_details_for_staff,
             parameters: param,
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<PTMSlotResponse, Error>) in
             
             DispatchQueue.main.async {
@@ -219,7 +219,7 @@ class NewPtmVC: UIViewController, Datepicker {
             showActivityLoader()
         }
         
-        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_datewise_booked_slots, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<BookedSlotsResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_datewise_booked_slots, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<BookedSlotsResponse,Error>) in
             
             DispatchQueue.main.async { [self] in
                 guard let self = self else {return}
@@ -833,7 +833,7 @@ extension NewPtmVC: BookingCellDelegate, SelectedId {
         
         let param : [String:Any] = ["slot_id":SlotId]
         
-        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_and_reopen_slot, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_and_reopen_slot, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result:Result<CommonApiSuc,Error>) in
             
             guard let self = self else { return }
             
@@ -873,7 +873,7 @@ extension NewPtmVC: BookingCellDelegate, SelectedId {
         let slot_id = [SlotId]
         let param : [String:Any] = ["slot_ids":slot_id]
         
-        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_and_close_slot, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_cancel_and_close_slot, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result:Result<CommonApiSuc,Error>) in
             
             guard let self = self else { return }
             

@@ -148,7 +148,7 @@ class CountryListVC: UIViewController {
         
         UserDefaultFileManager.saveCountryDetails(data: country)
         ServiceUrl.baseurl = country.base_url ?? ""
-        ServiceUrl.report_url = country.reporting_url ?? ""
+        ServiceUrl.Reporting_baseurl = country.reporting_url ?? ""
         
         if #available(iOS 14.0, *) {
             let vc = MobileNumberVc()
@@ -164,7 +164,7 @@ class CountryListVC: UIViewController {
         APIService.shared.makeApi(url: ServiceUrl.country_list,
                                   parameters: [:],
                                   type: ApitTypeSringFile.GET,
-                                  token: "") { [weak self] (result: Result<CountryListSuccess, Error>) in
+                                  token: "", isBaseUrl: true) { [weak self] (result: Result<CountryListSuccess, Error>) in
             guard let self = self else { return }
             
             switch result {

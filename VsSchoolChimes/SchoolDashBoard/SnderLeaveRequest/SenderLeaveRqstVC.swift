@@ -115,7 +115,7 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
     
     //MARK: Get Leave Requests API call
     func GetLeaveRequestAPI() {
-        APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_list, parameters: [LeaveRequestStringFile.member_type: member_type], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") {[self] (result: Result<LeaveInfoResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_list, parameters: [LeaveRequestStringFile.member_type: member_type], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) {[self] (result: Result<LeaveInfoResponse,Error>) in
             switch result{
             case .success(let Success):
                 DispatchQueue.main.async {[self] in
@@ -180,7 +180,7 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
             url: ServiceUrl.comm_api_leave_req_update_status,
             parameters: param,
             type: ApitTypeSringFile.PUT,
-            token: StaffDetails?.access_token ?? ""
+            token: StaffDetails?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<CommonApiSuc, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {

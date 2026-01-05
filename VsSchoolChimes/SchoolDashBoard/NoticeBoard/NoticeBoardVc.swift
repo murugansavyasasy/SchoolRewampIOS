@@ -256,7 +256,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
             baseUrl = ServiceUrl.api_notice_board_get_notice
         }
         showLoadingState()
-        APIService.shared.makeApi(url: baseUrl, parameters: [:], type: ApitTypeSringFile.GET, token: token ?? "") { [weak self] (result: Result<NoticeResponse, Error>) in
+        APIService.shared.makeApi(url: baseUrl, parameters: [:], type: ApitTypeSringFile.GET, token: token ?? "", isBaseUrl: false) { [weak self] (result: Result<NoticeResponse, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 self.hideLoadingState()
@@ -309,7 +309,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
                     url: ServiceUrl.admin_api_notice_board_delete,
                     parameters: ["id": noticeId],
                     type: ApitTypeSringFile.PUT,
-                    token: self.token ?? ""
+                    token: self.token ?? "", isBaseUrl: true
                 ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
                     DispatchQueue.main.async {
                         guard let self = self else { return }

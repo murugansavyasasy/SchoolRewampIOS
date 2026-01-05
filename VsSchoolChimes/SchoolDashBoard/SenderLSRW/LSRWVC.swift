@@ -101,7 +101,7 @@ class LSRWVC: UIViewController, FilterDelegate, SelectedId {
                     url: ServiceUrl.lms_api_lsrw_delete,
                     parameters: ["id": targetID],
                     type: ApitTypeSringFile.PUT,
-                    token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                    token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true
                 ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
 
                     DispatchQueue.main.async {
@@ -169,7 +169,7 @@ class LSRWVC: UIViewController, FilterDelegate, SelectedId {
             url: ServiceUrl.lms_api_lsrw_skills_report,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<LSRWReportResponse, Error>) in
             guard let self = self else { return }
 

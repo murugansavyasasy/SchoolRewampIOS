@@ -183,7 +183,7 @@ class CreatePasswordVc: UIViewController{
             .makeApi(url: ServiceUrl.cred_create_new_password, parameters: [
                 
                 COMMON_PARAMETER.mobile_number: mobile_number ?? "" ,COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""
-            ], type: ApitTypeSringFile.POST, token: ""){ [self] (
+            ], type: ApitTypeSringFile.POST, token: "", isBaseUrl: true){ [self] (
                 result: Result<CreateNewPasswordSuc,
                 Error>
             ) in
@@ -271,7 +271,7 @@ class CreatePasswordVc: UIViewController{
     
     func ResetPasswordAPIcall(){
         
-        APIService.shared.makeApi(url: ServiceUrl.cred_reset_password, parameters: [COMMON_PARAMETER.mobile_number: mobile_number ??  "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (result: Result<ResetPasswordSuc, Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.cred_reset_password, parameters: [COMMON_PARAMETER.mobile_number: mobile_number ??  "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token, isBaseUrl: true){ [self] (result: Result<ResetPasswordSuc, Error>) in
             switch result {
             case.success(let successMessage):
                 if successMessage.status == true {
@@ -349,7 +349,7 @@ class CreatePasswordVc: UIViewController{
     
     func changePassword(){
         APIService.shared
-            .makeApi(url: ServiceUrl.cred_change_password, parameters: [COMMON_PARAMETER.mobile_number: mobileNo?.mobile_number ?? "" ,COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? "",COMMON_PARAMETER.old_password : createPassTextFLd.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
+            .makeApi(url: ServiceUrl.cred_change_password, parameters: [COMMON_PARAMETER.mobile_number: mobileNo?.mobile_number ?? "" ,COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? "",COMMON_PARAMETER.old_password : createPassTextFLd.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token, isBaseUrl: true){ [self] (
                 result: Result<ResetPasswordSuc,
                 Error>
             ) in

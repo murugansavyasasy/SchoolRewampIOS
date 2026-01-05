@@ -77,7 +77,7 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     
     func Get_standardSection_Api(academicId : Int){
         
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id: academicId], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<GetStandardsSuc , Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id: academicId], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<GetStandardsSuc , Error>) in
             
             DispatchQueue.main.sync { [weak self] in
                 

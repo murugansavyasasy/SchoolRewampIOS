@@ -102,7 +102,7 @@ class EventResiverVC: UIViewController {
             url: ServiceUrl.api_school_event_get_event,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: studentDetails?.access_token ?? ""
+            token: studentDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
                 
@@ -169,7 +169,7 @@ class EventResiverVC: UIViewController {
             url: ServiceUrl.dashboard_api_pauket_add_points,
             parameters: params,
             type: ApitTypeSringFile.POST,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
                 

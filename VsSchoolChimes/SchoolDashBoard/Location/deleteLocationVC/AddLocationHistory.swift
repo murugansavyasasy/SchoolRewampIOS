@@ -84,7 +84,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
                 url: ServiceUrl.staff_attd_geometric_remove_geometric_location,
                 parameters: ["location_id":locationHistory?[sender.tag].id ?? 0],
                 type: ApitTypeSringFile.POST,
-                token:staffDetails?.access_token ?? ""
+                token:staffDetails?.access_token ?? "", isBaseUrl: true
             ) { [weak self] (result: Result<StaffGeometricLocation, Error>) in
                 DispatchQueue.main.async {
                     if #available(iOS 15.0, *) {
@@ -115,7 +115,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
             url: ServiceUrl.staff_attd_geometric_update_geometric_location,
             parameters:param,
             type: ApitTypeSringFile.POST,
-            token:staffDetails?.access_token ?? ""
+            token:staffDetails?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<StaffGeometricLocation, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
@@ -145,7 +145,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
             url: ServiceUrl.staff_attd_geometric_get_geometric_location_history,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token:staffDetails?.access_token ?? ""
+            token:staffDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<StaffGeometricLocation, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {

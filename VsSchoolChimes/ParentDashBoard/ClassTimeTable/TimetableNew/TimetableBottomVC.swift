@@ -51,7 +51,7 @@ class TimetableBottomVC: UIViewController, UITableViewDelegate, UITableViewDataS
                url: ServiceUrl.lms_api_time_table_get_schedule,
                parameters: ["day_id": DayId ?? 0],
                type: ApitTypeSringFile.GET,
-               token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+               token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: false
            ) { [weak self] (result: Result<TimetableResponse, Error>) in
                
                guard let self = self else { return }

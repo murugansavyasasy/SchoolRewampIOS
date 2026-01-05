@@ -279,7 +279,7 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
             url: ServiceUrl.dashboard_notifications,
             parameters: ["device_type": "Iphone"],
             type: ApitTypeSringFile.GET,
-            token: token
+            token: token, isBaseUrl: false
         ) { [weak self] (result: Result<notificationSuc, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) { self?.hideActivityLoader() }
@@ -314,7 +314,7 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
             url: ServiceUrl.dashboard_delete_notification,
             parameters: ["id": id],
             type: ApitTypeSringFile.PUT,
-            token: token
+            token: token, isBaseUrl: true
         ) { [weak self] (result: Result<notificationSuc, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) { self?.hideActivityLoader() }

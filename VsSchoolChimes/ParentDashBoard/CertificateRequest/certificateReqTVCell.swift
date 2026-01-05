@@ -137,7 +137,7 @@ class certificateReqTVCell: UITableViewCell,UITextViewDelegate {
             url: ServiceUrl.comm_api_certificate_types,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
             DispatchQueue.main.async {
                 switch result {

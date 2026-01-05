@@ -209,7 +209,7 @@ class EventHistoryVC: UIViewController, SelectedId {
             url: ServiceUrl.admin_api_school_event_report,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }
@@ -338,7 +338,7 @@ class EventHistoryVC: UIViewController, SelectedId {
                     url: ServiceUrl.admin_api_school_event_delete,
                     parameters: ["id": noticeId],
                     type: ApitTypeSringFile.PUT,
-                    token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                    token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true
                 ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
                     DispatchQueue.main.async {
                         guard let self = self else { return }

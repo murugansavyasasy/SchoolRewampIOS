@@ -83,7 +83,7 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
     
     func ReadStatusUpdate(type: String,detail_id: String){
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "", isBaseUrl: true) { [self] (result : Result<ReadStatusResponse,Error>) in
             
             switch result {
             case .success(let SuccessMessage):
@@ -352,7 +352,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                 url: ServiceUrl.lms_api_lsrw_submit_skill,
                 parameters: parameters,
                 type: ApitTypeSringFile.POST,
-                token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+                token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true
             ) { [weak self] (result: Result<Send_AttachmentResponse, Error>) in
                 guard let self = self else { return }
                 switch result {
@@ -377,7 +377,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             url: ServiceUrl.lms_api_lsrw_my_submissions,
             parameters: ["id":lsrw?.id ?? ""],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<LSWSubmissionResponse, Error>) in
             switch result {
             case .success(let response):

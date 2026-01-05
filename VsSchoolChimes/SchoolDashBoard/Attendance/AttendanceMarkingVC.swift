@@ -155,7 +155,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
             MarkAttendenceStringFile.attendance_type: user_inputs.attendance_type
         ]
         
-        APIService.shared.makeApi(url: ServiceUrl.stud_attd_api_attendance_student_list, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<AttendanceStudentListResponse, Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.stud_attd_api_attendance_student_list, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<AttendanceStudentListResponse, Error>) in
             
             guard let self = self else {return}
             
@@ -216,7 +216,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                 MarkAttendenceStringFile.session_type: user_inputs.session_type,
                 MarkAttendenceStringFile.attendance_date: user_inputs.attendance_date,
                 MarkAttendenceStringFile.student_details: payload
-            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
             ) in
@@ -266,7 +266,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
             url: ServiceUrl.dashboard_api_pauket_add_points,
             parameters: params,
             type: ApitTypeSringFile.POST,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }

@@ -305,7 +305,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             url: ServiceUrl.comm_homework_get_homework_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: studentDetails?.access_token ?? ""
+            token: studentDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<HomeworListkResponse, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {  self?.hideActivityLoader() }
@@ -363,7 +363,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             url: ServiceUrl.dashboard_api_pauket_add_points,
             parameters: params,
             type: ApitTypeSringFile.POST,
-            token: studentDetails?.access_token ?? ""
+            token: studentDetails?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
                 

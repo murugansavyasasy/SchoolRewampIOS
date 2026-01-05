@@ -64,7 +64,7 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
             url: ServiceUrl.comm_api_assignment_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<AssignmentReportResponse, Error>) in
             DispatchQueue.main.async {
                 switch result {
@@ -138,7 +138,7 @@ class AssignmentListVC: UIViewController, DidSelectDelegate, SumitionDelegate{
             url: ServiceUrl.dashboard_api_pauket_add_points,
             parameters: params,
             type: ApitTypeSringFile.POST,
-            token: studentDetails?.access_token ?? ""
+            token: studentDetails?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
 

@@ -36,7 +36,7 @@ class OnboardingVC: UIViewController {
                 url: ServiceUrl.dashboard_api_dashboard_features,
                 parameters: [:],
                 type: ApitTypeSringFile.GET,
-                token: ""
+                token: "", isBaseUrl: true
             ) { [weak self] (result: Result<IntroResponse, Error>) in
                 guard let self = self else { return }
                 DispatchQueue.main.async {

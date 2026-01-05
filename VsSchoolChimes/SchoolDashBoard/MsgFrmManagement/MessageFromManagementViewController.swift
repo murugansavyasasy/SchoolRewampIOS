@@ -153,7 +153,7 @@ class MessageFromManagementViewController: UIViewController {
             url: ServiceUrl.comm_api_msg_from_management_get_messages_staff,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: token
+            token: token, isBaseUrl: false
         ) { [weak self] (result: Result<MessageFromManagementResp, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -219,7 +219,7 @@ class MessageFromManagementViewController: UIViewController {
             url: ServiceUrl.comm_api_msg_from_management_get_messages_staff_archive,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: token
+            token: token, isBaseUrl: false
         ) { [weak self] (result: Result<MessageFromManagementResp, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -267,7 +267,7 @@ class MessageFromManagementViewController: UIViewController {
             url: url,
             parameters: parameters,
             type: ApitTypeSringFile.POST,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<ReadStatusResponse, Error>) in
             self?.handleReadStatusResponse(result, detailId: detailId)
         }

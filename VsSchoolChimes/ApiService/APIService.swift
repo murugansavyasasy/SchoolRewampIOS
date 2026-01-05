@@ -1,9 +1,6 @@
 import Foundation
 import UIKit
 
-
-import Foundation
-
 class APIService: NSObject, URLSessionDelegate {
     
     static let shared = APIService()
@@ -19,6 +16,7 @@ class APIService: NSObject, URLSessionDelegate {
         parameters: [String: Any]? = nil,
         type: String,
         token: String,
+        isBaseUrl: Bool,
         completionHandler: @escaping (Result<T, Error>) -> Void
     ) {
         guard NetworkMonitor.shared.isConnected else {
@@ -27,7 +25,7 @@ class APIService: NSObject, URLSessionDelegate {
             return
         }
         
-        guard let fullURL = buildURLWithQueryParams(path: url, queryParams: parameters, method: type, baseUrlType: token ) else {
+        guard let fullURL = buildURLWithQueryParams(path: url, queryParams: parameters, method: type, baseUrlType: token, isBaseUrl: isBaseUrl ) else {
             let error = getError(statusCode: 0, description: "Invalid URL")
             completionHandler(.failure(error))
             return
@@ -91,17 +89,20 @@ class APIService: NSObject, URLSessionDelegate {
     
     
     // MARK: - Build URL with query parameters for GET
-    private func buildURLWithQueryParams(path: String, queryParams: [String: Any]?, method: String,baseUrlType:String) -> URL? {
+    private func buildURLWithQueryParams(path: String, queryParams: [String: Any]?, method: String,baseUrlType:String,isBaseUrl:Bool) -> URL? {
         
         let baseURL: String
         if baseUrlType != PaucketHeader.Paucket {
-            baseURL = ServiceUrl.baseurl
+            if isBaseUrl{
+                baseURL = ServiceUrl.baseurl
+            }else{
+                baseURL = ServiceUrl.Reporting_baseurl
+            }
         } else {
-            baseURL = ServiceUrl.Pacukt_baseurl
+                baseURL = ServiceUrl.Pacukt_baseurl
         }
+        
         var components = URLComponents(string: baseURL + path)
-        
-        
         if method.uppercased() == "GET", let queryParams = queryParams {
             components?.queryItems = queryParams.map {
                 URLQueryItem(name: $0.key, value: "\($0.value)")
@@ -118,33 +119,40 @@ class APIService: NSObject, URLSessionDelegate {
     }
     
     // MARK: - PUT
-    func putApi<T: Codable>(
-        url: String,
-        parameters: [String: Any],
-        token: String,
-        completionHandler: @escaping (Result<T, Error>) -> Void
-    ) {
-        makeApi(url: url, parameters: parameters, type: "PUT", token: token, completionHandler: completionHandler)
-    }
-    
-    // MARK: - DELETE
-    func deleteApi<T: Codable>(
-        url: String,
-        token: String,
-        completionHandler: @escaping (Result<T, Error>) -> Void
-    ) {
-        makeApi(url: url, parameters: nil, type: "DELETE", token: token, completionHandler: completionHandler)
-    }
+//    func putApi<T: Codable>(
+//        url: String,
+//        parameters: [String: Any],
+//        token: String,
+//        completionHandler: @escaping (Result<T, Error>) -> Void
+//    ) {
+//        makeApi(url: url, parameters: parameters, type: "PUT", token: token, completionHandler: completionHandler)
+//    }
+//    
+//    // MARK: - DELETE
+//    func deleteApi<T: Codable>(
+//        url: String,
+//        token: String,
+//        completionHandler: @escaping (Result<T, Error>) -> Void
+//    ) {
+//        makeApi(url: url, parameters: nil, type: "DELETE", token: token, completionHandler: completionHandler)
+//    }
     
     // MARK: - PTM Api
     func PtmApi<T: Codable>(
         url: String,
         parameters: [[String: Any]],
         token: String,
+        isBaseUrl : Bool,
         completionHandler: @escaping (Result<T, Error>) -> Void
     ) {
         print("Param",parameters)
-        guard let fullURL = URL(string: ServiceUrl.baseurl + url) else {
+        var baseUrl:String = ""
+        if isBaseUrl{
+            baseUrl = ServiceUrl.baseurl
+        }else{
+            baseUrl = ServiceUrl.Reporting_baseurl
+        }
+        guard let fullURL = URL(string: baseUrl + url) else {
             let error = getError(statusCode: 0, description: "Invalid URL")
             completionHandler(.failure(error))
             return
@@ -154,13 +162,8 @@ class APIService: NSObject, URLSessionDelegate {
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(token, forHTTPHeaderField: "Authorization")
         
-        if token != PaucketHeader.Paucket {
-            request.addValue(token, forHTTPHeaderField: "Authorization")
-        } else {
-            request.addValue(PaucketHeader.api_key_value, forHTTPHeaderField: PaucketHeader.api_key)
-            request.addValue(PaucketHeader.partner_name_value, forHTTPHeaderField: PaucketHeader.partner_name)
-        }
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
         } catch {

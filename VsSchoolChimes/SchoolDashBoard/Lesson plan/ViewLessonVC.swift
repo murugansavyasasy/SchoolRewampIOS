@@ -113,7 +113,7 @@ class ViewLessonVC: UIViewController, SelectedId {
         }
         
         let param: [String: Any] = [LessonPlanStringFile.section_subject_id : SubjectId ?? "",LessonPlanStringFile.lesson_plan_status: 0]
-        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_view, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<LessonPlanDetailResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_view, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<LessonPlanDetailResponse,Error>) in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else{return}
                 if #available(iOS 15.0, *) {
@@ -158,7 +158,7 @@ class ViewLessonVC: UIViewController, SelectedId {
             url: ServiceUrl.lms_api_lesson_plan_get_data_for_edit,
             parameters: param,
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<LessonEditResponse, Error>) in
             
             DispatchQueue.main.async { [weak self] in
@@ -185,7 +185,7 @@ class ViewLessonVC: UIViewController, SelectedId {
     func Delete_LessonPlan_Api(particularID: String){
         
         APIService.shared
-            .makeApi(url: ServiceUrl.lms_api_lesson_plan_delete, parameters: [LessonPlanStringFile.particular_id: particularID], type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") {[weak self] (
+            .makeApi(url: ServiceUrl.lms_api_lesson_plan_delete, parameters: [LessonPlanStringFile.particular_id: particularID], type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "", isBaseUrl: true) {[weak self] (
                 result: Result<CommonApiSuc,
                 Error>
             ) in
@@ -225,7 +225,7 @@ class ViewLessonVC: UIViewController, SelectedId {
             url: ServiceUrl.lms_api_lesson_plan_get_data_for_add,
             parameters: param,
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<LessonEditResponse, Error>) in
             
             DispatchQueue.main.async { [weak self] in

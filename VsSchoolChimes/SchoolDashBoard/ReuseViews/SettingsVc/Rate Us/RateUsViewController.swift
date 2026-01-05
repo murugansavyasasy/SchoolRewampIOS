@@ -117,7 +117,7 @@ extension RateUsViewController: RatingDelegate,RatingTypeCellDelegate {
             url: ServiceUrl.dashboard_api_reviews_list,
             parameters: ["mobile_number": mobile],
             type: ApitTypeSringFile.GET,
-            token: ""
+            token: "", isBaseUrl: false
         ) { [weak self] (result: Result<ReviewResponse, Error>) in
             
             guard let self = self else { return }
@@ -182,7 +182,7 @@ extension RateUsViewController {
             url: ServiceUrl.dashboard_api_reviews_add,
             parameters: params,
             type: ApitTypeSringFile.POST,
-            token: ""
+            token: "", isBaseUrl: true
         ) { [weak self] (result: Result<ValidateOTPSuc, Error>) in
             
             guard let self = self else { return }

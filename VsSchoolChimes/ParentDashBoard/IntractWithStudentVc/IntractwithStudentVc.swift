@@ -54,7 +54,7 @@ class IntractwithStudentVc: UIViewController {
     
     func getStaff(){
         APIService.shared
-            .makeApi(url: ServiceUrl.interaction_classes_for_chat , parameters: [:], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? ""){ [self] (
+            .makeApi(url: ServiceUrl.interaction_classes_for_chat , parameters: [:], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false){ [self] (
                 result:Result <StaffListResponse,
                 Error>
             ) in
@@ -91,7 +91,7 @@ class IntractwithStudentVc: UIViewController {
     
     func get_blockList_Api(){
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_api_interaction_blocked_students, parameters: [:], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") {[weak self] (result:Result<BlockedStudentsResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.comm_api_interaction_blocked_students, parameters: [:], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) {[weak self] (result:Result<BlockedStudentsResponse,Error>) in
             
             guard let self = self else {return}
             DispatchQueue.main.async {
@@ -125,7 +125,7 @@ class IntractwithStudentVc: UIViewController {
                 ChatAPIKeys.reason : ""
             ]
             
-            APIService.shared.makeApi(url: ServiceUrl.comm_api_interaction_block_student, parameters: param, type: ApitTypeSringFile.PUT, token: self.StaffDetails?.access_token ?? "") { [weak self]
+            APIService.shared.makeApi(url: ServiceUrl.comm_api_interaction_block_student, parameters: param, type: ApitTypeSringFile.PUT, token: self.StaffDetails?.access_token ?? "", isBaseUrl: true) { [weak self]
                 (result: Result<CommonApiSuc,Error>) in
                 guard let self = self else {return}
                 DispatchQueue.main.async {
@@ -165,7 +165,7 @@ class IntractwithStudentVc: UIViewController {
             ChatAPIKeys.detail_id: sectionId
         ]
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: param, type: ApitTypeSringFile.POST, token: StaffDetails?.access_token ?? "") { [weak self] (result: Result<CommonApiSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: param, type: ApitTypeSringFile.POST, token: StaffDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result: Result<CommonApiSuc,Error>) in
             
             guard let self = self else {return}
             DispatchQueue.main.async {

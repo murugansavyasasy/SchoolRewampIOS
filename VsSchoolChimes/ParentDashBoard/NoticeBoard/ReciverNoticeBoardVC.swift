@@ -167,7 +167,7 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
     
     func Get_Notice() {
         showLoadingState()
-        APIService.shared.makeApi(url: ServiceUrl.api_notice_board_get_notice, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (result: Result<NoticeResponse, Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.api_notice_board_get_notice, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<NoticeResponse, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 self.hideLoadingState()
@@ -214,7 +214,7 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
                 url: ServiceUrl.dashboard_api_pauket_add_points,
                 parameters: params,
                 type: ApitTypeSringFile.POST,
-                token: childDetails?.access_token ?? ""
+                token: childDetails?.access_token ?? "", isBaseUrl: true
             ) { [weak self] (result: Result<EventResponse, Error>) in
                 DispatchQueue.main.async {
 

@@ -111,15 +111,21 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         }
         
         if ComFromNoticeBoard{
-            yourTargetLbl.text = "Message sent to SCHOOL"
-            targetFullView.isHidden = false
-            cv.delegate = self
-            cv.dataSource = self
-            cv.reloadData()
-            DispatchQueue.main.async {
-                self.reloadss()
-            }
-            ComFromNoticeBoard = false
+                switch staffDetails?.priority_level {
+                case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+                    yourTargetLbl.text = "Message sent to SCHOOL"
+                    targetFullView.isHidden = false
+                    cv.delegate = self
+                    cv.dataSource = self
+                    cv.reloadData()
+                    DispatchQueue.main.async {
+                        self.reloadss()
+                    }
+                    ComFromNoticeBoard = false
+                default:
+                    targetFullView.isHidden = true
+                }
+           
         }
     }
     
@@ -207,7 +213,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             url: ServiceUrl.homework_mark_complete,
             parameters: [id: homeWorkid ?? ""],
             type: ApitTypeSringFile.PUT,
-            token: studentDetails?.access_token ?? ""
+            token: studentDetails?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<CommonApiSuc, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) { self?.hideActivityLoader() }
@@ -235,7 +241,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     
     func ReadStatusUpdateArchive(type: String,detail_id: String){
         
-        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "", isBaseUrl: true) { [self] (result : Result<ReadStatusResponse,Error>) in
             switch result {
             case .success(let SuccessMessage):
                 ""
@@ -256,7 +262,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     }
     
     func getTargetReport(EndUrl : String ,params:[String:Any]) {
-        APIService.shared.makeApi(url: EndUrl,parameters: params,type: ApitTypeSringFile.GET,token: staffDetails?.access_token ?? "") {[weak self] (result: Result<targetSuc, Error>) in
+        APIService.shared.makeApi(url: EndUrl,parameters: params,type: ApitTypeSringFile.GET,token: staffDetails?.access_token ?? "", isBaseUrl: false) {[weak self] (result: Result<targetSuc, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 switch result {

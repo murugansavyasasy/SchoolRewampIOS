@@ -111,7 +111,7 @@ class MarkReviewVC: UIViewController {
             url: ServiceUrl.exam_api_exam_get_mark_details,
             parameters: parameters,
             type: ApitTypeSringFile.POST,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<MarkDetailsResponse, Error>) in
             
             DispatchQueue.main.async {

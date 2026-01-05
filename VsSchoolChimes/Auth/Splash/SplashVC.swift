@@ -593,7 +593,7 @@ class SplashVC: UIViewController, ViewAttachments {
             url: ServiceUrl.version_check,
             parameters: params,
             type: ApitTypeSringFile.POST,
-            token: ServiceUrl.token
+            token: ServiceUrl.token, isBaseUrl: false
         ) { [weak self] (result: Result<VersionCheckResponse, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -605,6 +605,7 @@ class SplashVC: UIViewController, ViewAttachments {
                             
                             UserDefaultFileManager.saveCountryDetails(data: countryDetails)
                             ServiceUrl.baseurl = countryDetails.base_url ?? ""
+                            ServiceUrl.Reporting_baseurl = countryDetails.reporting_url ?? ""
                         }
                             if self.versionData?.update_available == true {
                                 self.showUpdatePopup()
@@ -639,7 +640,7 @@ class SplashVC: UIViewController, ViewAttachments {
             url: ServiceUrl.validate_validate_user,
             parameters: parameters,
             type: ApitTypeSringFile.POST,
-            token: ServiceUrl.token
+            token: ServiceUrl.token, isBaseUrl: true
         ) { [weak self] (result: Result<UserValidationResponseSuc, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {

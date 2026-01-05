@@ -59,7 +59,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
                 ReadStatusUpdateStringFile.detail_id: detail_id
             ],
             type: ApitTypeSringFile.POST,
-            token: studentDetails?.access_token ?? ""
+            token: studentDetails?.access_token ?? "", isBaseUrl: true
         ) { [self] (result: Result<ReadStatusResponse, Error>) in
             switch result {
             case .success(let successMessage):
@@ -89,7 +89,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             url: ServiceUrl.dashboard_api_pauket_add_points,
             parameters: params,
             type: ApitTypeSringFile.POST,
-            token: studentDetails?.access_token ?? ""
+            token: studentDetails?.access_token ?? "", isBaseUrl: true
         ) { (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
                 switch result {
@@ -144,7 +144,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             url: ServiceUrl.comm_api_assignment_submissions_list,
             parameters: ["id": data?.id ?? "", "type": "TOTAL"],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<StudentSubmissionResponse, Error>) in
             guard let self = self else { return }
             switch result {

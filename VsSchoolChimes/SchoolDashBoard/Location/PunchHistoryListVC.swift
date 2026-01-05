@@ -63,7 +63,7 @@ class PunchHistoryListVC: UIViewController, UITableViewDelegate, UITableViewData
                 punchHistoryStringFile.staff_id : selected_staff_id ?? ""
             ],
             type: ApitTypeSringFile.GET,
-            token: staffdetails?.access_token ?? ""
+            token: staffdetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<PunchHistoryResponse, Error>) in
             guard let self = self else { return }
             

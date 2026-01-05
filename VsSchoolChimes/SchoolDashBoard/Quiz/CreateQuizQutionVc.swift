@@ -250,7 +250,7 @@ class CreateQuizQutionVc: UIViewController {
             url: ServiceUrl.quiz_questions_report,
             parameters: ["id": id ],
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<QuizaddQuestionSuc, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async { [self] in
@@ -288,7 +288,7 @@ class CreateQuizQutionVc: UIViewController {
             url: ServiceUrl.quiz_add_question,
             parameters:params,
             type: ApitTypeSringFile.POST,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<QuizaddQuestionSuc, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -586,7 +586,7 @@ class CreateQuizQutionVc: UIViewController {
     
     
     func delete_qestion_Api(ids:String){
-        APIService.shared.makeApi(url: ServiceUrl.lms_api_quiz_delete_question, parameters: [QuizKeys.id: ids], type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_quiz_delete_question, parameters: [QuizKeys.id: ids], type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result:Result<CommonApiSuc,Error>) in
             guard let self = self else {return}
             DispatchQueue.main.async {
                 switch result {
@@ -604,7 +604,7 @@ class CreateQuizQutionVc: UIViewController {
         }
     }
     func get_QuestionBank_Api(){
-        APIService.shared.makeApi(url: ServiceUrl.lms_api_quiz_pick_from_qbank, parameters: [QuizKeys.subject_id: subject_Id ?? ""], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<QuestionsResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_quiz_pick_from_qbank, parameters: [QuizKeys.subject_id: subject_Id ?? ""], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result:Result<QuestionsResponse,Error>) in
             guard let self = self else {return}
             DispatchQueue.main.async {
                 switch result {

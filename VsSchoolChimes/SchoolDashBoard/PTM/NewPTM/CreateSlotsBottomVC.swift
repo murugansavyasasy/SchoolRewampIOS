@@ -86,7 +86,7 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
             CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: "There is no available slots", on: self)
         }else {
             
-            APIService.shared.PtmApi(url: ServiceUrl.ptm_api_ptm_schedule_create_slots, parameters: param, token: staffDetails?.access_token ?? "") { [weak self] (result:Result<CommonApiSuc,Error>) in
+            APIService.shared.PtmApi(url: ServiceUrl.ptm_api_ptm_schedule_create_slots, parameters: param, token: staffDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result:Result<CommonApiSuc,Error>) in
                 
                 guard let self = self else{return}
                 
@@ -150,7 +150,7 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
             url: ServiceUrl.dashboard_api_pauket_add_points,
             parameters: params,
             type: ApitTypeSringFile.POST,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
 

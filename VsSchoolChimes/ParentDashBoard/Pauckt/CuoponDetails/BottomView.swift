@@ -289,7 +289,7 @@ class BottomView: UIViewController, AddCoupen{
         
         let params: [String: Any] = [PaucketHeader.source_link:sourceLink ?? "", PaucketHeader.mobile_no: "91" + (UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "")]
         APIService.shared
-            .makeApi(url: ServiceUrl.get_campaign_details, parameters: params, type: ApitTypeSringFile.POST, token: PaucketHeader.Paucket) {[self] (
+            .makeApi(url: ServiceUrl.get_campaign_details, parameters: params, type: ApitTypeSringFile.POST, token: PaucketHeader.Paucket, isBaseUrl: false) {[self] (
                 result: Result<CampaignResponse,
                 Error>
             ) in
@@ -366,7 +366,7 @@ class BottomView: UIViewController, AddCoupen{
             url: ServiceUrl.activate_coupon,
             parameters: param,
             type: ApitTypeSringFile.POST,
-            token: PaucketHeader.Paucket
+            token: PaucketHeader.Paucket, isBaseUrl: false
         ) { [weak self] (result: Result<ActivateCouponResponse, Error>) in
             guard let self = self else { return }
             

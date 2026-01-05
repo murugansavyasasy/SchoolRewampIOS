@@ -306,7 +306,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     func getStandardsAPI(academic_year_id:Int){
         standerdArray.removeAll()
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id : academic_year_id], type: ApitTypeSringFile.GET, token:UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id : academic_year_id], type: ApitTypeSringFile.GET, token:UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false) { [self] (result:Result <GetStandardsSuc,Error>) in
             switch result {
             case .success(let successMessage):
                 if successMessage.status == true{
@@ -372,7 +372,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             url: ServiceUrl.api_get_student_report,
             parameters: param,
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<StudentReportResponse, Error>) in
             guard let self = self else { return }
             
@@ -429,7 +429,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     
     func getacadmicYr(){
         APIService.shared
-            .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+            .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false){ [self] (
                 result:Result <get_academic_yearSuc,
                 Error>
             ) in

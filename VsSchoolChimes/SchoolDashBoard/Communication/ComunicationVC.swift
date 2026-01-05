@@ -14,7 +14,49 @@ extension ComunicationVC: UIPopoverPresentationControllerDelegate {
         return .none // Ensures popover on iPhone
     }
 }
-class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, SelectedTextDelegate, ForwordDelegate, HistoryFinishPalyingDelegate{
+class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, SelectedTextDelegate, ForwordDelegate, HistoryFinishPalyingDelegate, selectedAudio, AudioPlaybackDelegate1{
+    func audioCell(_ cell: CommunicationTVC, willStartPlayingAtIndex index: Int) {
+        if let audioCell = cell as? CommunicationTVC,
+           audioCell.cellIndex != index {
+            audioCell.stopPlayback()
+        }
+    }
+    
+    func audioCell(_ cell: CommunicationTVC, didStopPlayingAtIndex index: Int) {
+        ""
+    }
+    
+    func selectedAudio(index: Int) {
+        voiceTitleeTxt.text = VoiceHistory?[index].title ?? ""
+        if emengencyCall.isOn && (VoiceHistory?[index].duration ?? 0) >=  30{
+            let alert = UIAlertController(
+                title: "Oops!",
+                message: "Your Emergency call is ON. You can't forward Above 30 mins voice message",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            if isScheduleSelected{
+                enabelScheduleView(
+                    isforward: true,
+                    voiceUrl:VoiceHistory?[index].url ?? "",
+                    title: VoiceHistory?[index].title ?? "",
+                    durations: VoiceHistory?[index].duration ?? 0,
+                    url: VoiceHistory?[index].url ?? ""
+                )
+            }else{
+                enabelVoice_view(
+                    isforward: true,
+                    voiceUrl:VoiceHistory?[index].url ?? "",
+                    title: VoiceHistory?[index].title ?? "",
+                    durations: VoiceHistory?[index].duration ?? 0,
+                    url: VoiceHistory?[index].url ?? ""
+                )
+            }
+        }
+    }
+    
     
     func voiceforword(selectedIndex: Int?) {
         voiceTitleeTxt.text = VoiceHistory?[selectedIndex ?? 0].title ?? ""
@@ -86,7 +128,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var timePickerHeight: NSLayoutConstraint!
     @IBOutlet weak var fromTime: UIButton!
     @IBOutlet weak var toTime: UIButton!
-    @IBOutlet weak var waveView: WaveView!
+    @IBOutlet weak var waveView: AudioMessageView!
     @IBOutlet weak var tittlemessage: UILabel!
     @IBOutlet weak var emengencyCall: UISwitch!
     @IBOutlet weak var historytable: UITableView!
@@ -147,7 +189,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var recordImgHeightCon: NSLayoutConstraint!
     @IBOutlet weak var menuNameLbl: UILabel!
     @IBOutlet weak var dateBtn: UIButton!
-    
+    private let audioManager = AudioManager()
     let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     
@@ -166,6 +208,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var accadmicDefaultYrName : String?
     var forWardVoiceDuraction : Int?
     var Defaultdurations = "00:00/00:30"
+
     override func viewDidLoad() {
         super.viewDidLoad()
         acidamicYrDropView.isHidden = true
@@ -208,8 +251,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }else{
             seduleClickView.isHidden = false
         }
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(handleWaveViewProgressChange(_:)), name: NSNotification.Name("WaveViewSliderChanged"), object: nil)
+    
         historytable.delegate = self
         historytable.dataSource = self
         DateSelection.delegate = self
@@ -676,7 +718,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     //MARK: CELL REGISTRATION
     func CellRegistre(){
-        historytable.register(UINib(nibName: CellConfingName.HistoryTC, bundle: nil), forCellReuseIdentifier: CellConfingName.HistoryTC)
+        historytable.register(UINib(nibName: "CommunicationTVC", bundle: nil), forCellReuseIdentifier: "CommunicationTVC")
         historytable.register(UINib(nibName: CellConfingName.TextHistoryTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.TextHistoryTVCell)
         dateCV.register(UINib(nibName: CellConfingName.DateCVC, bundle: nil), forCellWithReuseIdentifier: CellConfingName.DateCVC)
         
@@ -688,7 +730,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         formatter.timeStyle = .short
         // Set initial times
         let initialFromTime = Date() // Current time for example
-        let initialToTime = Calendar.current.date(byAdding: .minute, value: 20, to: initialFromTime) ?? Date()
+        let initialToTime = Calendar.current.date(byAdding: .minute, value: 40, to: initialFromTime) ?? Date()
         fromTime.setTitle(formatter.string(from: initialFromTime), for: .normal)
         toTime.setTitle(formatter.string(from: initialToTime), for: .normal)
     }
@@ -839,7 +881,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                    let durationStr = getAudioDuration(from: filePath) {
                     voiceTiming.text = durationStr
                 }
-                waveView.progress = 0
                 playerheight.constant = 60
                 voiceStackview.isHidden = false
                 dltbtn.isHidden = false
@@ -925,7 +966,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     func get_Voice_History(){
         APIService.shared
-            .makeApi(url:  ServiceUrl.comm_voice_get_voice_history, parameters: [:] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
+            .makeApi(url:  ServiceUrl.comm_voice_get_voice_history, parameters: [:] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false){ [self] (
                 result : Result<VoiceResponse,
                 Error>
             ) in
@@ -954,7 +995,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     func get_Text_History(){
         APIService.shared
-            .makeApi(url:  ServiceUrl.comm_text_message_get_text_history, parameters: [:] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
+            .makeApi(url:  ServiceUrl.comm_text_message_get_text_history, parameters: [:] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false){ [self] (
                 result : Result<TextDetailsResponse,
                 Error>
             ) in switch result {
@@ -1054,27 +1095,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
         
     }
-    @objc func handleWaveViewProgressChange(_ notification: Notification) {
-        guard let progress = notification.object as? CGFloat,
-              let player = player else { return }
-        let totalDuration = CMTimeGetSeconds(player.currentItem?.duration ?? CMTime.zero)
-        let seekTime = CMTime(seconds: Double(progress) * totalDuration, preferredTimescale: 1)
-        player.seek(to: seekTime) { [weak self] _ in
-            self?.updateUIForSeekPosition(progress)
-        }
-    }
-    
-    // MARK: - UI Update for Seek
-    private func updateUIForSeekPosition(_ progress: CGFloat) {
-        waveView.progress = progress
-        
-        // Update the timer display
-        let totalDuration = CMTimeGetSeconds(player?.currentItem?.duration ?? CMTime.zero)
-        let currentSeconds = Int(progress * totalDuration)
-        let minutes = currentSeconds / 60
-        let seconds = currentSeconds % 60
-        voiceTiming.text = String(format: CommonStringFile.Time_formate, minutes, seconds)
-    }
+  
+        // MARK: - UI Update for Seek
+   
     
     
     
@@ -1122,16 +1145,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
     }
     
-    @objc func playerDidFinishPlaying(sender: Notification) {
-        btnplay.setImage(ImageName.playbutton, for: .normal)
-        waveView.progress = 0
-        player?.pause()
-        updateTimer?.invalidate()
-        audioRecorder?.updateMeters()
-        let normalizedPower = max(0, (0) / 160)
-        waveView.updateWithLevel(CGFloat(normalizedPower))
-        playerItem?.seek(to: CMTime.zero)
-    }
+   
     
     func setupWaveBars() {
         // Define the width and spacing of each bar
@@ -1152,65 +1166,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             bars.append(bar)
         }
     }
-    @objc func updateSlider() {
-        guard let audioPlayer = player else { return }
-        
-        // Get current player item and playback status
-        if let currentItem = audioPlayer.currentItem {
-            let totalDuration = CMTimeGetSeconds(currentItem.duration)
-            let elapsedTime = CMTimeGetSeconds(audioPlayer.currentTime())
-            
-            // Safely unwrap and validate durations
-            guard totalDuration.isFinite, elapsedTime.isFinite else { return }
-            let progress = CGFloat(elapsedTime / totalDuration)
-            waveView.progress = progress
-            waveView.setNeedsDisplay()
-            let totalFormatted = formatTime(totalDuration)
-            let currentFormatted = formatTime(elapsedTime)
-            voiceTiming.text = "\(currentFormatted) / \(totalFormatted)"
-            let fakeLevel = sin(progress * .pi)
-            waveView.updateWithLevel(CGFloat(fakeLevel))
-            if audioPlayer.isPlaying {
-                audioRecorder?.updateMeters()
-                
-                // Get average power for channel 0
-                let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
-                let normalizedPower = max(1, (averagePower + 160) / 160)
-                waveView.updateWithLevel(CGFloat(normalizedPower))  // Update waveform animation
-                
-                // Update playback time
-                if let currentItem = audioPlayer.currentItem {
-                    let totalDuration = CMTimeGetSeconds(currentItem.duration)
-                    
-                    if totalDuration.isFinite {
-                        let elapsedTime = CMTimeGetSeconds(audioPlayer.currentTime())
-                        let progress = CGFloat(elapsedTime / totalDuration)
-                        waveView.progress = progress
-                        waveView.setNeedsDisplay()  // Refresh WaveView to update colors
-                        
-                        // Time formatting for display
-                        let totalMinutes = Int(totalDuration) / 60
-                        let totalSeconds = Int(totalDuration) % 60
-                        let totalDurationFormatted = String(format: CommonStringFile.Time_formate, totalMinutes, totalSeconds)
-                        
-                        let elapsedMinutes = Int(elapsedTime) / 60
-                        let elapsedSeconds = Int(elapsedTime) % 60
-                        let currentFormatted = String(format: CommonStringFile.Time_formate, elapsedMinutes, elapsedSeconds)
-                        
-                        // Update the timing label
-                        voiceTiming.text = "\(currentFormatted) / \(totalDurationFormatted)"
-                        voiceRecordedDuration = Int(totalDurationFormatted)
-                        
-                    }
-                }
-            } else {
-                audioRecorder?.updateMeters()
-                let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
-                let normalizedPower = max(0, (0) / 160)
-                waveView.updateWithLevel(CGFloat(normalizedPower))
-            }
-        }
-    }
+   
     private func formatTime(_ seconds: Double) -> String {
         let minutes = Int(seconds) / 60
         let seconds = Int(seconds) % 60
@@ -1386,7 +1342,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             recordImgHeightCon.constant = 0
             Timinglbl.isHidden = true
             addfile.isHidden = true
-            waveView.progress = 0
             btnplay.setImage(ImageName.playbutton, for: .normal)
             AudioPlayUrl = url
             let formatted = formatDuration(durations)
@@ -1462,7 +1417,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             emengencyCall.isOn = false
             if isforward {
                 recordImgHeightCon.constant = 0
-                waveView.progress = 0
                 btnplay.setImage(ImageName.playbutton, for: .normal)
                 Timinglbl.isHidden = true
                 addfile.isHidden = true
@@ -1571,22 +1525,141 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     // Play Button Action
     @IBAction func playButtonTapped(_ sender: UIButton) {
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying(sender:)),
-                                               name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
-                                               object: player!.currentItem)
-        if playVoicce == true{
-            player?.pause()
-            playVoicce = false
-            btnplay.setImage(ImageName.playbutton, for: .normal)
-        }else{
+        if let urlString = AudioPlayUrl,
+               let url = URL(string: urlString) {
+
+                // This will auto download or load
+                self.setAudioURL(url)
+            }
+
+            if waveView.isPlaying {
+                stopPlayback()
+            } else {
+                startPlayback()
+            }
+    }
+    
+    func setAudioURL(_ url: URL) {
+//        self.audioURL = url
+
+        if url.isFileURL {
+            prepareLocalAudio(url: url)
+        } else {
+            downloadAndPrepareAudio(from: url)
+        }
+    }
+
+    private func startPlayback() {
+        // Notify other cells to stop playing
+        NotificationCenter.default.post(
+            name: NSNotification.Name("AudioCellStartedPlaying"),
+            object: nil
+        )
+        // Start playback
+        waveView.isPlaying = true
+        waveView.startPlaybackAnimation()
+        updatePlayButtonState(isPlaying: true)
+    }
+
+    func stopPlayback() {
+        audioManager.stop()
+        waveView.isPlaying = false
+        waveView.stopPlaybackAnimation()
+        updatePlayButtonState(isPlaying: false)
+    }
+
+    private func updatePlayButtonState(isPlaying: Bool) {
+        btnplay.isSelected = isPlaying
+        let imageName = isPlaying ? "pause-button" : "play-button"
+        btnplay.setImage(UIImage(named: imageName), for: .normal)
+    }
+
+    // MARK: - Error Handling
+    private func showErrorAlert(message: String) {
+        let alert = UIAlertController(title: "Audio Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+         present(alert, animated: true)
+    }
+    // MARK: - Audio Setup
+    private func prepareLocalAudio(url: URL) {
+        do {
+            try audioManager.setupPlayer(with: url)
+            waveView.audioURL = url
+        } catch {
+            print("❌ Failed to set up audio player:", error)
+            showErrorAlert(message: "Failed to load audio file")
+        }
+    }
+
+    private func downloadAndPrepareAudio(from remoteURL: URL) {
+        // Show loading state
+        btnplay.isEnabled = false
+        
+        let session = URLSession.shared
+        let task = session.downloadTask(with: remoteURL) { [weak self] (tempURL, response, error) in
+            guard let self = self else { return }
             
-            player?.volume = 1
-            player?.play()
-            playVoicce = true
-            btnplay.setImage(ImageName.pausebutton, for: .normal)
-            updateTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateSlider), userInfo: nil, repeats: true)
+            if let error = error {
+                print("Download error: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    self.btnplay.isEnabled = true
+                    self.showErrorAlert(message: "Audio download failed.")
+                }
+                return
+            }
+            
+            guard let tempURL = tempURL else {
+                DispatchQueue.main.async {
+                    self.btnplay.isEnabled = true
+                    self.showErrorAlert(message: "Audio download failed.")
+                }
+                return
+            }
+            
+            // Save to permanent location
+            let permanentURL = self.saveToPermanentLocation(tempURL: tempURL, originalURL: remoteURL)
+            
+            DispatchQueue.main.async {
+                self.btnplay.isEnabled = true
+                if let url = permanentURL {
+                    self.waveView.audioURL = url
+                    self.waveView.onDurationUpdate = { [weak self] time in
+                        self?.voiceTiming.text = time
+                    }
+                } else {
+                    self.showErrorAlert(message: "Failed to save audio file")
+                }
+            }
+        }
+        task.resume()
+    }
+    
+    private func saveToPermanentLocation(tempURL: URL, originalURL: URL) -> URL? {
+        let fileManager = FileManager.default
+        let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let audioFolderPath = documentsPath.appendingPathComponent("AudioFiles", isDirectory: true)
+        
+        // Create directory if needed
+        if !fileManager.fileExists(atPath: audioFolderPath.path) {
+            try? fileManager.createDirectory(at: audioFolderPath, withIntermediateDirectories: true)
         }
         
+        // Generate unique filename
+        let filename = originalURL.lastPathComponent.isEmpty ? UUID().uuidString + ".m4a" : originalURL.lastPathComponent
+        let permanentURL = audioFolderPath.appendingPathComponent(filename)
+        
+        // Remove if already exists
+        if fileManager.fileExists(atPath: permanentURL.path) {
+            try? fileManager.removeItem(at: permanentURL)
+        }
+        do {
+            try fileManager.copyItem(at: tempURL, to: permanentURL)
+            print("✅ Audio saved to: \(permanentURL.path)")
+            return permanentURL
+        } catch {
+            print("❌ Failed to save audio: \(error.localizedDescription)")
+            return nil
+        }
     }
     
 }
@@ -1636,46 +1709,66 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             return cell
             
         }else{
-            let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.HistoryTC, for: indexPath) as! HistoryTC
             
-            let isPlaying = (playIndex == indexPath.row)
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommunicationTVC", for: indexPath) as? CommunicationTVC else {
+           return UITableViewCell()
+            }
+            
+//            let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.HistoryTC, for: indexPath) as! HistoryTC
+//            
+//            let isPlaying = (playIndex == indexPath.row)
+//            let voiceData = VoiceHistory?[indexPath.row]
+//            cell.updatePlayState(isPlaying: isPlaying, url: voiceData?.url)
+//            cell.playBtn.tag = indexPath.row
+//            cell.sendbtn.tag = indexPath.row
+//            cell.delegate = self
+//            cell.ForwordDelegate = self
+//            cell.FinishPlayingdelegate = self
+//            cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
+//            let duration = voiceData?.duration ?? 0
+//            let formatted = formatDuration(duration)
+//            cell.totaltime.text = "00:00 / \(formatted)"
+//            cell.contentlbl.text = voiceData?.title ?? ""
+//            if !isPlaying {
+//                cell.playerView.progress = 0.0
+//                cell.playerView.updateWithLevel(0.0)
+//                cell.playerView.setNeedsDisplay()
+//            }
+//            
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+//                cell.configureShimmer()
+//            }
+//            
+//            if let sentOn = voiceData?.sent_on,
+//               let date = DateFormatterHelper.shared.parseDate(from: sentOn) {
+//                let dateString = DateFormatterHelper.shared.formatDateToDayMonthYear(date: date) // "11 Apr 2025"
+//                let timeString = DateFormatterHelper.shared.formatTime(date: date) // "01:04 PM"
+//                let fullText = "\(dateString) \(timeString)" // "11 Apr 2025 01:04 PM"
+//                let attributedText = NSMutableAttributedString(string: fullText)
+//                // Change time part color
+//                if let timeRange = fullText.range(of: timeString) {
+//                    let nsRange = NSRange(timeRange, in: fullText)
+//                    attributedText.addAttribute(.foregroundColor, value: UIColor.gray, range: nsRange)
+//                }
+//                
+//                cell.datelbl.attributedText = attributedText
+//            }
+//
             let voiceData = VoiceHistory?[indexPath.row]
-            cell.updatePlayState(isPlaying: isPlaying, url: voiceData?.url)
-            cell.playBtn.tag = indexPath.row
-            cell.sendbtn.tag = indexPath.row
-            cell.delegate = self
-            cell.ForwordDelegate = self
-            cell.FinishPlayingdelegate = self
-            cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
+            cell.emergencyBtnName.isHidden = true
+            if let sentOn = voiceData?.sent_on {
+                cell.dateLbl.attributedText = formattedDateTimeText(from: sentOn)
+            }
+            cell.selectedAudioDelegate = self
+            cell.selectBtnName.tag = indexPath.row
+            cell.waveView.durationLabel.isHidden = true
+            cell.titleLbl.text = voiceData?.title
+            cell.selectBtnHeight.constant = 30
             let duration = voiceData?.duration ?? 0
-            let formatted = formatDuration(duration)
-            cell.totaltime.text = "00:00 / \(formatted)"
-            cell.contentlbl.text = voiceData?.title ?? ""
-            if !isPlaying {
-                cell.playerView.progress = 0.0
-                cell.playerView.updateWithLevel(0.0)
-                cell.playerView.setNeedsDisplay()
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                cell.configureShimmer()
-            }
-            
-            if let sentOn = voiceData?.sent_on,
-               let date = DateFormatterHelper.shared.parseDate(from: sentOn) {
-                let dateString = DateFormatterHelper.shared.formatDateToDayMonthYear(date: date) // "11 Apr 2025"
-                let timeString = DateFormatterHelper.shared.formatTime(date: date) // "01:04 PM"
-                let fullText = "\(dateString) \(timeString)" // "11 Apr 2025 01:04 PM"
-                let attributedText = NSMutableAttributedString(string: fullText)
-                // Change time part color
-                if let timeRange = fullText.range(of: timeString) {
-                    let nsRange = NSRange(timeRange, in: fullText)
-                    attributedText.addAttribute(.foregroundColor, value: UIColor.gray, range: nsRange)
-                }
-                
-                cell.datelbl.attributedText = attributedText
-            }
-            
+            let formattedDuration = formatDuration(duration)
+            cell.tottalDurationLbl.text = formattedDuration
+                cell.newImageView.isHidden = true
+            configureAudioCell(cell, at: indexPath)
             
             return cell
         }
@@ -1685,7 +1778,33 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         return UITableView.automaticDimension
     }
     
+    func formattedDateTimeText(from sentOn: String) -> NSAttributedString? {
+        guard let date = DateFormatterHelper.shared.parseDate(from: sentOn) else {
+            return nil
+        }
+        let dateString = DateFormatterHelper.shared.formatDateToDayMonthYear(date: date)   // "11 Apr 2025"
+        let timeString = DateFormatterHelper.shared.formatTime(date: date)                // "01:04 PM"
+        let fullText = "\(dateString) \(timeString)"
+        let attributedText = NSMutableAttributedString(string: fullText)
+        // Change only time color
+        if let timeRange = fullText.range(of: timeString) {
+            let nsRange = NSRange(timeRange, in: fullText)
+            attributedText.addAttribute(.foregroundColor, value: UIColor.gray, range: nsRange)
+        }
+        return attributedText
+    }
     
+    private func configureAudioCell(_ cell: CommunicationTVC, at indexPath: IndexPath) {
+        let file = VoiceHistory?[indexPath.item]
+        if let urlString = file?.url,
+           let url = URL(string: urlString) {
+            cell.audioURL = url
+        }
+        cell.audioDelegate = self
+        cell.cellIndex = indexPath.item
+        cell.waveView.setParentCell(cell)
+       
+    }
     
     func playTapped(at index: Int) {
         if playIndex != index {

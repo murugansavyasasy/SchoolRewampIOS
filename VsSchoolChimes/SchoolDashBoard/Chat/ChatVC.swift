@@ -201,7 +201,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     }
     func getStaff(){
         APIService.shared
-            .makeApi(url: ServiceUrl.interaction_get_staff_answers , parameters: [ChatAPIKeys.staffId : staffMembersData.id ?? "",ChatAPIKeys.subjectId:staffMembersData.subject_id ?? "",ChatAPIKeys.offset:0,ChatAPIKeys.isClassTeacher:staffMembersData.is_class_teacher ?? false], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? ""){ [self] (
+            .makeApi(url: ServiceUrl.interaction_get_staff_answers , parameters: [ChatAPIKeys.staffId : staffMembersData.id ?? "",ChatAPIKeys.subjectId:staffMembersData.subject_id ?? "",ChatAPIKeys.offset:0,ChatAPIKeys.isClassTeacher:staffMembersData.is_class_teacher ?? false], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "", isBaseUrl: false){ [self] (
                 result:Result <ChatMessageSuc,Error>
             ) in
                 switch result {
@@ -242,7 +242,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
                 url: ServiceUrl.interaction_student_ask_question,
                 parameters: parameters,
                 type: ApitTypeSringFile.POST,
-                token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+                token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true
             ) { [weak self] (result: Result<MessageSuc, Error>) in
                 guard let self = self else { return }
                 switch result {
