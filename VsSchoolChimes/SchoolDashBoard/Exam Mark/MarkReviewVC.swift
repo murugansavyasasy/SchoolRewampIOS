@@ -8,146 +8,552 @@
 import UIKit
 
 class MarkReviewVC: UIViewController {
-
-    @IBOutlet weak var headerHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var errorDeclarationLbl: UILabel!
+    @IBOutlet weak var nameWith: NSLayoutConstraint!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var studentTableView: UITableView!
     @IBOutlet weak var saveMarksBtn: UIButton!
     @IBOutlet weak var subjectsCollectionView: UICollectionView!
     
-    var studentRecords: [StudentRecord] = []
-    private var subjectColumns: [ColumnConfig] = []
+    var studentRecords: [StudentMark] = []
+    var aiRecords: [ConvertedStudentRecord] = []
+    var subjectColumns: [ColumnConfig] = []
     private var isSyncing = false
-    private var editedMarks: [String: [String: String]] = [:]
+    var editedMarks: [String: [String: String]] = [:]
+    private var currentVerticalOffset: CGFloat = 0
+    var payload:[String:Any]?
+    private var isNameWidthCalculated = false
+    private var isAdjustingForKeyboard = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        loadData()
-        setupColumns()
-        if #available(iOS 15.0, *) {
-            studentTableView.sectionHeaderTopPadding = 0
-        }
         saveMarksBtn.layer.cornerRadius = 8
-        
+        // ✅ Don't setup columns here - wait for data
+        Get_Marks(parameters: payload ?? [:])
     }
     
-    // MARK: - Setup Columns (Dynamic from StudentRecords)
+    var activeTextField: UITextField?
+    var keyboardHeight: CGFloat = 0
     
-    private func setupColumns() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(notification:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(notification:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
 
-        subjectColumns.removeAll()
+        guard !isNameWidthCalculated else { return }
+        isNameWidthCalculated = true
+        updateNameColumnWidth()
+    }
 
-        var uniqueSubjects: [String] = []
-        var subjectMaxMarks: [String: Int] = [:]
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func keyboardWillShow(notification: Notification) {
 
-        for record in studentRecords {
-            if let subjects = record.subjects {
-                for subject in subjects {
-                    let subjectName = subject.Subject
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
 
-                    if !uniqueSubjects.contains(subjectName) {
-                        uniqueSubjects.append(subjectName)
+        let inset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height - 70, right: 0)
+        isAdjustingForKeyboard = true
+        studentTableView.contentInset = inset
+        studentTableView.scrollIndicatorInsets = inset
+        for cell in subjectsCollectionView.visibleCells {
+            if let colCell = cell as? MarkReviewCVC {
+                colCell.listTable.contentInset = inset
+                colCell.listTable.scrollIndicatorInsets = inset
+            }
+        }
+
+        isAdjustingForKeyboard = false
+    }
+
+    
+    @objc func keyboardWillHide(notification: Notification) {
+
+        let inset = UIEdgeInsets.zero
+
+        isAdjustingForKeyboard = true
+
+        studentTableView.contentInset = inset
+        studentTableView.scrollIndicatorInsets = inset
+
+        for cell in subjectsCollectionView.visibleCells {
+            if let colCell = cell as? MarkReviewCVC {
+                colCell.listTable.contentInset = inset
+                colCell.listTable.scrollIndicatorInsets = inset
+            }
+        }
+
+        isAdjustingForKeyboard = false
+    }
+
+    
+    func Get_Marks(parameters payload: [String: Any]) {
+        let parameters = buildGetMarksParams(from: payload)
+
+        APIService.shared.makeApi(
+            url: ServiceUrl.exam_api_exam_get_mark_details,
+            parameters: parameters,
+            type: ApitTypeSringFile.POST,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<MarkDetailsResponse, Error>) in
+
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+
+                switch result {
+                case .success(let response):
+                    if let data = response.data, !data.isEmpty {
+                        self.studentRecords = data
+                        self.setupColumnsFromPayload(self.payload ?? [:])
+                        
+                        self.mapActivityNamesFromColumns()
+                        if !self.aiRecords.isEmpty {
+                            self.updateMarksWithAIData()
+                        } else {
+                            self.errorDeclarationLbl.text = "⚠️ \(self.getFormattedReasonSummary())"
+                            self.isNameWidthCalculated = false
+                            self.studentTableView.reloadData()
+                            self.subjectsCollectionView.reloadData()
+                        }
                     }
 
-                    if subjectMaxMarks[subjectName] == nil {
-                        subjectMaxMarks[subjectName] = 100
+                case .failure(let error):
+                    print("❌ Error:", error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func updateMarksWithAIData() {
+
+        // STEP 1: Map activityId → displayName
+        for studentIndex in 0..<studentRecords.count {
+            for subjectIndex in 0..<(studentRecords[studentIndex].marks?.count ?? 0) {
+                for activityIndex in 0..<(studentRecords[studentIndex].marks?[subjectIndex].activities?.count ?? 0) {
+
+                    let activityId = studentRecords[studentIndex]
+                        .marks?[subjectIndex]
+                        .activities?[activityIndex]
+                        .id ?? ""
+
+                    if let matchingColumn = subjectColumns.first(where: { $0.activityId == activityId }) {
+                        let displayName = matchingColumn.activityName ?? matchingColumn.displayName ?? ""
+                        studentRecords[studentIndex]
+                            .marks?[subjectIndex]
+                            .activities?[activityIndex]
+                            .selectedName = displayName
                     }
                 }
             }
         }
 
-        uniqueSubjects.sort()
+        // STEP 2: Merge AI marks safely
+        for studentIndex in 0..<studentRecords.count {
 
-        for subjectName in uniqueSubjects {
-            subjectColumns.append(
-                ColumnConfig(
-                    displayName: subjectName,
-                    type: .subject,
-                    keyPath: nil,
-                    subjectName: subjectName,
-                    maxMarks: subjectMaxMarks[subjectName] ?? 100,
-                    width: 120
-                )
-            )
+            guard let studentId = studentRecords[studentIndex].student_id,
+                  let aiStudent = aiRecords.first(where: { $0.studentId == studentId }) else {
+                continue
+            }
+
+            for subjectIndex in 0..<(studentRecords[studentIndex].marks?.count ?? 0) {
+
+                guard let activities = studentRecords[studentIndex].marks?[subjectIndex].activities else {
+                    continue
+                }
+
+                for activityIndex in 0..<activities.count {
+
+                    let currentMark = studentRecords[studentIndex]
+                        .marks?[subjectIndex]
+                        .activities?[activityIndex]
+                        .mark ?? ""
+
+                    let selectedName = studentRecords[studentIndex]
+                        .marks?[subjectIndex]
+                        .activities?[activityIndex]
+                        .selectedName ?? ""
+
+                    guard let aiMark = aiStudent.marks.first(where: {
+                        normalizeName($0.name) == normalizeName(selectedName)
+                    }) else { continue }
+
+                    let aiValue = aiMark.value
+                    let aiReason = aiMark.reason ?? ""
+                    let aiReviewStatus = aiMark.isReview
+                    if !aiValue.isEmpty {
+
+                        // Only accept valid numeric AI values
+                        if let _ = Int(aiValue) {
+
+                            if !currentMark.isEmpty && currentMark != aiValue {
+
+                                studentRecords[studentIndex]
+                                    .marks?[subjectIndex]
+                                    .activities?[activityIndex]
+                                    .change_mark = currentMark
+
+                                studentRecords[studentIndex]
+                                    .marks?[subjectIndex]
+                                    .activities?[activityIndex]
+                                    .mark = aiValue
+
+                                studentRecords[studentIndex]
+                                    .marks?[subjectIndex]
+                                    .activities?[activityIndex]
+                                    .reason = "Existing marks differ from the newly uploaded data."
+
+                            } else if currentMark.isEmpty {
+
+                                studentRecords[studentIndex]
+                                    .marks?[subjectIndex]
+                                    .activities?[activityIndex]
+                                    .mark = aiValue
+                            }
+
+                        } else {
+                            studentRecords[studentIndex]
+                                .marks?[subjectIndex]
+                                .activities?[activityIndex]
+                                .change_mark = currentMark
+
+                            studentRecords[studentIndex]
+                                .marks?[subjectIndex]
+                                .activities?[activityIndex]
+                                .mark = ""
+
+                            studentRecords[studentIndex]
+                                .marks?[subjectIndex]
+                                .activities?[activityIndex]
+                                .reason = aiValue
+                        }
+
+                        studentRecords[studentIndex]
+                            .marks?[subjectIndex]
+                            .activities?[activityIndex]
+                            .isReview = aiReviewStatus
+
+                    } else if !currentMark.isEmpty, !aiReason.isEmpty {
+
+                        studentRecords[studentIndex]
+                            .marks?[subjectIndex]
+                            .activities?[activityIndex]
+                            .isReview = aiReviewStatus
+
+                        studentRecords[studentIndex]
+                            .marks?[subjectIndex]
+                            .activities?[activityIndex]
+                            .reason = aiReason
+                    }
+                }
+            }
+        }
+
+        // STEP 3: Reload UI
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.errorDeclarationLbl.text = "⚠️ \(self.getFormattedReasonSummary())"
+            self.isNameWidthCalculated = false
+            self.studentTableView.reloadData()
+            self.subjectsCollectionView.reloadData()
+            self.printaiRecordsJSON()
         }
     }
 
+    func printaiRecordsJSON() {
+
+        do {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+
+            let jsonData = try encoder.encode(self.studentRecords)
+
+            if let jsonString = String(data: jsonData, encoding: .utf8) {
+                print("\n=========== Student RECORDS JSON ===========\n")
+                print(jsonString)
+                print("\n===========================================\n")
+            }
+        } catch {
+            print("❌ JSON Encode Error:", error.localizedDescription)
+        }
+    }
+    private func mapActivityNamesFromColumns() {
+
+        guard !self.subjectColumns.isEmpty else { return }
+
+        for studentIndex in 0..<self.studentRecords.count {
+
+            for subjectIndex in 0..<(self.studentRecords[studentIndex].marks?.count ?? 0) {
+
+                guard let activities = self.studentRecords[studentIndex]
+                    .marks?[subjectIndex].activities else { continue }
+
+                for activityIndex in 0..<activities.count {
+
+                    let activityId = activities[activityIndex].name ?? ""
+
+                    if let column = self.subjectColumns.first(where: { $0.activityName == activityId }) {
+
+                        self.studentRecords[studentIndex]
+                            .marks?[subjectIndex]
+                            .activities?[activityIndex]
+                            .selectedName = column.activityName ?? column.displayName
+                    }
+                }
+            }
+        }
+    }
+
+    private func updateNameColumnWidth() {
+
+        subjectsCollectionView.layoutIfNeeded()
+
+        let frameWidth = view.bounds.width
+        let contentWidth = subjectsCollectionView
+            .collectionViewLayout
+            .collectionViewContentSize.width
+
+        let baseNameWidth: CGFloat = 160
+        let availableWidth = frameWidth - baseNameWidth
+
+        if contentWidth < availableWidth {
+            nameWith.constant = baseNameWidth + (availableWidth - contentWidth)
+        } else {
+            nameWith.constant = baseNameWidth
+        }
+    }
+
+    func normalizeName(_ text: String) -> String {
+        return text
+            .lowercased()
+            .replacingOccurrences(of: " ", with: "")
+            .replacingOccurrences(of: "-", with: "")
+            .replacingOccurrences(of: "_", with: "")
+            .replacingOccurrences(of: ".", with: "")
+    }
     
-    @IBAction func saveAllMarks(_ sender: UIButton) {
-        var marksData: [[String: Any]] = []
+    func buildGetMarksParams(from payload: [String: Any]) -> [String: Any] {
         
-        // Iterate through all students
-        for student in studentRecords {
-            guard let studentName = student.studentName,
-                  let subjects = student.subjects else { continue }
-            for subject in subjects {
-                // Check if mark was edited
-                let editedMark = editedMarks[studentName]?[subject.Subject]
-                let finalMark = editedMark ?? subject.value
+        let classId   = payload["class_id"] as? String ?? ""
+        let sectionId = payload["section_id"] as? String ?? ""
+        let examId    = payload["exam_id"] as? String ?? ""
+        
+        var resultActivities: [[String: Any]] = []
+        
+        guard let selected = payload["selected_activities"] as? [[String: Any]] else {
+            return [:]
+        }
+        
+        for subject in selected {
+            
+            let subjectId = subject["subject_id"] as? String ?? ""
+            var activityIds: [String] = []
+            
+            if let activities = subject["activities"] as? [[String: Any]] {
                 
-                let markEntry: [String: Any] = [
-                    "studentId": studentName,
-                    "studentRegNo": student.regNo ?? 0,
-                    "subject": subject.Subject,
-                    "mark": finalMark,
-                    "originalMark": subject.value,
-                    "isEdited": editedMark != nil,
-                    "confidenceLevel": subject.cnfidenceLvl,
-                    "reason": subject.reason
-                ]
-                marksData.append(markEntry)
+                for act in activities {
+                    if let actId = act["activity_id"] as? String {
+                        activityIds.append(actId)
+                    }
+                }
+            }
+            
+            resultActivities.append([
+                "subject_id": subjectId,
+                "activities": activityIds
+            ])
+        }
+        
+        return [
+            "class_id": classId,
+            "section_id": sectionId,
+            "exam_id": examId,
+            "selected_activities": resultActivities
+        ]
+    }
+    
+    private func setupColumnsFromPayload(_ payload: [String: Any]) {
+        
+        subjectColumns.removeAll()
+        var uniqueKeys = Set<String>()
+        
+        guard let selectedActivities = payload["selected_activities"] as? [[String: Any]] else {
+            return
+        }
+        
+        for subjectDict in selectedActivities {
+            
+            let subjectId   = subjectDict["subject_id"] as? String ?? ""
+            let subjectName = subjectDict["subject_name"] as? String ?? ""
+            
+            guard let activities = subjectDict["activities"] as? [[String: Any]] else { continue }
+            
+            for activity in activities {
+                
+                let activityId   = activity["activity_id"] as? String ?? ""
+                let activityName = activity["activity_name"] as? String ?? ""
+                let aiOption     = activity["ai_option"] as? String ?? ""
+                let maxMarkStr   = activity["max_mark"] as? String ?? "100"
+                let maxMark      = Int(maxMarkStr) ?? 100
+                let displayName = aiOption.isEmpty ? activityName : aiOption
+                
+                let uniqueKey = "\(subjectId)_\(activityId)"
+                
+                if !uniqueKeys.contains(uniqueKey) {
+                    
+                    uniqueKeys.insert(uniqueKey)
+                    
+                    subjectColumns.append(
+                        ColumnConfig(
+                            displayName: activityName,
+                            subjectName: subjectName,
+                            subjectId: subjectId,
+                            activityId: activityId,
+                            activityName: displayName,
+                            maxMarks: maxMark
+                        )
+                    )
+                }
             }
         }
         
-        // Print for debugging
-        print("✅ Total marks collected: \(marksData.count)")
-        print("📊 Marks Data: \(marksData)")
-        print("📝 Edited marks: \(editedMarks)")
-        
-        // Use this data to send to API or save locally
-        sendMarksToAPI(marksData)
+        subjectColumns.sort { $0.subjectName ?? "" < $1.subjectName ?? ""}
     }
     
-    // MARK: - API Call to Save Marks
     
-    private func sendMarksToAPI(_ marksData: [[String: Any]]) {
-        guard !isSyncing else {
-            print("⚠️ Already syncing, skipping save")
+    @IBAction func saveAllMarks(_ sender: UIButton) {
+        
+        var marksPayload: [[String: Any]] = []
+        var invalidMarkCount = 0
+
+        for studentIndex in 0..<studentRecords.count {
+            let student = studentRecords[studentIndex]
+            var studentMarks: [[String: Any]] = []
+
+            for subject in student.marks ?? [] {
+                var activitiesArray: [[String: Any]] = []
+
+                for activity in subject.activities ?? [] {
+
+                    let key = "\(subject.subject_id ?? "")_\(activity.id ?? "")"
+                    let editedMark = editedMarks[student.roll_no ?? ""]?[key]
+
+                    let finalMarkStr = editedMark ?? activity.mark ?? ""
+                    let maxMarkStr   = activity.max_mark ?? ""
+
+                    let finalMark = Double(finalMarkStr) ?? 0
+                    let maxMark   = Double(maxMarkStr) ?? 0
+
+                    if finalMark > maxMark {
+                        invalidMarkCount += 1
+                    }
+
+                    activitiesArray.append([
+                        "id": activity.id ?? "",
+                        "name": activity.name ?? "",
+                        "mark": finalMarkStr,
+                        "max_mark": maxMarkStr
+                    ])
+                }
+
+                studentMarks.append([
+                    "subject_id": subject.subject_id ?? "",
+                    "subject_name": subject.subject_name ?? "",
+                    "activities": activitiesArray
+                ])
+            }
+
+            marksPayload.append([
+                "student_id": student.student_id ?? "",
+                "student_name": student.student_name ?? "",
+                "roll_no": student.roll_no ?? "",
+                "admission_no": student.admission_no ?? "",
+                "marks": studentMarks
+            ])
+        }
+
+        if invalidMarkCount > 0 {
+            CustomAlert().showAlert(
+                title: "Invalid Marks",
+                message: "\(invalidMarkCount) marks are greater than Max Mark. Please correct them before saving.",
+                on: self
+            )
             return
         }
+
+        CustomAlert().showAlertCancel(
+            title: AlertstringFile.Confirm,
+            message: AlertstringFile.uploadMark,
+            actionLbl1: AlertstringFile.save,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: {
+                self.sendMarksToAPI(with: marksPayload)
+            },
+            onNo: {
+                print("User canceled upload")
+            }
+        )
+    }
+    
+    func sendMarksToAPI(with parameters: [[String: Any]]) {
         
+        guard !isSyncing else {
+            print("⚠️ Already syncing")
+            return
+        }
         isSyncing = true
         saveMarksBtn.isEnabled = false
         
-        // Show loading indicator
         let loadingAlert = UIAlertController(title: "Saving Marks", message: "Please wait...", preferredStyle: .alert)
         present(loadingAlert, animated: true)
-        
-        // Prepare JSON payload
-        let payload: [String: Any] = [
-            "records": marksData,
-            "timestamp": ISO8601DateFormatter().string(from: Date()),
-            "totalRecords": marksData.count
-        ]
-        
-        // Convert to JSON data
-        guard let jsonData = try? JSONSerialization.data(withJSONObject: payload, options: .prettyPrinted) else {
-            print("❌ Failed to serialize JSON")
-            isSyncing = false
-            saveMarksBtn.isEnabled = true
-            loadingAlert.dismiss(animated: true)
-            showAlert(title: "Error", message: "Failed to prepare data for saving")
-            return
+        APIService.shared.PtmApi(url:  ServiceUrl.exam_api_exam_upload_marks, parameters: parameters, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [weak self] (result: Result<Send_AttachmentResponse, Error>) in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self.isSyncing = false
+                self.saveMarksBtn.isEnabled = true
+                loadingAlert.dismiss(animated: true) {
+                    
+                    switch result {
+                        
+                    case .success(let response):
+                        CustomAlert.showAlertWithOkAction(
+                            title: response.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
+                            message: response.message,
+                            on: self
+                        ) {
+                            self.dismiss(animated: true)
+                        }
+                        
+                    case .failure(_):
+                        CustomAlert.showAlertWithOkAction(
+                            title: AlertstringFile.Alert_title,
+                            message: "Failed to upload marks. Please try again.",
+                            on: self
+                        ) { }
+                    }
+                }
+            }
         }
-        
-    }
-    
-    // MARK: - Helper Alert
-    
-    private func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
     }
     
     @IBAction func back(_ sender: UIButton) {
@@ -163,7 +569,7 @@ class MarkReviewVC: UIViewController {
     
     private func setupStudentTable() {
         studentTableView.register(UINib(nibName: "StudentNameTVC", bundle: nil),
-                                 forCellReuseIdentifier: "StudentNameTVC")
+                                  forCellReuseIdentifier: "StudentNameTVC")
         
         studentTableView.dataSource = self
         studentTableView.delegate = self
@@ -179,131 +585,163 @@ class MarkReviewVC: UIViewController {
     }
     
     private func setupSubjectsCollection() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        
-        subjectsCollectionView.collectionViewLayout = layout
-        subjectsCollectionView.register(UINib(nibName: "MarkReviewCVC", bundle: nil),
-                                       forCellWithReuseIdentifier: "MarkReviewCVC")
-        
-        subjectsCollectionView.dataSource = self
-        subjectsCollectionView.delegate = self
-        subjectsCollectionView.showsHorizontalScrollIndicator = true
-        subjectsCollectionView.bounces = true
-        subjectsCollectionView.backgroundColor = .systemBackground
-    }
-    
-    // MARK: - Data Loading
-    
-    private func loadData() {
-
-        studentRecords.removeAll()
-
-        for i in 1...40 {
-
-            let name = i <= 10 ? ["ARUN K","DIVYA R","KARTHIK M","SNEHA P","RAHUL S",
-                                  "PRIYA T","NAVEEN B","MEENA L","SANJAY D","LATHA V"][i-1]
-                               : "STUDENT \(i)"
-
-            let student = StudentRecord(
-                sNo: i,
-                regNo: 1000 + i,
-                studentName: name,
-                subjects: makeSubjects(name: name, i: i)
-            )
-
-            studentRecords.append(student)
-        }
-
-        studentTableView.reloadData()
-        subjectsCollectionView.reloadData()
-    }
-
-    func makeSubjects(name: String, i: Int) -> [Subjects] {
-
-        func mark(_ val: Int) -> String {
-            if val > 100 { return "105" }
-            return "\(val)"
-        }
-
-        return [
-            Subjects(student_id: name, Subject: "TERM I SCI", value: mark(70 + i % 20), cnfidenceLvl: true, reason: ""),
-            Subjects(student_id: name, Subject: "TERM II SCI", value: mark(72 + i % 18), cnfidenceLvl: true, reason: ""),
-            Subjects(student_id: name, Subject: "TERM III SCI", value: "AB", cnfidenceLvl: false, reason: "Invalid mark"),
-
-            Subjects(student_id: name, Subject: "TERM I ENG", value: mark(68 + i % 15), cnfidenceLvl: true, reason: ""),
-            Subjects(student_id: name, Subject: "TERM II ENG", value: "110", cnfidenceLvl: false, reason: "Marks out of range"),
-            Subjects(student_id: name, Subject: "TERM III ENG", value: mark(72 + i % 13), cnfidenceLvl: true, reason: ""),
-
-            Subjects(student_id: name, Subject: "TERM I SOCIAL", value: mark(65 + i % 12), cnfidenceLvl: true, reason: ""),
-            Subjects(student_id: name, Subject: "TERM II SOCIAL", value: "", cnfidenceLvl: false, reason: "Invalid mark"),
-            Subjects(student_id: name, Subject: "TERM III SOCIAL", value: mark(67 + i % 10), cnfidenceLvl: true, reason: "")
-        ]
-    }
-
-    // MARK: - API Integration
-    
-    func loadFromAPI(jsonData: Data) {
-        let decoder = JSONDecoder()
-        do {
-            let response = try decoder.decode(StudentResponse.self, from: jsonData)
-            studentRecords = response.records
-            
-            setupColumns()
-            studentTableView.reloadData()
-            subjectsCollectionView.reloadData()
-        } catch {
-            print("❌ Decode error: \(error)")
-        }
-    }
+         let layout = UICollectionViewFlowLayout()
+         layout.scrollDirection = .horizontal
+         layout.minimumLineSpacing = 0
+         layout.minimumInteritemSpacing = 0
+         
+         subjectsCollectionView.collectionViewLayout = layout
+         subjectsCollectionView.register(UINib(nibName: "MarkReviewCVC", bundle: nil),
+                                        forCellWithReuseIdentifier: "MarkReviewCVC")
+         
+         subjectsCollectionView.dataSource = self
+         subjectsCollectionView.delegate = self
+         subjectsCollectionView.showsHorizontalScrollIndicator = true
+         subjectsCollectionView.bounces = true
+         subjectsCollectionView.backgroundColor = .systemBackground
+     }
     
     // MARK: - Scroll Synchronization
-    
     func syncVerticalScroll(from sender: UIScrollView, offset: CGPoint) {
         guard !isSyncing else { return }
         isSyncing = true
+        currentVerticalOffset = offset.y
         if studentTableView != sender {
-            let syncOffset = CGPoint(x: 0, y: offset.y)
-            studentTableView.setContentOffset(syncOffset, animated: false)
+            studentTableView.setContentOffset(
+                CGPoint(x: 0, y: offset.y),
+                animated: false
+            )
         }
         for cell in subjectsCollectionView.visibleCells {
             if let colCell = cell as? MarkReviewCVC,
                colCell.listTable != sender {
-                colCell.listTable.setContentOffset(offset, animated: false)
+                colCell.listTable.setContentOffset(
+                    CGPoint(x: 0, y: offset.y),
+                    animated: false
+                )
             }
         }
         
         isSyncing = false
     }
     
-    // MARK: - Data Access & Updates
+    func getCurrentVerticalOffset() -> CGFloat {
+        return currentVerticalOffset
+    }
     
-    func updateMark(row: Int, column: Int, value: String) {
+    func restoreVerticalPosition(for tableView: UITableView) {
+        guard !isSyncing else { return }
+        if tableView.contentOffset.y != currentVerticalOffset {
+            tableView.setContentOffset(
+                CGPoint(x: 0, y: currentVerticalOffset),
+                animated: false
+            )
+        }
+    }
+    
+    func moveToNextColumn(row: Int, column: Int) {
+        focusTextField(row: row, column: column + 1)
+    }
+    
+    func moveToPreviousColumn(row: Int, column: Int) {
+        focusTextField(row: row, column: column - 1)
+    }
+    
+    func moveToNextRow(row: Int, column: Int) {
+        focusTextField(row: row + 1, column: column)
+    }
+    
+    func moveToPreviousRow(row: Int, column: Int) {
+        focusTextField(row: row - 1, column: column)
+    }
+    
+    func focusTextField(row: Int, column: Int) {
+        
+        guard row >= 0, column >= 0,
+              row < studentRecords.count,
+              column < subjectColumns.count else { return }
+        
+        let rowIndexPath = IndexPath(row: row, section: 0)
+        let colIndexPath = IndexPath(item: column, section: 0)
+        
+        // Horizontal scroll
+        subjectsCollectionView.scrollToItem(at: colIndexPath,
+                                            at: .centeredHorizontally,
+                                            animated: false)
+        
+        // Vertical scroll
+        studentTableView.scrollToRow(at: rowIndexPath,
+                                     at: .middle,
+                                     animated: false)
+        
+        DispatchQueue.main.async {
+            
+            guard let columnCell = self.subjectsCollectionView.cellForItem(at: colIndexPath) as? MarkReviewCVC else { return }
+            
+            columnCell.listTable.scrollToRow(at: rowIndexPath,
+                                             at: .middle,
+                                             animated: false)
+            
+            DispatchQueue.main.async {
+                
+                if let cell = columnCell.listTable.cellForRow(at: rowIndexPath) as? MarkReviewTVC {
+                    cell.markTxt.becomeFirstResponder()
+                }
+            }
+        }
+    }
+    
+    
+    func updateMark(row: Int, column: Int, value: String, reson: String) {
+        
         guard row < studentRecords.count,
               column < subjectColumns.count else { return }
         
-        let student = studentRecords[row]
-        let colConfig = subjectColumns[column]
+        let col = subjectColumns[column]
+        let rollNo = studentRecords[row].roll_no ?? ""
+        let trimmed = value.trimmingCharacters(in: .whitespaces)
         
-        guard var studentSubjects = student.subjects,
-              let studentId = student.studentName,
-              let subjectName = colConfig.subjectName else { return }
-        if editedMarks[studentId] == nil {
-            editedMarks[studentId] = [:]
-        }
-        editedMarks[studentId]?[subjectName] = value
-        if let index = studentSubjects.firstIndex(where: { $0.Subject == subjectName }) {
-            studentSubjects[index].value = value
-            studentRecords[row].subjects = studentSubjects
+        var hasError = false
+        if let entered = Int(trimmed) {
+            hasError = entered < 0 || entered > (col.maxMarks ?? 0)
+        } else {
+            hasError = true
         }
         
-        print("✅ Mark updated immediately:")
-        print("   Student: \(studentId)")
-        print("   Subject: \(subjectName)")
-        print("   New Value: \(value)")
-        print("   Edited Marks: \(editedMarks)")
+        let key = makeMarkKey(col: col)
+        
+        if editedMarks[rollNo] == nil { editedMarks[rollNo] = [:] }
+        editedMarks[rollNo]?[key] = trimmed
+        
+        for s in 0..<(studentRecords[row].marks?.count ?? 0) {
+            
+            for a in 0..<(studentRecords[row].marks?[s].activities?.count ?? 0) {
+                
+                let activity = studentRecords[row].marks?[s].activities?[a]
+                
+                guard activity?.name == col.activityName else { continue }
+                
+                let original = activity?.mark ?? ""
+                
+                studentRecords[row].marks?[s].activities?[a].mark = trimmed
+                studentRecords[row].marks?[s].activities?[a].isReview = !hasError
+                studentRecords[row].marks?[s].activities?[a].reason = reson
+                
+                errorDeclarationLbl.text = "⚠️ \(getFormattedReasonSummary())"
+                
+                if trimmed == original {
+                    editedMarks[rollNo]?.removeValue(forKey: key)
+                    if editedMarks[rollNo]?.isEmpty == true {
+                        editedMarks.removeValue(forKey: rollNo)
+                    }
+                }
+                return
+            }
+        }
+    }
+    
+    func makeMarkKey(col: ColumnConfig) -> String {
+        return "AN:\(col.activityName ?? UUID().uuidString)"
     }
 }
 
@@ -313,7 +751,7 @@ extension MarkReviewVC: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return studentRecords.count
     }
@@ -323,45 +761,54 @@ extension MarkReviewVC: UITableViewDataSource, UITableViewDelegate {
                                                  for: indexPath) as! StudentNameTVC
         
         let record = studentRecords[indexPath.row]
-        cell.configure(name: record.studentName ?? "Unknown", rollNo: "\(record.regNo ?? 0)")
+        cell.configure(name: record.student_name ?? "Unknown", rollNo: "\(record.roll_no ?? "")")
         
         return cell
     }
     
     func tableView(_ tableView: UITableView,
                    heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        let subject = studentRecords[indexPath.row]
-
-        let text = subject.studentName ?? ""
-        let font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        
+        let student = studentRecords[indexPath.row]
+        let name = student.student_name ?? ""
+        let rollNo = student.roll_no ?? ""
+        
+        let nameFont = UIFont.systemFont(ofSize: 16, weight: .medium)
+        let rollFont = UIFont.systemFont(ofSize: 13, weight: .regular)
+        
         let labelWidth: CGFloat = 160
-
-        let dynamicHeight = textHeight(text: text,
-                                       font: font,
-                                       width: labelWidth)
-
-        return max(50, dynamicHeight + 20)
+        
+        let nameHeight = textHeight(text: name, font: nameFont, width: labelWidth)
+        let rollHeight = textHeight(text: "Roll No: \(rollNo)", font: rollFont, width: labelWidth)
+        
+        let totalHeight = nameHeight + rollHeight + 24
+        return max(50, totalHeight)
     }
     
     func textHeight(text: String, font: UIFont, width: CGFloat) -> CGFloat {
-
+        
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-
+        
         let boundingBox = text.boundingRect(
             with: constraintRect,
             options: [.usesLineFragmentOrigin, .usesFontLeading],
             attributes: [.font: font],
             context: nil
         )
-
+        
         return ceil(boundingBox.height)
     }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == studentTableView {
+            // Prevent horizontal scroll
             if scrollView.contentOffset.x != 0 {
-                scrollView.setContentOffset(CGPoint(x: 0, y: scrollView.contentOffset.y), animated: false)
+                scrollView.setContentOffset(
+                    CGPoint(x: 0, y: scrollView.contentOffset.y),
+                    animated: false
+                )
             }
+            // Sync vertical scroll
             syncVerticalScroll(from: scrollView, offset: scrollView.contentOffset)
         }
     }
@@ -376,7 +823,8 @@ extension MarkReviewVC: UICollectionViewDataSource, UICollectionViewDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView,
-                       cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MarkReviewCVC",
                                                       for: indexPath) as! MarkReviewCVC
         
@@ -387,10 +835,23 @@ extension MarkReviewVC: UICollectionViewDataSource, UICollectionViewDelegate, UI
             studentRecords: studentRecords,
             parentVC: self)
         
-//        cell.layer.borderWidth = 0.5
-//        cell.layer.borderColor = UIColor.systemGray4.cgColor
-//        cell.backgroundColor = .systemBackground
-//        cell.contentView.backgroundColor = .systemBackground
+        // Reset any previous border first
+        cell.layer.sublayers?.removeAll(where: { $0.name == "rightBorder" })
+        
+        // Add right border only for last cell
+        if indexPath.item == subjectColumns.count - 1 {
+            let borderWidth: CGFloat = 1.0
+            let border = CALayer()
+            border.name = "rightBorder"
+            border.backgroundColor = UIColor.systemGray4.cgColor
+            border.frame = CGRect(
+                x: cell.bounds.width - borderWidth,
+                y: 0,
+                width: borderWidth,
+                height: cell.bounds.height
+            )
+            cell.layer.addSublayer(border)
+        }
         
         return cell
     }
@@ -398,90 +859,121 @@ extension MarkReviewVC: UICollectionViewDataSource, UICollectionViewDelegate, UI
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-
+        
         let column = subjectColumns[indexPath.item]
         
-
         var widths: [CGFloat] = []
-
-        let display = column.displayName
+        
+        if let display = column.displayName {
             let font = UIFont.systemFont(ofSize: 13, weight: .medium)
             widths.append(display.width(usingFont: font))
-
+        }
+        
         if let subject = column.subjectName {
             let font = UIFont.systemFont(ofSize: 13, weight: .bold)
             widths.append(subject.width(usingFont: font))
         }
-
+        
         if let max = column.maxMarks {
             let font = UIFont.systemFont(ofSize: 12, weight: .regular)
-            widths.append("Max :\(max)".width(usingFont: font))
+            widths.append("Max: \(max)".width(usingFont: font))
         }
-
+        
         let padding: CGFloat = 24
-        let minWidth: CGFloat = 60
-
+        let minWidth: CGFloat = 110
         let maxTextWidth = widths.max() ?? minWidth
         let finalWidth = max(maxTextWidth + padding, minWidth)
-
         return CGSize(width: finalWidth,
                       height: collectionView.frame.height)
     }
-
 }
 
-// MARK: - Models
-
-enum ColumnType {
-    case studentName
-    case rollNumber
-    case subject
-}
-
-struct ColumnConfig {
-    let displayName: String
-    let type: ColumnType
-    let keyPath: KeyPath<StudentRecord, String?>?
-    let subjectName: String?
-    let maxMarks: Int?
-    let width: CGFloat
-}
-
-struct StudentResponse: Codable {
-    let records: [StudentRecord]
-}
-
-struct StudentRecord: Codable {
-    let sNo: Int?
-    let regNo: Int?
-    let studentName: String?
-    var subjects: [Subjects]?
-   
-    enum CodingKeys: String, CodingKey {
-        case sNo = "S.no"
-        case regNo = "Reg No"
-        case studentName = "Student Name"
-        case subjects = "subjects"
+extension MarkReviewVC {
+    
+    func getReasonCounts() -> [String: Int] {
+        
+        var reasonMap: [String: Int] = [:]
+        
+        for student in studentRecords {
+            for subject in student.marks ?? [] {
+                for activity in subject.activities ?? [] {
+                    
+                    guard let reason = activity.reason?
+                            .trimmingCharacters(in: .whitespacesAndNewlines),
+                          !reason.isEmpty else { continue }
+                    
+                    reasonMap[reason, default: 0] += 1
+                }
+            }
+        }
+        return reasonMap
+    }
+    
+    func getFormattedReasonSummary() -> String {
+        
+        let map = getReasonCounts()
+        guard !map.isEmpty else { return "No issues found." }
+        
+        let total = map.values.reduce(0,+)
+        
+        let details = map
+            .sorted { $0.key < $1.key }
+            .map { "\($0.value) \($0.key)" }
+            .joined(separator: ", ")
+        
+        return "Found \(total) issue(s): " + details
     }
 }
 
-struct Subjects: Codable {
-    let student_id: String
-    let Subject: String
-    var value: String
-    let cnfidenceLvl: Bool
-    let reason: String
+struct ColumnConfig: Codable {
+    let displayName: String?
+    let subjectName: String?
+    let subjectId: String?
+    let activityId: String?
+    let activityName: String?
+    let maxMarks: Int?
 }
 
-struct ReviewFlag {
-    let studentId: String
-    let field: String
-    let value: String
-    let reason: String
+struct MarkDetailsResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [StudentMark]?
 }
+
+struct StudentMark: Codable {
+    let student_id: String?
+    let student_name: String?
+    let roll_no: String?
+    let admission_no: String?
+    var marks: [SubjectMarks]?
+}
+
+struct SubjectMarks: Codable {
+    let subject_id: String?
+    let subject_name: String?
+    var activities: [ActivityMark]?
+}
+
+struct ActivityMark: Codable {
+    let id: String?
+    let name: String?
+    var selectedName: String?
+    var mark: String?
+    var change_mark: String?
+    let max_mark: String?
+    var isReview: Bool?
+    var reason: String?
+}
+
 extension String {
     func width(usingFont font: UIFont) -> CGFloat {
         let size = (self as NSString).size(withAttributes: [.font: font])
         return ceil(size.width)
+    }
+}
+
+extension UIView {
+    func superview<T>(of type: T.Type) -> T? {
+        return superview as? T ?? superview?.superview(of: type)
     }
 }

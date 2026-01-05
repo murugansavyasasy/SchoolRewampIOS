@@ -30,8 +30,8 @@
             filePath = "VsSchoolChimes/Auth/Splash/SplashVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "658"
-            endingLineNumber = "658"
+            startingLineNumber = "657"
+            endingLineNumber = "657"
             landmarkName = "validateUser()"
             landmarkType = "7">
          </BreakpointContent>

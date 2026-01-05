@@ -177,6 +177,8 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             }
         }
 
+        NoDataImage.isHidden = !(FilteredSection?.isEmpty ?? false)
+        NoDataLbl.isHidden = !(FilteredSection?.isEmpty ?? false)
     }
 
     

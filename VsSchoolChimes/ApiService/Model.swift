@@ -431,22 +431,22 @@ struct AwsData: Codable {
 //MARK: - Get Communication List(Reciver)
 import AVFoundation
 struct CommunicationReciverResponse: Codable {
-    let status: Bool
-    let message: String
-    let data: [CommunicationReciverData]
+    let status: Bool?
+    let message: String?
+    let data: [CommunicationReciverData]?
 }
 
 class CommunicationReciverData: Codable {
-    let type: String
-    let id: String
-    let header_id: String
-    let content: String
-    let title: String
-    let date: String
-    let time: String
-    let sender_info: String
-    let is_emergency : Bool
-    var is_unread: Bool
+    let type: String?
+    let id: String?
+    let header_id: String?
+    let content: String?
+    let title: String?
+    let date: String?
+    let time: String?
+    let sender_info: String?
+    let is_emergency : Bool?
+    var is_unread: Bool?
     var isExpand:Bool?
     let is_archive: Bool?
     let duration : Int?
@@ -2778,23 +2778,119 @@ struct SubjectExamData: Codable {
     let class_name: String?
     let subject_id: String?
     let subject_name: String?
-    let splitup_details: [SplitDetail]?
+    var splitup_details: [SplitDetail]?
 }
 
 struct SplitDetail: Codable {
     let id: String?
     let name: String?
     let max_mark: String?
-    var isChecked: Bool?
+    
+    // UI STATE
+    var isChecked: Bool? = false
+    var selectedAIOption: String? = nil
 }
-//"section_id": "90828",
-//      "section_name": "B",
-//      "class_id": "32588",
-//      "class_name": "I",
-//      "subject_id": "112616",
-//      "subject_name": "ENGLISH",
-//      "splitup_details": [
-//        {
-//          "id": "3062",
-//          "name": "Paper 1",
-//          "max_mark": "100"
+
+struct SelectedSplit {
+    let subjectId: String
+    let subjectName: String
+    let splitId: String
+    let splitName: String
+    var aiOption: String?   // nil for Manual
+}
+
+//MARK: mark upload AI Api response
+
+struct MarksAIresponse: Codable {
+    
+    let status: Bool?
+    let message: String?
+    let data: MarkAiData?
+}
+
+struct MarkAiData: Codable {
+    let table_structure: TableStructure?
+    let review_flags: [ReviewFlag]?
+    let records: [DynamicRecord]?
+}
+
+struct TableStructure: Codable {
+    let selected_columns: [String]?
+}
+
+
+struct ReviewFlag: Codable {
+    let student_id: String?
+    let field: String?
+    let value: String?
+    let reason: String?
+}
+
+enum RecordValue: Codable {
+    case int(Int)
+    case string(String)
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let intValue = try? container.decode(Int.self) {
+            self = .int(intValue)
+        } else {
+            self = .string(try container.decode(String.self))
+        }
+    }
+
+    var stringValue: String {
+        switch self {
+        case .int(let value):
+            return String(value)
+        case .string(let value):
+            return value
+        }
+    }
+}
+
+struct DynamicCodingKey: CodingKey {
+    var stringValue: String
+    var intValue: Int? { nil }
+
+    init?(stringValue: String) {
+        self.stringValue = stringValue
+    }
+
+    init?(intValue: Int) { nil }
+}
+
+struct DynamicRecord: Codable {
+    let values: [String: RecordValue]
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: DynamicCodingKey.self)
+
+        var temp: [String: RecordValue] = [:]
+        for key in container.allKeys {
+            temp[key.stringValue] = try container.decode(
+                RecordValue.self,
+                forKey: key
+            )
+        }
+        values = temp
+    }
+}
+
+
+struct RecordItem:Codable {
+    let name: String
+    let value: String
+    let isReview: Bool
+    let reason: String?
+}
+
+struct ConvertedStudentRecord:Codable {
+    let studentId: String
+    let sNo: String
+    let regNo: String
+    let studentName: String
+    let marks: [RecordItem]
+}
+
+//-------------------------------------------------------------------------------------------------------

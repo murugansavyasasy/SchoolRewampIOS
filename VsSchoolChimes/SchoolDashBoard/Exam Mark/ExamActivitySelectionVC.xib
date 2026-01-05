@@ -12,10 +12,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExamActivitySelectionVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="bottomInfoLbl" destination="iLq-1r-dEk" id="pAR-cJ-LLL"/>
                 <outlet property="bottomInfoView" destination="bh4-Qp-85O" id="boj-Cu-7Xg"/>
                 <outlet property="continueBtn" destination="5QT-o3-6gc" id="Rw7-t0-anP"/>
+                <outlet property="examDateLbl" destination="Y76-KL-VTU" id="aaT-Me-0q7"/>
+                <outlet property="examNAmeLBl" destination="npw-ND-eKq" id="Cgc-0j-PcQ"/>
                 <outlet property="tableview" destination="awi-vC-nse" id="OAG-mt-Zd2"/>
                 <outlet property="tableviewHeight" destination="J1l-uK-Re3" id="rXm-Zn-qqe"/>
+                <outlet property="titleLbl" destination="S16-3Y-Gk3" id="7yn-Na-EOT"/>
+                <outlet property="topInfoLbl" destination="z2M-ti-lbN" id="dP9-Zw-rh7"/>
                 <outlet property="topInfoView" destination="eT7-Zf-Y6Z" id="xKy-X7-jWe"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

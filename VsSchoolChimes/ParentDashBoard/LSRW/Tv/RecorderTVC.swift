@@ -22,7 +22,7 @@ class RecorderTVC: UITableViewCell {
     private var recordingStartTime: Date?
     private(set) var isRecording = false
     private let audioManager = AudioManager()
-    private var audioURL: URL? // Can be local or remote
+    private var audioURL: URL?
     private var isRemoteAudio = false
 
    var delegate: EditObjectDelegate?
@@ -32,8 +32,6 @@ class RecorderTVC: UITableViewCell {
         super.awakeFromNib()
         setupUI()
         audioManager.delegate = self
-
-        // Stop recording if the app goes to background
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appDidEnterBackground),
                                                name: UIApplication.didEnterBackgroundNotification,

@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 class APIService: NSObject, URLSessionDelegate {
     
@@ -186,5 +187,90 @@ class APIService: NSObject, URLSessionDelegate {
                 completionHandler(.failure(error))
             }
         }.resume()
+    }
+    
+    //MARK: AI Image Post method API
+    func uploadImageApi<T: Codable>(
+        url: String,
+        image: UIImage,
+        type: String = "POST",
+        completionHandler: @escaping (Result<T, Error>) -> Void
+    ) {
+
+        guard NetworkMonitor.shared.isConnected else {
+            let error = getError(statusCode: 0, description: "No internet connection.")
+            completionHandler(.failure(error))
+            return
+        }
+
+        guard let fullURL = URL(string: ServiceUrl.baseurl + url) else {
+            let error = getError(statusCode: 0, description: "Invalid URL")
+            completionHandler(.failure(error))
+            return
+        }
+
+        print("✅ Upload URL:", fullURL.absoluteString)
+
+        var request = URLRequest(url: fullURL)
+        request.httpMethod = type
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+
+        let boundary = UUID().uuidString
+        request.setValue(
+            "multipart/form-data; boundary=\(boundary)",
+            forHTTPHeaderField: "Content-Type"
+        )
+
+        var body = Data()
+
+        guard let imageData = image.jpegData(compressionQuality: 0.9) else {
+            let error = getError(statusCode: 0, description: "Image conversion failed")
+            completionHandler(.failure(error))
+            return
+        }
+
+        body.append("--\(boundary)\r\n")
+        body.append("Content-Disposition: form-data; name=\"image\"; filename=\"image.jpg\"\r\n")
+        body.append("Content-Type: image/jpeg\r\n\r\n")
+        body.append(imageData)
+        body.append("\r\n")
+        body.append("--\(boundary)--\r\n")
+
+        request.httpBody = body
+
+        session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completionHandler(.failure(error))
+                return
+            }
+
+            guard let httpResponse = response as? HTTPURLResponse,
+                  let data = data else {
+                let error = self.getError(statusCode: 0, description: "No response from server")
+                completionHandler(.failure(error))
+                return
+            }
+
+            do {
+                let result = try JSONDecoder().decode(T.self, from: data)
+                completionHandler(.success(result))
+            } catch {
+                if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                   let message = json["message"] as? String {
+                    let error = self.getError(statusCode: httpResponse.statusCode, description: message)
+                    completionHandler(.failure(error))
+                } else {
+                    completionHandler(.failure(error))
+                }
+            }
+        }.resume()
+    }
+
+
+}
+
+extension Data {
+    mutating func append(_ string: String) {
+        append(string.data(using: .utf8)!)
     }
 }

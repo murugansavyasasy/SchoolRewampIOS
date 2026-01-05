@@ -7,20 +7,45 @@
 
 import UIKit
 
-class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
+    @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var academicYearBtn: UIButton!
+    @IBOutlet weak var selectYourClassLbl: UILabel!
+    @IBOutlet weak var chooseClassLbl: UILabel!
+    @IBOutlet weak var noDataImage: UIImageView!
+    @IBOutlet weak var noDataLbl: UILabel!
+    @IBOutlet weak var searchBtn: UIButton!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     
     var AcadimicYears: [AcadimicYearData] = []
     var AcademicDropdown = DropDown()
     var classList: [ClassDisplayItem] = []
+    var filteredClassList: [ClassDisplayItem] = []
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        selectYourClassLbl.setFont(style: .title, size: FontSize.TitleSize)
+        chooseClassLbl.setFont(style: .body, size: FontSize.BodySize)
+        noDataLbl.setFont(style: .body, size: FontSize.TitleSize)
+        academicYearBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        titleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        titleLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        noDataImage.isHidden = true
+        noDataLbl.isHidden = true
+        searchBtn.isHidden = true
+        
+        searchBar.isHidden = true
+        searchBar.delegate = self
+        searchBar.searchTextField.addDoneButton()
+        searchBar.placeholder = CommonStringFile.Search.translated()
+        searchBar.backgroundImage = UIImage()
 
-        tv.register(UINib(nibName: "Exam_ClassListTV", bundle: nil), forCellReuseIdentifier: "Exam_ClassListTV")
+        tv.register(UINib(nibName: CellConfingName.Exam_ClassListTV, bundle: nil), forCellReuseIdentifier: CellConfingName.Exam_ClassListTV)
         
         tv.delegate = self
         tv.dataSource = self
@@ -61,37 +86,81 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                 switch result {
                 case .success(let success):
                     
-                    if success.status == true {
-                        
-                        classList.removeAll()
-                        let standardData =  success.data ?? []
-                        
-                        for standard in standardData{
-                            for section in standard.sections ?? [] {
-                                
-                                let displayName = "Grade \(standard.name ?? "") - Section \(section.name ?? "")"
-                                classList.append(ClassDisplayItem(displayName: displayName, standardId: standard.id ?? "", sectionId: section.id ?? ""))
-                            }
-                        }
-                        
-                        tv.reloadData()
-                       
-                        
-                    }else {
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
-                            self.dismiss(animated: true)
+                    classList.removeAll()
+                    let standardData =  success.data ?? []
+                    
+                    for standard in standardData{
+                        for section in standard.sections ?? [] {
+                            
+                            let displayName = "Standard \(standard.name ?? "") - Section \(section.name ?? "")"
+                            classList.append(ClassDisplayItem(displayName: displayName, standardId: standard.id ?? "", sectionId: section.id ?? ""))
                         }
                     }
                     
+                    filteredClassList = classList
+                    noDataImage.isHidden = !filteredClassList.isEmpty
+                    noDataLbl.isHidden = !filteredClassList.isEmpty
+                    searchBtn.isHidden = filteredClassList.isEmpty
+                    noDataLbl.text = success.message ?? ""
+                    tv.reloadData()
+                    
+                    
                 case .failure(let failure):
-                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {
-                        self.dismiss(animated: true)
-                    }
+                    classList.removeAll()
+                    filteredClassList.removeAll()
+                    noDataImage.isHidden = false
+                    noDataLbl.isHidden = false
+                    searchBtn.isHidden = true
+                    noDataLbl.text = failure.localizedDescription
+                    tv.reloadData()
                 }
             }
             
         }
     }
+    
+    @IBAction func searchBtnAct(_ sender: UIButton) {
+        
+        sender.isSelected.toggle()
+        
+        if sender.isSelected{
+            searchBar.isHidden = false
+            searchBar.becomeFirstResponder()
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+        }else{
+            searchBar.isHidden = true
+            view.endEditing(true)
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            searchBar.searchTextField.text = ""
+            filteredClassList = classList
+            let hide = filteredClassList.isEmpty
+            noDataImage.isHidden = !hide
+            noDataLbl.isHidden = !hide
+            tv.reloadData()
+            
+        }
+    }
+        
+        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+            
+            let trimmedText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            if trimmedText.isEmpty {
+                // Show all data
+                filteredClassList = classList
+            } else {
+                // Filter by displayName
+                filteredClassList = classList.filter {
+                    $0.displayName.localizedCaseInsensitiveContains(trimmedText)
+                }
+            }
+            let hide = filteredClassList.isEmpty
+            noDataImage.isHidden = !hide
+            noDataLbl.isHidden = !hide
+            noDataLbl.text = "No data Found!"
+            tv.reloadData()
+        }
+
 
     @IBAction func BackAct(_ sender: Any) {
         
@@ -99,14 +168,14 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return classList.count
+        return filteredClassList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tv.dequeueReusableCell(withIdentifier: "Exam_ClassListTV", for: indexPath) as! Exam_ClassListTV
+        let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.Exam_ClassListTV, for: indexPath) as! Exam_ClassListTV
         
-        let standard = classList[indexPath.row]
+        let standard = filteredClassList[indexPath.row]
         cell.classNameLbl.text = standard.displayName
         return cell
     }
@@ -118,7 +187,7 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let vc  = ExamListVC()
-        vc.standard = classList[indexPath.row]
+        vc.standard = filteredClassList[indexPath.row]
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
