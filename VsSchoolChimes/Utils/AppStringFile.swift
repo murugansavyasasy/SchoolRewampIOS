@@ -685,6 +685,27 @@ struct PTMString {
     
 }
 
+struct ExamMarkUploadString {
+    
+    static let Continue_to_Manual_Entry = "Continue to Manual Entry?"
+    static let Youll_enter_student_marks_manually = "You'll enter student marks manually in the next step. You can add and edit all mark data directly without AI processing."
+    static let Yes_Continue_Manually = "Yes, Continue Manually"
+    static let Upload_Mark_Sheet = "Upload Mark Sheet"
+    static let Upload_an_image_for_AI_processing = "Upload an image for AI processing or skip to map manually"
+    static let AI_Powered_Upload = "AI-Powerd Upload"
+    static let Upload_image_for_automatic_detection = "Upload image for automatic detection"
+    static let AI_will_automatically_detect = "AI will automatically detect:"
+    static let Student_names_and_roll_numbers = "Student names and roll numbers,"
+    static let Subject_columns_and_marks = "Subject columns and marks,"
+    static let Table_structure_and_layout = "Table structure and layout,"
+    static let Click_to_upload = "Click to upload"
+    static let PNG_JPG_up_to_10MB = "PNG, JPG up to 10MB"
+    static let Continue_with_Upload = "Continue with Upload"
+    static let Manual_Entry = "Manual Entry"
+    static let Skip_upload_and_enter_marks_manually = "Skip upload and enter marks manually"
+
+}
+
 struct BucketName {
     
     static let schoolchimes_communication = "schoolchimes-communication";

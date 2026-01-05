@@ -20,11 +20,11 @@ class FAQTableViewCell: UITableViewCell {
         // Styling
         cellView.layer.cornerRadius = Colornames.CORadius10
         cellView.layer.shadowColor = UIColor.black.cgColor
-        cellView.layer.shadowOpacity = 0.5
-        cellView.layer.shadowOffset = CGSize(width: 4, height: 4)
+        cellView.layer.shadowOpacity = 0.4
+        cellView.layer.shadowOffset = CGSize(width: 2, height: 2)
         cellView.layer.shadowRadius = 3
-        cellView.layer.borderWidth = 1
-        cellView.layer.borderColor = UIColor.gray.cgColor
+//        cellView.layer.borderWidth = 1
+//        cellView.layer.borderColor = UIColor.gray.cgColor
         cellView.layer.masksToBounds = false
         
         QuestionLabel.setFont(style: .title, size: FontSize.TitleSize)

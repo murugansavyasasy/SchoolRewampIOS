@@ -13,6 +13,7 @@ import Photos
 class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     
+    @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var AIview: UIView!
     @IBOutlet weak var manualView: UIView!
     @IBOutlet weak var AiInstructionView: UIView!
@@ -55,6 +56,8 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        titleLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        
         AIview.layer.cornerRadius = 10
         manualView.layer.cornerRadius = 10
         AiInstructionView.layer.cornerRadius = 10
@@ -77,6 +80,9 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         separatorView.isHidden = true
         ContinuewithUploadBtn.isHidden = true
         
+        setFont()
+        Translate()
+        
         AIview.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(AiTap)))
         manualView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ManualTap)))
         uploadView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(UploadTap)))
@@ -89,6 +95,45 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         cancelBtn.layer.borderWidth = 1
         cancelBtn.layer.borderColor = UIColor.staffExamColour.cgColor
         ContinueManuallyBtn.layer.cornerRadius = 10
+    }
+    
+    func setFont() {
+        
+        uploadMarkSheetLbl.setFont(style: .title, size: FontSize.TitleSize)
+        uploadImageForAIDescLbl.setFont(style: .body, size: FontSize.BodySize)
+        AiPowerdUploadLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        AutoDetectionLbl.setFont(style: .body, size: FontSize.BodySize)
+        studentNamesAndRollnoLbl.setFont(style: .body, size: FontSize.BodySize)
+        subjectColoumsAndMarksLbl.setFont(style: .body, size: FontSize.BodySize)
+        tableStructureAndLayoutLbl.setFont(style: .body, size: FontSize.BodySize)
+        pickedFilenameLbl.setFont(style: .title, size: FontSize.TitleSize)
+        fileTypesAndSizeLimitLbl.setFont(style: .body, size: FontSize.TitleSize)
+        manualEntryLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        SkipUploadLbl.setFont(style: .body, size: FontSize.BodySize)
+        autoDetectBtn.setTitleFont(style: .secondary, size: FontSize.TitleSize)
+    }
+    
+    func Translate(){
+        
+        PopupAlertTitleLbl.text = ExamMarkUploadString.Continue_to_Manual_Entry
+        popupAlertDescriptionLbl.text = ExamMarkUploadString.Youll_enter_student_marks_manually
+        uploadMarkSheetLbl.text = ExamMarkUploadString.Upload_Mark_Sheet.translated()
+        uploadImageForAIDescLbl.text = ExamMarkUploadString.Upload_an_image_for_AI_processing.translated()
+        AiPowerdUploadLbl.text = ExamMarkUploadString.AI_Powered_Upload.translated()
+        AutoDetectionLbl.text = ExamMarkUploadString.Upload_image_for_automatic_detection.translated()
+        studentNamesAndRollnoLbl.text = ExamMarkUploadString.Student_names_and_roll_numbers.translated()
+        subjectColoumsAndMarksLbl.text = ExamMarkUploadString.Subject_columns_and_marks.translated()
+        tableStructureAndLayoutLbl.text = ExamMarkUploadString.Table_structure_and_layout.translated()
+    pickedFilenameLbl.text = ExamMarkUploadString.Click_to_upload.translated()
+    fileTypesAndSizeLimitLbl.text = ExamMarkUploadString.PNG_JPG_up_to_10MB.translated()
+    manualEntryLbl.text = ExamMarkUploadString.Manual_Entry.translated()
+    SkipUploadLbl.text = ExamMarkUploadString.Skip_upload_and_enter_marks_manually.translated()
+        
+        cancelBtn.setTitle(CommonStringFile.Cancel, for: .normal)
+        ContinueManuallyBtn.setTitle(ExamMarkUploadString.Yes_Continue_Manually, for: .normal)
+        autoDetectBtn.setTitle(ExamMarkUploadString.AI_will_automatically_detect, for: .normal)
+        ContinuewithUploadBtn.setTitle(ExamMarkUploadString.Continue_with_Upload, for: .normal)
+        ContinuewithUploadBtn.setTitle(ExamMarkUploadString.Continue_with_Upload, for: .normal)
     }
    
     @IBAction func AiTap(){

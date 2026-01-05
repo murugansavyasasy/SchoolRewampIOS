@@ -9,6 +9,7 @@ import UIKit
 
 class ExamActivitySelectionVC: UIViewController {
 
+    @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var topInfoView: UIView!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var bottomInfoView: UIView!
@@ -33,6 +34,8 @@ class ExamActivitySelectionVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        titleLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        
         topInfoView.layer.cornerRadius = 10
         topInfoView.backgroundColor = .staffExamColour.withAlphaComponent(0.1)
         topInfoView.layer.borderWidth = 0.3
@@ -46,7 +49,7 @@ class ExamActivitySelectionVC: UIViewController {
         continueBtn.layer.cornerRadius = 10
         
         examNAmeLBl.text = SelectedExam?.name
-        examDateLbl.text = SelectedExam?.date
+        examDateLbl.text = monthYear(from: SelectedExam?.date ?? "")
         
         tableview.isScrollEnabled = false
         tableview.register(UINib(nibName: "SubjectsTVCell", bundle: nil),
@@ -58,7 +61,23 @@ class ExamActivitySelectionVC: UIViewController {
         Get_exam_activities_Api(for: ExamID)
     }
     
+    func monthYear(from dateString: String) -> String? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
 
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "MMMM yyyy"
+        outputFormatter.locale = Locale(identifier: "en_US")
+
+        guard let date = inputFormatter.date(from: dateString) else {
+            return nil
+        }
+
+        return outputFormatter.string(from: date)
+    }
+
+    
     func Get_exam_activities_Api(for examId: String) {
         SubjectList.removeAll()
         let param:[String:Any] = ["exam_id": examId]
@@ -86,11 +105,14 @@ class ExamActivitySelectionVC: UIViewController {
     }
     
     private func updateMainHeight() {
-           DispatchQueue.main.async {
-               self.tableview.layoutIfNeeded()
-               self.tableviewHeight.constant = self.tableview.contentSize.height
-           }
-       }
+        DispatchQueue.main.async {
+            self.tableview.beginUpdates()
+            self.tableview.endUpdates()
+            self.tableview.layoutIfNeeded()
+            self.tableviewHeight.constant = self.tableview.contentSize.height
+        }
+    }
+
     
     @IBAction func continueAct(_ sender: Any) {
         let vc = MarkReviewVC()

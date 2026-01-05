@@ -50,6 +50,11 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
     var playIndex: Int?
     var lastPlaybackTime: CMTime?
     var lastMessageId: String?
+    private let threshold = 120
+    private let viewText = "View"
+    private let seeMoreText = "See more"
+    private let seeLessText = "See less"
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -496,7 +501,11 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.MessageTitle.text = message.title
             let formattedDateString = dateFormatter.convertDate(message.date ?? "") ?? ""
             cell.DateLabel.setStyledDateTime(dateString: formattedDateString, timeString: message.time)
-            cell.descriptContent.attributedText = self.descript(for:message.content ?? "", expanded: message.isExpand ?? false)
+            cell.descriptContent.attributedText = self.descript(
+                for: message.content ?? "",
+                expanded: message.isExpand ?? false,
+                isUnread: message.is_unread ?? false
+            )
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleLabelTap(_:)))
             cell.descriptContent.addGestureRecognizer(tapGesture)
             cell.layoutIfNeeded()
@@ -637,77 +646,120 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     
     
     @objc func handleLabelTap(_ gesture: UITapGestureRecognizer) {
-        guard let label = gesture.view as? UILabel, let attributedText = label.attributedText else { return }
-        let text = attributedText.string
-        let viewRange = (text as NSString).range(of: "View")
-        let hideRange = (text as NSString).range(of: "")
-        
-        if gesture.didTapAttributedTextInLabel(label: label, inRange: viewRange) ||
-            gesture.didTapAttributedTextInLabel(label: label, inRange: hideRange) {
+        guard
+            let label = gesture.view as? UILabel,
+            let text = label.attributedText?.string
+        else { return }
+
+        let ranges = [viewText,seeMoreText,seeLessText].map { (text as NSString).range(of: $0) }
+
+        if ranges.contains(where: { gesture.didTapAttributedTextInLabel(label: label, inRange: $0) }) {
             handleSeeMoreTap(gesture)
         }
     }
+
     
     @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
         guard let label = sender.view as? UILabel else { return }
+
         let indexPath = IndexPath(row: label.tag, section: 0)
-        
-        var message: CommunicationReciverData?
-        message = displayedMessages[indexPath.row]
-        guard let fullDescription = message?.content else { return }
+        var message = displayedMessages[indexPath.row]
+
+        guard let fullDescription = message.content else { return }
+
         let threshold = 120
-        if message?.isExpand == nil { message?.isExpand = false }
-        message?.isExpand!.toggle()
-        let expanded = message?.isExpand ?? false
-        label.numberOfLines = expanded ? 0 : (fullDescription.count > threshold ? 3 : 0)
-        label.attributedText = descript(for: fullDescription, expanded: expanded)
-        if message?.is_unread == true {
-            
-            if message?.is_archive ?? false {
-                ReadStatusUpdateArchive(type: message?.type ?? "", detail_id: message?.id ?? "")
-            }else {
-                ReadStatusUpdate(type: message?.type ?? "", detail_id: message?.id ?? "")
+        let isLong = fullDescription.count > threshold
+
+        if message.isExpand == nil {
+            message.isExpand = false
+        }
+
+        if message.is_unread == true {
+            // First tap on unread
+            message.is_unread = false
+            message.isExpand = isLong
+
+            if message.is_archive ?? false {
+                ReadStatusUpdateArchive(type: message.type ?? "", detail_id: message.id ?? "")
+            } else {
+                ReadStatusUpdate(type: message.type ?? "", detail_id: message.id ?? "")
             }
-            message?.is_unread = false
-            let cell = tv.cellForRow(at: indexPath) as! TextHistoryTVCell
+        } else if isLong {
+            // Toggle only for long text
+            message.isExpand!.toggle()
+        }
+
+        label.attributedText = descript(
+            for: fullDescription,
+            expanded: message.isExpand ?? false,
+            isUnread: message.is_unread ?? false
+        )
+
+        displayedMessages[indexPath.row] = message
+
+        if let cell = tv.cellForRow(at: indexPath) as? TextHistoryTVCell {
             cell.NewImageView.isHidden = true
+            cell.newImageOuterView.isHidden = true
         }
-        if let updatedMessage = message{
-            displayedMessages[indexPath.row] = updatedMessage
-        }
+
         tv.beginUpdates()
         tv.endUpdates()
-        
     }
-    func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
+
+
+   
+    func descript(
+        for fullDescription: String,
+        expanded: Bool,
+        isUnread: Bool
+    ) -> NSAttributedString {
+
         let threshold = 120
-        let attributedText: NSMutableAttributedString
-        
-        if fullDescription.count > threshold {
-            if expanded {
-                let fullString = fullDescription + " " + ""
-                attributedText = NSMutableAttributedString(string: fullString)
-                let hideRange = (fullString as NSString).range(of: "")
-                attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: hideRange)
-            } else {
-                let truncatedText = String(fullDescription.prefix(100))
-                let fullString = truncatedText + " " + "View"
-                attributedText = NSMutableAttributedString(string: fullString)
-                let viewRange = (fullString as NSString).range(of: "View")
-                attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: viewRange)
+        let isLong = fullDescription.count > threshold
+
+        var displayText = fullDescription
+        var actionText: String?
+
+        // UNREAD: always collapsed + "View"
+        if isUnread {
+            if isLong {
+                displayText = String(fullDescription.prefix(threshold))
             }
-        } else {
-            if expanded {
-                attributedText = NSMutableAttributedString(string: fullDescription)
+            actionText = "View"
+        }
+        // READ
+        else {
+            if isLong {
+                if expanded {
+                    displayText = fullDescription
+                    actionText = "See less"
+                } else {
+                    displayText = String(fullDescription.prefix(threshold))
+                    actionText = "See more"
+                }
             } else {
-                let fullString = fullDescription + " " + "View"
-                attributedText = NSMutableAttributedString(string: fullString)
-                let viewRange = (fullString as NSString).range(of: "View")
-                attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: viewRange)
+                // Short text, read → show nothing extra
+                displayText = fullDescription
             }
         }
-        return attributedText
+
+        let finalString: String
+        if let action = actionText {
+            finalString = displayText + " " + action
+        } else {
+            finalString = displayText
+        }
+
+        let attributed = NSMutableAttributedString(string: finalString)
+
+        if let action = actionText {
+            let range = (finalString as NSString).range(of: action)
+            attributed.addAttribute(.foregroundColor, value: UIColor.link, range: range)
+        }
+
+        return attributed
     }
+
     
     
     // Method to load the footer from nib and set it as tableFooterView

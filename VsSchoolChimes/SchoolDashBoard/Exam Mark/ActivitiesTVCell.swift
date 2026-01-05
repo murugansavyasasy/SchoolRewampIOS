@@ -185,7 +185,11 @@ class ActivitiesTVCell: UITableViewCell {
                 aiOption: item
             )
             
+           
+            self.contentView.setNeedsLayout()
+            self.contentView.layoutIfNeeded()
             self.superview?.layoutIfNeeded()
+
         }
         
         

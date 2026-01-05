@@ -215,7 +215,7 @@ class OTPVc: UIViewController {
         let index = layoutManager.characterIndex(for: tapLocation, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
         
         if NSLocationInRange(index, resendRange) {
-            validate_user()
+           ForgotPasswordAPIcall()
             self.remainingTime = 30
             self.startTimer()
         }
@@ -340,6 +340,55 @@ class OTPVc: UIViewController {
                     }
                     
                 case .failure(let error):
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                        if #available(iOS 15.0, *) {
+                            self.hideActivityLoader()
+                        }
+                    }
+                }
+            }
+    }
+    
+    func ForgotPasswordAPIcall() {
+        if #available(iOS 15.0, *) {
+            showActivityLoader()
+        }
+        APIService.shared
+            .makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : mobile_number ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (
+                result : Result<ForgotPasswordResponeSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let successmessage):
+                    DispatchQueue.main.async { [self] in
+                        if #available(iOS 15.0, *) {
+                            self.hideActivityLoader()
+                        }
+                        if successmessage.status == true {
+//                            let vc = OTPVc(nibName: nil, bundle: nil)
+//                            vc.modalPresentationStyle = .fullScreen
+//                            vc.mobile_number = MobilTextFld.text
+//                            vc.pageType = screenType.isForgotPassword
+//                            vc.forgotpasswordData = successmessage.data ?? []
+//                            vc.otpContent = successmessage.data?.first?.forgot_otp_message ?? ""
+//                            vc.didnotReciveMessage = successmessage.data?.first?.more_info ?? ""
+//                            present(vc, animated: true)
+                            
+                        }else {
+                            DispatchQueue.main.async {
+                                self.AlertModal.showAlert(
+                                    title: AlertstringFile.Oops,
+                                    message: successmessage.message ?? "",
+                                    on: self)
+                            }
+                        }
+                    }
+                    
+                case.failure(let error):
+                    
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
                         if #available(iOS 15.0, *) {
