@@ -74,8 +74,8 @@ class SchoolStrengthVC: UIViewController {
                 Total: total,
                 name: Total,
                 previousYear: totalPreviousYear,
-                Girl:Int(data.total_staff_strength ?? "0") ?? 0,
-                boys:  Int(data.total_student_strength ?? "0") ?? 0,
+                Girl:Int(data.total_student_strength ?? "0") ?? 0,
+                boys:  Int(data.total_staff_strength ?? "0") ?? 0,
                 others: 0,
                 message: previousData?.message ?? ""))
         list.append(

@@ -127,27 +127,5 @@ class MsgCellTv: UITableViewCell {
         }
         
     }
-    
-    //    private func applyGradients() {
-    //
-    //        emergencyBannerView.layer.sublayers?
-    //            .filter { $0 is CAGradientLayer }
-    //            .forEach { $0.removeFromSuperlayer() }
-    //
-    //        let bannerGradient = CAGradientLayer()
-    //
-    //        bannerGradient.colors = [
-    //            UIColor.systemRed.cgColor,
-    //            UIColor(red: 1.0, green: 0.9, blue: 0.9, alpha: 6.0).cgColor // ✅ light white mix
-    //        ]
-    //
-    //        bannerGradient.startPoint = CGPoint(x: 0, y: 0.5)
-    //        bannerGradient.endPoint = CGPoint(x: 1, y: 0.5)
-    //        bannerGradient.frame = emergencyBannerView.bounds
-    //
-    //        emergencyBannerView.layer.insertSublayer(bannerGradient, at: 0)
-    //    }
-    
-    
-    
+
 }

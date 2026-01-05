@@ -111,15 +111,21 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         }
         
         if ComFromNoticeBoard{
-            yourTargetLbl.text = "Message sent to SCHOOL"
-            targetFullView.isHidden = false
-            cv.delegate = self
-            cv.dataSource = self
-            cv.reloadData()
-            DispatchQueue.main.async {
-                self.reloadss()
-            }
-            ComFromNoticeBoard = false
+                switch staffDetails?.priority_level {
+                case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+                    yourTargetLbl.text = "Message sent to SCHOOL"
+                    targetFullView.isHidden = false
+                    cv.delegate = self
+                    cv.dataSource = self
+                    cv.reloadData()
+                    DispatchQueue.main.async {
+                        self.reloadss()
+                    }
+                    ComFromNoticeBoard = false
+                default:
+                    targetFullView.isHidden = true
+                }
+           
         }
     }
     

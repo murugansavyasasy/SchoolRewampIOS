@@ -1321,6 +1321,14 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     getSubjectListAPI(sectionIds ?? "")
                 }
             }
+            
+            if Menu_id.isAssaignment == Menu_id.staffSelectedMenuId  || Menu_id.AttachmentMenuId ==  Menu_id.staffSelectedMenuId || Menu_id.communicationMenuId == Menu_id.staffSelectedMenuId{
+                speficBtnName.isHidden = !(array_selectedId.count == 1)
+                speficBtnName.isEnabled = true
+            }else{
+                speficBtnName.isHidden = true
+                speficBtnName.isEnabled = false
+            }
         case recipeint_tabBarName.Staff:
             staffDetails = staffDetails?.map {
                 var item = $0

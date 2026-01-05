@@ -357,7 +357,7 @@ class OTPVc: UIViewController {
             showActivityLoader()
         }
         APIService.shared
-            .makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : mobile_number ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (
+            .makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : mobile_number ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token, isBaseUrl: true){[self] (
                 result : Result<ForgotPasswordResponeSuc,
                 Error>
             ) in

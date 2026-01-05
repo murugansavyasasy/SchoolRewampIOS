@@ -544,8 +544,8 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommunicationTVC", for: indexPath) as! CommunicationTVC
             let isPlaying = (playIndex == indexPath.row)
             let voiceData = message
-            cell.emergencyBtnName.isHidden = !(voiceData.is_emergency)
-            let formattedDateString = dateFormatter.convertDate(message.date) ?? ""
+            cell.emergencyBtnName.isHidden = !(voiceData.is_emergency ?? false)
+            let formattedDateString = dateFormatter.convertDate(message.date ?? "") ?? ""
             cell.dateLbl.setStyledDateTime(dateString: formattedDateString, timeString: message.time)
             cell.waveView.durationLabel.isHidden = true
             
@@ -558,7 +558,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             }else{
                 cell.newImageView.isHidden = true
             }
-         cell.newImageView.isHidden = !(message.is_unread)
+            cell.newImageView.isHidden = !(message.is_unread ?? false)
             configureAudioCell(cell, at: indexPath)
             return cell
             
@@ -569,7 +569,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     
     private func configureAudioCell(_ cell: CommunicationTVC, at indexPath: IndexPath) {
         let file = displayedMessages[indexPath.item]
-           let url = URL(string: file.content)
+        let url = URL(string: file.content ?? "")
             cell.audioURL = url
         cell.audioDelegate = self
         cell.cellIndex = indexPath.item

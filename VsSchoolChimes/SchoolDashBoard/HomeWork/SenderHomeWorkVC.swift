@@ -389,7 +389,7 @@ extension SenderHomeWorkVC: UICollectionViewDelegate,UICollectionViewDataSource,
             return UICollectionViewCell()
         }
         cell.SubjectLbl.text = FilterHomeWorkList?[indexPath.row].subject_name
-        cell.stafNamLbl.text = FilterHomeWorkList?[indexPath.row].sent_by
+        cell.stafNamLbl.text = FilterHomeWorkList?[indexPath.row].title
         cell.edit(edit: FilterHomeWorkList?[indexPath.row].can_edit ?? false, delete:  FilterHomeWorkList?[indexPath.row].can_delete ?? false, selectedId: FilterHomeWorkList?[indexPath.row].id ?? "")
         cell.threeDotBtn.isHidden = (
             (FilterHomeWorkList?[indexPath.row].can_edit) == false
