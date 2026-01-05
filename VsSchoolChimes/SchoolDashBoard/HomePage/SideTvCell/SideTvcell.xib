@@ -18,20 +18,21 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sqU-17-p1i">
-                        <rect key="frame" x="5" y="0.0" width="310" height="55"/>
+                        <rect key="frame" x="5" y="5" width="310" height="45"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All India Engineering Entrance Exam with PCM" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNw-1z-EaN">
-                                <rect key="frame" x="60" y="15" width="240" height="25"/>
+                                <rect key="frame" x="60" y="15" width="240" height="15"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lo3-lg-aTT">
-                                <rect key="frame" x="10" y="7.6666666666666679" width="40" height="40"/>
+                                <rect key="frame" x="10" y="2.6666666666666679" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="2Wh-La-MNx"/>
                                     <constraint firstAttribute="height" constant="40" id="Z9Q-ym-Cyy"/>
                                 </constraints>
+                                <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="School Needs"/>
                             </button>
@@ -48,9 +49,9 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="sqU-17-p1i" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="a1b-rU-Tuv"/>
+                    <constraint firstItem="sqU-17-p1i" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="a1b-rU-Tuv"/>
                     <constraint firstAttribute="trailing" secondItem="sqU-17-p1i" secondAttribute="trailing" constant="5" id="d50-1i-NFS"/>
-                    <constraint firstAttribute="bottom" secondItem="sqU-17-p1i" secondAttribute="bottom" id="sRv-Ir-T8R"/>
+                    <constraint firstAttribute="bottom" secondItem="sqU-17-p1i" secondAttribute="bottom" constant="5" id="sRv-Ir-T8R"/>
                     <constraint firstItem="sqU-17-p1i" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="xUm-Yj-nLJ"/>
                 </constraints>
             </tableViewCellContentView>

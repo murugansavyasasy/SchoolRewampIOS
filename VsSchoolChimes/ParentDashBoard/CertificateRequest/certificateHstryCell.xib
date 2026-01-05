@@ -65,6 +65,7 @@
             <connections>
                 <outlet property="cv" destination="Xhf-AC-lhM" id="49Y-MG-6gF"/>
                 <outlet property="cvHeight" destination="zUg-yr-p0t" id="bYC-C6-n3y"/>
+                <outlet property="historyLbl" destination="hWu-co-ISa" id="Jok-oL-Ivz"/>
                 <outlet property="searchBar" destination="5y7-Rz-uzA" id="QJt-1f-91t"/>
             </connections>
             <point key="canvasLocation" x="180.15267175572518" y="82.74647887323944"/>

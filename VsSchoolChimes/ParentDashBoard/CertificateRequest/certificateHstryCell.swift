@@ -13,6 +13,7 @@ class certificateHstryCell: UITableViewCell, UICollectionViewDelegate, UICollect
     @IBOutlet weak var cvHeight: NSLayoutConstraint!
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var historyLbl: UILabel!
     
     // MARK: - Properties
     let transitionDelegate = TransitioningDelegate()
@@ -42,6 +43,7 @@ class certificateHstryCell: UITableViewCell, UICollectionViewDelegate, UICollect
     // MARK: - Configuration
     func configure(with files: [CertificateRequest]?) {
         certificate = files
+        historyLbl.isHidden = files?.isEmpty ?? true
         filteredCertificates = files ?? []
         cv.reloadData()
         updateCollectionViewHeight()

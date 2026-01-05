@@ -291,44 +291,55 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             alert.showAlert(title: "", message: "Please enter description", on: self)
             return
         }
-        uploadMedia(
-            file: attachments,
-            viewController: self,
-            title: lsrw?.title ?? "",
-            description: descriptionString ?? ""
-        ) { [weak self] urls, iframe, fileSize, embedUrl in
-            guard let self = self else { return }
-            
-            var uploadedFiles: [[String: String]] = []
-            
-            for urlString in urls {
-                guard let url = URL(string: urlString) else { continue }
+        alert.showAlertCancel(
+            title: "Confirm Submission",
+            message: "Are you sure you want to submit this task?",
+            actionLbl1: "Submit",
+            actionLbl2: "Cancel",
+            on: self
+        ) {
+           
+            self.uploadMedia(
+                file: self.attachments,
+                viewController: self,
+                title: self.lsrw?.title ?? "",
+                description: self.descriptionString ?? ""
+            ) { [weak self] urls, iframe, fileSize, embedUrl in
+                guard let self = self else { return }
                 
-                let ext = url.pathExtension.lowercased()
-                var type = ""
+                var uploadedFiles: [[String: String]] = []
                 
-                if ["jpg", "jpeg", "png", "gif", "heic"].contains(ext) {
-                    type = CommonStringFile.IMAGE
-                } else if urlString.contains("vimeo.com") {
-                    type = CommonStringFile.VIDEO
-                } else {
-                    type = ext.uppercased()
+                for urlString in urls {
+                    guard let url = URL(string: urlString) else { continue }
+                    
+                    let ext = url.pathExtension.lowercased()
+                    var type = ""
+                    
+                    if ["jpg", "jpeg", "png", "gif", "heic"].contains(ext) {
+                        type = CommonStringFile.IMAGE
+                    } else if urlString.contains("vimeo.com") {
+                        type = CommonStringFile.VIDEO
+                    } else {
+                        type = ext.uppercased()
+                    }
+                    
+                    uploadedFiles.append([
+                        CommonStringFile.url: urlString,
+                        CommonStringFile.type: type
+                    ])
                 }
                 
-                uploadedFiles.append([
-                    CommonStringFile.url: urlString,
-                    CommonStringFile.type: type
-                ])
+                let params: [String: Any] = [
+                    SendAttachmentStringFile.id: self.lsrw?.id ?? "",
+                    assignmentResquestStringKey.description: self.descriptionString ?? "",
+                    assignmentResquestStringKey.iframe: iframe ?? "",
+                    assignmentResquestStringKey.file_size: fileSize != nil ? "\(fileSize!)" : "",
+                    assignmentResquestStringKey.filePath: uploadedFiles
+                ]
+                self.sendAttachment(with: params)
             }
-            
-            let params: [String: Any] = [
-                SendAttachmentStringFile.id: self.lsrw?.id ?? "",
-                assignmentResquestStringKey.description: self.descriptionString ?? "",
-                assignmentResquestStringKey.iframe: iframe ?? "",
-                assignmentResquestStringKey.file_size: fileSize != nil ? "\(fileSize!)" : "",
-                assignmentResquestStringKey.filePath: uploadedFiles
-            ]
-            self.sendAttachment(with: params)
+        } onNo: {
+            // NO – Cancel tapped
         }
     }
     
