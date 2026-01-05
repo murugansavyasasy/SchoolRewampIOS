@@ -9,6 +9,7 @@ import UIKit
 
 class ExamActivitySelectionVC: UIViewController {
 
+    @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var topInfoView: UIView!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var bottomInfoView: UIView!
@@ -33,6 +34,8 @@ class ExamActivitySelectionVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        titleLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        
         topInfoView.layer.cornerRadius = 10
         topInfoView.backgroundColor = .staffExamColour.withAlphaComponent(0.1)
         topInfoView.layer.borderWidth = 0.3

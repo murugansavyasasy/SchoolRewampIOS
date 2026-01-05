@@ -13,6 +13,7 @@ import Photos
 class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     
+    @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var AIview: UIView!
     @IBOutlet weak var manualView: UIView!
     @IBOutlet weak var AiInstructionView: UIView!
@@ -55,6 +56,8 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        titleLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        
         AIview.layer.cornerRadius = 10
         manualView.layer.cornerRadius = 10
         AiInstructionView.layer.cornerRadius = 10

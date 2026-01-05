@@ -30,6 +30,7 @@ class ExamListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        titleLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         classNameLbl.text = standard?.displayName
         classNameLbl.setFont(style: .title, size: FontSize.TitleSize)
         SelectExamDefLbl.setFont(style: .body, size: FontSize.BodySize)
