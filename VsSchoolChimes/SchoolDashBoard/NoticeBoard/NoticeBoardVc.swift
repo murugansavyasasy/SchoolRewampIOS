@@ -249,14 +249,18 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
 //    }
     
     func Get_Notice() {
-        var baseUrl:String
-        if checkMutipleSchool() {
-            baseUrl = ServiceUrl.admin_api_notice_board_report
-        }else{
-            baseUrl = ServiceUrl.api_notice_board_get_notice
+        var baseUrl:String?
+        let staffCount = Scholldetails?.user_details?.staff_details?.count ?? 0
+        if staffCount >= 1 {
+            switch Scholldetails?.user_details?.staff_details?.first?.priority_level {
+            case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+                baseUrl = ServiceUrl.admin_api_notice_board_report
+            default:
+                baseUrl = ServiceUrl.api_notice_board_get_notice
+            }
         }
         showLoadingState()
-        APIService.shared.makeApi(url: baseUrl, parameters: [:], type: ApitTypeSringFile.GET, token: token ?? "", isBaseUrl: false) { [weak self] (result: Result<NoticeResponse, Error>) in
+        APIService.shared.makeApi(url: baseUrl ?? "", parameters: [:], type: ApitTypeSringFile.GET, token: token ?? "", isBaseUrl: false) { [weak self] (result: Result<NoticeResponse, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }
                 self.hideLoadingState()

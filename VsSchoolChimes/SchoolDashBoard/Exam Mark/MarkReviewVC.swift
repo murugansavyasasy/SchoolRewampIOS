@@ -465,7 +465,7 @@ class MarkReviewVC: UIViewController {
         
         let loadingAlert = UIAlertController(title: "Saving Marks", message: "Please wait...", preferredStyle: .alert)
         present(loadingAlert, animated: true)
-        APIService.shared.makeApi(url:  ServiceUrl.exam_api_exam_upload_marks, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [weak self] (result: Result<Send_AttachmentResponse, Error>) in
+        APIService.shared.makeApi(url:  ServiceUrl.exam_api_exam_upload_marks, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true) { [weak self] (result: Result<Send_AttachmentResponse, Error>) in
             guard let self = self else { return }
             
             DispatchQueue.main.async {
@@ -660,23 +660,17 @@ class MarkReviewVC: UIViewController {
         for s in 0..<(studentRecords[row].marks?.count ?? 0) {
             
             let currentSubject = studentRecords[row].marks?[s].subject_name ?? ""
-            
-            // ✅ SUBJECT MATCH
             guard normalizeName(currentSubject) == normalizeName(subjectName) else { continue }
             
             for a in 0..<(studentRecords[row].marks?[s].activities?.count ?? 0) {
                 
                 let activity = studentRecords[row].marks?[s].activities?[a]
-                
-                // ✅ ACTIVITY MATCH
                 guard normalizeName(activity?.name ?? "") == normalizeName(col.activityName ?? "") else { continue }
                 
                 let original = activity?.mark ?? ""
-                
                 studentRecords[row].marks?[s].activities?[a].mark = trimmed
                 studentRecords[row].marks?[s].activities?[a].isReview = !hasError
                 studentRecords[row].marks?[s].activities?[a].reason = reson
-                
                 errorDeclarationLbl.text = "⚠️ \(getFormattedReasonSummary())"
                 
                 if trimmed == original {
