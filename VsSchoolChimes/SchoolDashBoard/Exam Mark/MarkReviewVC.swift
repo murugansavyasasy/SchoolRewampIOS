@@ -26,18 +26,15 @@ class MarkReviewVC: UIViewController {
     var payload:[String:Any]?
     private var isNameWidthCalculated = false
     private var isAdjustingForKeyboard = false
+    var activeTextField: UITextField?
+    var keyboardHeight: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         saveMarksBtn.layer.cornerRadius = 8
-        print(payload ?? [:])
         Get_Marks(parameters: payload ?? [:])
     }
-    
-    var activeTextField: UITextField?
-    var keyboardHeight: CGFloat = 0
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(
@@ -56,22 +53,22 @@ class MarkReviewVC: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
+        
         guard !isNameWidthCalculated else { return }
         isNameWidthCalculated = true
         updateNameColumnWidth()
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
     }
     
     @objc func keyboardWillShow(notification: Notification) {
-
+        
         guard let userInfo = notification.userInfo,
               let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-
+        
         let inset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height - 70, right: 0)
         isAdjustingForKeyboard = true
         studentTableView.contentInset = inset
@@ -82,44 +79,44 @@ class MarkReviewVC: UIViewController {
                 colCell.listTable.scrollIndicatorInsets = inset
             }
         }
-
+        
         isAdjustingForKeyboard = false
     }
-
+    
     
     @objc func keyboardWillHide(notification: Notification) {
-
+        
         let inset = UIEdgeInsets.zero
-
+        
         isAdjustingForKeyboard = true
-
+        
         studentTableView.contentInset = inset
         studentTableView.scrollIndicatorInsets = inset
-
+        
         for cell in subjectsCollectionView.visibleCells {
             if let colCell = cell as? MarkReviewCVC {
                 colCell.listTable.contentInset = inset
                 colCell.listTable.scrollIndicatorInsets = inset
             }
         }
-
+        
         isAdjustingForKeyboard = false
     }
-
+    
     
     func Get_Marks(parameters payload: [String: Any]) {
         let parameters = buildGetMarksParams(from: payload)
-
+        
         APIService.shared.makeApi(
             url: ServiceUrl.exam_api_exam_get_mark_details,
             parameters: parameters,
             type: ApitTypeSringFile.POST,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<MarkDetailsResponse, Error>) in
-
+            
             DispatchQueue.main.async {
                 guard let self = self else { return }
-
+                
                 switch result {
                 case .success(let response):
                     if let data = response.data, !data.isEmpty {
@@ -135,7 +132,7 @@ class MarkReviewVC: UIViewController {
                             self.subjectsCollectionView.reloadData()
                         }
                     }
-
+                    
                 case .failure(let error):
                     print("❌ Error:", error.localizedDescription)
                 }
@@ -145,94 +142,94 @@ class MarkReviewVC: UIViewController {
     
     private func updateMarksWithAIData() {
         for studentIndex in 0..<studentRecords.count {
-
+            
             guard let studentId = studentRecords[studentIndex].student_id,
                   let aiStudent = aiRecords.first(where: { $0.studentId == studentId }) else {
                 continue
             }
-
+            
             for subjectIndex in 0..<(studentRecords[studentIndex].marks?.count ?? 0) {
-
+                
                 guard let activities = studentRecords[studentIndex].marks?[subjectIndex].activities else {
                     continue
                 }
-
+                
                 for activityIndex in 0..<activities.count {
-
+                    
                     let currentMark = studentRecords[studentIndex]
                         .marks?[subjectIndex]
                         .activities?[activityIndex]
                         .mark ?? ""
-
+                    
                     let selectedName = studentRecords[studentIndex]
                         .marks?[subjectIndex]
                         .activities?[activityIndex]
                         .selected_name ?? ""
-
+                    
                     guard let aiMark = aiStudent.marks.first(where: {
                         normalizeName($0.name) == normalizeName(selectedName)
                     }) else { continue }
-
+                    
                     let aiValue = aiMark.value
                     let aiReason = aiMark.reason ?? ""
                     let aiReviewStatus = aiMark.isReview
                     if !aiValue.isEmpty {
                         if let _ = Int(aiValue) {
-
+                            
                             if !currentMark.isEmpty && currentMark != aiValue {
-
+                                
                                 studentRecords[studentIndex]
                                     .marks?[subjectIndex]
                                     .activities?[activityIndex]
                                     .change_mark = currentMark
-
+                                
                                 studentRecords[studentIndex]
                                     .marks?[subjectIndex]
                                     .activities?[activityIndex]
                                     .mark = aiValue
-
+                                
                                 studentRecords[studentIndex]
                                     .marks?[subjectIndex]
                                     .activities?[activityIndex]
                                     .reason = "Existing marks differ from the newly uploaded data."
-
+                                
                             } else if currentMark.isEmpty {
-
+                                
                                 studentRecords[studentIndex]
                                     .marks?[subjectIndex]
                                     .activities?[activityIndex]
                                     .mark = aiValue
                             }
-
+                            
                         } else {
                             studentRecords[studentIndex]
                                 .marks?[subjectIndex]
                                 .activities?[activityIndex]
                                 .change_mark = currentMark
-
+                            
                             studentRecords[studentIndex]
                                 .marks?[subjectIndex]
                                 .activities?[activityIndex]
                                 .mark = aiValue == "AB" ? "AB" : ""
-
+                            
                             studentRecords[studentIndex]
                                 .marks?[subjectIndex]
                                 .activities?[activityIndex]
                                 .reason = aiValue
                         }
-
+                        
                         studentRecords[studentIndex]
                             .marks?[subjectIndex]
                             .activities?[activityIndex]
                             .isReview = aiReviewStatus
-
+                        
                     } else if !currentMark.isEmpty, !aiReason.isEmpty {
-
+                        
                         studentRecords[studentIndex]
                             .marks?[subjectIndex]
                             .activities?[activityIndex]
                             .isReview = aiReviewStatus
-
+                        
                         studentRecords[studentIndex]
                             .marks?[subjectIndex]
                             .activities?[activityIndex]
@@ -241,7 +238,7 @@ class MarkReviewVC: UIViewController {
                 }
             }
         }
-
+        
         // STEP 3: Reload UI
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -252,26 +249,26 @@ class MarkReviewVC: UIViewController {
         }
     }
     
-
+    
     private func updateNameColumnWidth() {
-
+        
         subjectsCollectionView.layoutIfNeeded()
-
+        
         let frameWidth = view.bounds.width
         let contentWidth = subjectsCollectionView
             .collectionViewLayout
             .collectionViewContentSize.width
-
+        
         let baseNameWidth: CGFloat = 160
         let availableWidth = frameWidth - baseNameWidth
-
+        
         if contentWidth < availableWidth {
             nameWith.constant = baseNameWidth + (availableWidth - contentWidth)
         } else {
             nameWith.constant = baseNameWidth
         }
     }
-
+    
     func normalizeName(_ text: String) -> String {
         return text
             .lowercased()
@@ -282,42 +279,42 @@ class MarkReviewVC: UIViewController {
     }
     
     func buildGetMarksParams(from payload: [String: Any]) -> [String: Any] {
-
+        
         let classId   = payload["class_id"] as? String ?? ""
         let sectionId = payload["section_id"] as? String ?? ""
         let examId    = payload["exam_id"] as? String ?? ""
-
+        
         var resultSubjects: [[String: Any]] = []
-
+        
         guard let selected = payload["selected_activities"] as? [[String: Any]] else {
             return [:]
         }
-
+        
         for subject in selected {
-
+            
             let subjectId = subject["subject_id"] as? String ?? ""
             var activitiesArray: [[String: Any]] = []
-
+            
             if let activities = subject["activities"] as? [[String: Any]] {
-
+                
                 for act in activities {
                     let actId = act["activity_id"] as? String ?? ""
                     let activity_name = act["activity_name"] as? String ?? ""
                     let selectedName = act["ai_option"] as? String ?? activity_name
-
+                    
                     activitiesArray.append([
                         "id": actId,
                         "selected_name": selectedName
                     ])
                 }
             }
-
+            
             resultSubjects.append([
                 "subject_id": subjectId,
                 "activities": activitiesArray
             ])
         }
-
+        
         return [
             "class_id": classId,
             "section_id": sectionId,
@@ -325,7 +322,7 @@ class MarkReviewVC: UIViewController {
             "selected_activities": resultSubjects
         ]
     }
-
+    
     
     private func setupColumnsFromPayload(_ payload: [String: Any]) {
         
@@ -377,36 +374,36 @@ class MarkReviewVC: UIViewController {
     
     
     @IBAction func saveAllMarks(_ sender: UIButton) {
-
+        
         var uploadDetails: [[String: Any]] = []
         var invalidMarkCount = 0
-
+        
         for student in studentRecords {
-
+            
             let rollNo = student.roll_no ?? ""
             var studentMarks: [[String: Any]] = []
-
+            
             for subject in student.marks ?? [] {
-
+                
                 let subjectId = subject.subject_id ?? ""
                 var activitiesArray: [[String: Any]] = []
-
+                
                 for activity in subject.activities ?? [] {
-
+                    
                     let activityId = activity.id ?? ""
                     let key = "\(subjectId)_\(activityId)"
                     let editedMark = editedMarks[rollNo]?[key]
-
+                    
                     let finalMarkStr = editedMark ?? activity.mark ?? ""
                     let maxMarkStr   = activity.max_mark ?? ""
-
+                    
                     let finalMark = Double(finalMarkStr) ?? 0
                     let maxMark   = Double(maxMarkStr) ?? 0
-
+                    
                     if finalMark > maxMark {
                         invalidMarkCount += 1
                     }
-
+                    
                     activitiesArray.append([
                         "id": activityId,
                         "name": activity.name ?? "",
@@ -414,14 +411,14 @@ class MarkReviewVC: UIViewController {
                         "max_mark": maxMarkStr
                     ])
                 }
-
+                
                 studentMarks.append([
                     "subject_id": subjectId,
                     "subject_name": subject.subject_name ?? "",
                     "activities": activitiesArray
                 ])
             }
-
+            
             uploadDetails.append([
                 "student_id": student.student_id ?? "",
                 "student_name": student.student_name ?? "",
@@ -430,7 +427,7 @@ class MarkReviewVC: UIViewController {
                 "marks": studentMarks
             ])
         }
-
+        
         if invalidMarkCount > 0 {
             CustomAlert().showAlert(
                 title: "Invalid Marks",
@@ -439,12 +436,12 @@ class MarkReviewVC: UIViewController {
             )
             return
         }
-
+        
         let finalPayload: [String: Any] = [
             "exam_section_id": examId ?? "",
             "upload_details": uploadDetails
         ]
-
+        
         CustomAlert().showAlertCancel(
             title: AlertstringFile.Confirm,
             message: AlertstringFile.uploadMark,
@@ -455,7 +452,7 @@ class MarkReviewVC: UIViewController {
             onNo: { print("User canceled upload") }
         )
     }
-
+    
     
     func sendMarksToAPI(with parameters:[String: Any]) {
         
@@ -528,21 +525,21 @@ class MarkReviewVC: UIViewController {
     }
     
     private func setupSubjectsCollection() {
-         let layout = UICollectionViewFlowLayout()
-         layout.scrollDirection = .horizontal
-         layout.minimumLineSpacing = 0
-         layout.minimumInteritemSpacing = 0
-         
-         subjectsCollectionView.collectionViewLayout = layout
-         subjectsCollectionView.register(UINib(nibName: "MarkReviewCVC", bundle: nil),
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        
+        subjectsCollectionView.collectionViewLayout = layout
+        subjectsCollectionView.register(UINib(nibName: "MarkReviewCVC", bundle: nil),
                                         forCellWithReuseIdentifier: "MarkReviewCVC")
-         
-         subjectsCollectionView.dataSource = self
-         subjectsCollectionView.delegate = self
-         subjectsCollectionView.showsHorizontalScrollIndicator = true
-         subjectsCollectionView.bounces = true
-         subjectsCollectionView.backgroundColor = .systemBackground
-     }
+        
+        subjectsCollectionView.dataSource = self
+        subjectsCollectionView.delegate = self
+        subjectsCollectionView.showsHorizontalScrollIndicator = true
+        subjectsCollectionView.bounces = true
+        subjectsCollectionView.backgroundColor = .systemBackground
+    }
     
     // MARK: - Scroll Synchronization
     func syncVerticalScroll(from sender: UIScrollView, offset: CGPoint) {
@@ -640,48 +637,48 @@ class MarkReviewVC: UIViewController {
                     value: String,
                     reson: String,
                     subjectName: String) {
-
+        
         guard row < studentRecords.count,
               column < subjectColumns.count else { return }
-
+        
         let col = subjectColumns[column]
         let rollNo = studentRecords[row].roll_no ?? ""
         let trimmed = value.trimmingCharacters(in: .whitespaces)
-
+        
         var hasError = false
         if let entered = Int(trimmed) {
             hasError = entered < 0 || entered > (col.maxMarks ?? 0)
         } else {
             hasError = true
         }
-
+        
         let key = makeMarkKey(col: col)
-
+        
         if editedMarks[rollNo] == nil { editedMarks[rollNo] = [:] }
         editedMarks[rollNo]?[key] = trimmed
-
+        
         for s in 0..<(studentRecords[row].marks?.count ?? 0) {
-
+            
             let currentSubject = studentRecords[row].marks?[s].subject_name ?? ""
-
+            
             // ✅ SUBJECT MATCH
             guard normalizeName(currentSubject) == normalizeName(subjectName) else { continue }
-
+            
             for a in 0..<(studentRecords[row].marks?[s].activities?.count ?? 0) {
-
+                
                 let activity = studentRecords[row].marks?[s].activities?[a]
-
+                
                 // ✅ ACTIVITY MATCH
                 guard normalizeName(activity?.name ?? "") == normalizeName(col.activityName ?? "") else { continue }
-
+                
                 let original = activity?.mark ?? ""
-
+                
                 studentRecords[row].marks?[s].activities?[a].mark = trimmed
                 studentRecords[row].marks?[s].activities?[a].isReview = !hasError
                 studentRecords[row].marks?[s].activities?[a].reason = reson
-
+                
                 errorDeclarationLbl.text = "⚠️ \(getFormattedReasonSummary())"
-
+                
                 if trimmed == original {
                     editedMarks[rollNo]?.removeValue(forKey: key)
                     if editedMarks[rollNo]?.isEmpty == true {
@@ -692,7 +689,7 @@ class MarkReviewVC: UIViewController {
             }
         }
     }
-
+    
     
     func makeMarkKey(col: ColumnConfig) -> String {
         return "AN:\(col.activityName ?? UUID().uuidString)"
@@ -853,7 +850,7 @@ extension MarkReviewVC {
                 for activity in subject.activities ?? [] {
                     
                     guard let reason = activity.reason?
-                            .trimmingCharacters(in: .whitespacesAndNewlines),
+                        .trimmingCharacters(in: .whitespacesAndNewlines),
                           !reason.isEmpty else { continue }
                     
                     reasonMap[reason, default: 0] += 1
