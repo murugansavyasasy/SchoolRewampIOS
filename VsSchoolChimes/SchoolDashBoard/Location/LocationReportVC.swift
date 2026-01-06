@@ -51,7 +51,7 @@ class LocationReportVC: UIViewController{
             url: ServiceUrl.comm_recipient_get_academic_year_list,
             parameters: [:],
             type: ApitTypeSringFile.GET, // make sure this is not a typo
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<get_academic_yearSuc, Error>) in
             switch result {
             case .success(let successMessage):
@@ -146,7 +146,7 @@ class LocationReportVC: UIViewController{
     func Geometric_Staff_Attendance_Report() {
         let date = (YearLbl.text ?? "") + "-" + SelectedMonthCode
         let param = [StaffAttendanceReportStringFile.attendance_dt: date] //"2025-04"
-        APIService.shared.makeApi(url: ServiceUrl.staff_attd_geometric_geometric_staff_attendance_report, parameters: param, type: ApitTypeSringFile.GET, token: staffdetails?.access_token ?? "") { [self] (reult: Result<StaffAttendanceResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.staff_attd_geometric_geometric_staff_attendance_report, parameters: param, type: ApitTypeSringFile.GET, token: staffdetails?.access_token ?? "", isBaseUrl: false) { [self] (reult: Result<StaffAttendanceResponse,Error>) in
             switch reult {
             case .success(let successMessage):
                 if successMessage.status == true {

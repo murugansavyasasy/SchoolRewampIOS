@@ -65,7 +65,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         recentActiveMenuCollection.register(UINib(nibName: CellConfingName.TopCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.TopCVCell)
         MenuCollection.register(UINib(nibName: CellConfingName.CustomMenuCVC, bundle: nil), forCellWithReuseIdentifier: CellConfingName.CustomMenuCVC)
         
-        if checkMutipleSchool() {
+        if checkMutipleSchool(isSingle: true) {
             profileImageView.isHidden = true
             setupLabels(
                 name: staffDetails?.name,
@@ -189,7 +189,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             url: ServiceUrl.get_dashboard_details,
             parameters: [COMMON_PARAMETER.member_type: API_PARAMS_HOTCODE.staff, COMMON_PARAMETER.mobile_number: mobile_num ?? ""],
             type: ApitTypeSringFile.GET,
-            token:token
+            token:token, isBaseUrl: false
         ) { [weak self] (result: Result<MenuResponse, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -237,7 +237,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             url: ServiceUrl.dashboard_api_dashboard_menu_counts,
             parameters: [COMMON_PARAMETER.member_type:API_PARAMS_HOTCODE.staff],
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<MenuCountResponse, Error>) in
             guard let self = self else { return }
             
@@ -337,7 +337,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             url: ServiceUrl.comm_recipient_get_academic_year_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { (result: Result<get_academic_yearSuc, Error>) in
             switch result {
             case .success(let successMessage):
@@ -375,7 +375,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                 ]
             ],
             type: ApitTypeSringFile.POST,
-            token: ServiceUrl.token
+            token: ServiceUrl.token, isBaseUrl: true
         ) { (result: Result<DeviceTokenResponseSuc, Error>) in
             switch result {
             case .success(let successMessage):
@@ -395,7 +395,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             url: ServiceUrl.global_global_variables,
             parameters: ["key_names" : []],
             type: ApitTypeSringFile.POST,
-            token: ""
+            token: "", isBaseUrl: false
         ) { (result: Result<GlobalVariablesResponse, Error>) in
             switch result {
                 
@@ -421,24 +421,34 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         let schoolText = school?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let rollText = roll?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
 
+        var finalText = ""
         if !schoolText.isEmpty && !rollText.isEmpty {
-            welcomeLabel.text = "\(schoolText)\n \(rollText)"
+            finalText = "\(schoolText)\n\(rollText)"
         } else if !schoolText.isEmpty {
-            welcomeLabel.text = schoolText
+            finalText = schoolText
         } else if !rollText.isEmpty {
-            welcomeLabel.text = "\(rollText)"
-        } else {
-            welcomeLabel.text = ""
+            finalText = "\(rollText)"
         }
 
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 6 
+        let attributedString = NSAttributedString(
+            string: finalText,
+            attributes: [
+                .paragraphStyle: paragraphStyle,
+                .foregroundColor: UIColor.white.withAlphaComponent(0.9),
+                .font: UIFont.systemFont(ofSize: 14, weight: .regular)
+            ]
+        )
+
+        welcomeLabel.attributedText = attributedString
         welcomeLabel.numberOfLines = 0
-        welcomeLabel.textColor = UIColor.white.withAlphaComponent(0.9)
-        welcomeLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
 
         nameLabel.text = name
         nameLabel.textColor = UIColor.white
         nameLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
     }
+
 
 
     
@@ -702,8 +712,15 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
-    func checkMutipleSchool() -> Bool {
+    func checkMutipleSchool(isSingle:Bool? = nil) -> Bool {
         if staffDetailsCount?.count ?? 0 > 1 {
+            switch staff_roll {
+            case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+                return true
+            default:
+                return false
+            }
+        }else if isSingle ?? false{
             switch staff_roll {
             case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
                 return true

@@ -140,7 +140,7 @@ extension InteractionVC : UITableViewDataSource,UITableViewDelegate{
     
     func getStaff(){
         APIService.shared
-            .makeApi(url: ServiceUrl.interaction_staff_details_for_chat , parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? ""){ [self] (
+            .makeApi(url: ServiceUrl.interaction_staff_details_for_chat , parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "", isBaseUrl: false){ [self] (
                 result:Result <StaffListResponse,
                 Error>
             ) in

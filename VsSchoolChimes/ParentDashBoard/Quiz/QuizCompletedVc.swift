@@ -202,7 +202,7 @@ extension QuizCompletedVc {
 
     func mySubmission() {
         APIService.shared
-            .makeApi(url: ServiceUrl.my_submissions, parameters: [QuizKeys.id : selected_QuizId ?? "" ], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (
+            .makeApi(url: ServiceUrl.my_submissions, parameters: [QuizKeys.id : selected_QuizId ?? "" ], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (
                 result: Result<MyQuizSuc,
                 Error>
             ) in

@@ -138,7 +138,7 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             "description": discriptionsTextFild.text ?? ""
         ]
         
-        APIService.shared.makeApi(url: ServiceUrl.lms_api_quiz_update, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<CommonApiSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_quiz_update, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result: Result<CommonApiSuc,Error>) in
             
             guard let self = self else {return}
             

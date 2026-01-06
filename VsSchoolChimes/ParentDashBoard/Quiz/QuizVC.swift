@@ -61,7 +61,7 @@ class QuizVC: UIViewController, UISearchBarDelegate {
     
     func Get_Quiz() {
         APIService.shared
-            .makeApi(url: ServiceUrl.quiz_exam_list, parameters: [QuizKeys.type : "2",QuizKeys.status_type : stausType], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") { [weak self] (
+            .makeApi(url: ServiceUrl.quiz_exam_list, parameters: [QuizKeys.type : "2",QuizKeys.status_type : stausType], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (
                 result: Result<QuizListSuc,
                 Error>
             ) in

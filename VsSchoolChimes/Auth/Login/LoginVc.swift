@@ -161,7 +161,7 @@ class LoginVc: UIViewController {
         ]
         
         APIService.shared.makeApi(url: ServiceUrl.validate_validate_user,parameters:parameters
-                                  , type: ApitTypeSringFile.POST, token: "") { [self] (result: Result<UserValidationResponseSuc,Error>) in
+                                  , type: ApitTypeSringFile.POST, token: "", isBaseUrl: true) { [self] (result: Result<UserValidationResponseSuc,Error>) in
             switch result {
             case .success(let response):
                 if response.status == true {
@@ -257,7 +257,7 @@ class LoginVc: UIViewController {
             showActivityLoader()
         }
         APIService.shared
-            .makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : MobilTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (
+            .makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : MobilTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token, isBaseUrl: true){[self] (
                 result : Result<ForgotPasswordResponeSuc,
                 Error>
             ) in

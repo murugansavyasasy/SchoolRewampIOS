@@ -133,7 +133,7 @@ class UpdateProfileVC: UIViewController, reloadDelegate {
             url: url,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: token
+            token: token, isBaseUrl: false
         ) { [weak self] (result: Result<UserProfileResponse, Error>) in
             guard let self = self else { return }
             
@@ -587,7 +587,7 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
                 url: ServiceUrl.admin_api_student_profile_pre_submission,
                 parameters: parameters,
                 type: ApitTypeSringFile.POST,
-                token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+                token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true
             ) { [weak self] (result: Result<Send_AttachmentResponse, Error>) in
                 guard let self = self else { return }
                 switch result {
@@ -629,7 +629,7 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
             url: ServiceUrl.dashboard_api_pauket_add_points,
             parameters: params,
             type: ApitTypeSringFile.POST,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
 

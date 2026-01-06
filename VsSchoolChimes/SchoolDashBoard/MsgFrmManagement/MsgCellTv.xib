@@ -46,7 +46,7 @@
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tg0-3i-Gkk">
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tg0-3i-Gkk">
                                                 <rect key="frame" x="331" y="0.0" width="30" height="30"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new-image" translatesAutoresizingMaskIntoConstraints="NO" id="R6b-qg-WML">
@@ -246,12 +246,31 @@
                             <constraint firstAttribute="bottom" secondItem="KMZ-Ka-HDH" secondAttribute="bottom" id="mQt-68-YVU"/>
                         </constraints>
                     </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CdN-p7-kHI">
+                        <rect key="frame" x="348" y="8" width="30" height="30"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new-image" translatesAutoresizingMaskIntoConstraints="NO" id="ULl-lc-82c">
+                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="ULl-lc-82c" secondAttribute="trailing" id="2xF-2A-50K"/>
+                            <constraint firstAttribute="bottom" secondItem="ULl-lc-82c" secondAttribute="bottom" id="6Lk-HB-HOZ"/>
+                            <constraint firstAttribute="height" constant="30" id="OLY-EZ-dOC"/>
+                            <constraint firstAttribute="width" constant="30" id="csZ-Om-nEI"/>
+                            <constraint firstItem="ULl-lc-82c" firstAttribute="leading" secondItem="CdN-p7-kHI" secondAttribute="leading" id="kFg-5X-oW1"/>
+                            <constraint firstItem="ULl-lc-82c" firstAttribute="top" secondItem="CdN-p7-kHI" secondAttribute="top" id="scP-yM-bab"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="lVX-WR-rhk" secondAttribute="trailing" constant="16" id="B7C-dQ-4JN"/>
+                    <constraint firstItem="CdN-p7-kHI" firstAttribute="top" secondItem="lVX-WR-rhk" secondAttribute="top" id="G9b-z8-q0k"/>
                     <constraint firstItem="lVX-WR-rhk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="MUp-fR-khB"/>
                     <constraint firstAttribute="bottom" secondItem="lVX-WR-rhk" secondAttribute="bottom" constant="8" id="YoF-g5-Fex"/>
                     <constraint firstItem="lVX-WR-rhk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="beO-Qw-TQM"/>
+                    <constraint firstAttribute="trailing" secondItem="CdN-p7-kHI" secondAttribute="trailing" constant="15" id="tEi-yK-GS2"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -267,7 +286,7 @@
                 <outlet property="nameLabel" destination="EUd-hX-ZiY" id="ixQ-aZ-Vjf"/>
                 <outlet property="profileContainerView" destination="4Aa-62-KsQ" id="gez-Ql-HWD"/>
                 <outlet property="profileInitialsLabel" destination="Zcl-MO-icZ" id="aAB-1g-cfb"/>
-                <outlet property="readView" destination="tg0-3i-Gkk" id="0Le-nA-QEY"/>
+                <outlet property="readView" destination="CdN-p7-kHI" id="IMl-qp-1yK"/>
                 <outlet property="roleContainerView" destination="Hcf-hA-UAI" id="s23-eU-UqZ"/>
                 <outlet property="roleLabel" destination="Et6-3l-4rG" id="vXi-7y-gmE"/>
                 <outlet property="schoolName" destination="TW9-Yz-axe" id="Ge6-Q9-Oof"/>
@@ -287,16 +306,16 @@
         <image name="new-image" width="288" height="288"/>
         <image name="trash" catalog="system" width="117" height="128"/>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.53333333333333333" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.2196078431372549" blue="0.23529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

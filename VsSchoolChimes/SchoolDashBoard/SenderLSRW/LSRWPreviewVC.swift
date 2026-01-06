@@ -52,7 +52,7 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             url: ServiceUrl.lms_api_lsrw_submission_list,
             parameters: ["id":report?.id ?? ""],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<LSWSubmissionResponse, Error>) in
             switch result {
             case .success(let response):

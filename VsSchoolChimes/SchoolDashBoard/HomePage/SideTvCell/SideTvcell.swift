@@ -13,17 +13,7 @@ class SideTvcell: UITableViewCell {
     @IBOutlet weak var ExameLbl: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-      
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        if isSelected == true {
-           cellView.backgroundColor = .parentClr
-        }else{
-           cellView.backgroundColor = .white
-        }
+        cellView.layer.cornerRadius = 10
     }
     
 }

@@ -26,6 +26,7 @@ class  commonApi_forSending {
         message: String,
         from viewController: UIViewController,
         Common_request_params: [String: Any]? = nil,
+        isBaseUrl : Bool,
         onComplete: @escaping(Send_AttachmentResponse) -> Void
     ) {
         alert.showAlertCancel(
@@ -127,7 +128,7 @@ class  commonApi_forSending {
                         //                        return
                     }
                     if edit == true {
-                        self.EditAttachment(from: viewController, with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue, baseURl: baseURL, Common_request_params: Common_request_params) { response in
+                        self.EditAttachment(from: viewController, with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue, baseURl: baseURL, Common_request_params: Common_request_params, isBaseUrl: isBaseUrl) { response in
                             print("✅ All uploads complete.")
                             onComplete(response)
                         }
@@ -142,6 +143,7 @@ class  commonApi_forSending {
                             target_type: target_type,
                             selectedAcadimicYearId: selectedAcadimicYearId,
                             Common_request_params: Common_request_params,
+                            isBaseUrls : isBaseUrl,
                             subjectId: subjectId
                         ) { response in
                             print("✅ All uploads complete.")
@@ -171,6 +173,7 @@ class  commonApi_forSending {
         target_type : Int,
         selectedAcadimicYearId : Int,
         Common_request_params: [String: Any]? = nil,
+        isBaseUrls : Bool,
         subjectId: String, onComplete : @escaping(Send_AttachmentResponse) -> Void) {
             
             
@@ -201,7 +204,7 @@ class  commonApi_forSending {
                 url: baseURl,
                 parameters: finalParams,
                 type: ApitTypeSringFile.POST,
-                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: isBaseUrls
             ) { [] (result: Result<Send_AttachmentResponse, Error>) in
                 switch result {
                 case .success(let successMessage):
@@ -235,6 +238,7 @@ class  commonApi_forSending {
         filesize: String,
         baseURl: String,
         Common_request_params: [String: Any]?,
+        isBaseUrl : Bool,
         onComplete: @escaping(Send_AttachmentResponse) -> Void
     ) {
         
@@ -261,7 +265,7 @@ class  commonApi_forSending {
             url: baseURl,
             parameters: finalParams,
             type: ApitTypeSringFile.PUT,
-            token: Updatetoken ?? ""
+            token: Updatetoken ?? "", isBaseUrl: isBaseUrl
         ) { [weak viewController] (result: Result<Send_AttachmentResponse, Error>) in
             guard let viewController = viewController else { return }
             

@@ -87,7 +87,7 @@ class AssignmentReport: UIViewController, SelectedId {
                     url: ServiceUrl.comm_api_assignment_delete,
                     parameters: ["id": targetID],
                     type: ApitTypeSringFile.PUT,
-                    token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                    token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true
                 ) { [weak self] (result: Result<ResetPasswordSuc, Error>) in
                     DispatchQueue.main.async {
                         guard let self = self else { return }
@@ -136,7 +136,7 @@ class AssignmentReport: UIViewController, SelectedId {
             url: ServiceUrl.comm_api_assignment_report,
             parameters: ["academic_year_id":academicId ?? 0],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<AssignmentReportResponse, Error>) in
             switch result {
             case .success(let response):
@@ -244,7 +244,7 @@ class AssignmentReport: UIViewController, SelectedId {
                     url: ServiceUrl.comm_api_assignment_delete,
                     parameters: ["id": idToRemove],
                     type: ApitTypeSringFile.PUT,
-                    token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                    token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true
                 ) { (result: Result<Send_AttachmentResponse, Error>) in
                     switch result {
                     case .success(let response):

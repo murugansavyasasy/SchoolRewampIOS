@@ -167,7 +167,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             url: ServiceUrl.get_dashboard_details,
             parameters: ["member_type": "parent", "mobile_number": mobile_num ?? ""],
             type: ApitTypeSringFile.GET,
-            token: childDetails?.access_token ?? ""
+            token: childDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<MenuResponse, Error>) in
             guard let self = self else { return }
             
@@ -218,7 +218,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             url: ServiceUrl.global_global_variables,
             parameters: ["key_names" : []],
             type: ApitTypeSringFile.POST,
-            token: ""
+            token: "", isBaseUrl: false
         ) { (result: Result<GlobalVariablesResponse, Error>) in
             switch result {
                 
@@ -244,7 +244,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             url: ServiceUrl.dashboard_api_dashboard_menu_counts,
             parameters: ["member_type": "parent"],
             type: ApitTypeSringFile.GET,
-            token: childDetails?.access_token ?? ""
+            token: childDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<MenuCountResponse, Error>) in
             guard let self = self else { return }
 

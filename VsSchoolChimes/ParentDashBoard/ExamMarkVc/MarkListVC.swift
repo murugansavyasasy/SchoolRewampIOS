@@ -64,7 +64,7 @@ class MarkListVC: UIViewController {
             url: ServiceUrl.exam_api_exam_view_marks,
             parameters: ["exam_id": exam_id],
             type: ApitTypeSringFile.GET,
-            token: studentDetails?.access_token ?? ""
+            token: studentDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<ExamMarksResponse, Error>) in
             DispatchQueue.main.async {
                 switch result {

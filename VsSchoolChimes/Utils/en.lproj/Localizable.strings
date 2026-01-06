@@ -657,7 +657,7 @@
 //MARK: FeePending
 "CATEGORY_WISE" = "Category Wise";
 "CLASS_WISE" = "Class Wise";
-"TOTAL_PENDING" = "Total Pending";
+"TOTAL_PENDING" = "TOTAL PENDING";
 "PAYMENT_HISTORY" = "Payment History";
 
 //MARK: DailyCollection
@@ -666,7 +666,7 @@
 "MODE" = "Mode";
 "FROM_DATE" = " From Date";
 "TO_DATE" = " To Date";
-"TOTAL_COLLECTION" = "Total Collection";
+"TOTAL_COLLECTION" = "TOTAL COLLECTION";
 
 //MARK: PunchAttendence
 "Today's Report" = "Today's Report";
@@ -704,9 +704,9 @@
 "Total Students" = "Total Students";
 "Standard" = "Standard";
 "Boys" = "Boys";
-"STANDARD SECTION OVER VIEW" = "Standard Section Overview";
-"SCHOOL STRENGTH VISUALIZATION" = "School Strength Visualization";
-"SUMMARY STATICS" = "Summary Statics";
+"STANDARD SECTION OVER VIEW" = "STANDARD SECTION OVER VIEW";
+"SCHOOL STRENGTH VISUALIZATION" = "SCHOOL STRENGTH VISUALIZATION";
+"SUMMARY STATICS" = "SUMMARY STATICS";
 
 "Staffs" = "Staffs";
 "Students" = "Students";

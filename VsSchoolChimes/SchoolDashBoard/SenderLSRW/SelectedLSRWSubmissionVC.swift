@@ -81,7 +81,7 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
             url: ServiceUrl.lms_api_lsrw_stats,
             parameters: ["month_id": monthId],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<SkillResponse, Error>) in
             switch result {
             case .success(let response):

@@ -34,7 +34,7 @@ class PriorityVC: UIViewController {
     var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
     var staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     let rollname = UserDefaultFileManager.getUserDetails()?.user_details?.role_name ?? ""
-    
+    var IsAddPointApiCheck : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -45,9 +45,6 @@ class PriorityVC: UIViewController {
     
         StyleAndTranslate()
         
-//        gradientcolours(button: NextButtonView, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-//       
-//        gradientcolours(button: teacherButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         teacherButton.tintColor = .white
     
         let nib1 = UINib(nibName: CellConfingName.SchoolTVCell, bundle: nil)
@@ -61,10 +58,10 @@ class PriorityVC: UIViewController {
         tableview.dataSource = self
         tableview.layoutIfNeeded()
         if user_inputs.clearTempData(){
-            let parms = [ "mobile_number": UserDefaultFileManager.get_staff_Details()?.mobile_no ?? "",
-                          "activity": "HOMEWORK",
-                          "user_type": 1,
-                          "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
+            let parms = [ "mobile_number": UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "",
+                          "activity": "LOGIN",
+                          "user_type": login_astype == 1 ? 2 : 1,
+                          "menu_id": 0] as [String : Any]
             paketApiCall(params:parms)
         }
     }
@@ -73,16 +70,17 @@ class PriorityVC: UIViewController {
             url: ServiceUrl.dashboard_api_pauket_add_points,
             parameters: params,
             type: ApitTypeSringFile.POST,
-            token:  UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token:  UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<EventResponse, Error>) in
-            DispatchQueue.main.async {
-                
+            DispatchQueue.main.async { [self] in
                 guard let self = self else { return }
-                
                 switch result {
                 case .success(let response):
                     if let window = UIApplication.shared.windows.first {
                         window.makeToast(response.message, duration: 2.0, position: .bottom)
+                    }
+                    if self.login_astype == 2{
+                        self.IsAddPointApiCheck = true
                     }
                 case .failure(let error):
                     if let window = UIApplication.shared.windows.first {
@@ -244,6 +242,7 @@ class PriorityVC: UIViewController {
         login_astype = 2
         UserDefaults.standard.set(login_astype, forKey: "passvalue")
         tableview.reloadData()
+    
     }
     
     func gradientcolours(button: UIView, colours: [CGColor]) {
@@ -356,65 +355,19 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
         } else {
         
             let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.PriorityStudentTVC, for: indexPath) as! PriorityStudentTVC
-            
-//            cell.TopView.backgroundColor = colour1
-//            cell.StudentImage.image = image
-            //cell.imgview.image = UIImage(named: childDetails?[indexPath.row].school_logo_url ?? "")
+
             cell.NameLbl.text = childDetails?[indexPath.row].name
             cell.RollNo.text = CommonStringFile.RollNo + " : " + (childDetails?[indexPath.row].roll_number ?? "")
-//            cell.AcademicYearLbl.text = CommonStringFile.Academic_Year + " : " + (childDetails?[indexPath.row].academic_year_name ?? "")
-                      
             cell.ClassLbl.text = (childDetails?[indexPath.row].standard_name ?? "") + " - " + (childDetails?[indexPath.row].section_name ?? "")
             cell.SchoolNameLbl.text = childDetails?[indexPath.row].school_name
             cell.bloodLbl.text = childDetails?[indexPath.row].blood_group
             cell.StudentImage.kf.setImage(with: URL(string: childDetails?[indexPath.row].profile ?? ""),placeholder: UIImage(systemName: "person.fill"))
             if #available(iOS 15.0, *) {
                 let gradientSets: [[CGColor]] = [ [UIColor.systemBlue.cgColor, UIColor.systemTeal.cgColor], [UIColor.systemPurple.cgColor,UIColor.systemPink.cgColor], [UIColor.systemOrange.cgColor,UIColor.systemRed.cgColor], [UIColor.systemGreen.cgColor,UIColor.systemMint.cgColor], [UIColor.systemIndigo.cgColor,UIColor.systemBlue.cgColor]]
-//                let gradientSets: [[CGColor]] = [
-//                    [UIColor(hex: "#7D3A8A").cgColor, UIColor(hex: "#E5D7EF").cgColor],
-//                    [UIColor(hex: "#09203F").cgColor, UIColor(hex: "#1EA698").cgColor],
-//                    [UIColor(hex: "#F9C861").cgColor, UIColor(hex: "#F7943D").cgColor],
-//                    [UIColor(hex: "#1B6572").cgColor, UIColor(hex: "#B9EFFF").cgColor],
-//                    [UIColor(hex: "#336A29").cgColor, UIColor(hex: "#EAEF9D").cgColor],
-//                    [UIColor(hex: "#FF5F91").cgColor, UIColor(hex: "#F042FF").cgColor],
-//                    [UIColor(hex: "#A674FF").cgColor, UIColor(hex: "#D5B3FF").cgColor],
-//                    [UIColor(hex: "#87F5F5").cgColor, UIColor(hex: "#F042FF").cgColor],
-//                    [UIColor(hex: "#C7B8FF").cgColor, UIColor(hex: "#E9E4FF").cgColor]
-//                ]
-//                let topBottomGradientSets: [[CGColor]] = [
-//
-//                    // Soft Purple Lavender
-//                    [UIColor(hex: "#B88CE3").cgColor, UIColor(hex: "#E9DBFF").cgColor],
-//
-//                    // Aqua Teal Smooth
-//                    [UIColor(hex: "#46A2A9").cgColor, UIColor(hex: "#A8E6DF").cgColor],
-//
-//                    // Warm Golden Peach
-//                    [UIColor(hex: "#F7CE68").cgColor, UIColor(hex: "#FFB37B").cgColor],
-//
-//                    // Light Sky Blue Premium
-//                    [UIColor(hex: "#4FA8D0").cgColor, UIColor(hex: "#CFEFFF").cgColor],
-//
-//                    // Fresh Green Mint
-//                    [UIColor(hex: "#4C9A4B").cgColor, UIColor(hex: "#E5F7C8").cgColor],
-//
-//                    // Pink → Light Purple
-//                    [UIColor(hex: "#FF82B2").cgColor, UIColor(hex: "#F8C8FF").cgColor],
-//
-//                    // Soft Violet (No dark shades)
-//                    [UIColor(hex: "#C59AFE").cgColor, UIColor(hex: "#ECD8FF").cgColor],
-//
-//                    // Aqua Blue to Pink (premium look)
-//                    [UIColor(hex: "#9FF7F5").cgColor, UIColor(hex: "#FFB8F8").cgColor],
-//
-//                    // Light Royal Violet (replacing dark blue)
-//                    [UIColor(hex: "#D5C7FF").cgColor, UIColor(hex: "#F1EBFF").cgColor]
-//                ]
+
                 
                 let colors = gradientSets[indexPath.row % gradientSets.count]
-//                let topcolors = topBottomGradientSets[indexPath.row % topBottomGradientSets.count]
                 cell.setGradientColors(colors)
-//                cell.setGradientColors(colors,topColors: topcolors)
                 
             }
                
@@ -433,6 +386,13 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
         if login_astype  == 2 {
             if let data = childDetails?[indexPath.row]{
                 UserDefaultFileManager.saveChildDetails(data: data)}
+            if IsAddPointApiCheck == false{
+                let parms = ["mobile_number": UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "",
+                              "activity": "LOGIN",
+                              "user_type": login_astype == 2 ? 1 : 2,
+                             "menu_id": 0] as [String : Any]
+                paketApiCall(params:parms)
+            }
             let vc = TapBarVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             vc.login_astype = login_astype
@@ -441,6 +401,13 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             if staff_role == PriorityType.is_staff{
                 if let data = staffDetails?[indexPath.row]{
                     UserDefaultFileManager.saveStaffDetails(data: data)
+                    if IsAddPointApiCheck == false{
+                        let parms = ["mobile_number": UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "",
+                                      "activity": "LOGIN",
+                                      "user_type": login_astype == 2 ? 1 : 2,
+                                     "menu_id": 0] as [String : Any]
+                        paketApiCall(params:parms)
+                    }
                     let vc = TapBarVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     vc.login_astype = login_astype

@@ -10,8 +10,8 @@ import UIKit
 
 struct ServiceUrl{
     static var baseurl = "http://apiv8.schoolchimes.net/"
+    static var Reporting_baseurl = "http://apiv8.schoolchimes.net/"
     static var Pacukt_baseurl = "https://api.pauket.com/api/partner/"
-    static var report_url = ""
     static var token = ""
     static var awsBucketName = ""
     
@@ -107,7 +107,6 @@ struct ServiceUrl{
     static let   attachment_target_details = "comm/api/attachment/target-details"
     static let   comm_api_assignment_list_archive = "comm/api/assignment/list-archive"
     static let comm_api_my_submissions = "comm/api/assignment/my-submissions"
-    static let comm_api_assignment_submissions_list_archive = "comm/api/assignment/submissions-list-archive"
     static let lms_api_lesson_plan_staff_report = "lms/api/lesson-plan/staff-report"
     static let lms_api_lesson_plan_view = "lms/api/lesson-plan/view"
     static let lms_api_lesson_plan_get_data_for_edit = "lms/api/lesson-plan/get-data-for-edit"

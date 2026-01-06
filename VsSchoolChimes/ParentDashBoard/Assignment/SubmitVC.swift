@@ -189,7 +189,7 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
             url: ServiceUrl.dashboard_api_pauket_add_points,
             parameters: params,
             type: ApitTypeSringFile.POST,
-            token: studentDetails?.access_token ?? ""
+            token: studentDetails?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
 
@@ -603,7 +603,7 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
                 url: baseURL,
                 parameters: parameters,
                 type: type,
-                token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+                token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true
             ) { [weak self] (result: Result<Send_AttachmentResponse, Error>) in
                 guard let self = self else { return }
                 switch result {

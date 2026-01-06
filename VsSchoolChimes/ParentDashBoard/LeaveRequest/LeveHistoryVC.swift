@@ -183,7 +183,7 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
             APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_delete,
                                       parameters: ["id": id],
                                       type: ApitTypeSringFile.PUT,
-                                      token: self.childDetails?.access_token ?? "") { [weak self] (result: Result<CommonApiSuc, Error>) in
+                                      token: self.childDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result: Result<CommonApiSuc, Error>) in
 
                 DispatchQueue.main.async {
                     guard let self = self else { return }
@@ -234,7 +234,7 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
         APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_list,
                                   parameters: [LeaveRequestStringFile.member_type: "STUDENT"],
                                   type: ApitTypeSringFile.GET,
-                                  token: childDetails?.access_token ?? "") { [weak self] (result: Result<LeaveInfoResponse, Error>) in
+                                  token: childDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<LeaveInfoResponse, Error>) in
 
             DispatchQueue.main.async {
                 guard let self = self else { return }

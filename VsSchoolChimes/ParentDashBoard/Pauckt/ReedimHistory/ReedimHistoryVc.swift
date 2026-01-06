@@ -77,7 +77,7 @@ class ReedimHistoryVc: UIViewController {
             url: ServiceUrl.my_coupons,
             parameters: param,
             type: ApitTypeSringFile.POST,
-            token: PaucketHeader.Paucket
+            token: PaucketHeader.Paucket, isBaseUrl: false
         ) { [weak self] (result: Result<MyCouponResponse, Error>) in
             
             guard let self = self else { return }

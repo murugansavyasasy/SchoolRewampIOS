@@ -74,8 +74,8 @@ class SchoolStrengthVC: UIViewController {
                 Total: total,
                 name: Total,
                 previousYear: totalPreviousYear,
-                Girl:Int(data.total_staff_strength ?? "0") ?? 0,
-                boys:  Int(data.total_student_strength ?? "0") ?? 0,
+                Girl:Int(data.total_student_strength ?? "0") ?? 0,
+                boys:  Int(data.total_staff_strength ?? "0") ?? 0,
                 others: 0,
                 message: previousData?.message ?? ""))
         list.append(
@@ -159,7 +159,7 @@ class SchoolStrengthVC: UIViewController {
             url: ServiceUrl.admin_api_get_school_strength,
             parameters: [COMMON_PARAMETER.academic_year_id: acodemicId ?? 0],
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<SchoolStrengthResponse, Error>) in
             guard let self = self else { return }
             

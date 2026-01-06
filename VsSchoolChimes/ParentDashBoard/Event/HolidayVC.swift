@@ -95,7 +95,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             url: ServiceUrl.school_event_view_holidays,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: token) { [weak self] (result: Result<EventHolidayResponse, Error>) in
+            token: token, isBaseUrl: false) { [weak self] (result: Result<EventHolidayResponse, Error>) in
                 DispatchQueue.main.async {
                     if #available(iOS 15.0, *) {
                         self?.hideActivityLoader()
@@ -130,7 +130,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             url: ServiceUrl.dashboard_api_pauket_add_points,
             parameters: params,
             type: ApitTypeSringFile.POST,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<EventResponse, Error>) in
             DispatchQueue.main.async {
 

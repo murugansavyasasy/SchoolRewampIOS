@@ -87,7 +87,7 @@ class AttachmentsVc: UIViewController {
             url: ServiceUrl.comm_communication_attachment_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token:studentDetails?.access_token ?? ""
+            token:studentDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<AttachmentsResponse, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -154,7 +154,7 @@ class AttachmentsVc: UIViewController {
             url: ServiceUrl.comm_communication_attachment_list_archive,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token:studentDetails?.access_token ?? ""
+            token:studentDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<AttachmentsResponse, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -216,7 +216,7 @@ class AttachmentsVc: UIViewController {
                 ReadStatusUpdateStringFile.detail_id: detail_id
             ],
             type: ApitTypeSringFile.POST,
-            token: studentDetails?.access_token ?? ""
+            token: studentDetails?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<ReadStatusResponse, Error>) in
             
             guard let self = self else { return }

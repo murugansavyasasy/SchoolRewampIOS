@@ -92,7 +92,7 @@ class SubmitedAssignmentVC: UIViewController, UITableViewDataSource, UITableView
             url: ServiceUrl.comm_api_assignment_submissions_list,
             parameters: ["id": id ?? "", "type": type],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<StudentSubmissionResponse, Error>) in
             switch result {
             case .success(let response):
@@ -112,33 +112,6 @@ class SubmitedAssignmentVC: UIViewController, UITableViewDataSource, UITableView
                 DispatchQueue.main.async {
                     print("API Error: \(error.localizedDescription)")
                     self?.showAlert(message: "Network error occurred. Please try again.")
-                }
-            }
-        }
-    }
-    
-    func getAssignmentArchive() {
-        APIService.shared.makeApi(
-            url: ServiceUrl.comm_api_assignment_submissions_list_archive,
-            parameters: ["id": id ?? "", "type": type],
-            type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
-        ) { [weak self] (result: Result<StudentSubmissionResponse, Error>) in
-            switch result {
-            case .success(let response):
-                if response.status ?? false {
-                    DispatchQueue.main.async {
-                        // Append archived data to existing data
-                        let archivedData = response.data ?? []
-                        self?.submittedAssignment.append(contentsOf: archivedData)
-                        self?.filteredAssignment = self?.submittedAssignment ?? []
-                        self?.submitionList.reloadData()
-                        self?.updateCountLabels()
-                    }
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    print("API Error: \(error.localizedDescription)")
                 }
             }
         }

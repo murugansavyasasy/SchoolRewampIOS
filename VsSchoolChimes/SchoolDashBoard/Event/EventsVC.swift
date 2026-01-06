@@ -91,7 +91,8 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         backBtn.configureAsBackTitle(firstLine: "Event", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         eventTxt.placeholder = CommonStringFile.Title.translated()
-        
+        nextBtn.setAttributedTitle(nil, for: .normal)
+        nextBtn.setTitle("Next", for: .normal)
         dateView.layer.borderColor = UIColor.lightGray.cgColor
         dateView.layer.borderWidth = 0.5
         dateView.layer.cornerRadius = 8
@@ -223,7 +224,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     }
     
     func get_CatagoryListApi() {
-        APIService.shared.makeApi(url: ServiceUrl.admin_api_school_event_categories, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [weak self] (result: Result<EventCategoryResponse, Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.admin_api_school_event_categories, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<EventCategoryResponse, Error>) in
             guard let self = self else { return }
             
             switch result {
@@ -486,7 +487,8 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                     subjectId: "",
                     message:"",
                     from: self,
-                    Common_request_params: params
+                    Common_request_params: params,
+                    isBaseUrl: true
                 ) { response in
                     DispatchQueue.main.async {
                         CircularProgressLoader.shared.hide()

@@ -440,7 +440,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         if sender.titleLabel?.text == "Update"{
             let com = commonApi_forSending()
             params[SendAttachmentStringFile.id] = editId
-            sendAttachmentFlow(via: com, url: ServiceUrl.admin_api_notice_board_update, Common_request_params: params)
+            sendAttachmentFlow(via: com, url: ServiceUrl.admin_api_notice_board_update, Common_request_params: params, isBaseUrl: true)
         }else{
             let vc = SchoolListVC(nibName: nil, bundle: nil)
             vc.Common_request_params = params
@@ -452,7 +452,8 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     private func sendAttachmentFlow(
         via comm: commonApi_forSending,
         url baseURL: String,
-        Common_request_params: [String: Any]
+        Common_request_params: [String: Any],
+        isBaseUrl : Bool
     ) {
         comm.SendingAttachmentFlow(
             selectedAcadimicYearId: 0,
@@ -463,7 +464,8 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             subjectId: "",
             message:"",
             from: self,
-            Common_request_params: Common_request_params
+            Common_request_params: Common_request_params,
+            isBaseUrl: isBaseUrl
         ) { response in
             DispatchQueue.main.async {
                 CircularProgressLoader.shared.hide()

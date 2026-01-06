@@ -90,6 +90,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             return
         }
 
+        print("userInfouserInfo",userInfo)
         if notificationAlreadyHandled {
             print("🚫 Notification already handled — skipping duplicate.")
             return
@@ -102,15 +103,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
         if type == "normal" {
             handleNormalNotification(userInfo: userInfo, from: topVC)
-        } else if type == "call" {
+        } else if type == "isCall" {
             let vc = NotificationCallVC()
-            vc.voiceUrl = voiceUrl
-            vc.welcomeFileUrl = welcomeURL
+            vc.userInfo = userInfo
+            vc.voiceUrl = userInfo["url"] as? String ?? ""
+            vc.welcomeFileUrl = userInfo["welcome"] as? String ?? ""
             vc.modalPresentationStyle = .fullScreen
             topVC.present(vc, animated: true)
         }
     }
 
+    
     // MARK: - Notification Types
     private func handleNormalNotification(userInfo: [AnyHashable: Any], from topVC: UIViewController) {
 
@@ -157,6 +160,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completion: @escaping () -> Void) {
+        print("response.notification.request.content.userInforesponse.notification.request.content.userInfo",response.notification.request.content.userInfo)
         handleNotificationTap(userInfo: response.notification.request.content.userInfo)
         completion()
     }

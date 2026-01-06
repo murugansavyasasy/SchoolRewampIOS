@@ -72,7 +72,7 @@ extension PreviewTargetTVC {
             url: ServiceUrl.comm_api_assignment_target_details,
             parameters: ["id": targetIdOrType, "target_type": targetType],
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<targetSuc, Error>) in
             guard let self = self else { return }
             

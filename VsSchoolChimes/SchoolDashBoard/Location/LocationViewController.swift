@@ -90,6 +90,7 @@ class LocationViewController: UIViewController {
             config.imagePadding = 8
             addlocationbtnName.configuration = config
         }
+    
         
     }
     
@@ -417,7 +418,7 @@ extension LocationViewController:CLLocationManagerDelegate{
                 PunchStringFile.device_model : device,
                 PunchStringFile.punch_type : punch_type,
                 PunchStringFile.staff_or_student : staff
-            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
             ) in
@@ -455,7 +456,7 @@ extension LocationViewController:CLLocationManagerDelegate{
             url: ServiceUrl.staff_attd_geometric_get_staff_geometric_location,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<StaffGeometricLocation, Error>) in
             guard let self = self else { return }
             

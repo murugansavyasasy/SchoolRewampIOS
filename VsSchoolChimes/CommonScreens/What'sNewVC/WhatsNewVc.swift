@@ -155,7 +155,7 @@ class WhatsNewVc: UIViewController {
             url: ServiceUrl.dashboard_api_dashboard_new_updates,
             parameters: ["role_type": roll],
             type: ApitTypeSringFile.GET,
-            token: token
+            token: token, isBaseUrl: false
         ) { [weak self] (result: Result<UpdateResponse, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }

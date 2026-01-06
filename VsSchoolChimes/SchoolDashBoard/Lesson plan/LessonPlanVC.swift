@@ -86,7 +86,7 @@ class LessonPlanVC: UIViewController {
         showActivityLoader()
         let param: [String: Any] = [LessonPlanStringFile.request_type: ReqestType]
         
-        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_staff_report, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<LessonPlanStaffReportResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.lms_api_lesson_plan_staff_report, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<LessonPlanStaffReportResponse,Error>) in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else {return}
                 self.hideActivityLoader()

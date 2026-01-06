@@ -102,7 +102,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         selectImgPdfview.imageCollectionview.backgroundColor = .clear
         imageSelection()
         menuTitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
-        menuTitleLbl.text = MenuStringFile.Create_new + MenuStringFile.selectedMenuName
+        menuTitleLbl.text = MenuStringFile.selectedMenuName
         chooseRecipientsBtn.setTitle(CommonStringFile.NEXT, for: .normal)
         if let id = editId,id != ""{
             menuTitleLbl.text = MenuStringFile.Update_Existing + MenuStringFile.selectedMenuName
@@ -298,7 +298,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                     subjectId: "",
                     message:"",
                     from: self,
-                    Common_request_params: params
+                    Common_request_params: params, isBaseUrl: true
                 ) { response in
                     DispatchQueue.main.async {
                         CircularProgressLoader.shared.hide()

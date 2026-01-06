@@ -198,7 +198,7 @@ extension QuizSubmissionVc: UITableViewDelegate, UITableViewDataSource {
     }
     func getSubmissionList(QuizId : String){
         APIService.shared
-            .makeApi(url: ServiceUrl.quiz_submission_list, parameters: [QuizKeys.id : QuizId], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (
+            .makeApi(url: ServiceUrl.quiz_submission_list, parameters: [QuizKeys.id : QuizId], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (
                 result: Result<QuizStudentReportSuc,
                 Error>
             ) in

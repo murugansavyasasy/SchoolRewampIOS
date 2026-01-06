@@ -11,9 +11,19 @@ protocol AudioPlaybackDelegate1: AnyObject {
     func audioCell(_ cell: CommunicationTVC, willStartPlayingAtIndex index: Int)
     func audioCell(_ cell: CommunicationTVC, didStopPlayingAtIndex index: Int)
 }
+protocol selectedAudio : AnyObject{
+    func selectedAudio(index:Int)
+}
 @available(iOS 15.0, *)
 class CommunicationTVC: UITableViewCell {
 
+    @IBOutlet weak var selectBtnHeight: NSLayoutConstraint!
+    @IBOutlet weak var selectBtnName: UIButton!
+    @IBOutlet weak var runningDurationLbl: UILabel!
+    @IBOutlet weak var tottalDurationLbl: UILabel!
+    @IBOutlet weak var newImageView: UIImageView!
+    @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var emergencyBtnName: UIButton!
     // MARK: - Outlets
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var dateLbl: UILabel!
@@ -25,13 +35,12 @@ class CommunicationTVC: UITableViewCell {
     // MARK: - Delegates
     var delegate: DeleteImge?
     weak var audioDelegate: AudioPlaybackDelegate1?
-
+   weak var selectedAudioDelegate: selectedAudio?
     // MARK: - Properties
     var cellIndex: Int = 0
     private let audioManager = AudioManager()
 
     var audioURL: URL? {
-        
         didSet {
             guard let url = audioURL else { return }
             if url.isFileURL {
@@ -65,13 +74,16 @@ class CommunicationTVC: UITableViewCell {
 
     // MARK: - Setup
     private func setupUI() {
-        playerView.layer.cornerRadius = 8
-        playerView.layer.borderWidth = 0.6
-        playerView.layer.borderColor = UIColor.systemGray6.cgColor
         outerView.setShadow(cornerRadius: 10)
+        selectBtnName.layer.cornerRadius = 4
         updatePlayButtonState(isPlaying: false)
+        dateLbl.setFont(style: .body, size: FontSize.BodySize)
+        tittleLbl.setFont(style: .title, size: FontSize.TitleSize)
     }
 
+    @IBAction func selectBtnAct(_ sender: UIButton) {
+        selectedAudioDelegate?.selectedAudio(index: sender.tag)
+    }
     private func setupNotifications() {
         NotificationCenter.default.addObserver(
             self,
@@ -93,19 +105,76 @@ class CommunicationTVC: UITableViewCell {
     }
 
     private func downloadAndPrepareAudio(from remoteURL: URL) {
-        URLSession.shared.downloadTask(with: remoteURL) { [weak self] (tempURL, _, error) in
+        // Show loading state
+        playBtn.isEnabled = false
+        
+        let session = URLSession.shared
+        let task = session.downloadTask(with: remoteURL) { [weak self] (tempURL, response, error) in
             guard let self = self else { return }
-            if let tempURL = tempURL {
-                self.prepareLocalAudio(url: tempURL)
-            } else {
-                print("Download error: \(error?.localizedDescription ?? "Unknown error")")
+            
+            if let error = error {
+                print("Download error: \(error.localizedDescription)")
                 DispatchQueue.main.async {
+                    self.playBtn.isEnabled = true
                     self.showErrorAlert(message: "Audio download failed.")
                 }
+                return
             }
-        }.resume()
+            
+            guard let tempURL = tempURL else {
+                DispatchQueue.main.async {
+                    self.playBtn.isEnabled = true
+                    self.showErrorAlert(message: "Audio download failed.")
+                }
+                return
+            }
+            
+            // Save to permanent location
+            let permanentURL = self.saveToPermanentLocation(tempURL: tempURL, originalURL: remoteURL)
+            
+            DispatchQueue.main.async {
+                self.playBtn.isEnabled = true
+                if let url = permanentURL {
+                    self.waveView.audioURL = url
+                    self.waveView.onDurationUpdate = { [weak self] time in
+                        self?.runningDurationLbl.text = time
+                    }
+                } else {
+                    self.showErrorAlert(message: "Failed to save audio file")
+                }
+            }
+        }
+        task.resume()
     }
-
+    
+    private func saveToPermanentLocation(tempURL: URL, originalURL: URL) -> URL? {
+        let fileManager = FileManager.default
+        let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let audioFolderPath = documentsPath.appendingPathComponent("AudioFiles", isDirectory: true)
+        
+        // Create directory if needed
+        if !fileManager.fileExists(atPath: audioFolderPath.path) {
+            try? fileManager.createDirectory(at: audioFolderPath, withIntermediateDirectories: true)
+        }
+        
+        // Generate unique filename
+        let filename = originalURL.lastPathComponent.isEmpty ? UUID().uuidString + ".m4a" : originalURL.lastPathComponent
+        let permanentURL = audioFolderPath.appendingPathComponent(filename)
+        
+        // Remove if already exists
+        if fileManager.fileExists(atPath: permanentURL.path) {
+            try? fileManager.removeItem(at: permanentURL)
+        }
+        do {
+            try fileManager.copyItem(at: tempURL, to: permanentURL)
+            print("✅ Audio saved to: \(permanentURL.path)")
+            return permanentURL
+        } catch {
+            print("❌ Failed to save audio: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
     // MARK: - Notifications
     @objc private func otherAudioStartedPlaying(_ notification: Notification) {
         guard let playingCellIndex = notification.object as? Int,
@@ -128,10 +197,9 @@ class CommunicationTVC: UITableViewCell {
             name: NSNotification.Name("AudioCellStartedPlaying"),
             object: cellIndex
         )
-        
+
         // Notify delegate
         audioDelegate?.audioCell(self, willStartPlayingAtIndex: cellIndex)
-        
         // Start playback
         waveView.isPlaying = true
         waveView.startPlaybackAnimation()
@@ -143,7 +211,6 @@ class CommunicationTVC: UITableViewCell {
         waveView.isPlaying = false
         waveView.stopPlaybackAnimation()
         updatePlayButtonState(isPlaying: false)
-
         audioDelegate?.audioCell(self, didStopPlayingAtIndex: cellIndex)
     }
 

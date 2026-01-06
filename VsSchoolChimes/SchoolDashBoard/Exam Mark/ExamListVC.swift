@@ -59,7 +59,7 @@ class ExamListVC: UIViewController {
     func Get_staffwise_exam_Api() {
         
         let param:[String:Any] = ["section_id": standard?.sectionId ?? ""]
-        APIService.shared.makeApi(url: ServiceUrl.exam_api_exam_get_staff_wise_exam, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [weak self] (result: Result<StaffExamListResponse, Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.exam_api_exam_get_staff_wise_exam, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<StaffExamListResponse, Error>) in
             
             guard let self = self else{return}
             
@@ -96,7 +96,7 @@ class ExamListVC: UIViewController {
             url: ServiceUrl.exam_get_subject_wise_activities,
             parameters: param,
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<SubjectWiseExamResponse, Error>) in
 
             guard let self = self else { return }

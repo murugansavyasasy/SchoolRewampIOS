@@ -59,7 +59,7 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
     
     func Get_attendaceReport() {
         
-        APIService.shared.makeApi(url: ServiceUrl.stud_attd_attendance_get_absent_dates_for_child, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") {[weak self] (result: Result<StudentAttendanceResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.stud_attd_attendance_get_absent_dates_for_child, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "", isBaseUrl: false) {[weak self] (result: Result<StudentAttendanceResponse,Error>) in
             
             guard let self = self else {return}
             
