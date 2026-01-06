@@ -93,7 +93,7 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         
         cancelBtn.layer.cornerRadius = 10
         cancelBtn.layer.borderWidth = 1
-        cancelBtn.layer.borderColor = UIColor.staffExamColour.cgColor
+        cancelBtn.layer.borderColor = UIColor.backGroundClr.cgColor
         ContinueManuallyBtn.layer.cornerRadius = 10
     }
     
@@ -144,7 +144,6 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         AiInstructionView.isHidden = false
         uploadView.isHidden = false
         separatorView.isHidden = false
-       // ContinuewithUploadBtn.isHidden = false
         documentIcon.tintColor = .staffExamColour
     }
     
@@ -156,11 +155,8 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         AiInstructionView.isHidden = true
         uploadView.isHidden = true
         separatorView.isHidden = true
-        ContinuewithUploadBtn.isHidden = true
         documentIcon.tintColor = .systemGray4
-        
         showPopup()
-        
     }
     
     @IBAction func UploadTap(){
