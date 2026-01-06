@@ -25,82 +25,127 @@ class MarkReviewTVC: UITableViewCell {
         markTxt.textAlignment = .center
         markTxt.borderStyle = .roundedRect
         markTxt.placeholder = "--"
-        markTxt.font = UIFont.systemFont(ofSize: 15)
+        markTxt.font = .systemFont(ofSize: 15)
         markTxt.keyboardType = .numberPad
         markTxt.layer.cornerRadius = 8
 
         let toolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.isTranslucent = true
         toolbar.sizeToFit()
 
-        let abBtn    = UIBarButtonItem(customView: createKeyButton(title: "AB", action: #selector(abTapped)))
-        let upBtn    = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.up", action: #selector(upTapped)))
-        let downBtn  = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.down", action: #selector(downTapped)))
-        let leftBtn  = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.left", action: #selector(leftTapped)))
-        let rightBtn = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.right", action: #selector(rightTapped)))
+        let abBtn    = UIBarButtonItem(customView: createKeyButton(title: "AB",
+                                                                  action: #selector(abTapped)))
+        let upBtn    = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.up",
+                                                                  action: #selector(upTapped)))
+        let downBtn  = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.down",
+                                                                  action: #selector(downTapped)))
+        let leftBtn  = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.left",
+                                                                  action: #selector(leftTapped)))
+        let rightBtn = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.right",
+                                                                  action: #selector(rightTapped)))
 
-        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: markTxt, action: #selector(UITextField.resignFirstResponder))
-        
-        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done,
+                                     target: markTxt,
+                                     action: #selector(UITextField.resignFirstResponder))
+
+        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
+                                  target: nil,
+                                  action: nil)
 
         toolbar.items = [
             abBtn,
-            space(8),
+            space(4),
             upBtn,
-            space(6),
+            space(4),
             downBtn,
-            space(6),
+            space(4),
             leftBtn,
-            space(6),
+            space(4),
             rightBtn,
             flex,
             doneBtn
         ]
+
         markTxt.inputAccessoryView = toolbar
     }
-    func space(_ width: CGFloat) -> UIBarButtonItem {
-        let sp = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+
+
+    private func space(_ width: CGFloat) -> UIBarButtonItem {
+        let sp = UIBarButtonItem(barButtonSystemItem: .fixedSpace,
+                                 target: nil,
+                                 action: nil)
         sp.width = width
         return sp
     }
 
-    private func createKeyButton(title: String? = nil,
-                                 imageName: String? = nil,
-                                 action: Selector) -> UIButton {
+
+
+    private func createKeyButton(
+        title: String? = nil,
+        imageName: String? = nil,
+        action: Selector
+    ) -> UIButton {
 
         let button = UIButton(type: .system)
 
+        let height: CGFloat = 36
+        let minWidth: CGFloat = 44
+
+        button.frame = CGRect(x: 0, y: 0, width: minWidth, height: height)
+
         if let title = title {
             button.setTitle(title, for: .normal)
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
             button.backgroundColor = .systemOrange
-            button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
-        }
-        else if let imageName = imageName {
-            // 🔷 Arrow Buttons (BLUE)
-            let config = UIImage.SymbolConfiguration(pointSize: 14, weight: .bold)
-            let image = UIImage(systemName: imageName, withConfiguration: config)
-            button.setImage(image, for: .normal)
-
-            button.backgroundColor = UIColor.systemBlue
-            button.contentEdgeInsets = UIEdgeInsets(top: 6, left: 14, bottom: 6, right: 14)
-            button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 2)
+            button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
+        } else if let imageName = imageName {
+            let config = UIImage.SymbolConfiguration(pointSize: 14, weight: .semibold)
+            button.setImage(UIImage(systemName: imageName,
+                                    withConfiguration: config),
+                            for: .normal)
+            button.backgroundColor = .systemBlue
         }
 
         button.tintColor = .white
-        button.frame = CGRect(x: 0, y: 0, width: 44, height: 34)
         button.layer.cornerRadius = 8
-        button.clipsToBounds = true
+        button.layer.masksToBounds = true
+        button.addTarget(self,
+                         action: action,
+                         for: .touchUpInside)
 
-        // Shadow
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOpacity = 0.2
-        button.layer.shadowOffset = CGSize(width: 0, height: 2)
-        button.layer.shadowRadius = 3
-
-        button.addTarget(self, action: action, for: .touchUpInside)
         return button
     }
 
+
+    @objc private func keyDown(_ sender: UIButton) {
+        UIView.animate(
+            withDuration: 0.14,
+            delay: 0,
+            usingSpringWithDamping: 0.65,
+            initialSpringVelocity: 0.9,
+            options: [.allowUserInteraction],
+            animations: {
+                sender.transform = CGAffineTransform(scaleX: 0.92, y: 0.92)
+                sender.layer.shadowOpacity = 0.08
+                sender.layer.shadowOffset = CGSize(width: 0, height: 2)
+            }
+        )
+    }
+
+    @objc private func keyUp(_ sender: UIButton) {
+        UIView.animate(
+            withDuration: 0.22,
+            delay: 0,
+            usingSpringWithDamping: 0.5,
+            initialSpringVelocity: 1.2,
+            options: [.allowUserInteraction],
+            animations: {
+                sender.transform = .identity
+                sender.layer.shadowOpacity = 0.18
+                sender.layer.shadowOffset = CGSize(width: 0, height: 4)
+            }
+        )
+    }
 
     
     private func setupInfoButton() {

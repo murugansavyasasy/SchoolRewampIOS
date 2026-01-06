@@ -23,6 +23,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     weak var delegate: SideMenuDelegate?
     var isSwitchRoleExpanded = false
     var isStudent:Bool?
+    var selectedIndex = 0
     // MARK: - Data
     var menuArray: [MenuItem] = [
         MenuItem(name: "Home".translated(), icon: "house"),
@@ -40,15 +41,24 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        if isStudent ?? false{
+        if isStudent ?? false {
+
             userName.text = childeDetail?.name
-            welcomeLabel.text = "\(childeDetail?.school_name ?? "")"
+            setWelcomeLabel(
+                firstLine: childeDetail?.school_name,
+                secondLine: nil)
             setupProfileImage(url: URL(string: childeDetail?.profile ?? ""))
-        }else{
+
+        } else {
+
             userName.text = staffDetails?.name
-            welcomeLabel.text = "\(staffDetails?.school_name ?? "")\n \(staffDetails?.role ?? "")"
+            setWelcomeLabel(
+                firstLine: staffDetails?.school_name,
+                secondLine: staffDetails?.role
+            )
             setupProfileImage(url: URL(string: staffDetails?.staff_profile ?? ""))
         }
+
         menuTable.register(UINib(nibName: "SideTvcell", bundle: nil), forCellReuseIdentifier: "SideTvcell")
         let staffCount = staffDetailsCount?.count ?? 0
         let studentCount = childCount?.count ?? 0
@@ -60,7 +70,35 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         menuTable.dataSource = self
         menuTable.tableFooterView = UIView()
     }
-    
+    private func setWelcomeLabel(firstLine: String?, secondLine: String?) {
+
+        let line1 = firstLine?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let line2 = secondLine?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+
+        var finalText = ""
+        if !line1.isEmpty && !line2.isEmpty {
+            finalText = "\(line1)\n\(line2)"
+        } else if !line1.isEmpty {
+            finalText = line1
+        } else if !line2.isEmpty {
+            finalText = line2
+        }
+
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 6
+
+        let attributedText = NSAttributedString(
+            string: finalText,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 14, weight: .regular),
+                .foregroundColor: UIColor.white.withAlphaComponent(0.9),
+                .paragraphStyle: paragraphStyle
+            ])
+
+        welcomeLabel.attributedText = attributedText
+        welcomeLabel.numberOfLines = 0
+    }
+
     private func setupProfileImage(url:URL?) {
         if let url = url{
             profileImgaView.kf.setImage(with: url,placeholder:UIImage(systemName: "person.circle.fill"))
@@ -98,6 +136,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                                  for: indexPath) as! SideTvcell
         let item = menuArray[indexPath.row]
         cell.ExameLbl.text = item.name
+        cell.cellView.backgroundColor = indexPath.row == selectedIndex ? .parentClr.withAlphaComponent(0.5):.clear
         if let iconName = item.icon {
             if let systemImage = UIImage(systemName: iconName) {
                 cell.iconBtn.setImage(systemImage, for: .normal)
@@ -110,7 +149,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.iconBtn.tintColor = .red
         }else{
             cell.ExameLbl.textColor = .label
-            cell.iconBtn.tintColor = .link
+            cell.iconBtn.tintColor = .gray
         }
         return cell
     
@@ -122,8 +161,9 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedIndex = indexPath.row
         let selectedItem = menuArray[indexPath.row]
-        
+        tableView.reloadData()
         switch selectedItem.name {
         case "Profile".translated():
             delegate?.meunu(viewController: UpdateProfileVC(isStudent: isStudent ?? false))

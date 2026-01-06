@@ -144,7 +144,7 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
                 if subject.subject_name == columnConfig.subjectName {
                     
                     for activity in subject.activities ?? [] {
-                        let activitySelectedName = activity.selectedName ?? ""
+                        let activitySelectedName = activity.selected_name ?? ""
                         if !activitySelectedName.isEmpty &&
                            parentVC?.normalizeName(activitySelectedName) == parentVC?.normalizeName(columnActivityName) {
                             
@@ -206,7 +206,7 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
                 if subject.subject_name == columnConfig.subjectName {
                     
                     for activity in subject.activities ?? [] {
-                        let activitySelectedName = activity.selectedName ?? ""
+                        let activitySelectedName = activity.selected_name ?? ""
                         
                         if !activitySelectedName.isEmpty &&
                            parentVC?.normalizeName(activitySelectedName) == parentVC?.normalizeName(columnActivityName) {
@@ -320,39 +320,45 @@ extension MarkReviewCVC: UIPopoverPresentationControllerDelegate {
 
 extension MarkReviewCVC: MarkReviewTVCDelegate {
     func markDidChange(row: Int, column: Int, value: String, reason: String) {
-        
+
         guard row < studentRecords.count else { return }
-        
+
         let trimmed = value.trimmingCharacters(in: .whitespaces)
         let columnActivityName = columnConfig.activityName ?? columnConfig.displayName ?? ""
-        
-        // ✅ Match by selectedName!
+        let columnSubjectName  = columnConfig.subjectName ?? ""
+
         for s in 0..<(studentRecords[row].marks?.count ?? 0) {
-            
-            // Check subject name match
-            if studentRecords[row].marks?[s].subject_name == columnConfig.subjectName {
-                
-                for a in 0..<(studentRecords[row].marks?[s].activities?.count ?? 0) {
-                    
-                    let activitySelectedName = studentRecords[row].marks?[s].activities?[a].selectedName ?? ""
-                    
-                    if !activitySelectedName.isEmpty &&
-                       parentVC?.normalizeName(activitySelectedName) == parentVC?.normalizeName(columnActivityName) {
-                        
-                        let maxMarks = columnConfig.maxMarks ?? 0
-                        let isError = (Int(trimmed) ?? 0) > maxMarks
-                        
-                        studentRecords[row].marks?[s].activities?[a].mark = value
-                        studentRecords[row].marks?[s].activities?[a].isReview = isError
-                        studentRecords[row].marks?[s].activities?[a].reason = reason
-                        
-                        parentVC?.updateMark(row: row, column: columnIndex, value: value, reson: reason)
-                        return
-                    }
-                }
+
+            let subjectName = studentRecords[row].marks?[s].subject_name ?? ""
+
+            // ✅ SUBJECT NORMALIZED MATCH
+            guard parentVC?.normalizeName(subjectName) ==
+                  parentVC?.normalizeName(columnSubjectName) else { continue }
+
+            for a in 0..<(studentRecords[row].marks?[s].activities?.count ?? 0) {
+
+                let activitySelectedName = studentRecords[row].marks?[s].activities?[a].selected_name ?? ""
+
+                // ✅ ACTIVITY MATCH
+                guard parentVC?.normalizeName(activitySelectedName) ==
+                      parentVC?.normalizeName(columnActivityName) else { continue }
+
+                let maxMarks = columnConfig.maxMarks ?? 0
+                let isError = (Int(trimmed) ?? 0) > maxMarks
+
+                studentRecords[row].marks?[s].activities?[a].mark = value
+                studentRecords[row].marks?[s].activities?[a].isReview = isError
+                studentRecords[row].marks?[s].activities?[a].reason = reason
+
+                // 🔥 SUBJECT NAME PASS PANNROM
+                parentVC?.updateMark(row: row,
+                                     column: columnIndex,
+                                     value: value,
+                                     reson: reason,
+                                     subjectName: subjectName ?? "")
+                return
             }
         }
-        
-        print("⚠️ No matching activity found for: '\(columnActivityName)' in row \(row)")
     }
+
 }
