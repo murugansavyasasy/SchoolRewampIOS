@@ -77,7 +77,7 @@ class NewPtmVC: UIViewController, Datepicker {
         selectDateBtn.layer.borderWidth = 1
         selectDateBtn.layer.borderColor = UIColor.white.cgColor
         selectDateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        MeetingCountLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        MeetingCountLbl.setFont(style: .header, size: 13)
         
         allBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)
         
@@ -163,6 +163,9 @@ class NewPtmVC: UIViewController, Datepicker {
                         self.noDataImage.isHidden = true
                         self.nodataLbl.isHidden = true
                         guard let slotData = success.data?.first else { return }
+                        
+                        let message = String(format:PTMString.no_meetings_meetingsToday.translated())
+                        self.MeetingCountLbl.text = message
                         
                         // Today
                         if let todayGroups = slotData.today, !todayGroups.isEmpty {
