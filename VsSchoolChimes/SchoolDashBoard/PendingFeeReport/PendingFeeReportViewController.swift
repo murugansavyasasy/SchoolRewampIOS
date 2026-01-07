@@ -64,12 +64,14 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
     }
 
     func getacadmicYr() {
+        showActivityLoader()
         APIService.shared.makeApi(
             url: ServiceUrl.comm_recipient_get_academic_year_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [self] (result: Result<get_academic_yearSuc, Error>) in
+            
             switch result {
             case .success(let response):
                 DispatchQueue.main.async { [self] in
@@ -85,16 +87,19 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
                 print(error.localizedDescription)
                 nodata(false)
             }
+            hideActivityLoader()
         }
     }
 
     func getPendingReportAPI(_ academic_year_id: Int) {
+        showActivityLoader()
         APIService.shared.makeApi(
             url: ServiceUrl.api_fee_report_detailed_pending_report,
             parameters: ["academic_year_id": academic_year_id,"country_id":  UserDefaultFileManager.getCountryDetails()?.id ?? ""],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [self] (result: Result<PendingReportsResponse, Error>) in
+            
             switch result {
             case .success(let response):
                 DispatchQueue.main.async { [self] in
@@ -111,16 +116,19 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
                 print(error.localizedDescription)
                 nodata(false)
             }
+            hideActivityLoader()
         }
     }
 
     func classPendingReportAPI(_ academic_year_id: Int) {
+        showActivityLoader()
         APIService.shared.makeApi(
             url: ServiceUrl.api_fee_report_detailed_class_wise_pending_report,
             parameters: ["academic_year_id": academic_year_id,"country_id" : UserDefaultFileManager.getCountryDetails()?.id ?? "" ],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [self] (result: Result<PendingReportsResponse, Error>) in
+            
             switch result {
             case .success(let response):
                 DispatchQueue.main.async { [self] in
@@ -137,6 +145,7 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
                 print(error.localizedDescription)
                 nodata(false)
             }
+            hideActivityLoader()
         }
     }
 

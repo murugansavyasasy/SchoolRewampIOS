@@ -18,6 +18,8 @@
                 <outlet property="continueBtn" destination="rbA-xi-bTf" id="4oy-ST-pbW"/>
                 <outlet property="noDataImage" destination="Jgd-cv-Xw5" id="cak-1P-1zA"/>
                 <outlet property="noDataLbl" destination="dSw-TZ-nbj" id="386-rB-3W3"/>
+                <outlet property="searchBar" destination="KrD-71-Zrb" id="dr3-dx-Att"/>
+                <outlet property="searchBtn" destination="8jC-t1-llN" id="11h-a6-b4j"/>
                 <outlet property="titleLbl" destination="Nvc-Ny-NJL" id="X12-6P-JrK"/>
                 <outlet property="tv" destination="Hbp-6n-LtI" id="fdI-iR-rZA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -29,13 +31,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jF7-v5-pts" customClass="BottomRoundedView" customModule="School_Chimes" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="410"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="332"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Xzi-qI-npb">
-                            <rect key="frame" x="10" y="128" width="373" height="262"/>
+                            <rect key="frame" x="10" y="128" width="373" height="184"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o3C-Ex-Umg">
-                                    <rect key="frame" x="0.0" y="113.66666666666666" width="35" height="35"/>
+                                    <rect key="frame" x="0.0" y="74.666666666666657" width="35" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="35" id="fuT-Ga-zfX"/>
                                         <constraint firstAttribute="height" constant="35" id="sDc-Yv-21m"/>
@@ -50,13 +52,13 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exam Mark" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nvc-Ny-NJL">
-                                    <rect key="frame" x="35" y="121.33333333333333" width="338" height="19.333333333333329"/>
+                                    <rect key="frame" x="35" y="82.333333333333343" width="303" height="19.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8jC-t1-llN">
-                                    <rect key="frame" x="373" y="113.66666666666666" width="35" height="35"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8jC-t1-llN">
+                                    <rect key="frame" x="338" y="74.666666666666657" width="35" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="35" id="GUs-5h-Dpe"/>
                                         <constraint firstAttribute="height" constant="35" id="tbN-5r-nnh"/>
@@ -64,10 +66,10 @@
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" image="magnifyingglass" catalog="system">
-                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium" weight="semibold"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="semibold"/>
                                     </state>
                                     <connections>
-                                        <action selector="backAct:" destination="-1" eventType="touchUpInside" id="Z6X-2Q-oYf"/>
+                                        <action selector="searchBtnAct:" destination="-1" eventType="touchUpInside" id="0Mt-qV-CrX"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -81,23 +83,23 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bOQ-o7-9EH">
-                    <rect key="frame" x="0.0" y="410" width="393" height="374"/>
+                    <rect key="frame" x="0.0" y="332" width="393" height="452"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="8Cu-8s-G39">
-                            <rect key="frame" x="15" y="15.000000000000004" width="363" height="52.333333333333343"/>
+                            <rect key="frame" x="15" y="15" width="363" height="130.33333333333334"/>
                             <subviews>
-                                <searchBar hidden="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="KrD-71-Zrb">
-                                    <rect key="frame" x="0.0" y="0.0" width="363" height="0.0"/>
+                                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="KrD-71-Zrb">
+                                    <rect key="frame" x="0.0" y="0.0" width="363" height="64"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Grade 10 - Section A" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yzt-Ry-aVv">
-                                    <rect key="frame" x="0.0" y="0.0" width="363" height="20.333333333333332"/>
+                                    <rect key="frame" x="0.0" y="78" width="363" height="20.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                     <color key="textColor" name="staffExamColour"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select an Exam to continue" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RbA-Bx-EY2">
-                                    <rect key="frame" x="0.0" y="34.333333333333314" width="363" height="18"/>
+                                    <rect key="frame" x="0.0" y="112.33333333333331" width="363" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -105,7 +107,7 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Bx8-kZ-Brh">
-                            <rect key="frame" x="0.0" y="82.333333333333329" width="393" height="203.33333333333337"/>
+                            <rect key="frame" x="0.0" y="160.33333333333331" width="393" height="203.33333333333331"/>
                             <subviews>
                                 <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="missing-file" translatesAutoresizingMaskIntoConstraints="NO" id="Jgd-cv-Xw5">
                                     <rect key="frame" x="0.0" y="-300" width="393" height="300"/>
@@ -125,7 +127,7 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Thn-oT-dS7">
-                            <rect key="frame" x="10" y="295.66666666666663" width="373" height="68.333333333333314"/>
+                            <rect key="frame" x="10" y="373.66666666666663" width="373" height="68.333333333333314"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rbA-xi-bTf">
                                     <rect key="frame" x="20" y="0.0" width="333" height="40"/>

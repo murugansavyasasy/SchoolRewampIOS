@@ -619,6 +619,7 @@
 "No Slot Booked yet" = "ยังไม่มีการจองช่วงเวลา";
 "Book PTM Slots" = "จองช่วงเวลา PTM";
 "Join" = "เข้าร่วม";
+"Are you sure want to create this PTM meeting?" = "คุณแน่ใจหรือไม่ว่าต้องการสร้างการประชุม PTM นี้?";
 
 
 //MARK: Quiz Page

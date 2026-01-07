@@ -141,8 +141,11 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
     
     
     @IBAction func createMeetingBtnAct(_ sender: Any) {
-        
-        Create_meeting_api()
+        CustomAlert().showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_want_to_create_this_PTM_meeting, actionLbl1: AlertstringFile.Yes, actionLbl2: AlertstringFile.No, on: self) {
+            self.Create_meeting_api()
+        } onNo: {
+            
+        }
     }
     
     func paketApiCall(params:[String:Any]){

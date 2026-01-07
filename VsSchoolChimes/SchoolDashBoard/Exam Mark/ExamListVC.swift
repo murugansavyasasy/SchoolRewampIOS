@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ExamListVC: UIViewController {
+class ExamListVC: UIViewController, UISearchBarDelegate {
 
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var tv: UITableView!
@@ -17,12 +17,15 @@ class ExamListVC: UIViewController {
     @IBOutlet weak var SelectExamDefLbl: UILabel!
     @IBOutlet weak var noDataImage: UIImageView!
     @IBOutlet weak var noDataLbl: UILabel!
+    @IBOutlet weak var searchBtn: UIButton!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var standard : ClassDisplayItem?
     var expandedRow: IndexPath? = nil
     var selectedRow: IndexPath? = nil
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var ExamList : [StaffExamData] = []
+    var FilteredExamList : [StaffExamData] = []
     var SubjectList : [SubjectExamData] = []
     var selectedExam : StaffExamData?
     var apiCalledForIndex: IndexPath?
@@ -46,6 +49,14 @@ class ExamListVC: UIViewController {
         
         noDataImage.isHidden = true
         noDataLbl.isHidden = true
+        searchBtn.isHidden = true
+        
+        searchBar.isHidden = true
+        searchBar.delegate = self
+        searchBar.searchTextField.addDoneButton()
+        searchBar.placeholder = CommonStringFile.Search.translated()
+        searchBar.backgroundImage = UIImage()
+
 
         tv.register(UINib(nibName: CellConfingName.ExamListHeader, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.ExamListHeader)
         tv.register(UINib(nibName: CellConfingName.ExamListCell, bundle: nil),forCellReuseIdentifier: CellConfingName.ExamListCell)
@@ -69,12 +80,15 @@ class ExamListVC: UIViewController {
                 case .success(let success):
                     
                     self.ExamList = success.data ?? []
-                    let hide = self.ExamList.isEmpty
+                    self.FilteredExamList = self.ExamList
+                    let hide = self.FilteredExamList.isEmpty
                     self.noDataLbl.text = success.message ?? ""
                     self.noDataImage.isHidden = !hide
                     self.noDataLbl.isHidden = !hide
                     self.continueBtn.isHidden = hide
                     self.bottomSlectInfoLbl.isHidden = hide
+                    self.SelectExamDefLbl.isHidden = hide
+                    self.searchBtn.isHidden = hide
                     self.tv.reloadData()
                     
                 case .failure(let failure):
@@ -83,6 +97,8 @@ class ExamListVC: UIViewController {
                     self.noDataLbl.isHidden = false
                     self.continueBtn.isHidden = true
                     self.bottomSlectInfoLbl.isHidden = true
+                    self.SelectExamDefLbl.isHidden = true
+                    self.tv.reloadData()
                 }
             }
         }
@@ -118,6 +134,30 @@ class ExamListVC: UIViewController {
         }
     }
 
+    @IBAction func searchBtnAct(_ sender: UIButton) {
+        
+        sender.isSelected.toggle()
+        
+        if sender.isSelected{
+            searchBar.isHidden = false
+            searchBar.becomeFirstResponder()
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+        }else{
+            searchBar.isHidden = true
+            view.endEditing(true)
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            searchBar.searchTextField.text = ""
+            FilteredExamList = ExamList
+            let hide = self.FilteredExamList.isEmpty
+            self.noDataImage.isHidden = !hide
+            self.noDataLbl.isHidden = !hide
+            self.continueBtn.isHidden = hide
+            self.bottomSlectInfoLbl.isHidden = hide
+            self.SelectExamDefLbl.isHidden = hide
+            tv.reloadData()
+            
+        }
+    }
     
     @available(iOS 14.0, *)
     @IBAction func continueAct(_ sender: Any) {
@@ -132,22 +172,44 @@ class ExamListVC: UIViewController {
         
         dismiss(animated: true)
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        let trimmedText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if trimmedText.isEmpty{
+            FilteredExamList = ExamList
+        }else{
+            FilteredExamList = ExamList.filter{
+                ($0.name ?? "").localizedCaseInsensitiveContains(trimmedText)
+            }
+        }
+        
+        let hide = self.FilteredExamList.isEmpty
+        self.noDataImage.isHidden = !hide
+        self.noDataLbl.isHidden = !hide
+        self.continueBtn.isHidden = hide
+        self.bottomSlectInfoLbl.isHidden = hide
+        self.SelectExamDefLbl.isHidden = hide
+        self.noDataLbl.text = "No exams found!"
+        tv.reloadData()
+    }
 }
 
 extension ExamListVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ExamList.count
+        return FilteredExamList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExamListCell", for: indexPath) as! ExamListCell
         
-        let exam = ExamList[indexPath.row]
+        let exam = FilteredExamList[indexPath.row]
         
         cell.examNameLbl.text = exam.name
-        cell.examDateLbl.text = formatDateString(exam.date ?? "")
+        cell.examDateLbl.text = monthYear(from: exam.date ?? "")
 
         let isSelected = (selectedRow == indexPath)
         
@@ -184,7 +246,7 @@ extension ExamListVC: UITableViewDelegate, UITableViewDataSource {
 
             // Call API only when expanding (not collapsing)
             if self.expandedRow == indexPath {
-                let examId = self.ExamList[indexPath.row].id ?? ""
+                let examId = self.FilteredExamList[indexPath.row].id ?? ""
                 self.loadSubjectList(for: examId, reloadIndex: indexPath)
                // selectedExam = examId
             }
@@ -209,7 +271,7 @@ extension ExamListVC: UITableViewDelegate, UITableViewDataSource {
 
         let previousSelected = selectedRow        // save old selection
         selectedRow = indexPath                   // update to new selection
-        selectedExam = ExamList[indexPath.row]
+        selectedExam = FilteredExamList[indexPath.row]
         continueBtn.isUserInteractionEnabled = true
         continueBtn.alpha = 1
         bottomSlectInfoLbl.isHidden = true
@@ -244,6 +306,22 @@ extension ExamListVC: UITableViewDelegate, UITableViewDataSource {
         let outputFormatter = DateFormatter()
         outputFormatter.dateFormat = outputFormat
         outputFormatter.locale = Locale(identifier: "en_US_POSIX")
+
+        return outputFormatter.string(from: date)
+    }
+    
+    func monthYear(from dateString: String) -> String? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "MMMM yyyy"
+        outputFormatter.locale = Locale(identifier: "en_US")
+
+        guard let date = inputFormatter.date(from: dateString) else {
+            return nil
+        }
 
         return outputFormatter.string(from: date)
     }

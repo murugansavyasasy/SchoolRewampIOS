@@ -63,13 +63,13 @@ class ActivitiesTVCell: UITableViewCell {
         self.isAIFlow = isAi
         dropdown.dataSource = items
         let nameText = split.name ?? ""
-        let maxText = " (Max: \(split.max_mark ?? ""))"
+        let maxText = " (Max: \(split.max_mark ?? "") marks)"
         print(items)
         let fullText = nameText + maxText
         
         let attributedString = NSMutableAttributedString(string: fullText)
         
-        attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length: nameText.count))
+        attributedString.addAttributes([.foregroundColor: UIColor.black,.font: UIFont(name: "Poppins-Medium", size: 15) ?? UIFont.systemFont(ofSize: 15, weight: .semibold)], range: NSRange(location: 0, length: nameText.count))
         
         attributedString.addAttributes([.foregroundColor: UIColor.darkGray, .font : UIFont(name: "Poppins-Medium", size: 12) ?? UIFont.systemFont(ofSize: 12)], range: NSRange(location: nameText.count, length: maxText.count))
         
@@ -82,12 +82,19 @@ class ActivitiesTVCell: UITableViewCell {
         updateCheckboxUI(isChecked: isSelected)
 
         // ✅ STATUS
-        ActivitystatusLbl.text = split.selectedAIOption.map { "Mapped to: \($0)" }
+        let mapped = "Mapped to: "
+        let selectedOption = split.selectedAIOption.map {$0} ?? ""
+        let ActivityfullText = mapped + selectedOption
+        let ActivityattributedString = NSMutableAttributedString(string: ActivityfullText)
+        ActivityattributedString.addAttributes([.foregroundColor:UIColor.darkGray], range: NSRange(location: 0, length: mapped.count))
+        ActivityattributedString.addAttributes([.foregroundColor : UIColor.staffExamColour], range: NSRange(location: mapped.count, length: selectedOption.count))
+        ActivitystatusLbl.attributedText = ActivityattributedString
+       // ActivitystatusLbl.text = split.selectedAIOption.map { "Mapped to: \($0)" }
         ActivitystatusLbl.isHidden = split.selectedAIOption == nil
         clearBtn.isHidden = split.selectedAIOption == nil
 
         // ✅ BACKGROUND — SINGLE SOURCE OF TRUTH
-        if split.selectedAIOption != nil {
+        if split.isChecked == true {
             contentView.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.07)
         } else {
             contentView.backgroundColor = .systemBackground

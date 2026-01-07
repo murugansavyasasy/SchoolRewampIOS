@@ -236,6 +236,7 @@ struct AlertstringFile{
     static let No_Data_Found = "No Data Found"
     static let Invalid_time = "Invalid time"
     static let Choose_an_action_for_this_message = "Choose an action for this message"
+    static let Are_you_sure_want_to_create_this_PTM_meeting = "Are you sure want to create this PTM meeting?"
 }
 
 struct classTimeTableStrings {
