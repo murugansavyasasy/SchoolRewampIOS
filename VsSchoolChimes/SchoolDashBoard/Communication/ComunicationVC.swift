@@ -269,8 +269,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         EnableCallLbl.isUserInteractionEnabled = true
         let bubbleClick = UITapGestureRecognizer(target: self, action: #selector(Enabel_buble))
         EnableCallLbl.addGestureRecognizer(bubbleClick)
-        
+        waveView.setParentCell(self)
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         player?.pause()
@@ -1095,7 +1096,19 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             playerItem = AVPlayerItem(url: urls)
             player = AVPlayer(playerItem: playerItem!)
         }
-        
+        guard let url = URL(string: AudioPlayUrl ?? "") else { return }
+        // Check if it's a remote URL (http or https)
+        if url.isFileURL {
+            do {
+                try audioManager.setupPlayer(with: url)
+                waveView.audioURL = url
+            } catch {
+                print("❌ Failed to set up audio player:", error)
+            }
+        } else {
+            // Remote URL - download it first
+            downloadAndPrepareAudio(from: url)
+        }
     }
   
         // MARK: - UI Update for Seek
@@ -1523,9 +1536,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
 
     // Play Button Action
     @IBAction func playButtonTapped(_ sender: UIButton) {
-        
-      AudioPlayUrl
-           
+        if waveView.isPlaying {
+            stopPlayback()
+        } else {
+            startPlayback()
+        }
     }
     
     
