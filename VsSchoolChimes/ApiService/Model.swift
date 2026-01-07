@@ -1953,7 +1953,7 @@ struct LSRWTask: Codable {
     let time: String?
     let submitted_date: String?
     let is_submitted: Bool?
-    let is_unread: Bool?
+    var is_unread: Bool?
     let sent_by: String?
     let created_on: String?
     let iframe: String?
