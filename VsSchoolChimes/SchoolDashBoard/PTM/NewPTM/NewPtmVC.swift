@@ -826,9 +826,14 @@ extension NewPtmVC: BookingCellDelegate, SelectedId {
     
     func selectId(id: String?, edit: Bool?) {
         if edit ?? false{
-            Cancel_and_Reopen_Slot_api(SlotId: id ?? "")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                CustomAlert().showAlertCancel(title: AlertstringFile.Confirm.translated(), message: "Are you sure want to Reopen this slot?".translated(), actionLbl1: AlertstringFile.Yes, actionLbl2: AlertstringFile.No, on: self, onOk: {self.Cancel_and_Reopen_Slot_api(SlotId: id ?? "")}, onNo: {})
+            }
+            
         }else{
-            cancel_and_close_slot_Api(SlotId: id ?? "")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                CustomAlert().showAlertCancel(title: AlertstringFile.Confirm.translated(), message: "Are you sure want to Cancel this slot?".translated(), actionLbl1: AlertstringFile.Yes, actionLbl2: AlertstringFile.No, on: self, onOk: {self.cancel_and_close_slot_Api(SlotId: id ?? "")}, onNo: {})
+            }
         }
     }
     

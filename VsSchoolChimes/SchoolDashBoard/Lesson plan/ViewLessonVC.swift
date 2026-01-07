@@ -337,7 +337,9 @@ extension ViewLessonVC: UICollectionViewDelegate,UICollectionViewDataSource,UICo
             searchData = ViewLessonData?.filter{$0.lesson_plan_status == Status}
         }
         searchBtnName.isHidden = (FilteredData?.isEmpty ?? true)
-        SearchBar.isHidden = (FilteredData?.isEmpty ?? true)
+        if searchBtnName.isSelected {
+            SearchBar.isHidden = (FilteredData?.isEmpty ?? true)
+        }
         SearchBar.searchTextField.text = ""
         NoDataImg.isHidden = !(FilteredData?.isEmpty ?? true)
         NoDataLbl.isHidden = !(FilteredData?.isEmpty ?? true)

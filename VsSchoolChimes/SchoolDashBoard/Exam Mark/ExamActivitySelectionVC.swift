@@ -36,10 +36,21 @@ class ExamActivitySelectionVC: UIViewController {
 
         titleLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         
+        setFont()
+        
         topInfoView.layer.cornerRadius = 10
         topInfoView.backgroundColor = .staffExamColour.withAlphaComponent(0.1)
         topInfoView.layer.borderWidth = 0.3
         topInfoView.layer.borderColor = UIColor.staffExamColour.cgColor
+        
+        if isAIFlow{
+            topInfoLbl.text = "Click the radio button next to each activity to select a column from your uploaded image."
+            bottomInfoLbl.text = "💡 Tip: You don't need to fill all activities now. Unmapped activities can be filled later."
+        }else{
+           
+            topInfoLbl.text = "Choose the activities where you would like to enter marks manually."
+            bottomInfoLbl.text = "Please select at least one activity to continue."
+        }
         
         bottomInfoView.layer.cornerRadius = 10
         bottomInfoView.backgroundColor = .systemGray6.withAlphaComponent(0.7)
@@ -59,6 +70,15 @@ class ExamActivitySelectionVC: UIViewController {
         tableview.dataSource = self
         
         Get_exam_activities_Api(for: ExamID)
+    }
+    
+    func setFont(){
+        
+        examNAmeLBl.setFont(style: .header, size: FontSize.HeaderSize)
+        examDateLbl.setFont(style: .title, size: FontSize.TitleSize)
+        topInfoLbl.setFont(style: .body, size: FontSize.TitleSize)
+        bottomInfoLbl.setFont(style: .body, size: FontSize.TitleSize)
+        continueBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
     }
     
     func monthYear(from dateString: String) -> String? {
@@ -115,30 +135,44 @@ class ExamActivitySelectionVC: UIViewController {
 
     
     @IBAction func continueAct(_ sender: Any) {
-        let vc = MarkReviewVC()
-        vc.payload = buildPayload()
-        vc.aiRecords = convertedRecords
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        
+        if let payload = buildPayload() {
+            let vc = MarkReviewVC()
+            vc.payload = payload
+            vc.aiRecords = convertedRecords
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        } else {
+            let message = isAIFlow ? "Please Map atleast one activity to continue" : "Please select atleast one activity to continue"
+            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Missing_Information, message: message, on: self)
+        }
     }
     
-    func buildPayload() -> [String: Any] {
+    func buildPayload() -> [String: Any]? {
 
         let selectedActivities = SubjectList.compactMap { subject -> [String: Any]? in
-            let selected = subject.splitup_details?.filter { $0.isChecked == true } ?? []
+            let selected = subject.splitup_details?.filter { $0.isChecked ?? false} ?? []
             guard !selected.isEmpty else { return nil }
 
             return [
                 "subject_id": subject.subject_id ?? "",
                 "subject_name": subject.subject_name ?? "",
                 "activities": selected.map {
-                    var dict: [String: Any] = ["activity_id": $0.id ?? "", "activity_name": $0.name ?? "", "max_mark": $0.max_mark ?? ""]
-                    if isAIFlow == true {
+                    var dict: [String: Any] = [
+                        "activity_id": $0.id ?? "",
+                        "activity_name": $0.name ?? "",
+                        "max_mark": $0.max_mark ?? ""
+                    ]
+                    if isAIFlow {
                         dict["ai_option"] = $0.selectedAIOption ?? ""
                     }
                     return dict
                 }
             ]
+        }
+
+        guard !selectedActivities.isEmpty else {
+            return nil
         }
 
         return [
@@ -148,6 +182,7 @@ class ExamActivitySelectionVC: UIViewController {
             "selected_activities": selectedActivities
         ]
     }
+
 
     
     @IBAction func BackAct(_ sender: Any) {

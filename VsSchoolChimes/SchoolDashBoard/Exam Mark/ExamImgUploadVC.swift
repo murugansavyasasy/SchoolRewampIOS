@@ -40,6 +40,9 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     @IBOutlet weak var fileTypesAndSizeLimitLbl: UILabel!
     @IBOutlet weak var manualEntryLbl: UILabel!
     @IBOutlet weak var SkipUploadLbl: UILabel!
+    @IBOutlet weak var pencilIcon: UIImageView!
+    @IBOutlet weak var imgiconBaseView: UIView!
+    
     
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var attachments: [AttachmentItem] = []
@@ -73,7 +76,14 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         AiInstructionView.layer.borderColor = UIColor.staffExamColour.withAlphaComponent(0.7).cgColor
         
         AiInstructionView.backgroundColor = .staffExamColour.withAlphaComponent(0.05)
-        documentIcon.tintColor = .systemGray4
+        documentIcon.tintColor = .darkGray
+        
+        imgiconBaseView.layer.cornerRadius = imgiconBaseView.frame.height / 2
+        imgiconBaseView.backgroundColor = .systemGray6
+        
+        pencilIcon.layer.cornerRadius = documentIcon.frame.height / 2
+        pencilIcon.backgroundColor = .systemGray6
+        pencilIcon.tintColor = .darkGray
         
         AiInstructionView.isHidden = true
         uploadView.isHidden = true
@@ -103,9 +113,9 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         uploadImageForAIDescLbl.setFont(style: .body, size: FontSize.BodySize)
         AiPowerdUploadLbl.setFont(style: .header, size: FontSize.HeaderSize)
         AutoDetectionLbl.setFont(style: .body, size: FontSize.BodySize)
-        studentNamesAndRollnoLbl.setFont(style: .body, size: FontSize.BodySize)
-        subjectColoumsAndMarksLbl.setFont(style: .body, size: FontSize.BodySize)
-        tableStructureAndLayoutLbl.setFont(style: .body, size: FontSize.BodySize)
+//        studentNamesAndRollnoLbl.setFont(style: .body, size: FontSize.BodySize)
+//        subjectColoumsAndMarksLbl.setFont(style: .body, size: FontSize.BodySize)
+//        tableStructureAndLayoutLbl.setFont(style: .body, size: FontSize.BodySize)
         pickedFilenameLbl.setFont(style: .title, size: FontSize.TitleSize)
         fileTypesAndSizeLimitLbl.setFont(style: .body, size: FontSize.TitleSize)
         manualEntryLbl.setFont(style: .header, size: FontSize.HeaderSize)
@@ -121,19 +131,38 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         uploadImageForAIDescLbl.text = ExamMarkUploadString.Upload_an_image_for_AI_processing.translated()
         AiPowerdUploadLbl.text = ExamMarkUploadString.AI_Powered_Upload.translated()
         AutoDetectionLbl.text = ExamMarkUploadString.Upload_image_for_automatic_detection.translated()
-        studentNamesAndRollnoLbl.text = ExamMarkUploadString.Student_names_and_roll_numbers.translated()
-        subjectColoumsAndMarksLbl.text = ExamMarkUploadString.Subject_columns_and_marks.translated()
-        tableStructureAndLayoutLbl.text = ExamMarkUploadString.Table_structure_and_layout.translated()
-    pickedFilenameLbl.text = ExamMarkUploadString.Click_to_upload.translated()
-    fileTypesAndSizeLimitLbl.text = ExamMarkUploadString.PNG_JPG_up_to_10MB.translated()
-    manualEntryLbl.text = ExamMarkUploadString.Manual_Entry.translated()
-    SkipUploadLbl.text = ExamMarkUploadString.Skip_upload_and_enter_marks_manually.translated()
+//        studentNamesAndRollnoLbl.text = "•" + ExamMarkUploadString.Student_names_and_roll_numbers.translated()
+//        subjectColoumsAndMarksLbl.text = "•" + ExamMarkUploadString.Subject_columns_and_marks.translated()
+//        tableStructureAndLayoutLbl.text = "•" + ExamMarkUploadString.Table_structure_and_layout.translated()
+        setAttributedText(Text:  ExamMarkUploadString.Student_names_and_roll_numbers.translated(), label: studentNamesAndRollnoLbl)
+        setAttributedText(Text:  ExamMarkUploadString.Subject_columns_and_marks.translated(), label: subjectColoumsAndMarksLbl)
+        setAttributedText(Text:  ExamMarkUploadString.Table_structure_and_layout.translated(), label: tableStructureAndLayoutLbl)
+        pickedFilenameLbl.text = ExamMarkUploadString.Click_to_upload.translated()
+        fileTypesAndSizeLimitLbl.text = ExamMarkUploadString.PNG_JPG_up_to_10MB.translated()
+        manualEntryLbl.text = ExamMarkUploadString.Manual_Entry.translated()
+        SkipUploadLbl.text = ExamMarkUploadString.Skip_upload_and_enter_marks_manually.translated()
         
         cancelBtn.setTitle(CommonStringFile.Cancel, for: .normal)
         ContinueManuallyBtn.setTitle(ExamMarkUploadString.Yes_Continue_Manually, for: .normal)
         autoDetectBtn.setTitle(ExamMarkUploadString.AI_will_automatically_detect, for: .normal)
         ContinuewithUploadBtn.setTitle(ExamMarkUploadString.Continue_with_Upload, for: .normal)
         ContinuewithUploadBtn.setTitle(ExamMarkUploadString.Continue_with_Upload, for: .normal)
+    }
+    
+    func setAttributedText(Text:String, label:UILabel){
+        
+        let bulletPoint = "• "
+        let text = Text
+        
+        let fullText =  bulletPoint + text
+        
+        let attributedString = NSMutableAttributedString(string: fullText)
+        
+        attributedString.addAttributes([.foregroundColor : UIColor.staffExamColour, .font : UIFont.systemFont(ofSize: 13, weight: .semibold)], range: NSRange(location: 0, length: bulletPoint.count))
+        
+        attributedString.addAttributes([.foregroundColor: UIColor.darkGray, .font: UIFont(name: "Poppins-Medium", size: 13) ?? UIFont.systemFont(ofSize: 13)], range: NSRange(location: bulletPoint.count, length: text.count))
+        
+        label.attributedText = attributedString
     }
    
     @IBAction func AiTap(){
@@ -144,7 +173,8 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         AiInstructionView.isHidden = false
         uploadView.isHidden = false
         separatorView.isHidden = false
-        documentIcon.tintColor = .staffExamColour
+        documentIcon.tintColor = .white
+        imgiconBaseView.backgroundColor = .staffExamColour
     }
     
     @IBAction func ManualTap(){
@@ -155,7 +185,8 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         AiInstructionView.isHidden = true
         uploadView.isHidden = true
         separatorView.isHidden = true
-        documentIcon.tintColor = .systemGray4
+        imgiconBaseView.backgroundColor = .systemGray6
+        documentIcon.tintColor = .darkGray
         showPopup()
     }
     
@@ -233,6 +264,7 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     }
     
     @IBAction func ContinueManuallyAct(_ sender: Any) {
+        hidePopup()
         let vc = ExamActivitySelectionVC()
         vc.ExamID = SelectedExam?.id ?? ""
         vc.isAIFlow = false
@@ -302,9 +334,13 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true)
                        
+                    }else{
+                        
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) { }
                     }
                     
                 case .failure(let failure):
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) { }
                     print("failure",failure.localizedDescription)
                 }
                 

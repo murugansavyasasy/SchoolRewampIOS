@@ -208,7 +208,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     }
     
     func daily_collectionApi(type:String){
-        
+        showActivityLoader()
         let fromdate = ConvertDateStringSmart(fromLbl.text)
         let todate = ConvertDateStringSmart(todateLbl.text)
         APIService.shared
@@ -223,6 +223,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
                 result:Result <DailyCollectionResponse,
                 Error>
             ) in
+               
                 switch result {
                 case .success(let successMessage):
                     DispatchQueue.main.async { [self] in
@@ -251,6 +252,8 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
                         print(error.localizedDescription)
                     }
                 }
+                
+                hideActivityLoader()
             }
     }
     
