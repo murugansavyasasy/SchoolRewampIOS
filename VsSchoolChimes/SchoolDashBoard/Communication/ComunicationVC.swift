@@ -714,6 +714,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         ])
         moveTextmessage.setAttributedTitle(attributedTitle, for: .normal)
         moveVoiceMessage.setAttributedTitle(attributedTitle, for: .normal)
+        
+        updatePlayButtonState(isPlaying: false)
     }
     
     //MARK: CELL REGISTRATION
@@ -1512,75 +1514,29 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     
-    
-    
     @IBAction func deleteVoicemsg(_ sender: UIButton) {
         if let url = URL(string:AudioPlayUrl ?? ""){
             deletRecoding()
         }
     }
     
-    
-    
+
     // Play Button Action
     @IBAction func playButtonTapped(_ sender: UIButton) {
         
-        if let urlString = AudioPlayUrl,
-               let url = URL(string: urlString) {
-
-                // This will auto download or load
-                self.setAudioURL(url)
-            }
-
-            if waveView.isPlaying {
-                stopPlayback()
-            } else {
-                startPlayback()
-            }
+      AudioPlayUrl
+           
     }
     
-    func setAudioURL(_ url: URL) {
-//        self.audioURL = url
-
-        if url.isFileURL {
-            prepareLocalAudio(url: url)
-        } else {
-            downloadAndPrepareAudio(from: url)
-        }
-    }
-
-    private func startPlayback() {
-        // Notify other cells to stop playing
-        NotificationCenter.default.post(
-            name: NSNotification.Name("AudioCellStartedPlaying"),
-            object: nil
-        )
-        // Start playback
-        waveView.isPlaying = true
-        waveView.startPlaybackAnimation()
-        updatePlayButtonState(isPlaying: true)
-    }
-
+    
     func stopPlayback() {
         audioManager.stop()
         waveView.isPlaying = false
         waveView.stopPlaybackAnimation()
         updatePlayButtonState(isPlaying: false)
+//        audioDelegate?.audioCell(self, didStopPlayingAtIndex: cellIndex)
     }
-
-    private func updatePlayButtonState(isPlaying: Bool) {
-        btnplay.isSelected = isPlaying
-        let imageName = isPlaying ? "pause-button" : "play-button"
-        btnplay.setImage(UIImage(named: imageName), for: .normal)
-    }
-
-    // MARK: - Error Handling
-    private func showErrorAlert(message: String) {
-        let alert = UIAlertController(title: "Audio Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-         present(alert, animated: true)
-    }
-    // MARK: - Audio Setup
+    
     private func prepareLocalAudio(url: URL) {
         do {
             try audioManager.setupPlayer(with: url)
@@ -1590,7 +1546,21 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             showErrorAlert(message: "Failed to load audio file")
         }
     }
-
+    private func setupNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(otherAudioStartedPlaying(_:)),
+            name: NSNotification.Name("AudioCellStartedPlaying"),
+            object: nil
+        )
+    }
+    
+    @objc private func otherAudioStartedPlaying(_ notification: Notification) {
+        guard let playingCellIndex = notification.object as? Int,
+              playingCellIndex != 0 else { return }
+        stopPlayback()
+    }
+    
     private func downloadAndPrepareAudio(from remoteURL: URL) {
         // Show loading state
         btnplay.isEnabled = false
@@ -1623,9 +1593,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 self.btnplay.isEnabled = true
                 if let url = permanentURL {
                     self.waveView.audioURL = url
-                    self.waveView.onDurationUpdate = { [weak self] time in
-                        self?.voiceTiming.text = time
-                    }
                 } else {
                     self.showErrorAlert(message: "Failed to save audio file")
                 }
@@ -1660,6 +1627,43 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             print("❌ Failed to save audio: \(error.localizedDescription)")
             return nil
         }
+    }
+    
+    private func startPlayback() {
+        // Check if audio is loaded
+        guard waveView.audioURL != nil else {
+            showErrorAlert(message: "Audio not loaded yet")
+            return
+        }
+        NotificationCenter.default.post(
+            name: NSNotification.Name("AudioCellStartedPlaying"),
+            object: nil
+        )
+        waveView.isPlaying = true
+        waveView.startPlaybackAnimation()
+        updatePlayButtonState(isPlaying: true)
+    }
+
+    
+    private func updatePlayButtonState(isPlaying: Bool) {
+        btnplay.isSelected = isPlaying
+        let imageName = isPlaying ? "pause-button" : "play-button"
+        btnplay.setImage(UIImage(named: imageName), for: .normal)
+    }
+    
+    private func showErrorAlert(message: String) {
+        let alert = UIAlertController(title: "Audio Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        getCurrentViewController()?.present(alert, animated: true)
+    }
+    
+    private func getCurrentViewController() -> UIViewController? {
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first(where: { $0.isKeyWindow })?
+            .rootViewController?
+            .topMostViewController()
     }
     
 }
@@ -1710,50 +1714,10 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             
         }else{
             
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommunicationTVC", for: indexPath) as? CommunicationTVC else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.CommunicationTVC, for: indexPath) as? CommunicationTVC else {
            return UITableViewCell()
             }
             
-//            let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.HistoryTC, for: indexPath) as! HistoryTC
-//            
-//            let isPlaying = (playIndex == indexPath.row)
-//            let voiceData = VoiceHistory?[indexPath.row]
-//            cell.updatePlayState(isPlaying: isPlaying, url: voiceData?.url)
-//            cell.playBtn.tag = indexPath.row
-//            cell.sendbtn.tag = indexPath.row
-//            cell.delegate = self
-//            cell.ForwordDelegate = self
-//            cell.FinishPlayingdelegate = self
-//            cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
-//            let duration = voiceData?.duration ?? 0
-//            let formatted = formatDuration(duration)
-//            cell.totaltime.text = "00:00 / \(formatted)"
-//            cell.contentlbl.text = voiceData?.title ?? ""
-//            if !isPlaying {
-//                cell.playerView.progress = 0.0
-//                cell.playerView.updateWithLevel(0.0)
-//                cell.playerView.setNeedsDisplay()
-//            }
-//            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-//                cell.configureShimmer()
-//            }
-//            
-//            if let sentOn = voiceData?.sent_on,
-//               let date = DateFormatterHelper.shared.parseDate(from: sentOn) {
-//                let dateString = DateFormatterHelper.shared.formatDateToDayMonthYear(date: date) // "11 Apr 2025"
-//                let timeString = DateFormatterHelper.shared.formatTime(date: date) // "01:04 PM"
-//                let fullText = "\(dateString) \(timeString)" // "11 Apr 2025 01:04 PM"
-//                let attributedText = NSMutableAttributedString(string: fullText)
-//                // Change time part color
-//                if let timeRange = fullText.range(of: timeString) {
-//                    let nsRange = NSRange(timeRange, in: fullText)
-//                    attributedText.addAttribute(.foregroundColor, value: UIColor.gray, range: nsRange)
-//                }
-//                
-//                cell.datelbl.attributedText = attributedText
-//            }
-//
             let voiceData = VoiceHistory?[indexPath.row]
             cell.emergencyBtnName.isHidden = true
             if let sentOn = voiceData?.sent_on {

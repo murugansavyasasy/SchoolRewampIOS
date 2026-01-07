@@ -1114,15 +1114,6 @@
             </constraints>
             <point key="canvasLocation" x="136.64122137404578" y="19.718309859154932"/>
         </view>
-        <viewController id="J6Y-Ra-SPC">
-            <view key="view" contentMode="scaleToFill" id="kd3-jx-39L">
-                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                <viewLayoutGuide key="safeArea" id="qkp-ik-bJR"/>
-                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-            </view>
-            <point key="canvasLocation" x="816" y="6"/>
-        </viewController>
         <viewController id="uOm-lJ-Pm5">
             <view key="view" contentMode="scaleToFill" id="Hge-74-NDs">
                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
@@ -1719,6 +1710,13 @@
             <viewLayoutGuide key="safeArea" id="9s4-8a-riq"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <point key="canvasLocation" x="2686" y="139"/>
+        </view>
+        <view contentMode="scaleToFill" id="Chz-Fd-efW">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <viewLayoutGuide key="safeArea" id="G65-bG-cKG"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <point key="canvasLocation" x="865" y="20"/>
         </view>
     </objects>
     <resources>
