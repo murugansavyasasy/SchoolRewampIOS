@@ -16,11 +16,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     @IBOutlet weak var stafNameLbl: UILabel!
     @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet weak var tv: UITableView!
-    
     @IBOutlet weak var staffDropView: UIView!
-    
     @IBOutlet weak var monthView: UIView!
-    
     @IBOutlet weak var yearsView: UIView!
     @IBOutlet weak var yearAndmonthStack: UIStackView!
     @IBOutlet weak var SegmentControl: UISegmentedControl!
@@ -45,6 +42,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     var SelectedMonthCode = ""
     var currentMonth = Calendar.current.component(.month, from: Date())
     var AcadimicYearDatas : [AcadimicYearData] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
