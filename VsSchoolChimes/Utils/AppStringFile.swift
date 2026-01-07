@@ -636,6 +636,7 @@ struct PTMString {
     static let with = "With"
     static let create = "Create"
     static let meetingsToday = "You have %d Meetings Today"
+    static let no_meetings_meetingsToday = "There are no meetings planned for you today"
     static let minutes = "Minutes"
     static let virtual = "Virtual"
     static let duration = "Duration"

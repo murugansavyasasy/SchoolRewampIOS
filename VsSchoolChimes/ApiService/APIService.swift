@@ -34,6 +34,7 @@ class APIService: NSObject, URLSessionDelegate {
         print("✅ Request URL: \(fullURL)")
         print("📦 Parameters: \(parameters ?? [:])")
         print("TOKEN : \(token)")
+        print("isBaseUrl \(isBaseUrl)")
 
         var request = URLRequest(url: fullURL)
         if token != PaucketHeader.Paucket{
@@ -157,6 +158,10 @@ class APIService: NSObject, URLSessionDelegate {
             completionHandler(.failure(error))
             return
         }
+        
+        print("✅ Request URL: \(fullURL)")
+        print("📦 Parameters: \(parameters)")
+        print("TOKEN : \(token)")
         
         var request = URLRequest(url: fullURL)
         request.httpMethod = "POST"

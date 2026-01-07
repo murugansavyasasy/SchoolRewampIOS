@@ -148,7 +148,7 @@ class EventResiverVC: UIViewController {
                     self.noDataImg.isHidden = self.filteredSections.count != 0
                     self.tableview.isHidden = false
                     self.tableview.reloadData()
-                    self.scrollToClickedMessage()
+//                    self.scrollToClickedMessage()
                 case .failure(let error):
                     print(error.localizedDescription)
                     self.noDataLbl.text = error.localizedDescription
@@ -211,41 +211,41 @@ class EventResiverVC: UIViewController {
         }
         
     }
-    private func scrollToClickedMessage() {
-        guard let id = clickedMessageId else { return }
-        var targetIndexPath: IndexPath?
-        for (sectionIndex, section) in filteredSections.enumerated() {
-            switch section {
-            case .featured(let events),
-                 .upcoming(let events),
-                 .completed(let events):
-
-                if let rowIndex = events.firstIndex(where: { $0.id == id }) {
-                    targetIndexPath = IndexPath(row: rowIndex, section: sectionIndex)
-                }
-
-            default:
-                continue
-            }
-        }
-
-        guard let indexPath = targetIndexPath else { return }
-        DispatchQueue.main.async {
-            self.tableview.scrollToRow(at: indexPath, at: .middle, animated: true)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                if let cell = self.tableview.cellForRow(at: indexPath) {
-                    let originalColor = cell.contentView.backgroundColor ?? .clear
-                    UIView.animate(withDuration: 0.3, animations: {
-                        cell.contentView.backgroundColor = UIColor.systemYellow.withAlphaComponent(0.35)
-                    }) { _ in
-                        UIView.animate(withDuration: 0.5, delay: 1.0, animations: {
-                            cell.contentView.backgroundColor = originalColor
-                        })
-                    }
-                }
-            }
-        }
-    }
+//    private func scrollToClickedMessage() {
+//        guard let id = clickedMessageId else { return }
+//        var targetIndexPath: IndexPath?
+//        for (sectionIndex, section) in filteredSections.enumerated() {
+//            switch section {
+//            case .featured(let events),
+//                 .upcoming(let events),
+//                 .completed(let events):
+//
+//                if let rowIndex = events.firstIndex(where: { $0.id == id }) {
+//                    targetIndexPath = IndexPath(row: rowIndex, section: sectionIndex)
+//                }
+//
+//            default:
+//                continue
+//            }
+//        }
+//
+//        guard let indexPath = targetIndexPath else { return }
+//        DispatchQueue.main.async {
+//            self.tableview.scrollToRow(at: indexPath, at: .middle, animated: true)
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+//                if let cell = self.tableview.cellForRow(at: indexPath) {
+//                    let originalColor = cell.contentView.backgroundColor ?? .clear
+//                    UIView.animate(withDuration: 0.3, animations: {
+//                        cell.contentView.backgroundColor = UIColor.systemYellow.withAlphaComponent(0.35)
+//                    }) { _ in
+//                        UIView.animate(withDuration: 0.5, delay: 1.0, animations: {
+//                            cell.contentView.backgroundColor = originalColor
+//                        })
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     func loadFiles(into cell: ReciverEventTVC, files: [FilePath]) {
         [cell.img1, cell.img2, cell.img3].forEach { $0?.isHidden = true }

@@ -95,7 +95,7 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
         showActivityLoader()
         APIService.shared.makeApi(
             url: ServiceUrl.api_fee_report_detailed_pending_report,
-            parameters: ["academic_year_id": academic_year_id],
+            parameters: ["academic_year_id": academic_year_id,"country_id":  UserDefaultFileManager.getCountryDetails()?.id ?? ""],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [self] (result: Result<PendingReportsResponse, Error>) in
@@ -124,7 +124,7 @@ class PendingFeeReportViewController: UIViewController, UITableViewDataSource, U
         showActivityLoader()
         APIService.shared.makeApi(
             url: ServiceUrl.api_fee_report_detailed_class_wise_pending_report,
-            parameters: ["academic_year_id": academic_year_id],
+            parameters: ["academic_year_id": academic_year_id,"country_id" : UserDefaultFileManager.getCountryDetails()?.id ?? "" ],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [self] (result: Result<PendingReportsResponse, Error>) in

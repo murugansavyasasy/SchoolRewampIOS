@@ -197,6 +197,7 @@ class Daily_collectionStringFile {
     static var type = "type"
     static var from_date = "from_date"
     static var to_date = "to_date"
+    static var country_id = "country_id"
     
 }
 class SendNoticeStringFile {

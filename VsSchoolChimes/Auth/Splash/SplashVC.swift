@@ -198,6 +198,18 @@ class SplashVC: UIViewController, ViewAttachments {
             UIColor(hex: "#81D4FA")   // Pale blue
         ]
         
+        
+//        private var gradientLayer: CAGradientLayer?
+//        private let lightColors: [CGColor] = [
+//            UIColor(hex: "#6EC9F5").cgColor,
+//            UIColor(hex: "#B3E5FC").cgColor,
+//            UIColor(hex: "#FFFFFF").cgColor
+//        ]
+//        private let darkColors: [CGColor] = [
+//            UIColor(hex: "#1E88E5").cgColor,
+//            UIColor(hex: "#64B5F6").cgColor,
+//            UIColor(hex: "#E3F2FD").cgColor
+//        ]
         let numberOfStars = 12
         let containerBounds = confettiContainerView.bounds
         
