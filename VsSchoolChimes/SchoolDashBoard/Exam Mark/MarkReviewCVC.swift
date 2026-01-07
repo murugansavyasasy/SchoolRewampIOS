@@ -316,21 +316,21 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
             } else {
                 visibleRowsInfo = "No visible rows"
             }
-            
-            print("""
-            ═══════════════════════════════════════════════════════════════════════
-            📊 COLUMN \(columnIndex) LIST TABLE SCROLL - \(columnConfig?.displayName ?? "Unknown")
-            ═══════════════════════════════════════════════════════════════════════
-            Current Offset Y: \(String(format: "%.2f", offsetY)) pt
-            Expected Offset Y: \(String(format: "%.2f", expectedOffset)) pt
-            Offset Difference: \(String(format: "%.2f", offsetDifference)) pt
-            Content Height: \(String(format: "%.2f", contentHeight)) pt
-            Visible Height: \(String(format: "%.2f", visibleHeight)) pt
-            Scroll Progress: \(String(format: "%.1f", scrollPercentage))%
-            Sync Status: \(syncStatus)
-            \(visibleRowsInfo)
-            ═══════════════════════════════════════════════════════════════════════
-            """)
+//            
+//            print("""
+//            ═══════════════════════════════════════════════════════════════════════
+//            📊 COLUMN \(columnIndex) LIST TABLE SCROLL - \(columnConfig?.displayName ?? "Unknown")
+//            ═══════════════════════════════════════════════════════════════════════
+//            Current Offset Y: \(String(format: "%.2f", offsetY)) pt
+//            Expected Offset Y: \(String(format: "%.2f", expectedOffset)) pt
+//            Offset Difference: \(String(format: "%.2f", offsetDifference)) pt
+//            Content Height: \(String(format: "%.2f", contentHeight)) pt
+//            Visible Height: \(String(format: "%.2f", visibleHeight)) pt
+//            Scroll Progress: \(String(format: "%.1f", scrollPercentage))%
+//            Sync Status: \(syncStatus)
+//            \(visibleRowsInfo)
+//            ═══════════════════════════════════════════════════════════════════════
+//            """)
 
             // Sync with parent
             parentVC?.syncVerticalScroll(from: scrollView, offset: offsetY)
