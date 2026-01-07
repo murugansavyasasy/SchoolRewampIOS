@@ -153,4 +153,5 @@ class CellConfingName {
     static let  ExamListHeader = "ExamListHeader"
     static let  ExamListCell = "ExamListCell"
     static let  MarkReviewTVC = "MarkReviewTVC"
+    static let  CommunicationTVC = "CommunicationTVC"
 }

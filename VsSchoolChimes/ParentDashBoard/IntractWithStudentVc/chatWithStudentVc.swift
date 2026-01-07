@@ -44,8 +44,18 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
         MessgeTextview.layer.cornerRadius = 10
         replyFullview.isHidden = true
         MessgeTextview.isHidden = true
+        replyBtn.isHidden = true
+        replyAllBtn.isHidden = true
         MessgeTextview.addDoneButton()
         questionLbl.setFont(style: .body, size: FontSize.BodySize)
+        replyBtn.layer.cornerRadius = 10
+        replyBtn.layer.borderColor = UIColor.systemGray5.cgColor
+        replyBtn.layer.borderWidth = 1
+        replyBtn.backgroundColor = .systemGray6.withAlphaComponent(0.5)
+        replyAllBtn.layer.cornerRadius = 10
+        replyAllBtn.layer.borderColor = UIColor.systemGray5.cgColor
+        replyAllBtn.layer.borderWidth = 1
+        replyAllBtn.backgroundColor = .systemGray6.withAlphaComponent(0.5)
         noRecordlbl.isHidden = true
         noDataImage.isHidden = true
         tableView.showsVerticalScrollIndicator = false
@@ -139,6 +149,8 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
                             self.getChat()
                             self.replyFullview.isHidden = true
                             self.MessgeTextview.isHidden = true
+                            self.replyBtn.isHidden = true
+                            self.replyAllBtn.isHidden = true
                             self.MessgeTextview.text = ""
                             self.MessgeTextview.resignFirstResponder()
                             self.view.endEditing(true)
@@ -226,6 +238,8 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
     @IBAction func closeBtnAct(_ sender: Any) {
         replyFullview.isHidden = true
         MessgeTextview.isHidden = true
+        replyBtn.isHidden = true
+        replyAllBtn.isHidden = true
         MessgeTextview.text = ""
         MessgeTextview.resignFirstResponder()
         view.endEditing(true)
@@ -332,6 +346,8 @@ extension chatWithStudentVc: UITableViewDelegate,UITableViewDataSource,ChatTable
         if edit ?? false{
             replyFullview.isHidden = false
             MessgeTextview.isHidden = false
+            replyBtn.isHidden = false
+            replyAllBtn.isHidden = false
             if let message = chatDataDetails?.first(where: { $0.id == id }) {
                 selectedMessage = message
                 studetnNameLbl.text = CommonStringFile.ReplyingTo + (message.student_name ?? "")

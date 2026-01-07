@@ -485,6 +485,9 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
             if let cell = self.parentCell as? CommunicationTVC {
                 cell.stopPlayback()
             }
+            if let cell = self.parentCell as? ComunicationVC {
+                cell.stopPlayback()
+            }
         }
     }
     
