@@ -495,7 +495,8 @@ class MarkReviewVC: UIViewController {
         studentTableView.dataSource = self
         studentTableView.delegate = self
         studentTableView.separatorStyle = .singleLine
-        studentTableView.rowHeight = 50
+        studentTableView.rowHeight = UITableView.automaticDimension
+        studentTableView.estimatedRowHeight = 50
         studentTableView.isScrollEnabled = true
         studentTableView.showsVerticalScrollIndicator = false
         studentTableView.showsHorizontalScrollIndicator = false
@@ -522,29 +523,22 @@ class MarkReviewVC: UIViewController {
         subjectsCollectionView.backgroundColor = .systemBackground
     }
     
-    // MARK: - Scroll Synchronization
-    func syncVerticalScroll(from sender: UIScrollView, offset: CGPoint) {
+    func syncVerticalScroll(from sender: UIScrollView, offset: CGFloat) {
         guard !isSyncing else { return }
         isSyncing = true
-        currentVerticalOffset = offset.y
+        currentVerticalOffset = offset
         if studentTableView != sender {
-            studentTableView.setContentOffset(
-                CGPoint(x: 0, y: offset.y),
-                animated: false
-            )
+            studentTableView.setContentOffset(CGPoint(x: 0, y: offset), animated: false)
         }
-        for cell in subjectsCollectionView.visibleCells {
-            if let colCell = cell as? MarkReviewCVC,
-               colCell.listTable != sender {
-                colCell.listTable.setContentOffset(
-                    CGPoint(x: 0, y: offset.y),
-                    animated: false
-                )
+
+        for case let cell as MarkReviewCVC in subjectsCollectionView.visibleCells {
+            if cell.listTable != sender {
+                cell.listTable.setContentOffset(CGPoint(x: 0, y: offset), animated: false)
             }
         }
-        
         isSyncing = false
     }
+
     
     func getCurrentVerticalOffset() -> CGFloat {
         return currentVerticalOffset
@@ -694,23 +688,25 @@ extension MarkReviewVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView,
                    heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        let student = studentRecords[indexPath.row]
+        return heightForStudentRow(indexPath.row)
+    }
+    func heightForStudentRow(_ row: Int) -> CGFloat {
+
+        let student = studentRecords[row]
         let name = student.student_name ?? ""
         let rollNo = student.roll_no ?? ""
-        
+
         let nameFont = UIFont.systemFont(ofSize: 16, weight: .medium)
         let rollFont = UIFont.systemFont(ofSize: 13, weight: .regular)
-        
-        let labelWidth: CGFloat = 160
-        
+        let labelWidth: CGFloat = nameWith.constant
+
         let nameHeight = textHeight(text: name, font: nameFont, width: labelWidth)
         let rollHeight = textHeight(text: "Roll No: \(rollNo)", font: rollFont, width: labelWidth)
-        
-        let totalHeight = nameHeight + rollHeight + 24
-        return max(50, totalHeight)
+
+        let total = nameHeight + rollHeight + 24
+        return max(50, total)
     }
-    
+
     func textHeight(text: String, font: UIFont, width: CGFloat) -> CGFloat {
         
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
@@ -726,18 +722,16 @@ extension MarkReviewVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == studentTableView {
-            // Prevent horizontal scroll
-            if scrollView.contentOffset.x != 0 {
-                scrollView.setContentOffset(
-                    CGPoint(x: 0, y: scrollView.contentOffset.y),
-                    animated: false
-                )
-            }
-            // Sync vertical scroll
-            syncVerticalScroll(from: scrollView, offset: scrollView.contentOffset)
-        }
-    }
+         // TableView Vertical Scroll
+         if scrollView == studentTableView {
+             tableViewScrollViewDidScroll(scrollView)
+         }
+         
+         // CollectionView Horizontal Scroll
+         if scrollView == subjectsCollectionView {
+             collectionViewScrollViewDidScroll(scrollView)
+         }
+     }
 }
 
 // MARK: - Subjects CollectionView (Scrollable Columns)
@@ -778,10 +772,26 @@ extension MarkReviewVC: UICollectionViewDataSource, UICollectionViewDelegate, UI
             )
             cell.layer.addSublayer(border)
         }
+        cell.layoutIfNeeded()
+        cell.listTable.layoutIfNeeded()
         
+        cell.listTable.setContentOffset(
+            CGPoint(x: 0, y: currentVerticalOffset),
+            animated: false
+        )
+
         return cell
     }
-    
+    func collectionView(_ collectionView: UICollectionView,
+                       willDisplay cell: UICollectionViewCell,
+                       forItemAt indexPath: IndexPath) {
+        
+        guard let markCell = cell as? MarkReviewCVC else { return }
+        markCell.listTable.setContentOffset(
+            CGPoint(x: 0, y: currentVerticalOffset),
+            animated: false
+        )
+    }
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -904,5 +914,239 @@ extension String {
 extension UIView {
     func superview<T>(of type: T.Type) -> T? {
         return superview as? T ?? superview?.superview(of: type)
+    }
+}
+// Add this complete extension to MarkReviewVC for detailed scroll position tracking
+
+extension MarkReviewVC {
+    
+    // MARK: - Helper Methods
+    
+    private func getScrollViewName(_ scrollView: UIScrollView) -> String {
+        if scrollView == studentTableView {
+            return "👤 Student Name Table"
+        } else if scrollView == subjectsCollectionView {
+            return "📚 Subjects Collection View"
+        } else {
+            return "📋 Mark Cell Table"
+        }
+    }
+    
+    func logHorizontalScroll(scrollView: UIScrollView, offset: CGFloat) {
+        let scrollViewName = getScrollViewName(scrollView)
+        let contentWidth = scrollView.contentSize.width
+        let visibleWidth = scrollView.bounds.width
+        let maxOffset = contentWidth - visibleWidth
+        let scrollPercentage = maxOffset > 0 ? (offset / maxOffset) * 100 : 0
+        
+//        print("""
+//        ═══════════════════════════════════════════════════════════
+//        📊 HORIZONTAL SCROLL - \(scrollViewName)
+//        ═══════════════════════════════════════════════════════════
+//        Current Offset X: \(String(format: "%.2f", offset))
+//        Content Width: \(String(format: "%.2f", contentWidth))
+//        Visible Width: \(String(format: "%.2f", visibleWidth))
+//        Max Offset: \(String(format: "%.2f", maxOffset))
+//        Scroll Progress: \(String(format: "%.1f", scrollPercentage))%
+//        ═══════════════════════════════════════════════════════════
+//        """)
+    }
+    
+    // MARK: - Comprehensive Scroll Position Logger
+    
+    func logCompleteScrollPositions(from scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let scrollViewName = getScrollViewName(scrollView)
+        
+//        print("""
+//        
+//        ╔═══════════════════════════════════════════════════════════════════════════╗
+//        ║              📍 COMPLETE SCROLL POSITION SYNC - \(scrollViewName)                    ║
+//        ╠═══════════════════════════════════════════════════════════════════════════╣
+//        """)
+//        
+        // 1. Main StudentTableView Position
+        logStudentTablePosition(offsetY: offsetY)
+        
+        // 2. SubjectsCollectionView Visible Columns
+        logCollectionViewColumns(offsetY: offsetY)
+        
+        // 3. Each visible column's listTable position
+        logAllColumnListTables(offsetY: offsetY)
+        
+//        print("""
+//        ╚═══════════════════════════════════════════════════════════════════════════╝
+//        
+//        """)
+    }
+    
+    private func logStudentTablePosition(offsetY: CGFloat) {
+        let contentHeight = studentTableView.contentSize.height
+        let visibleHeight = studentTableView.bounds.height
+        let maxOffset = contentHeight - visibleHeight
+        let scrollPercentage = maxOffset > 0 ? (offsetY / maxOffset) * 100 : 0
+        
+        var visibleRowsInfo = ""
+        if let indexPaths = studentTableView.indexPathsForVisibleRows {
+            let rowNumbers = indexPaths.map { "\($0.row)" }.joined(separator: ", ")
+            visibleRowsInfo = "Visible Rows: \(rowNumbers)"
+        }
+//        
+//        print("""
+//        ┌─ 👤 STUDENT TABLE (Fixed Name Column)
+//        ├─ Current Offset Y: \(String(format: "%.2f", offsetY)) pt
+//        ├─ Content Height: \(String(format: "%.2f", contentHeight)) pt
+//        ├─ Visible Height: \(String(format: "%.2f", visibleHeight)) pt
+//        ├─ Scroll Progress: \(String(format: "%.1f", scrollPercentage))%
+//        ├─ \(visibleRowsInfo)
+//        └─
+//        """)
+    }
+    
+    private func logCollectionViewColumns(offsetY: CGFloat) {
+        let offsetX = subjectsCollectionView.contentOffset.x
+        let contentWidth = subjectsCollectionView.contentSize.width
+        let visibleWidth = subjectsCollectionView.bounds.width
+        let maxOffset = contentWidth - visibleWidth
+        let scrollPercentage = maxOffset > 0 ? (offsetX / maxOffset) * 100 : 0
+        
+        var visibleColumnsInfo = ""
+        let visibleItems = subjectsCollectionView.indexPathsForVisibleItems
+        if !visibleItems.isEmpty {
+            let columnNumbers = visibleItems.map { "\($0.item)" }.sorted().joined(separator: ", ")
+            visibleColumnsInfo = "Visible Columns: \(columnNumbers)"
+        } else {
+            visibleColumnsInfo = "No visible columns"
+        }
+//        
+//        print("""
+//        ┌─ 📚 SUBJECTS COLLECTION VIEW (Horizontal Scroll)
+//        ├─ Current Offset X: \(String(format: "%.2f", offsetX)) pt
+//        ├─ Content Width: \(String(format: "%.2f", contentWidth)) pt
+//        ├─ Visible Width: \(String(format: "%.2f", visibleWidth)) pt
+//        ├─ Scroll Progress: \(String(format: "%.1f", scrollPercentage))%
+//        ├─ \(visibleColumnsInfo)
+//        ├─ Stored Vertical Offset: \(String(format: "%.2f", currentVerticalOffset)) pt
+//        └─
+//        """)
+    }
+    
+    private func logAllColumnListTables(offsetY: CGFloat) {
+//        print("┌─ 📋 COLUMN LIST TABLES (Inside CollectionView Cells)")
+        
+        let visibleCells = subjectsCollectionView.visibleCells.compactMap { $0 as? MarkReviewCVC }
+        
+        if visibleCells.isEmpty {
+//            print("├─ ⚠️  No visible column cells")
+//            print("└─")
+            return
+        }
+        
+        for (index, cell) in visibleCells.enumerated() {
+            let isLastCell = (index == visibleCells.count - 1)
+            let cellOffsetY = cell.listTable.contentOffset.y
+            let cellContentHeight = cell.listTable.contentSize.height
+            let cellVisibleHeight = cell.listTable.bounds.height
+            
+            var cellVisibleRowsInfo = ""
+            if let indexPaths = cell.listTable.indexPathsForVisibleRows {
+                let rowNumbers = indexPaths.map { "\($0.row)" }.joined(separator: ", ")
+                cellVisibleRowsInfo = "Visible Rows: \(rowNumbers)"
+            } else {
+                cellVisibleRowsInfo = "No visible rows"
+            }
+            
+            let syncStatus = abs(cellOffsetY - offsetY) < 1.0 ? "✅ SYNCED" : "❌ OUT OF SYNC"
+            let offsetDiff = cellOffsetY - offsetY
+            
+            let columnPrefix = isLastCell ? "└─" : "├─"
+            let subPrefix = isLastCell ? "  " : "│ "
+            
+//            print("""
+//            \(columnPrefix) Column \(cell.columnIndex): \(cell.columnConfig?.displayName ?? "Unknown")
+//            \(subPrefix)├─ Table Offset Y: \(String(format: "%.2f", cellOffsetY)) pt
+//            \(subPrefix)├─ Expected Offset: \(String(format: "%.2f", offsetY)) pt
+//            \(subPrefix)├─ Offset Difference: \(String(format: "%.2f", offsetDiff)) pt
+//            \(subPrefix)├─ Content Height: \(String(format: "%.2f", cellContentHeight)) pt
+//            \(subPrefix)├─ Sync Status: \(syncStatus)
+//            \(subPrefix)├─ \(cellVisibleRowsInfo)
+//            \(subPrefix)└─
+//            """)
+        }
+    }
+    
+    // MARK: - Enhanced syncVerticalScroll with Logging
+    
+    func syncVerticalScrollWithLogging(from sender: UIScrollView, offset: CGFloat) {
+        guard !isSyncing else { return }
+        isSyncing = true
+        currentVerticalOffset = offset
+        
+//        print("""
+//        
+//        🔄 SYNCING VERTICAL SCROLL FROM: \(getScrollViewName(sender))
+//        Target Offset Y: \(String(format: "%.2f", offset))
+//        
+//        """)
+        
+        // Sync studentTableView if sender is not studentTableView
+        if studentTableView != sender {
+            let oldOffset = studentTableView.contentOffset.y
+            studentTableView.setContentOffset(CGPoint(x: 0, y: offset), animated: false)
+//            print("✅ Updated Student Table: \(String(format: "%.2f", oldOffset)) → \(String(format: "%.2f", offset))")
+        }
+
+        // Sync all visible column list tables
+        for case let cell as MarkReviewCVC in subjectsCollectionView.visibleCells {
+            if cell.listTable != sender {
+                let oldOffset = cell.listTable.contentOffset.y
+                cell.listTable.setContentOffset(CGPoint(x: 0, y: offset), animated: false)
+//                print("✅ Updated Column \(cell.columnIndex) Table: \(String(format: "%.2f", oldOffset)) → \(String(format: "%.2f", offset))")
+            }
+        }
+        
+        // Log final positions
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            self?.logCompleteScrollPositions(from: sender)
+        }
+        
+        isSyncing = false
+    }
+    
+    // MARK: - Updated scrollViewDidScroll for TableView
+    
+    func tableViewScrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == studentTableView {
+            let offsetY = scrollView.contentOffset.y
+            
+            // Enhanced logging with sync
+            logCompleteScrollPositions(from: scrollView)
+            
+            // Sync with logging
+            syncVerticalScrollWithLogging(from: scrollView, offset: offsetY)
+        }
+    }
+    
+    // MARK: - Updated scrollViewDidScroll for CollectionView
+    
+    func collectionViewScrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == subjectsCollectionView {
+            let offsetX = scrollView.contentOffset.x
+            
+            // Log horizontal scroll
+            logHorizontalScroll(scrollView: scrollView, offset: offsetX)
+            
+            // Print first visible column
+            let visibleItems = subjectsCollectionView.indexPathsForVisibleItems
+            if !visibleItems.isEmpty {
+                if let firstItem = visibleItems.first {
+//                    print("""
+//                    ⭐ Collection View First Visible Column
+//                       Column Index: \(firstItem.item)
+//                       Offset X: \(String(format: "%.2f", offsetX))
+//                    """)
+                }
+            }
+        }
     }
 }

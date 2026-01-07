@@ -18,7 +18,7 @@ class MarkReviewCVC: UICollectionViewCell {
     @IBOutlet weak var headerLbl: UILabel!
     @IBOutlet weak var listTable: UITableView!
     
-    private var columnIndex = 0
+    var columnIndex = 0
     var columnConfig: ColumnConfig!
     var studentRecords: [StudentMark] = []
     private var flagReasons: [Int: String] = [:]
@@ -58,9 +58,15 @@ class MarkReviewCVC: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        listTable.layoutIfNeeded()
-        if listTable.frame.height < 100 {
-            print("⚠️ WARNING: TableView height is too small! (\(listTable.frame.height))")
+        if !isConfiguring, let parent = parentVC {
+            let currentOffset = listTable.contentOffset.y
+            let expectedOffset = parent.getCurrentVerticalOffset()
+            if abs(currentOffset - expectedOffset) > 1.0 {
+                listTable.setContentOffset(
+                    CGPoint(x: 0, y: expectedOffset),
+                    animated: false
+                )
+            }
         }
     }
     
@@ -98,7 +104,7 @@ class MarkReviewCVC: UICollectionViewCell {
         isConfiguring = true
         studentRecords = []
         flagReasons.removeAll()
-        // Don't reload here - just clear
+        isConfiguring = false
     }
 }
 
@@ -286,10 +292,49 @@ extension MarkReviewCVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     }
     
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard !isConfiguring else { return }
-        parentVC?.syncVerticalScroll(from: scrollView, offset: scrollView.contentOffset)
-    }
+            guard scrollView == listTable else { return }
+
+            let offsetY = scrollView.contentOffset.y
+            let contentHeight = listTable.contentSize.height
+            let visibleHeight = listTable.bounds.height
+            let maxOffset = contentHeight - visibleHeight
+            let scrollPercentage = maxOffset > 0 ? (offsetY / maxOffset) * 100 : 0
+            
+            // Get expected offset from parent
+            let expectedOffset = parentVC?.getCurrentVerticalOffset() ?? 0
+            let isSynced = abs(offsetY - expectedOffset) < 1.0
+            let syncStatus = isSynced ? "✅ SYNCED" : "❌ OUT OF SYNC"
+            let offsetDifference = offsetY - expectedOffset
+            
+            // Get visible rows
+            var visibleRowsInfo = ""
+            if let indexPaths = listTable.indexPathsForVisibleRows {
+                let rowNumbers = indexPaths.map { "\($0.row)" }.joined(separator: ", ")
+                visibleRowsInfo = "Visible Rows: \(rowNumbers)"
+            } else {
+                visibleRowsInfo = "No visible rows"
+            }
+            
+            print("""
+            ═══════════════════════════════════════════════════════════════════════
+            📊 COLUMN \(columnIndex) LIST TABLE SCROLL - \(columnConfig?.displayName ?? "Unknown")
+            ═══════════════════════════════════════════════════════════════════════
+            Current Offset Y: \(String(format: "%.2f", offsetY)) pt
+            Expected Offset Y: \(String(format: "%.2f", expectedOffset)) pt
+            Offset Difference: \(String(format: "%.2f", offsetDifference)) pt
+            Content Height: \(String(format: "%.2f", contentHeight)) pt
+            Visible Height: \(String(format: "%.2f", visibleHeight)) pt
+            Scroll Progress: \(String(format: "%.1f", scrollPercentage))%
+            Sync Status: \(syncStatus)
+            \(visibleRowsInfo)
+            ═══════════════════════════════════════════════════════════════════════
+            """)
+
+            // Sync with parent
+            parentVC?.syncVerticalScroll(from: scrollView, offset: offsetY)
+        }
 }
 
 // MARK: - Popover Presentation
