@@ -122,7 +122,7 @@ class MarkReviewVC: UIViewController {
                     if let data = response.data, !data.isEmpty {
                         self.studentRecords = data.first?.upload_details ?? []
                         self.examId = data.first?.exam_section_id
-                        self.setupColumnsFromPayload(self.payload ?? [:])
+                        self.setupColumnsFromGetMarksResponse()
                         if !self.aiRecords.isEmpty {
                             self.updateMarksWithAIData()
                         } else {
@@ -324,52 +324,33 @@ class MarkReviewVC: UIViewController {
     }
     
     
-    private func setupColumnsFromPayload(_ payload: [String: Any]) {
-        
+    private func setupColumnsFromGetMarksResponse() {
         subjectColumns.removeAll()
         var uniqueKeys = Set<String>()
+        guard let firstStudent = studentRecords.first else { return }
         
-        guard let selectedActivities = payload["selected_activities"] as? [[String: Any]] else {
-            return
-        }
-        
-        for subjectDict in selectedActivities {
-            
-            let subjectId   = subjectDict["subject_id"] as? String ?? ""
-            let subjectName = subjectDict["subject_name"] as? String ?? ""
-            
-            guard let activities = subjectDict["activities"] as? [[String: Any]] else { continue }
-            
-            for activity in activities {
-                
-                let activityId   = activity["activity_id"] as? String ?? ""
-                let activityName = activity["activity_name"] as? String ?? ""
-                let aiOption     = activity["ai_option"] as? String ?? ""
-                let maxMarkStr   = activity["max_mark"] as? String ?? "100"
-                let maxMark      = Int(maxMarkStr) ?? 100
-                let displayName = aiOption.isEmpty ? activityName : aiOption
+        for subject in firstStudent.marks ?? [] {
+            for activity in subject.activities ?? [] {
+                guard let subjectId = subject.subject_id,
+                      let activityId = activity.id,
+                      let baseName = activity.name else { continue }
                 
                 let uniqueKey = "\(subjectId)_\(activityId)"
+                if uniqueKeys.contains(uniqueKey) { continue }
+                uniqueKeys.insert(uniqueKey)
                 
-                if !uniqueKeys.contains(uniqueKey) {
-                    
-                    uniqueKeys.insert(uniqueKey)
-                    
-                    subjectColumns.append(
-                        ColumnConfig(
-                            displayName: activityName,
-                            subjectName: subjectName,
-                            subjectId: subjectId,
-                            activityId: activityId,
-                            activityName: displayName,
-                            maxMarks: maxMark
-                        )
+                subjectColumns.append(
+                    ColumnConfig(
+                        displayName: baseName,
+                        subjectName: subject.subject_name,
+                        subjectId: subjectId,
+                        activityId: activityId,
+                        activityName: activity.selected_name,
+                        maxMarks: Int(activity.max_mark ?? "0")
                     )
-                }
+                )
             }
         }
-        
-        subjectColumns.sort { $0.subjectName ?? "" < $1.subjectName ?? ""}
     }
     
     

@@ -20,7 +20,7 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
     var descriptionString:String?
     var alert = CustomAlert()
     var vimeoUploader: VimeoUploader?
-    var onDismiss: (() -> Void)?
+    var onDismiss: (( _ id: String?) -> Void)?
     var studentDetails = UserDefaultFileManager.get_child_Details()
     
     override func viewDidLoad() {
@@ -89,7 +89,7 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
             case .success(let SuccessMessage):
                 if SuccessMessage.status == true {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-                        self?.onDismiss?()
+                        self?.onDismiss?(detail_id)
                     }
                 }
             case .failure(let error):

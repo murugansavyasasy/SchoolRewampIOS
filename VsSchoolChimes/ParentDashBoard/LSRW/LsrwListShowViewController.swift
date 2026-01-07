@@ -164,8 +164,9 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         if #available(iOS 15.0, *) {
             let vc = LSRWActivitesVC(nibName: nil, bundle: nil)
             vc.lsrw = selectedTask
-            vc.onDismiss = { [weak self] in
-                self?.SkillListApi()
+            vc.onDismiss = { [weak self] id in
+                guard let self = self else { return }
+                markTaskAsRead(taskId: id ?? "nil")
             }
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
@@ -184,14 +185,35 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         if #available(iOS 15.0, *) {
             let vc = LSRWActivitesVC(nibName: nil, bundle: nil)
             vc.lsrw = selectedTask
-            vc.onDismiss = { [weak self] in
-                self?.SkillListApi()
+            vc.onDismiss = { [weak self] id in
+                guard let self = self else { return }
+                markTaskAsRead(taskId: id ?? "nil")
             }
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }
     }
-    
+    func markTaskAsRead(taskId: String?) {
+        guard let taskId = taskId else { return }
+
+        tasks = tasks.map { task in
+            var updatedTask = task
+            if updatedTask.id == taskId {
+                updatedTask.is_unread = false
+            }
+            return updatedTask
+        }
+
+        filteredTasks = filteredTasks.map { task in
+            var updatedTask = task
+            if updatedTask.id == taskId {
+                updatedTask.is_unread = false
+            }
+            return updatedTask
+        }
+
+        tv.reloadData()
+    }
     // MARK: - Search Bar
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         searchBar.resignFirstResponder()
