@@ -29,7 +29,7 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        selectYourClassLbl.setFont(style: .title, size: FontSize.TitleSize)
+        selectYourClassLbl.setFont(style: .title, size: FontSize.HeaderSize)
         chooseClassLbl.setFont(style: .body, size: FontSize.BodySize)
         noDataLbl.setFont(style: .body, size: FontSize.TitleSize)
         academicYearBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -98,9 +98,12 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                     }
                     
                     filteredClassList = classList
-                    noDataImage.isHidden = !filteredClassList.isEmpty
-                    noDataLbl.isHidden = !filteredClassList.isEmpty
-                    searchBtn.isHidden = filteredClassList.isEmpty
+                    let hide = filteredClassList.isEmpty
+                    noDataImage.isHidden = !hide
+                    noDataLbl.isHidden = !hide
+                    searchBtn.isHidden = hide
+                    selectYourClassLbl.isHidden = hide
+                    chooseClassLbl.isHidden = hide
                     noDataLbl.text = success.message ?? ""
                     tv.reloadData()
                     
@@ -111,6 +114,8 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                     noDataImage.isHidden = false
                     noDataLbl.isHidden = false
                     searchBtn.isHidden = true
+                    selectYourClassLbl.isHidden = true
+                    chooseClassLbl.isHidden = true
                     noDataLbl.text = failure.localizedDescription
                     tv.reloadData()
                 }
@@ -136,6 +141,8 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             let hide = filteredClassList.isEmpty
             noDataImage.isHidden = !hide
             noDataLbl.isHidden = !hide
+            selectYourClassLbl.isHidden = hide
+            chooseClassLbl.isHidden = hide
             tv.reloadData()
             
         }
@@ -157,6 +164,8 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             let hide = filteredClassList.isEmpty
             noDataImage.isHidden = !hide
             noDataLbl.isHidden = !hide
+            selectYourClassLbl.isHidden = hide
+            chooseClassLbl.isHidden = hide
             noDataLbl.text = "No data Found!"
             tv.reloadData()
         }

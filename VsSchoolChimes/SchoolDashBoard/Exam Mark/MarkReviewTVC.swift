@@ -30,8 +30,16 @@ class MarkReviewTVC: UITableViewCell {
         markTxt.layer.cornerRadius = 8
 
         let toolbar = UIToolbar()
-        toolbar.barStyle = .default
-        toolbar.isTranslucent = true
+        toolbar.isTranslucent = false
+        toolbar.barTintColor = .systemGray6
+
+        // 🔒 Disable toolbar animations (iOS 16+)
+        toolbar.layer.actions = [
+            "position": NSNull(),
+            "bounds": NSNull(),
+            "frame": NSNull()
+        ]
+
         toolbar.sizeToFit()
 
         let abBtn    = UIBarButtonItem(customView: createKeyButton(title: "AB",
@@ -45,7 +53,8 @@ class MarkReviewTVC: UITableViewCell {
         let rightBtn = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.right",
                                                                   action: #selector(rightTapped)))
 
-        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done,
+        let doneBtn = UIBarButtonItem(title: "Done",
+                                     style: .plain,
                                      target: markTxt,
                                      action: #selector(UITextField.resignFirstResponder))
 
@@ -55,13 +64,13 @@ class MarkReviewTVC: UITableViewCell {
 
         toolbar.items = [
             abBtn,
-            space(4),
+            space(6),
             upBtn,
-            space(4),
+            space(6),
             downBtn,
-            space(4),
+            space(6),
             leftBtn,
-            space(4),
+            space(6),
             rightBtn,
             flex,
             doneBtn
@@ -69,6 +78,7 @@ class MarkReviewTVC: UITableViewCell {
 
         markTxt.inputAccessoryView = toolbar
     }
+
 
 
     private func space(_ width: CGFloat) -> UIBarButtonItem {
@@ -79,42 +89,54 @@ class MarkReviewTVC: UITableViewCell {
         return sp
     }
 
-
-
     private func createKeyButton(
         title: String? = nil,
         imageName: String? = nil,
         action: Selector
     ) -> UIButton {
 
-        let button = UIButton(type: .system)
-
+        let button = UIButton(type: .custom)
+        let width: CGFloat = 44
         let height: CGFloat = 36
-        let minWidth: CGFloat = 44
-
-        button.frame = CGRect(x: 0, y: 0, width: minWidth, height: height)
+        button.frame = CGRect(x: 0, y: 0, width: width, height: height)
 
         if let title = title {
             button.setTitle(title, for: .normal)
             button.backgroundColor = .systemOrange
             button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
         } else if let imageName = imageName {
-            let config = UIImage.SymbolConfiguration(pointSize: 14, weight: .semibold)
-            button.setImage(UIImage(systemName: imageName,
-                                    withConfiguration: config),
-                            for: .normal)
+            let config = UIImage.SymbolConfiguration(pointSize: 15,
+                                                     weight: .semibold,
+                                                     scale: .medium)
+            let image = UIImage(systemName: imageName,
+                                withConfiguration: config)
+            button.setImage(image, for: .normal)
             button.backgroundColor = .systemBlue
         }
 
         button.tintColor = .white
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
+        
+        button.adjustsImageWhenHighlighted = false
+        button.adjustsImageWhenDisabled = false
+        button.showsTouchWhenHighlighted = false
+
+        // 🔒 Disable implicit CoreAnimation
+        button.layer.actions = [
+            "backgroundColor": NSNull(),
+            "transform": NSNull(),
+            "bounds": NSNull(),
+            "position": NSNull()
+        ]
+
         button.addTarget(self,
                          action: action,
                          for: .touchUpInside)
 
         return button
     }
+
 
 
     @objc private func keyDown(_ sender: UIButton) {

@@ -147,6 +147,8 @@ class MessageFromManagementViewController: UIViewController {
     
     // MARK: - API Calls
     private func fetchMessages() {
+        
+    showActivityLoader()
         let token = staffDetails?.access_token ?? ""
         
         APIService.shared.makeApi(
@@ -212,6 +214,7 @@ class MessageFromManagementViewController: UIViewController {
         }
     }
     private func fetchArchivedMessages() {
+        showActivityLoader()
         SearchBar.searchTextField.text = ""
         searchText = ""
         let token = staffDetails?.access_token ?? ""

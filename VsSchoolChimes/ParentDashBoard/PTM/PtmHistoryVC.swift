@@ -290,20 +290,33 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             cell.ModeBtn.setImage(UIImage(systemName: "network"), for: .normal)
         }
         
-        if slot?.status == "Upcoming"{
-            cell.cancelStackTop.constant = 20
-            cell.cancelStackHeight.constant = 35
-            cell.statusBtn.backgroundColor = .systemBlue.withAlphaComponent(0.7)
+        if slot?.is_cancelled_by_staff == true{
+            cell.statusBtn.setTitle("Cancelled", for: .normal)
+            cell.statusBtn.backgroundColor = .systemRed.withAlphaComponent(0.7)
             cell.statusBtn.setTitleColor(.white, for: .normal)
-        }else{
             cell.cancelStackTop.constant = 0
             cell.cancelStackHeight.constant = 0
             cell.callBtn.isHidden = true
             cell.cancelBtn.isHidden = true
             cell.JoinBtn.isHidden = true
-            cell.statusBtn.backgroundColor = .systemGreen.withAlphaComponent(0.7)
-            cell.statusBtn.setTitleColor(.white, for: .normal)
+        }else{
+            
+            if slot?.status == "Upcoming"{
+                cell.cancelStackTop.constant = 20
+                cell.cancelStackHeight.constant = 35
+                cell.statusBtn.backgroundColor = .systemBlue.withAlphaComponent(0.7)
+                cell.statusBtn.setTitleColor(.white, for: .normal)
+            }else{
+                cell.cancelStackTop.constant = 0
+                cell.cancelStackHeight.constant = 0
+                cell.callBtn.isHidden = true
+                cell.cancelBtn.isHidden = true
+                cell.JoinBtn.isHidden = true
+                cell.statusBtn.backgroundColor = .systemGreen.withAlphaComponent(0.7)
+                cell.statusBtn.setTitleColor(.white, for: .normal)
+            }
         }
+        
         
         cell.onCancel = { [weak self] in
             //self?.Cancel_meeting_Api()

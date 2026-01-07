@@ -1900,6 +1900,7 @@ struct BookedSlotItem: Codable {
     var subject_name: [String]?
     var duration: Int?
     var staff_mobile_no: String?
+    var is_cancelled_by_staff: Bool?
 }
 
 struct AvailableSlotsResponse: Codable {
