@@ -95,7 +95,7 @@ class AudioPlayerTVC: UITableViewCell {
 class AudioMessageView: UIView, AVAudioPlayerDelegate {
     private let waveformView = UIStackView()
     let durationLabel = UILabel()
-    private let progressView = UIView()
+     var progressView = UIView()
     var parentCell: Any?
     private var waveformBars: [UIView] = []
     private var barHeightConstraints: [NSLayoutConstraint] = []

@@ -39,7 +39,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var selectedRows: [Bool] = []
     var StandardString: String?
     var SectionString: String?
-    var img = ["shiyam","stuentimg 1"]
     var totalcount = 0
     var filterData : [StudentDetails]?
     var studentsDetails: [StudentDetails]?

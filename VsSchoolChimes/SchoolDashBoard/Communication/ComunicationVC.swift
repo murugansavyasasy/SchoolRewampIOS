@@ -45,6 +45,22 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     durations: VoiceHistory?[index].duration ?? 0,
                     url: VoiceHistory?[index].url ?? ""
                 )
+                guard let url = URL(string: VoiceHistory?[index].url ?? "") else { return }
+                // Check if it's a remote URL (http or https)
+                if url.isFileURL {
+                    do {
+                        try audioManager.setupPlayer(with: url)
+                        waveView.audioURL = url
+                        self.waveView.onDurationUpdate = { [weak self] time in
+                            self?.voiceTiming.text = time
+                        }
+                    } catch {
+                        print("❌ Failed to set up audio player:", error)
+                    }
+                } else {
+                    // Remote URL - download it first
+                    downloadAndPrepareAudio(from: url)
+                }
             }else{
                 enabelVoice_view(
                     isforward: true,
@@ -53,6 +69,24 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     durations: VoiceHistory?[index].duration ?? 0,
                     url: VoiceHistory?[index].url ?? ""
                 )
+                AudioPlayUrl = VoiceHistory?[index].url ?? ""
+                
+                guard let url = URL(string: VoiceHistory?[index].url ?? "") else { return }
+                // Check if it's a remote URL (http or https)
+                if url.isFileURL {
+                    do {
+                        try audioManager.setupPlayer(with: url)
+                        waveView.audioURL = url
+                        self.waveView.onDurationUpdate = { [weak self] time in
+                            self?.voiceTiming.text = time
+                        }
+                    } catch {
+                        print("❌ Failed to set up audio player:", error)
+                    }
+                } else {
+                    // Remote URL - download it first
+                    downloadAndPrepareAudio(from: url)
+                }
             }
         }
     }
@@ -77,6 +111,22 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0,
                     url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
                 )
+                guard let url = URL(string: AudioPlayUrl ?? "") else { return }
+                // Check if it's a remote URL (http or https)
+                if url.isFileURL {
+                    do {
+                        try audioManager.setupPlayer(with: url)
+                        waveView.audioURL = url
+                        self.waveView.onDurationUpdate = { [weak self] time in
+                            self?.voiceTiming.text = time
+                        }
+                    } catch {
+                        print("❌ Failed to set up audio player:", error)
+                    }
+                } else {
+                    // Remote URL - download it first
+                    downloadAndPrepareAudio(from: url)
+                }
             }else{
                 enabelVoice_view(
                     isforward: true,
@@ -85,6 +135,23 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0,
                     url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
                 )
+                
+                guard let url = URL(string: AudioPlayUrl ?? "") else { return }
+                // Check if it's a remote URL (http or https)
+                if url.isFileURL {
+                    do {
+                        try audioManager.setupPlayer(with: url)
+                        waveView.audioURL = url
+                        self.waveView.onDurationUpdate = { [weak self] time in
+                            self?.voiceTiming.text = time
+                        }
+                    } catch {
+                        print("❌ Failed to set up audio player:", error)
+                    }
+                } else {
+                    // Remote URL - download it first
+                    downloadAndPrepareAudio(from: url)
+                }
             }
         }
     }
@@ -1034,6 +1101,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         Timinglbl.isHidden = false
         player?.pause()
         AudioPlayUrl = ""
+        stopPlayback()
         playerheight.constant = 0
         if emengencyCall.isOn{
             Timinglbl.text = Defaultdurations
@@ -1093,29 +1161,26 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             sendbtn.isEnabled = voiceTiming.text == "00:00" ? false:true
             addfile.isHidden = voiceTiming.text == "00:00" ? false:true
             voiceTileTextFldCount.isHidden = true
-            playerItem = AVPlayerItem(url: urls)
-            player = AVPlayer(playerItem: playerItem!)
+            
         }
+        
         guard let url = URL(string: AudioPlayUrl ?? "") else { return }
         // Check if it's a remote URL (http or https)
         if url.isFileURL {
             do {
                 try audioManager.setupPlayer(with: url)
+                waveView.durationLabel.isHidden = true
                 waveView.audioURL = url
             } catch {
                 print("❌ Failed to set up audio player:", error)
             }
         } else {
             // Remote URL - download it first
+            waveView.durationLabel.isHidden = true
             downloadAndPrepareAudio(from: url)
         }
     }
   
-        // MARK: - UI Update for Seek
-   
-    
-    
-    
     //MARK: TIME PICKER
     func showTimePicker(for button: UIButton) {
         activeButton = button
@@ -1608,6 +1673,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 self.btnplay.isEnabled = true
                 if let url = permanentURL {
                     self.waveView.audioURL = url
+                    self.waveView.onDurationUpdate = { [weak self] time in
+                        self?.voiceTiming.text = time
+                    }
                 } else {
                     self.showErrorAlert(message: "Failed to save audio file")
                 }

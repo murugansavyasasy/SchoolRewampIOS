@@ -45,7 +45,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var selectStudentType = ""
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
     var studentDetails = UserDefaultFileManager.get_child_Details()
-    var imgs = ["shiyam","StudImg","stuentimg 1"]
     var Sorting = ["Name A-Z ","Name Z-A","Roll No ↑","Roll No ↓","Admission No ↓","Admission No ↑"]
     var Gender = ["All","Male","Female","Others"]
     var Filters = ["All students"]
