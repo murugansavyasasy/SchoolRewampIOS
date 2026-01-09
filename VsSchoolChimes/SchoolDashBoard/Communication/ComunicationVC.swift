@@ -1726,6 +1726,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             object: nil
         )
         waveView.isPlaying = true
+        self.waveView.onDurationUpdate = { [weak self] time in
+            self?.voiceTiming.text = time
+        }
         waveView.startPlaybackAnimation()
         updatePlayButtonState(isPlaying: true)
     }
