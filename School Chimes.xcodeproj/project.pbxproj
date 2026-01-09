@@ -8,6 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		187A0AB22F10CCD1008CF5B7 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 187A0AB12F10CCD1008CF5B7 /* DGCharts */; };
+		187A0B3B2F10E9A7008CF5B7 /* chatWithStudentVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A0B362F10E9A7008CF5B7 /* chatWithStudentVc.swift */; };
+		187A0B3C2F10E9A7008CF5B7 /* IntractwithStudentVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A0B382F10E9A7008CF5B7 /* IntractwithStudentVc.swift */; };
+		187A0B3D2F10E9A7008CF5B7 /* chatWithStudentVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187A0B372F10E9A7008CF5B7 /* chatWithStudentVc.xib */; };
+		187A0B3E2F10E9A7008CF5B7 /* IntractwithStudentVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187A0B392F10E9A7008CF5B7 /* IntractwithStudentVc.xib */; };
+		187A0B462F10E9AA008CF5B7 /* FeeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A0B3F2F10E9AA008CF5B7 /* FeeDetails.swift */; };
+		187A0B472F10E9AA008CF5B7 /* FeedetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A0B412F10E9AA008CF5B7 /* FeedetailTVC.swift */; };
+		187A0B482F10E9AA008CF5B7 /* ViewPaymentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A0B432F10E9AA008CF5B7 /* ViewPaymentVC.swift */; };
+		187A0B492F10E9AA008CF5B7 /* FeeDetails.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187A0B402F10E9AA008CF5B7 /* FeeDetails.xib */; };
+		187A0B4A2F10E9AA008CF5B7 /* FeedetailTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187A0B422F10E9AA008CF5B7 /* FeedetailTVC.xib */; };
+		187A0B4B2F10E9AA008CF5B7 /* ViewPaymentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187A0B442F10E9AA008CF5B7 /* ViewPaymentVC.xib */; };
+		187A0B4F2F10E9B0008CF5B7 /* ParantMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A0B4C2F10E9B0008CF5B7 /* ParantMapVC.swift */; };
+		187A0B502F10E9B0008CF5B7 /* ParantMapVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187A0B4D2F10E9B0008CF5B7 /* ParantMapVC.xib */; };
+		187A0B562F10E9BD008CF5B7 /* OnboardingCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A0B512F10E9BD008CF5B7 /* OnboardingCVC.swift */; };
+		187A0B572F10E9BD008CF5B7 /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A0B532F10E9BD008CF5B7 /* OnboardingVC.swift */; };
+		187A0B582F10E9BD008CF5B7 /* OnboardingCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187A0B522F10E9BD008CF5B7 /* OnboardingCVC.xib */; };
+		187A0B592F10E9BD008CF5B7 /* OnboardingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187A0B542F10E9BD008CF5B7 /* OnboardingVC.xib */; };
+		187A0B5C2F10E9BF008CF5B7 /* Biometric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A0B5A2F10E9BF008CF5B7 /* Biometric.swift */; };
 		187CF4922D11355D001422CE /* MessageFromManagementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187CF4912D11355D001422CE /* MessageFromManagementViewController.xib */; };
 		187CF4932D11355D001422CE /* MessageFromManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CF4902D11355D001422CE /* MessageFromManagementViewController.swift */; };
 		187CF5BF2D13F009001422CE /* WeekDaysNameCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187CF5BE2D13F009001422CE /* WeekDaysNameCollectionViewCell.xib */; };
@@ -228,7 +245,6 @@
 		84127ACF2E03C8F00092159D /* AddSuccessTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AA22E03C8F00092159D /* AddSuccessTVC.swift */; };
 		84127AD12E03C8F00092159D /* CooponViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AAF2E03C8F00092159D /* CooponViewVC.swift */; };
 		84127AD32E03C8F00092159D /* CustomTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AC52E03C8F00092159D /* CustomTabVC.swift */; };
-		84127AD42E03C8F00092159D /* ApplyCustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AB22E03C8F00092159D /* ApplyCustomFont.swift */; };
 		84127AD52E03C8F00092159D /* BottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AAD2E03C8F00092159D /* BottomView.swift */; };
 		84127AD82E03C8F00092159D /* CaterogyCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AB72E03C8F00092159D /* CaterogyCvCell.swift */; };
 		84127AD92E03C8F00092159D /* HomePaucktVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127ABC2E03C8F00092159D /* HomePaucktVC.swift */; };
@@ -239,14 +255,11 @@
 		84127AE52E03C8F00092159D /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127A972E03C8F00092159D /* TicketView.swift */; };
 		84127AE92E03C8F00092159D /* AddSuccessTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AA32E03C8F00092159D /* AddSuccessTVC.xib */; };
 		84127AEA2E03C8F00092159D /* CaterogyCvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AB82E03C8F00092159D /* CaterogyCvCell.xib */; };
-		84127AEB2E03C8F00092159D /* Gilroy-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84127AB42E03C8F00092159D /* Gilroy-Regular.ttf */; };
 		84127AEC2E03C8F00092159D /* ReedimHistoryVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AC32E03C8F00092159D /* ReedimHistoryVc.xib */; };
-		84127AED2E03C8F00092159D /* Gilroy-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84127AB52E03C8F00092159D /* Gilroy-SemiBold.ttf */; };
 		84127AEE2E03C8F00092159D /* BottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AAE2E03C8F00092159D /* BottomView.xib */; };
 		84127AEF2E03C8F00092159D /* CoupenCvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127ABA2E03C8F00092159D /* CoupenCvCell.xib */; };
 		84127AF02E03C8F00092159D /* ActivateCoupenTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127A9F2E03C8F00092159D /* ActivateCoupenTVC.xib */; };
 		84127AF12E03C8F00092159D /* CoupenDetailTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AA72E03C8F00092159D /* CoupenDetailTVC.xib */; };
-		84127AF22E03C8F00092159D /* Gilroy-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84127AB32E03C8F00092159D /* Gilroy-Bold.ttf */; };
 		84127AF32E03C8F00092159D /* CustomTabVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AC62E03C8F00092159D /* CustomTabVC.xib */; };
 		84127AF42E03C8F00092159D /* CoupenDetailCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AA52E03C8F00092159D /* CoupenDetailCVC.xib */; };
 		84127AF52E03C8F00092159D /* AddCoupenTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84127AA12E03C8F00092159D /* AddCoupenTVC.xib */; };
@@ -818,6 +831,23 @@
 
 /* Begin PBXFileReference section */
 		11488136D5686E65FD0FC70E /* Pods_School_Chimes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_School_Chimes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		187A0B362F10E9A7008CF5B7 /* chatWithStudentVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatWithStudentVc.swift; sourceTree = "<group>"; };
+		187A0B372F10E9A7008CF5B7 /* chatWithStudentVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = chatWithStudentVc.xib; sourceTree = "<group>"; };
+		187A0B382F10E9A7008CF5B7 /* IntractwithStudentVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntractwithStudentVc.swift; sourceTree = "<group>"; };
+		187A0B392F10E9A7008CF5B7 /* IntractwithStudentVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntractwithStudentVc.xib; sourceTree = "<group>"; };
+		187A0B3F2F10E9AA008CF5B7 /* FeeDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeDetails.swift; sourceTree = "<group>"; };
+		187A0B402F10E9AA008CF5B7 /* FeeDetails.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeeDetails.xib; sourceTree = "<group>"; };
+		187A0B412F10E9AA008CF5B7 /* FeedetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedetailTVC.swift; sourceTree = "<group>"; };
+		187A0B422F10E9AA008CF5B7 /* FeedetailTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedetailTVC.xib; sourceTree = "<group>"; };
+		187A0B432F10E9AA008CF5B7 /* ViewPaymentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPaymentVC.swift; sourceTree = "<group>"; };
+		187A0B442F10E9AA008CF5B7 /* ViewPaymentVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewPaymentVC.xib; sourceTree = "<group>"; };
+		187A0B4C2F10E9B0008CF5B7 /* ParantMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParantMapVC.swift; sourceTree = "<group>"; };
+		187A0B4D2F10E9B0008CF5B7 /* ParantMapVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParantMapVC.xib; sourceTree = "<group>"; };
+		187A0B512F10E9BD008CF5B7 /* OnboardingCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCVC.swift; sourceTree = "<group>"; };
+		187A0B522F10E9BD008CF5B7 /* OnboardingCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingCVC.xib; sourceTree = "<group>"; };
+		187A0B532F10E9BD008CF5B7 /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
+		187A0B542F10E9BD008CF5B7 /* OnboardingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingVC.xib; sourceTree = "<group>"; };
+		187A0B5A2F10E9BF008CF5B7 /* Biometric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Biometric.swift; sourceTree = "<group>"; };
 		187CF4902D11355D001422CE /* MessageFromManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFromManagementViewController.swift; sourceTree = "<group>"; };
 		187CF4912D11355D001422CE /* MessageFromManagementViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageFromManagementViewController.xib; sourceTree = "<group>"; };
 		187CF5BD2D13F009001422CE /* WeekDaysNameCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDaysNameCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -982,10 +1012,6 @@
 		84127AAE2E03C8F00092159D /* BottomView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BottomView.xib; sourceTree = "<group>"; };
 		84127AAF2E03C8F00092159D /* CooponViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CooponViewVC.swift; sourceTree = "<group>"; };
 		84127AB02E03C8F00092159D /* CooponViewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CooponViewVC.xib; sourceTree = "<group>"; };
-		84127AB22E03C8F00092159D /* ApplyCustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyCustomFont.swift; sourceTree = "<group>"; };
-		84127AB32E03C8F00092159D /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Bold.ttf"; sourceTree = "<group>"; };
-		84127AB42E03C8F00092159D /* Gilroy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Regular.ttf"; sourceTree = "<group>"; };
-		84127AB52E03C8F00092159D /* Gilroy-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-SemiBold.ttf"; sourceTree = "<group>"; };
 		84127AB72E03C8F00092159D /* CaterogyCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaterogyCvCell.swift; sourceTree = "<group>"; };
 		84127AB82E03C8F00092159D /* CaterogyCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CaterogyCvCell.xib; sourceTree = "<group>"; };
 		84127AB92E03C8F00092159D /* CoupenCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoupenCvCell.swift; sourceTree = "<group>"; };
@@ -1540,16 +1566,11 @@
 		1814123C2EE2EF4300FF8A9B /* BirthdayVc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = BirthdayVc; sourceTree = "<group>"; };
 		1814123D2EE2EF8000FF8A9B /* ShimmerView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ShimmerView; sourceTree = "<group>"; };
 		1814123E2EE2EFA100FF8A9B /* ImagePickerView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ImagePickerView; sourceTree = "<group>"; };
-		840540952D701A5200D0CA60 /* TrakingDriver */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TrakingDriver; sourceTree = "<group>"; };
-		8405884C2DE18CE100A7384E /* FeeDetail */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = FeeDetail; sourceTree = "<group>"; };
 		843BCD752E2E71EA00D4364A /* CalanderCv */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CalanderCv; sourceTree = "<group>"; };
-		845AB85F2EC1A786003C22E1 /* OnboardingFlow */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = OnboardingFlow; sourceTree = "<group>"; };
 		845CF1202E81737E001B2147 /* What'sNewVC */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "What'sNewVC"; sourceTree = "<group>"; };
 		84759C662CEDEF3300E7D367 /* ImageViewer */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ImageViewer; sourceTree = "<group>"; };
-		848108A22E178D6E004A0F87 /* IntractWithStudentVc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = IntractWithStudentVc; sourceTree = "<group>"; };
 		848554CB2E8FB06300CDED47 /* NotificationCall */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = NotificationCall; sourceTree = "<group>"; };
 		849183E62E7DC34900DE4F7C /* CvCell */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CvCell; sourceTree = "<group>"; };
-		849DD1612D9668B00027910D /* Biometric */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Biometric; sourceTree = "<group>"; };
 		84AB0FFC2E78E094001160AD /* CvCell */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CvCell; sourceTree = "<group>"; };
 		84C4159C2D94073F007BF478 /* CustomPopup */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CustomPopup; sourceTree = "<group>"; };
 		84D2D5742CE4B8CD00606CE8 /* GIFASSETS */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = GIFASSETS; sourceTree = "<group>"; };
@@ -1669,6 +1690,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		187A0B3A2F10E9A7008CF5B7 /* IntractWithStudentVc */ = {
+			isa = PBXGroup;
+			children = (
+				187A0B362F10E9A7008CF5B7 /* chatWithStudentVc.swift */,
+				187A0B372F10E9A7008CF5B7 /* chatWithStudentVc.xib */,
+				187A0B382F10E9A7008CF5B7 /* IntractwithStudentVc.swift */,
+				187A0B392F10E9A7008CF5B7 /* IntractwithStudentVc.xib */,
+			);
+			path = IntractWithStudentVc;
+			sourceTree = "<group>";
+		};
+		187A0B452F10E9AA008CF5B7 /* FeeDetail */ = {
+			isa = PBXGroup;
+			children = (
+				187A0B3F2F10E9AA008CF5B7 /* FeeDetails.swift */,
+				187A0B402F10E9AA008CF5B7 /* FeeDetails.xib */,
+				187A0B412F10E9AA008CF5B7 /* FeedetailTVC.swift */,
+				187A0B422F10E9AA008CF5B7 /* FeedetailTVC.xib */,
+				187A0B432F10E9AA008CF5B7 /* ViewPaymentVC.swift */,
+				187A0B442F10E9AA008CF5B7 /* ViewPaymentVC.xib */,
+			);
+			path = FeeDetail;
+			sourceTree = "<group>";
+		};
+		187A0B4E2F10E9B0008CF5B7 /* TrakingDriver */ = {
+			isa = PBXGroup;
+			children = (
+				187A0B4C2F10E9B0008CF5B7 /* ParantMapVC.swift */,
+				187A0B4D2F10E9B0008CF5B7 /* ParantMapVC.xib */,
+			);
+			path = TrakingDriver;
+			sourceTree = "<group>";
+		};
+		187A0B552F10E9BD008CF5B7 /* OnboardingFlow */ = {
+			isa = PBXGroup;
+			children = (
+				187A0B512F10E9BD008CF5B7 /* OnboardingCVC.swift */,
+				187A0B522F10E9BD008CF5B7 /* OnboardingCVC.xib */,
+				187A0B532F10E9BD008CF5B7 /* OnboardingVC.swift */,
+				187A0B542F10E9BD008CF5B7 /* OnboardingVC.xib */,
+			);
+			path = OnboardingFlow;
+			sourceTree = "<group>";
+		};
+		187A0B5B2F10E9BF008CF5B7 /* Biometric */ = {
+			isa = PBXGroup;
+			children = (
+				187A0B5A2F10E9BF008CF5B7 /* Biometric.swift */,
+			);
+			path = Biometric;
+			sourceTree = "<group>";
+		};
 		187CF48F2D113524001422CE /* MsgFrmManagement */ = {
 			isa = PBXGroup;
 			children = (
@@ -2180,17 +2253,6 @@
 			path = CuoponDetails;
 			sourceTree = "<group>";
 		};
-		84127AB62E03C8F00092159D /* Fonts_gilroy */ = {
-			isa = PBXGroup;
-			children = (
-				84127AB22E03C8F00092159D /* ApplyCustomFont.swift */,
-				84127AB32E03C8F00092159D /* Gilroy-Bold.ttf */,
-				84127AB42E03C8F00092159D /* Gilroy-Regular.ttf */,
-				84127AB52E03C8F00092159D /* Gilroy-SemiBold.ttf */,
-			);
-			path = Fonts_gilroy;
-			sourceTree = "<group>";
-		};
 		84127ABB2E03C8F00092159D /* PaucktCVcell */ = {
 			isa = PBXGroup;
 			children = (
@@ -2238,7 +2300,6 @@
 			children = (
 				84127A982E03C8F00092159D /* ClaimCoupon */,
 				84127AB12E03C8F00092159D /* CuoponDetails */,
-				84127AB62E03C8F00092159D /* Fonts_gilroy */,
 				84127ABE2E03C8F00092159D /* HomePageVc */,
 				84127AC42E03C8F00092159D /* ReedimHistory */,
 				84127AC52E03C8F00092159D /* CustomTabVC.swift */,
@@ -2844,8 +2905,8 @@
 		84A5BE712C19728F00E32496 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				845AB85F2EC1A786003C22E1 /* OnboardingFlow */,
-				849DD1612D9668B00027910D /* Biometric */,
+				187A0B552F10E9BD008CF5B7 /* OnboardingFlow */,
+				187A0B5B2F10E9BF008CF5B7 /* Biometric */,
 				848CC1802D8A9E2A00CD0255 /* Password */,
 				848CC1742D8A98AB00CD0255 /* MobileNumber */,
 				848F7A6C2CF8CA5A004EF617 /* AnimationView */,
@@ -2965,12 +3026,12 @@
 			isa = PBXGroup;
 			children = (
 				FAD4D72C2E60640C007A3FC0 /* PTM */,
-				848108A22E178D6E004A0F87 /* IntractWithStudentVc */,
+				187A0B3A2F10E9A7008CF5B7 /* IntractWithStudentVc */,
 				84127AC72E03C8F00092159D /* Pauckt */,
-				8405884C2DE18CE100A7384E /* FeeDetail */,
+				187A0B452F10E9AA008CF5B7 /* FeeDetail */,
 				84FC4DC92DBCAE6700BBEDD7 /* Communication */,
 				840F67722D94066000AC2F5A /* Attachments */,
-				840540952D701A5200D0CA60 /* TrakingDriver */,
+				187A0B4E2F10E9B0008CF5B7 /* TrakingDriver */,
 				84D1FF192D4CDFE2003ACC04 /* ParentHomePage */,
 				84F9862A2D3A57DD009FF065 /* Quiz */,
 				849AD0062D1A837A002DEC07 /* ReciverHomework */,
@@ -3576,16 +3637,11 @@
 				1814123C2EE2EF4300FF8A9B /* BirthdayVc */,
 				1814123D2EE2EF8000FF8A9B /* ShimmerView */,
 				1814123E2EE2EFA100FF8A9B /* ImagePickerView */,
-				840540952D701A5200D0CA60 /* TrakingDriver */,
-				8405884C2DE18CE100A7384E /* FeeDetail */,
 				843BCD752E2E71EA00D4364A /* CalanderCv */,
-				845AB85F2EC1A786003C22E1 /* OnboardingFlow */,
 				845CF1202E81737E001B2147 /* What'sNewVC */,
 				84759C662CEDEF3300E7D367 /* ImageViewer */,
-				848108A22E178D6E004A0F87 /* IntractWithStudentVc */,
 				848554CB2E8FB06300CDED47 /* NotificationCall */,
 				849183E62E7DC34900DE4F7C /* CvCell */,
-				849DD1612D9668B00027910D /* Biometric */,
 				84AB0FFC2E78E094001160AD /* CvCell */,
 				84C4159C2D94073F007BF478 /* CustomPopup */,
 				84D2D5742CE4B8CD00606CE8 /* GIFASSETS */,
@@ -3810,6 +3866,9 @@
 				18886D0E2EE6B4FA008B71FF /* MsgCellTv.xib in Resources */,
 				8480477E2E02DF6E0042BC5D /* SubmitedStudentTVC.xib in Resources */,
 				FA7A64132D64995900D43031 /* LessonDashboardTv.xib in Resources */,
+				187A0B492F10E9AA008CF5B7 /* FeeDetails.xib in Resources */,
+				187A0B4A2F10E9AA008CF5B7 /* FeedetailTVC.xib in Resources */,
+				187A0B4B2F10E9AA008CF5B7 /* ViewPaymentVC.xib in Resources */,
 				18D718B92D0D477900E9EDA3 /* PunchHistoryListVC.xib in Resources */,
 				84BB5EA72D11330E00AD0C87 /* ScheduleExamVC.xib in Resources */,
 				84017F7D2E44942A006CB477 /* certificateHstryCell.xib in Resources */,
@@ -4024,6 +4083,9 @@
 				84B57EE22D15533000E0EA29 /* SubmitVC.xib in Resources */,
 				FAF43B5F2E02811E00F28A16 /* ViewLessonVC.xib in Resources */,
 				840A7CE72D24FDAA0061EAEA /* MarkTvCell.xib in Resources */,
+				187A0B502F10E9B0008CF5B7 /* ParantMapVC.xib in Resources */,
+				187A0B582F10E9BD008CF5B7 /* OnboardingCVC.xib in Resources */,
+				187A0B592F10E9BD008CF5B7 /* OnboardingVC.xib in Resources */,
 				844DF0892E5ADBDE0016A347 /* ReportsQuizVc.xib in Resources */,
 				84017F812E4494D6006CB477 /* certificateHstryCvCell.xib in Resources */,
 				843F9A2C2DAF71FF00215973 /* SenderHomeWorkVC.xib in Resources */,
@@ -4079,17 +4141,16 @@
 				8483F6402E6AF89100E2C886 /* PunchUserDetailsTVC.xib in Resources */,
 				84127AE92E03C8F00092159D /* AddSuccessTVC.xib in Resources */,
 				84127AEA2E03C8F00092159D /* CaterogyCvCell.xib in Resources */,
-				84127AEB2E03C8F00092159D /* Gilroy-Regular.ttf in Resources */,
 				84127AEC2E03C8F00092159D /* ReedimHistoryVc.xib in Resources */,
-				84127AED2E03C8F00092159D /* Gilroy-SemiBold.ttf in Resources */,
 				FA6CD8A22E3DEEC500C146AB /* OutpassVC.xib in Resources */,
 				84127AEE2E03C8F00092159D /* BottomView.xib in Resources */,
 				84127AEF2E03C8F00092159D /* CoupenCvCell.xib in Resources */,
 				188870552EEAEB0F008B71FF /* parentPTMcell.xib in Resources */,
+				187A0B3D2F10E9A7008CF5B7 /* chatWithStudentVc.xib in Resources */,
+				187A0B3E2F10E9A7008CF5B7 /* IntractwithStudentVc.xib in Resources */,
 				84127AF02E03C8F00092159D /* ActivateCoupenTVC.xib in Resources */,
 				84174DF32E70061C00AC7092 /* QuizCompletedVc.xib in Resources */,
 				84127AF12E03C8F00092159D /* CoupenDetailTVC.xib in Resources */,
-				84127AF22E03C8F00092159D /* Gilroy-Bold.ttf in Resources */,
 				84127AF32E03C8F00092159D /* CustomTabVC.xib in Resources */,
 				84127AF42E03C8F00092159D /* CoupenDetailCVC.xib in Resources */,
 				845AB8702EC1F89C003C22E1 /* SuccesseRatusTVC.xib in Resources */,
@@ -4343,7 +4404,6 @@
 				84127ACF2E03C8F00092159D /* AddSuccessTVC.swift in Sources */,
 				84127AD12E03C8F00092159D /* CooponViewVC.swift in Sources */,
 				84127AD32E03C8F00092159D /* CustomTabVC.swift in Sources */,
-				84127AD42E03C8F00092159D /* ApplyCustomFont.swift in Sources */,
 				84127AD52E03C8F00092159D /* BottomView.swift in Sources */,
 				84127AD82E03C8F00092159D /* CaterogyCvCell.swift in Sources */,
 				84127AD92E03C8F00092159D /* HomePaucktVC.swift in Sources */,
@@ -4426,6 +4486,8 @@
 				840E44A52D1A85B000D561E8 /* SenderLeaveRqstVC.swift in Sources */,
 				84BB5EB82D11467700AD0C87 /* SchedulePopupVC.swift in Sources */,
 				8481087B2E164CFE004A0F87 /* VideoPreviewVc.swift in Sources */,
+				187A0B3B2F10E9A7008CF5B7 /* chatWithStudentVc.swift in Sources */,
+				187A0B3C2F10E9A7008CF5B7 /* IntractwithStudentVc.swift in Sources */,
 				846CF7432E2F5AC7000361CE /* CatogoryCVC.swift in Sources */,
 				FA2A3FBA2DB0CABB0000AF55 /* SenderAttachmentVC.swift in Sources */,
 				848F7A702CF8CBCD004EF617 /* AnimatView.swift in Sources */,
@@ -4436,6 +4498,7 @@
 				FAD8BDA42E66BE6C00C7CD53 /* PtmHistoryVC.swift in Sources */,
 				840658442CFD9C3400080CF6 /* AttachmentCVCell.swift in Sources */,
 				FAB3C1D22E567B8400E361CA /* CreatedSlotsTv.swift in Sources */,
+				187A0B4F2F10E9B0008CF5B7 /* ParantMapVC.swift in Sources */,
 				842FBABE2D0BEDBF007C0B51 /* ReportStudentTVC.swift in Sources */,
 				842FBABF2D0BEDBF007C0B51 /* ReportStudentListVC.swift in Sources */,
 				84EFFAE12CCF9EEA00C11C26 /* NotificationTableViewCell.swift in Sources */,
@@ -4487,6 +4550,7 @@
 				84EFFACE2CCF90DE00C11C26 /* SettingHeaderView.swift in Sources */,
 				84EFFACF2CCF90DE00C11C26 /* SettingsTableViewCell.swift in Sources */,
 				8474CB9E2D9A6D0400DA0951 /* RecipientVc.swift in Sources */,
+				187A0B5C2F10E9BF008CF5B7 /* Biometric.swift in Sources */,
 				84EFFAD02CCF90DE00C11C26 /* SettingsViewController.swift in Sources */,
 				FA3B2FFE2E2F714D003B6E6D /* ExamMarkTvCell.swift in Sources */,
 				8494B6652CD1EC8D004B0746 /* TapBarVC.swift in Sources */,
@@ -4540,6 +4604,8 @@
 				FAD4D72F2E606449007A3FC0 /* PtmParentVC.swift in Sources */,
 				84C82A0B2D086A490024A46A /* ClassicFirework.swift in Sources */,
 				84C82A0C2D086A490024A46A /* CircleColorSparkView.swift in Sources */,
+				187A0B562F10E9BD008CF5B7 /* OnboardingCVC.swift in Sources */,
+				187A0B572F10E9BD008CF5B7 /* OnboardingVC.swift in Sources */,
 				84127DBE2E152DDB0092159D /* chatAttachmentPicker.swift in Sources */,
 				84C82A0D2D086A490024A46A /* SparkViewFactory.swift in Sources */,
 				84C82A0E2D086A490024A46A /* CircleColorSparkViewFactory.swift in Sources */,
@@ -4583,6 +4649,9 @@
 				844188842CC91179006483C3 /* LoginVc.swift in Sources */,
 				8442A9702CDE8B2C0006068E /* LangTvCellTableViewCell.swift in Sources */,
 				84174DF02E6B5F6A00AC7092 /* quizCellTv.swift in Sources */,
+				187A0B462F10E9AA008CF5B7 /* FeeDetails.swift in Sources */,
+				187A0B472F10E9AA008CF5B7 /* FeedetailTVC.swift in Sources */,
+				187A0B482F10E9AA008CF5B7 /* ViewPaymentVC.swift in Sources */,
 				84385F682CF842F60020E94D /* Fonts.swift in Sources */,
 				8442A8F42CDC83860006068E /* BanerTableViewCell.swift in Sources */,
 				8442A8F52CDC83860006068E /* GifImage.swift in Sources */,

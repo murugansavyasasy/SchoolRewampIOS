@@ -595,6 +595,8 @@ class SplashVC: UIViewController, ViewAttachments {
     }
     
     private func versionCheck() {
+        ServiceUrl.baseurl = UserDefaultFileManager.getCountryDetails()?.base_url ?? ""
+        ServiceUrl.Reporting_baseurl = UserDefaultFileManager.getCountryDetails()?.reporting_url ?? ""
         let params: [String: Any] = [
             COMMON_PARAMETER.device_type: API_PARAMS_HOTCODE.device_type,
             COMMON_PARAMETER.version_code: API_PARAMS_HOTCODE.Version_Code,
