@@ -137,7 +137,7 @@ class ExamActivitySelectionVC: UIViewController {
     @IBAction func continueAct(_ sender: Any) {
         
         if let payload = buildPayload() {
-            let vc = MarkReviewVC()
+            let vc = EnterMarkVC()
             vc.payload = payload
             vc.aiRecords = convertedRecords
             vc.modalPresentationStyle = .fullScreen

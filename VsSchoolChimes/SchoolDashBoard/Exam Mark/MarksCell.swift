@@ -1,26 +1,34 @@
+//
+//  MarksCell.swift
+//  School Chimes
+//
+//  Created by Chandhru on 07/01/26.
+//
+
 import UIKit
 
-class MarkReviewTVC: UITableViewCell {
+// MARK: - Protocol for communicating mark changes
+protocol MarksCellDelegate: AnyObject {
+    func updateMark(row: Int,
+                    column: Int,
+                    value: String,
+                    reson: String,
+                    subjectName: String)
+}
+
+class MarksCell: UICollectionViewCell {
 
     @IBOutlet weak var infoBtn: UIButton!
     @IBOutlet weak var tittleLbl: UILabel!
     @IBOutlet weak var markTxt: UITextField!
-
+    
     private var rowIndex = 0
     private var columnIndex = 0
     private var hasFlaggedIssue = false
-    weak var parentVC: MarkReviewVC?
-    weak var delegate: MarkReviewTVCDelegate?
-
+    weak var delegate: MarksCellDelegate?
+    weak var parentVC: EnterMarkVC?
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupTextField()
-        setupInfoButton()
-        setupTitleLabel()
-    }
-    
-    private func setupTextField() {
-
         markTxt.delegate = self
         markTxt.textAlignment = .center
         markTxt.borderStyle = .roundedRect
@@ -28,7 +36,6 @@ class MarkReviewTVC: UITableViewCell {
         markTxt.font = .systemFont(ofSize: 15)
         markTxt.keyboardType = .numberPad
         markTxt.layer.cornerRadius = 8
-
         let toolbar = UIToolbar()
         toolbar.isTranslucent = false
         toolbar.barTintColor = .systemGray6
@@ -121,8 +128,6 @@ class MarkReviewTVC: UITableViewCell {
         button.adjustsImageWhenHighlighted = false
         button.adjustsImageWhenDisabled = false
         button.showsTouchWhenHighlighted = false
-
-        // 🔒 Disable implicit CoreAnimation
         button.layer.actions = [
             "backgroundColor": NSNull(),
             "transform": NSNull(),
@@ -168,7 +173,6 @@ class MarkReviewTVC: UITableViewCell {
             }
         )
     }
-
     
     private func setupInfoButton() {
         infoBtn.isHidden = true
@@ -187,13 +191,14 @@ class MarkReviewTVC: UITableViewCell {
                    rowIndex: Int,
                    columnIndex: Int,
                    alignment: NSTextAlignment = .center,
-                   parentVC: MarkReviewVC?,
-                   hasFlaggedIssue: Bool = false) {
+                   parentVC: EnterMarkVC?,
+                   hasFlaggedIssue: Bool = false,
+                   maxMark: Int = 0) {
         
         self.rowIndex = rowIndex
         self.columnIndex = columnIndex
-        self.parentVC = parentVC
         self.hasFlaggedIssue = hasFlaggedIssue
+        self.parentVC = parentVC
         tittleLbl.isHidden = true
         markTxt.isHidden = false
         markTxt.text = mark
@@ -215,7 +220,7 @@ class MarkReviewTVC: UITableViewCell {
             infoBtn.tintColor = .systemGreen
             markTxt.font = UIFont.systemFont(ofSize: 15)
             markTxt.isUserInteractionEnabled = true
-            return 
+            return
         }
         
         if hasFlaggedIssue {
@@ -230,7 +235,8 @@ class MarkReviewTVC: UITableViewCell {
             markTxt.isUserInteractionEnabled = true
             return
         }
-        if let markValue = Int(mark), !mark.isEmpty, markValue > 100 {
+        
+        if let markValue = Int(mark), !mark.isEmpty, markValue > maxMark {
             markTxt.textColor = .orange
             markTxt.layer.borderWidth = 2
             markTxt.layer.borderColor = UIColor.orange.cgColor
@@ -264,74 +270,12 @@ class MarkReviewTVC: UITableViewCell {
         markTxt.layer.borderWidth = 0
         infoBtn.isHidden = true
         hasFlaggedIssue = false
-    }
-}
-
-// MARK: - UITextFieldDelegate
-
-extension MarkReviewTVC: UITextFieldDelegate {
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        let value = textField.text ?? ""
-        var reason = ""
-        var isValid = true
-
-        if let maxStr = parentVC?.subjectColumns[columnIndex].maxMarks,
-           let entered = Int(value),
-           entered > maxStr {
-            isValid = false
-            reason = "Maximum mark exceeded"
-        }
-        delegate?.markDidChange(row: rowIndex,
-                                column: columnIndex,
-                                value: value,
-                                reason: reason)
-    }
-
-    func textField(_ textField: UITextField,
-                   shouldChangeCharactersIn range: NSRange,
-                   replacementString string: String) -> Bool {
-
-        if !string.isEmpty {
-            let allowed = CharacterSet.decimalDigits
-            let set = CharacterSet(charactersIn: string)
-            if !allowed.isSuperset(of: set) { return false }
-        }
-
-        let currentText = textField.text ?? ""
-        guard let textRange = Range(range, in: currentText) else { return true }
-        let updatedText = currentText.replacingCharacters(in: textRange, with: string)
-
-        var reason = ""
-        var isValid = true
-
-        if let max = parentVC?.subjectColumns[columnIndex].maxMarks,
-           let entered = Int(updatedText),
-           entered > max {
-            isValid = false
-            reason = "Maximum mark exceeded"
-        }
-        if "AB" == updatedText{
-            reason = "Absent"
-        }
-        applyValidationUI(mark: updatedText,
-                          maxMark: parentVC?.subjectColumns[columnIndex].maxMarks ?? 0)
-        delegate?.markDidChange(row: rowIndex,
-                                column: columnIndex,
-                                value: updatedText,
-                                reason: reason)
-        return true
-    }
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+        delegate = nil
     }
     
     func applyValidationUI(mark: String, maxMark: Int) {
         let trimmed = mark.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
-//            showErrorUI()
             return
         }
 
@@ -361,40 +305,97 @@ extension MarkReviewTVC: UITextFieldDelegate {
         infoBtn.isHidden = true
         markTxt.layer.borderWidth = 0
     }
+}
+extension MarksCell: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let value = textField.text ?? ""
+        var reason = ""
+        var isValid = true
 
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        parentVC?.activeTextField = textField
+        if let maxStr = parentVC?.subjectColumns[columnIndex].maxMarks,
+           let entered = Int(value),
+           entered > maxStr {
+            isValid = false
+            reason = "Maximum mark exceeded"
+        }
+        
+        let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
+    }
+    
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        
+        if !string.isEmpty {
+            let allowed = CharacterSet.decimalDigits
+            let set = CharacterSet(charactersIn: string)
+            if !allowed.isSuperset(of: set) { return false }
+        }
+        
+        let currentText = textField.text ?? ""
+        guard let textRange = Range(range, in: currentText) else { return true }
+        let updatedText = currentText.replacingCharacters(in: textRange, with: string)
+        
+        var reason = ""
+        var isValid = true
+
+        if let max = parentVC?.subjectColumns[columnIndex].maxMarks,
+           let entered = Int(updatedText),
+           entered > max {
+            isValid = false
+            reason = "Maximum mark exceeded"
+        }
+        
+        if updatedText == "AB" {
+            reason = "Absent"
+        }
+        
+        applyValidationUI(mark: updatedText,
+                          maxMark: parentVC?.subjectColumns[columnIndex].maxMarks ?? 0)
+        let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
+        delegate?.updateMark(row: rowIndex,
+                             column: columnIndex,
+                             value: updatedText,
+                             reson: reason,
+                             subjectName: subjectName)
+        
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 
-// MARK: - Toolbar Actions
-
-extension MarkReviewTVC {
+extension MarksCell {
     
-    @objc func upTapped() {
+    @objc private func upTapped() {
         parentVC?.moveToPreviousRow(row: rowIndex, column: columnIndex)
     }
-    
-    @objc func downTapped() {
+
+    @objc private func downTapped() {
         parentVC?.moveToNextRow(row: rowIndex, column: columnIndex)
     }
-    
-    @objc func leftTapped() {
+
+    @objc private func leftTapped() {
         parentVC?.moveToPreviousColumn(row: rowIndex, column: columnIndex)
     }
-    
-    @objc func rightTapped() {
+
+    @objc private func rightTapped() {
         parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex)
     }
+
     
-    @objc func abTapped() {
+    @objc private func abTapped() {
         markTxt.text = "AB"
-        delegate?.markDidChange(row: rowIndex,
-                                column: columnIndex,
-                                value: "AB",
-                                reason: "Absent")
+        let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
+        delegate?.updateMark(row: rowIndex,
+                             column: columnIndex,
+                             value: "AB",
+                             reson: "Absent",
+                             subjectName: subjectName)
         parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex)
     }
 }
-
-

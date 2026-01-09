@@ -370,7 +370,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
     }
 
 
-    private func updateWaveformColor(progress: Double) {
+    func updateWaveformColor(progress: Double) {
         let index = Int(progress * Double(waveformBars.count))
         for (i, bar) in waveformBars.enumerated() {
             bar.backgroundColor = i <= index ? .systemBlue : .systemGray4

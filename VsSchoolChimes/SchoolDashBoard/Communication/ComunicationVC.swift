@@ -142,6 +142,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     do {
                         try audioManager.setupPlayer(with: url)
                         waveView.audioURL = url
+                        waveView.updateWaveformColor(progress: 0.0)
                         self.waveView.onDurationUpdate = { [weak self] time in
                             self?.voiceTiming.text = time
                         }
@@ -1171,6 +1172,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 try audioManager.setupPlayer(with: url)
                 waveView.durationLabel.isHidden = true
                 waveView.audioURL = url
+                waveView.updateWaveformColor(progress: 0.0)
             } catch {
                 print("❌ Failed to set up audio player:", error)
             }
@@ -1673,6 +1675,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 self.btnplay.isEnabled = true
                 if let url = permanentURL {
                     self.waveView.audioURL = url
+                    self.waveView.updateWaveformColor(progress: 0.0)
                     self.waveView.onDurationUpdate = { [weak self] time in
                         self?.voiceTiming.text = time
                     }
