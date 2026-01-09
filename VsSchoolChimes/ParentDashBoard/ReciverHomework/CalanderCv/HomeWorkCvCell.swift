@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Charts
 
 
 class HomeWorkCvCell: UICollectionViewCell,SelectedId, UIPopoverPresentationControllerDelegate {
@@ -80,26 +79,26 @@ class HomeWorkCvCell: UICollectionViewCell,SelectedId, UIPopoverPresentationCont
         // Ensure the popup style is maintained on iPhone
         return .none
     }
-    
-    func setProgress(to percentage: Double) {
-        let progressEntry = PieChartDataEntry(value: percentage, label: nil)
-        let emptyEntry = PieChartDataEntry(value: 100 - percentage, label: nil)
-        
-        let progressColor = colorForPercentage(percentage)
-        let progressDataSet = PieChartDataSet(entries: [progressEntry, emptyEntry], label: "Hello")
-        progressDataSet.colors = [progressColor, UIColor.lightGray]
-        progressDataSet.drawValuesEnabled = false
-        // Display Percentage in the Center
-        let percentageText = "\(Int(percentage))%"
-        let attributedString = NSAttributedString(
-            string: percentageText,
-            attributes: [
-                .font: UIFont(name: "Poppins-Bold", size: 11), // Change font size
-                .foregroundColor: UIColor.homeWorkClr // Change text color
-            ]
-        )
-        
-    }
+//    
+//    func setProgress(to percentage: Double) {
+//        let progressEntry = PieChartDataEntry(value: percentage, label: nil)
+//        let emptyEntry = PieChartDataEntry(value: 100 - percentage, label: nil)
+//        
+//        let progressColor = colorForPercentage(percentage)
+//        let progressDataSet = PieChartDataSet(entries: [progressEntry, emptyEntry], label: "Hello")
+//        progressDataSet.colors = [progressColor, UIColor.lightGray]
+//        progressDataSet.drawValuesEnabled = false
+//        // Display Percentage in the Center
+//        let percentageText = "\(Int(percentage))%"
+//        let attributedString = NSAttributedString(
+//            string: percentageText,
+//            attributes: [
+//                .font: UIFont(name: "Poppins-Bold", size: 11), // Change font size
+//                .foregroundColor: UIColor.homeWorkClr // Change text color
+//            ]
+//        )
+//        
+//    }
     
     func colorForPercentage(_ percentage: Double) -> UIColor {
         switch percentage {

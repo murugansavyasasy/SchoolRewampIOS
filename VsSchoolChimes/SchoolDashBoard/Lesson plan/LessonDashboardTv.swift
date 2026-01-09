@@ -6,8 +6,7 @@
 //
 
 import UIKit
-import Charts
-
+import DGCharts
 @available(iOS 15.0, *)
 class LessonDashboardTv: UITableViewCell {
     

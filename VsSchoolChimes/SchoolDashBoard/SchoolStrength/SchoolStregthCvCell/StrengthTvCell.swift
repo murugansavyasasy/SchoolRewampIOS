@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Charts
 
 class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     

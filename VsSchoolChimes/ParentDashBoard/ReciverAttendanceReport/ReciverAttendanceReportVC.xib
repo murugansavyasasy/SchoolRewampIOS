@@ -173,7 +173,7 @@
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TO5-1f-PR4">
                                                                     <rect key="frame" x="0.0" y="0.0" width="101" height="140"/>
                                                                     <subviews>
-                                                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gFk-6q-1zE" customClass="PieChartView" customModule="Charts">
+                                                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gFk-6q-1zE" customClass="PieChartView" customModule="DGCharts">
                                                                             <rect key="frame" x="0.0" y="5" width="100.66666666666667" height="100"/>
                                                                             <color key="backgroundColor" name="themeColour"/>
                                                                             <constraints>
@@ -210,7 +210,7 @@
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6aP-Jg-yOC">
                                                                     <rect key="frame" x="106" y="0.0" width="101" height="140"/>
                                                                     <subviews>
-                                                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dHN-4e-O6W" customClass="PieChartView" customModule="Charts">
+                                                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dHN-4e-O6W" customClass="PieChartView" customModule="DGCharts">
                                                                             <rect key="frame" x="0.0" y="5" width="101" height="100"/>
                                                                             <color key="backgroundColor" name="themeColour"/>
                                                                             <constraints>
@@ -248,7 +248,7 @@
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fX5-ed-TAV">
                                                                     <rect key="frame" x="212" y="0.0" width="101" height="140"/>
                                                                     <subviews>
-                                                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qA8-Ap-mtB" customClass="PieChartView" customModule="Charts">
+                                                                        <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qA8-Ap-mtB" customClass="PieChartView" customModule="DGCharts">
                                                                             <rect key="frame" x="0.0" y="5" width="101" height="100"/>
                                                                             <color key="backgroundColor" name="themeColour"/>
                                                                             <constraints>
