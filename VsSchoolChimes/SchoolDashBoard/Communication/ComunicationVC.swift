@@ -276,6 +276,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var accadmicDefaultYrName : String?
     var forWardVoiceDuraction : Int?
     var Defaultdurations = "00:00/00:30"
+    var initialFromTime: Date?
 
     override func viewDidLoad() {
         super.viewDidLoad()
