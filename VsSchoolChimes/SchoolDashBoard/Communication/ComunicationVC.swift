@@ -184,7 +184,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var placeholderLabel: UILabel!
     let alert = CustomAlert()
     var activeField: UIView?
-    
+    var selectedFromTime: Date?
+    let intervalMinutes = 40
     @IBOutlet weak var textMsgVoiceCountLbl: UILabel!
     @IBOutlet weak var voiceTileTextFldCount: UILabel!
     @IBOutlet weak var acidmicYrLbl: UILabel!
@@ -796,16 +797,19 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
     }
     
-    //MARK: BUTTON TITLE CURRANT TIME
     private func setInitialButtonTitles() {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
-        // Set initial times
-        let initialFromTime = Date() // Current time for example
-        let initialToTime = Calendar.current.date(byAdding: .minute, value: 40, to: initialFromTime) ?? Date()
+
+        let initialFromTime = Date()
+        let initialToTime = Calendar.current.date(byAdding: .minute, value: intervalMinutes, to: initialFromTime) ?? Date()
+
+        selectedFromTime = initialFromTime
+
         fromTime.setTitle(formatter.string(from: initialFromTime), for: .normal)
         toTime.setTitle(formatter.string(from: initialToTime), for: .normal)
     }
+
     
     //MARK: PERMISSION CHECKING
     func check_record_permission()
@@ -1184,23 +1188,76 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
     }
   
-    //MARK: TIME PICKER
     func showTimePicker(for button: UIButton) {
         activeButton = button
+
         let buttonFrame = button.convert(button.bounds, to: self.view)
-        timePicker.frame = CGRect(x: (self.view.frame.width - 250) / 2, y: buttonFrame.maxY + 10, width: 250, height: 200)
-        doneButton.frame = CGRect(x: timePicker.frame.maxX - 80, y: timePicker.frame.maxY - 40, width: 70, height: 30)
+        timePicker.frame = CGRect(x: (self.view.frame.width - 250) / 2,
+                                  y: buttonFrame.maxY + 10,
+                                  width: 250,
+                                  height: 200)
+
+        doneButton.frame = CGRect(x: timePicker.frame.maxX - 80,
+                                  y: timePicker.frame.maxY - 40,
+                                  width: 70,
+                                  height: 30)
+
+        timePicker.datePickerMode = .time
         timePicker.backgroundColor = .white
-        timePicker.layer.cornerRadius = 20
-        timePicker.layer.shadowColor = UIColor.black.cgColor
-        timePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
-        timePicker.layer.shadowRadius = 5
-        timePicker.layer.shadowOpacity = 0.3
-        
+
+        // Add snapping target
+        timePicker.addTarget(self, action: #selector(timePickerChanged(_:)), for: .valueChanged)
+
+        if button == toTime, let from = selectedFromTime {
+            let minToTime = Calendar.current.date(byAdding: .minute, value: intervalMinutes, to: from)!
+            timePicker.minimumDate = minToTime
+            timePicker.setDate(minToTime, animated: false)
+        } else {
+            timePicker.minimumDate = Date() // optional: block past
+            timePicker.maximumDate = nil
+        }
+
         timePicker.fadeAndPopIn()
         doneButton.fadeAndPopIn()
     }
-    
+
+    @objc func timePickerChanged(_ picker: UIDatePicker) {
+        guard let from = selectedFromTime, activeButton == toTime else { return }
+
+        let calendar = Calendar.current
+        let diff = calendar.dateComponents([.minute], from: from, to: picker.date).minute ?? 0
+        let intervalsPassed = max(0, diff / intervalMinutes)
+        let snappedDate = calendar.date(byAdding: .minute, value: intervalsPassed * intervalMinutes, to: from)!
+
+        picker.setDate(snappedDate, animated: false)
+    }
+
+    // MARK: - Done Button Action
+    @objc func doneButtonTapped() {
+        guard let activeButton = activeButton else { return }
+
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+
+        if activeButton == fromTime {
+            selectedFromTime = timePicker.date
+            fromTime.setTitle(formatter.string(from: timePicker.date), for: .normal)
+
+            // Auto update To Time = From + 40 min
+            let newToTime = Calendar.current.date(byAdding: .minute, value: intervalMinutes, to: timePicker.date)!
+            toTime.setTitle(formatter.string(from: newToTime), for: .normal)
+
+        } else if activeButton == toTime {
+            guard let from = selectedFromTime else { return }
+            let minAllowed = Calendar.current.date(byAdding: .minute, value: intervalMinutes, to: from)!
+            let selectedDate = timePicker.date < minAllowed ? minAllowed : timePicker.date
+            toTime.setTitle(formatter.string(from: selectedDate), for: .normal)
+        }
+
+        timePicker.isHidden = true
+        doneButton.isHidden = true
+        self.activeButton = nil
+    }
     
     //MARK: UPDATE RECORDING UPDATE DURATION
     @objc func updateRecordingTime() {
@@ -1897,16 +1954,14 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     }
     
     func setupTimePicker() {
-        // Initialize the picker
         timePicker = UIDatePicker()
         timePicker.datePickerMode = .time
         if #available(iOS 13.4, *) {
             timePicker.preferredDatePickerStyle = .wheels
         }
         timePicker.backgroundColor = .white
-        timePicker.isHidden = true // Initially hidden
+        timePicker.isHidden = true
         self.view.addSubview(timePicker)
-        // Add Done Button
         doneButton = UIButton(type: .system)
         doneButton.setTitle("Done", for: .normal)
         doneButton.isHidden = true
@@ -1915,18 +1970,6 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         doneButton.layer.cornerRadius = 8
         doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
         self.view.addSubview(doneButton)
-    }
-    @objc func doneButtonTapped() {
-        // Format the time
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        if let activeButton = activeButton {
-            let selectedTime = formatter.string(from: timePicker.date)
-            activeButton.setTitle(selectedTime, for: .normal)
-        }
-        timePicker.isHidden = true
-        doneButton.isHidden = true
-        activeButton = nil
     }
     
     func minimumDate(for calendar: FSCalendar) -> Date {
