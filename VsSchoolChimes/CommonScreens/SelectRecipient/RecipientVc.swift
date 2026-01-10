@@ -84,6 +84,7 @@ class RecipientVc: UIViewController{
     var file_path: [FilePath] = []
     var uploadedCount = 0
     var isQuiz_open_to_students: Bool = false
+    var IsNoSubjectData: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         nodataFound.isHidden = true
@@ -877,6 +878,7 @@ class RecipientVc: UIViewController{
     
     
     @IBAction func spefic_student_actionBtn(_ sender: UIButton) {
+    
         guard  array_selectedId.count > 0 else {
             self.alert
                 .showAlert(
@@ -1532,6 +1534,10 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             case .success(let successMessage):
                 if successMessage.status == true{
                     DispatchQueue.main.async { [self] in
+                        speficBtnName.isEnabled = true
+                        sendbtnName.isEnabled = true
+                        sendbtnName.backgroundColor = .primery
+                        speficBtnName.backgroundColor = .primery
                         tv.isHidden = false
                         spaceView.isHidden = true
                         subjectDetails = successMessage.data
@@ -1552,11 +1558,18 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 }else{
                     DispatchQueue.main.async { [self] in
                         selectSubject.isHidden = true
+                        IsNoSubjectData = true
                         spaceView.isHidden = true
+                        speficBtnName.isEnabled = false
+                        sendbtnName.isEnabled = false
+                        sendbtnName.backgroundColor = .gray
+                        speficBtnName.backgroundColor = .gray
+                        view.makeToast(successMessage.message ?? "")
                     }
                 }
             case .failure(let error):
                 print(error.localizedDescription)
+                view.makeToast(error.localizedDescription)
             }
         }
     }
