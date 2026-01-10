@@ -517,7 +517,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="Do you want History" image="chevron.right.2" catalog="system">
-                                                <color key="titleColor" name="AccentColor"/>
+                                                <color key="titleColor" systemColor="tintColor"/>
                                             </state>
                                             <connections>
                                                 <action selector="history:" destination="-1" eventType="touchUpInside" id="BZ9-4S-8d0"/>
@@ -768,7 +768,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="Do you want History" image="chevron.right.2" catalog="system">
-                                                <color key="titleColor" name="AccentColor"/>
+                                                <color key="titleColor" systemColor="tintColor"/>
                                             </state>
                                             <connections>
                                                 <action selector="history:" destination="-1" eventType="touchUpInside" id="2xL-MM-USl"/>
@@ -916,7 +916,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="Do you want Text Meaage" image="chevron.left.2" catalog="system">
-                                                <color key="titleColor" name="AccentColor"/>
+                                                <color key="titleColor" systemColor="tintColor"/>
                                             </state>
                                             <connections>
                                                 <action selector="backToHome:" destination="-1" eventType="touchUpInside" id="lqN-e0-reG"/>
@@ -1024,7 +1024,7 @@
                     </constraints>
                 </scrollView>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cdr-6F-LLo">
-                    <rect key="frame" x="20" y="188" width="353" height="280"/>
+                    <rect key="frame" x="20" y="117" width="353" height="280"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Vr-4A-iyx" customClass="FSCalendar">
                             <rect key="frame" x="0.0" y="45" width="353" height="225"/>
@@ -1739,7 +1739,7 @@
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="voicemsg" width="128" height="128"/>
         <namedColor name="AccentColor">
-            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.79199999570846558" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="BackGroundClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1767,6 +1767,9 @@
         </systemColor>
         <systemColor name="systemTealColor">
             <color red="0.18823529410000001" green="0.69019607839999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
