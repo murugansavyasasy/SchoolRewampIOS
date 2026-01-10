@@ -1195,6 +1195,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         timePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
         timePicker.layer.shadowRadius = 5
         timePicker.layer.shadowOpacity = 0.3
+        
         timePicker.fadeAndPopIn()
         doneButton.fadeAndPopIn()
     }
