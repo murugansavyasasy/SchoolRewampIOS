@@ -113,9 +113,6 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         uploadImageForAIDescLbl.setFont(style: .body, size: FontSize.BodySize)
         AiPowerdUploadLbl.setFont(style: .header, size: FontSize.HeaderSize)
         AutoDetectionLbl.setFont(style: .body, size: FontSize.BodySize)
-//        studentNamesAndRollnoLbl.setFont(style: .body, size: FontSize.BodySize)
-//        subjectColoumsAndMarksLbl.setFont(style: .body, size: FontSize.BodySize)
-//        tableStructureAndLayoutLbl.setFont(style: .body, size: FontSize.BodySize)
         pickedFilenameLbl.setFont(style: .title, size: FontSize.TitleSize)
         fileTypesAndSizeLimitLbl.setFont(style: .body, size: FontSize.TitleSize)
         manualEntryLbl.setFont(style: .header, size: FontSize.HeaderSize)
@@ -125,15 +122,12 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     
     func Translate(){
         
-        PopupAlertTitleLbl.text = ExamMarkUploadString.Continue_to_Manual_Entry
-        popupAlertDescriptionLbl.text = ExamMarkUploadString.Youll_enter_student_marks_manually
+        PopupAlertTitleLbl.text = ExamMarkUploadString.Continue_to_Manual_Entry.translated()
+        popupAlertDescriptionLbl.text = ExamMarkUploadString.Youll_enter_student_marks_manually.translated()
         uploadMarkSheetLbl.text = ExamMarkUploadString.Upload_Mark_Sheet.translated()
         uploadImageForAIDescLbl.text = ExamMarkUploadString.Upload_an_image_for_AI_processing.translated()
         AiPowerdUploadLbl.text = ExamMarkUploadString.AI_Powered_Upload.translated()
         AutoDetectionLbl.text = ExamMarkUploadString.Upload_image_for_automatic_detection.translated()
-//        studentNamesAndRollnoLbl.text = "•" + ExamMarkUploadString.Student_names_and_roll_numbers.translated()
-//        subjectColoumsAndMarksLbl.text = "•" + ExamMarkUploadString.Subject_columns_and_marks.translated()
-//        tableStructureAndLayoutLbl.text = "•" + ExamMarkUploadString.Table_structure_and_layout.translated()
         setAttributedText(Text:  ExamMarkUploadString.Student_names_and_roll_numbers.translated(), label: studentNamesAndRollnoLbl)
         setAttributedText(Text:  ExamMarkUploadString.Subject_columns_and_marks.translated(), label: subjectColoumsAndMarksLbl)
         setAttributedText(Text:  ExamMarkUploadString.Table_structure_and_layout.translated(), label: tableStructureAndLayoutLbl)
@@ -142,11 +136,10 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         manualEntryLbl.text = ExamMarkUploadString.Manual_Entry.translated()
         SkipUploadLbl.text = ExamMarkUploadString.Skip_upload_and_enter_marks_manually.translated()
         
-        cancelBtn.setTitle(CommonStringFile.Cancel, for: .normal)
-        ContinueManuallyBtn.setTitle(ExamMarkUploadString.Yes_Continue_Manually, for: .normal)
-        autoDetectBtn.setTitle(ExamMarkUploadString.AI_will_automatically_detect, for: .normal)
-        ContinuewithUploadBtn.setTitle(ExamMarkUploadString.Continue_with_Upload, for: .normal)
-        ContinuewithUploadBtn.setTitle(ExamMarkUploadString.Continue_with_Upload, for: .normal)
+        cancelBtn.setTitle(CommonStringFile.Cancel.translated(), for: .normal)
+        ContinueManuallyBtn.setTitle(ExamMarkUploadString.Yes_Continue_Manually.translated(), for: .normal)
+        autoDetectBtn.setTitle(ExamMarkUploadString.AI_will_automatically_detect.translated(), for: .normal)
+        ContinuewithUploadBtn.setTitle(ExamMarkUploadString.Continue_with_Upload.translated(), for: .normal)
     }
     
     func setAttributedText(Text:String, label:UILabel){
@@ -192,21 +185,21 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     
     @IBAction func UploadTap(){
         
-        let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: AlertstringFile.Select.translated(), message: AlertstringFile.Chooseanoption.translated(), preferredStyle: .actionSheet)
         
         // Camera option
-        let cameraAction = UIAlertAction(title: CommonStringFile.Camera, style: .default) { [self] _ in
+        let cameraAction = UIAlertAction(title: CommonStringFile.Camera.translated(), style: .default) { [self] _ in
            openCamera()
         }
         alertController.addAction(cameraAction)
         
         // Gallery option
-        let galleryAction = UIAlertAction(title: CommonStringFile.Photos, style: .default) { [self] _ in
+        let galleryAction = UIAlertAction(title: CommonStringFile.Photos.translated(), style: .default) { [self] _ in
            openImagePicker()
         }
         alertController.addAction(galleryAction)
         
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alertController.addAction(UIAlertAction(title: AlertstringFile.Cancel.translated(), style: .cancel))
 
         self.present(alertController, animated: true, completion: nil)
     }

@@ -50,8 +50,8 @@
 "Present" = "வருகை";
 "Absent" = "வரவில்லை";
 "Get All Student" = "அனைத்து மாணவர்களையும் பெறுக";
-"Standard & Section" = "தரம் மற்றும் பிரிவு";
-"Standard" = "தரம்";
+"Standard & Section" = "வகுப்பு மற்றும் பிரிவு";
+"Standard" = "வகுப்பு";
 "Logout" = "வெளியேறு";
 "Select from history" = "வரலாற்றிலிருந்து தேர்வு செய்";
 "Roll No" = "விதி எண்";
@@ -67,7 +67,7 @@
 "Starts on" = "தொடங்கும் தேதி";
 "Groups" = "குழுக்கள்";
 "Section or student" = "பிரிவு அல்லது மாணவர்";
-"Standard or section" = "தரம் அல்லது பிரிவு";
+"Standard or section" = "வகுப்பு அல்லது பிரிவு";
 "From Time" = "இருந்து நேரம்";
 "Schedule date" = "அட்டவணை தேதி";
 "Do not dial beyond" = "இதற்கு அப்பால் அழைக்க வேண்டாம்";
@@ -170,7 +170,7 @@
 "Submission Date" = "சமர்ப்பிக்கும் தேதி";
 "Category" = "வகை";
 "Choose Recipients" = "பெறுநர்களைத் தேர்வுசெய்";
-"TO STANDARD OR SECTION" = "தரத்திற்கு அல்லது பிரிவிற்கு";
+"TO STANDARD OR SECTION" = "வகுப்பு அல்லது பிரிவிற்கு";
 "Switch Role" = "பாத்திரத்தை மாற்று";
 "DashBoard" = "கட்டுப்பாட்டு பலகை";
 "View Profile" = "சுயவிவரத்தை பார்க்க";
@@ -354,7 +354,7 @@
 "Upload Attachment" = "இணைப்பு பதிவேற்றவும்";
 //MARK: Common Staff Side
 "Groups" = "குழுக்கள்";
-"Standard or section" = "தரம் அல்லது பிரிவு";
+"Standard or section" = "வகுப்பு அல்லது பிரிவு";
 "Section or student" = "பிரிவு அல்லது மாணவர்";
 "OK" = "சரி";
 "Camera Not Available" = "கேமரா கிடைக்கவில்லை";
@@ -450,7 +450,6 @@
 "RollNo" = "வரிசை எண்";
 "Status" = "நிலை";
 "LeaveRequests" = "விடுப்புக்களை கோரிக்கைகள்";
-"Section" = "பிரிவு '10வது சி'";
 "RollNo DESC" = "உருட்டு எண் குறையுமாறு";
 "RollNo ASC" = "உருட்டு எண் அதிகரிக்கும்";
 "Name ASC" = "பெயர் அதிகரிக்கும்";
@@ -730,9 +729,9 @@
 //MARK: SchoolStregnth
 "Girls" = "பெண்கள்";
 "Total Students" = "மொத்த மாணவர்கள்";
-"Standard" = "தரம்";
+"Standard" = "வகுப்பு";
 "Boys" = "ஆண் குழந்தைகள்";
-"STANDARD SECTION OVER VIEW" = "தரவு பிரிவு முன்னோட்டம்";
+"STANDARD SECTION OVER VIEW" = "வகுப்பு பிரிவு முன்னோட்டம்";
 "SCHOOL STRENGTH VISUALIZATION" = "பள்ளி மாணவர் எண்ணிக்கை காட்சி";
 "SUMMARY STATICS" = "சுருக்க புள்ளிவிவரங்கள்";
 "Staffs" = "பணியாளர்கள்";
@@ -752,3 +751,39 @@
 "Enter your reason here..." = "உங்கள் காரணத்தை இங்கே உள்ளிடவும்...";
 "any_other_suggestions" = "வேறு எந்த பரிந்துரைகள்? (விருப்பத்திற்கேற்ப)";
 "rate_experience" = "உங்கள் அனுபவத்தை எப்படி மதிப்பிடுவீர்கள்?";
+
+//MARK: Exam mark Upload
+"Continue to Manual Entry?" = "கைமுறை பதிவைத் தொடரவா?";
+"You'll enter student marks manually in the next step. You can add and edit all mark data directly without AI processing." = "அடுத்த கட்டத்தில் மாணவர்களின் மதிப்பெண்களை கைமுறையாக உள்ளிடுவீர்கள். AI செயலாக்கம் இல்லாமல் அனைத்து மதிப்பெண் தகவல்களையும் நேரடியாக சேர்க்கவும் திருத்தவும் முடியும்.";
+"Yes, Continue Manually" = "ஆம், கைமுறையாக தொடரவும்";
+"Upload Mark Sheet" = "மதிப்பெண் தாளை பதிவேற்றவும்";
+"Upload an image for AI processing or skip to map manually" = "AI செயலாக்கத்திற்காக படத்தை பதிவேற்றவும் அல்லது கைமுறையாக மேப் செய்ய தவிர்க்கவும்";
+"AI-Powerd Upload" = "AI ஆதரவு பதிவேற்றம்";
+"Upload image for automatic detection" = "தானியங்கி கண்டறிதலுக்காக படத்தை பதிவேற்றவும்";
+"AI will automatically detect:" = "AI தானாக கண்டறியும்:";
+"Student names and roll numbers," = "மாணவர் பெயர்கள் மற்றும் ரோல் எண்கள்,";
+"Subject columns and marks," = "பாடப் பிரிவுகள் மற்றும் மதிப்பெண்கள்,";
+"Table structure and layout," = "அட்டவணை அமைப்பு மற்றும் வடிவமைப்பு,";
+"Click to upload" = "பதிவேற்ற கிளிக் செய்க";
+"PNG, JPG up to 10MB" = "PNG, JPG 10MB வரை";
+"Continue with Upload" = "பதிவேற்றத்தை தொடரவும்";
+"Manual Entry" = "கைமுறை பதிவு";
+"Skip upload and enter marks manually" = "பதிவேற்றத்தை தவிர்த்து மதிப்பெண்களை கைமுறையாக உள்ளிடவும்";
+"Select Your Class" = "உங்கள் வகுப்பைத் தேர்வு செய்க";
+"Choose a class to start processing marks" = "மதிப்பெண்களை செயலாக்க தொடங்க ஒரு வகுப்பைத் தேர்வு செய்க";
+"Activities :" = "செயல்பாடுகள் :";
+"Select an Exam to continue" = "தொடர தேர்வைத் தேர்வு செய்க";
+"Continue to Upload" = "பதிவேற்றத்தை தொடரவும்";
+"Please select an exam to continue" = "தொடர ஒரு தேர்வைத் தேர்வு செய்யவும்";
+"💡 Tip: You don't need to fill all activities now. Unmapped activities can be filled later." = "💡 குறிப்பு: இப்போது அனைத்து செயல்பாடுகளையும் நிரப்ப வேண்டியதில்லை. மேப் செய்யப்படாத செயல்பாடுகளை பின்னர் நிரப்பலாம்.";
+"Continue to Review" = "மதிப்பாய்வை தொடரவும்";
+"Not started" = "தொடங்கப்படவில்லை";
+"Click the radio button next to each activity to select a column from your uploaded image." = "பதிவேற்றிய படத்திலிருந்து ஒரு நெடுவரிசையைத் தேர்வு செய்ய, ஒவ்வொரு செயல்பாட்டின் அருகிலும் உள்ள ரேடியோ பொத்தானை கிளிக் செய்யவும்.";
+"Choose the activities where you would like to enter marks manually." = "மதிப்பெண்களை கைமுறையாக உள்ளிட விரும்பும் செயல்பாடுகளைத் தேர்வு செய்யவும்.";
+"Please select at least one activity to continue." = "தொடர குறைந்தது ஒரு செயல்பாட்டைத் தேர்வு செய்யவும்.";
+"%d of %d activities selected" = "%d / %d செயல்பாடுகள் தேர்வு செய்யப்பட்டுள்ளன";
+"Continue to Entry" = "பதிவுக்கு தொடரவும்";
+"Please Map atleast one activity to continue" = "தொடர குறைந்தது ஒரு செயல்பாட்டையாவது மேப் செய்யவும்";
+"Please select atleast one activity to continue" = "தொடர குறைந்தது ஒரு செயல்பாட்டையாவது தேர்வு செய்யவும்";
+"All %d activities mapped" = "அனைத்து %d செயல்பாடுகளும் மேப் செய்யப்பட்டுள்ளன";
+"%d of %d activities mapped" = "%d / %d செயல்பாடுகள் மேப் செய்யப்பட்டுள்ளன";

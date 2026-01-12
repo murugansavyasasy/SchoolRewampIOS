@@ -446,7 +446,6 @@
 "Name DESC" = "ชื่อ เรียงจากมากไปน้อย";
 "Present" = "มา";
 "Filter" = "กรอง";
-"Section" = "ส่วน '10th C'";
 "Present" = "มา";
 "Absent" = "ขาด";
 "RollNo_ASC" = "หมายเลขโรลจากน้อยไปมาก";
@@ -742,3 +741,39 @@
 "Enter your reason here..." = "กรอกเหตุผลของคุณที่นี่...";
 "any_other_suggestions" = "มีคำแนะนำอื่นไหม? (ไม่จำเป็น)";
 "rate_experience" = "คุณจะให้คะแนนประสบการณ์ของคุณอย่างไร?";
+
+//MARK: Exam mark Upload
+"Continue to Manual Entry?" = "ดำเนินการป้อนข้อมูลด้วยตนเองต่อหรือไม่?";
+"You'll enter student marks manually in the next step. You can add and edit all mark data directly without AI processing." = "ในขั้นตอนถัดไป คุณจะป้อนคะแนนนักเรียนด้วยตนเอง โดยสามารถเพิ่มและแก้ไขข้อมูลคะแนนทั้งหมดได้โดยไม่ต้องใช้ AI";
+"Yes, Continue Manually" = "ใช่ ดำเนินการด้วยตนเอง";
+"Upload Mark Sheet" = "อัปโหลดแผ่นคะแนน";
+"Upload an image for AI processing or skip to map manually" = "อัปโหลดรูปภาพเพื่อประมวลผลด้วย AI หรือข้ามไปจัดการด้วยตนเอง";
+"AI-Powerd Upload" = "อัปโหลดด้วย AI";
+"Upload image for automatic detection" = "อัปโหลดรูปภาพเพื่อการตรวจจับอัตโนมัติ";
+"AI will automatically detect:" = "AI จะตรวจจับโดยอัตโนมัติ:";
+"Student names and roll numbers" = "ชื่อนักเรียนและหมายเลขประจำตัว";
+"Subject columns and marks" = "คอลัมน์วิชาและคะแนน";
+"Table structure and layout" = "โครงสร้างและรูปแบบตาราง";
+"Click to upload" = "คลิกเพื่ออัปโหลด";
+"PNG, JPG up to 10MB" = "PNG, JPG ขนาดไม่เกิน 10MB";
+"Continue with Upload" = "ดำเนินการอัปโหลดต่อ";
+"Manual Entry" = "ป้อนข้อมูลด้วยตนเอง";
+"Skip upload and enter marks manually" = "ข้ามการอัปโหลดและป้อนคะแนนด้วยตนเอง";
+"Select Your Class" = "เลือกชั้นเรียนของคุณ";
+"Choose a class to start processing marks" = "เลือกชั้นเรียนเพื่อเริ่มประมวลผลคะแนน";
+"Activities :" = "กิจกรรม :";
+"Select an Exam to continue" = "เลือกการสอบเพื่อดำเนินการต่อ";
+"Continue to Upload" = "ดำเนินการอัปโหลดต่อ";
+"Please select an exam to continue" = "กรุณาเลือกการสอบเพื่อดำเนินการต่อ";
+"💡 Tip: You don't need to fill all activities now. Unmapped activities can be filled later." = "💡 เคล็ดลับ: คุณไม่จำเป็นต้องกรอกกิจกรรมทั้งหมดในตอนนี้ กิจกรรมที่ยังไม่ได้เชื่อมโยงสามารถกรอกได้ภายหลัง";
+"Continue to Review" = "ดำเนินการตรวจสอบต่อ";
+"Not started" = "ยังไม่เริ่ม";
+"Click the radio button next to each activity to select a column from your uploaded image." = "คลิกปุ่มตัวเลือกถัดจากแต่ละกิจกรรมเพื่อเลือกคอลัมน์จากรูปภาพที่อัปโหลด";
+"Choose the activities where you would like to enter marks manually." = "เลือกกิจกรรมที่คุณต้องการป้อนคะแนนด้วยตนเอง";
+"Please select at least one activity to continue." = "กรุณาเลือกอย่างน้อยหนึ่งกิจกรรมเพื่อดำเนินการต่อ";
+"%d of %d activities selected" = "เลือกแล้ว %d จาก %d กิจกรรม";
+"Continue to Entry" = "ดำเนินการไปยังการป้อนข้อมูล";
+"Please Map atleast one activity to continue" = "กรุณาเชื่อมโยงอย่างน้อยหนึ่งกิจกรรมเพื่อดำเนินการต่อ";
+"Please select atleast one activity to continue" = "กรุณาเลือกอย่างน้อยหนึ่งกิจกรรมเพื่อดำเนินการต่อ";
+"All %d activities mapped" = "กิจกรรมทั้งหมด %d รายการถูกเชื่อมโยงแล้ว";
+"%d of %d activities mapped" = "เชื่อมโยงแล้ว %d จาก %d กิจกรรม";

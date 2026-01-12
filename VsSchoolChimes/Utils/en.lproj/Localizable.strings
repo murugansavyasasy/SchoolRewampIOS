@@ -422,7 +422,6 @@
 "Roll No" = "Roll No";
 "Status" = "Status";
 "Leave Requests" = "Leave Requests";
-"Section" = "Section '10th C'";
 "Roll No DESC" = "Roll No DESC";
 "Roll No ASC" = "Roll No ASC";
 "Name ASC" = "Name ASC";
@@ -725,3 +724,41 @@
 "Enter your reason here..." = "Enter your reason here...";
 "any_other_suggestions" = "Any other suggestions? (optional)";
 "rate_experience" = "How would you rate your experience?";
+
+//MARK: Exam mark Upload
+"Continue to Manual Entry?" = "Continue to Manual Entry?";
+"You'll enter student marks manually in the next step. You can add and edit all mark data directly without AI processing." = "You'll enter student marks manually in the next step. You can add and edit all mark data directly without AI processing.";
+"Yes, Continue Manually" = "Yes, Continue Manually";
+"Upload Mark Sheet" = "Upload Mark Sheet";
+"Upload an image for AI processing or skip to map manually" = "Upload an image for AI processing or skip to map manually";
+"AI-Powerd Upload" = "AI-Powerd Upload";
+"Upload image for automatic detection" = "Upload image for automatic detection";
+"AI will automatically detect:" = "AI will automatically detect:";
+"Student names and roll numbers," = "Student names and roll numbers,";
+"Subject columns and marks," = "Subject columns and marks,";
+"Table structure and layout," = "Table structure and layout,";
+"Click to upload" = "Click to upload";
+"PNG, JPG up to 10MB" = "PNG, JPG up to 10MB";
+"Continue with Upload" = "Continue with Upload";
+"Manual Entry" = "Manual Entry";
+"Skip upload and enter marks manually" = "Skip upload and enter marks manually";
+"Select Your Class" = "Select Your Class";
+"Choose a class to start processing marks" = "Choose a class to start processing marks";
+"Activities :" = "Activities :";
+"Select an Exam to continue" = "Select an Exam to continue";
+"Continue to Upload" = "Continue to Upload";
+"Please select an exam to continue" = "Please select an exam to continue";
+"💡 Tip: You don't need to fill all activities now. Unmapped activities can be filled later." = "💡 Tip: You don't need to fill all activities now. Unmapped activities can be filled later.";
+"Continue to Review" = "Continue to Review";
+"Not started" = "Not started";
+"Click the radio button next to each activity to select a column from your uploaded image." = "Click the radio button next to each activity to select a column from your uploaded image.";
+"Choose the activities where you would like to enter marks manually." = "Choose the activities where you would like to enter marks manually.";
+"Please select at least one activity to continue." = "Please select at least one activity to continue.";
+"%d of %d activities selected" = "%d of %d activities selected";
+"Continue to Entry" = "Continue to Entry";
+"Please Map atleast one activity to continue" = "Please map at least one activity to continue";
+"Please select atleast one activity to continue" = "Please select at least one activity to continue";
+"All %d activities mapped" = "All %d activities mapped";
+"%d of %d activities mapped" = "%d of %d activities mapped";
+
+
