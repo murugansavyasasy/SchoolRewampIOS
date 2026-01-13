@@ -49,6 +49,7 @@ class MessageFromManagementViewController: UIViewController {
     private var searchText = ""
     private var selectedSchoolId: String?
     var Pushnotification_msgId : String?
+    var menuNameString: String?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +62,12 @@ class MessageFromManagementViewController: UIViewController {
     
     // MARK: - Setup Methods
     private func setupUI() {
-        menuNameLbl.text = MenuStringFile.selectedMenuName
+        
+        if let msg_id = Pushnotification_msgId, !msg_id.isEmpty {
+            menuNameLbl.text = menuNameString
+        }else{
+            menuNameLbl.text = MenuStringFile.selectedMenuName
+        }
         menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
         BackBtn.applyBackButton()
         NoDataLbl.setFont(style: .title, size: FontSize.HeaderSize)
@@ -189,6 +195,7 @@ class MessageFromManagementViewController: UIViewController {
                     self.NoDataLbl.isHidden = false
                 }
                 self.tv.reloadData()
+                self.hideActivityLoader()
             }
         }
     }

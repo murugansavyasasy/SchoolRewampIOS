@@ -234,12 +234,10 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
     
     // MARK: Navigation Handling
     private func handleMenuNavigation(indexPath: IndexPath) {
-        let menuItem = tvheadernotidata[indexPath.section].details?[indexPath.row].menu_id
-        if let menuName = tvheadernotidata.first(where: { $0.menu_id == menuItem })?.menu_name {
-            MenuStringFile.selectedMenuName = menuName
-        }
+        let menuItem = tvheadernotidata[indexPath.section]
+        MenuStringFile.selectedMenuName = menuItem.menu_name ?? ""
         if isParent{
-            switch menuItem {
+            switch menuItem.menu_id {
             case 2:  MenuRedirect.receiverAssignmentNavigate(from: self, PushNotiMsgId: "")
             case 4:  MenuRedirect.receiverAttendancereport(
                 from: self,
@@ -268,6 +266,25 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
             case 40: MenuRedirect.receiverPauckt(from: self)
             default: break
             }
+        }else{
+            
+            
+            if menuItem.menu_id == 7 || menuItem.menu_id == 39{
+                
+                let vc = MessageFromManagementViewController(nibName: nil, bundle: nil)
+                vc.Pushnotification_msgId = "1"
+                vc.menuNameString = "Mgmt Msgs"
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }
+//                if menuItem == 23{
+//                    let vc = NoticeBoardVc()
+//                        vc.modalPresentationStyle = .fullScreen
+//                        present(vc, animated: true)
+//                }else{
+                 //  MenuRedirect.senderMgmt(from: self, Notification_MsgId: "")
+//                }
+                
         }
     }
     
