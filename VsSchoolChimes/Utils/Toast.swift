@@ -65,7 +65,7 @@ public extension UIView {
     func makeToast(_ message: String?, duration: TimeInterval = ToastManager.shared.duration, position: ToastPosition = ToastManager.shared.position, title: String? = nil, image: UIImage? = nil, style: ToastStyle = ToastManager.shared.style, completion: ((_ didTap: Bool) -> Void)? = nil) {
         do {
             let toast = try toastViewForMessage(message, title: title, image: image, style: style)
-            showToast(toast, duration: duration, position: position, completion: completion)
+//            showToast(toast, duration: duration, position: position, completion: completion)
         } catch ToastError.missingParameters {
             print("Error: message, title, and image are all nil")
         } catch {}
@@ -75,7 +75,7 @@ public extension UIView {
     func makeToast(_ message: String?, duration: TimeInterval = ToastManager.shared.duration, point: CGPoint, title: String?, image: UIImage?, style: ToastStyle = ToastManager.shared.style, completion: ((_ didTap: Bool) -> Void)?) {
         do {
             let toast = try toastViewForMessage(message, title: title, image: image, style: style)
-            showToast(toast, duration: duration, point: point, completion: completion)
+//            showToast(toast, duration: duration, point: point, completion: completion)
         } catch ToastError.missingParameters {
             print("Error: message, title, and image cannot all be nil")
         } catch {}

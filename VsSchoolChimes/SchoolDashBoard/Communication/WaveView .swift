@@ -504,20 +504,29 @@ class HeaderWaveView: UIView {
     }
     
     private func drawGradientBackground(in context: CGContext, rect: CGRect) {
+
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        // Updated colors to match the exact design
-        let topColor = UIColor(red: 0.31, green: 0.58, blue: 0.98, alpha: 1.0).cgColor // Brighter blue
-        let middleColor = UIColor(red: 0.24, green: 0.51, blue: 0.93, alpha: 1.0).cgColor // Mid blue
-        let bottomColor = UIColor(red: 0.18, green: 0.42, blue: 0.85, alpha: 1.0).cgColor // Deeper blue
+        
+        let primary = UIColor.backGroundClr
+        let topColor = primary.lighter(by: 18).cgColor
+        let middleColor = primary.cgColor
+        let bottomColor = primary.darker(by: 18).cgColor
+        
         let colors = [topColor, middleColor, bottomColor] as CFArray
+        let locations: [CGFloat] = [0.0, 0.5, 1.0]
         
-        guard let gradient = CGGradient(colorsSpace: colorSpace, colors: colors, locations: [0.0, 0.5, 1.0]) else { return }
-        
-        context.drawLinearGradient(gradient,
-                                   start: CGPoint(x: 0, y: 0),
-                                   end: CGPoint(x: 0, y: bounds.height),
-                                   options: [])
+        guard let gradient = CGGradient(colorsSpace: colorSpace,
+                                        colors: colors,
+                                        locations: locations) else { return }
+
+        context.drawLinearGradient(
+            gradient,
+            start: CGPoint(x: rect.midX, y: rect.minY),
+            end: CGPoint(x: rect.midX, y: rect.maxY),
+            options: []
+        )
     }
+
     
     private func drawStaticWaves(in context: CGContext, rect: CGRect) {
         let width = bounds.width
@@ -594,5 +603,27 @@ class HeaderWaveView: UIView {
         color.setFill()
         wavePath.fill()
         context.restoreGState()
+    }
+}
+extension UIColor {
+    
+    func lighter(by percentage: CGFloat = 20) -> UIColor {
+        return adjust(by: abs(percentage))
+    }
+
+    func darker(by percentage: CGFloat = 20) -> UIColor {
+        return adjust(by: -abs(percentage))
+    }
+
+    private func adjust(by percentage: CGFloat) -> UIColor {
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+
+        return UIColor(
+            red: min(max(r + percentage/100, 0), 1),
+            green: min(max(g + percentage/100, 0), 1),
+            blue: min(max(b + percentage/100, 0), 1),
+            alpha: a
+        )
     }
 }

@@ -73,6 +73,11 @@ class RateUsViewController: UIViewController {
         let lastRow = tableview.numberOfRows(inSection: lastSection) - 1
         tableview.scrollToRow(at: IndexPath(row: lastRow, section: lastSection), at: .bottom, animated: true)
     }
+    
+    @IBAction func close(_ sender: UIButton) {
+        self.dismiss(animated: true)
+        self.delegate?.dismiss(true)
+    }
 }
 
 
@@ -193,8 +198,8 @@ extension RateUsViewController {
                     if self.selectedRating >= 4 {
                         self.redirectToAppStoreWriteReview()
                     }
-                    self.dismiss(animated: true)
-                    self.delegate?.dismiss(true)
+//                    self.dismiss(animated: true)
+//                    self.delegate?.dismiss(true)
                 }
                 
             case .failure(let error):

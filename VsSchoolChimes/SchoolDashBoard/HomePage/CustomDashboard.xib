@@ -31,7 +31,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wzN-GC-JgT" customClass="HeaderWaveView" customModule="School_Chimes" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="199.66666666666666"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="179.66666666666666"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nfh-Ne-KxY">
                             <rect key="frame" x="10" y="69" width="30" height="30"/>
@@ -49,7 +49,7 @@
                             </connections>
                         </button>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="mUU-DT-hxr">
-                            <rect key="frame" x="60" y="69" width="188" height="60.333333333333343"/>
+                            <rect key="frame" x="60" y="69" width="188" height="40.333333333333343"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xm8-ou-byW">
                                     <rect key="frame" x="0.0" y="0.0" width="188" height="0.0"/>
@@ -58,7 +58,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="unread_count&quot;:0},{&quot;id&quot;:1,&quot;name&quot;:&quot;Absenteeism Report" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2aN-xi-caa">
-                                    <rect key="frame" x="0.0" y="10.000000000000004" width="188" height="50.333333333333343"/>
+                                    <rect key="frame" x="0.0" y="9.9999999999999982" width="188" height="30.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -124,10 +124,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Bj-00-zHJ">
-                    <rect key="frame" x="0.0" y="189.66666666666669" width="393" height="628.33333333333326"/>
+                    <rect key="frame" x="0.0" y="169.66666666666669" width="393" height="648.33333333333326"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pCW-mj-7SX">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="628.33333333333337"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="648.33333333333337"/>
                             <subviews>
                                 <searchBar hidden="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="AYK-DQ-QY1">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="0.0"/>
@@ -137,10 +137,10 @@
                                     </connections>
                                 </searchBar>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="4Nf-r1-Ddw">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="100"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="120"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="100" id="WJO-xo-AjA"/>
+                                        <constraint firstAttribute="height" constant="120" id="WJO-xo-AjA"/>
                                     </constraints>
                                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Nbr-9Q-a5x">
                                         <size key="itemSize" width="128" height="128"/>
@@ -150,7 +150,7 @@
                                     </collectionViewFlowLayout>
                                 </collectionView>
                                 <pageControl hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="A6G-fe-j6j">
-                                    <rect key="frame" x="0.0" y="100.00000000000003" width="393" height="30"/>
+                                    <rect key="frame" x="0.0" y="120.00000000000003" width="393" height="30"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="DvL-ns-eO2"/>
@@ -159,7 +159,7 @@
                                     <color key="currentPageIndicatorTintColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </pageControl>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="8j8-rO-HUO">
-                                    <rect key="frame" x="0.0" y="100.00000000000006" width="393" height="528.33333333333348"/>
+                                    <rect key="frame" x="0.0" y="120.00000000000006" width="393" height="528.33333333333348"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZST-5D-OKJ">
                                         <size key="itemSize" width="128" height="128"/>
@@ -169,7 +169,7 @@
                                     </collectionViewFlowLayout>
                                 </collectionView>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uhY-rK-gyY">
-                                    <rect key="frame" x="0.0" y="628.33333333333337" width="393" height="100"/>
+                                    <rect key="frame" x="0.0" y="648.33333333333337" width="393" height="100"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="ccp-h9-uyK"/>
