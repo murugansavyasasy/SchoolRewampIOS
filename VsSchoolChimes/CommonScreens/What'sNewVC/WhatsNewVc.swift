@@ -70,23 +70,25 @@ class WhatsNewVc: UIViewController {
     }
 
     private func setupButtonGradient(_ button: UIButton) {
-        // Remove old gradient if exists
-        button.layer.sublayers?.forEach {
-            if $0.name == "buttonGradientLayer" {
-                $0.removeFromSuperlayer()
-            }
-        }
 
-        let hexColors = ["#FFA500", "#FF3B30"] // Orange to red
-        let cgColors = hexColors.map { UIColor(hex: $0).cgColor }
+        // Remove old gradient if exists
+        button.layer.sublayers?.removeAll(where: { $0.name == "buttonGradientLayer" })
+
+        let primary = UIColor.backGroundClr
+
+        let gradientColors: [CGColor] = [
+            primary.darker(by: 10).cgColor,
+            primary.lighter(by: 15).cgColor
+        ]
 
         let gradient = CAGradientLayer()
-        gradient.colors = cgColors
+        gradient.colors = gradientColors
         gradient.startPoint = CGPoint(x: 0, y: 0)
         gradient.endPoint = CGPoint(x: 1, y: 1)
         gradient.frame = button.bounds
         gradient.cornerRadius = button.layer.cornerRadius
         gradient.name = "buttonGradientLayer"
+
         button.layer.insertSublayer(gradient, at: 0)
 
         // Border
@@ -94,6 +96,7 @@ class WhatsNewVc: UIViewController {
         button.layer.borderColor = UIColor.white.withAlphaComponent(0.25).cgColor
         button.tintColor = .white
     }
+
 
     // MARK: - Actions
     @IBAction func exploreBtn(_ sender: UIButton) {

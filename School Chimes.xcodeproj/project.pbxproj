@@ -606,6 +606,8 @@
 		84CAE5BB2D5DEF7C0091C671 /* ColourManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CAE5BA2D5DEF7B0091C671 /* ColourManager.swift */; };
 		84CE676A2E4232610019128B /* AssignmentTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CE67692E4232610019128B /* AssignmentTVC.xib */; };
 		84CE676B2E4232610019128B /* AssignmentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CE67682E4232610019128B /* AssignmentTVC.swift */; };
+		84CF63E62F150FA700746968 /* PopoverHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CF63E52F150FA700746968 /* PopoverHeaderView.swift */; };
+		84CF63E82F15150700746968 /* PopoverHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CF63E72F15150700746968 /* PopoverHeaderView.xib */; };
 		84CFD72D2F10EAFC008ED044 /* MarksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CFD72A2F10EAFC008ED044 /* MarksTableViewCell.xib */; };
 		84CFD72E2F10EAFC008ED044 /* MarkReviewCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CFD7282F10EAFC008ED044 /* MarkReviewCVC.xib */; };
 		84CFD72F2F10EAFC008ED044 /* MarksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84CFD72C2F10EAFC008ED044 /* MarksCell.xib */; };
@@ -1371,6 +1373,8 @@
 		84CAE5BA2D5DEF7B0091C671 /* ColourManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourManager.swift; sourceTree = "<group>"; };
 		84CE67682E4232610019128B /* AssignmentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentTVC.swift; sourceTree = "<group>"; };
 		84CE67692E4232610019128B /* AssignmentTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentTVC.xib; sourceTree = "<group>"; };
+		84CF63E52F150FA700746968 /* PopoverHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverHeaderView.swift; sourceTree = "<group>"; };
+		84CF63E72F15150700746968 /* PopoverHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopoverHeaderView.xib; sourceTree = "<group>"; };
 		84CFD7252F10EAFC008ED044 /* EnterMarkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterMarkVC.swift; sourceTree = "<group>"; };
 		84CFD7262F10EAFC008ED044 /* EnterMarkVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EnterMarkVC.xib; sourceTree = "<group>"; };
 		84CFD7272F10EAFC008ED044 /* MarkReviewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkReviewCVC.swift; sourceTree = "<group>"; };
@@ -3558,6 +3562,8 @@
 				84CFD72B2F10EAFC008ED044 /* MarksCell.swift */,
 				84CFD72C2F10EAFC008ED044 /* MarksCell.xib */,
 				FAFB40C02ED6FA2000783142 /* ActivitiesTVCell.xib */,
+				84CF63E52F150FA700746968 /* PopoverHeaderView.swift */,
+				84CF63E72F15150700746968 /* PopoverHeaderView.xib */,
 			);
 			path = "Exam Mark";
 			sourceTree = "<group>";
@@ -4042,6 +4048,7 @@
 				FA38D8F12E530EBE00EC6ED7 /* SlotCV.xib in Resources */,
 				849970CB2CF8752400800B07 /* TextHistoryTVCell.xib in Resources */,
 				849970CC2CF8752400800B07 /* ComunicationVC.xib in Resources */,
+				84CF63E82F15150700746968 /* PopoverHeaderView.xib in Resources */,
 				844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */,
 				8464468E2E4BABF7007D1C5A /* NotiTvheader.xib in Resources */,
 				188870372EEAEAC6008B71FF /* LSRWPerformenceTVC.xib in Resources */,
@@ -4522,6 +4529,7 @@
 				84079FF32D15A7B000D6DF04 /* LeveCreateVC.swift in Sources */,
 				84079FF42D15A7B000D6DF04 /* LeveHistoryVC.swift in Sources */,
 				84079FF52D15A7B000D6DF04 /* LeveHistoryTV.swift in Sources */,
+				84CF63E62F150FA700746968 /* PopoverHeaderView.swift in Sources */,
 				FA0EDF142E4A1752008EC30D /* NewPtmVC.swift in Sources */,
 				845FED3F2D129A0D0090296B /* ExamCreatVC.swift in Sources */,
 				8464468A2E4B6F52007D1C5A /* NotiTvheader.swift in Sources */,
@@ -4962,7 +4970,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 15;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5004,7 +5012,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 15;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

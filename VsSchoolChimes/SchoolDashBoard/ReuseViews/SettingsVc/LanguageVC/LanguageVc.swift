@@ -23,9 +23,8 @@ class LanguageVc: UIViewController {
         language(language: "Tamil", languageCode: "ta-IN", selected: false),
         language(language: "English", languageCode: "en", selected: false),
         language(language: "Hindi", languageCode: "hi", selected: false),
-        language(language: "Thai", languageCode: "th", selected: false),
-        language(language: "Arabic", languageCode: "ar", selected: false)]
-    
+        language(language: "Thai", languageCode: "th", selected: false)]
+//    language(language: "Arabic", languageCode: "ar", selected: false)
     var Language = ["தமிழ்", "English","हिंदी", "ไทย", "العربية"]
     var Buttontext = ["உறுதிப்படுத்தவும்","Confirm","पुष्टि करें", "ยืนยัน", "تأكيد"]
     var index:Int?

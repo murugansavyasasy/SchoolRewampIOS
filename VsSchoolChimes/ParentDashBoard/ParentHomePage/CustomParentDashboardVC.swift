@@ -528,7 +528,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
 extension CustomParentDashboardVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == recentActiveMenuCollection {
-            return CGSize(width: 200, height: 90)
+            return CGSize(width: 200, height: 110)
         } else {
             return CGSize(width: (collectionView.frame.width - 25) / 2, height: 100)
         }

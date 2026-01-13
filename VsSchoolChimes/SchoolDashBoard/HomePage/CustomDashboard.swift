@@ -736,7 +736,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
 extension CustomDashboard: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView == recentActiveMenuCollection
-        ? CGSize(width: 200, height: 90)
+        ? CGSize(width: 200, height: 110)
         : CGSize(width: (collectionView.frame.width - 25) / 2, height: 100)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

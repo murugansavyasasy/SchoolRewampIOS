@@ -6,6 +6,7 @@ class MarksTableViewCell: UITableViewCell {
     @IBOutlet weak var nameWidth: NSLayoutConstraint!
     @IBOutlet weak var studentNameLabel: UILabel!
     @IBOutlet weak var rollNoLabel: UILabel!
+    @IBOutlet weak var admissNoLabel: UILabel!
     @IBOutlet weak var marksCollectionView: UICollectionView!
     
     var studentIndex: Int = 0
@@ -22,7 +23,9 @@ class MarksTableViewCell: UITableViewCell {
         studentNameLabel.textColor = .black
         
         rollNoLabel.font = .systemFont(ofSize: 12, weight: .regular)
+        admissNoLabel.font = .systemFont(ofSize: 12, weight: .regular)
         rollNoLabel.textColor = .gray
+        admissNoLabel.textColor = .gray
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
@@ -40,14 +43,16 @@ class MarksTableViewCell: UITableViewCell {
     }
     
     func configure(student: StudentMark, index: Int, parentVC: EnterMarkVC, nameWidth: CGFloat) {
-        studentNameLabel.text = student.student_name
-        
-        if let rollNo = student.admission_no, !rollNo.isEmpty {
+        setStudentNameWithGender(label: studentNameLabel,student:student.student_name,gender:"M")
+        if let rollNo = student.roll_no,let admissionNo = student.admission_no{
             rollNoLabel.text = "Roll No: \(rollNo)"
-            rollNoLabel.isHidden = false
-        } else {
-            rollNoLabel.text = "Roll No:"
-            rollNoLabel.isHidden = false
+            admissNoLabel.text = "Admiss No: \(admissionNo)"
+            rollNoLabel.isHidden = rollNo.isEmpty
+            admissNoLabel.isHidden = admissionNo.isEmpty
+            
+        }else{
+            rollNoLabel.isHidden = true
+            admissNoLabel.isHidden = true
         }
         self.nameWidth.constant = nameWidth
         self.studentIndex = index
@@ -57,7 +62,38 @@ class MarksTableViewCell: UITableViewCell {
         marksCollectionView.tag = index
         marksCollectionView.reloadData()
     }
-    
+    func setStudentNameWithGender(label: UILabel, student:String?,gender:String?) {
+
+        let name = student ?? ""
+        let gender = gender?.uppercased()
+
+        let fullText: String
+        if let gender = gender, !gender.isEmpty {
+            fullText = "\(name) (\(gender))"
+        } else {
+            fullText = name
+        }
+
+        let attr = NSMutableAttributedString(string: fullText)
+
+        // Name color
+        let nameRange = (fullText as NSString).range(of: name)
+        attr.addAttribute(.foregroundColor,
+                          value: UIColor.label,
+                          range: nameRange)
+
+        // Gender color
+        if let gender = gender {
+            let genderText = "(\(gender))"
+            let genderRange = (fullText as NSString).range(of: genderText)
+            attr.addAttribute(.foregroundColor,
+                              value: UIColor.systemPink,
+                              range: genderRange)
+        }
+
+        label.attributedText = attr
+    }
+
     func syncScroll(to offset: CGFloat) {
         isScrolling = true
         marksCollectionView.setContentOffset(CGPoint(x: offset, y: 0), animated: false)

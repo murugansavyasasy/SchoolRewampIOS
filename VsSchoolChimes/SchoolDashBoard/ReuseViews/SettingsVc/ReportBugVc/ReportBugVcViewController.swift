@@ -47,6 +47,7 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
         BugsTextview.layer.cornerRadius = 8
         BugsTextview.layer.borderWidth = 0.5
         BugsTextview.layer.borderColor = UIColor.lightGray.cgColor
+        BugsTextview.addDoneButton()
         scrollView.keyboardDismissMode = .interactive
         remarkDefaultLbl.setRequiredText("Remarks")
         selectDefaultLbl.setRequiredText("Select Module")
@@ -164,8 +165,8 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
     // MARK: - Gmail / Share Sheet
     func sendEmailWithAttachmentsToGmail() {
 
-        let toEmail = "support@gmail.com"
-        let ccEmails = "team@gmail.com,dev@gmail.com"
+        let toEmail = "support@savyasasy.com"
+        let ccEmails = "murugan@savyasasy.com,swathi@savyasasy.com"
         let subject = "Bug Report - \(selectModuleLbl.text ?? "")"
         let body = BugsTextview.text ?? ""
 
@@ -188,31 +189,31 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
         }
 
         // Attachments
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            var items: [Any] = []
-
-            for item in self.attachments {
-                if let img = item.image,
-                   let data = img.jpegData(compressionQuality: 0.8) {
-                    let tempURL = self.saveTempFile(
-                        data: data,
-                        fileName: item.displayName ?? "image.jpg"
-                    )
-                    items.append(tempURL)
-                }
-
-                if let url = item.videoURL {
-                    items.append(url)
-                }
-            }
-
-            let activityVC = UIActivityViewController(
-                activityItems: items,
-                applicationActivities: nil
-            )
-            activityVC.popoverPresentationController?.sourceView = self.view
-            self.present(activityVC, animated: true)
-        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//            var items: [Any] = []
+//
+//            for item in self.attachments {
+//                if let img = item.image,
+//                   let data = img.jpegData(compressionQuality: 0.8) {
+//                    let tempURL = self.saveTempFile(
+//                        data: data,
+//                        fileName: item.displayName ?? "image.jpg"
+//                    )
+//                    items.append(tempURL)
+//                }
+//
+//                if let url = item.videoURL {
+//                    items.append(url)
+//                }
+//            }
+//
+//            let activityVC = UIActivityViewController(
+//                activityItems: items,
+//                applicationActivities: nil
+//            )
+//            activityVC.popoverPresentationController?.sourceView = self.view
+//            self.present(activityVC, animated: true)
+//        }
     }
     func saveTempFile(data: Data, fileName: String) -> URL {
         let url = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)

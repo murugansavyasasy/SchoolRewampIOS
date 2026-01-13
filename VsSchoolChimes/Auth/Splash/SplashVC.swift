@@ -869,14 +869,14 @@ class GradientView: UIView {
         
         let colorAnimation = CABasicAnimation(keyPath: "colors")
         colorAnimation.fromValue = lightColors
-        colorAnimation.toValue = darkColors
+        colorAnimation.toValue = lightColors
         colorAnimation.duration = duration
         colorAnimation.fillMode = .forwards
         colorAnimation.isRemovedOnCompletion = false
         colorAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         
         gradientLayer.add(colorAnimation, forKey: "colorChange")
-        gradientLayer.colors = darkColors
+        gradientLayer.colors = lightColors
     }
     
     override func layoutSubviews() {

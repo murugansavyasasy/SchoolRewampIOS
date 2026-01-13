@@ -33,12 +33,29 @@
                                 <outlet property="delegate" destination="-1" id="0nJ-z6-ASI"/>
                             </connections>
                         </tableView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1lt-zH-mGI">
+                            <rect key="frame" x="358" y="0.0" width="35" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="35" id="Hb6-1a-hIx"/>
+                                <constraint firstAttribute="height" constant="35" id="Tsz-pE-pEM"/>
+                            </constraints>
+                            <color key="tintColor" name="errorColor"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="multiply.circle.fill" catalog="system">
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20" scale="large" weight="bold"/>
+                            </state>
+                            <connections>
+                                <action selector="close:" destination="-1" eventType="touchUpInside" id="tOG-2k-Nrw"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" name="topBackgroundCLr"/>
                     <constraints>
+                        <constraint firstItem="1lt-zH-mGI" firstAttribute="trailing" secondItem="33x-KJ-bEt" secondAttribute="trailing" id="YPs-sO-U7K"/>
                         <constraint firstItem="33x-KJ-bEt" firstAttribute="leading" secondItem="Swq-u5-oa5" secondAttribute="leading" id="cJG-zF-iwT"/>
                         <constraint firstItem="33x-KJ-bEt" firstAttribute="top" secondItem="Swq-u5-oa5" secondAttribute="top" id="dI8-VF-3dq"/>
                         <constraint firstAttribute="trailing" secondItem="33x-KJ-bEt" secondAttribute="trailing" id="k8y-QN-ga0"/>
+                        <constraint firstItem="1lt-zH-mGI" firstAttribute="top" secondItem="33x-KJ-bEt" secondAttribute="top" id="nIf-yR-HyI"/>
                         <constraint firstAttribute="bottom" secondItem="33x-KJ-bEt" secondAttribute="bottom" id="rCR-op-BcY"/>
                     </constraints>
                 </view>
@@ -55,6 +72,10 @@
         </view>
     </objects>
     <resources>
+        <image name="multiply.circle.fill" catalog="system" width="128" height="123"/>
+        <namedColor name="errorColor">
+            <color red="0.89399999380111694" green="0.23499999940395355" blue="0.18400000035762787" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="topBackgroundCLr">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

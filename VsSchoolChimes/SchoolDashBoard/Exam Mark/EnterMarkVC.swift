@@ -1,10 +1,12 @@
 import UIKit
-
+protocol FilterStudentMark:AnyObject{
+    func applySort(type: SortType?, gender: String?)
+}
 // MARK: - Enter Mark View Controller
 class EnterMarkVC: UIViewController, MarksCellDelegate {
-   
-    
-    
+    @IBOutlet weak var filtterBtn: UIButton!
+    @IBOutlet weak var searchBtn: UIButton!
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var nameWidth: NSLayoutConstraint!
     @IBOutlet weak var headerCollectionview: UICollectionView!
     @IBOutlet weak var listLableView: UITableView!
@@ -17,6 +19,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     var editedMarks: [String: [String: String]] = [:]
     var payload: [String: Any]?
     var studentRecords: [StudentMark] = []
+    var allStudents: [StudentMark] = []
     var aiRecords: [ConvertedStudentRecord] = []
     var subjectColumns: [ColumnConfig] = []
     private var isNameWidthCalculated = false
@@ -29,6 +32,12 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
         setupTableView()
         setupKeyboardObservers()
         saveMarksBtn.layer.cornerRadius = 8
+        searchBar.searchTextField.backgroundColor = .systemGray5
+        searchBar.layer.cornerRadius = 8
+        searchBar.searchTextField.layer.masksToBounds = true
+        searchBar.placeholder = "Search"
+        searchBar.delegate = self
+        searchBar.searchTextField.addDoneButton()
     }
 
     deinit {
@@ -42,6 +51,30 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
         }
     }
     
+    @IBAction func searchBtn(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
+        sender.setImage(UIImage(systemName: icon), for: .normal)
+        
+        if sender.isSelected {
+            searchBar.isHidden = false
+            searchBar.becomeFirstResponder()
+        } else {
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
+            searchBar.isHidden = true
+            studentRecords = allStudents
+            listLableView.reloadData()
+        }
+    }
+    @IBAction func filterBtn(_ sender: UIButton) {
+
+        let popoverVC = PopoverViewVC(nibName: "PopoverViewVC", bundle: nil)
+        popoverVC.modalPresentationStyle = .popover
+        popoverVC.preferredContentSize = CGSize(width: 240, height: 360)
+        popoverVC.filterdelegate = self
+        showPopover(from: sender, contentVC: popoverVC)
+    }
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
@@ -98,6 +131,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                 case .success(let response):
                     guard let data = response.data?.first else { return }
                     self.studentRecords = data.upload_details ?? []
+                    self.allStudents = data.upload_details ?? []
                     self.examId = data.exam_section_id
                     self.errorDeclarationLbl.text = "⚠️ \(self.getFormattedReasonSummary())"
                     self.isNameWidthCalculated = false
@@ -226,6 +260,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
             guard let self = self else { return }
             self.view.layoutIfNeeded()
             self.isNameWidthCalculated = false
+            self.allStudents = studentRecords
             self.errorDeclarationLbl.text = "⚠️ \(self.getFormattedReasonSummary())"
             self.headerCollectionview.reloadData()
             self.listLableView.reloadData()
@@ -775,7 +810,7 @@ extension EnterMarkVC {
     }
 }
 // MARK: - Keyboard Handling
-extension EnterMarkVC {
+extension EnterMarkVC:FilterStudentMark,UISearchBarDelegate,UIPopoverPresentationControllerDelegate {
     
     func setupKeyboardObservers() {
         NotificationCenter.default.addObserver(
@@ -850,6 +885,77 @@ extension EnterMarkVC {
             object: nil
         )
     }
+    func applySort(type: SortType?, gender: String?) {
+
+        var filtered = allStudents.filter {
+            $0.gender == gender
+        }
+
+        switch type {
+
+        case .nameAZ:
+            filtered.sort { ($0.student_name ?? "") < ($1.student_name ?? "") }
+
+        case .nameZA:
+            filtered.sort { ($0.student_name ?? "") > ($1.student_name ?? "") }
+
+        case .rollAZ:
+            filtered.sort { ($0.roll_no ?? "") < ($1.roll_no ?? "") }
+
+        case .rollZA:
+            filtered.sort { ($0.roll_no ?? "") > ($1.roll_no ?? "") }
+
+        case .admAZ:
+            filtered.sort { ($0.admission_no ?? "") < ($1.admission_no ?? "") }
+
+        case .admZA:
+            filtered.sort { ($0.admission_no ?? "") > ($1.admission_no ?? "") }
+        case .none:
+            filtered = allStudents
+        }
+
+        studentRecords = filtered
+        listLableView.reloadData()
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        applySearchAndReload(searchText: searchText)
+    }
+    func applySearchAndReload(searchText: String) {
+
+        guard !searchText.isEmpty else {
+            studentRecords = allStudents
+            listLableView.reloadData()
+            return
+        }
+
+        let key = searchText.lowercased()
+
+        studentRecords = allStudents.filter {
+            ($0.student_name ?? "").lowercased().contains(key) ||
+            ($0.roll_no ?? "").lowercased().contains(key) ||
+            ($0.admission_no ?? "").lowercased().contains(key)
+        }
+
+        listLableView.reloadData()
+    }
+    func showPopover(from sender: UIView, contentVC: PopoverViewVC) {
+        contentVC.modalPresentationStyle = .popover
+        if let popover = contentVC.popoverPresentationController {
+            popover.sourceView = sender
+            popover.sourceRect = sender.bounds
+            popover.permittedArrowDirections = .any
+            popover.delegate = self
+            popover.backgroundColor = .white
+        }
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            contentVC.modalPresentationStyle = .overFullScreen
+            contentVC.view.backgroundColor = .white
+        }
+        self.present(contentVC, animated: true)
+    }
+    public func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
 }
 struct ColumnConfig: Codable {
     let displayName: String?
@@ -874,6 +980,7 @@ struct StudentMark: Codable {
     let student_name: String?
     let roll_no: String?
     let admission_no: String?
+    let gender: String?
     var marks: [SubjectMarks]?
 }
 

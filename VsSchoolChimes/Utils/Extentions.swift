@@ -1044,23 +1044,64 @@ extension UILabel {
     }
 }
 class BottomRoundedView: UIView {
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupCorners()
+        commonInit()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        commonInit()
+    }
+
+    private func commonInit() {
+        backgroundColor = .clear
         setupCorners()
     }
-    
     private func setupCorners() {
         self.layer.cornerRadius = 20
         self.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner] // bottom left + bottom right
         self.clipsToBounds = true
     }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = 20
+        layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        clipsToBounds = true
+    }
+
+    // ⭐ THIS is mandatory
+    override func draw(_ rect: CGRect) {
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        drawGradientBackground(in: context, rect: rect)
+    }
+
+    private func drawGradientBackground(in context: CGContext, rect: CGRect) {
+
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+
+        let primary = UIColor.backGroundClr
+        let topColor = primary.lighter(by: 18).cgColor
+        let middleColor = primary.cgColor
+        let bottomColor = primary.darker(by: 5).cgColor
+
+        let colors = [topColor, middleColor, bottomColor] as CFArray
+        let locations: [CGFloat] = [0.0, 0.5, 1.0]
+
+        guard let gradient = CGGradient(colorsSpace: colorSpace,
+                                        colors: colors,
+                                        locations: locations) else { return }
+
+        context.drawLinearGradient(
+            gradient,
+            start: CGPoint(x: rect.midX, y: rect.minY),
+            end: CGPoint(x: rect.midX, y: rect.maxY),
+            options: []
+        )
+    }
 }
+
 
 
 import UIKit
