@@ -35,6 +35,10 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         academicYearBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         titleLbl.setFont(style: .title, size: FontSize.TitleSize)
         titleLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        
+        selectYourClassLbl.text = ExamMarkUploadString.Select_Your_Class.translated()
+        chooseClassLbl.text = ExamMarkUploadString.Choose_a_class_to_start_processing_marks.translated()
+        
         noDataImage.isHidden = true
         noDataLbl.isHidden = true
         searchBtn.isHidden = true
@@ -44,7 +48,7 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         searchBar.searchTextField.addDoneButton()
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.backgroundImage = UIImage()
-
+        
         tv.register(UINib(nibName: CellConfingName.Exam_ClassListTV, bundle: nil), forCellReuseIdentifier: CellConfingName.Exam_ClassListTV)
         
         tv.delegate = self
@@ -92,7 +96,7 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                     for standard in standardData{
                         for section in standard.sections ?? [] {
                             
-                            let displayName = "Standard \(standard.name ?? "") - Section \(section.name ?? "")"
+                            let displayName = "\(CommonStringFile.Standard.translated()) \(standard.name ?? "") - \(CommonStringFile.Section.translated()) \(section.name ?? "")"
                             classList.append(ClassDisplayItem(displayName: displayName, standardId: standard.id ?? "", sectionId: section.id ?? ""))
                         }
                     }
@@ -147,35 +151,35 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
             
         }
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            
-            let trimmedText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-            
-            if trimmedText.isEmpty {
-                // Show all data
-                filteredClassList = classList
-            } else {
-                // Filter by displayName
-                filteredClassList = classList.filter {
-                    $0.displayName.localizedCaseInsensitiveContains(trimmedText)
-                }
+        let trimmedText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if trimmedText.isEmpty {
+            // Show all data
+            filteredClassList = classList
+        } else {
+            // Filter by displayName
+            filteredClassList = classList.filter {
+                $0.displayName.localizedCaseInsensitiveContains(trimmedText)
             }
-            let hide = filteredClassList.isEmpty
-            noDataImage.isHidden = !hide
-            noDataLbl.isHidden = !hide
-            selectYourClassLbl.isHidden = hide
-            chooseClassLbl.isHidden = hide
-            noDataLbl.text = "No data Found!"
-            tv.reloadData()
         }
-
-
+        let hide = filteredClassList.isEmpty
+        noDataImage.isHidden = !hide
+        noDataLbl.isHidden = !hide
+        selectYourClassLbl.isHidden = hide
+        chooseClassLbl.isHidden = hide
+        noDataLbl.text = AlertstringFile.No_Data_Found.translated()
+        tv.reloadData()
+    }
+    
+    
     @IBAction func BackAct(_ sender: Any) {
         
         dismiss(animated: true)
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredClassList.count
     }
@@ -200,5 +204,5 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
-
+    
 }

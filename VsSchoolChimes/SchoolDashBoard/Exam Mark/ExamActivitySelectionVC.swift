@@ -44,12 +44,13 @@ class ExamActivitySelectionVC: UIViewController {
         topInfoView.layer.borderColor = UIColor.staffExamColour.cgColor
         
         if isAIFlow{
-            topInfoLbl.text = "Click the radio button next to each activity to select a column from your uploaded image."
-            bottomInfoLbl.text = "💡 Tip: You don't need to fill all activities now. Unmapped activities can be filled later."
+            topInfoLbl.text = ExamMarkUploadString.Click_the_radio_button_next_to_each_activity.translated()
+            bottomInfoLbl.text = ExamMarkUploadString.Tip_Unmapped_activities_can_be_filled_later.translated()
+            continueBtn.setTitle(ExamMarkUploadString.Continue_to_Review.translated(), for: .normal)
         }else{
-           
-            topInfoLbl.text = "Choose the activities where you would like to enter marks manually."
-            bottomInfoLbl.text = "Please select at least one activity to continue."
+            topInfoLbl.text = ExamMarkUploadString.Choose_the_activities_where_you_would_like_to_enter_marks_manually.translated()
+            bottomInfoLbl.text = ExamMarkUploadString.Please_select_at_least_one_activity_to_continue.translated()
+            continueBtn.setTitle(ExamMarkUploadString.Continue_to_Entry.translated(), for: .normal)
         }
         
         bottomInfoView.layer.cornerRadius = 10
@@ -63,8 +64,7 @@ class ExamActivitySelectionVC: UIViewController {
         examDateLbl.text = monthYear(from: SelectedExam?.date ?? "")
         
         tableview.isScrollEnabled = false
-        tableview.register(UINib(nibName: "SubjectsTVCell", bundle: nil),
-                           forCellReuseIdentifier: "SubjectsTVCell")
+        tableview.register(UINib(nibName: CellConfingName.SubjectsTVCell, bundle: nil),forCellReuseIdentifier: CellConfingName.SubjectsTVCell)
         
         tableview.delegate = self
         tableview.dataSource = self
@@ -116,9 +116,14 @@ class ExamActivitySelectionVC: UIViewController {
                 case .success(let response):
                     self.SubjectList = response.data ?? []
                     self.tableview.reloadData()
+                    
+                    if !(response.status ?? false) {
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: response.message ?? "", on: self) {}
+                    }
                    
                 case .failure(let error):
                     print("Error loading subjects: \(error)")
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: error.localizedDescription, on: self) {}
                 }
             }
         }
@@ -143,7 +148,7 @@ class ExamActivitySelectionVC: UIViewController {
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         } else {
-            let message = isAIFlow ? "Please Map atleast one activity to continue" : "Please select atleast one activity to continue"
+            let message = isAIFlow ? ExamMarkUploadString.Please_Map_atleast_one_activity_to_continue.translated() : ExamMarkUploadString.Please_select_atleast_one_activity_to_continue.translated()
             CustomAlert.showAlertWithOkAction(title: AlertstringFile.Missing_Information, message: message, on: self)
         }
     }
@@ -183,8 +188,6 @@ class ExamActivitySelectionVC: UIViewController {
         ]
     }
 
-
-    
     @IBAction func BackAct(_ sender: Any) {
         dismiss(animated: true)
     }
@@ -198,7 +201,7 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SubjectsTVCell", for: indexPath) as! SubjectsTVCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SubjectsTVCell, for: indexPath) as! SubjectsTVCell
 
         let data = SubjectList[indexPath.row]
 

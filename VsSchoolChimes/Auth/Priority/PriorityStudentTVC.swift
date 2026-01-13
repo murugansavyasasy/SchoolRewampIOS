@@ -17,7 +17,7 @@ class PriorityStudentTVC: UITableViewCell {
     @IBOutlet weak var SchoolNameLbl: UILabel!
     @IBOutlet weak var SchoolAdressLbl: UILabel!
     @IBOutlet weak var innerView: UIView!
-    
+    @IBOutlet weak var academicYearLbl: UILabel!
     private var gradientLayer: CAGradientLayer?
     private var blurView: UIVisualEffectView?
     private var gradientColors: [CGColor] = []

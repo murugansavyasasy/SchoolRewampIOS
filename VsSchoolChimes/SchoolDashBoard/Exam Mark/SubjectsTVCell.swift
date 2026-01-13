@@ -53,7 +53,7 @@ class SubjectsTVCell: UITableViewCell {
         tableview.isHidden = true
         tableviewHeight.constant = 0
         
-        tableview.register(UINib(nibName: "ActivitiesTVCell", bundle: nil),forCellReuseIdentifier: "ActivitiesTVCell")
+        tableview.register(UINib(nibName: CellConfingName.ActivitiesTVCell, bundle: nil),forCellReuseIdentifier: CellConfingName.ActivitiesTVCell)
         
         tableview.delegate = self
         tableview.dataSource = self
@@ -93,23 +93,23 @@ class SubjectsTVCell: UITableViewCell {
         
         if isAI{
             if selected == 0{
-                statusLbl.text = "Not started"
+                statusLbl.text = ExamMarkUploadString.Not_started.translated()
                 statusLbl.textColor = .darkGray
                 subjectView.backgroundColor = .systemBackground
                 baseView.layer.borderColor = UIColor.lightGray.cgColor
             }else if selected < splits.count {
-                statusLbl.text = "\(selected) of \(splits.count) activities mapped"
+                statusLbl.text = String(format: ExamMarkUploadString.Activities_mapped_count.translated(),selected,splits.count)
                 statusLbl.textColor = .systemBrown
                 subjectView.backgroundColor = .systemYellow.withAlphaComponent(0.05)
                 baseView.layer.borderColor = UIColor.systemOrange.cgColor
             }else{
-                statusLbl.text = "All \(splits.count) activities mapped"
+                statusLbl.text = String(format: ExamMarkUploadString.All_activities_mapped.translated(),splits.count)
                 statusLbl.textColor = .systemGreen
                 subjectView.backgroundColor = .systemGreen.withAlphaComponent(0.05)
                 baseView.layer.borderColor = UIColor.systemGreen.cgColor
             }
         }else{
-            statusLbl.text = "\(selected) of \(splits.count) activities selected"
+            statusLbl.text = String(format: ExamMarkUploadString.Activities_selected_count.translated(),selected,splits.count)
         }
     }
     
@@ -144,7 +144,7 @@ extension SubjectsTVCell: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ActivitiesTVCell", for: indexPath) as! ActivitiesTVCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ActivitiesTVCell, for: indexPath) as! ActivitiesTVCell
         
         cell.configure(subjectIndex: subjectIndex, splitIndex: indexPath.row, split: splits[indexPath.row], isAi: isAI, items: DropdownData ?? [])
         cell.delegate = self

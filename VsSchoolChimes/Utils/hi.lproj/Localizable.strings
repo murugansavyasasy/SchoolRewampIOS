@@ -434,7 +434,6 @@
 "RollNo" = "रोल नंबर";
 "Status" = "स्थिति";
 "LeaveRequests" = "छुट्टी के अनुरोध";
-"Section" = "सेक्शन '10वीं सी'";
 "RollNo DESC" = "Roll No घटता क्रम";
 "RollNo ASC" = "Roll No बढ़ता क्रम";
 "Name ASC" = "नाम बढ़ता क्रम";
@@ -737,3 +736,39 @@
 "Enter your reason here..." = "अपना कारण यहाँ दर्ज करें...";
 "any_other_suggestions" = "कोई और सुझाव? (वैकल्पिक)";
 "rate_experience" = "अपने अनुभव को आप कैसे रेट करेंगे?";
+
+//MARK: Exam mark Upload
+"Continue to Manual Entry?" = "मैनुअल एंट्री जारी रखें?";
+"You'll enter student marks manually in the next step. You can add and edit all mark data directly without AI processing." = "अगले चरण में आप छात्रों के अंक मैनुअल रूप से दर्ज करेंगे। बिना AI प्रोसेसिंग के आप सभी अंक डेटा को सीधे जोड़ और संपादित कर सकते हैं।";
+"Yes, Continue Manually" = "हाँ, मैनुअल रूप से जारी रखें";
+"Upload Mark Sheet" = "अंक पत्र अपलोड करें";
+"Upload an image for AI processing or skip to map manually" = "AI प्रोसेसिंग के लिए छवि अपलोड करें या मैनुअल मैपिंग के लिए छोड़ें";
+"AI-Powerd Upload" = "AI-संचालित अपलोड";
+"Upload image for automatic detection" = "स्वचालित पहचान के लिए छवि अपलोड करें";
+"AI will automatically detect:" = "AI स्वचालित रूप से पहचान करेगा:";
+"Student names and roll numbers," = "छात्रों के नाम और रोल नंबर,";
+"Subject columns and marks," = "विषय कॉलम और अंक,";
+"Table structure and layout," = "तालिका संरचना और लेआउट,";
+"Click to upload" = "अपलोड करने के लिए क्लिक करें";
+"PNG, JPG up to 10MB" = "PNG, JPG 10MB तक";
+"Continue with Upload" = "अपलोड के साथ जारी रखें";
+"Manual Entry" = "मैनुअल एंट्री";
+"Skip upload and enter marks manually" = "अपलोड छोड़ें और अंक मैनुअल रूप से दर्ज करें";
+"Select Your Class" = "अपनी कक्षा चुनें";
+"Choose a class to start processing marks" = "अंकों की प्रक्रिया शुरू करने के लिए एक कक्षा चुनें";
+"Activities :" = "गतिविधियाँ :";
+"Select an Exam to continue" = "जारी रखने के लिए परीक्षा चुनें";
+"Continue to Upload" = "अपलोड जारी रखें";
+"Please select an exam to continue" = "जारी रखने के लिए कृपया परीक्षा चुनें";
+"💡 Tip: You don't need to fill all activities now. Unmapped activities can be filled later." = "💡 सुझाव: अभी सभी गतिविधियाँ भरना आवश्यक नहीं है। जो गतिविधियाँ मैप नहीं की गई हैं, उन्हें बाद में भरा जा सकता है।";
+"Continue to Review" = "समीक्षा जारी रखें";
+"Not started" = "शुरू नहीं हुआ";
+"Click the radio button next to each activity to select a column from your uploaded image." = "अपलोड की गई छवि से एक कॉलम चुनने के लिए प्रत्येक गतिविधि के पास रेडियो बटन पर क्लिक करें।";
+"Choose the activities where you would like to enter marks manually." = "वे गतिविधियाँ चुनें जिनमें आप अंक मैनुअल रूप से दर्ज करना चाहते हैं।";
+"Please select at least one activity to continue." = "जारी रखने के लिए कृपया कम से कम एक गतिविधि चुनें।";
+"%d of %d activities selected" = "%d में से %d गतिविधियाँ चयनित";
+"Continue to Entry" = "एंट्री पर जारी रखें";
+"Please Map atleast one activity to continue" = "जारी रखने के लिए कम से कम एक गतिविधि मैप करें";
+"Please select atleast one activity to continue" = "जारी रखने के लिए कृपया कम से कम एक गतिविधि चुनें";
+"All %d activities mapped" = "सभी %d गतिविधियाँ मैप की गई हैं";
+"%d of %d activities mapped" = "%d में से %d गतिविधियाँ मैप की गई हैं";

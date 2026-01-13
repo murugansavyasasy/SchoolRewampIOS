@@ -372,6 +372,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             }
                
             cell.SchoolAdressLbl.text = childDetails?[indexPath.row].school_city ?? ""
+            cell.academicYearLbl.text = CommonStringFile.Academic_Year.translated() + " : " + (childDetails?[indexPath.row].academic_year_name ?? "")
             DispatchQueue.main.async {
                 self.containerViewHeightConstraint.constant = self.tableview.contentSize.height
                 self.view.layoutIfNeeded()
