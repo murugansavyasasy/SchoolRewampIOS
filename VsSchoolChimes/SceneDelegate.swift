@@ -56,8 +56,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate,UNUserNotificationCenter
            }
            NetworkMonitor.shared.startMonitoring()
        }
-
-       // 🔥 Forward the notification to AppDelegate handler
        private func forwardToAppDelegate(_ userInfo: [AnyHashable: Any]) {
            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
                appDelegate.handleNotificationTap(userInfo: userInfo)

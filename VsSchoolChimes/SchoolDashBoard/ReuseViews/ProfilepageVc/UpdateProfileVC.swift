@@ -143,20 +143,19 @@ class UpdateProfileVC: UIViewController, reloadDelegate {
                     if response.status == true,
                        let data = response.data,
                        let firstProfileData = data.first {
-                        
-                        // Populate profileSections excluding photo section
-                        self.profileSections = firstProfileData.getAllSections().filter { $0.title != "Photo" }
-                        if let photoPathItems = firstProfileData.photoPath,
-                           let photoItem = photoPathItems.first,
-                           let photoPath = photoItem.value,
-                           !photoPath.isEmpty,
-                           let imageUrl = URL(string: photoPath) {
-                            self.profileImg.kf.setImage(with: imageUrl)
+                        self.profileSections = firstProfileData.getAllSections().filter { $0.title != "Student Image" }
+                        if let photoItem = firstProfileData.photoPath?.first,
+                           let imageUrl = URL(string: photoItem.value ?? "") {
+                            
+                            self.profileImg.kf.setImage(
+                                with: imageUrl,
+                                placeholder: UIImage(systemName: "person.fill")
+                            )
                             self.changeProfileUrl = imageUrl
-                            self.profileNode = photoItem.node ?? "photoPath"
-                            self.editBtn.isHidden = !(photoItem.is_editable ?? false)
                         }
-                        
+
+                        self.profileNode = firstProfileData.photoPath?.first?.node ?? "photoPath"
+                        self.editBtn.isHidden = !(firstProfileData.photoPath?.first?.is_editable == true)
                         if let documentSection = self.profileSections.first(where: { section in
                             section.items.contains(where: { $0.node == "documents" })
                         }), let documentItem = documentSection.items.first(where: { $0.node == "documents" }) {
