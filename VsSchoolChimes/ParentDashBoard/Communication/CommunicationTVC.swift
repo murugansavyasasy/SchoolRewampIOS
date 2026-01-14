@@ -60,12 +60,30 @@ class CommunicationTVC: UITableViewCell {
         setupNotifications()
     }
 
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        stopPlayback()
+//        audioURL = nil
+//        cellIndex = 0
+//        audioDelegate = nil
+//    }
     override func prepareForReuse() {
         super.prepareForReuse()
         stopPlayback()
-        audioURL = nil
-        cellIndex = 0
+        audioManager.stop()
+        waveView.reset()
+        waveView.audioURL = nil
+        runningDurationLbl.text = "00:00"
+        tottalDurationLbl.text = "00:00"
+        playBtn.isSelected = false
+        playBtn.isEnabled = true
+        newImageView.isHidden = true
+        emergencyBtnName.isHidden = true
+        selectBtnName.isHidden = true
+        selectBtnHeight.constant = 0
         audioDelegate = nil
+        selectedAudioDelegate = nil
+        cellIndex = -1
     }
 
     deinit {

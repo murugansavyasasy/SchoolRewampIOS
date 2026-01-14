@@ -451,6 +451,7 @@ class CommunicationReciverData: Codable {
     let is_archive: Bool?
     let duration : Int?
     var playbackSeconds: Double?
+    var loadFile: Bool?
 }
 
 struct ReadStatusResponse: Codable {

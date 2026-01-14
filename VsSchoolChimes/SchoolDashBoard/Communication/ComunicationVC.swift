@@ -340,6 +340,16 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         let bubbleClick = UITapGestureRecognizer(target: self, action: #selector(Enabel_buble))
         EnableCallLbl.addGestureRecognizer(bubbleClick)
         waveView.setParentCell(self)
+        
+        //view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ContentViewTapped)))
+    }
+    
+    @IBAction func ContentViewTapped(){
+        timePicker.isHidden = true
+        doneButton.isHidden = true
+        self.activeButton = nil
+        dateBtn.isSelected = false
+        ViewAnimator.hideFade(calanderOuter)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -1116,7 +1126,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         if emengencyCall.isOn{
             Timinglbl.text = Defaultdurations
         }else{
-            Timinglbl.text = Defaultdurations
+            Timinglbl.text = "00:00/03:00"
         }
         moveTextmessage.isHidden = false
         voiceTitleeTxt.text = ""
@@ -1415,10 +1425,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     @IBAction func timeChanged(_ sender: UIButton) {
+        dateBtn.isSelected = false
+        ViewAnimator.hideFade(calanderOuter)
         showTimePicker(for: sender)
         
     }
     @IBAction func fromTime(_ sender: UIButton) {
+        dateBtn.isSelected = false
+        ViewAnimator.hideFade(calanderOuter)
         showTimePicker(for: sender)
     }
     
@@ -1464,6 +1478,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBAction func calander(_ sender: UIButton) {
         sender.isSelected.toggle()
         if sender.isSelected {
+            timePicker.isHidden = true
+            doneButton.isHidden = true
+            self.activeButton = nil
             ViewAnimator.showFade(calanderOuter)
         } else {
             ViewAnimator.hideFade(calanderOuter)

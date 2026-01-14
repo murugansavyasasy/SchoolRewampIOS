@@ -125,23 +125,6 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ydH-nc-hrJ">
-                                <rect key="frame" x="275" y="0.0" width="35" height="35"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new-image" translatesAutoresizingMaskIntoConstraints="NO" id="ATW-Ce-Vgz">
-                                        <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="tintColor" systemColor="linkColor"/>
-                                <constraints>
-                                    <constraint firstItem="ATW-Ce-Vgz" firstAttribute="leading" secondItem="ydH-nc-hrJ" secondAttribute="leading" id="CkR-ln-M83"/>
-                                    <constraint firstAttribute="bottom" secondItem="ATW-Ce-Vgz" secondAttribute="bottom" id="MV7-Pf-9kS"/>
-                                    <constraint firstAttribute="height" constant="35" id="gJ6-to-kzc"/>
-                                    <constraint firstItem="ATW-Ce-Vgz" firstAttribute="top" secondItem="ydH-nc-hrJ" secondAttribute="top" id="gsm-CK-2Vh"/>
-                                    <constraint firstAttribute="trailing" secondItem="ATW-Ce-Vgz" secondAttribute="trailing" id="i7Z-aY-UeU"/>
-                                    <constraint firstAttribute="width" constant="35" id="lOV-SH-Sci"/>
-                                </constraints>
-                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="CYT-VZ-S41">
                                 <rect key="frame" x="20" y="146" width="66.333333333333329" height="13.333333333333343"/>
                                 <subviews>
@@ -181,6 +164,23 @@
                                     <action selector="selectBtnAct:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="HB3-sr-9Wz"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ydH-nc-hrJ">
+                                <rect key="frame" x="275" y="0.0" width="35" height="35"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="new-image" translatesAutoresizingMaskIntoConstraints="NO" id="ATW-Ce-Vgz">
+                                        <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="tintColor" systemColor="linkColor"/>
+                                <constraints>
+                                    <constraint firstItem="ATW-Ce-Vgz" firstAttribute="leading" secondItem="ydH-nc-hrJ" secondAttribute="leading" id="CkR-ln-M83"/>
+                                    <constraint firstAttribute="bottom" secondItem="ATW-Ce-Vgz" secondAttribute="bottom" id="MV7-Pf-9kS"/>
+                                    <constraint firstAttribute="height" constant="35" id="gJ6-to-kzc"/>
+                                    <constraint firstItem="ATW-Ce-Vgz" firstAttribute="top" secondItem="ydH-nc-hrJ" secondAttribute="top" id="gsm-CK-2Vh"/>
+                                    <constraint firstAttribute="trailing" secondItem="ATW-Ce-Vgz" secondAttribute="trailing" id="i7Z-aY-UeU"/>
+                                    <constraint firstAttribute="width" constant="35" id="lOV-SH-Sci"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -242,10 +242,10 @@
             <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.2196078431372549" blue="0.23529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -1060,13 +1060,13 @@ class BottomRoundedView: UIView {
         setupCorners()
     }
     private func setupCorners() {
-        self.layer.cornerRadius = 20
+        self.layer.cornerRadius = 15
         self.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner] // bottom left + bottom right
         self.clipsToBounds = true
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        layer.cornerRadius = 20
+        layer.cornerRadius = 15
         layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         clipsToBounds = true
     }

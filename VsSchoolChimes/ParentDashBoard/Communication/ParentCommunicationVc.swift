@@ -11,9 +11,22 @@ import AVFoundation
 
 class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPalyingDelegate, AudioPlaybackDelegate1{
     func audioCell(_ cell: CommunicationTVC, willStartPlayingAtIndex index: Int) {
+        
         if let audioCell = cell as? CommunicationTVC,
            audioCell.cellIndex != index {
             audioCell.stopPlayback()
+            
+            
+            let message = displayedMessages[index]
+            
+            if message.is_unread ?? false{
+                audioCell.newImageView.isHidden = true
+                if message.is_archive ?? false{
+                    ReadStatusUpdate(type: message.type ?? "", detail_id: message.id ?? "")
+                }else{
+                    ReadStatusUpdateArchive(type: message.type ?? "", detail_id: message.id ?? "")
+                }
+            }
         }
     }
     
@@ -296,10 +309,10 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
         APIService.shared.makeApi(url: ServiceUrl.comm_communication_list, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result : Result<CommunicationReciverResponse,Error>) in
             
             guard let self = self else {return}
-            switch result {
-            case .success(let SuccessMessage):
-                if SuccessMessage.status == true {
-                    DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let SuccessMessage):
+                    if SuccessMessage.status == true {
                         self.allMessages = SuccessMessage.data ?? []
                         self.displayedMessages = self.allMessages
                         self.NodataLbl.isHidden = true
@@ -311,10 +324,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
                                 self.scrollToClickedMessage()
                             }
                         }
-                    }
-                }else {
-                    
-                    DispatchQueue.main.async {
+                        
+                    }else {
+                        
                         self.allMessages = []
                         self.displayedMessages = self.allMessages
                         self.NodataLbl.text = SuccessMessage.message
@@ -323,19 +335,21 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
                         self.searchBtn.isHidden = true
                         self.tv.isScrollEnabled = false
                         self.tv.reloadData()
-                        if #available(iOS 15.0, *) {
-                            self.hideActivityLoader()
-                        }
                     }
+                    
+                case .failure(let error):
+                    
+                    self.allMessages = []
+                    self.displayedMessages = self.allMessages
+                    self.NodataLbl.text = error.localizedDescription
+                    self.NodataLbl.isHidden = false
+                    self.NodataImage.isHidden = false
+                    self.searchBtn.isHidden = true
+                    self.tv.isScrollEnabled = false
+                    self.tv.reloadData()
                 }
                 
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    print(error.localizedDescription)
-                    if #available(iOS 15.0, *) {
-                        self.hideActivityLoader()
-                    }
-                }
+                self.hideActivityLoader()
             }
         }
     }
@@ -450,12 +464,18 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
     }
     
     func ReadStatusUpdateArchive(type: String,detail_id: String){
-        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update_archive, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "", isBaseUrl: true) { [self] (result : Result<ReadStatusResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update_archive, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result : Result<ReadStatusResponse,Error>) in
+            
+            guard let self = self else {return}
             
             switch result {
             case .success(let SuccessMessage):
-                DispatchQueue.main.async {
-                    print(SuccessMessage.message)
+                if SuccessMessage.status == true {
+                    DispatchQueue.main.async { [weak self] in
+                        if let index = self?.displayedMessages.firstIndex(where: {$0.id == detail_id}) {
+                            self?.displayedMessages[index].is_unread = false
+                        }
+                    }
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -553,13 +573,16 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             let duration = voiceData.duration ?? 0
             let formattedDuration = formatDuration(duration)
             cell.tottalDurationLbl.text = formattedDuration
-//              cell.runningDurationLbl.isHidden = true
             if !isPlaying {
             }else{
                 cell.newImageView.isHidden = true
             }
             cell.newImageView.isHidden = !(message.is_unread ?? false)
-            configureAudioCell(cell, at: indexPath)
+//            if voiceData.loadFile != true || voiceData.loadFile == nil{
+                configureAudioCell(cell, at: indexPath)
+                message.loadFile = true
+//            }
+            
             return cell
             
         default:
@@ -568,13 +591,15 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     }
     
     private func configureAudioCell(_ cell: CommunicationTVC, at indexPath: IndexPath) {
-        let file = displayedMessages[indexPath.item]
-        let url = URL(string: file.content ?? "")
+//        if displayedMessages[indexPath.item].loadFile != true{
+            let file = displayedMessages[indexPath.item]
+            let url = URL(string: file.content ?? "")
             cell.audioURL = url
-        cell.audioDelegate = self
-        cell.cellIndex = indexPath.item
-        cell.waveView.setParentCell(cell)
-       
+            cell.audioDelegate = self
+            cell.cellIndex = indexPath.item
+            cell.waveView.setParentCell(cell)
+//            displayedMessages[indexPath.item].loadFile = true
+//        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
