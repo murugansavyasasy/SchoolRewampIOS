@@ -88,8 +88,6 @@ class NotificationCallVC: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("welcomeFileUrl---->\(welcomeFileUrl)")
-        print("voiceUrl---->\(voiceUrl)")
         stopLocalRingtone()
         setupModernUI()
         setupCallerInfo()
@@ -211,10 +209,8 @@ class NotificationCallVC: UIViewController {
         // When user presses power button
         switch callState {
         case .ringing:
-            print("🔴 Power button pressed - declining call")
             declineCallAction()
         case .active:
-            print("🔴 Power button pressed - ending call")
             cutCallAction()
         default:
             break
@@ -262,7 +258,6 @@ class NotificationCallVC: UIViewController {
             try session.setActive(true)
             return session.outputVolume == 0
         } catch {
-            print("Failed to check silent mode: \(error)")
             return false
         }
     }
@@ -300,7 +295,6 @@ class NotificationCallVC: UIViewController {
 //
     private func playLocalRingtone(named name: String, ext: String) {
         guard let path = Bundle.main.url(forResource: name, withExtension: ext) else {
-            print("❌ schoolchimes_tone.wav not found")
             playSystemDefaultTone()
             return
         }
@@ -311,7 +305,6 @@ class NotificationCallVC: UIViewController {
             audioPlayer?.numberOfLoops = -1   // infinite loop
             audioPlayer?.play()
         } catch {
-            print("❌ Local audio play failed:", error)
             playSystemDefaultTone()
         }
     }
@@ -327,7 +320,6 @@ class NotificationCallVC: UIViewController {
         }
         
         do {
-            // Use .playback so it can play even in silent if you want
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .voiceChat)
             try AVAudioSession.sharedInstance().setActive(true)
             
@@ -799,10 +791,8 @@ class NotificationCallVC: UIViewController {
             let session = AVAudioSession.sharedInstance()
             if speakerBtn.isSelected {
                 try session.overrideOutputAudioPort(.speaker)
-                print("🔈 Speaker ON")
             } else {
                 try session.overrideOutputAudioPort(.none)
-                print("🔇 Speaker OFF (earpiece)")
             }
         } catch {
             print("⚠️ Failed to toggle speaker: \(error.localizedDescription)")
@@ -998,9 +988,7 @@ class NotificationCallVC: UIViewController {
             self.audioPlayer?.play()
             
             self.startAudioTimer()
-            print("✅ Audio playing through earpiece")
         } catch {
-            print("Audio setup failed: \(error)")
             self.handleAudioPlaybackError()
         }
     }
@@ -1083,7 +1071,6 @@ class NotificationCallVC: UIViewController {
     
     deinit {
         cleanup()
-        print("NotificationCallVC deinitialized")
     }
 }
 
@@ -1107,8 +1094,6 @@ extension NotificationCallVC: AVAudioPlayerDelegate {
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         guard player == audioPlayer else { return }
-        
-        print("Audio decode error: \(error?.localizedDescription ?? "Unknown error")")
         DispatchQueue.main.async {
             self.durationLbl.text = "Audio error"
             self.handleAudioPlaybackError()

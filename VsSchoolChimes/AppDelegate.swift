@@ -107,7 +107,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             vc.userInfo = userInfo
             vc.voiceUrl = userInfo["url"] as? String ?? ""
             vc.welcomeFileUrl = userInfo["welcome"] as? String ?? ""
-            print("--->\(userInfo["welcome"] as? String ?? "")")
             vc.modalPresentationStyle = .fullScreen
             topVC.present(vc, animated: true)
         }
