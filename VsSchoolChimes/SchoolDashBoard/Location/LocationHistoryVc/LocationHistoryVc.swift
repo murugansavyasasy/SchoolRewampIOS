@@ -110,42 +110,46 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 if successMessage.status == true {
                     DispatchQueue.main.async {
                         guard let self = self else { return }
+                        
                         self.AcadimicYearDatas = successMessage.data ?? []
                         self.years.removeAll()
-                        
-                        var currentAcademicYear: String?
-                        
+
+                        var yearSet = Set<String>()
+                        var currentAcademicYearEnd: String?
+
                         for yearData in self.AcadimicYearDatas {
-                            // Append all first years
-                            if let year = yearData.year,
-                               let firstYear = year.components(separatedBy: "-").first?.trimmingCharacters(in: .whitespaces) {
-                                self.years.append(firstYear)
-                            }
-                            if yearData.current_academic_year == true {
-                                if let year = yearData.year,
-                                   let firstYear = year.components(separatedBy: "-").first?.trimmingCharacters(in: .whitespaces) {
-                                    currentAcademicYear = firstYear
+                            guard let yearRange = yearData.year else { continue }
+                            
+                            let parts = yearRange
+                                .components(separatedBy: "-")
+                                .map { $0.trimmingCharacters(in: .whitespaces) }
+                            
+                            // Add both years to Set (ensures uniqueness)
+                            if parts.count == 2 {
+                                yearSet.insert(parts[0])
+                                yearSet.insert(parts[1])
+                                
+                                // Capture END year of current academic year
+                                if yearData.current_academic_year == true {
+                                    currentAcademicYearEnd = parts[1]
                                 }
                             }
                         }
-                        
-                        // Once data is loaded
-                        if let year = currentAcademicYear {
-                            self.yearLbl.text = year
-                            
-                            if let firstYear = year.components(separatedBy: " - ").first {
-                                if !self.years.isEmpty {
-                                    self.Months = self.getMonthNames(for: firstYear)
-                                    self.selectMthLbl.text = self.Months[self.currentMonth - 1]
-                                    self.SelectedMonthCode = String(format: "%02d", self.currentMonth)
-                                }
-                            }
-                            
+
+                        // Convert Set → Sorted Array
+                        self.years = Array(yearSet).sorted()
+
+                        // Set label and dependent data
+                        if let currentYear = currentAcademicYearEnd {
+                            self.yearLbl.text = currentYear
+                            self.Months = self.getMonthNames(for: currentYear)
+                            self.selectMthLbl.text = self.Months[self.currentMonth - 1]
+                            self.SelectedMonthCode = String(format: "%02d", self.currentMonth)
                             self.geometric_principal_attendance_report()
                             self.setupTableView()
                         }
-                        
-                        print("First Years: \(self.years)")
+
+                        print("Unique Years:", self.years)
                     }
                 }
             case .failure(let error):

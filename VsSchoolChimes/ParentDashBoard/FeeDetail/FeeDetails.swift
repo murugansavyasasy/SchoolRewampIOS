@@ -25,6 +25,7 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var studentNameLbl: UILabel!
     @IBOutlet weak var menuNameLbl: UILabel!
+    @IBOutlet weak var refreshBtn: UIButton!
     
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var global = UserDefaultFileManager.get_globalSelection()
@@ -36,6 +37,8 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
         super.viewDidLoad()
         webView.navigationDelegate = self
         studentNameLbl.configureAsBackTitle(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
+        
+        refreshBtn.layer.cornerRadius = 10
         
         menuNameLbl.text = MenuStringFile.selectedMenuName
         tableOuterView.isHidden = true
@@ -66,6 +69,11 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
         dismiss(animated: true)
     }
     
+    
+    @IBAction func refreshBtnAct(_ sender: Any) {
+        webView.reload()
+    }
+    
     @IBAction func switchController(_ sender: UIButton) {
         let selectedIndex = sender.tag
         updateTabUI(for: selectedIndex)
@@ -73,9 +81,11 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
             UIView.transition(with: self.view, duration: 0.3, options: .transitionCrossDissolve, animations: { [self] in
                    switch selectedIndex {
                    case 0:
+                       self.refreshBtn.isHidden = false
                        self.webOuterView.isHidden = false
                        self.tableOuterView.isHidden = true
                    case 1:
+                       self.refreshBtn.isHidden = true
                        self.webOuterView.isHidden = true
                        self.tableOuterView.isHidden = false
                        LoadingView.isHidden = true

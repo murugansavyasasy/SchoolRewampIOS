@@ -407,8 +407,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             Enabel_buble()
         }
         else{
+            stopRecording()
+            if let url = URL(string:AudioPlayUrl ?? ""){
+                deletRecoding()
+            }
             isEmergencyVoice = false
-            Timinglbl.text = Defaultdurations
+            Timinglbl.text = "00:00/03:00"
         }
     }
     
@@ -1188,7 +1192,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
     }
   
-    func showTimePicker(for button: UIButton) {
+    /*func showTimePicker(for button: UIButton) {
         activeButton = button
 
         let buttonFrame = button.convert(button.bounds, to: self.view)
@@ -1219,18 +1223,89 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
 
         timePicker.fadeAndPopIn()
         doneButton.fadeAndPopIn()
-    }
+    }*/
+    
+    func showTimePicker(for button: UIButton) {
+        activeButton = button
 
-    @objc func timePickerChanged(_ picker: UIDatePicker) {
-        guard let from = selectedFromTime, activeButton == toTime else { return }
+        let buttonFrame = button.convert(button.bounds, to: self.view)
+        timePicker.frame = CGRect(
+            x: (self.view.frame.width - 250) / 2,
+            y: buttonFrame.maxY + 10,
+            width: 250,
+            height: 200
+        )
+
+        doneButton.frame = CGRect(
+            x: timePicker.frame.maxX - 80,
+            y: timePicker.frame.maxY - 40,
+            width: 70,
+            height: 30
+        )
+
+        timePicker.datePickerMode = .time
+        timePicker.backgroundColor = .white
+        timePicker.addTarget(self, action: #selector(timePickerChanged(_:)), for: .valueChanged)
 
         let calendar = Calendar.current
-        let diff = calendar.dateComponents([.minute], from: from, to: picker.date).minute ?? 0
-        let intervalsPassed = max(0, diff / intervalMinutes)
-        let snappedDate = calendar.date(byAdding: .minute, value: intervalsPassed * intervalMinutes, to: from)!
+        let now = Date()
 
-        picker.setDate(snappedDate, animated: false)
+        if button == fromTime {
+            if isTodaySelected() {
+                let minFromTime = calendar.date(byAdding: .minute, value: 10, to: now)!
+                timePicker.minimumDate = minFromTime
+                timePicker.setDate(minFromTime, animated: false)
+            } else {
+                timePicker.minimumDate = nil
+            }
+
+        } else if button == toTime, let from = selectedFromTime {
+            let minToTime = calendar.date(byAdding: .minute, value: 40, to: from)!
+            timePicker.minimumDate = minToTime
+            timePicker.setDate(minToTime, animated: false)
+        }
+
+        timePicker.maximumDate = nil
+        timePicker.fadeAndPopIn()
+        doneButton.fadeAndPopIn()
     }
+
+
+    @objc func timePickerChanged(_ picker: UIDatePicker) {
+        let calendar = Calendar.current
+
+        if activeButton == fromTime {
+            selectedFromTime = picker.date
+
+            // If To Time picker is opened later, it will always be >= From + 40
+        }
+
+        if activeButton == toTime, let from = selectedFromTime {
+            let minToTime = calendar.date(byAdding: .minute, value: 40, to: from)!
+            if picker.date < minToTime {
+                picker.setDate(minToTime, animated: true)
+            }
+        }
+    }
+
+    func isTodaySelected() -> Bool {
+        let today = Date()
+        return selectedDates.contains {
+            Calendar.current.isDate($0, inSameDayAs: today)
+        }
+    }
+
+
+//    @objc func timePickerChanged(_ picker: UIDatePicker) {
+//        guard let from = selectedFromTime, activeButton == toTime else { return }
+//
+//        let calendar = Calendar.current
+//        let diff = calendar.dateComponents([.minute], from: from, to: picker.date).minute ?? 0
+//        let intervalsPassed = max(0, diff / intervalMinutes)
+//        let snappedDate = calendar.date(byAdding: .minute, value: intervalsPassed * intervalMinutes, to: from)!
+//
+//        picker.setDate(snappedDate, animated: false)
+//    }
 
     // MARK: - Done Button Action
     @objc func doneButtonTapped() {

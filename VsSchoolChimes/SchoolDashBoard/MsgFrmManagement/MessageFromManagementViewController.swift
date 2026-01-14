@@ -189,6 +189,7 @@ class MessageFromManagementViewController: UIViewController {
                     self.NoDataLbl.isHidden = false
                 }
                 self.tv.reloadData()
+                self.hideActivityLoader()
             }
         }
     }
@@ -208,7 +209,7 @@ class MessageFromManagementViewController: UIViewController {
                     .withAlphaComponent(0.3)
             }) { _ in
                 UIView.animate(withDuration: 0.5, delay: 1.0, options: []) {
-                    cell.contentView.backgroundColor = .white
+                    cell.contentView.backgroundColor = .systemGray6
                 }
             }
         }

@@ -60,39 +60,42 @@ class LocationReportVC: UIViewController{
                         guard let self = self else { return }
                         self.AcadimicYearDatas = successMessage.data ?? []
                         self.years.removeAll()
-                        
-                        var currentAcademicYear: String?
-                        
+
+                        var yearSet = Set<String>()
+                        var currentAcademicYearEnd: String?
+
                         for yearData in self.AcadimicYearDatas {
-                            // Append all first years
-                            if let year = yearData.year,
-                               let firstYear = year.components(separatedBy: "-").first?.trimmingCharacters(in: .whitespaces) {
-                                self.years.append(firstYear)
-                            }
-                            if yearData.current_academic_year == true {
-                                if let year = yearData.year,
-                                   let firstYear = year.components(separatedBy: "-").first?.trimmingCharacters(in: .whitespaces) {
-                                    currentAcademicYear = firstYear
+                            guard let yearRange = yearData.year else { continue }
+                            
+                            let parts = yearRange
+                                .components(separatedBy: "-")
+                                .map { $0.trimmingCharacters(in: .whitespaces) }
+                            
+                            // Add both years to Set (ensures uniqueness)
+                            if parts.count == 2 {
+                                yearSet.insert(parts[0])
+                                yearSet.insert(parts[1])
+                                
+                                // Capture END year of current academic year
+                                if yearData.current_academic_year == true {
+                                    currentAcademicYearEnd = parts[1]
                                 }
                             }
                         }
-                        
-                        // Once data is loaded
-                        if let year = currentAcademicYear {
-                            self.YearLbl.text = year
-                            
-                            if let firstYear = year.components(separatedBy: " - ").first {
-                                if !self.years.isEmpty {
-                                    self.Months = self.getMonthNames(for: firstYear)
-                                    self.MonthLbl.text = self.Months[self.currentMonth - 1]
-                                    self.SelectedMonthCode = String(format: "%02d", self.currentMonth)
-                                }
-                            }
-                            
+
+                        // Convert Set → Sorted Array
+                        self.years = Array(yearSet).sorted()
+
+                        // Set label and dependent data
+                        if let currentYear = currentAcademicYearEnd {
+                            self.YearLbl.text = currentYear
+                            self.Months = self.getMonthNames(for: currentYear)
+                            self.MonthLbl.text = self.Months[self.currentMonth - 1]
+                            self.SelectedMonthCode = String(format: "%02d", self.currentMonth)
                             self.Geometric_Staff_Attendance_Report()
                         }
-                        
-                        print("First Years: \(self.years)")
+
+                        print("Unique Years:", self.years)
                     }
                 }
             case .failure(let error):
@@ -291,7 +294,7 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         let key = first.key.uppercased()  // FD / HD
         let value = first.value
         let statusText = "\(key) | \(value)"
-        if value.lowercased() != "absent", let inTime = attendanceData.in_time, !inTime.isEmpty {
+//        if value.lowercased() != "absent", let inTime = attendanceData.in_time, !inTime.isEmpty {
             let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             vc.selectedDate = attendanceData.date ?? ""
@@ -301,7 +304,7 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
             vc.user = attendanceData.name
             
             present(vc, animated: true)
-        }
+       // }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

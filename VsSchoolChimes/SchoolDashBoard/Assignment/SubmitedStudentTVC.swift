@@ -14,12 +14,14 @@ class SubmitedStudentTVC: UITableViewCell {
     @IBOutlet weak var studentNameLbl: UILabel!
     @IBOutlet weak var standerdScection: UILabel!
     @IBOutlet weak var submitDate: UILabel!
+    @IBOutlet weak var reasonLbl: UILabel!
     
     var onBlock: (() -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         initialBtn.setShadow(cornerRadius: initialBtn.frame.width/2)
+        reasonLbl.isHidden = true
     }
     
     func setLabelWithIcon(label: UILabel, iconName: String, text: String) {

@@ -274,8 +274,14 @@ class ReciverAttendanceReportVC: UIViewController {
         let attendancePercent = Double(stats?.attendance_percentage?.replacingOccurrences(of: "%", with: "") ?? "0") ?? 0
         let absentDays = Double(stats?.absent_days ?? 0)
         let completedDays = Double(stats?.completed_working_days ?? 0)
-        let totalDays = Double(stats?.total_working_days ?? 1) // avoid divide by zero
-        let OnGoingPercentage = Int((completedDays / totalDays) * 100)
+        let totalDays = Double(stats?.total_working_days ?? 0)
+        let onGoingPercentage: Int
+        if totalDays > 0 {
+            onGoingPercentage = Int((completedDays / totalDays) * 100)
+        } else {
+            onGoingPercentage = 0
+        }
+
         setProgress(
             on: AttendencePercentage,
             value: attendancePercent,
@@ -296,7 +302,7 @@ class ReciverAttendanceReportVC: UIViewController {
         
         setProgress(
             on: OngoingDaysView,
-            value: Double(OnGoingPercentage),
+            value: Double(onGoingPercentage),
             total: 100,
             unit: "%",
             fillColor: .backGroundClr,

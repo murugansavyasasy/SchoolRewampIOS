@@ -122,7 +122,8 @@ class IntractwithStudentVc: UIViewController {
             let param: [String:Any] = [
                 ChatAPIKeys.student_id : id,
                 ChatAPIKeys.is_block : false,
-                ChatAPIKeys.reason : ""
+                ChatAPIKeys.reason : "",
+                
             ]
             
             APIService.shared.makeApi(url: ServiceUrl.comm_api_interaction_block_student, parameters: param, type: ApitTypeSringFile.PUT, token: self.StaffDetails?.access_token ?? "", isBaseUrl: true) { [weak self]
@@ -300,9 +301,12 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
             
             let student = BlockList?[indexPath.row]
             cell.studentNameLbl.text = student?.name
-            if let letter = student?.name?.first{
-                cell.initialBtn.setTitle(String(letter).uppercased(), for: .normal)
+            if let name = student?.name, name.count >= 2 {
+                let initials = name.prefix(2).uppercased()
+                cell.initialBtn.setTitle(String(initials), for: .normal)
             }
+            cell.standerdScection.text = (student?.class_name ?? "") + " - " + (student?.section_name ?? "")
+            cell.reasonLbl.text = "Reason: " + (student?.reason ?? "")
             cell.submitDate.text = MenuStringFile.Blocked_on + (student?.blocked_on ?? "")
             cell.statusView.layer.cornerRadius = 10
             cell.statusView.backgroundColor = .systemBlue

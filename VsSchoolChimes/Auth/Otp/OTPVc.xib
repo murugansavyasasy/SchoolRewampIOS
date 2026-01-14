@@ -41,14 +41,20 @@
                             </constraints>
                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium"/>
                         </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter OTP" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMB-Zh-uCl">
+                            <rect key="frame" x="30" y="185" width="333" height="26.333333333333343"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Verification code has been sent to your registered mobile number" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOL-oW-HOC">
-                            <rect key="frame" x="18" y="188" width="357" height="40.666666666666657"/>
+                            <rect key="frame" x="18" y="226.33333333333331" width="357" height="40.666666666666686"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Kf6-0D-tdz">
-                            <rect key="frame" x="18" y="253.66666666666669" width="357" height="50"/>
+                            <rect key="frame" x="18" y="292" width="357" height="50"/>
                             <subviews>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1A4-KG-zQT">
                                     <rect key="frame" x="0.0" y="0.0" width="51.333333333333336" height="50"/>
@@ -86,13 +92,13 @@
                             </constraints>
                         </stackView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Didn't recive a Verification code?    Resend" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UrQ-ed-Icg">
-                            <rect key="frame" x="16" y="323.66666666666663" width="361" height="20.333333333333314"/>
+                            <rect key="frame" x="16" y="362" width="361" height="20.333333333333314"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="lTa-Ra-tGM">
-                            <rect key="frame" x="16" y="359" width="361" height="70.333333333333314"/>
+                            <rect key="frame" x="16" y="397.33333333333337" width="361" height="70.333333333333314"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you didn't recive the otp please call any of the below numbers" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="93I-6J-po5">
                                     <rect key="frame" x="0.0" y="0.0" width="361" height="40.666666666666664"/>
@@ -123,7 +129,7 @@
                             </constraints>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="wbJ-zI-txV">
-                            <rect key="frame" x="105.66666666666669" y="459.33333333333337" width="182" height="40"/>
+                            <rect key="frame" x="105.66666666666669" y="497.66666666666663" width="182" height="40"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="savyasasy" translatesAutoresizingMaskIntoConstraints="NO" id="LgO-2f-NET">
                                     <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -146,7 +152,6 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="WOL-oW-HOC" firstAttribute="top" secondItem="U48-hr-SHa" secondAttribute="bottom" constant="8" id="3H5-Zg-w6b"/>
                         <constraint firstItem="Kf6-0D-tdz" firstAttribute="top" secondItem="WOL-oW-HOC" secondAttribute="bottom" constant="25" id="753-vw-QjV"/>
                         <constraint firstItem="WOL-oW-HOC" firstAttribute="leading" secondItem="tNr-aW-rXT" secondAttribute="leading" constant="18" id="9Gy-k1-ahi"/>
                         <constraint firstItem="wbJ-zI-txV" firstAttribute="centerX" secondItem="tNr-aW-rXT" secondAttribute="centerX" id="C2W-Ss-RaT"/>
@@ -156,8 +161,12 @@
                         <constraint firstItem="U48-hr-SHa" firstAttribute="leading" secondItem="tNr-aW-rXT" secondAttribute="leading" id="UPN-hI-KNo"/>
                         <constraint firstItem="Kf6-0D-tdz" firstAttribute="leading" secondItem="tNr-aW-rXT" secondAttribute="leading" constant="18" id="Ujd-2V-waD"/>
                         <constraint firstAttribute="trailing" secondItem="WOL-oW-HOC" secondAttribute="trailing" constant="18" id="Xjt-Lj-Lp3"/>
+                        <constraint firstItem="fMB-Zh-uCl" firstAttribute="leading" secondItem="tNr-aW-rXT" secondAttribute="leading" constant="30" id="aDm-iU-xau"/>
                         <constraint firstItem="U48-hr-SHa" firstAttribute="top" secondItem="tNr-aW-rXT" secondAttribute="top" id="asu-GD-waD"/>
+                        <constraint firstItem="fMB-Zh-uCl" firstAttribute="top" secondItem="U48-hr-SHa" secondAttribute="bottom" constant="5" id="cxz-aJ-Ecs"/>
+                        <constraint firstAttribute="trailing" secondItem="fMB-Zh-uCl" secondAttribute="trailing" constant="30" id="gMM-c6-SZF"/>
                         <constraint firstItem="lTa-Ra-tGM" firstAttribute="leading" secondItem="tNr-aW-rXT" secondAttribute="leading" constant="16" id="iM5-zM-ODB"/>
+                        <constraint firstItem="WOL-oW-HOC" firstAttribute="top" secondItem="fMB-Zh-uCl" secondAttribute="bottom" constant="15" id="icL-Rf-8No"/>
                         <constraint firstItem="lTa-Ra-tGM" firstAttribute="top" secondItem="UrQ-ed-Icg" secondAttribute="bottom" constant="15" id="qPj-Rb-xbk"/>
                         <constraint firstAttribute="trailing" secondItem="UrQ-ed-Icg" secondAttribute="trailing" constant="16" id="rJ2-aJ-sx8"/>
                         <constraint firstItem="UrQ-ed-Icg" firstAttribute="top" secondItem="Kf6-0D-tdz" secondAttribute="bottom" constant="20" id="yOf-qx-5Yg"/>
