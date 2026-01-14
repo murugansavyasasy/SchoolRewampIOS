@@ -142,8 +142,8 @@ class NotificationCallVC: UIViewController {
         if let receiverId = userInfo["receiver_id"] as? String {
             noti.receiver_id = receiverId
         }
-        if let receiverId = userInfo["url"] as? String {
-            noti.url = receiverId
+        if let receiverurl = userInfo["url"] as? String {
+            noti.url = receiverurl
         }
     }
     

@@ -9,6 +9,7 @@ import UIKit
 
 class IntractwithStudentVc: UIViewController {
     
+    @IBOutlet weak var blockStudentBtnName: UIButton!
     @IBOutlet weak var backBtn: UILabel!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var noDataFoundLbl: UILabel!
@@ -50,6 +51,7 @@ class IntractwithStudentVc: UIViewController {
         blockListTV.register(UINib(nibName: CellConfingName.SubmitedStudentTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.SubmitedStudentTVC)
         blockListTV.delegate = self
         blockListTV.dataSource = self
+        
     }
     
     func getStaff(){
@@ -67,6 +69,7 @@ class IntractwithStudentVc: UIViewController {
                             searchBtn.isHidden = filteredData?.isEmpty ?? false
                             noDataFoundLbl.isHidden = !(filteredData?.isEmpty ?? true)
                             imgView.isHidden = !(filteredData?.isEmpty ?? true)
+                            blockStudentBtnName.isHidden = false
                             tv.reloadData()
                         }
                     }else{
@@ -75,6 +78,7 @@ class IntractwithStudentVc: UIViewController {
                             noDataFoundLbl.isHidden = !(filteredData?.isEmpty ?? true)
                             imgView.isHidden = !(filteredData?.isEmpty ?? true)
                             noDataFoundLbl.text = successMessage.message ?? ""
+                            blockStudentBtnName.isHidden = true
                         }
                     }
                 case .failure(let error):
@@ -83,6 +87,7 @@ class IntractwithStudentVc: UIViewController {
                         noDataFoundLbl.isHidden = false
                         noDataFoundLbl.text = error.localizedDescription
                         imgView.isHidden = false
+                        blockStudentBtnName.isHidden = true
                     }
                     print(error.localizedDescription)
                 }

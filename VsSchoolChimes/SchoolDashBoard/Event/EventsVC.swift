@@ -122,6 +122,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         eventTxt.addDoneButton()
         contentTxtView.addDoneButton()
         imageSelection()
+        get_CatagoryListApi()
         costomView.imageCollectionview.backgroundColor = .clear
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
         catagoryDropDownView.isUserInteractionEnabled = true
@@ -159,7 +160,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        get_CatagoryListApi()
+//        get_CatagoryListApi()
     }
     deinit {
         // Remove observers
