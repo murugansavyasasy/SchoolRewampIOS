@@ -1427,6 +1427,9 @@ struct BlockedStudent: Codable {
     var name: String?
     var gender: String?
     var blocked_on: String?
+    var class_name: String?
+    var section_name: String?
+    var reason: String?
 }
 
 

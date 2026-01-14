@@ -10,13 +10,15 @@ import UIKit
 
 class shareAndDownloadVc: UIViewController {
     
-  
+    @IBOutlet weak var shareBtn: UIButton!
+    
     var dowloadUrl:String?
     var fileType:String?
     var typeVideo = false
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        shareBtn.isHidden = true
         // Do any additional setup after loading the view.
     }
 

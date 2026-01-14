@@ -543,7 +543,7 @@ func formattedDateStatus(from selectedDateString: String, isTimeNeeded: Bool = f
     dateFormatter.dateFormat = "dd MMM yyyy"
     
     if calendar.isDate(date, inSameDayAs: today) {
-        return isTimeNeeded ? "\(todayText) \(timeFormatter.string(from: date))" : todayText
+        return isTimeNeeded ? timeFormatter.string(from: date) : todayText
     }
     
     if let yesterday = calendar.date(byAdding: .day, value: -1, to: today),

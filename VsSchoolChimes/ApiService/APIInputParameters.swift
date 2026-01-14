@@ -406,6 +406,8 @@ class ChatAPIKeys {
     static let Types = "type"
     static let section_id = "section_id"
     static let detail_id = "detail_id"
+    static let class_name = "class_name"
+    static let section_name = "section_name"
 }
 class LessonPlanAPIKeys {
 
