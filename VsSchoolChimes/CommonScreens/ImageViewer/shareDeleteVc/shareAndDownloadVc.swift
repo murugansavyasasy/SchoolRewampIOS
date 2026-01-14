@@ -15,6 +15,7 @@ class shareAndDownloadVc: UIViewController {
     var dowloadUrl:String?
     var fileType:String?
     var typeVideo = false
+    var FolderName : String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,11 +34,15 @@ class shareAndDownloadVc: UIViewController {
                 sender.isEnabled = true
                 return
             }
-            let fileType = fileType?.lowercased() == "image" ? "Photos":"Document"
+            if FolderName != ""{
+                let fileType = fileType?.lowercased() == "image" ? "Photos":"Document"
+                FolderName = fileType
+            }
+           
             let downloader = FileDownloader()
             downloader.downloadFile(
                 from: fileURL,
-                folderName: fileType,
+                folderName: FolderName,
                 fileName: filename
             ) { result in
                 DispatchQueue.main.async { [self] in

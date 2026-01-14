@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-class FeeDetails: UIViewController,WKNavigationDelegate {
+class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate {
     @IBOutlet weak var createBtn: UIButton!
     @IBOutlet weak var reportsBtn: UIButton!
     @IBOutlet weak var LoadingView: UIView!
@@ -32,7 +32,7 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
     var feeDetailsList: [InvoiceItem] = []
     var isWebViewLoaded = false
     var receipt_url: [String] = []
-    
+    var newWebView: WKWebView?
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self
@@ -44,27 +44,56 @@ class FeeDetails: UIViewController,WKNavigationDelegate {
         tableOuterView.isHidden = true
         NodataImage.isHidden = true
         NoDataLbl.isHidden = true
+        newWebView = nil
+        webViewFeeLoader()
+    }
 
-        
+    func webViewFeeLoader() {
+
         let baseURL = global?.fees_url ?? ""
         let studentId = studentDetails?.child_id ?? ""
         let schoolId = studentDetails?.school_id ?? ""
-        let finalURL = baseURL
-            .replacingOccurrences(of: ":student_id", with: studentId)
-            .replacingOccurrences(of: ":school_id", with: schoolId)
-        if let pdfURL = URL(string: finalURL) {
-            let request = URLRequest(url: pdfURL)
-            webView.load(request)
+
+        // Same logic as old code
+        let cleanedBase = baseURL.replacingOccurrences(of: ":student_id/:school_id", with: "")
+
+        let finalURL = cleanedBase + "\(studentId)/\(schoolId)"
+
+        print("Final Fee URL:", finalURL)
+
+        if let url = URL(string: finalURL) {
+            webView.uiDelegate = self
+            webView.navigationDelegate = self
+            webView.load(URLRequest(url: url))
         } else {
-            print("Invalid URL: \(finalURL)")
+            print("❌ Invalid URL:", finalURL)
         }
-        feeDetailTableView.register(UINib(nibName: CellConfingName.FeedetailTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.FeedetailTVC)
+
+        // TableView setup (unchanged)
+        feeDetailTableView.register(
+            UINib(nibName: CellConfingName.FeedetailTVC, bundle: nil),
+            forCellReuseIdentifier: CellConfingName.FeedetailTVC
+        )
         feeDetailTableView.delegate = self
         feeDetailTableView.dataSource = self
-        
-        
     }
 
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+            let newWebView = WKWebView(frame: self.view.bounds, configuration: configuration)
+            newWebView.uiDelegate = self
+            newWebView.navigationDelegate = self
+            self.view.addSubview(newWebView)
+            self.newWebView = newWebView
+            return newWebView
+        }
+        
+        // Handle closing the new tab
+        func webViewDidClose(_ webView: WKWebView) {
+            if webView == newWebView {
+                webView.removeFromSuperview()
+                newWebView = nil
+            }
+        }
     @IBAction func backBtn(_ sender: UIButton) {
         dismiss(animated: true)
     }
