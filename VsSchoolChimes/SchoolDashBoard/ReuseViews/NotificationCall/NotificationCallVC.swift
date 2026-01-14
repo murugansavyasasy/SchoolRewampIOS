@@ -84,11 +84,10 @@ class NotificationCallVC: UIViewController {
     }
     
     private var audioQueuePlayer: AVQueuePlayer?
-    private var queueItems: [AVPlayerItem] = []
+    private var queueItems: [Int: AVPlayerItem] = [:]
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         stopLocalRingtone()
         setupModernUI()
         setupCallerInfo()
@@ -210,10 +209,8 @@ class NotificationCallVC: UIViewController {
         // When user presses power button
         switch callState {
         case .ringing:
-            print("🔴 Power button pressed - declining call")
             declineCallAction()
         case .active:
-            print("🔴 Power button pressed - ending call")
             cutCallAction()
         default:
             break
@@ -238,7 +235,7 @@ class NotificationCallVC: UIViewController {
             print("Audio session setup failed: \(error.localizedDescription)")
         }
     }
-    
+   
     private func configureAudioSessionForCall() {
         do {
             // Switch to playAndRecord with voiceChat mode for earpiece routing
@@ -261,7 +258,6 @@ class NotificationCallVC: UIViewController {
             try session.setActive(true)
             return session.outputVolume == 0
         } catch {
-            print("Failed to check silent mode: \(error)")
             return false
         }
     }
@@ -299,7 +295,6 @@ class NotificationCallVC: UIViewController {
 //
     private func playLocalRingtone(named name: String, ext: String) {
         guard let path = Bundle.main.url(forResource: name, withExtension: ext) else {
-            print("❌ schoolchimes_tone.wav not found")
             playSystemDefaultTone()
             return
         }
@@ -310,7 +305,6 @@ class NotificationCallVC: UIViewController {
             audioPlayer?.numberOfLoops = -1   // infinite loop
             audioPlayer?.play()
         } catch {
-            print("❌ Local audio play failed:", error)
             playSystemDefaultTone()
         }
     }
@@ -326,7 +320,6 @@ class NotificationCallVC: UIViewController {
         }
         
         do {
-            // Use .playback so it can play even in silent if you want
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .voiceChat)
             try AVAudioSession.sharedInstance().setActive(true)
             
@@ -798,10 +791,8 @@ class NotificationCallVC: UIViewController {
             let session = AVAudioSession.sharedInstance()
             if speakerBtn.isSelected {
                 try session.overrideOutputAudioPort(.speaker)
-                print("🔈 Speaker ON")
             } else {
                 try session.overrideOutputAudioPort(.none)
-                print("🔇 Speaker OFF (earpiece)")
             }
         } catch {
             print("⚠️ Failed to toggle speaker: \(error.localizedDescription)")
@@ -809,39 +800,54 @@ class NotificationCallVC: UIViewController {
     }
     
     private func dismissCallScreen() {
+
         Update_NotificationStatus()
         stopLocalRingtone()
         cleanup()
-      
-        UIView.animate(withDuration: 0.4, animations: {
+
+        UIView.animate(withDuration: 0.3, animations: {
             self.view.alpha = 0
-            self.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            self.view.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
         }) { _ in
-            self.dismiss(animated: false) {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    exit(0)
-                }
+
+            if self.presentingViewController != nil {
+                self.dismiss(animated: false)
+                return
+            }
+
+            if let nav = self.navigationController {
+                nav.popViewController(animated: true)
+                return
+            }
+            if let window = UIApplication.shared.windows.first {
+
+                let storyboard = UIStoryboard(name: "SplashStoryboard", bundle: nil)
+                let homeVC = storyboard.instantiateViewController(withIdentifier: "SplashVC")
+
+                let nav = UINavigationController(rootViewController: homeVC)
+                window.rootViewController = nav
+                window.makeKeyAndVisible()
             }
         }
     }
+
     
-    // MARK: - Audio Player
     private func setupAudioPlayer() {
 
-        stopLocalRingtone()   // stop ringing when answered
+        stopLocalRingtone()
 
         audioQueuePlayer = AVQueuePlayer()
         queueItems.removeAll()
         totalQueueDuration = 0
 
-        var orderedUrls: [URL] = []
+        var orderedUrls: [(Int, URL)] = []
 
         if let w = URL(string: welcomeFileUrl), !welcomeFileUrl.isEmpty {
-            orderedUrls.append(w)
+            orderedUrls.append((0, w))   // welcome must be 0
         }
 
         if let v = URL(string: voiceUrl), !voiceUrl.isEmpty {
-            orderedUrls.append(v)
+            orderedUrls.append((1, v))
         }
 
         guard !orderedUrls.isEmpty else {
@@ -851,14 +857,14 @@ class NotificationCallVC: UIViewController {
 
         let dispatchGroup = DispatchGroup()
 
-        for url in orderedUrls {
+        for (index, url) in orderedUrls {
             dispatchGroup.enter()
 
             let cacheKey = url.absoluteString as NSString
 
             if let cachedData = Self.audioCache.object(forKey: cacheKey) {
-                let item = createQueueItem(from: cachedData as Data)
-                self.queueItems.append(item)
+                let item = self.createQueueItem(from: cachedData as Data)
+                self.queueItems[index] = item
                 dispatchGroup.leave()
             } else {
                 URLSession.shared.dataTask(with: url) { data, _, error in
@@ -869,29 +875,42 @@ class NotificationCallVC: UIViewController {
                     Self.audioCache.setObject(data as NSData, forKey: cacheKey, cost: data.count)
 
                     let item = self.createQueueItem(from: data)
-                    self.queueItems.append(item)
-
+                    self.queueItems[index] = item
                 }.resume()
             }
         }
-
         dispatchGroup.notify(queue: .main) {
             guard let player = self.audioQueuePlayer else { return }
 
             self.totalQueueDuration = 0
 
-            for item in self.queueItems {
-                player.insert(item, after: nil)
+            let sortedKeys = self.queueItems.keys.sorted()
 
-                let sec = CMTimeGetSeconds(item.asset.duration)
-                if sec.isFinite { self.totalQueueDuration += sec }
+            for key in sortedKeys {
+                if let item = self.queueItems[key] {
+                    player.insert(item, after: nil)
+
+                    let sec = CMTimeGetSeconds(item.asset.duration)
+                    if sec.isFinite {
+                        self.totalQueueDuration += sec
+                    }
+                }
             }
+
+            player.actionAtItemEnd = .advance
+            player.volume = 1.0
 
             self.startQueueTimer()
             self.observeQueueFinish()
-            player.play()
+            self.configureAudioSessionForCall()
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                player.play()
+            }
         }
+
     }
+
     private func observeQueueFinish() {
         NotificationCenter.default.addObserver(
             self,
@@ -922,21 +941,18 @@ class NotificationCallVC: UIViewController {
 
     
     private func createQueueItem(from data: Data) -> AVPlayerItem {
-        let tempURL = FileManager.default.temporaryDirectory
-            .appendingPathComponent(UUID().uuidString)
-            .appendingPathExtension("m4a")
 
-        try? data.write(to: tempURL)
+        let fileURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString + ".mp3")
 
-        let asset = AVURLAsset(url: tempURL)
-        asset.loadValuesAsynchronously(forKeys: ["duration"])
+        try? data.write(to: fileURL, options: .atomic)
 
+        let asset = AVURLAsset(url: fileURL)
         let item = AVPlayerItem(asset: asset)
-        item.preferredForwardBufferDuration = 5
+        item.preferredForwardBufferDuration = 0
+
         return item
     }
-
-    
     
     private func startQueueTimer() {
         audioTimer?.invalidate()
@@ -972,9 +988,7 @@ class NotificationCallVC: UIViewController {
             self.audioPlayer?.play()
             
             self.startAudioTimer()
-            print("✅ Audio playing through earpiece")
         } catch {
-            print("Audio setup failed: \(error)")
             self.handleAudioPlaybackError()
         }
     }
@@ -1029,33 +1043,34 @@ class NotificationCallVC: UIViewController {
         gradientLayer = nil
     }
     
-    // MARK: - Cleanup
     private func cleanup() {
         stopAllAnimations()
         stopAllTimers()
         stopVibration()
-        
+
         audioPlayer?.stop()
         audioPlayer = nil
-        
+
         ringtonePlayer?.stop()
         ringtonePlayer = nil
-        
+
         volumeObserver?.invalidate()
         volumeObserver = nil
-        
+
         NotificationCenter.default.removeObserver(self)
-        
-        do {
-            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-        } catch {
-            print("Failed to deactivate audio session: \(error)")
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            let session = AVAudioSession.sharedInstance()
+            do {
+                try session.setActive(false, options: .notifyOthersOnDeactivation)
+            } catch {
+                print("AudioSession deactivation failed: \(error)")
+            }
         }
     }
     
     deinit {
         cleanup()
-        print("NotificationCallVC deinitialized")
     }
 }
 
@@ -1079,8 +1094,6 @@ extension NotificationCallVC: AVAudioPlayerDelegate {
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         guard player == audioPlayer else { return }
-        
-        print("Audio decode error: \(error?.localizedDescription ?? "Unknown error")")
         DispatchQueue.main.async {
             self.durationLbl.text = "Audio error"
             self.handleAudioPlaybackError()

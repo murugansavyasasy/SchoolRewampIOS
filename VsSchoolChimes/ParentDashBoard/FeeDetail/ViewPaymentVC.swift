@@ -22,8 +22,23 @@ class ViewPaymentVC: UIViewController,QLPreviewControllerDataSource {
         if #available(iOS 13.0, *) {
             self.isModalInPresentation = true
         }
-        downloadPDF(from: URL(string: "https://schoolchimes-fee-receipts.s3.ap-south-1.amazonaws.com/undefined/fee_receipt/PDF_1748065242703.pdf")!)
+        privewVc()
     }
+    
+    func privewVc(){
+        var fileURL: [FilePath] = []
+        fileURL.removeAll()
+        fileURL.append(FilePath(url: "https://schoolchimes-fee-receipts.s3.ap-south-1.amazonaws.com/undefined/fee_receipt/PDF_1748065242703.pdf", type: ""))
+        let vc = ImageShowVc()
+        vc.fileURL = fileURL
+        vc.subjectName = "Images & Docs"
+        vc.index = 0
+        vc.scrollIndex = IndexPath(row: 0, section: 0)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+        
+    }
+   
     
     @IBAction func backBtn(_ sender: UIButton) {
         if let documentURL = documentURL {

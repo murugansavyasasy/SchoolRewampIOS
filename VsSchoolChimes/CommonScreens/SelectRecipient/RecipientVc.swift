@@ -1789,6 +1789,12 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     DispatchQueue.main.async {
                         CircularProgressLoader.shared.hide()
                         print(error.localizedDescription)
+                        self.alert
+                            .showAlert(
+                                title: AlertstringFile.Alert_title,
+                                message: error.localizedDescription ,
+                                on: self
+                            )
                     }
                 }
                 

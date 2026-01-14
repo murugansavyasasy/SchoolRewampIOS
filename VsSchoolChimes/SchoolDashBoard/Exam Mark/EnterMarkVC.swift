@@ -1,7 +1,4 @@
 import UIKit
-protocol FilterStudentMark:AnyObject{
-    func applySort(type: SortType?, gender: String?)
-}
 // MARK: - Enter Mark View Controller
 class EnterMarkVC: UIViewController, MarksCellDelegate {
     @IBOutlet weak var filtterBtn: UIButton!
@@ -24,6 +21,10 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     var subjectColumns: [ColumnConfig] = []
     private var isNameWidthCalculated = false
     private var isKeyboardVisible = false
+    private var popoverWidth: CGFloat = 393
+    private var popoverHeight: CGFloat = 400
+    var isUpdatingPopover = false
+    var selectedFilters: [(type: String, sortValue: String)] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         titleLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
@@ -69,10 +70,9 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     }
     @IBAction func filterBtn(_ sender: UIButton) {
 
-        let popoverVC = PopoverViewVC(nibName: "PopoverViewVC", bundle: nil)
-        popoverVC.modalPresentationStyle = .popover
-        popoverVC.preferredContentSize = CGSize(width: 240, height: 360)
-        popoverVC.filterdelegate = self
+        let popoverVC = FilterPopover(nibName: "FilterPopover", bundle: nil)
+        popoverVC.delegate = self
+        popoverVC.previouslyAppliedFilters = selectedFilters
         showPopover(from: sender, contentVC: popoverVC)
     }
     @IBAction func back(_ sender: UIButton) {
@@ -809,8 +809,7 @@ extension EnterMarkVC {
         return finalWidth
     }
 }
-// MARK: - Keyboard Handling
-extension EnterMarkVC:FilterStudentMark,UISearchBarDelegate,UIPopoverPresentationControllerDelegate {
+extension EnterMarkVC: UISearchBarDelegate, UIPopoverPresentationControllerDelegate {
     
     func setupKeyboardObservers() {
         NotificationCenter.default.addObserver(
@@ -829,7 +828,6 @@ extension EnterMarkVC:FilterStudentMark,UISearchBarDelegate,UIPopoverPresentatio
     }
 
     @objc func keyboardWillShow(_ notification: Notification) {
-
         guard !isKeyboardVisible else { return }
         isKeyboardVisible = true
 
@@ -885,43 +883,12 @@ extension EnterMarkVC:FilterStudentMark,UISearchBarDelegate,UIPopoverPresentatio
             object: nil
         )
     }
-    func applySort(type: SortType?, gender: String?) {
-
-        var filtered = allStudents.filter {
-            $0.gender == gender
-        }
-
-        switch type {
-
-        case .nameAZ:
-            filtered.sort { ($0.student_name ?? "") < ($1.student_name ?? "") }
-
-        case .nameZA:
-            filtered.sort { ($0.student_name ?? "") > ($1.student_name ?? "") }
-
-        case .rollAZ:
-            filtered.sort { ($0.roll_no ?? "") < ($1.roll_no ?? "") }
-
-        case .rollZA:
-            filtered.sort { ($0.roll_no ?? "") > ($1.roll_no ?? "") }
-
-        case .admAZ:
-            filtered.sort { ($0.admission_no ?? "") < ($1.admission_no ?? "") }
-
-        case .admZA:
-            filtered.sort { ($0.admission_no ?? "") > ($1.admission_no ?? "") }
-        case .none:
-            filtered = allStudents
-        }
-
-        studentRecords = filtered
-        listLableView.reloadData()
-    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         applySearchAndReload(searchText: searchText)
     }
+    
     func applySearchAndReload(searchText: String) {
-
         guard !searchText.isEmpty else {
             studentRecords = allStudents
             listLableView.reloadData()
@@ -938,23 +905,147 @@ extension EnterMarkVC:FilterStudentMark,UISearchBarDelegate,UIPopoverPresentatio
 
         listLableView.reloadData()
     }
-    func showPopover(from sender: UIView, contentVC: PopoverViewVC) {
+
+    // MARK: - Popover Presentation
+    func showPopover(from sender: UIView, contentVC: FilterPopover) {
+        let popoverWidth = self.view.frame.width - 40
+        let popoverHeight: CGFloat = 170
         contentVC.modalPresentationStyle = .popover
-        if let popover = contentVC.popoverPresentationController {
-            popover.sourceView = sender
-            popover.sourceRect = sender.bounds
-            popover.permittedArrowDirections = .any
-            popover.delegate = self
-            popover.backgroundColor = .white
+        contentVC.preferredContentSize = CGSize(width: popoverWidth, height: popoverHeight)
+
+        if let pop = contentVC.popoverPresentationController {
+            pop.sourceView = self.view
+            pop.sourceRect = sender.frame
+            pop.permittedArrowDirections = []
+            pop.delegate = self
+            pop.backgroundColor = .white
         }
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            contentVC.modalPresentationStyle = .overFullScreen
-            contentVC.view.backgroundColor = .white
-        }
-        self.present(contentVC, animated: true)
+
+        present(contentVC, animated: true)
     }
-    public func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+
+    // MARK: - Update Popover Size When Stack Added
+    func updatePopoverSizeForStackCount(_ stackCount: Int) {
+        guard !isUpdatingPopover else { return }
+        isUpdatingPopover = true
+        
+        guard let popoverVC = self.presentedViewController as? FilterPopover else {
+            self.isUpdatingPopover = false
+            return
+        }
+        
+        popoverVC.loadViewIfNeeded()
+        popoverVC.view.layoutIfNeeded()
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            let rowHeight: CGFloat = 70
+            let extraPadding: CGFloat = 50
+            let stackHeight = CGFloat(stackCount) * rowHeight + extraPadding
+            
+            let paddingX: CGFloat = 20
+            let width = self.view.frame.width - (paddingX * 2)
+            let height = min(stackHeight, self.view.frame.height * 0.85)
+            popoverVC.preferredContentSize = CGSize(width: width, height: height)
+            if let popover = popoverVC.popoverPresentationController {
+                popover.sourceView = self.view
+                popover.sourceRect = CGRect(
+                    x: (self.view.frame.width - width) / 2,
+                    y: (self.view.frame.height - height) / 2,
+                    width: width,
+                    height: height
+                )
+            }
+            
+            self.isUpdatingPopover = false
+        }
+    }
+
+    // MARK: - Popover Presentation Delegate
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
+    }
+   }
+extension EnterMarkVC {
+    
+    func applyFiltersToStudents(_ filters: [(type: String, sortValue: String)]) {
+        // Start with base student records
+        var sortedRecords = studentRecords
+        for filter in filters.reversed() {
+            sortedRecords = sortStudentsBy(
+                filter.type,
+                sortOrder: filter.sortValue,
+                students: sortedRecords
+            )
+        }
+        
+        studentRecords = sortedRecords
+        listLableView.reloadData()
+    }
+    
+    private func sortStudentsBy(_ filterType: String,
+                                sortOrder: String,
+                                students: [StudentMark]) -> [StudentMark] {
+
+        let isAscending = sortOrder == "Ascending"
+
+        switch filterType {
+
+        case "Student Name":
+            return students.sorted {
+                let n1 = $0.student_name ?? ""
+                let n2 = $1.student_name ?? ""
+                return isAscending ? n1 < n2 : n1 > n2
+            }
+
+        case "Roll Number":
+            return students.sorted {
+                let r1 = $0.roll_no ?? ""
+                let r2 = $1.roll_no ?? ""
+
+                if let i1 = Int(r1), let i2 = Int(r2) {
+                    return isAscending ? i1 < i2 : i1 > i2
+                }
+                return isAscending ? r1 < r2 : r1 > r2
+            }
+
+        case "Admission Number":
+            return students.sorted {
+                let a1 = $0.admission_no ?? ""
+                let a2 = $1.admission_no ?? ""
+
+                if let i1 = Int(a1), let i2 = Int(a2) {
+                    return isAscending ? i1 < i2 : i1 > i2
+                }
+                return isAscending ? a1 < a2 : a1 > a2
+            }
+
+        case "Gender":
+            return students.sorted {
+                let g1 = $0.gender ?? ""
+                let g2 = $1.gender ?? ""
+                return sortOrder == "Male" ? g1 == "Male" :
+                       sortOrder == "Female" ? g1 == "Female" :
+                       g1 == "Others"
+            }
+
+        default:
+            return students
+        }
+    }
+}
+
+// MARK: - Update FilterPopoverDelegate in EnterMarkVC
+extension EnterMarkVC: FilterPopoverDelegate {
+    func didApplyFilters(_ filters: [(type: String, sortValue: String)]) {
+        selectedFilters = filters
+        if filters.isEmpty{
+            studentRecords = allStudents
+            listLableView.reloadData()
+        }
+        applyFiltersToStudents(filters)
+        dismiss(animated: true)
     }
 }
 struct ColumnConfig: Codable {
