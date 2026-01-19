@@ -208,11 +208,26 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let id = feeDetailsList[indexPath.row].id ?? ""
        // Get_Invoice_Receipt_Api(invoiceId: id)
-        let ViewPaymentVC = ViewPaymentVC(nibName: nil, bundle: nil)
-        let fileURL = URL(fileURLWithPath: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents//Get_Started_With_Smallpdf.pdf")
-        ViewPaymentVC.documentURL = fileURL
-        ViewPaymentVC.modalPresentationStyle = .fullScreen
-        self.present(ViewPaymentVC, animated: true)
+//        let ViewPaymentVC = ViewPaymentVC(nibName: nil, bundle: nil)
+//        let fileURL = URL(fileURLWithPath: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents//Get_Started_With_Smallpdf.pdf")
+//        ViewPaymentVC.documentURL = fileURL
+//        ViewPaymentVC.modalPresentationStyle = .fullScreen
+//        self.present(ViewPaymentVC, animated: true)
+        privewVc()
+    }
+    
+    func privewVc(){
+        var fileURL: [FilePath] = []
+        fileURL.removeAll()
+        fileURL.append(FilePath(url: "https://schoolchimes-fee-receipts.s3.ap-south-1.amazonaws.com/undefined/fee_receipt/PDF_1748065242703.pdf", type: ""))
+        let vc = ImageShowVc()
+        vc.fileURL = fileURL
+        vc.subjectName = "Fee Receipt"
+        vc.index = 0
+        vc.scrollIndex = IndexPath(row: 0, section: 0)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+        
     }
 
     func extractDateAndTime(from input: String) -> (date: String?, time: String?) {

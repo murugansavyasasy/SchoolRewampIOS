@@ -148,10 +148,10 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             searchBar.becomeFirstResponder()
         } else {
             searchBar.text = ""
-            filteredMenu = menu_details ?? []
-            filteredRecentMenu = recentMenuItems ?? []
+            filteredMenu = menu_details
+//            filteredRecentMenu = recentMenuItems ?? []
             MenuCollection.reloadData()
-            recentActiveMenuCollection.reloadData()
+//            recentActiveMenuCollection.reloadData()
             searchBar.resignFirstResponder()
         }
     }
@@ -363,6 +363,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     }
     // MARK: - Actions
     @IBAction func SideMenu(_ sender: UIButton) {
+        self.view.endEditing(true)
         showSideMenu()
     }
     
@@ -550,9 +551,9 @@ extension CustomParentDashboardVC: UISearchBarDelegate {
 
         guard !text.isEmpty else {
             filteredMenu = menu_details
-            filteredRecentMenu = recentMenuItems ?? []
+//            filteredRecentMenu = recentMenuItems ?? []
             MenuCollection.reloadData()
-            recentActiveMenuCollection.reloadData()
+//            recentActiveMenuCollection.reloadData()
             return
         }
 
@@ -561,13 +562,13 @@ extension CustomParentDashboardVC: UISearchBarDelegate {
             ($0.description?.localizedCaseInsensitiveContains(text) ?? false)
         }
 
-        filteredRecentMenu = recentMenuItems?.filter {
-            ($0.name?.localizedCaseInsensitiveContains(text) ?? false) ||
-            ($0.description?.localizedCaseInsensitiveContains(text) ?? false)
-        } ?? []
+//        filteredRecentMenu = recentMenuItems?.filter {
+//            ($0.name?.localizedCaseInsensitiveContains(text) ?? false) ||
+//            ($0.description?.localizedCaseInsensitiveContains(text) ?? false)
+//        } ?? []
 
         MenuCollection.reloadData()
-        recentActiveMenuCollection.reloadData()
+//        recentActiveMenuCollection.reloadData()
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

@@ -125,9 +125,9 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         } else {
             searchBar.text = ""
             filteredMenu = menu_details ?? []
-            filteredRecentMenu = recentMenuItems ?? []
+//            filteredRecentMenu = recentMenuItems ?? []
             MenuCollection.reloadData()
-            recentActiveMenuCollection.reloadData()
+//            recentActiveMenuCollection.reloadData()
             searchBar.resignFirstResponder()
         }
     }
@@ -517,6 +517,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     // MARK: - Side Menu
     @IBAction func SideMenu(_ sender: UIButton) {
+        self.view.endEditing(true)
         showSideMenu()
     }
     
@@ -853,9 +854,9 @@ extension CustomDashboard: UISearchBarDelegate {
 
         guard !text.isEmpty else {
             filteredMenu = menu_details ?? []
-            filteredRecentMenu = recentMenuItems ?? []
+//            filteredRecentMenu = recentMenuItems ?? []
             MenuCollection.reloadData()
-            recentActiveMenuCollection.reloadData()
+//            recentActiveMenuCollection.reloadData()
             return
         }
 
@@ -864,13 +865,13 @@ extension CustomDashboard: UISearchBarDelegate {
             ($0.description?.localizedCaseInsensitiveContains(text) ?? false)
         } ?? []
 
-        filteredRecentMenu = recentMenuItems?.filter {
-            ($0.name?.localizedCaseInsensitiveContains(text) ?? false) ||
-            ($0.description?.localizedCaseInsensitiveContains(text) ?? false)
-        } ?? []
+//        filteredRecentMenu = recentMenuItems?.filter {
+//            ($0.name?.localizedCaseInsensitiveContains(text) ?? false) ||
+//            ($0.description?.localizedCaseInsensitiveContains(text) ?? false)
+//        } ?? []
 
         MenuCollection.reloadData()
-        recentActiveMenuCollection.reloadData()
+//        recentActiveMenuCollection.reloadData()
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
