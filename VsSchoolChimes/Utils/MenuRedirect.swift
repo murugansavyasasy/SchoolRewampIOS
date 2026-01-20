@@ -58,6 +58,7 @@ class MenuRedirectHandler {
         MenuImage(id: 38, name: "ExamTest" ),
         MenuImage(id: 39, name: "Attachements"),
         MenuImage(id: 40, name: "Rewards"),
+        MenuImage(id: 41, name: "Exam Marks"),
         MenuImage(id: 194, name: "Finance")
     ]
     

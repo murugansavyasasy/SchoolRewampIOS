@@ -101,10 +101,10 @@
                     <rect key="frame" x="0.0" y="239" width="393" height="545"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tP1-Fq-Xno">
-                            <rect key="frame" x="35" y="-20" width="323" height="160"/>
+                            <rect key="frame" x="35" y="-20" width="323" height="155"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="27" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j6O-r6-KfD">
-                                    <rect key="frame" x="25" y="15" width="30" height="35"/>
+                                    <rect key="frame" x="25" y="15" width="30" height="30"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                     <color key="textColor" name="ParentClr"/>
                                     <nil key="highlightedColor"/>
@@ -116,7 +116,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="U63-tP-yU9">
-                                    <rect key="frame" x="20" y="70" width="283" height="75"/>
+                                    <rect key="frame" x="20" y="65" width="283" height="75"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XN0-Ca-EOM">
                                             <rect key="frame" x="0.0" y="0.0" width="130.66666666666666" height="20"/>
@@ -148,7 +148,6 @@
                                 <constraint firstItem="j6O-r6-KfD" firstAttribute="top" secondItem="tP1-Fq-Xno" secondAttribute="top" constant="15" id="eBC-aY-Chq"/>
                                 <constraint firstItem="j6O-r6-KfD" firstAttribute="leading" secondItem="tP1-Fq-Xno" secondAttribute="leading" constant="25" id="gH9-aB-28z"/>
                                 <constraint firstItem="Xqr-Zf-Adp" firstAttribute="leading" secondItem="j6O-r6-KfD" secondAttribute="trailing" constant="15" id="i2c-6B-f07"/>
-                                <constraint firstAttribute="height" constant="160" id="ikD-0V-RS7"/>
                                 <constraint firstItem="U63-tP-yU9" firstAttribute="top" secondItem="j6O-r6-KfD" secondAttribute="bottom" constant="20" id="l51-SM-dG5"/>
                                 <constraint firstAttribute="trailing" secondItem="U63-tP-yU9" secondAttribute="trailing" constant="20" id="pE2-IO-2z6"/>
                                 <constraint firstAttribute="trailing" secondItem="Xqr-Zf-Adp" secondAttribute="trailing" constant="10" id="qIE-Xm-h5b"/>
@@ -156,7 +155,7 @@
                             </constraints>
                         </view>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wM0-hj-deR">
-                            <rect key="frame" x="0.0" y="150" width="393" height="395"/>
+                            <rect key="frame" x="0.0" y="145" width="393" height="400"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="n7d-EO-BNb">
                                     <rect key="frame" x="35" y="0.0" width="323" height="392.66666666666669"/>

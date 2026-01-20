@@ -1349,26 +1349,7 @@ struct StaffMember: Codable {
     let last_msg: String?
     let section_id: String?
     let section_name: String?
-    init() {
-        self.id = nil
-        self.name = nil
-        self.is_blocked = nil
-        self.profile = ""
-        self.subject_id = nil
-        self.subject_name = nil
-        self.is_assigned = nil
-        self.is_class_teacher = nil
-        self.unread_count = nil
-        self.section_id = nil
-        self.section_name = nil
-        self.last_msg_time = nil
-        self.last_msg = nil
-    }
-    
 }
-
-
-
 
 struct ChatMessageSuc: Codable {
     
@@ -1430,6 +1411,8 @@ struct BlockedStudent: Codable {
     var blocked_on: String?
     var class_name: String?
     var section_name: String?
+    var class_id: String?
+    var section_id: String?
     var reason: String?
 }
 

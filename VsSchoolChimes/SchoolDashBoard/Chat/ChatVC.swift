@@ -21,19 +21,19 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     @IBOutlet weak var blockedLbl: UILabel!
     @IBOutlet weak var blockedView: UIView!
     var getValue = 1
-    var staffMembersData = StaffMember()
+    var staffMembersData: StaffMember?
     var childDetails = UserDefaultFileManager.get_child_Details()
     var chatDataDetails : [ChatMessage]?
     let Askedby  = "Asked by ~ "
     override func viewDidLoad() {
         super.viewDidLoad()
         profileImage.layer.cornerRadius = profileImage.frame.size.width/2
-        teacherLbl.text = staffMembersData.name
-        subjectLbl.text = staffMembersData.subject_name
+        teacherLbl.text = staffMembersData?.name
+        subjectLbl.text = staffMembersData?.subject_name
         blockedView.isHidden = true
         teacherLbl.setFont(style: .title, size: 15)
         subjectLbl.setFont(style: .title, size: 11)
-        if staffMembersData.is_blocked == true {
+        if staffMembersData?.is_blocked == true {
             blockedView.isHidden = false
             TextViewFullView.isHidden = true
         }else{
@@ -201,7 +201,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     }
     func getStaff(){
         APIService.shared
-            .makeApi(url: ServiceUrl.interaction_get_staff_answers , parameters: [ChatAPIKeys.staffId : staffMembersData.id ?? "",ChatAPIKeys.subjectId:staffMembersData.subject_id ?? "",ChatAPIKeys.offset:0,ChatAPIKeys.isClassTeacher:staffMembersData.is_class_teacher ?? false], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "", isBaseUrl: false){ [self] (
+            .makeApi(url: ServiceUrl.interaction_get_staff_answers , parameters: [ChatAPIKeys.staffId : staffMembersData?.id ?? "",ChatAPIKeys.subjectId:staffMembersData?.subject_id ?? "",ChatAPIKeys.offset:0,ChatAPIKeys.isClassTeacher:staffMembersData?.is_class_teacher ?? false], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "", isBaseUrl: false){ [self] (
                 result:Result <ChatMessageSuc,Error>
             ) in
                 switch result {
@@ -232,10 +232,10 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             let parameters: [String: Any] = [
-                ChatAPIKeys.staffId: self.staffMembersData.id ?? "",
-                ChatAPIKeys.subjectId: self.staffMembersData.subject_id  ?? "",
+                ChatAPIKeys.staffId: self.staffMembersData?.id ?? "",
+                ChatAPIKeys.subjectId: self.staffMembersData?.subject_id  ?? "",
                 ChatAPIKeys.question: self.MessgeTextview.text?.removingExtraSpaces() ?? "",
-                ChatAPIKeys.isClassTeacher: self.staffMembersData.is_class_teacher ?? false,
+                ChatAPIKeys.isClassTeacher: self.staffMembersData?.is_class_teacher ?? false,
                 ChatAPIKeys.filePath: []
             ]
             APIService.shared.makeApi(
