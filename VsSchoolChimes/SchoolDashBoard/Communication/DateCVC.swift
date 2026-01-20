@@ -22,7 +22,6 @@ class DateCVC: UICollectionViewCell {
         dateLbl.setFont(style: .title, size: FontSize.TitleSize)
     }
     @IBAction func deleteBtn(_ sender: UIButton) {
-        
         delegate?.deleteDelegate(index: sender.tag)
     }
 }

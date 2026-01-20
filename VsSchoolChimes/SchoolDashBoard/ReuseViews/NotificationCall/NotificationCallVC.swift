@@ -158,7 +158,7 @@ class NotificationCallVC: UIViewController {
             }
         }
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         gradientLayer?.frame = slideLabel.bounds
@@ -174,7 +174,19 @@ class NotificationCallVC: UIViewController {
         super.viewWillDisappear(animated)
         cleanup()
     }
-    
+    private func setDefaultSpeakerOn() {
+        speakerBtn.isSelected = true
+        speakerBtn.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.overrideOutputAudioPort(.speaker)
+        } catch {
+            print("⚠️ Speaker enable failed: \(error)")
+        }
+    }
+
+
     // MARK: - Volume & Power Button Observers
     private func setupVolumeObserver() {
         do {
@@ -235,18 +247,19 @@ class NotificationCallVC: UIViewController {
             print("Audio session setup failed: \(error.localizedDescription)")
         }
     }
-   
+
+    // MARK: - Audio Session Configuration
     private func configureAudioSessionForCall() {
         do {
-            // Switch to playAndRecord with voiceChat mode for earpiece routing
-            try AVAudioSession.sharedInstance().setCategory(
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(
                 .playAndRecord,
                 mode: .voiceChat,
-                options: [.allowBluetooth, .allowBluetoothA2DP]
+                options: [.defaultToSpeaker, .allowBluetooth, .allowBluetoothA2DP]
             )
-            try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
-            // Explicitly route to earpiece (receiver)
-            try AVAudioSession.sharedInstance().overrideOutputAudioPort(.none)
+            
+            try session.setActive(true, options: .notifyOthersOnDeactivation)
+            try session.overrideOutputAudioPort(.speaker)
         } catch {
             print("⚠️ Failed to configure audio session for call: \(error.localizedDescription)")
         }
@@ -740,11 +753,7 @@ class NotificationCallVC: UIViewController {
             self.dismissCallScreen()
         }
     }
-    // MARK: - Call Handling
     private func navigateToCallScreen() {
-        // Configure audio session for call (earpiece routing)
-        configureAudioSessionForCall()
-        
         UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
             self.swipeView.alpha = 0
             self.swipeView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
@@ -766,10 +775,12 @@ class NotificationCallVC: UIViewController {
             }
             
             self.callState = .active
+            self.configureAudioSessionForCall()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.setDefaultSpeakerOn()
+            }
         }
     }
-    
-    
     
     @objc private func toggleSpeaker() {
         speakerBtn.isSelected.toggle()
@@ -831,11 +842,12 @@ class NotificationCallVC: UIViewController {
         }
     }
 
-    
     private func setupAudioPlayer() {
-
         stopLocalRingtone()
 
+        // Re-configure audio session before playing
+        configureAudioSessionForCall()
+        
         audioQueuePlayer = AVQueuePlayer()
         queueItems.removeAll()
         totalQueueDuration = 0
@@ -843,7 +855,7 @@ class NotificationCallVC: UIViewController {
         var orderedUrls: [(Int, URL)] = []
 
         if let w = URL(string: welcomeFileUrl), !welcomeFileUrl.isEmpty {
-            orderedUrls.append((0, w))   // welcome must be 0
+            orderedUrls.append((0, w))
         }
 
         if let v = URL(string: voiceUrl), !voiceUrl.isEmpty {
@@ -879,6 +891,7 @@ class NotificationCallVC: UIViewController {
                 }.resume()
             }
         }
+        
         dispatchGroup.notify(queue: .main) {
             guard let player = self.audioQueuePlayer else { return }
 
@@ -902,15 +915,13 @@ class NotificationCallVC: UIViewController {
 
             self.startQueueTimer()
             self.observeQueueFinish()
-            self.configureAudioSessionForCall()
+            self.setDefaultSpeakerOn()
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                 player.play()
             }
         }
-
     }
-
     private func observeQueueFinish() {
         NotificationCenter.default.addObserver(
             self,
@@ -961,24 +972,44 @@ class NotificationCallVC: UIViewController {
             guard let self = self,
                   let player = self.audioQueuePlayer else { return }
 
-            let seconds = CMTimeGetSeconds(player.currentTime())
-            guard seconds.isFinite, !seconds.isNaN else { return }
+            let currentItemSeconds = CMTimeGetSeconds(player.currentTime())
+            guard currentItemSeconds.isFinite else { return }
+
+            let previousDuration = self.playedDurationTillCurrentItem()
+            let totalPlayed = previousDuration + currentItemSeconds
 
             guard self.totalQueueDuration > 0 else { return }
 
-            let cur = Int(seconds)
+            let cur = Int(totalPlayed)
             let total = Int(self.totalQueueDuration)
 
             self.durationLbl.text = String(
                 format: "Connected\n\n%02d:%02d / %02d:%02d",
-                cur/60, cur%60, total/60, total%60
+                cur / 60, cur % 60,
+                total / 60, total % 60
             )
         }
     }
 
+    private func playedDurationTillCurrentItem() -> Double {
+        guard let player = audioQueuePlayer,
+              let currentItem = player.currentItem else { return 0 }
 
-    
-    
+        var duration: Double = 0
+
+        let sortedKeys = queueItems.keys.sorted()
+
+        for key in sortedKeys {
+            guard let item = queueItems[key] else { continue }
+            if item == currentItem { break }
+
+            let sec = CMTimeGetSeconds(item.asset.duration)
+            if sec.isFinite {
+                duration += sec
+            }
+        }
+        return duration
+    }
     
     private func playAudioData(_ data: Data) {
         do {
@@ -1006,18 +1037,12 @@ class NotificationCallVC: UIViewController {
         audioTimer?.invalidate()
         audioTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self, let player = self.audioPlayer else { return }
-            
-            // Current time
             let current = Int(player.currentTime)
             let currentMinutes = current / 60
             let currentSeconds = current % 60
-            
-            // Total duration
             let total = Int(player.duration)
             let totalMinutes = total / 60
             let totalSeconds = total % 60
-            
-            // Format: "Connected\n\n00:45 / 03:20"
             self.durationLbl.text = String(format: "Connected\n\n%02d:%02d / %02d:%02d",
                                            currentMinutes, currentSeconds,
                                            totalMinutes, totalSeconds)
