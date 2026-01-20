@@ -315,7 +315,7 @@ class NotificationCallVC: UIViewController {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: path)
             audioPlayer?.prepareToPlay()
-            audioPlayer?.numberOfLoops = -1   // infinite loop
+            audioPlayer?.numberOfLoops = -1
             audioPlayer?.play()
         } catch {
             playSystemDefaultTone()

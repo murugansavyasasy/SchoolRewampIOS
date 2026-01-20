@@ -12,7 +12,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PopoverViewVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="listTable" destination="0dh-ph-Uwd" id="MH5-SB-0kz"/>
-                <outlet property="stackView" destination="Lap-5c-wsY" id="do3-Fy-YEY"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,50 +20,18 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="voN-PS-qx1">
-                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
-                    <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0dh-ph-Uwd">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </tableView>
-                        <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Lap-5c-wsY">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="54"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NrT-4E-Bii">
-                                    <rect key="frame" x="0.0" y="0.0" width="191.66666666666666" height="54"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="54" id="ub0-zw-rNI"/>
-                                    </constraints>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="Clear"/>
-                                    <connections>
-                                        <action selector="clearBtn:" destination="-1" eventType="touchUpInside" id="7qO-M9-7C0"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V2X-Sm-RYX">
-                                    <rect key="frame" x="201.66666666666663" y="0.0" width="191.33333333333337" height="54"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="54" id="XQB-sa-MoG"/>
-                                    </constraints>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="Apply"/>
-                                    <connections>
-                                        <action selector="applyBtn:" destination="-1" eventType="touchUpInside" id="JGz-eN-och"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                        </stackView>
-                    </subviews>
-                </stackView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0dh-ph-Uwd">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="818"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="voN-PS-qx1" secondAttribute="bottom" id="NWd-6m-ZLF"/>
-                <constraint firstItem="voN-PS-qx1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="lhc-Ju-XyY"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="voN-PS-qx1" secondAttribute="trailing" id="lrP-qZ-Omd"/>
-                <constraint firstItem="voN-PS-qx1" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="usy-04-cfl"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="0dh-ph-Uwd" secondAttribute="bottom" id="D6j-Pr-q66"/>
+                <constraint firstItem="0dh-ph-Uwd" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Pd9-JP-Nft"/>
+                <constraint firstItem="0dh-ph-Uwd" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Sto-Kj-BKl"/>
+                <constraint firstItem="0dh-ph-Uwd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="rJo-zO-5kA"/>
             </constraints>
             <point key="canvasLocation" x="-66.412213740458014" y="19.718309859154932"/>
         </view>
