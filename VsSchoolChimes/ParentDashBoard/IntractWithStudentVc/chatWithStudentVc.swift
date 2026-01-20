@@ -29,7 +29,7 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
     @IBOutlet weak var noDataImage: UIImageView!
     
     
-    var staffMembersData = StaffMember()
+    var staffMembersData: StaffMember?
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var chatDataDetails : [StaffChatMessage]?
     var selectedMessage: StaffChatMessage?
@@ -37,8 +37,8 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
     var Publicreply = "Public reply"
     override func viewDidLoad() {
         super.viewDidLoad()
-        let subject = staffMembersData.subject_name ?? ""
-        let class_name = "\(staffMembersData.name ?? "") (\(staffMembersData.section_name ?? ""))"
+        let subject = staffMembersData?.subject_name ?? ""
+        let class_name = "\(staffMembersData?.name ?? "") (\(staffMembersData?.section_name ?? ""))"
         classNameLbl.configureAsBackTitle(firstLine: class_name, secondLine: subject)
         replyFullview.layer.cornerRadius = 10
         MessgeTextview.layer.cornerRadius = 10
@@ -93,7 +93,7 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
     //MARK: Api Call functions
     func getChat(){
         APIService.shared
-            .makeApi(url: ServiceUrl.interaction_staff_get_questions , parameters: [ChatAPIKeys.section_id : staffMembersData.section_id ?? "",ChatAPIKeys.subjectId:staffMembersData.subject_id ?? "",ChatAPIKeys.offset:0,ChatAPIKeys.isClassTeacher:staffMembersData.is_class_teacher ?? false], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false){ [self] (
+            .makeApi(url: ServiceUrl.interaction_staff_get_questions , parameters: [ChatAPIKeys.section_id : staffMembersData?.section_id ?? "",ChatAPIKeys.subjectId:staffMembersData?.subject_id ?? "",ChatAPIKeys.offset:0,ChatAPIKeys.isClassTeacher:staffMembersData?.is_class_teacher ?? false], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false){ [self] (
                 result:Result <StaffChatResponse,Error>
             ) in
                 switch result {
@@ -170,7 +170,11 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
         let param: [String:Any] = [
             ChatAPIKeys.student_id : selectedMessage?.student_id ?? "",
             ChatAPIKeys.is_block : !(selectedMessage?.is_blocked ?? false),
-            ChatAPIKeys.reason : reasonTextfield.text ?? ""
+            ChatAPIKeys.reason : reasonTextfield.text ?? "",
+            ChatAPIKeys.class_id : staffMembersData?.id ?? "",
+            ChatAPIKeys.section_id : staffMembersData?.section_id ?? "",
+            ChatAPIKeys.class_name : staffMembersData?.name ?? "",
+            ChatAPIKeys.section_name : staffMembersData?.section_name ?? ""
         ]
         APIService.shared.makeApi(url: ServiceUrl.comm_api_interaction_block_student, parameters: param, type: ApitTypeSringFile.PUT, token: staffDetails?.access_token ?? "", isBaseUrl: true) { [weak self]
             (result: Result<CommonApiSuc,Error>) in

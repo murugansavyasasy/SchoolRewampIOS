@@ -148,6 +148,8 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     
     func Get_student_List_Api(){
         
+        showActivityLoader()
+        
         let param: [String:Any] = [
             MarkAttendenceStringFile.section_id: user_inputs.section_id,
             MarkAttendenceStringFile.class_id: user_inputs.class_id,
@@ -197,6 +199,8 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                         self.dismiss(animated: true)
                     }
                 }
+                
+                self.hideActivityLoader()
             }
         }
     }
@@ -204,6 +208,9 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     
     
     func markAttendaceApi(){
+        
+        showActivityLoader()
+        
         let payload = student_List?.map {
             getSpecialAttendanceType(for: $0)
         } ?? []
@@ -258,6 +265,8 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                         print(error.localizedDescription)
                     }
                 }
+                
+                hideActivityLoader()
             }
     }
     

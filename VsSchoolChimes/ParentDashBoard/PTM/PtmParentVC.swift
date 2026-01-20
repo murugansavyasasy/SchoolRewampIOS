@@ -59,6 +59,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     func Reload(){
         getSlotsApi()
+        Get_Available_slot_count()
     }
    
     func updateTableHeight() {
@@ -262,6 +263,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                                                           message: success.message ?? "",
                                                           on: self) {
                             self.getSlotsApi()
+                            self.Get_Available_slot_count()
                         }
                     } else {
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed,

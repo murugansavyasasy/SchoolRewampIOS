@@ -118,17 +118,22 @@ class IntractwithStudentVc: UIViewController {
         }
     }
     
-    func UnBlock_Api(id:String){
+    func UnBlock_Api(student:BlockedStudent?){
+        
+        guard let student = student else{return}
         
         let alert = CustomAlert()
         
         alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Unblock_this_Student, actionLbl1: AlertstringFile.Yes, actionLbl2: AlertstringFile.Cancel, on: self) {
             
             let param: [String:Any] = [
-                ChatAPIKeys.student_id : id,
+                ChatAPIKeys.student_id : student.id ?? "",
                 ChatAPIKeys.is_block : false,
                 ChatAPIKeys.reason : "",
-                
+                ChatAPIKeys.class_id : student.class_id ?? "",
+                ChatAPIKeys.section_id : student.section_id ?? "",
+                ChatAPIKeys.class_name : student.class_name ?? "",
+                ChatAPIKeys.section_name : student.section_name ?? "",
             ]
             
             APIService.shared.makeApi(url: ServiceUrl.comm_api_interaction_block_student, parameters: param, type: ApitTypeSringFile.PUT, token: self.StaffDetails?.access_token ?? "", isBaseUrl: true) { [weak self]
@@ -140,7 +145,7 @@ class IntractwithStudentVc: UIViewController {
                         if success.status == true {
                             CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: success.message ?? "", on: self) {
                                 if var blockList = self.BlockList,
-                                   let index = blockList.firstIndex(where: { $0.id == id }) {
+                                   let index = blockList.firstIndex(where: { $0.id == student.id }) {
                                     blockList.remove(at: index)
                                     self.BlockList = blockList
                                     self.blockListTV.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
@@ -312,6 +317,7 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
             }
             cell.standerdScection.text = (student?.class_name ?? "") + " - " + (student?.section_name ?? "")
             cell.reasonLbl.text = "Reason: " + (student?.reason ?? "")
+            cell.reasonLbl.isHidden = false
             cell.submitDate.text = MenuStringFile.Blocked_on + (student?.blocked_on ?? "")
             cell.statusView.layer.cornerRadius = 10
             cell.statusView.backgroundColor = .systemBlue
@@ -319,7 +325,7 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
             cell.statusView.setTitle("Unblock", for: .normal)
             cell.statusView.isUserInteractionEnabled = true
             cell.onBlock = { [weak self] in
-                self?.UnBlock_Api(id: student?.id ?? "")
+                self?.UnBlock_Api(student: student)
             }
             
             return cell

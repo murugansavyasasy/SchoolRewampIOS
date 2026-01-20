@@ -113,8 +113,12 @@ class ReciverAttendanceReportVC: UIViewController {
         WeekStatusDefBtn.setTitleColor(.black.withAlphaComponent(0.7), for: .normal)
         WeekStatusDefBtn.semanticContentAttribute = .forceRightToLeft
         let spacing: CGFloat = 2
-        WeekStatusDefBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: -spacing)
-        WeekStatusDefBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: -spacing, bottom: 0, right: spacing)
+        var config = UIButton.Configuration.plain()
+           config.imagePadding = spacing
+           WeekStatusDefBtn.configuration = config
+
+//        WeekStatusDefBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: -spacing)
+//        WeekStatusDefBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: -spacing, bottom: 0, right: spacing)
         
         let today = Date()
         
@@ -153,23 +157,38 @@ class ReciverAttendanceReportVC: UIViewController {
     
     //MARK: Api call
     func get_student_stats() {
+        
+        showActivityLoader()
+        
         APIService.shared.makeApi(url: ServiceUrl.stud_attd_api_attendance_student_stats, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "", isBaseUrl: false) {[weak self] (result: Result<StudentStatisticsResponse,Error>) in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else {return}
                 switch result{
                 case .success(let success):
-                    self.studentStats = success.data
-                    setupDayButtons()
-                    Set_Piechart_data()
-                    if success.status == false {
+                    
+                    if success.status == true {
+                        self.studentStats = success.data
+                        setupDayButtons()
+                        Set_Piechart_data()
+                        noStatsLbl.isHidden = true
+                        Stackview.isHidden = false
+                        WeekStatusDefBtn.isHidden = false
+                    }else{
                         noStatsLbl.isHidden = false
                         noStatsLbl.text = success.message
+                        Set_Piechart_data()
+                        Stackview.isHidden = true
+                        WeekStatusDefBtn.isHidden = true
                     }
                     
                 case .failure(let error):
                     noStatsLbl.isHidden = false
                     noStatsLbl.text = error.localizedDescription
+                    Stackview.isHidden = true
+                    WeekStatusDefBtn.isHidden = true
                 }
+                
+                hideActivityLoader()
             }
         }
     }

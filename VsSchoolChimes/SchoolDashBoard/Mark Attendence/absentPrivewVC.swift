@@ -240,6 +240,7 @@ extension absentPrivewVC:UITableViewDelegate,UITableViewDataSource{
         cell.addmissionLbl.text =  MenuStringFile.admission_no + (data?.admission_no ?? "")
         return cell
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }

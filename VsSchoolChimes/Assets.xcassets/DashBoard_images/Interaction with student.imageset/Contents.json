@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "chat (4) 1.svg",
+      "filename" : "interaction.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "chat (4) 2.svg",
+      "filename" : "interaction 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "chat (4) 3.svg",
+      "filename" : "interaction 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }
