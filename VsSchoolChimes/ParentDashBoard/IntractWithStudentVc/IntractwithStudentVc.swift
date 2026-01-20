@@ -36,6 +36,8 @@ class IntractwithStudentVc: UIViewController {
         popupView.layer.cornerRadius = 10
         backBtn.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,
                                       secondLine: StaffDetails?.school_name ?? "")
+        blockStudentBtnName.isHidden = true
+        searchBtn.isHidden = true
         searchBar.delegate = self
         searchBar.isHidden = true
         searchBar.searchTextField.addDoneButton()
@@ -70,6 +72,7 @@ class IntractwithStudentVc: UIViewController {
                             noDataFoundLbl.isHidden = !(filteredData?.isEmpty ?? true)
                             imgView.isHidden = !(filteredData?.isEmpty ?? true)
                             blockStudentBtnName.isHidden = false
+                            searchBtn.isHidden = false
                             tv.reloadData()
                         }
                     }else{
@@ -79,6 +82,7 @@ class IntractwithStudentVc: UIViewController {
                             imgView.isHidden = !(filteredData?.isEmpty ?? true)
                             noDataFoundLbl.text = successMessage.message ?? ""
                             blockStudentBtnName.isHidden = true
+                            searchBtn.isHidden = true
                         }
                     }
                 case .failure(let error):
@@ -88,6 +92,7 @@ class IntractwithStudentVc: UIViewController {
                         noDataFoundLbl.text = error.localizedDescription
                         imgView.isHidden = false
                         blockStudentBtnName.isHidden = true
+                        searchBtn.isHidden = true
                     }
                     print(error.localizedDescription)
                 }

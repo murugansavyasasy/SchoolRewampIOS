@@ -10,7 +10,16 @@ import UIKit
 
 class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, markeAsAbsent {
     func markAsAbsent(AbsentStudent: [AttendanceStudentListDetails], CallAttendaceApi: Bool) {
+        
+        searchBar.searchTextField.text = ""
+        searchQuery = ""
+        filterBtn.setTitle(CommonStringFile.NameASC, for: .normal)
+        noDataLbl.isHidden = true
+        noDataImage.isHidden = true
+        
         if CallAttendaceApi {
+            student_List = AbsentStudent
+            Filtered_stuent_Listt = student_List
             user_inputs.all_present = areAllStudentsPresent() ? "T" : "F"
             self.markAttendaceApi()
             
@@ -429,24 +438,50 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         
     }
     
+//    func areAllStudentsPresent() -> Bool {
+//        guard let students = student_List else { return false }
+//        return students.allSatisfy { student in
+//            let components = student.att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
+//            var value = ""
+//            if user_inputs.attendance_type == "H" {
+//                if user_inputs.session_type == "FH" {
+//                    value = components.first ?? ""
+//                } else {
+//                    value = components.count > 1 ? components[1] : (components.first ?? "")
+//                }
+//            } else {
+//                return components.allSatisfy { $0 == "P" || $0 == "P~" }
+//            }
+//            return value == "P" || value == "P~"
+//        }
+//    }
+    
+    
     func areAllStudentsPresent() -> Bool {
-        guard let students = Filtered_stuent_Listt else { return false }
+        guard let students = student_List else { return false }
+
         return students.allSatisfy { student in
-            let components = student.att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
-            var value = ""
+            let components = student.att_status?
+                .split(separator: "/")
+                .map(String.init) ?? ["P", "P"]
+
             if user_inputs.attendance_type == "H" {
+                let value: String
+
                 if user_inputs.session_type == "FH" {
                     value = components.first ?? ""
                 } else {
                     value = components.count > 1 ? components[1] : (components.first ?? "")
                 }
+
+                return value == "P" || value == "P~"
             } else {
-                return components.allSatisfy { $0 == "P" || $0 == "P~" }
+                let value = components.first ?? ""
+                return value == "P" || value == "P~"
             }
-            return value == "P" || value == "P~"
         }
     }
-    
+
     
     
     func getSpecialAttendanceType(for student: AttendanceStudentListDetails) -> [String: String] {
@@ -530,7 +565,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     }
     
     @IBAction func fliter(_ sender: UIButton) {
-        dropDown.dataSource = [CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(), CommonStringFile.Absent.translated(),CommonStringFile.Present.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.RollNoDESC.translated(),CommonStringFile.AdmissionNoASC,CommonStringFile.AdmissionNoDESC]
+        dropDown.dataSource = [CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.RollNoDESC.translated(),CommonStringFile.AdmissionNoASC,CommonStringFile.AdmissionNoDESC]
         dropDown.anchorView = filterBtn
         dropDown.bottomOffset = CGPoint(x: 0, y: (filterBtn.bounds.height))
         dropDown.direction = .bottom

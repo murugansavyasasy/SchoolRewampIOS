@@ -5,6 +5,11 @@
 //  Created by Admin on 19/12/24.
 //
 
+enum AttendanceImage {
+    case system(String)
+    case asset(String)
+}
+
 import UIKit
 import DGCharts
 
@@ -177,8 +182,8 @@ class ReciverAttendanceReportVC: UIViewController {
                         noStatsLbl.isHidden = false
                         noStatsLbl.text = success.message
                         Set_Piechart_data()
-                        Stackview.isHidden = true
-                        WeekStatusDefBtn.isHidden = true
+                       // Stackview.isHidden = true
+                       // WeekStatusDefBtn.isHidden = true
                     }
                     
                 case .failure(let error):
@@ -228,65 +233,193 @@ class ReciverAttendanceReportVC: UIViewController {
     
     
     
+//    func setupDayButtons() {
+//        Stackview.arrangedSubviews.forEach { view in
+//            Stackview.removeArrangedSubview(view)
+//            view.removeFromSuperview()
+//        }
+//        
+//        let dayInitials = ["M", "T", "W", "T", "F", "S", "S"]
+//        let attList = studentStats?.first?.weekly_status?.att_list ?? []
+//        for (index,initial) in dayInitials.enumerated() {
+//            let verticalStack = UIStackView()
+//            verticalStack.axis = .vertical
+//            verticalStack.alignment = .center
+//            verticalStack.spacing = 4
+//            
+//            // Create the day label
+//            let label = UILabel()
+//            label.text = initial
+//            label.textAlignment = .center
+//            label.font = UIFont.systemFont(ofSize: 13)
+//            label.textColor = .black.withAlphaComponent(0.8)
+//            
+//            // Create the image view
+//            let imageView = UIImageView()
+//            let status = attList.indices.contains(index) ? attList[index] : nil
+//            switch status{
+//            case "-":
+//                imageView.image = UIImage(systemName: "circle")
+//                imageView.tintColor = .systemPink
+//            case "x":
+//                imageView.image = UIImage(systemName: "checkmark.circle.fill")
+//                imageView.tintColor = .backGroundClr
+//            case "A":
+//                imageView.image = UIImage(systemName: "a.circle.fill")
+//                imageView.tintColor = .systemRed
+//            case "S":
+//                imageView.image = UIImage(systemName: "h.circle.fill")
+//                imageView.tintColor = .systemPink
+//            case "/" :
+//                imageView.image = UIImage(systemName: "circle.lefthalf.filled")
+//                imageView.tintColor = .backGroundClr
+//            case "SH" :
+//                imageView.image = UIImage(systemName: "circle.righthalf.filled")
+//                imageView.tintColor = .backGroundClr
+//            default:
+//                imageView.image = UIImage(systemName: "circle")
+//                imageView.tintColor = .systemPink
+//            }
+//            
+//            imageView.contentMode = .scaleAspectFit
+//            imageView.translatesAutoresizingMaskIntoConstraints = false
+//            NSLayoutConstraint.activate([
+//                imageView.widthAnchor.constraint(equalToConstant: 20),
+//                imageView.heightAnchor.constraint(equalToConstant: 20)
+//            ])
+//            verticalStack.addArrangedSubview(label)
+//            verticalStack.addArrangedSubview(imageView)
+//            Stackview.addArrangedSubview(verticalStack)
+//        }
+//    }
+    
     func setupDayButtons() {
-        Stackview.arrangedSubviews.forEach { view in
-            Stackview.removeArrangedSubview(view)
-            view.removeFromSuperview()
+        Stackview.arrangedSubviews.forEach {
+            Stackview.removeArrangedSubview($0)
+            $0.removeFromSuperview()
         }
-        
+
         let dayInitials = ["M", "T", "W", "T", "F", "S", "S"]
         let attList = studentStats?.first?.weekly_status?.att_list ?? []
-        for (index,initial) in dayInitials.enumerated() {
+
+        for (index, initial) in dayInitials.enumerated() {
+
             let verticalStack = UIStackView()
             verticalStack.axis = .vertical
             verticalStack.alignment = .center
             verticalStack.spacing = 4
-            
-            // Create the day label
+
             let label = UILabel()
             label.text = initial
-            label.textAlignment = .center
             label.font = UIFont.systemFont(ofSize: 13)
+            label.textAlignment = .center
             label.textColor = .black.withAlphaComponent(0.8)
-            
-            // Create the image view
+
             let imageView = UIImageView()
             let status = attList.indices.contains(index) ? attList[index] : nil
-            switch status{
-            case "-":
-                imageView.image = UIImage(systemName: "circle")
-                imageView.tintColor = .systemPink
-            case "x":
-                imageView.image = UIImage(systemName: "checkmark.circle.fill")
-                imageView.tintColor = .backGroundClr
-            case "A":
-                imageView.image = UIImage(systemName: "a.circle.fill")
-                imageView.tintColor = .systemRed
-            case "S":
-                imageView.image = UIImage(systemName: "h.circle.fill")
-                imageView.tintColor = .systemPink
-            case "/" :
-                imageView.image = UIImage(systemName: "circle.lefthalf.filled")
-                imageView.tintColor = .backGroundClr
-            case "SH" :
-                imageView.image = UIImage(systemName: "circle.righthalf.filled")
-                imageView.tintColor = .backGroundClr
-            default:
-                imageView.image = UIImage(systemName: "circle")
-                imageView.tintColor = .systemPink
+
+            let appearance = attendanceAppearance(for: status)
+
+            switch appearance.image {
+            case .system(let name):
+                imageView.image = UIImage(systemName: name)
+
+            case .asset(let name):
+                imageView.image = UIImage(named: name)
             }
-            
+
+            imageView.tintColor = appearance.color
+
             imageView.contentMode = .scaleAspectFit
             imageView.translatesAutoresizingMaskIntoConstraints = false
+
             NSLayoutConstraint.activate([
                 imageView.widthAnchor.constraint(equalToConstant: 20),
                 imageView.heightAnchor.constraint(equalToConstant: 20)
             ])
+
             verticalStack.addArrangedSubview(label)
             verticalStack.addArrangedSubview(imageView)
             Stackview.addArrangedSubview(verticalStack)
         }
     }
+    
+    
+    private func attendanceAppearance(
+        for status: String?
+    ) -> (image: AttendanceImage, color: UIColor) {
+
+        guard let status = status else {
+            return (.system("minus.circle.fill"), .systemRed)
+        }
+
+        switch status {
+
+        // MARK: - Single / Base statuses (WITH COLORS)
+
+        case "-/-", "-":
+            return (.system("minus.circle.fill"), .systemRed)
+
+        case "P", "P/P":
+            return (.system("checkmark.circle.fill"), .systemBlue)
+
+        case "A", "A/A":
+            return (.system("a.circle.fill"), .systemRed)
+
+        case "P~", "P~/P~":
+            return (.asset("Late"), .systemBlue)
+
+        case "OD", "OD/OD":
+            return (.asset("Od"), .systemOrange)
+
+        case "H", "H/H":
+            return (.system("h.circle.fill"), .systemPink)
+
+        // MARK: - FN / AN combinations
+
+        case "P/A":
+            return (.asset("present_absent"), .systemBlue)
+        case "P/P~":
+            return (.asset("present_late"), .systemBlue)
+        case "P/OD":
+            return (.asset("present_OD"), .systemBlue)
+        case "P/-":
+            return (.asset("presnt_notTaken"), .systemBlue)
+
+        case "A/P":
+            return (.asset("absent_present"), .systemBlue)
+        case "A/P~":
+            return (.asset("absent_Late"), .systemBlue)
+        case "A/OD":
+            return (.asset("absent_Od"), .systemBlue)
+        case "A/-":
+            return (.asset("absent_notTaken"), .systemBlue)
+
+        case "P~/P":
+            return (.asset("Late_Present"), .systemBlue)
+        case "P~/A":
+            return (.asset("Late_Absent"), .systemBlue)
+        case "P~/OD":
+            return (.asset("Late_Od"), .systemBlue)
+        case "P~/-":
+            return (.asset("Late_notTaken"), .systemBlue)
+
+        case "OD/P":
+            return (.asset("Od_Present"), .systemBlue)
+        case "OD/A":
+            return (.asset("Od_Absent"), .systemBlue)
+        case "OD/P~":
+            return (.asset("Od_Late"), .systemBlue)
+        case "OD/-":
+            return (.asset("Od_notTaken"), .systemBlue)
+
+        default:
+            return (.system("minus.circle.fill"), .systemRed)
+        }
+    }
+
+
+
     
     func Set_Piechart_data(){
         let stats = studentStats?.first
@@ -401,11 +534,15 @@ class ReciverAttendanceReportVC: UIViewController {
             ("a.circle.fill", "Absent", .systemRed),
             ("Late", "Late Comer", .systemPink),
             ("Od", "OD", .systemOrange),
+            ("h.circle.fill", "Holiday", .systemPink),
             ("present_absent", "FN Present - AN Absent", .systemBlue),
             ("present_late", "FN Present - AN Late comer", .systemBlue),
             ("present_OD", "FN Present - AN OD", .systemBlue),
             ("presnt_notTaken", "FN Present - AN Not Taken", .systemBlue),
             ("absent_present", "FN Absent - AN Present", .systemBlue),
+            ("absent_Late", "FN Absent - AN Late comer", .systemBlue),
+            ("absent_Od", "FN Absent - AN OD", .systemBlue),
+            ("absent_notTaken", "FN Absent - AN Not Taken", .systemBlue),
             ("Late_Present", "FN Late comer - AN Present", .systemBlue),
             ("Late_Absent", "FN Late comer - AN Absent", .systemBlue),
             ("Late_Od", "FN Late comer - AN OD", .systemBlue),

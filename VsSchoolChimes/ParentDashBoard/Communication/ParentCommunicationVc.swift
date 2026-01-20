@@ -10,25 +10,35 @@ import UIKit
 import AVFoundation
 
 class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPalyingDelegate, AudioPlaybackDelegate1{
+   
+    
     func audioCell(_ cell: CommunicationTVC, willStartPlayingAtIndex index: Int) {
         
-        if let audioCell = cell as? CommunicationTVC,
-           audioCell.cellIndex != index {
-            audioCell.stopPlayback()
+        // Safety check
+        guard displayedMessages.indices.contains(index) else { return }
+        
+        let message = displayedMessages[index]
+        
+        // Mark message as read
+        if message.is_unread == true {
+            cell.newImageView.isHidden = true
             
+            let type = message.type ?? ""
+            let id = message.id ?? ""
             
-            let message = displayedMessages[index]
-            
-            if message.is_unread ?? false{
-                audioCell.newImageView.isHidden = true
-                if message.is_archive ?? false{
-                    ReadStatusUpdate(type: message.type ?? "", detail_id: message.id ?? "")
-                }else{
-                    ReadStatusUpdateArchive(type: message.type ?? "", detail_id: message.id ?? "")
-                }
+            if message.is_archive == true {
+                ReadStatusUpdateArchive(type: type, detail_id: id)
+            } else {
+                ReadStatusUpdate(type: type, detail_id: id)
             }
         }
+        
+        // Stop playback for reused cells
+        if cell.cellIndex != index {
+            cell.stopPlayback()
+        }
     }
+
     
     func audioCell(_ cell: CommunicationTVC, didStopPlayingAtIndex index: Int) {
         ""
