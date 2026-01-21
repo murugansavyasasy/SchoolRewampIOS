@@ -99,7 +99,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
     var parentCell: Any?
     private var waveformBars: [UIView] = []
     private var barHeightConstraints: [NSLayoutConstraint] = []
-    private var lastPausedTime: TimeInterval = 0
+
     private var timer: Timer?
     private var audioPlayer: AVAudioPlayer?
     var onDurationUpdate: ((String) -> Void)?
@@ -108,7 +108,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
             updatePlayingState()
         }
     }
-
+    
     private var barsGenerated = false
     private var panGesture: UIPanGestureRecognizer!
     private var tapGesture: UITapGestureRecognizer!
@@ -120,16 +120,16 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
             audioPlayer?.stop()
             audioPlayer = nil
             isPlaying = false
-
+            
             DispatchQueue.main.async {
                 self.progressView.alpha = 0
                 self.durationLabel.text = "0:00"
             }
-
+            
             loadAudio()
         }
     }
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -139,7 +139,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
         super.init(coder: coder)
         setupUI()
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         if !barsGenerated && waveformView.bounds.width > 0 {
@@ -256,14 +256,14 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
                 DispatchQueue.main.async {
                     self.durationLabel.text = self.formatTime(duration)
                     let sampleCount = Int(self.bounds.width / 4)
-
+                    
                     AudioProcessor.extractAmplitudes(from: url, sampleCount: sampleCount) { [weak self] amplitudes in
                         guard let self = self else { return }
-
+                        
                         if self.waveformBars.isEmpty {
                             self.generateWaveformBars()
                         }
-
+                        
                         self.barsGenerated = true
                     }
                 }
@@ -275,34 +275,32 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
         }
     }
 
-    func startPlaybackAnimation() {
-        guard let player = audioPlayer else { return }
 
+    func startPlaybackAnimation() {
+        guard let player = audioPlayer else {
+            print("Audio player not initialized")
+            return
+        }
+        
         do {
             try AVAudioSession.sharedInstance().setActive(true)
-            player.currentTime = lastPausedTime
             player.play()
             isPlaying = true
             startTimer()
-            updateUI()
-
         } catch {
-            print("Playback failed")
+            print("Failed to start playback: \(error.localizedDescription)")
+            isPlaying = false
         }
     }
 
     func stopPlaybackAnimation() {
-        guard let player = audioPlayer else { return }
-
-        lastPausedTime = player.currentTime
-        player.pause()
-
+        audioPlayer?.pause()
         isPlaying = false
+        stopAnimations()
         timer?.invalidate()
         timer = nil
     }
-
-
+    
     private func stopAnimations() {
         DispatchQueue.main.async {
             self.waveformBars.forEach { bar in
@@ -311,30 +309,30 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
             }
         }
     }
-
+    
     private func updatePlayingState() {
         if !isPlaying {
             stopAnimations()
         }
     }
-
+    
     private func startTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
             self?.updateUI()
         }
     }
-
+    
     private func updateUI() {
         guard let player = audioPlayer else { return }
-
+        
         let remainingTime = player.duration - player.currentTime
         let timeText = formatTime(remainingTime)
         durationLabel.text = timeText
-
+        
         onDurationUpdate?(timeText)
         let progress = player.currentTime / player.duration
-
+        
         DispatchQueue.main.async {
             self.progressView.frame = CGRect(
                 x: 0,
@@ -343,7 +341,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
                 height: self.bounds.height
             )
         }
-
+        
         updateWaveformColor(progress: progress)
     }
 
@@ -401,15 +399,15 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
         audioPlayer?.stop()
         audioPlayer?.currentTime = 0
         isPlaying = false
-
+        
         UIView.animate(withDuration: 0.3) {
             self.progressView.alpha = 0
         }
-
+        
         durationLabel.text = formatTime(audioPlayer?.duration ?? 0)
         updateWaveformColor(progress: 0)
     }
-
+    
     private func resetState() {
         timer?.invalidate()
         timer = nil
@@ -422,7 +420,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
                 bar.layer.removeAllAnimations()
                 bar.alpha = 1.0
             }
-
+            
             self.progressView.alpha = 0
             self.durationLabel.text = "0:00"
         }
@@ -431,9 +429,9 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
     func setParentCell(_ cell: Any?) {
         parentCell = cell
     }
-
+    
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-
+        
         DispatchQueue.main.async {
             self.reset()
             if let cell = self.parentCell as? AudioCVC {
@@ -447,7 +445,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
             }
         }
     }
-
+    
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         print("Audio player decode error: \(error?.localizedDescription ?? "Unknown error")")
         DispatchQueue.main.async {
@@ -456,6 +454,7 @@ class AudioMessageView: UIView, AVAudioPlayerDelegate {
         }
     }
 }
+
 // MARK: - AudioProcessor
 class AudioProcessor {
     static func extractAmplitudes(from url: URL, sampleCount: Int, completion: @escaping ([Float]) -> Void) {
