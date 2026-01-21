@@ -43,7 +43,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate,UNUserNotificationCenter
                                    withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
 
            if #available(iOS 14.0, *) {
-               completionHandler([.banner, .sound, .badge, .list])
+               completionHandler([.banner, .sound, .list])
            } else {
                // Fallback on earlier versions
            }
@@ -88,6 +88,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate,UNUserNotificationCenter
         print("sceneDidEnterBackground")
     }
 
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        application.applicationIconBadgeNumber = 0
+    }
 
 }
 
