@@ -43,7 +43,7 @@ class MarksTableViewCell: UITableViewCell {
     }
     
     func configure(student: StudentMark, index: Int, parentVC: EnterMarkVC, nameWidth: CGFloat) {
-        setStudentNameWithGender(label: studentNameLabel,student:student.student_name,gender:"M")
+        setStudentNameWithGender(label: studentNameLabel,student:student.student_name,gender:student.gender)
         if let rollNo = student.roll_no,let admissionNo = student.admission_no{
             rollNoLabel.text = "Roll No: \(rollNo)"
             admissNoLabel.text = "Admiss No: \(admissionNo)"
@@ -65,7 +65,7 @@ class MarksTableViewCell: UITableViewCell {
     func setStudentNameWithGender(label: UILabel, student:String?,gender:String?) {
 
         let name = student ?? ""
-        let gender = gender?.uppercased()
+        let gender = gender?.first?.uppercased()
 
         let fullText: String
         if let gender = gender, !gender.isEmpty {

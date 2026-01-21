@@ -17,7 +17,8 @@ class AddSuccessTVC: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         setupDashedBorder()
-        contentLbl.text = "Let the staff scan the QR code or \n use the coupon code to claim the offer"
+        contentLbl.text = "Staff can scan the QR code or \n enter the coupon code to claim the offer."
+        
     }
     private func setupDashedBorder() {
             // Create border layer

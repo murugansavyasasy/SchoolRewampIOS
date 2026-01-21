@@ -183,13 +183,13 @@ class OTPVc: UIViewController {
     }
     
     func updateLabelWithTime() {
-        let text = "Didn't receive a verification code? 00:\(String(format: "%02d", remainingTime))"
+        let text = "Didn’t receive the verification code? 00:\(String(format: "%02d", remainingTime))"
         let attributedText = NSMutableAttributedString(string: text)
         ResendLbl.attributedText = attributedText
     }
     
     func showResend() {
-        let text = "Didn't receive a verification code? Resend"
+        let text = "Didn’t receive the verification code? Resend"
         let attributed = NSMutableAttributedString(string: text)
         let resendRange = (text as NSString).range(of: "Resend")
         attributed.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: resendRange)
