@@ -30,8 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         UNUserNotificationCenter.current().delegate = self
         Messaging.messaging().delegate = self
 
-        // Push notification permission
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, _ in
+        UIApplication.shared.applicationIconBadgeNumber = 0   // 🔥 ADD THIS
+
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, _ in
             if granted {
                 DispatchQueue.main.async {
                     application.registerForRemoteNotifications()
@@ -39,6 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
             }
         }
         return true
+    }
+
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        application.applicationIconBadgeNumber = 0
     }
 
     // MARK: - Firebase Token
