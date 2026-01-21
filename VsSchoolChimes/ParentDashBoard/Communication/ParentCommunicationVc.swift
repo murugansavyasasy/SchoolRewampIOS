@@ -14,6 +14,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
     
     func audioCell(_ cell: CommunicationTVC, willStartPlayingAtIndex index: Int) {
         
+        playIndex = index
         // Safety check
         guard displayedMessages.indices.contains(index) else { return }
         
@@ -41,7 +42,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
 
     
     func audioCell(_ cell: CommunicationTVC, didStopPlayingAtIndex index: Int) {
-        ""
+        if playIndex == index {
+            playIndex = nil
+        }
     }
     
    
@@ -262,6 +265,21 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
         }
     }
     
+    private func stopPlayingAudioIfNeeded() {
+        
+        guard let index = playIndex else { return }
+
+        let indexPath = IndexPath(row: index, section: 0)
+
+        if let cell = tv.cellForRow(at: indexPath) as? CommunicationTVC {
+            cell.stopPlayback()
+        }
+
+        playIndex = nil
+    }
+
+
+    
     @IBAction func backBtn(_ sender: Any) {
         
         dismiss(animated: true)
@@ -270,21 +288,21 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
     //MARK: Filter Buttons Actions
     
     @IBAction func allAction(_ sender: Any) {
-        pauseCurrentAudioBeforeReload()
+        stopPlayingAudioIfNeeded()
         updateFilterButtons(selected: AllBtn)
         readStatus = 0
         applyFilters()
     }
     
     @IBAction func readAction(_ sender: Any) {
-        pauseCurrentAudioBeforeReload()
+        stopPlayingAudioIfNeeded()
         updateFilterButtons(selected: ReadBtn)
         readStatus = 1
         applyFilters()
     }
     
     @IBAction func unreadAction(_ sender: Any) {
-        pauseCurrentAudioBeforeReload()
+        stopPlayingAudioIfNeeded()
         updateFilterButtons(selected: UnreadBtn)
         readStatus = 2
         applyFilters()
@@ -385,7 +403,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
     }
     
     func GetArchiveCommunicationList() {
-        savePlaybackStateBeforeReload()
+        //savePlaybackStateBeforeReload()
         
         APIService.shared.makeApi(
             url: ServiceUrl.comm_communication_list_archive,
@@ -409,10 +427,10 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
                         self.tv.isHidden = false
                         self.searchBtn.isHidden = false
                         self.tv.isScrollEnabled = true
-                        self.restorePlaybackStateAfterReload()
+                       // self.restorePlaybackStateAfterReload()
                     } else {
                         self.tv.reloadData()
-                        self.restorePlaybackStateAfterReload()
+                       // self.restorePlaybackStateAfterReload()
                         
                         if self.allMessages.isEmpty {
                             self.NodataLbl.text = response.message
@@ -432,7 +450,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
                 DispatchQueue.main.async {
                     print(error.localizedDescription)
                     self.tv.reloadData()
-                    self.restorePlaybackStateAfterReload()
+                    //self.restorePlaybackStateAfterReload()
                     
                     if self.allMessages.isEmpty {
                         self.NodataLbl.text = error.localizedDescription
@@ -572,7 +590,6 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             
         case "VOICE":
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommunicationTVC", for: indexPath) as! CommunicationTVC
-            let isPlaying = (playIndex == indexPath.row)
             let voiceData = message
             cell.emergencyBtnName.isHidden = !(voiceData.is_emergency ?? false)
             let formattedDateString = dateFormatter.convertDate(message.date ?? "") ?? ""
@@ -583,15 +600,9 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             let duration = voiceData.duration ?? 0
             let formattedDuration = formatDuration(duration)
             cell.tottalDurationLbl.text = formattedDuration
-            if !isPlaying {
-            }else{
-                cell.newImageView.isHidden = true
-            }
             cell.newImageView.isHidden = !(message.is_unread ?? false)
-//            if voiceData.loadFile != true || voiceData.loadFile == nil{
-                configureAudioCell(cell, at: indexPath)
-                message.loadFile = true
-//            }
+            configureAudioCell(cell, at: indexPath)
+            message.loadFile = true
             
             return cell
             
@@ -857,7 +868,7 @@ extension ParentCommunicationVc : UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        pauseCurrentAudioBeforeReload()
+        stopPlayingAudioIfNeeded()
         selectedIndex = indexPath
         
         selectedFilterType = (indexPath.row == 0) ? nil : Filters[indexPath.row]
@@ -884,7 +895,7 @@ extension ParentCommunicationVc : UICollectionViewDelegate, UICollectionViewData
 extension ParentCommunicationVc : UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        pauseCurrentAudioBeforeReload()
+        stopPlayingAudioIfNeeded()
         
         let trimmedText = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         let baseList = allMessages.filtered(readStatus: readStatus, type: selectedFilterType)
