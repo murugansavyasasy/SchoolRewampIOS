@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AppTourVC" customModule="School_Chimes" customModuleProvider="target">
+            <connections>
+                <outlet property="imageView" destination="Rox-6p-xwS" id="MPI-KJ-JOB"/>
+                <outlet property="nextBtn" destination="nc9-0p-RPM" id="Ldd-3w-d2W"/>
+                <outlet property="previousBtn" destination="pvy-6V-6jP" id="0Os-5g-doy"/>
+                <outlet property="skipBtn" destination="hQA-hJ-JNW" id="gym-CP-tnQ"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="doF-Mc-ixM">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="818"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Exam_pencil" translatesAutoresizingMaskIntoConstraints="NO" id="Rox-6p-xwS">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="818"/>
+                        </imageView>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="I4d-py-EKy">
+                            <rect key="frame" x="163" y="773.66666666666663" width="220" height="34.333333333333371"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvy-6V-6jP">
+                                    <rect key="frame" x="0.0" y="0.0" width="80" height="34.333333333333336"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="34.333333333333336" id="VyV-zT-cJr"/>
+                                        <constraint firstAttribute="width" constant="80" id="tV9-2O-O04"/>
+                                    </constraints>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Prievious"/>
+                                    <connections>
+                                        <action selector="previous:" destination="-1" eventType="touchUpInside" id="dF4-U4-i5W"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nc9-0p-RPM">
+                                    <rect key="frame" x="90" y="0.0" width="70" height="34.333333333333336"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="70" id="Hvs-1J-vZ2"/>
+                                        <constraint firstAttribute="height" constant="34.333333333333336" id="rDE-gX-lHR"/>
+                                    </constraints>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Next"/>
+                                    <connections>
+                                        <action selector="next:" destination="-1" eventType="touchUpInside" id="xgR-Ia-5Ah"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hQA-hJ-JNW">
+                                    <rect key="frame" x="170" y="0.0" width="50" height="34.333333333333336"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="34.333333333333336" id="Hop-vz-NO8"/>
+                                        <constraint firstAttribute="width" constant="50" id="fZC-8m-cQT"/>
+                                    </constraints>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Skip"/>
+                                    <connections>
+                                        <action selector="skip:" destination="-1" eventType="touchUpInside" id="Io8-fG-aBc"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="Rox-6p-xwS" firstAttribute="top" secondItem="doF-Mc-ixM" secondAttribute="top" id="Rj8-8s-GeZ"/>
+                        <constraint firstAttribute="bottom" secondItem="I4d-py-EKy" secondAttribute="bottom" constant="10" id="bsJ-DU-fai"/>
+                        <constraint firstItem="Rox-6p-xwS" firstAttribute="leading" secondItem="doF-Mc-ixM" secondAttribute="leading" id="lki-YK-QXR"/>
+                        <constraint firstAttribute="bottom" secondItem="Rox-6p-xwS" secondAttribute="bottom" id="tuV-vR-6Vn"/>
+                        <constraint firstAttribute="trailing" secondItem="I4d-py-EKy" secondAttribute="trailing" constant="10" id="uVJ-II-ifZ"/>
+                        <constraint firstAttribute="trailing" secondItem="Rox-6p-xwS" secondAttribute="trailing" id="yWf-Lt-dnt"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="doF-Mc-ixM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="3ig-rC-mmV"/>
+                <constraint firstItem="doF-Mc-ixM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="RGL-BY-1dV"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="doF-Mc-ixM" secondAttribute="bottom" id="gKY-uC-Nl0"/>
+                <constraint firstItem="doF-Mc-ixM" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="nM0-T8-LoV"/>
+            </constraints>
+            <point key="canvasLocation" x="27" y="20"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Exam_pencil" width="24" height="24"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

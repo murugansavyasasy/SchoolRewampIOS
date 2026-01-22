@@ -22,7 +22,7 @@ class RatingTableViewCell: UITableViewCell {
     // MARK: - Variables
     weak var delegate: RatingCellDelegate?
     weak var RatingDelegate: RatingDelegate?
-
+    var categorySections: [CategoriesSection]?
     private var currentRating = 0
 
     // MARK: - Lifecycle
@@ -85,19 +85,18 @@ extension RatingTableViewCell {
 extension RatingTableViewCell {
 
     func updateRating(_ value: Int) {
-
+//        let filtered = categorySections?.filter { $0.rating == value }
         guard value != currentRating else { return }   // avoid extra animation refresh
-
         currentRating = value
 
         // Text
         let ratingText: String
         switch value {
-        case 1: ratingText = RatingCellStringFile.Bad
-        case 2: ratingText = RatingCellStringFile.Not_bad
-        case 3: ratingText = RatingCellStringFile.Better
-        case 4: ratingText = RatingCellStringFile.Nice
-        case 5: ratingText = RatingCellStringFile.Good
+        case 1: ratingText = categorySections?[0].name ?? ""
+        case 2: ratingText = categorySections?[1].name ?? ""
+        case 3: ratingText = categorySections?[2].name ?? ""
+        case 4: ratingText = categorySections?[3].name ?? ""
+        case 5: ratingText = categorySections?[4].name ?? ""
         default: ratingText = ""
         }
 

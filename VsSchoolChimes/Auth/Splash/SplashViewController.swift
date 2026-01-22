@@ -404,6 +404,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                 if response.status ?? false {
                     DispatchQueue.main.async {
                         self.versionData = response.data?.first
+                        ServiceUrl.appStore_url = response.data?.first?.app_store_link ?? ""
                         if let countryDetails = self.versionData?.country_details {
                             UserDefaultFileManager.saveCountryDetails(data: countryDetails)
                             ServiceUrl.baseurl = countryDetails.base_url ?? ""

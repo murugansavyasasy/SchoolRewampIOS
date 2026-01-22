@@ -172,6 +172,7 @@ class SplashVC: UIViewController, ViewAttachments {
     private func setupUI() {
         setColoredEmpoweringText()
         headerLabel.alpha = 0
+        headerLabel.textColor = UIColor.black
         logoImageView.alpha = 0
         logoImageView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
         empoweringLabel.alpha = 0
