@@ -32,6 +32,7 @@ class AttachmentsVc: UIViewController {
     var ArchiveMessage = ""
     let transitionDelegate = TransitioningDelegate()
     let ATTACHMENT = "ATTACHMENT"
+    var tourKey = "ParentAttachment"
     override func viewDidLoad() {
         super.viewDidLoad()
         TitleLbl.configureAsBackTitle(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
@@ -51,7 +52,15 @@ class AttachmentsVc: UIViewController {
         
         tv.delegate = self
         tv.dataSource = self
-        
+        if !UserDefaults.standard.bool(forKey: tourKey){
+            DispatchQueue.main.asyncAfter(deadline:.now() + 0.5){
+                let vc = AppTourVC()
+                vc.modalPresentationStyle = .overFullScreen
+                vc.tourKey = self.tourKey
+                vc.modalTransitionStyle = .crossDissolve
+                self.present(vc, animated: true)
+            }
+        }
         fetchAttachments()
     }
     

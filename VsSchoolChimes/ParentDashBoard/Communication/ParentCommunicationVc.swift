@@ -92,7 +92,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
     private let viewText = "View"
     private let seeMoreText = "See more"
     private let seeLessText = "See less"
-
+    var tourKey = "ParentCommunication"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,6 +114,15 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
         tv.reloadData()
         FilterCV.delegate = self
         FilterCV.dataSource = self
+        if !UserDefaults.standard.bool(forKey: tourKey){
+            DispatchQueue.main.asyncAfter(deadline:.now() + 0.5){
+                let vc = AppTourVC()
+                vc.modalPresentationStyle = .overFullScreen
+                vc.tourKey = self.tourKey
+                vc.modalTransitionStyle = .crossDissolve
+                self.present(vc, animated: true)
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
