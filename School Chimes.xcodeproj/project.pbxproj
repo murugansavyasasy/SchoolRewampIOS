@@ -616,6 +616,8 @@
 		84CFD7322F10EAFC008ED044 /* EnterMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CFD7252F10EAFC008ED044 /* EnterMarkVC.swift */; };
 		84CFD7332F10EAFC008ED044 /* MarkReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CFD7272F10EAFC008ED044 /* MarkReviewCVC.swift */; };
 		84CFD7342F10EAFC008ED044 /* MarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CFD72B2F10EAFC008ED044 /* MarksCell.swift */; };
+		84D1D7082F21064800638962 /* AppTourVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D1D7072F21064800638962 /* AppTourVC.xib */; };
+		84D1D7092F21064800638962 /* AppTourVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D1D7062F21064800638962 /* AppTourVC.swift */; };
 		84D32C972D55CE2300A420A9 /* QuizListTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D32C962D55CE2300A420A9 /* QuizListTvCell.xib */; };
 		84D32C982D55CE2300A420A9 /* QuizListTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D32C952D55CE2300A420A9 /* QuizListTvCell.swift */; };
 		84D7858E2DFD3A3900A7B9E9 /* PaymentTypeTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D7858D2DFD3A3900A7B9E9 /* PaymentTypeTVC.xib */; };
@@ -1383,6 +1385,8 @@
 		84CFD72A2F10EAFC008ED044 /* MarksTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarksTableViewCell.xib; sourceTree = "<group>"; };
 		84CFD72B2F10EAFC008ED044 /* MarksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarksCell.swift; sourceTree = "<group>"; };
 		84CFD72C2F10EAFC008ED044 /* MarksCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarksCell.xib; sourceTree = "<group>"; };
+		84D1D7062F21064800638962 /* AppTourVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTourVC.swift; sourceTree = "<group>"; };
+		84D1D7072F21064800638962 /* AppTourVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppTourVC.xib; sourceTree = "<group>"; };
 		84D32C952D55CE2300A420A9 /* QuizListTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListTvCell.swift; sourceTree = "<group>"; };
 		84D32C962D55CE2300A420A9 /* QuizListTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuizListTvCell.xib; sourceTree = "<group>"; };
 		84D7858C2DFD3A3900A7B9E9 /* PaymentTypeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTypeTVC.swift; sourceTree = "<group>"; };
@@ -2624,6 +2628,8 @@
 				849970C52CF8752400800B07 /* TextHistoryTVCell.swift */,
 				849970C62CF8752400800B07 /* TextHistoryTVCell.xib */,
 				849970C72CF8752400800B07 /* WaveView .swift */,
+				84D1D7062F21064800638962 /* AppTourVC.swift */,
+				84D1D7072F21064800638962 /* AppTourVC.xib */,
 			);
 			path = Communication;
 			sourceTree = "<group>";
@@ -4103,6 +4109,7 @@
 				84395FEA2D10026100FC3242 /* ChatVC.xib in Resources */,
 				84F9862E2D3A57FC009FF065 /* QuizVC.xib in Resources */,
 				84E420BF2D2CF11500AA9D87 /* SpecificStudentTvcell.xib in Resources */,
+				84D1D7082F21064800638962 /* AppTourVC.xib in Resources */,
 				84A5BE492C19719700E32496 /* Base in Resources */,
 				84C499382E33AD52007BCB62 /* RiminderTimePicker.xib in Resources */,
 				84ADC9BA2E98C3900092CCAD /* TargetCvCell.xib in Resources */,
@@ -4608,6 +4615,7 @@
 				84C82A082D086A490024A46A /* SparkTrajectoryFactory.swift in Sources */,
 				84C82A092D086A490024A46A /* SparkTrajectory.swift in Sources */,
 				84C82A0A2D086A490024A46A /* FountainFireworkAnimator.swift in Sources */,
+				84D1D7092F21064800638962 /* AppTourVC.swift in Sources */,
 				FAFB40BA2ED6D9F800783142 /* ExamActivitySelectionVC.swift in Sources */,
 				FAD4D72F2E606449007A3FC0 /* PtmParentVC.swift in Sources */,
 				84C82A0B2D086A490024A46A /* ClassicFirework.swift in Sources */,

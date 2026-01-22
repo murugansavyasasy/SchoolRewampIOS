@@ -11,6 +11,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var studentNameLbl: UILabel!
     @IBOutlet weak var errorDeclarationLbl: UILabel!
+    @IBOutlet weak var aiIndimationLbl: UILabel!
     var examId: String?
     private var isSyncing = false
     var editedMarks: [String: [String: String]] = [:]
@@ -39,6 +40,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
         searchBar.placeholder = "Search"
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
+        aiIndimationLbl.isHidden = aiRecords.isEmpty
     }
 
     deinit {
@@ -670,9 +672,7 @@ extension EnterMarkVC {
         
         var hasError = false
         if let entered = Int(trimmed) {
-            hasError = entered < 0 || entered > (col.maxMarks ?? 0)
-        } else {
-            hasError = true
+            hasError = entered > col.maxMarks ?? 0
         }
         
         let key = makeMarkKey(col: col)
@@ -692,7 +692,7 @@ extension EnterMarkVC {
                 
                 let original = activity?.mark ?? ""
                 studentRecords[row].marks?[s].activities?[a].mark = trimmed
-                studentRecords[row].marks?[s].activities?[a].isReview = !hasError
+                studentRecords[row].marks?[s].activities?[a].isReview = hasError
                 studentRecords[row].marks?[s].activities?[a].reason = reson
                 errorDeclarationLbl.text = "⚠️ \(getFormattedReasonSummary())"
                 
@@ -716,39 +716,57 @@ extension EnterMarkVC {
 // Add to EnterMarkVC
 
 extension EnterMarkVC {
-    func moveToCell(row: Int, column: Int, animated: Bool = false) {
+    func moveToCell(row: Int, column: Int) {
+
         guard row >= 0 && row < studentRecords.count,
               column >= 0 && column < subjectColumns.count else { return }
 
         let indexPath = IndexPath(row: row, section: 0)
-
-        var offsetX: CGFloat = 0
-        for i in 0..<column {
-            offsetX += getColumnWidth(column: i)
-        }
-        headerCollectionview.setContentOffset(CGPoint(x: offsetX, y: 0), animated: false)
         listLableView.scrollToRow(at: indexPath, at: .middle, animated: false)
         listLableView.layoutIfNeeded()
 
         guard let cell = listLableView.cellForRow(at: indexPath) as? MarksTableViewCell else { return }
-        cell.marksCollectionView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: false)
-        cell.marksCollectionView.layoutIfNeeded()
+
+        let colX = columnX(column)
+        let colWidth = getColumnWidth(column: column)
+
+        let visibleStart = cell.marksCollectionView.contentOffset.x
+        let visibleEnd = visibleStart + cell.marksCollectionView.bounds.width
+
+        var newOffsetX = visibleStart
+
+        // 👉 Scroll RIGHT (next column)
+        if colX + colWidth > visibleEnd {
+            newOffsetX += colWidth
+        }
+
+        // 👉 Scroll LEFT (previous column)
+        else if colX < visibleStart {
+            newOffsetX -= colWidth
+        }
+
+        newOffsetX = max(0, newOffsetX)
+
+        cell.marksCollectionView.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
+        headerCollectionview.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
 
         let itemPath = IndexPath(item: column, section: 0)
+        cell.marksCollectionView.layoutIfNeeded()
+
         if let marksCell = cell.marksCollectionView.cellForItem(at: itemPath) as? MarksCell {
             marksCell.markTxt.becomeFirstResponder()
-        } else {
-            cell.marksCollectionView.scrollToItem(at: itemPath,
-                                                  at: .centeredHorizontally,
-                                                  animated: false)
-            cell.marksCollectionView.layoutIfNeeded()
-            if let marksCell = cell.marksCollectionView.cellForItem(at: itemPath) as? MarksCell {
-                marksCell.markTxt.becomeFirstResponder()
-            }
         }
     }
 
-    
+    private func columnX(_ column: Int) -> CGFloat {
+        var x: CGFloat = 0
+        for i in 0..<column {
+            x += getColumnWidth(column: i)
+        }
+        return x
+    }
+
+
     func moveToNextRow(row: Int, column: Int) {
         let nextRow = row + 1
         if nextRow < studentRecords.count {
@@ -906,16 +924,23 @@ extension EnterMarkVC: UISearchBarDelegate, UIPopoverPresentationControllerDeleg
         listLableView.reloadData()
     }
 
-    // MARK: - Popover Presentation
     func showPopover(from sender: UIView, contentVC: FilterPopover) {
+
         let popoverWidth = self.view.frame.width - 40
         let popoverHeight: CGFloat = 170
+
         contentVC.modalPresentationStyle = .popover
-        contentVC.preferredContentSize = CGSize(width: popoverWidth, height: popoverHeight)
+        contentVC.preferredContentSize = CGSize(width: popoverWidth,
+                                                height: popoverHeight)
 
         if let pop = contentVC.popoverPresentationController {
             pop.sourceView = self.view
-            pop.sourceRect = sender.frame
+            pop.sourceRect = CGRect(
+                x: self.view.bounds.midX,
+                y: self.view.bounds.midY,
+                width: 1,
+                height: 1
+            )
             pop.permittedArrowDirections = []
             pop.delegate = self
             pop.backgroundColor = .white
@@ -1023,11 +1048,24 @@ extension EnterMarkVC {
 
         case "Gender":
             return students.sorted {
-                let g1 = $0.gender ?? ""
-                let g2 = $1.gender ?? ""
-                return sortOrder == "Male" ? g1 == "Male" :
-                       sortOrder == "Female" ? g1 == "Female" :
-                       g1 == "Others"
+                func normalizeGender(_ gender: String?) -> String {
+                    guard let gender = gender, !gender.isEmpty else { return "" }
+                    return gender.prefix(1).uppercased() + gender.dropFirst().lowercased()
+                }
+
+                let g1 = normalizeGender($0.gender)
+                let g2 = normalizeGender($1.gender)
+
+                switch sortOrder.lowercased() {
+                case "male":
+                    return g1 == "Male"
+                case "female":
+                    return g1 == "Female"
+                case "others":
+                    return g1 == "Others"
+                default:
+                    return true
+                }
             }
 
         default:
