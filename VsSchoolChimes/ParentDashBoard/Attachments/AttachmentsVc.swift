@@ -330,12 +330,11 @@ class AttachmentsVc: UIViewController, Datepicker {
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
         vc.date = fromDateLbl.text
-//        if let maxDate = To_date{
-//            vc.maximumDate = maxDate
-//        }else{
-//            vc.maximumDate = Date()
-//        }
-        vc.maximumDate = Date()
+        if let maxDate = toDate{
+            vc.maximumDate = maxDate
+        }else{
+            vc.maximumDate = Date()
+        }
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
@@ -345,12 +344,12 @@ class AttachmentsVc: UIViewController, Datepicker {
     @IBAction func SelectToDate(){
         isFromDate = false
         let vc = DatePickerVC(nibName: nil, bundle: nil)
-         vc.dateSelection = 2
-          vc.date = toDateLbl.text
-          vc.maximumDate = Date()
-//        if let minDate = from_date{
-//            vc.minimumDate = minDate
-//        }
+        vc.dateSelection = 2
+        vc.date = toDateLbl.text
+        vc.maximumDate = Date()
+        if let minDate = fromDate{
+            vc.minimumDate = minDate
+        }
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)

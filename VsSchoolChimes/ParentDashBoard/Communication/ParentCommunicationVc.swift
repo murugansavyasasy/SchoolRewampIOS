@@ -349,12 +349,11 @@ class ParentCommunicationVc: UIViewController, AudioPlaybackDelegate1, Datepicke
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
         vc.date = fromDateLbl.text
-        //        if let maxDate = To_date{
-        //            vc.maximumDate = maxDate
-        //        }else{
-        //            vc.maximumDate = Date()
-        //        }
-        vc.maximumDate = Date()
+        if let maxDate = toDate{
+            vc.maximumDate = maxDate
+        }else{
+            vc.maximumDate = Date()
+        }
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
@@ -367,9 +366,9 @@ class ParentCommunicationVc: UIViewController, AudioPlaybackDelegate1, Datepicke
         vc.dateSelection = 2
         vc.date = toDateLbl.text
         vc.maximumDate = Date()
-        //        if let minDate = from_date{
-        //            vc.minimumDate = minDate
-        //        }
+        if let minDate = fromDate{
+            vc.minimumDate = minDate
+        }
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
@@ -678,6 +677,8 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.NewImageView.isHidden = true
             cell.descriptContent.tag = indexPath.row
             cell.descriptContent.isUserInteractionEnabled = true
+            cell.PostedByLbl.isHidden = false
+            cell.PostedByLbl.text = "Posted By - \(message.sent_by ?? "")"
             cell.MessageTitle.text = message.title
             let formattedDateString = dateFormatter.convertDate(message.date ?? "") ?? ""
             cell.DateLabel.setStyledDateTime(dateString: formattedDateString, timeString: message.time)
@@ -706,7 +707,8 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             let formattedDateString = dateFormatter.convertDate(message.date ?? "") ?? ""
             cell.dateLbl.setStyledDateTime(dateString: formattedDateString, timeString: message.time)
             cell.waveView.durationLabel.isHidden = true
-            
+            cell.PostedByLbl.isHidden = false
+            cell.PostedByLbl.text = "Posted By - \(voiceData.sent_by ?? "")"
             cell.titleLbl.text = voiceData.title
             let duration = voiceData.duration ?? 0
             let formattedDuration = formatDuration(duration)

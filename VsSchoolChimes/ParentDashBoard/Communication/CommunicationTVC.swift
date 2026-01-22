@@ -32,6 +32,9 @@ class CommunicationTVC: UITableViewCell {
     @IBOutlet weak var playBtn: UIButton!
     @IBOutlet weak var waveView: AudioMessageView!
     @IBOutlet weak var playerView: UIView!
+    @IBOutlet weak var PostedByLbl: UILabel!
+    
+    
     // MARK: - Delegates
     var delegate: DeleteImge?
     weak var audioDelegate: AudioPlaybackDelegate1?
@@ -97,6 +100,8 @@ class CommunicationTVC: UITableViewCell {
         updatePlayButtonState(isPlaying: false)
         dateLbl.setFont(style: .body, size: FontSize.BodySize)
         tittleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        PostedByLbl.setFont(style: .body, size: FontSize.BodySize)
+        PostedByLbl.isHidden = true
     }
 
     @IBAction func selectBtnAct(_ sender: UIButton) {
