@@ -73,8 +73,8 @@ class AWSUploadManager {
             // AUDIO → ALWAYS WAV
             if isAudioFile(url: url) {
                 let time = Int(Date().timeIntervalSince1970)
-                fileName = "audio_\(time).wav"
-                contentType = "audio/wav"
+                fileName = "original_\(time).m4a"
+                contentType = "audio/mp4"
                 fileURL = url   // Upload original audio file
             }
             else {
@@ -179,7 +179,7 @@ class AWSUploadManager {
         case "xls": return "application/vnd.ms-excel"
         case "xlsx": return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         case "mp3", "m4a", "wav":
-            return "audio/wav"
+            return "audio/mp4"
         case "mp4": return "video/mp4"
         case "mov": return "video/quicktime"
         default: return "application/octet-stream"
@@ -219,7 +219,7 @@ class AWSUploadManager {
             
         case Menu_id.communicationMenuId:
             Bucket = BucketName.schoolchimes_communication
-            Path = "\(Awsmenu.voice)/\(school_id)/\(today_date)"
+            Path = "\(Awsmenu.voice)/\("original")/\(today_date)"
         case Menu_id.quiz:
             Bucket = BucketName.schoolchimes_activities
             Path = "\(Awsmenu.marksheets)/\(school_id)/\(today_date)"

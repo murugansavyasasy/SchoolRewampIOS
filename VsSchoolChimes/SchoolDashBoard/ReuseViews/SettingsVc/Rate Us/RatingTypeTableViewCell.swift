@@ -84,6 +84,7 @@ class RatingTypeTableViewCell: UITableViewCell,
         
         AnySuggestionsLbl.text = names?.name ?? ""
         AnySuggestionsLbl.isHidden = self.names.isEmpty
+        AnySuggestionsLbl.alpha = 0
         
         collectionview.reloadData()
         collectionview.layoutIfNeeded()

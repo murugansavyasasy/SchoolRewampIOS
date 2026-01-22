@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -23,10 +23,10 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Swq-u5-oa5">
-                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="33x-KJ-bEt">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="666"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="nQg-bE-hry"/>
@@ -34,7 +34,7 @@
                             </connections>
                         </tableView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1lt-zH-mGI">
-                            <rect key="frame" x="358" y="0.0" width="35" height="35"/>
+                            <rect key="frame" x="353" y="5" width="35" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="35" id="Hb6-1a-hIx"/>
                                 <constraint firstAttribute="height" constant="35" id="Tsz-pE-pEM"/>
@@ -51,11 +51,11 @@
                     </subviews>
                     <color key="backgroundColor" name="topBackgroundCLr"/>
                     <constraints>
-                        <constraint firstItem="1lt-zH-mGI" firstAttribute="trailing" secondItem="33x-KJ-bEt" secondAttribute="trailing" id="YPs-sO-U7K"/>
+                        <constraint firstItem="1lt-zH-mGI" firstAttribute="trailing" secondItem="33x-KJ-bEt" secondAttribute="trailing" constant="-5" id="YPs-sO-U7K"/>
                         <constraint firstItem="33x-KJ-bEt" firstAttribute="leading" secondItem="Swq-u5-oa5" secondAttribute="leading" id="cJG-zF-iwT"/>
                         <constraint firstItem="33x-KJ-bEt" firstAttribute="top" secondItem="Swq-u5-oa5" secondAttribute="top" id="dI8-VF-3dq"/>
                         <constraint firstAttribute="trailing" secondItem="33x-KJ-bEt" secondAttribute="trailing" id="k8y-QN-ga0"/>
-                        <constraint firstItem="1lt-zH-mGI" firstAttribute="top" secondItem="33x-KJ-bEt" secondAttribute="top" id="nIf-yR-HyI"/>
+                        <constraint firstItem="1lt-zH-mGI" firstAttribute="top" secondItem="33x-KJ-bEt" secondAttribute="top" constant="5" id="nIf-yR-HyI"/>
                         <constraint firstAttribute="bottom" secondItem="33x-KJ-bEt" secondAttribute="bottom" id="rCR-op-BcY"/>
                     </constraints>
                 </view>
