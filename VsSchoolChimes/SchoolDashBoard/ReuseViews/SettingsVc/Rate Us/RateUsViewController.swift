@@ -209,8 +209,7 @@ extension RateUsViewController {
     }
     
     func redirectToAppStoreWriteReview() {
-        let appId = "700513732"
-        if let url = URL(string: "https://apps.apple.com/app/id\(appId)?action=write-review") {
+        if let url = URL(string:ServiceUrl.appStore_url) {
             UIApplication.shared.open(url)
         }
     }
@@ -240,6 +239,7 @@ extension RateUsViewController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.RatingTableViewCell, for: indexPath) as! RatingTableViewCell
             cell.RatingDelegate = self
+            cell.categorySections = categorySections
             cell.updateRating(selectedRating)
             return cell
             

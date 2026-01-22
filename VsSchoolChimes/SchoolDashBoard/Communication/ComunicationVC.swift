@@ -279,6 +279,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var Defaultdurations = "00:00/00:30"
     var initialFromTime: Date?
     var tourKey = "StaffCommunication"
+var RecordedAudioFormat = "RecordedAudio.m4a"
+    let defaultTime = "00:00/03:00"
     override func viewDidLoad() {
         super.viewDidLoad()
         acidamicYrDropView.isHidden = true
@@ -432,7 +434,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 deletRecoding()
             }
             isEmergencyVoice = false
-            Timinglbl.text = "00:00/03:00"
+            Timinglbl.text = defaultTime
         }
     }
     
@@ -715,7 +717,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         toTime.applyRightButton()
         fromTime.applyRightButton()
         //MARK: FSCalander View
-        Timinglbl.text = "00:00/03:00"
+        Timinglbl.text = defaultTime
         calanderOuter.isHidden = true
         calanderOuter.layer.cornerRadius = 20
         calanderOuter.layer.shadowColor = UIColor.black.cgColor
@@ -882,7 +884,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     func getFileUrl() -> URL {
-        let filename = "RecordedAudio.m4a"
+        let filename = RecordedAudioFormat
         let filePath = getDocumentsDirectory().appendingPathComponent(filename)
         if FileManager.default.fileExists(atPath: filePath.path) {
             try? FileManager.default.removeItem(at: filePath)
@@ -1136,7 +1138,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         if emengencyCall.isOn{
             Timinglbl.text = Defaultdurations
         }else{
-            Timinglbl.text = "00:00/03:00"
+            Timinglbl.text = defaultTime
         }
         moveTextmessage.isHidden = false
         voiceTitleeTxt.text = ""
@@ -1170,7 +1172,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         recordingTimer = nil
         btnplay.setImage(ImageName.playbutton, for: .normal)
         if let urls = URL(string: AudioPlayUrl ?? ""){
-            // Calculate total recording duration and set Timinglbl
             if let startTime = recordingStartTime {
                 let duration = Date().timeIntervalSince(startTime)
                 let minutes = Int(duration) / 60
@@ -1179,7 +1180,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 let durationString =  voiceTiming.text ?? ""
                 let totalSeconds = convertTimeStringToSeconds(durationString)
                 voiceRecordedDuration = totalSeconds
-                
             }
             // Set message send time
             let formatter = DateFormatter()
@@ -1191,9 +1191,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             sendbtn.isEnabled = voiceTiming.text == "00:00" ? false:true
             addfile.isHidden = voiceTiming.text == "00:00" ? false:true
             voiceTileTextFldCount.isHidden = true
-            
         }
-        
         guard let url = URL(string: AudioPlayUrl ?? "") else { return }
         // Check if it's a remote URL (http or https)
         if url.isFileURL {
@@ -1210,40 +1208,10 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             waveView.durationLabel.isHidden = true
             downloadAndPrepareAudio(from: url)
         }
+        
+        print("AudioPlayUrlAudioPlayUrl",AudioPlayUrl)
     }
   
-    /*func showTimePicker(for button: UIButton) {
-        activeButton = button
-
-        let buttonFrame = button.convert(button.bounds, to: self.view)
-        timePicker.frame = CGRect(x: (self.view.frame.width - 250) / 2,
-                                  y: buttonFrame.maxY + 10,
-                                  width: 250,
-                                  height: 200)
-
-        doneButton.frame = CGRect(x: timePicker.frame.maxX - 80,
-                                  y: timePicker.frame.maxY - 40,
-                                  width: 70,
-                                  height: 30)
-
-        timePicker.datePickerMode = .time
-        timePicker.backgroundColor = .white
-
-        // Add snapping target
-        timePicker.addTarget(self, action: #selector(timePickerChanged(_:)), for: .valueChanged)
-
-        if button == toTime, let from = selectedFromTime {
-            let minToTime = Calendar.current.date(byAdding: .minute, value: intervalMinutes, to: from)!
-            timePicker.minimumDate = minToTime
-            timePicker.setDate(minToTime, animated: false)
-        } else {
-            timePicker.minimumDate = Date() // optional: block past
-            timePicker.maximumDate = nil
-        }
-
-        timePicker.fadeAndPopIn()
-        doneButton.fadeAndPopIn()
-    }*/
     
     func showTimePicker(for button: UIButton) {
         activeButton = button
@@ -1978,6 +1946,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             cell.waveView.durationLabel.isHidden = true
             cell.titleLbl.text = voiceData?.title
             cell.selectBtnHeight.constant = 30
+            cell.selectBtnName.isHidden = false
             let duration = voiceData?.duration ?? 0
             let formattedDuration = formatDuration(duration)
             cell.tottalDurationLbl.text = formattedDuration
