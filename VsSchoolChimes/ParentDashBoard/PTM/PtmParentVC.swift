@@ -558,14 +558,15 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             cell.monthLbl.textColor = .white
             cell.dateBaseView.backgroundColor = .white
         } else {
-            cell.cellView.backgroundColor = .clear
+            cell.cellView.backgroundColor = .white
             cell.monthLbl.textColor = .black
-            cell.dateBaseView.backgroundColor = .clear
+            cell.dateBaseView.backgroundColor = .white
         }
         
         // Show count if available
         if let count = comp.count {
             cell.countBtn.setTitle("Avl: "+count, for: .normal)
+            cell.countBtn.setTitleColor(.systemRed, for: .normal)
             cell.countBtn.isHidden = false
         } else {
             cell.countBtn.isHidden = true
