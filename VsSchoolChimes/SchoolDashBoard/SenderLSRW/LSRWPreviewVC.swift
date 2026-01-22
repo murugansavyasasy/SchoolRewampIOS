@@ -167,7 +167,7 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         case 0:
             return "Task Details:"
         case 1:
-            return "Submited Students"
+            return "Submitted Students"
         default:
             return nil
         }

@@ -2751,6 +2751,7 @@ struct StaffExamData: Codable {
     let name: String?
     let date: String?
     let ref_flag: Int?
+    let ai_mark_entry: Bool?
 }
 
 struct SubjectWiseExamResponse: Codable {

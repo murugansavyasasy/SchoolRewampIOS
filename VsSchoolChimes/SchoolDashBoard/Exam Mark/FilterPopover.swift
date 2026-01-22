@@ -61,13 +61,9 @@ class FilterPopover: UIViewController {
         selectedFilters.removeAll()
         dropdowns.removeAll()
         availableFilters = filterSection ?? []
-        
-        // Hide all stacks except first
         for (index, stack) in (horizontalstackViews ?? []).enumerated() {
             stack.isHidden = index != 0
         }
-        
-        // Populate filters based on previously applied filters
         for (stackIndex, appliedFilter) in previouslyAppliedFilters.enumerated() {
             // Show stack if needed
             if stackIndex > 0 {
@@ -519,8 +515,6 @@ class FilterPopover: UIViewController {
     
     // MARK: - Remove Stack
     func removeStack(at stackIndex: Int) {
-        guard stackIndex > 0 else { return }
-        
         if let selectedFilter = selectedFilters.first(where: { $0.stackIndex == stackIndex }) {
             if let originalFilter = filterSection?.first(where: { $0.type == selectedFilter.type }) {
                 availableFilters.append(originalFilter)

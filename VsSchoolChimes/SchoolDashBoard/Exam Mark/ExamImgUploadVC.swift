@@ -105,6 +105,8 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         cancelBtn.layer.borderWidth = 1
         cancelBtn.layer.borderColor = UIColor.backGroundClr.cgColor
         ContinueManuallyBtn.layer.cornerRadius = 10
+        
+        AIview.isHidden = !(SelectedExam?.ai_mark_entry ?? false)
     }
     
     func setFont() {

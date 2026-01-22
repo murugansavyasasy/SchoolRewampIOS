@@ -28,7 +28,7 @@ class RatingTableViewCell: UITableViewCell {
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
-        RatingValue.setTitleFont(style: .body, size: 18)
+        RatingValue.setTitleFont(style: .body, size: 14)
         RatingValue.layer.borderWidth = 1
         RatingValue.layer.borderColor = UIColor.orange.cgColor
         RatingValue.contentEdgeInsets = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
