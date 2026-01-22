@@ -46,13 +46,13 @@ class CommunicationTVC: UITableViewCell {
     var audioURL: URL? {
         didSet {
             guard let url = audioURL else { return }
-            if url.isFileURL {
+//            if url.isFileURL {
                 // Local file
                 prepareLocalAudio(url: url)
-            } else {
-                // Remote file
-                downloadAndPrepareAudio(from: url)
-            }
+//            } else {
+//                // Remote file
+//                downloadAndPrepareAudio(from: url)
+//            }
         }
     }
 

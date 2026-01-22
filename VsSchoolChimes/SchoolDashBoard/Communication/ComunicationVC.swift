@@ -278,6 +278,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var forWardVoiceDuraction : Int?
     var Defaultdurations = "00:00/00:30"
     var initialFromTime: Date?
+    var tourKey = "StaffCommunication"
 var RecordedAudioFormat = "RecordedAudio.m4a"
     let defaultTime = "00:00/03:00"
     override func viewDidLoad() {
@@ -341,11 +342,16 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         let bubbleClick = UITapGestureRecognizer(target: self, action: #selector(Enabel_buble))
         EnableCallLbl.addGestureRecognizer(bubbleClick)
         waveView.setParentCell(self)
-        DispatchQueue.main.asyncAfter(deadline:.now() + 0.5){
-            let vc = AppTourVC()
-            vc.modalPresentationStyle = .overFullScreen
-            vc.modalTransitionStyle = .crossDissolve
-            self.present(vc, animated: true)
+        if !UserDefaults.standard.bool(forKey: tourKey){
+            DispatchQueue.main.asyncAfter(deadline:.now() + 0.5){
+                let vc = AppTourVC()
+                vc.modalPresentationStyle = .overFullScreen
+                vc.tourKey = self.tourKey
+                vc.modalTransitionStyle = .crossDissolve
+                self.present(vc, animated: true)
+            }
+        }else{
+            UserDefaults.standard.set(false, forKey: tourKey)
         }
         //view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ContentViewTapped)))
     }

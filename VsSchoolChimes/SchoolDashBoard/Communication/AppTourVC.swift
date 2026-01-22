@@ -15,23 +15,27 @@ class AppTourVC: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     var image = ["communicationInfo","ptmCalender"]
     var currentIntdex = 0
+    var tourKey:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        imageView.image = UIImage(named: image[currentIntdex])
     }
     @IBAction func skip(_ sender: UIButton) {
-        if image.count > 0 && currentIntdex != image.count - 1 {
-            currentIntdex += 1
-            imageView.image = UIImage(named: image[currentIntdex])
-        }else if currentIntdex <= image.count - 1{
+            if let tourKey = tourKey{
+                UserDefaults.standard.set(true, forKey: tourKey)
+            }
             dismiss(animated: true)
-        }
     }
     @IBAction func next(_ sender: UIButton) {
         if image.count > 0 && currentIntdex != image.count - 1 {
             currentIntdex += 1
             imageView.image = UIImage(named: image[currentIntdex])
         }else if currentIntdex <= image.count - 1{
+            
+            if let tourKey = tourKey{
+                UserDefaults.standard.set(true, forKey: tourKey)
+            }
             dismiss(animated: true)
         }
     }
