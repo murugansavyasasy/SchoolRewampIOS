@@ -42,6 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         return true
     }
 
+    func application(_ application: UIApplication,
+                     supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return .portrait
+    }
+
     func applicationDidBecomeActive(_ application: UIApplication) {
         application.applicationIconBadgeNumber = 0
     }

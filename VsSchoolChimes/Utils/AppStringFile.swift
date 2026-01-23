@@ -316,6 +316,7 @@ class QuizListStringFile{
 struct CommonStringFile {
     //MARK:
     static let UPDATE = "UPDATE"
+    static let You_can_access_this_after_30_minutes = "This video will be available in 30 minutes."
     static let NEXT = "NEXT"
     static let ReplyingTo = "Replying To "
     static let Search = "Search"

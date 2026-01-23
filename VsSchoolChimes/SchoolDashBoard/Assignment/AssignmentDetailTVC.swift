@@ -24,7 +24,7 @@ class AssignmentDetailTVC: UITableViewCell {
     // MARK: - Properties
     private var attachmentList: [FilePath] = []
     weak var delegate: AssignmentDetailTVCDelegate?
-    
+    var dateAndTimeForVideo : String = ""
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,7 +35,7 @@ class AssignmentDetailTVC: UITableViewCell {
     func configureCell(with assignment: Report, attachments: [FilePath]) {
         titleLbl.text = assignment.title ?? ""
         descriptionLbl.text = assignment.description ?? ""
-        
+        dateAndTimeForVideo = (assignment.date ?? "") + " " + (assignment.time ?? "")
         attachmentList = attachments
         attachmentLbl.text = "𓄲 Attachments (\(attachments.count))"
         attachmentLbl.isHidden = attachments.count == 0

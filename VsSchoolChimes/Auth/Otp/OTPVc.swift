@@ -232,7 +232,7 @@ class OTPVc: UIViewController {
     func Validate_OTP(mobileNumber : String , otp : String) {
         APIService.shared.makeApi(url: ServiceUrl.validate_validate_otp, parameters: [
             COMMON_PARAMETER.mobile_number :  mobileNumber,
-            OTP_PARAMETER.otp :  otp], type: ApitTypeSringFile.POST, token: ServiceUrl.token, isBaseUrl: true) { [self] (
+            OTP_PARAMETER.otp :  otp], type: ApitTypeSringFile.POST, token: "", isBaseUrl: true) { [self] (
                 result: Result<ValidateOTPSuc,
                 Error>) in
                 switch result {
@@ -357,7 +357,7 @@ class OTPVc: UIViewController {
             showActivityLoader()
         }
         APIService.shared
-            .makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : mobile_number ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token, isBaseUrl: true){[self] (
+            .makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : mobile_number ?? ""], type: ApitTypeSringFile.POST, token: "", isBaseUrl: true){[self] (
                 result : Result<ForgotPasswordResponeSuc,
                 Error>
             ) in
@@ -415,7 +415,7 @@ class OTPVc: UIViewController {
         
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
-                     , type: ApitTypeSringFile.POST, token: ServiceUrl.token, isBaseUrl: true) { [self] (
+                     , type: ApitTypeSringFile.POST, token: "", isBaseUrl: true) { [self] (
                         result: Result<UserValidationResponseSuc,
                         Error>
                      ) in

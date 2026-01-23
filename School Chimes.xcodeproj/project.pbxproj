@@ -94,6 +94,7 @@
 		18926D322D04140B002BBB97 /* PendingFeeReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926D222D04140B002BBB97 /* PendingFeeReportViewController.xib */; };
 		18926D372D041D74002BBB97 /* ImportantInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D352D041D74002BBB97 /* ImportantInfoViewController.swift */; };
 		18926D382D041D74002BBB97 /* ImportantInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926D362D041D74002BBB97 /* ImportantInfoViewController.xib */; };
+		189AFD342F23803500BDF3A0 /* TimeAccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189AFD332F23803500BDF3A0 /* TimeAccessManager.swift */; };
 		18D09A3E2EFFECF700D1930D /* VoiceCellTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D09A3D2EFFECF700D1930D /* VoiceCellTV.xib */; };
 		18D09A3F2EFFECF700D1930D /* VoiceCellTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D09A3C2EFFECF700D1930D /* VoiceCellTV.swift */; };
 		18D09A422F00055E00D1930D /* VoiceMessagesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D09A412F00055E00D1930D /* VoiceMessagesVC.xib */; };
@@ -921,6 +922,7 @@
 		18926D222D04140B002BBB97 /* PendingFeeReportViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingFeeReportViewController.xib; sourceTree = "<group>"; };
 		18926D352D041D74002BBB97 /* ImportantInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantInfoViewController.swift; sourceTree = "<group>"; };
 		18926D362D041D74002BBB97 /* ImportantInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportantInfoViewController.xib; sourceTree = "<group>"; };
+		189AFD332F23803500BDF3A0 /* TimeAccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAccessManager.swift; sourceTree = "<group>"; };
 		189E991D2CE3286600FE98A5 /* VsSchoolChimes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VsSchoolChimes.entitlements; sourceTree = "<group>"; };
 		189E997F2CE3794A00FE98A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		189E99802CE3794A00FE98A5 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -2993,6 +2995,7 @@
 				84127DBD2E152DDB0092159D /* chatAttachmentPicker.swift */,
 				843BCD832E2FB1B700D4364A /* CustomTransition.swift */,
 				8449D8D32ED4647300822FAC /* normal.mp3 */,
+				189AFD332F23803500BDF3A0 /* TimeAccessManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -4613,6 +4616,7 @@
 				188EBD952ED5632F00BEA524 /* DropDownCell.swift in Sources */,
 				188EBD962ED5632F00BEA524 /* DropDown+Appearance.swift in Sources */,
 				84C82A082D086A490024A46A /* SparkTrajectoryFactory.swift in Sources */,
+				189AFD342F23803500BDF3A0 /* TimeAccessManager.swift in Sources */,
 				84C82A092D086A490024A46A /* SparkTrajectory.swift in Sources */,
 				84C82A0A2D086A490024A46A /* FountainFireworkAnimator.swift in Sources */,
 				84D1D7092F21064800638962 /* AppTourVC.swift in Sources */,
@@ -4958,13 +4962,13 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to capture photos";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need access to Face ID for authentication.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show it on the map.";
@@ -4976,7 +4980,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = SplashVC;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -5001,12 +5005,12 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to capture photos";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need access to Face ID for authentication.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show it on the map.";
@@ -5018,7 +5022,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = SplashVC;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (

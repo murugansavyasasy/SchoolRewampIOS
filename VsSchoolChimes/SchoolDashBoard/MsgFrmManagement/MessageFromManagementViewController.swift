@@ -542,6 +542,7 @@ extension MessageFromManagementViewController: ViewAttachments {
     private func presentPopover(with message: ManagemantMessageData) {
         let popoverVC = MsgViewVC()
         popoverVC.modalPresentationStyle = .popover
+        popoverVC.isModalInPresentation = true
         popoverVC.MsgFromManagmentData = message
         popoverVC.file_path = message.file_path
         popoverVC.delegate = self

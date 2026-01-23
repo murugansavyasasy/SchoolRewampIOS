@@ -341,12 +341,12 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         let bubbleClick = UITapGestureRecognizer(target: self, action: #selector(Enabel_buble))
         EnableCallLbl.addGestureRecognizer(bubbleClick)
         waveView.setParentCell(self)
-        DispatchQueue.main.asyncAfter(deadline:.now() + 0.5){
-            let vc = AppTourVC()
-            vc.modalPresentationStyle = .overFullScreen
-            vc.modalTransitionStyle = .crossDissolve
-            self.present(vc, animated: true)
-        }
+//        DispatchQueue.main.asyncAfter(deadline:.now() + 0.5){
+//            let vc = AppTourVC()
+//            vc.modalPresentationStyle = .overFullScreen
+//            vc.modalTransitionStyle = .crossDissolve
+//            self.present(vc, animated: true)
+//        }
         //view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ContentViewTapped)))
     }
     

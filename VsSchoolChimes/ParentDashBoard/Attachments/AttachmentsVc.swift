@@ -134,8 +134,8 @@ class AttachmentsVc: UIViewController {
         tv.scrollToRow(at: indexPath, at: .middle, animated: true)
         // Optionally highlight the cell for 1 second
         if let cell = tv.cellForRow(at: indexPath) {
-            UIView.animate(withDuration: 0.3, animations: {
-                cell.contentView.backgroundColor = UIColor.lightGray
+            UIView.animate(withDuration: 0.5, animations: {
+                cell.contentView.backgroundColor = UIColor.notificationLandingClr
                     .withAlphaComponent(0.3)
             }) { _ in
                 UIView.animate(withDuration: 0.5, delay: 1.0, options: []) {
@@ -390,6 +390,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
         let detailVC = PrivewVc()
         detailVC.attachmetList = attach.file_path
         detailVC.selectedDate = attach.date
+        detailVC.dateAndTimeForVideo = attach.date ?? ""
         detailVC.titleString = attach.title
         detailVC.descriptionString = attach.description
         detailVC.postedBy = attach.sent_by

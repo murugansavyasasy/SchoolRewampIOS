@@ -56,6 +56,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var params : [String : Any] = [:]
     let id = "id"
     let HOMEWORK = "HOMEWORK"
+    var dateAndTimeForVideo : String = ""
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         cv.reloadData()
@@ -390,6 +391,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             imageVC.fileURL = attachmetList ?? []
             imageVC.subjectName = backBtn.title(for: .normal) ?? ""
             imageVC.pdfUrl = urlString
+            imageVC.dateAndTimeForVideo = dateAndTimeForVideo
             imageVC.scrollIndex = indexPath
             imageVC.index = indexPath.row
             imageVC.modalPresentationStyle = .fullScreen

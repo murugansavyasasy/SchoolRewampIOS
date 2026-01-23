@@ -375,7 +375,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                 ]
             ],
             type: ApitTypeSringFile.POST,
-            token: ServiceUrl.token, isBaseUrl: true
+            token: "", isBaseUrl: true
         ) { (result: Result<DeviceTokenResponseSuc, Error>) in
             switch result {
             case .success(let successMessage):

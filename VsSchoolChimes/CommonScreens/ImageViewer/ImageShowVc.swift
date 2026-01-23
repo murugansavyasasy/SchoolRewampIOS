@@ -48,6 +48,7 @@ class ImageShowVc: UIViewController {
     var downloadUrl: String?
     var fileType: String?
     var FolderName : String = ""
+    var dateAndTimeForVideo : String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -144,7 +145,7 @@ extension ImageShowVc: UICollectionViewDelegate, UICollectionViewDataSource, UIC
             case .video:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.VideoPlayerCVC, for: indexPath) as! VideoPlayerCVC
                 if let videoURL = item.VideoURl {
-                    cell.configure(with: videoURL, parentVC: self)
+                    cell.configure(with: videoURL, parentVC: self, dateAndTimeForVideo: dateAndTimeForVideo)
                 }
                 return cell
                 
@@ -175,7 +176,7 @@ extension ImageShowVc: UICollectionViewDelegate, UICollectionViewDataSource, UIC
             case .video:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.VideoPlayerCVC, for: indexPath) as! VideoPlayerCVC
                 if let urlStr = item.url, let videoUrl = URL(string: urlStr) {
-                    cell.configure(with: videoUrl, parentVC: self)
+                    cell.configure(with: videoUrl, parentVC: self, dateAndTimeForVideo: dateAndTimeForVideo)
                 }
                 return cell
                 

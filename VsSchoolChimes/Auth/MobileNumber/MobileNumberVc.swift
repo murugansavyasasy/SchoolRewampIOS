@@ -160,7 +160,7 @@ class MobileNumberVc: UIViewController{
             mobileNumber.secure_id: secureID ]
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
-                     , type: ApitTypeSringFile.POST, token: ServiceUrl.token, isBaseUrl: true) { [self] (
+                     , type: ApitTypeSringFile.POST, token: "", isBaseUrl: true) { [self] (
                         result: Result<UserValidationResponseSuc,
                         Error>
                      ) in

@@ -273,7 +273,7 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
             let imageVC = ImageShowVc(nibName: nil, bundle: nil)
             let homeworkDocs = attachmentFiles ?? []
             imageVC.fileURL = homeworkDocs
-            imageVC.subjectName = "Attachments"
+            imageVC.subjectName = MenuStringFile.selectedMenuName.translated()
             imageVC.pdfUrl = file.url
             imageVC.scrollIndex = indexPath
             imageVC.index = indexPath.row

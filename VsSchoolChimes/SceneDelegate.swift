@@ -11,6 +11,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate,UNUserNotificationCenter
 
     var window: UIWindow?
     var languages :String!
+    func windowScene(_ windowScene: UIWindowScene,
+                     didUpdate previousCoordinateSpace: UICoordinateSpace,
+                     interfaceOrientation previousInterfaceOrientation: UIInterfaceOrientation,
+                     traitCollection previousTraitCollection: UITraitCollection) {
+
+        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+    }
 
     func scene(_ scene: UIScene,
                   willConnectTo session: UISceneSession,

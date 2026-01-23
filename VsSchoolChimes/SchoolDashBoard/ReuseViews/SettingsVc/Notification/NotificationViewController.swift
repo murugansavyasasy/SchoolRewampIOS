@@ -178,10 +178,34 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
         cell.sentbyLbl.text = detail?.name ?? ""
         cell.messageLbl.text = detail?.message ?? ""
         cell.typeLbl.text = detail?.type ?? ""
-        cell.dateLbl.text = detail?.sent_on?.convertToTargetDateFormat() ?? ""
+        let input = detail?.sent_on ?? ""
+        if let result = convertSentOnDate(input) {
+            print(result)
+            cell.dateLbl.text =  result // 31 Dec 2025 03:41 PM
+        }
         return cell
     }
     
+    func convertSentOnDate(_ sentOn: String) -> String? {
+
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+
+        guard let date = inputFormatter.date(from: sentOn) else {
+            return nil
+        }
+
+        // ➕ Add 1 hour
+        let updatedDate = Calendar.current.date(byAdding: .hour, value: 1, to: date) ?? date
+
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "dd MMM yyyy hh:mm a"
+        outputFormatter.locale = Locale(identifier: "en_US_POSIX")
+
+        return outputFormatter.string(from: updatedDate)
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         handleMenuNavigation(indexPath: indexPath)
     }

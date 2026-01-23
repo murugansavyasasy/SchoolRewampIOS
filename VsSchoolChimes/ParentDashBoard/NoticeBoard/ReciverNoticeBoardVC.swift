@@ -317,6 +317,7 @@ extension ReciverNoticeBoardVC: UICollectionViewDataSource, UICollectionViewDele
         detailVC.selectedDate  = notice.created_on
         detailVC.titleString  = notice.title
         detailVC.descriptionString  = notice.description
+        detailVC.dateAndTimeForVideo  = notice.created_on ?? ""
         //        detailVC.homeWorkid  = FilterHomeWorkList[indexPath.row].id
         detailVC.postedBy  = notice.sent_by
         detailVC.subject_name = "Notice Board".translated()

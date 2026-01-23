@@ -7,11 +7,11 @@ class VideoPlayerCVC: UICollectionViewCell {
 
     @IBOutlet weak var videoPlayer: UIView!
 
+    @IBOutlet weak var AlertLbl: UILabel!
     private var player: AVPlayer?
     private var playerViewController: AVPlayerViewController?
     private var webView: WKWebView?
     private var activityIndicator: UIActivityIndicatorView?
-
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -29,25 +29,38 @@ class VideoPlayerCVC: UICollectionViewCell {
         activityIndicator = nil
     }
 
-    func configure(with url: URL, parentVC: UIViewController) {
+    func configure(with url: URL, parentVC: UIViewController,dateAndTimeForVideo:String) {
         showActivityIndicator()
         
+        print("dateAndTimeForVideodateAndTimeForVideo",dateAndTimeForVideo)
         let urlString = url.absoluteString.lowercased()
         
         if urlString.contains("youtube.com") || urlString.contains("vimeo.com") {
-            let config = WKWebViewConfiguration()
-            let webView = WKWebView(frame: videoPlayer.bounds, configuration: config)
-            webView.navigationDelegate = self
-            webView.translatesAutoresizingMaskIntoConstraints = false
-            self.videoPlayer.addSubview(webView)
-            NSLayoutConstraint.activate([
-                webView.topAnchor.constraint(equalTo: videoPlayer.topAnchor),
-                webView.bottomAnchor.constraint(equalTo: videoPlayer.bottomAnchor),
-                webView.leadingAnchor.constraint(equalTo: videoPlayer.leadingAnchor),
-                webView.trailingAnchor.constraint(equalTo: videoPlayer.trailingAnchor)
-            ])
-            webView.load(URLRequest(url: url))
-            self.webView = webView
+            
+            if TimeAccessManager.shared.canAllowFlow(dateAndTime: dateAndTimeForVideo) {
+                let config = WKWebViewConfiguration()
+                let webView = WKWebView(frame: videoPlayer.bounds, configuration: config)
+                webView.navigationDelegate = self
+                webView.translatesAutoresizingMaskIntoConstraints = false
+                self.videoPlayer.addSubview(webView)
+                NSLayoutConstraint.activate([
+                    webView.topAnchor.constraint(equalTo: videoPlayer.topAnchor),
+                    webView.bottomAnchor.constraint(equalTo: videoPlayer.bottomAnchor),
+                    webView.leadingAnchor.constraint(equalTo: videoPlayer.leadingAnchor),
+                    webView.trailingAnchor.constraint(equalTo: videoPlayer.trailingAnchor)
+                ])
+                self.AlertLbl.isHidden = true
+                webView.load(URLRequest(url: url))
+                self.webView = webView
+                self.webView?.isHidden = false
+            } else {
+                self.hideActivityIndicator()
+                self.AlertLbl.isHidden = false
+                self.AlertLbl.text = CommonStringFile.You_can_access_this_after_30_minutes
+                webView?.isHidden = true
+            }
+
+          
         } else {
             let asset = AVURLAsset(url: url)
             asset.loadValuesAsynchronously(forKeys: ["playable"]) { [weak self] in

@@ -13,10 +13,7 @@ struct ServiceUrl{
     static var Reporting_baseurl = "http://apiv8.schoolchimes.net/"
     static var appStore_url = ""
     static var Pacukt_baseurl = "https://api.pauket.com/api/partner/"
-    static var token = ""
     static var awsBucketName = ""
-    
-    
     static let country_list              = "app/api/setup/countries"
     static let version_check             = "app/api/setup/version-check"
     static let validate_validate_user    = "app/api/auth/validate-user"
@@ -100,7 +97,7 @@ struct ServiceUrl{
     static let comm_api_leave_req_update_status = "comm/api/leave-req/update-status"
     static let comm_api_assignment_report = "comm/api/assignment/report"
     static let comm_api_assignment_submissions_list = "comm/api/assignment/submissions-list"
-    static let   comm_api_assignment_list = "comm/api/assignment/list"
+    static let  comm_api_assignment_list = "comm/api/assignment/list"
     static let   comm_api_homework_update = "comm/api/homework/update"
     static let   comm_api_attachment_update = "comm/api/attachment/update"
     static let   comm_api_homework_delete = "comm/api/homework/delete"
