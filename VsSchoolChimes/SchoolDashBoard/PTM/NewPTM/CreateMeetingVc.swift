@@ -78,6 +78,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var calendarcancelBtn: UIButton!
+    @IBOutlet weak var noClassLbl: UILabel!
     
     var breakDuration: [String] = []
     var SelectedClasses = Set<IndexPath>()
@@ -148,6 +149,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         
         Translate()
         
+        noClassLbl.isHidden = true
         customDurationView.isHidden = true
         
         breakSlotView.isHidden = true
@@ -971,17 +973,25 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
                         classCVHeight.constant =
                         classCv.collectionViewLayout.collectionViewContentSize.height
                         view.layoutIfNeeded()
+                        noClassLbl.isHidden = true
+                        selectClassDefLbl.isHidden = false
                         
                     }else {
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
-                            self.dismiss(animated: true)
-                        }
+//                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
+//                            self.dismiss(animated: true)
+//                        }
+                        noClassLbl.isHidden = false
+                        noClassLbl.text = success.message ?? ""
+                        selectClassDefLbl.isHidden = true
                     }
                     
                 case .failure(let failure):
-                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {
-                        self.dismiss(animated: true)
-                    }
+//                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {
+//                        self.dismiss(animated: true)
+//                    }
+                    noClassLbl.isHidden = false
+                    noClassLbl.text = failure.localizedDescription
+                    selectClassDefLbl.isHidden = true
                 }
             }
             

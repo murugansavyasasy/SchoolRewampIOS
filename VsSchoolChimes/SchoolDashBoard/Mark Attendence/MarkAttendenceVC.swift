@@ -272,6 +272,7 @@ class MarkAttendenceVC: UIViewController {
     }
     
     @IBAction func MarkAttendanceAct(_ sender: Any) {
+        
         addUnderline(to: MarkAttendanceBtn, unselectedButton: ReportsBtn)
         reportFullView.isHidden = true
         attendaceTypeStack.isHidden = false
@@ -280,6 +281,12 @@ class MarkAttendenceVC: UIViewController {
         MarkAbsentiesBtn.isHidden = false
         IsMarkAttendaceSelected = true
         notTakenView.isHidden = true
+        if StandardId == "" && sectionId == "" {
+            MarkAbsentiesBtn.isHidden = true
+        }
+        if  user_inputs.attendance_type == "H" {
+            AttendaceSectionStac.isHidden = false
+        }
     }
     
     @IBAction func ReportsAct(_ sender: Any) {
@@ -503,14 +510,18 @@ class MarkAttendenceVC: UIViewController {
                         AttendanceOptionStack.isHidden = false
                         noStandardsImage.isHidden = true
                         noStandardsLbl.isHidden = true
-                        MarkAbsentiesBtn.isHidden = false
+                        if IsMarkAttendaceSelected == true{
+                            MarkAbsentiesBtn.isHidden = false
+                        }else{
+                            student_attendance_report()
+                        }
                     }else{
-                        CustomAlert.showAlertWithOkAction(
-                            title: AlertstringFile.Alert_title,
-                            message: successMessage.message ?? "",
-                            on: self) {
-                                //self.dismiss(animated: true)
-                            }
+//                        CustomAlert.showAlertWithOkAction(
+//                            title: AlertstringFile.Alert_title,
+//                            message: successMessage.message ?? "",
+//                            on: self) {
+//                                //self.dismiss(animated: true)
+//                            }
                         notTakenView.isHidden = true
                         reportFullView.isHidden = true
                         classSectionStack.isHidden = true
@@ -518,6 +529,7 @@ class MarkAttendenceVC: UIViewController {
                         noStandardsImage.isHidden = false
                         noStandardsLbl.isHidden = false
                         MarkAbsentiesBtn.isHidden = true
+                        noStandardsLbl.text = successMessage.message ?? ""
                         sectionId = ""
                         StandardId = ""
                     }
@@ -526,12 +538,12 @@ class MarkAttendenceVC: UIViewController {
                 DispatchQueue.main.async { [self] in
                     print(error.localizedDescription)
                     
-                    CustomAlert.showAlertWithOkAction(
-                        title: AlertstringFile.Alert_title,
-                        message: error.localizedDescription,
-                        on: self) {
-                            //self.dismiss(animated: true)
-                        }
+//                    CustomAlert.showAlertWithOkAction(
+//                        title: AlertstringFile.Alert_title,
+//                        message: error.localizedDescription,
+//                        on: self) {
+//                            //self.dismiss(animated: true)
+//                        }
                     notTakenView.isHidden = true
                     reportFullView.isHidden = true
                     classSectionStack.isHidden = true
@@ -539,6 +551,7 @@ class MarkAttendenceVC: UIViewController {
                     noStandardsImage.isHidden = false
                     noStandardsLbl.isHidden = false
                     MarkAbsentiesBtn.isHidden = true
+                    noStandardsLbl.text = error.localizedDescription
                     sectionId = ""
                     StandardId = ""
                 }
@@ -919,7 +932,9 @@ extension MarkAttendenceVC: FSCalendarDataSource, FSCalendarDelegate, FSCalendar
         selectedDate = selectedDateForFilter
         dateDayLbl.text = selectedDateForLabel
         if IsMarkAttendaceSelected !=  true{
-            student_attendance_report()
+            if StandardId != "" || sectionId != "" {
+                student_attendance_report()
+            }
         }
     }
     func minimumDate(for calendar: FSCalendar) -> Date {
