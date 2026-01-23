@@ -178,6 +178,8 @@
 "Help" = "ความช่วยเหลือ";
 "Logout" = "ออกจากระบบ";
 "Chapters Completed" = "บทเรียนที่เสร็จสมบูรณ์";
+"Show old Messages" = "แสดงข้อความเก่า";
+
 // MARK: Days
 "Sunday" = "วันอาทิตย์";
 "Monday" = "วันจันทร์";

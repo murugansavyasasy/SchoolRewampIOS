@@ -758,7 +758,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             let button = UIButton(type: .system)
             button.translatesAutoresizingMaskIntoConstraints = false
             button.titleLabel?.textAlignment = .right
-            let title = "See Archived Messages"
+            let title = CommonStringFile.Show_old_Messages.translated()
             let attributedTitle = NSAttributedString(
                 string: title,
                 attributes: [

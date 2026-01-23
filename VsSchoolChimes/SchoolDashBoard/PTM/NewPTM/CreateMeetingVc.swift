@@ -1086,6 +1086,7 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
             let classItem = classList[indexPath.item]
             
             cell.closeBtn.isHidden = true
+            cell.statusLbl.isHidden = true
             cell.label.textAlignment = .center
             cell.label.text = classItem.displayName
             
@@ -1197,8 +1198,27 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
                 text = SelectedDates[indexPath.item]
             }
             
-            let size = (text as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 16)])
-            return CGSize(width: size.width + 20, height: size.height + 16) // padding
+//            let size = (text as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 16)])
+//            return CGSize(width: size.width + 20, height: size.height + 16) // padding
+            
+            let font = UIFont.systemFont(ofSize: 16)
+
+               // Define max width for a class cell
+               let maxWidth = collectionView.bounds.width - 16 // horizontal padding
+
+               let boundingSize = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
+
+               let rect = (text as NSString).boundingRect(
+                   with: boundingSize,
+                   options: [.usesLineFragmentOrigin, .usesFontLeading],
+                   attributes: [.font: font],
+                   context: nil
+               )
+
+               return CGSize(
+                   width: ceil(rect.width) + 20,   // horizontal padding
+                   height: ceil(rect.height) + 16  // vertical padding
+               )
         }
     }
     

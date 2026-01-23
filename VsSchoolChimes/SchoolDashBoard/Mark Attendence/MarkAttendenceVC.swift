@@ -71,6 +71,12 @@ class MarkAttendenceVC: UIViewController {
     @IBOutlet weak var ReportsBtn: UIButton!
     
     @IBOutlet weak var notTakenLbl: UILabel!
+    @IBOutlet weak var noStandardsImage: UIImageView!
+    @IBOutlet weak var noStandardsLbl: UILabel!
+    @IBOutlet weak var classSectionStack: UIStackView!
+    @IBOutlet weak var AttendanceOptionStack: UIStackView!
+    
+    
     let formatter = DateFormatter()
     let customdate = DateFormatter()
     let standardDropdown = DropDown()
@@ -193,6 +199,11 @@ class MarkAttendenceVC: UIViewController {
     }
     func UIupdate() {
         TV.isHidden = true
+        notTakenView.isHidden = true
+        noStandardsImage.isHidden = true
+        noStandardsLbl.isHidden = true
+        reportFullView.isHidden = true
+        notTakenView.isHidden = true
         backBtnName
             .configureAsBackButton(
                 firstLine: MenuStringFile.selectedMenuName,
@@ -224,12 +235,16 @@ class MarkAttendenceVC: UIViewController {
         presentView.setShadow()
         absentView.setShadow()
         AcademicYearView.setShadow()
+        calendar.select(Date(), scrollToDate: true)
         calendar.appearance.headerTitleColor = .systemBlue
         calendar.appearance.weekdayTextColor = .darkGray
-        calendar.appearance.selectionColor = .primery
         calendar.placeholderType = .none
         calendar.headerHeight = 0
         calendar.allowsMultipleSelection = false
+        calendar.appearance.todayColor = .clear      // removes the circle background
+        calendar.appearance.titleTodayColor = .systemBlue   // set text color for today
+        calendar.appearance.selectionColor = .backGroundClr
+        calendar.appearance.titleSelectionColor = .white
         fulldayAction()
     }
     // MARK: - Date Selection
@@ -268,17 +283,28 @@ class MarkAttendenceVC: UIViewController {
     }
     
     @IBAction func ReportsAct(_ sender: Any) {
+        
+        if StandardId == "" && sectionId == "" {
+            reportFullView.isHidden = true
+            notTakenView.isHidden = true
+            noStandardsImage.isHidden = false
+            noStandardsLbl.isHidden = false
+        }else{
+            student_attendance_report()
+        }
+        
         addUnderline(to: ReportsBtn, unselectedButton: MarkAttendanceBtn)
-        student_attendance_report()
+        
         attendaceTypeStack.isHidden = true
         AttendaceSectionStac.isHidden = true
         attendancedefault.isHidden = true
-        reportFullView.isHidden = false
+//        reportFullView.isHidden = false
         absentView.setShadow()
         presentView.setShadow()
         SearchBar.isHidden = true
         MarkAbsentiesBtn.isHidden = true
         IsMarkAttendaceSelected = false
+        
     }
     @IBAction func InfoBtnAct(_ sender: UIButton) {
         let popoverVC = PopoverViewVC(nibName: nil, bundle: nil)
@@ -473,15 +499,25 @@ class MarkAttendenceVC: UIViewController {
                         sectionId = StandardData?.first?.sections?.first?.id ?? ""
                         standardLbl.text = StandardData?.first?.name
                         sectionLbl.text = StandardData?.first?.sections?.first?.name ?? ""
+                        classSectionStack.isHidden = false
+                        AttendanceOptionStack.isHidden = false
+                        noStandardsImage.isHidden = true
+                        noStandardsLbl.isHidden = true
+                        MarkAbsentiesBtn.isHidden = false
                     }else{
                         CustomAlert.showAlertWithOkAction(
                             title: AlertstringFile.Alert_title,
                             message: successMessage.message ?? "",
                             on: self) {
-                                self.dismiss(animated: true)
+                                //self.dismiss(animated: true)
                             }
-                        notTakenView.isHidden = false
-                        BottomView.isHidden = true
+                        notTakenView.isHidden = true
+                        reportFullView.isHidden = true
+                        classSectionStack.isHidden = true
+                        AttendanceOptionStack.isHidden = true
+                        noStandardsImage.isHidden = false
+                        noStandardsLbl.isHidden = false
+                        MarkAbsentiesBtn.isHidden = true
                         sectionId = ""
                         StandardId = ""
                     }
@@ -489,6 +525,20 @@ class MarkAttendenceVC: UIViewController {
             case .failure(let error):
                 DispatchQueue.main.async { [self] in
                     print(error.localizedDescription)
+                    
+                    CustomAlert.showAlertWithOkAction(
+                        title: AlertstringFile.Alert_title,
+                        message: error.localizedDescription,
+                        on: self) {
+                            //self.dismiss(animated: true)
+                        }
+                    notTakenView.isHidden = true
+                    reportFullView.isHidden = true
+                    classSectionStack.isHidden = true
+                    AttendanceOptionStack.isHidden = true
+                    noStandardsImage.isHidden = false
+                    noStandardsLbl.isHidden = false
+                    MarkAbsentiesBtn.isHidden = true
                     sectionId = ""
                     StandardId = ""
                 }

@@ -519,7 +519,7 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
             let attachment = attachments[indexPath.item - 1]
             let imageVC = ImageShowVc(nibName: nil, bundle: nil)
             imageVC.attachment = attachments
-            imageVC.subjectName = "Attachment"
+            imageVC.subjectName = MenuStringFile.selectedMenuName
             imageVC.scrollIndex = indexPath
             imageVC.index = indexPath.row - 1
             imageVC.type = attachment.fileType

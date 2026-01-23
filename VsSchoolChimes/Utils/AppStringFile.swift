@@ -448,6 +448,7 @@ struct CommonStringFile {
     static let Notice_Display_Date_Range = "Notice Active Period"
     static let all = "All"
     static let edit = "Edit"
+    static let Show_old_Messages = "Show old Messages"
 }
 
 

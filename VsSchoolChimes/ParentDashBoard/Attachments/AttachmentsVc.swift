@@ -489,7 +489,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
             button.translatesAutoresizingMaskIntoConstraints = false
             button.titleLabel?.textAlignment = .right
             // Create underlined attributed text
-            let title = "See Archived Messages"
+            let title = CommonStringFile.Show_old_Messages.translated()
             let attributedTitle = NSAttributedString(
                 string: title,
                 attributes: [

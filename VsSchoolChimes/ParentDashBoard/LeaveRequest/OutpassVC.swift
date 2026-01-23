@@ -68,7 +68,7 @@ class OutpassVC: UIViewController {
         ReasonSubview.layer.cornerRadius = 8
         
         topLightColourView.backgroundColor = .backGroundClr.withAlphaComponent(0.7)
-        ReasonSubview.backgroundColor = .backGroundClr.lighter(by: 15)
+        ReasonSubview.backgroundColor = .white.withAlphaComponent(0.5)//.backGroundClr.lighter(by: 15)
         BottomLightView.backgroundColor = .backGroundClr.withAlphaComponent(0.7)
     }
     
