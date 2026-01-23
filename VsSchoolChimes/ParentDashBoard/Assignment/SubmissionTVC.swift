@@ -100,7 +100,7 @@ class SubmissionTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptive
         self.selectedId = selectedId
         self.delete = delete
         self.edit = edit
-        EditBtn.isHidden = !(edit || delete)
+//        EditBtn.isHidden = !(edit || delete)
         EditBtn1.isHidden = !(edit || delete)
     }
     @IBAction func edit(_ sender: UIButton) {

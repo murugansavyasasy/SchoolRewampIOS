@@ -281,6 +281,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var tourKey = "StaffCommunication"
 var RecordedAudioFormat = "RecordedAudio.m4a"
     let defaultTime = "00:00/03:00"
+    let tempKey = "TempRecordings"
     override func viewDidLoad() {
         super.viewDidLoad()
         acidamicYrDropView.isHidden = true
@@ -342,17 +343,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         let bubbleClick = UITapGestureRecognizer(target: self, action: #selector(Enabel_buble))
         EnableCallLbl.addGestureRecognizer(bubbleClick)
         waveView.setParentCell(self)
-        if !UserDefaults.standard.bool(forKey: tourKey){
-            DispatchQueue.main.asyncAfter(deadline:.now() + 0.5){
-                let vc = AppTourVC()
-                vc.modalPresentationStyle = .overFullScreen
-                vc.tourKey = self.tourKey
-                vc.modalTransitionStyle = .crossDissolve
-                self.present(vc, animated: true)
-            }
-        }else{
-            UserDefaults.standard.set(false, forKey: tourKey)
-        }
+        
         //view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ContentViewTapped)))
     }
     
@@ -873,13 +864,13 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
     }
     
     func deleteFile(at url: URL) {
-        if FileManager.default.fileExists(atPath: url.path) {
-            do {
-                try FileManager.default.removeItem(at: url)
-            } catch {
+        var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
+        if let index = list.firstIndex(where: { $0 == url.absoluteString }) {
+            if url.isFileURL {
+                try? FileManager.default.removeItem(at: url)
             }
-        } else {
-            print("⚠️ File does not exist at path: \(url.path)")
+            list.remove(at: index)
+            UserDefaults.standard.set(list, forKey: tempKey)
         }
     }
     
@@ -943,7 +934,6 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
                 let asset = AVAsset(url: selectedFileURL)
                 let duration = CMTimeGetSeconds(asset.duration)
                 guard duration.isFinite else { return }
-                // ✅ Check if the audio is more than 30 seconds
                 voiceRecordedDuration = Int(duration)
                 if emengencyCall.isOn{
                     if duration > 30 {
@@ -1140,6 +1130,9 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         }else{
             Timinglbl.text = defaultTime
         }
+        if let url = URL(string: AudioPlayUrl ?? ""){
+            deleteFile(at:url)
+        }
         moveTextmessage.isHidden = false
         voiceTitleeTxt.text = ""
     }
@@ -1212,7 +1205,11 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         print("AudioPlayUrlAudioPlayUrl",AudioPlayUrl)
     }
   
-    
+    func saveTempRecording(_ url: String) {
+        var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
+        list.append(url)
+        UserDefaults.standard.set(list, forKey: tempKey)
+    }
     func showTimePicker(for button: UIButton) {
         activeButton = button
 
@@ -1283,17 +1280,6 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         }
     }
 
-
-//    @objc func timePickerChanged(_ picker: UIDatePicker) {
-//        guard let from = selectedFromTime, activeButton == toTime else { return }
-//
-//        let calendar = Calendar.current
-//        let diff = calendar.dateComponents([.minute], from: from, to: picker.date).minute ?? 0
-//        let intervalsPassed = max(0, diff / intervalMinutes)
-//        let snappedDate = calendar.date(byAdding: .minute, value: intervalsPassed * intervalMinutes, to: from)!
-//
-//        picker.setDate(snappedDate, animated: false)
-//    }
 
     // MARK: - Done Button Action
     @objc func doneButtonTapped() {
@@ -1450,6 +1436,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
     }
     
     @IBAction func back(_ sender: Any) {
+        deletRecoding()
         dismiss(animated: true)
     }
     
@@ -1752,6 +1739,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         do {
             try audioManager.setupPlayer(with: url)
             waveView.audioURL = url
+            saveTempRecording(url.absoluteString)
         } catch {
             print("❌ Failed to set up audio player:", error)
             showErrorAlert(message: "Failed to load audio file")
@@ -1836,10 +1824,8 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         }
         do {
             try fileManager.copyItem(at: tempURL, to: permanentURL)
-            print("✅ Audio saved to: \(permanentURL.path)")
             return permanentURL
         } catch {
-            print("❌ Failed to save audio: \(error.localizedDescription)")
             return nil
         }
     }
@@ -2000,7 +1986,6 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     
     // MARK: - Finish Playing Delegate
     func didFinishPlaying(at index: Int) {
-        print("✅ Finished playing voice at row: \(index)")
         playIndex = -1
         historytable.reloadData()
     }

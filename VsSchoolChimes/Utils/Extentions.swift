@@ -1016,11 +1016,11 @@ extension UILabel {
         self.attributedText = combined
     }
     
-    func profilesetRequiredText(_ text: String, asteriskColor: UIColor = .red) {
-        
-        // Asterisk font: Poppins-Regular, larger size
-        let asteriskFont = UIFont(name: "Poppins-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .regular)
-        
+    func profilesetRequiredText(
+        _ text: String,
+        asteriskColor: UIColor? = .red,
+        editableText: String? = nil
+    ) {
         let normalText = NSAttributedString(
             string: text,
             attributes: [
@@ -1028,18 +1028,28 @@ extension UILabel {
                 .foregroundColor: self.textColor ?? .black
             ])
         
-        let asteriskText = NSAttributedString(
-            string: "*",
-            attributes: [
-                .font: asteriskFont,
-                .foregroundColor: asteriskColor,
-                .baselineOffset: 2 // tweak to align nicely with main text
-            ])
-        
         let combined = NSMutableAttributedString()
         combined.append(normalText)
-        combined.append(asteriskText)
-        
+        if let editable = editableText, !editable.isEmpty {
+            let editableAttr = NSAttributedString(
+                string: editable,
+                attributes: [
+                    .font: UIFont.systemFont(ofSize: 11, weight: .light),
+                    .foregroundColor: UIColor.lightGray
+                ])
+            combined.append(editableAttr)
+        }
+        if let aColor = asteriskColor {
+            let asteriskFont = UIFont(name: "Poppins-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .regular)
+            let asteriskText = NSAttributedString(
+                string: "*",
+                attributes: [
+                    .font: asteriskFont,
+                    .foregroundColor: aColor,
+                    .baselineOffset: 2
+                ])
+            combined.append(asteriskText)
+        }
         self.attributedText = combined
     }
 }

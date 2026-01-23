@@ -35,7 +35,7 @@ class AddAttachmentTVC: UITableViewCell,
     private let maxAttachments = 10
     private var lastAttachmentCount = 0
     private var isReloading = false
-    
+    let tempKey = "TempRecordings"
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -312,13 +312,35 @@ class AddAttachmentTVC: UITableViewCell,
             }
         }
         let urlString = attachments[index].imageURL
-        if let url = urlString.flatMap(URL.init), url.isFileURL {
-            url.stopAccessingSecurityScopedResource()  // <- important
-        }
+//        if let url = urlString.flatMap(URL.init), url.isFileURL {
+//            url.stopAccessingSecurityScopedResource()
+//        }
+        if let urlStr = attachments[index].imageURL,
+               let url = URL(string: urlStr),
+               url.isFileURL {
+            removeTempRecording(at: index)
+                try? FileManager.default.removeItem(at: url)
+            }
         attachments.remove(at: index)
         reloadAttachments()
     }
-    
+    func removeTempRecording(at index: Int) {
+        var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
+        guard index < list.count else { return }
+        let urlString = list[index]
+        if let url = URL(string: urlString), url.isFileURL {
+            do {
+                try FileManager.default.removeItem(at: url)
+                print("✅ File deleted: \(url.lastPathComponent)")
+            } catch {
+                print("❌ Failed to delete file: \(error.localizedDescription)")
+            }
+        }
+        list.remove(at: index)
+        UserDefaults.standard.set(list, forKey: tempKey)
+    }
+
+
     // MARK: - Selection
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         

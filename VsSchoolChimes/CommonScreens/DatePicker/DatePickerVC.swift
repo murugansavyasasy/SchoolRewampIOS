@@ -36,15 +36,10 @@ class DatePickerVC: UIViewController {
         }
         
         if let date = maximumDate {
-            
             datepicker.maximumDate = date
         }
-        
         bgView.layer.cornerRadius = 10
         outerView.layer.cornerRadius = 10
-       // datepicker.locale = .current
-        
-        // Set picker mode and style
         if dateSelection == 2 {
             datepicker.datePickerMode = .date
             datepicker.preferredDatePickerStyle = .inline
@@ -52,8 +47,6 @@ class DatePickerVC: UIViewController {
             datepicker.datePickerMode = .time
             datepicker.preferredDatePickerStyle = .wheels
         }
-        
-        // Set initial selected date if provided
         if let inputDate = dateConvert(date ?? "") {
             datepicker.date = inputDate
         } else {

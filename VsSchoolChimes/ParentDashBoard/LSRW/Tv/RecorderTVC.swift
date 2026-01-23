@@ -15,7 +15,7 @@ class RecorderTVC: UITableViewCell {
     // MARK: - IBOutlets
     @IBOutlet weak var vicecImg: UIImageView!
     @IBOutlet weak var recoderTime: UILabel!
-    @IBOutlet weak var recordButton: UIButton! // connect this if you have the button in nib
+    @IBOutlet weak var recordButton: UIButton!
 
     // MARK: - Properties
     private var recordingTimer: Timer?
@@ -26,7 +26,7 @@ class RecorderTVC: UITableViewCell {
     private var isRemoteAudio = false
 
    var delegate: EditObjectDelegate?
-
+    private let tempKey = "TempRecordings"
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -113,12 +113,18 @@ class RecorderTVC: UITableViewCell {
                 if let url = url {
                     self.audioURL = url
                     self.isRemoteAudio = false
+                    self.saveTempRecording(url.absoluteString)
                     self.delegate?.editDta(edit: AttachmentItem(image: nil, imageURL: url.absoluteString, fileType: "audio", VideoURl: nil, VimeoVideoURL: nil))
                 }
 
                 UIApplication.shared.isIdleTimerDisabled = false
             }
         }
+    }
+    func saveTempRecording(_ url: String) {
+        var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
+        list.append(url)
+        UserDefaults.standard.set(list, forKey: tempKey)
     }
 
     private func stopRecordingIfNeeded() {
@@ -331,7 +337,7 @@ class AudioManager: NSObject {
 
     private func setupRecorder() -> Bool {
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let timestamp = Int(Date().timeIntervalSince1970) // unique name
+        let timestamp = Int(Date().timeIntervalSince1970)
         let fileURL = documentsPath.appendingPathComponent("RecordedAudio_\(timestamp).m4a")
 
         if FileManager.default.fileExists(atPath: fileURL.path) {

@@ -122,8 +122,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 vc.modalTransitionStyle = .crossDissolve
                 self.present(vc, animated: true)
             }
-        }else{
-            UserDefaults.standard.set(false, forKey: tourKey)
         }
     }
     

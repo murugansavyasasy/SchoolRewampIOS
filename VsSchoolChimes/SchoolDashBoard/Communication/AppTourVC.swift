@@ -13,7 +13,7 @@ class AppTourVC: UIViewController {
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var skipBtn: UIButton!
     @IBOutlet weak var imageView: UIImageView!
-    var image = ["communicationInfo","ptmCalender"]
+    var image:[String] = []
     var currentIntdex = 0
     var tourKey:String?
     override func viewDidLoad() {

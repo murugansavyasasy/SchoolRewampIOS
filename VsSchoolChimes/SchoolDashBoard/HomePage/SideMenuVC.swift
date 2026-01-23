@@ -28,8 +28,8 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var menuArray: [MenuItem] = [
         MenuItem(name: "Home".translated(), icon: "house"),
         MenuItem(name: "Profile".translated(), icon: "person.circle"),
-        MenuItem(name: "Settings".translated(), icon: "gearshape.fill"),
-        MenuItem(name: "Help".translated(), icon: "questionmark.circle")
+        MenuItem(name: "Settings".translated(), icon: "gearshape.fill")
+//        MenuItem(name: "Help".translated(), icon: "questionmark.circle")
     ]
     
     let staff_roll = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role
