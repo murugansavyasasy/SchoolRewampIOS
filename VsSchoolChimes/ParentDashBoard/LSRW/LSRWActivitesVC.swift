@@ -22,7 +22,7 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
     var vimeoUploader: VimeoUploader?
     var onDismiss: (( _ id: String?) -> Void)?
     var studentDetails = UserDefaultFileManager.get_child_Details()
-    
+    private let tempKey = "TempRecordings"
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCaptions()
@@ -43,6 +43,10 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
             object: nil
         )
     }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     @objc func keyboardWillShow(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
               let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
@@ -152,8 +156,29 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
         }
         testTable.reloadData()
     }
-    
-    
+
+    func deleteAllLocalRecordingsFromAttachments() {
+        for item in attachments {
+            guard let urlString = item.imageURL else { continue }
+            if urlString.starts(with: "file://") {
+                if let fileURL = URL(string: urlString),
+                   FileManager.default.fileExists(atPath: fileURL.path) {
+
+                    do {
+                        try FileManager.default.removeItem(at: fileURL)
+                        var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
+                            list.removeAll { $0 == urlString }
+                            UserDefaults.standard.set(list, forKey: tempKey)
+                    } catch {
+                        print("❌ Delete failed:", error.localizedDescription)
+                    }
+                }
+            }
+        }
+        
+        attachments.removeAll()
+    }
+
     func didSelectAttachment(at index: Int, allAttachments: [FilePath], subjectName: String) {
         let filterArray = allAttachments.filter { $0.type?.uppercased() != CommonStringFile.M4A }
         if allAttachments[index].type?.uppercased() != CommonStringFile.M4A {
@@ -187,6 +212,7 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
     }
     
     @IBAction private func back(_ sender: UIButton) {
+        deleteAllLocalRecordingsFromAttachments()
         dismiss(animated: true)
     }
 }
@@ -613,4 +639,7 @@ class SubmitFooterCell: UITableViewCell {
             submitButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
+}
+extension Notification.Name {
+    static let deleteLocalRecordings = Notification.Name("deleteLocalRecordings")
 }

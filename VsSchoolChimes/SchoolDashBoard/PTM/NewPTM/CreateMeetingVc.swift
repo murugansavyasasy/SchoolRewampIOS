@@ -78,6 +78,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var calendarcancelBtn: UIButton!
+    @IBOutlet weak var noClassLbl: UILabel!
     
     var breakDuration: [String] = []
     var SelectedClasses = Set<IndexPath>()
@@ -148,6 +149,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         
         Translate()
         
+        noClassLbl.isHidden = true
         customDurationView.isHidden = true
         
         breakSlotView.isHidden = true
@@ -971,17 +973,25 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
                         classCVHeight.constant =
                         classCv.collectionViewLayout.collectionViewContentSize.height
                         view.layoutIfNeeded()
+                        noClassLbl.isHidden = true
+                        selectClassDefLbl.isHidden = false
                         
                     }else {
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
-                            self.dismiss(animated: true)
-                        }
+//                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
+//                            self.dismiss(animated: true)
+//                        }
+                        noClassLbl.isHidden = false
+                        noClassLbl.text = success.message ?? ""
+                        selectClassDefLbl.isHidden = true
                     }
                     
                 case .failure(let failure):
-                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {
-                        self.dismiss(animated: true)
-                    }
+//                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {
+//                        self.dismiss(animated: true)
+//                    }
+                    noClassLbl.isHidden = false
+                    noClassLbl.text = failure.localizedDescription
+                    selectClassDefLbl.isHidden = true
                 }
             }
             
@@ -1086,6 +1096,7 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
             let classItem = classList[indexPath.item]
             
             cell.closeBtn.isHidden = true
+            cell.statusLbl.isHidden = true
             cell.label.textAlignment = .center
             cell.label.text = classItem.displayName
             
@@ -1197,8 +1208,27 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
                 text = SelectedDates[indexPath.item]
             }
             
-            let size = (text as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 16)])
-            return CGSize(width: size.width + 20, height: size.height + 16) // padding
+//            let size = (text as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 16)])
+//            return CGSize(width: size.width + 20, height: size.height + 16) // padding
+            
+            let font = UIFont.systemFont(ofSize: 16)
+
+               // Define max width for a class cell
+               let maxWidth = collectionView.bounds.width - 16 // horizontal padding
+
+               let boundingSize = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
+
+               let rect = (text as NSString).boundingRect(
+                   with: boundingSize,
+                   options: [.usesLineFragmentOrigin, .usesFontLeading],
+                   attributes: [.font: font],
+                   context: nil
+               )
+
+               return CGSize(
+                   width: ceil(rect.width) + 20,   // horizontal padding
+                   height: ceil(rect.height) + 16  // vertical padding
+               )
         }
     }
     

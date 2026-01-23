@@ -411,8 +411,8 @@ struct CommonStringFile {
     static let OrParent = "or Student/Parent"
     static let Principal = "Principal"
     static let LoginAsTeacherOrParent = "Login As Teacher Or Parent"
-    static let LoginAs = "Login As"
-    static let ChooseYourRole = "Choose Your Role"
+    static let LoginAs = "Login as"
+    static let ChooseYourRole = "Choose your role"
     static let Proceed = "Proceed"
     static let CreateEvent = "Create Event"
     static let Title = "Title"
@@ -449,6 +449,7 @@ struct CommonStringFile {
     static let Notice_Display_Date_Range = "Notice Active Period"
     static let all = "All"
     static let edit = "Edit"
+    static let Show_old_Messages = "Show old Messages"
 }
 
 

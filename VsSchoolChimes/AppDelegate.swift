@@ -39,9 +39,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
                 }
             }
         }
+        NotificationCenter.default.addObserver(
+                   self,
+                   selector: #selector(cleanupTempRecordings),
+                   name: UIApplication.willTerminateNotification,
+                   object: nil
+               )
         return true
     }
+    @objc func cleanupTempRecordings() {
+        let tempKey = "TempRecordings"
+        let list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
 
+        let fileManager = FileManager.default
+        for urlString in list {
+            if let url = URL(string: urlString), url.isFileURL {
+                try? fileManager.removeItem(at: url)
+            }
+        }
+        UserDefaults.standard.removeObject(forKey: tempKey)
     func application(_ application: UIApplication,
                      supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return .portrait

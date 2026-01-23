@@ -67,6 +67,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     var placeholderLabel: UILabel?
     var editId : String?
     var Editattachment =  Attachment()
+    var tourKey = "senderAttachment"
     override func viewDidLoad() {
         super.viewDidLoad()
         StyleAndTranslater()
@@ -112,6 +113,15 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 imageUrls: Editattachment.file_path ?? [],
                 editId: Editattachment.id ?? ""
             )
+        }
+        if !UserDefaults.standard.bool(forKey: tourKey){
+            DispatchQueue.main.asyncAfter(deadline:.now() + 0.5){
+                let vc = AppTourVC()
+                vc.modalPresentationStyle = .overFullScreen
+                vc.tourKey = self.tourKey
+                vc.modalTransitionStyle = .crossDissolve
+                self.present(vc, animated: true)
+            }
         }
     }
     

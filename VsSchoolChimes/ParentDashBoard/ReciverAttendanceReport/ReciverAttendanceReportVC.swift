@@ -182,8 +182,8 @@ class ReciverAttendanceReportVC: UIViewController {
                         noStatsLbl.isHidden = false
                         noStatsLbl.text = success.message
                         Set_Piechart_data()
-                       // Stackview.isHidden = true
-                       // WeekStatusDefBtn.isHidden = true
+                        Stackview.isHidden = true
+                        WeekStatusDefBtn.isHidden = true
                     }
                     
                 case .failure(let error):

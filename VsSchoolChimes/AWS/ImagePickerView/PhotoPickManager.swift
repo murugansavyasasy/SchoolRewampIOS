@@ -119,7 +119,7 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = .camera
-        picker.allowsEditing = true
+        picker.allowsEditing = false //true
         picker.mediaTypes = ["public.image"] // Restrict to photo only
         viewController.present(picker, animated: true)
     }

@@ -453,6 +453,7 @@ class CommunicationReciverData: Codable {
     let duration : Int?
     var playbackSeconds: Double?
     var loadFile: Bool?
+    let sent_by: String?
 }
 
 struct ReadStatusResponse: Codable {

@@ -28,6 +28,8 @@ class TextHistoryTVCell: UITableViewCell {
     @IBOutlet weak var descriptContent: ShimmerLabel!
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var outerview: ShimmerView2!
+    @IBOutlet weak var PostedByLbl: UILabel!
+    
     var delegate : SelectedTextDelegate?
     var ExpandDelegate: TextExpandCellDelegate?
     private var isExpanded = false
@@ -48,6 +50,8 @@ class TextHistoryTVCell: UITableViewCell {
         DateLabel.setFont(style: .body, size: FontSize.BodySize)
         MessageTitle.setFont(style: .title, size: FontSize.TitleSize)
         descriptContent.setFont(style: .body, size: FontSize.BodySize)
+        PostedByLbl.setFont(style: .body, size: FontSize.BodySize)
+        PostedByLbl.isHidden = true
         sendBtn.isHidden = true
         setupTapGesture()
     }

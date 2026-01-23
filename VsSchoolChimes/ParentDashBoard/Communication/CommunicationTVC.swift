@@ -32,6 +32,9 @@ class CommunicationTVC: UITableViewCell {
     @IBOutlet weak var playBtn: UIButton!
     @IBOutlet weak var waveView: AudioMessageView!
     @IBOutlet weak var playerView: UIView!
+    @IBOutlet weak var PostedByLbl: UILabel!
+    
+    
     // MARK: - Delegates
     var delegate: DeleteImge?
     weak var audioDelegate: AudioPlaybackDelegate1?
@@ -43,13 +46,13 @@ class CommunicationTVC: UITableViewCell {
     var audioURL: URL? {
         didSet {
             guard let url = audioURL else { return }
-            if url.isFileURL {
+//            if url.isFileURL {
                 // Local file
                 prepareLocalAudio(url: url)
-            } else {
-                // Remote file
-                downloadAndPrepareAudio(from: url)
-            }
+//            } else {
+//                // Remote file
+//                downloadAndPrepareAudio(from: url)
+//            }
         }
     }
 
@@ -97,6 +100,8 @@ class CommunicationTVC: UITableViewCell {
         updatePlayButtonState(isPlaying: false)
         dateLbl.setFont(style: .body, size: FontSize.BodySize)
         tittleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        PostedByLbl.setFont(style: .body, size: FontSize.BodySize)
+        PostedByLbl.isHidden = true
     }
 
     @IBAction func selectBtnAct(_ sender: UIButton) {
@@ -117,7 +122,6 @@ class CommunicationTVC: UITableViewCell {
             try audioManager.setupPlayer(with: url)
             waveView.audioURL = url
         } catch {
-            print("❌ Failed to set up audio player:", error)
             showErrorAlert(message: "Failed to load audio file")
         }
     }

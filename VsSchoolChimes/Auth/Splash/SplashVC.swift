@@ -271,11 +271,11 @@ class SplashVC: UIViewController, ViewAttachments {
     private func startSplashAnimation() {
         createLottieConfetti()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
             self?.revealLogoWithRipples()
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.2) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) { [weak self] in
             self?.animateHeaderLabel()
         }
         
@@ -283,11 +283,11 @@ class SplashVC: UIViewController, ViewAttachments {
             self?.animateEmpoweringSection()
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { [weak self] in
             self?.animateDots()
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 7.0) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
             self?.proceedWithAppFlow()
         }
     }
