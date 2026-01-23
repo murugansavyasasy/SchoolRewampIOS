@@ -122,7 +122,6 @@ class CommunicationTVC: UITableViewCell {
             try audioManager.setupPlayer(with: url)
             waveView.audioURL = url
         } catch {
-            print("❌ Failed to set up audio player:", error)
             showErrorAlert(message: "Failed to load audio file")
         }
     }

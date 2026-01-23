@@ -75,11 +75,8 @@ class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge, UITextFieldDelega
     }
     
     private func setupCollectionView() {
-        // Register the nib for AttachmentCVC
         let nib = UINib(nibName: "AttachmentCVC", bundle: nil)
         attachmentCollectionView.register(nib, forCellWithReuseIdentifier: "AttachmentCVC")
-        
-        // Set delegate and data source
         attachmentCollectionView.dataSource = self
         attachmentCollectionView.delegate = self
         
@@ -89,12 +86,8 @@ class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge, UITextFieldDelega
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         attachmentCollectionView.collectionViewLayout = layout
-        
-        // Ensure collection view is visible
         attachmentCollectionView.isHidden = false
         attachmentView.isHidden = false
-        
-        // Set background color for debugging
         attachmentCollectionView.backgroundColor = .white
         addAttachmentBtn.layer.cornerRadius = 4
     }
@@ -131,8 +124,6 @@ class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge, UITextFieldDelega
         dropDownLbl.text = nil
         selectedGender = nil
         attachments.removeAll()
-        
-        // Ensure collection view is reset
         attachmentCollectionView.reloadData()
         collectionViewHeight.constant = 0
     }
@@ -147,10 +138,11 @@ class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge, UITextFieldDelega
         }
         node = item.node
         if item.optional ?? false{
-            titleLable.text = item.title
+            titleLable.profilesetRequiredText(item.title,asteriskColor: nil, editableText:item.is_editable ?? false ? "(Editable)":"(Non Editable)")
         }else{
-            titleLable.profilesetRequiredText(item.title)
+            titleLable.profilesetRequiredText(item.title,asteriskColor: .red,editableText:item.is_editable ?? false ? "(Editable)":"(Non Editable)")
         }
+       
         titleLable.isHidden = false
         
         switch item.type {

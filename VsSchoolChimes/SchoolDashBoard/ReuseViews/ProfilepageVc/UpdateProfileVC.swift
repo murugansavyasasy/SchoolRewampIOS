@@ -392,39 +392,27 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
         let isLastRow = indexPath.row == items.count
         
         cell.addAttachmentBtn.addTarget(self, action: #selector(addDocs(_:)), for: .touchUpInside)
-        
         if isLastSection && isLastRow && isStudent {
             cell.configure(with: nil, attachments: nil)
             cell.updateBtn.addTarget(self, action: #selector(updateButtonTapped(_:)), for: .touchUpInside)
         } else {
             let item = items[indexPath.row]
-            
-            // 🔑 Create unique key for this cell
             let cellKey = "\(indexPath.section)_\(indexPath.row)_\(item.node ?? "")"
-            
-            // 🔑 Check if we have edited value for this cell
             var modifiedItem = item
             if let editedValue = editedValues[cellKey] {
                 modifiedItem.value = editedValue
             }
-            
             cell.configure(with: modifiedItem, attachments: attachments)
             cell.deleteDelegate = self
             
             cell.onValueChanged = { [weak self] changedKey, value in
                 guard let self = self else { return }
                 if let value = value {
-                    print(changedKey)
-                    print(value)
-                    
-                    // 🔑 Store the edited value
                     self.editedValues[cellKey] = "\(value)"
-                    
                     if item.node != "documents" {
                         if "\(value)" != "\(item.value ?? "")" {
                             self.changedParams[changedKey] = value
                         } else {
-                            // If value restored to original, remove from changedParams
                             self.changedParams.removeValue(forKey: changedKey)
                         }
                     }

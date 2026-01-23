@@ -93,7 +93,7 @@ class NotificationCallVC: UIViewController {
         setupCallerInfo()
         setupSlideToAnswerAnimation()
         addSwipeGesture()
-        
+        speakerBtn.isHidden = true
         // Initially hide call controls
         cutCallBtn.isHidden = true
         speakerBtn.isHidden = true

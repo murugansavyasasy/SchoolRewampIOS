@@ -72,15 +72,6 @@ class AttachmentsVc: UIViewController, Datepicker {
         
         tv.delegate = self
         tv.dataSource = self
-        if !UserDefaults.standard.bool(forKey: tourKey){
-            DispatchQueue.main.asyncAfter(deadline:.now() + 0.5){
-                let vc = AppTourVC()
-                vc.modalPresentationStyle = .overFullScreen
-                vc.tourKey = self.tourKey
-                vc.modalTransitionStyle = .crossDissolve
-                self.present(vc, animated: true)
-            }
-        }
         fetchAttachments()
         
         fromDateView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SelectFromDate)))

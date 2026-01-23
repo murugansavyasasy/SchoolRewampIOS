@@ -77,6 +77,8 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     var comeFormNotification : Bool = false
     var messageId : String?
     var menuId : String?
+    var tourKey = "parentDashboard"
+    var tourImg = ["receiver_msg1","receiver_file2","receiver_task- projects3","receiver_attendance - leave req4"]
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,6 +110,16 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         searchBar.placeholder = "Search"
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
+        if !UserDefaults.standard.bool(forKey: tourKey){
+            DispatchQueue.main.asyncAfter(deadline:.now() + 0.5){
+                let vc = AppTourVC()
+                vc.modalPresentationStyle = .overFullScreen
+                vc.tourKey = self.tourKey
+                vc.image = self.tourImg
+                vc.modalTransitionStyle = .crossDissolve
+                self.present(vc, animated: true)
+            }
+        }
     }
     
     init(
