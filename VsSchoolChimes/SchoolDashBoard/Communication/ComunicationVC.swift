@@ -785,7 +785,8 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         playerview.layer.shadowRadius = 5
         playerview.layer.shadowOpacity = 0.3
         playerview.layer.cornerRadius = 8
-        voiceStackview.isHidden = true
+        playerview.isHidden = true
+        voiceTitleeTxt.isHidden = false
         dltbtn.isHidden = true
         informationcontent.delegate = self
         textViewOuter.layer.cornerRadius = 10
@@ -986,7 +987,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
                     voiceTiming.text = durationStr
                 }
                 playerheight.constant = 60
-                voiceStackview.isHidden = false
+                playerview.isHidden = false
                 dltbtn.isHidden = false
                 recoderbtn.isEnabled = false
                 if let audioUrl = URL(string: AudioPlayUrl ?? "") {
@@ -1129,7 +1130,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
     func deletRecoding(){
         recoderbtn.isEnabled = true
         dltbtn.isHidden = true
-        voiceStackview.isHidden = true
+        playerview.isHidden = true
         addfile.isHidden = false
         recordImgHeightCon.constant = 80
         Timinglbl.isHidden = false
@@ -1165,7 +1166,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         UIApplication.shared.isIdleTimerDisabled = true
         audioRecorder?.record()
         recordingTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateRecordingTime), userInfo: nil, repeats: true)
-        voiceStackview.isHidden = true
+        playerview.isHidden = true
         playerheight.constant = 0
         dltbtn.isHidden = true
     }
@@ -1193,7 +1194,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
             formatter.timeStyle = .short
             messageSendTime.text = "\(formatter.string(from: Date()))"
             playerheight.constant = voiceTiming.text == "00:00" ? 0:60
-            voiceStackview.isHidden = voiceTiming.text == "00:00" ? true:false
+            playerview.isHidden = voiceTiming.text == "00:00" ? true:false
             dltbtn.isHidden = voiceTiming.text == "00:00" ? true:false
             sendbtn.isEnabled = voiceTiming.text == "00:00" ? false:true
             addfile.isHidden = voiceTiming.text == "00:00" ? false:true
@@ -1564,7 +1565,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
                 playerheight.constant = 60
                 self.view.layoutIfNeeded()
             }
-            ViewAnimator.showFade(voiceStackview)
+            ViewAnimator.showFade(playerview)
             ViewAnimator.showFade(dltbtn)
             recoderbtn.isEnabled = false
             
@@ -1641,7 +1642,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
                     playerheight.constant = 60
                     self.view.layoutIfNeeded()
                 }
-                ViewAnimator.showFade(voiceStackview)
+                ViewAnimator.showFade(playerview)
                 ViewAnimator.showFade(dltbtn)
                 recoderbtn.isEnabled = false
                 if let audioUrl = URL(string: voiceUrl) {

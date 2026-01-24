@@ -33,7 +33,7 @@ class LSRWSubmisionListVC: UIViewController,
     var backTitle2: String?
     var titleSting: String?
     var mark: String?
-    
+    var dateAndTimeForVideo : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         lsrwCV.delegate = self
@@ -270,7 +270,7 @@ class LSRWSubmisionListVC: UIViewController,
                         withReuseIdentifier: CellConfingName.VideoPlayerCVC,
                         for: indexPath) as! VideoPlayerCVC
                     if let url = URL(string: file.url ?? "") {
-                        cell.configure(with: url, parentVC: self, dateAndTimeForVideo: "")
+                        cell.configure(with: url, parentVC: self, dateAndTimeForVideo: dateAndTimeForVideo ?? "")
                     }
                     return cell
                 } else {
@@ -450,6 +450,7 @@ class LSRWSubmisionListVC: UIViewController,
                 let vc = ImageShowVc()
                 vc.fileURL = items
                 vc.subjectName = "Videos"
+                vc.dateAndTimeForVideo = dateAndTimeForVideo ?? ""
                 vc.index = indexPath.row
                 vc.scrollIndex = indexPath
                 vc.modalPresentationStyle = .fullScreen

@@ -185,6 +185,7 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                 vc.backTitle1 = filterAssignment[indexPath.row].student_name
                 vc.titleSting = filterAssignment[indexPath.row].description
                 vc.mark = filterAssignment[indexPath.row].remark
+                vc.dateAndTimeForVideo = filterAssignment[indexPath.row].submitted_date
                 vc.backTitle2 = "\(filterAssignment[indexPath.row].standard ?? "") - \(filterAssignment[indexPath.row].section ?? "")"
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)

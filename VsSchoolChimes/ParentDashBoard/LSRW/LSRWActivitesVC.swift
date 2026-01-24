@@ -416,6 +416,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                             if data.first?.file_path?.count != 0{
                                 let vc = LSRWSubmisionListVC()
                                 vc.attachment = data.first?.file_path
+                                vc.dateAndTimeForVideo = data.first?.submitted_date ?? ""
                                 vc.titleSting = data.first?.description ?? ""
                                 vc.mark = data.first?.remark ?? ""
                                 vc.modalPresentationStyle = .fullScreen

@@ -35,8 +35,8 @@ struct VersionCheckResponse: Codable {
 }
 
 struct VersionData: Codable {
-    let update_available: Bool?
-    let force_update: Bool?
+    var update_available: Bool?
+    var force_update: Bool?
     let new_version: String?
     let new_version_updates: String?
     let country_details: CountryData?
@@ -2731,6 +2731,7 @@ struct Review: Codable {
 // MARK: - Models
 struct CategoriesSection:Codable{
     let name: String?
+    let value: String?
     let rating: Int?
     var category: [Categories]?
 }
