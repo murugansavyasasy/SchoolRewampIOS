@@ -95,6 +95,8 @@
 		18926D372D041D74002BBB97 /* ImportantInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D352D041D74002BBB97 /* ImportantInfoViewController.swift */; };
 		18926D382D041D74002BBB97 /* ImportantInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926D362D041D74002BBB97 /* ImportantInfoViewController.xib */; };
 		189AFD342F23803500BDF3A0 /* TimeAccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189AFD332F23803500BDF3A0 /* TimeAccessManager.swift */; };
+		189AFD392F24C98700BDF3A0 /* ForceUpdateVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189AFD372F24C98700BDF3A0 /* ForceUpdateVc.swift */; };
+		189AFD3A2F24C98700BDF3A0 /* ForceUpdateVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 189AFD382F24C98700BDF3A0 /* ForceUpdateVc.xib */; };
 		18D09A3E2EFFECF700D1930D /* VoiceCellTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D09A3D2EFFECF700D1930D /* VoiceCellTV.xib */; };
 		18D09A3F2EFFECF700D1930D /* VoiceCellTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D09A3C2EFFECF700D1930D /* VoiceCellTV.swift */; };
 		18D09A422F00055E00D1930D /* VoiceMessagesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D09A412F00055E00D1930D /* VoiceMessagesVC.xib */; };
@@ -923,6 +925,8 @@
 		18926D352D041D74002BBB97 /* ImportantInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantInfoViewController.swift; sourceTree = "<group>"; };
 		18926D362D041D74002BBB97 /* ImportantInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportantInfoViewController.xib; sourceTree = "<group>"; };
 		189AFD332F23803500BDF3A0 /* TimeAccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAccessManager.swift; sourceTree = "<group>"; };
+		189AFD372F24C98700BDF3A0 /* ForceUpdateVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceUpdateVc.swift; sourceTree = "<group>"; };
+		189AFD382F24C98700BDF3A0 /* ForceUpdateVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForceUpdateVc.xib; sourceTree = "<group>"; };
 		189E991D2CE3286600FE98A5 /* VsSchoolChimes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VsSchoolChimes.entitlements; sourceTree = "<group>"; };
 		189E997F2CE3794A00FE98A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		189E99802CE3794A00FE98A5 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -2007,6 +2011,15 @@
 			path = ImportantInfo;
 			sourceTree = "<group>";
 		};
+		189AFD362F24C94F00BDF3A0 /* ForceUpdatePopup */ = {
+			isa = PBXGroup;
+			children = (
+				189AFD372F24C98700BDF3A0 /* ForceUpdateVc.swift */,
+				189AFD382F24C98700BDF3A0 /* ForceUpdateVc.xib */,
+			);
+			path = ForceUpdatePopup;
+			sourceTree = "<group>";
+		};
 		189E99812CE3794A00FE98A5 /* ImageNotificationService */ = {
 			isa = PBXGroup;
 			children = (
@@ -2917,6 +2930,7 @@
 		84A5BE712C19728F00E32496 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				189AFD362F24C94F00BDF3A0 /* ForceUpdatePopup */,
 				187A0B552F10E9BD008CF5B7 /* OnboardingFlow */,
 				187A0B5B2F10E9BF008CF5B7 /* Biometric */,
 				848CC1802D8A9E2A00CD0255 /* Password */,
@@ -3967,6 +3981,7 @@
 				843739032E3CDE690063E84D /* CustomParentDashboardVC.xib in Resources */,
 				FAFB40C12ED6FA2000783142 /* ActivitiesTVCell.xib in Resources */,
 				8442A90E2CDC8B2D0006068E /* FAQTableViewCell.xib in Resources */,
+				189AFD3A2F24C98700BDF3A0 /* ForceUpdateVc.xib in Resources */,
 				849507312DAE3EDD004343C4 /* loader (2).json in Resources */,
 				8442A90F2CDC8B2D0006068E /* FAQViewController.xib in Resources */,
 				849E573A2C1FF6BD006119DA /* RobotoSlab-Regular.ttf in Resources */,
@@ -4474,6 +4489,7 @@
 				84017F7E2E44942A006CB477 /* certificateHstryCell.swift in Sources */,
 				18D718DD2D0D479B00E9EDA3 /* NewAbsenteesViewController.swift in Sources */,
 				845F21792E45C2660078AF69 /* AssignmentDetailTVC.swift in Sources */,
+				189AFD392F24C98700BDF3A0 /* ForceUpdateVc.swift in Sources */,
 				84B57EE32D15533000E0EA29 /* SubmitVC.swift in Sources */,
 				84F9862D2D3A57FC009FF065 /* QuizVC.swift in Sources */,
 				84AC7F0F2E3C8EED0022BD63 /* SideMenuVC.swift in Sources */,

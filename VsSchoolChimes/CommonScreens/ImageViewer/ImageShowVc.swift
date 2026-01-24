@@ -47,7 +47,7 @@ class ImageShowVc: UIViewController {
     var scrollIndex: IndexPath?
     var downloadUrl: String?
     var fileType: String?
-    var FolderName : String = ""
+    var isPaymentReceipt = false
     var dateAndTimeForVideo : String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +94,7 @@ class ImageShowVc: UIViewController {
         popoverVC.view.backgroundColor = .white
         popoverVC.dowloadUrl = downloadUrl
         popoverVC.fileType = fileType
-        popoverVC.FolderName = FolderName
+        popoverVC.isPaymentReceipt = isPaymentReceipt
         popoverVC.preferredContentSize = CGSize(width: 150, height: 100)
         popoverVC.modalPresentationStyle = .popover
         
