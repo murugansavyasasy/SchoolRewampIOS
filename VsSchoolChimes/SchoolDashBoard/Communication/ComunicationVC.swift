@@ -438,7 +438,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
             ScheduleSelectedDate.append(formattedDate)
         }
         let today_date = getCurrentDateString()
-        guard AudioPlayUrl != "", let voiceTitle = voiceTitleeTxt.text, !voiceTitle.isEmpty else {
+        guard AudioPlayUrl != "",AudioPlayUrl != nil, let voiceTitle = voiceTitleeTxt.text, !voiceTitle.isEmpty else {
             alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
             return
         }
@@ -991,8 +991,21 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
                 dltbtn.isHidden = false
                 recoderbtn.isEnabled = false
                 if let audioUrl = URL(string: AudioPlayUrl ?? "") {
-                    playerItem = AVPlayerItem(url: audioUrl)
-                    player = AVPlayer(playerItem: playerItem)
+                    if audioUrl.isFileURL {
+                        do {
+                            try audioManager.setupPlayer(with: audioUrl)
+                            waveView.durationLabel.isHidden = true
+                            waveView.audioURL = audioUrl
+                            waveView.updateWaveformColor(progress: 0.0)
+                            saveTempRecording(audioUrl.absoluteString)
+                        } catch {
+                            print("❌ Failed to set up audio player:", error)
+                        }
+                    } else {
+                        waveView.audioURL = audioUrl
+                        waveView.durationLabel.isHidden = true
+            //            downloadAndPrepareAudio(from: url)
+                    }
                 }
                 
             } catch {
@@ -1715,8 +1728,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
     
     @IBAction func addFileAction(_ sender: Any) {
         if #available(iOS 14.0, *) {
-            let supportedTypes: [UTType] = [.audio]
-            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes)
+            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.audio])
             documentPicker.delegate = self
             documentPicker.allowsMultipleSelection = false
             present(documentPicker, animated: true, completion: nil)

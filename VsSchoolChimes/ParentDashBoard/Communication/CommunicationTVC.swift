@@ -43,18 +43,7 @@ class CommunicationTVC: UITableViewCell {
     var cellIndex: Int = 0
     private let audioManager = AudioManager()
 
-    var audioURL: URL? {
-        didSet {
-            guard let url = audioURL else { return }
-//            if url.isFileURL {
-                // Local file
-                prepareLocalAudio(url: url)
-//            } else {
-//                // Remote file
-//                downloadAndPrepareAudio(from: url)
-//            }
-        }
-    }
+    var audioURL: URL?
 
     // MARK: - Lifecycle
     override func awakeFromNib() {
@@ -63,13 +52,6 @@ class CommunicationTVC: UITableViewCell {
         setupNotifications()
     }
 
-//    override func prepareForReuse() {
-//        super.prepareForReuse()
-//        stopPlayback()
-//        audioURL = nil
-//        cellIndex = 0
-//        audioDelegate = nil
-//    }
     override func prepareForReuse() {
         super.prepareForReuse()
         stopPlayback()
@@ -178,21 +160,15 @@ class CommunicationTVC: UITableViewCell {
         if !fileManager.fileExists(atPath: audioFolderPath.path) {
             try? fileManager.createDirectory(at: audioFolderPath, withIntermediateDirectories: true)
         }
-        
-        // Generate unique filename
         let filename = originalURL.lastPathComponent.isEmpty ? UUID().uuidString + ".m4a" : originalURL.lastPathComponent
         let permanentURL = audioFolderPath.appendingPathComponent(filename)
-        
-        // Remove if already exists
         if fileManager.fileExists(atPath: permanentURL.path) {
             try? fileManager.removeItem(at: permanentURL)
         }
         do {
             try fileManager.copyItem(at: tempURL, to: permanentURL)
-            print("✅ Audio saved to: \(permanentURL.path)")
             return permanentURL
         } catch {
-            print("❌ Failed to save audio: \(error.localizedDescription)")
             return nil
         }
     }
@@ -212,21 +188,32 @@ class CommunicationTVC: UITableViewCell {
             startPlayback()
         }
     }
-
     private func startPlayback() {
-        // Notify other cells to stop playing
+        guard let url = audioURL else {
+            print("❌ Audio URL nil")
+            return
+        }
         NotificationCenter.default.post(
             name: NSNotification.Name("AudioCellStartedPlaying"),
             object: cellIndex
         )
 
-        // Notify delegate
-        audioDelegate?.audioCell(self, willStartPlayingAtIndex: cellIndex)
-        // Start playback
-        waveView.isPlaying = true
-        waveView.startPlaybackAnimation()
-        updatePlayButtonState(isPlaying: true)
+        do {
+            try audioManager.setupPlayer(with: url)
+            try audioManager.play()
+
+            waveView.audioURL = url
+            waveView.isPlaying = true
+            waveView.startPlaybackAnimation()
+            updatePlayButtonState(isPlaying: true)
+
+        } catch {
+            print("❌ Play error:", error)
+            showErrorAlert(message: "Unable to play audio")
+        }
     }
+
+
 
     func stopPlayback() {
         audioManager.stop()

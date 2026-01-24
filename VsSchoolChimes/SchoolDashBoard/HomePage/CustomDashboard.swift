@@ -467,6 +467,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
     private func setupProfileImage() {
         profileImageView.kf.setImage(with: URL(string: staffDetails?.school_logo ?? ""),placeholder:UIImage(named: "School Needs"))
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
+        profileImageView.contentMode = .scaleAspectFit
         profileImageView.clipsToBounds = true
         profileImageView.layer.borderWidth = 2
         profileImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
