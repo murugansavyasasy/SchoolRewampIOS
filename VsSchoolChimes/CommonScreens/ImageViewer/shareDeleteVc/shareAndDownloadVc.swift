@@ -15,7 +15,7 @@ class shareAndDownloadVc: UIViewController {
     var dowloadUrl:String?
     var fileType:String?
     var typeVideo = false
-    var FolderName : String = ""
+    var isPaymentReceipt = false
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,15 +34,18 @@ class shareAndDownloadVc: UIViewController {
                 sender.isEnabled = true
                 return
             }
-//            if FolderName != ""{
-//                let fileType = fileType?.lowercased() == "image" ? "Photos":"Document"
-//                FolderName = fileType
-//            }
-            let fileType = fileType?.lowercased() == "image" ? "Photos":"Document"
+            
+            var folderName = ""
+            if isPaymentReceipt {
+                folderName = "FeeReceipt"
+            }else{
+             folderName = fileType?.lowercased() == "image" ? "Photos":"Document"
+            }
+            
             let downloader = FileDownloader()
             downloader.downloadFile(
                 from: fileURL,
-                folderName: fileType,
+                folderName: folderName,
                 fileName: filename
             ) { result in
                 DispatchQueue.main.async { [self] in

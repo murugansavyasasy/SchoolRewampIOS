@@ -81,7 +81,7 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
     
     func removeCell(at indexPath: IndexPath) {
         //        guard questions.count > 1 else { return }
-        if questions[indexPath.row].id != "" {
+        if questions[indexPath.row].id != "" && questions[indexPath.row].id != nil {
             CustomAlert().showAlertCancel(
                 title: AlertstringFile.Confirm,
                 message: "Are you sure want to delete this Question?",
@@ -179,7 +179,7 @@ class CreateQuizQutionVc: UIViewController {
             return
         }
         
-        if id == ""{
+        if id == "" || id == nil{
             let remaining = noOfQuestion - questions.count
             let msg =
             """
