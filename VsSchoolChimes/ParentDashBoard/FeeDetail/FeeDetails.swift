@@ -165,11 +165,7 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate {
                 case .success(let success):
                     if success.status == true{
                         self.receipt_url = success.data ?? []
-                        let ViewPaymentVC = ViewPaymentVC(nibName: nil, bundle: nil)
-                        let fileURL = URL(fileURLWithPath: self.receipt_url.first ?? "")
-                        ViewPaymentVC.documentURL = fileURL
-                        ViewPaymentVC.modalPresentationStyle = .fullScreen
-                        self.present(ViewPaymentVC, animated: true)
+                        self.privewVc(url: self.receipt_url.first ?? "")
                     }else{
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
                     }
@@ -207,22 +203,17 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let id = feeDetailsList[indexPath.row].id ?? ""
-       // Get_Invoice_Receipt_Api(invoiceId: id)
-//        let ViewPaymentVC = ViewPaymentVC(nibName: nil, bundle: nil)
-//        let fileURL = URL(fileURLWithPath: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents//Get_Started_With_Smallpdf.pdf")
-//        ViewPaymentVC.documentURL = fileURL
-//        ViewPaymentVC.modalPresentationStyle = .fullScreen
-//        self.present(ViewPaymentVC, animated: true)
-        privewVc()
+        Get_Invoice_Receipt_Api(invoiceId: id)
     }
     
-    func privewVc(){
+    func privewVc(url:String){
         var fileURL: [FilePath] = []
         fileURL.removeAll()
-        fileURL.append(FilePath(url: "https://schoolchimes-fee-receipts.s3.ap-south-1.amazonaws.com/undefined/fee_receipt/PDF_1748065242703.pdf", type: ""))
+        fileURL.append(FilePath(url: url, type: ""))
         let vc = ImageShowVc()
         vc.fileURL = fileURL
         vc.subjectName = "Fee Receipt"
+        vc.isPaymentReceipt = true
         vc.index = 0
         vc.scrollIndex = IndexPath(row: 0, section: 0)
         vc.modalPresentationStyle = .fullScreen

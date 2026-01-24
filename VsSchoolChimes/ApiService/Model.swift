@@ -2730,9 +2730,9 @@ struct Review: Codable {
 }
 // MARK: - Models
 struct CategoriesSection:Codable{
-    let name: String?
-    let value: String?
     let rating: Int?
+    let value: String?
+    let name: String?
     var category: [Categories]?
 }
 

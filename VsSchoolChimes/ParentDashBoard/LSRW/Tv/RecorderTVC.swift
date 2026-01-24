@@ -334,9 +334,9 @@ class AudioManager: NSObject {
         do {
             if forRecording {
                 try session.setCategory(
-                    .playAndRecord,
-                    mode: .default,
-                    options: [.defaultToSpeaker, .allowBluetooth]
+                    .playback,
+                    mode: .spokenAudio,
+                    options: [.duckOthers]
                 )
             } else {
                 try session.setCategory(.playback, mode: .default)
@@ -412,20 +412,22 @@ class AudioManager: NSObject {
         let normalized = (clampedPower - minDb) / (maxDb - minDb)
         return pow(normalized, 0.5)
     }
-    
-    // MARK: - Enhanced Playback Methods
     func setupPlayer(with url: URL) throws {
-        cleanup()
-        
+        if audioURL == url {
+            return
+        }
+
+        stop()
         if url.isFileURL {
             try setupLocalPlayer(with: url)
         } else {
             try setupRemotePlayer(with: url)
         }
-        
+
         audioURL = url
     }
-    
+
+
     private func setupLocalPlayer(with url: URL) throws {
         try setupAudioSession(forRecording: false)
         

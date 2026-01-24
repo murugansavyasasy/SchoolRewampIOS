@@ -20,6 +20,9 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     @IBOutlet weak var blockedBtn: UIButton!
     @IBOutlet weak var blockedLbl: UILabel!
     @IBOutlet weak var blockedView: UIView!
+    @IBOutlet weak var noRecordImage: UIImageView!
+    
+    
     var getValue = 1
     var staffMembersData: StaffMember?
     var childDetails = UserDefaultFileManager.get_child_Details()
@@ -209,6 +212,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
                     if successMessage.status == true{
                         DispatchQueue.main.async { [self] in
                             noRecordlbl.isHidden = true
+                            noRecordImage.isHidden = true
                             chatDataDetails = successMessage.data?
                                 .reversed() ?? []
                             tableView.reloadData()
@@ -219,6 +223,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
                     }else{
                         DispatchQueue.main.async { [self] in
                             noRecordlbl.isHidden = false
+                            noRecordImage.isHidden = false
                             noRecordlbl.text = successMessage.message ?? ""
                         }
                     }

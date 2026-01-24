@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -48,16 +48,16 @@
                             </connections>
                         </button>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="YBa-T3-kkZ">
-                            <rect key="frame" x="60" y="70" width="188" height="49.666666666666657"/>
+                            <rect key="frame" x="60" y="70" width="183" height="49.666666666666657"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qY3-iO-aCN">
-                                    <rect key="frame" x="0.0" y="0.0" width="188" height="20.333333333333332"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="183" height="20.333333333333332"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Alh-hd-6ki">
-                                    <rect key="frame" x="0.0" y="29.333333333333343" width="188" height="20.333333333333329"/>
+                                    <rect key="frame" x="0.0" y="29.333333333333343" width="183" height="20.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -65,10 +65,10 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="lastBaseline" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="tJQ-Wb-LSN">
-                            <rect key="frame" x="258" y="70" width="125" height="45.666666666666657"/>
+                            <rect key="frame" x="253" y="70" width="130" height="49.666666666666657"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="48b-4j-Y8M">
-                                    <rect key="frame" x="0.0" y="15.666666666666657" width="30" height="30"/>
+                                    <rect key="frame" x="0.0" y="19.666666666666657" width="30" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="30" id="RZE-bd-5FY"/>
                                         <constraint firstAttribute="height" constant="30" id="Uof-xc-89k"/>
@@ -84,7 +84,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3KO-gs-lDP">
-                                    <rect key="frame" x="40" y="15.666666666666657" width="30" height="30"/>
+                                    <rect key="frame" x="40" y="19.666666666666657" width="30" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="30" id="KOb-HK-Kch"/>
                                         <constraint firstAttribute="height" constant="30" id="lXx-m4-po5"/>
@@ -100,11 +100,12 @@
                                     </connections>
                                 </button>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Xnk-us-IRt">
-                                    <rect key="frame" x="80" y="0.66666666666666785" width="45" height="43.666666666666657"/>
+                                    <rect key="frame" x="80" y="0.66666666666666785" width="50" height="48.666666666666657"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="45" id="FSW-Fj-6Lk"/>
-                                        <constraint firstAttribute="height" constant="45" id="xXK-Pe-5Ct"/>
+                                        <constraint firstAttribute="width" constant="50" id="FSW-Fj-6Lk"/>
+                                        <constraint firstAttribute="height" constant="50" id="xXK-Pe-5Ct"/>
                                     </constraints>
                                 </imageView>
                             </subviews>
