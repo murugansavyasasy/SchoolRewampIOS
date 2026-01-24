@@ -25,17 +25,20 @@ class RecorderTVC: UITableViewCell {
     private var audioURL: URL?
     private var isRemoteAudio = false
 
-   var delegate: EditObjectDelegate?
+    var delegate: EditObjectDelegate?
     private let tempKey = "TempRecordings"
+    
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
         audioManager.delegate = self
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(appDidEnterBackground),
-                                               name: UIApplication.didEnterBackgroundNotification,
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(appDidEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
     }
 
     override func prepareForReuse() {
@@ -53,7 +56,7 @@ class RecorderTVC: UITableViewCell {
     private func setupUI() {
         recoderTime.text = "00:00"
         vicecImg.image = UIImage(systemName: "microphone.circle.fill")
-        recordButton?.setTitle(nil, for: .normal) // optional, if you only show icon
+        recordButton?.setTitle(nil, for: .normal)
     }
 
     private func resetUI() {
@@ -82,15 +85,18 @@ class RecorderTVC: UITableViewCell {
         recordingStartTime = Date()
         recoderTime.text = "00:00"
 
-        // Start a 1s tick timer (no retain cycle)
-        recordingTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+        // Start a 1s tick timer
+        recordingTimer = Timer.scheduledTimer(
+            withTimeInterval: 1.0,
+            repeats: true
+        ) { [weak self] _ in
             self?.updateRecordingTime()
         }
 
         // Start recording
         audioManager.startRecording()
 
-        // Optional animated indicator (if you have this helper; otherwise keep the SF Symbol)
+        // Optional animated indicator
         if let gif = UIImage.gifImageWithName("Mic") {
             vicecImg.image = gif
         } else {
@@ -113,14 +119,27 @@ class RecorderTVC: UITableViewCell {
                 if let url = url {
                     self.audioURL = url
                     self.isRemoteAudio = false
-                    self.saveTempRecording(url.absoluteString)
-                    self.delegate?.editDta(edit: AttachmentItem(image: nil, imageURL: url.absoluteString, fileType: "audio", VideoURl: nil, VimeoVideoURL: nil))
+                    
+                    // IMPORTANT: Save only the path, not the full URL string
+                    // This prevents the "file://" prefix issue
+                    self.saveTempRecording(url.path)
+                    
+                    self.delegate?.editDta(
+                        edit: AttachmentItem(
+                            image: nil,
+                            imageURL: url.path,  // Changed from url.absoluteString to url.path
+                            fileType: "audio",
+                            VideoURl: nil,
+                            VimeoVideoURL: nil
+                        )
+                    )
                 }
 
                 UIApplication.shared.isIdleTimerDisabled = false
             }
         }
     }
+    
     func saveTempRecording(_ url: String) {
         var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
         list.append(url)
@@ -153,7 +172,7 @@ class RecorderTVC: UITableViewCell {
     private func formatTime(_ seconds: Double) -> String {
         let mins = Int(seconds) / 60
         let secs = Int(seconds) % 60
-        return String(format: CommonStringFile.Time_formate, mins, secs)
+        return String(format: "%02d:%02d", mins, secs)
     }
 
     private func showMicPermissionAlert() {
@@ -174,7 +193,11 @@ class RecorderTVC: UITableViewCell {
     }
 
     private func showErrorAlert(message: String) {
-        let alert = UIAlertController(title: "Audio Error", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(
+            title: "Audio Error",
+            message: message,
+            preferredStyle: .alert
+        )
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         getCurrentViewController()?.present(alert, animated: true)
     }
@@ -188,7 +211,7 @@ class RecorderTVC: UITableViewCell {
             .topMostViewController()
     }
 
-    // Public setter if you want to prefill with local audio (not recording)
+    // Public setter for prefilling with local audio
     func setLocalAudioURL(_ url: URL) {
         audioURL = url
         isRemoteAudio = false
@@ -199,7 +222,6 @@ class RecorderTVC: UITableViewCell {
 @available(iOS 15.0, *)
 extension RecorderTVC: AudioManagerDelegate {
     func audioManagerDidUpdateTime(currentTime: Double, duration: Double) {
-        // If you also use AudioManager progress while recording, you can reflect it here
         DispatchQueue.main.async { [weak self] in
             guard let self = self, self.isRecording else { return }
             self.recoderTime.text = self.formatTime(currentTime)
@@ -207,7 +229,7 @@ extension RecorderTVC: AudioManagerDelegate {
     }
 
     func audioManagerDidFinishPlaying() {
-        // Not used for recording, but keep for completeness
+        // Not used for recording
     }
 
     func audioManagerDidFailWithError(_ error: Error) {
@@ -217,15 +239,13 @@ extension RecorderTVC: AudioManagerDelegate {
     }
 
     func audioManagerDidStartBuffering() {
-        // Likely N/A during recording
+        // N/A during recording
     }
 
     func audioManagerDidFinishBuffering() {
-        // Likely N/A during recording
+        // N/A during recording
     }
 }
-
-
 
 // MARK: - Enhanced AudioManager Class
 class AudioManager: NSObject {
@@ -239,6 +259,8 @@ class AudioManager: NSObject {
     private var playbackTimer: Timer?
     private var levelTimer: Timer?
     private var timeObserver: Any?
+    private var hasAddedObservers = false
+    
     weak var delegate: AudioManagerDelegate?
     var onLevelUpdate: ((Float) -> Void)?
     
@@ -306,10 +328,13 @@ class AudioManager: NSObject {
     }
     
     func stopRecording(completion: @escaping (URL?, TimeInterval?) -> Void) {
-        audioRecorder?.stop()
+        guard let recorder = audioRecorder else {
+            completion(nil, nil)
+            return
+        }
+        recorder.stop()
         stopLevelMonitoring()
-        
-        let duration = recordingStartTime.map { Date().timeIntervalSince($0) }
+        let duration = recorder.currentTime
         completion(audioURL, duration)
     }
     
@@ -318,17 +343,16 @@ class AudioManager: NSObject {
         let session = AVAudioSession.sharedInstance()
         do {
             if forRecording {
-                if #available(iOS 10.0, *) {
-                    try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
-                } else {
-                    try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
-                }
+                try session.setCategory(
+                    .playAndRecord,
+                    mode: .default,
+                    options: [.defaultToSpeaker, .allowBluetooth]
+                )
             } else {
                 try session.setCategory(.playback, mode: .default)
             }
 
             try session.setActive(true, options: .notifyOthersOnDeactivation)
-            print("✅ Audio session configured for \(forRecording ? "recording" : "playback")")
         } catch {
             print("❌ Audio session setup failed: \(error.localizedDescription)")
             throw error
@@ -336,9 +360,14 @@ class AudioManager: NSObject {
     }
 
     private func setupRecorder() -> Bool {
-        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let documentsPath = FileManager.default.urls(
+            for: .documentDirectory,
+            in: .userDomainMask
+        )[0]
         let timestamp = Int(Date().timeIntervalSince1970)
-        let fileURL = documentsPath.appendingPathComponent("RecordedAudio_\(timestamp).m4a")
+        let fileURL = documentsPath.appendingPathComponent(
+            "RecordedAudio_\(timestamp).m4a"
+        )
 
         if FileManager.default.fileExists(atPath: fileURL.path) {
             try? FileManager.default.removeItem(at: fileURL)
@@ -369,7 +398,10 @@ class AudioManager: NSObject {
     // MARK: - Level Monitoring
     private func startLevelMonitoring() {
         levelTimer?.invalidate()
-        levelTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, weakTarget: self) { [weak self] _ in
+        levelTimer = Timer.scheduledTimer(
+            withTimeInterval: 0.05,
+            repeats: true
+        ) { [weak self] _ in
             guard let self = self, let recorder = self.audioRecorder else { return }
             recorder.updateMeters()
             let level = recorder.averagePower(forChannel: 0)
@@ -390,15 +422,14 @@ class AudioManager: NSObject {
         let normalized = (clampedPower - minDb) / (maxDb - minDb)
         return pow(normalized, 0.5)
     }
+    
     // MARK: - Enhanced Playback Methods
     func setupPlayer(with url: URL) throws {
-        cleanup() // Clean up any existing player
+        cleanup()
         
         if url.isFileURL {
-            // Local file playback
             try setupLocalPlayer(with: url)
         } else {
-            // Remote URL playback
             try setupRemotePlayer(with: url)
         }
         
@@ -427,20 +458,48 @@ class AudioManager: NSObject {
     }
     
     private func setupRemotePlayerObservers() {
-        guard let playerItem = playerItem else { return }
-        playerItem.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.status), options: [.new], context: nil)
-        playerItem.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.duration), options: [.new], context: nil)
+        guard let playerItem = playerItem, !hasAddedObservers else { return }
         
-        // Buffering observers
-        playerItem.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.isPlaybackBufferEmpty), options: [.new], context: nil)
-        playerItem.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.isPlaybackLikelyToKeepUp), options: [.new], context: nil)
+        playerItem.addObserver(
+            self,
+            forKeyPath: #keyPath(AVPlayerItem.status),
+            options: [.new],
+            context: nil
+        )
+        playerItem.addObserver(
+            self,
+            forKeyPath: #keyPath(AVPlayerItem.duration),
+            options: [.new],
+            context: nil
+        )
+        playerItem.addObserver(
+            self,
+            forKeyPath: #keyPath(AVPlayerItem.isPlaybackBufferEmpty),
+            options: [.new],
+            context: nil
+        )
+        playerItem.addObserver(
+            self,
+            forKeyPath: #keyPath(AVPlayerItem.isPlaybackLikelyToKeepUp),
+            options: [.new],
+            context: nil
+        )
+        
+        hasAddedObservers = true
         
         // Add time observer
         if let player = avPlayer {
             let timeScale = CMTimeScale(NSEC_PER_SEC)
             let time = CMTime(seconds: 0.1, preferredTimescale: timeScale)
-            timeObserver = player.addPeriodicTimeObserver(forInterval: time, queue: .main) { [weak self] time in
-                self?.delegate?.audioManagerDidUpdateTime(currentTime: time.seconds, duration: self?.duration ?? 0)
+            timeObserver = player.addPeriodicTimeObserver(
+                forInterval: time,
+                queue: .main
+            ) { [weak self] time in
+                guard let self = self else { return }
+                self.delegate?.audioManagerDidUpdateTime(
+                    currentTime: time.seconds,
+                    duration: self.duration
+                )
             }
         }
         
@@ -486,7 +545,6 @@ class AudioManager: NSObject {
         } else if let player = avPlayer {
             try setupAudioSession(forRecording: false)
             player.play()
-            // Time observer is already set up for AVPlayer
         } else {
             throw AudioError.playerNotInitialized
         }
@@ -512,7 +570,10 @@ class AudioManager: NSObject {
                 throw AudioError.playbackFailed
             }
             player.currentTime = time
-            delegate?.audioManagerDidUpdateTime(currentTime: time, duration: duration)
+            delegate?.audioManagerDidUpdateTime(
+                currentTime: time,
+                duration: duration
+            )
         } else if let player = avPlayer {
             let timeCM = CMTime(seconds: time, preferredTimescale: CMTimeScale(1000))
             player.seek(to: timeCM)
@@ -523,9 +584,15 @@ class AudioManager: NSObject {
     
     private func startPlaybackTimer() {
         playbackTimer?.invalidate()
-        playbackTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, weakTarget: self) { [weak self] _ in
+        playbackTimer = Timer.scheduledTimer(
+            withTimeInterval: 0.1,
+            repeats: true
+        ) { [weak self] _ in
             guard let self = self else { return }
-            self.delegate?.audioManagerDidUpdateTime(currentTime: self.currentTime, duration: self.duration)
+            self.delegate?.audioManagerDidUpdateTime(
+                currentTime: self.currentTime,
+                duration: self.duration
+            )
         }
     }
     
@@ -535,7 +602,12 @@ class AudioManager: NSObject {
     }
     
     // MARK: - KVO for AVPlayer
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override func observeValue(
+        forKeyPath keyPath: String?,
+        of object: Any?,
+        change: [NSKeyValueChangeKey : Any]?,
+        context: UnsafeMutableRawPointer?
+    ) {
         guard let keyPath = keyPath else { return }
         
         switch keyPath {
@@ -546,7 +618,10 @@ class AudioManager: NSObject {
             }
             
         case #keyPath(AVPlayerItem.duration):
-            delegate?.audioManagerDidUpdateTime(currentTime: currentTime, duration: duration)
+            delegate?.audioManagerDidUpdateTime(
+                currentTime: currentTime,
+                duration: duration
+            )
             
         case #keyPath(AVPlayerItem.isPlaybackBufferEmpty):
             if let isEmpty = change?[.newKey] as? Bool, isEmpty {
@@ -559,7 +634,12 @@ class AudioManager: NSObject {
             }
             
         default:
-            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+            super.observeValue(
+                forKeyPath: keyPath,
+                of: object,
+                change: change,
+                context: context
+            )
         }
     }
     
@@ -567,7 +647,10 @@ class AudioManager: NSObject {
         switch status {
         case .readyToPlay:
             delegate?.audioManagerDidFinishBuffering()
-            delegate?.audioManagerDidUpdateTime(currentTime: currentTime, duration: duration)
+            delegate?.audioManagerDidUpdateTime(
+                currentTime: currentTime,
+                duration: duration
+            )
         case .failed:
             if let error = playerItem?.error {
                 delegate?.audioManagerDidFailWithError(error)
@@ -584,7 +667,9 @@ class AudioManager: NSObject {
     // MARK: - Cleanup
     func deleteRecording() {
         stop()
-        if let url = audioURL, url.isFileURL, FileManager.default.fileExists(atPath: url.path) {
+        if let url = audioURL,
+           url.isFileURL,
+           FileManager.default.fileExists(atPath: url.path) {
             try? FileManager.default.removeItem(at: url)
         }
         cleanup()
@@ -606,11 +691,20 @@ class AudioManager: NSObject {
             self.timeObserver = nil
         }
         
-        // Remove KVO observers
-        playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status))
-        playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.duration))
-        playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.isPlaybackBufferEmpty))
-        playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.isPlaybackLikelyToKeepUp))
+        // Remove KVO observers safely
+        if hasAddedObservers, let item = playerItem {
+            item.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status))
+            item.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.duration))
+            item.removeObserver(
+                self,
+                forKeyPath: #keyPath(AVPlayerItem.isPlaybackBufferEmpty)
+            )
+            item.removeObserver(
+                self,
+                forKeyPath: #keyPath(AVPlayerItem.isPlaybackLikelyToKeepUp)
+            )
+            hasAddedObservers = false
+        }
         
         // Remove notification observers
         NotificationCenter.default.removeObserver(self)
@@ -624,7 +718,10 @@ class AudioManager: NSObject {
         
         // Deactivate audio session
         do {
-            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+            try AVAudioSession.sharedInstance().setActive(
+                false,
+                options: .notifyOthersOnDeactivation
+            )
         } catch {
             print("Failed to deactivate audio session: \(error.localizedDescription)")
         }
@@ -633,13 +730,19 @@ class AudioManager: NSObject {
 
 // MARK: - AudioManager Delegates
 extension AudioManager: AVAudioRecorderDelegate {
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+    func audioRecorderDidFinishRecording(
+        _ recorder: AVAudioRecorder,
+        successfully flag: Bool
+    ) {
         if !flag {
             delegate?.audioManagerDidFailWithError(AudioError.recordingFailed)
         }
     }
     
-    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+    func audioRecorderEncodeErrorDidOccur(
+        _ recorder: AVAudioRecorder,
+        error: Error?
+    ) {
         if let error = error {
             delegate?.audioManagerDidFailWithError(error)
         }
@@ -647,12 +750,18 @@ extension AudioManager: AVAudioRecorderDelegate {
 }
 
 extension AudioManager: AVAudioPlayerDelegate {
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(
+        _ player: AVAudioPlayer,
+        successfully flag: Bool
+    ) {
         stopPlaybackTimer()
         delegate?.audioManagerDidFinishPlaying()
     }
     
-    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+    func audioPlayerDecodeErrorDidOccur(
+        _ player: AVAudioPlayer,
+        error: Error?
+    ) {
         if let error = error {
             delegate?.audioManagerDidFailWithError(error)
         }
@@ -689,19 +798,5 @@ enum AudioError: Error, LocalizedError {
         case .bufferingTimeout:
             return "Audio loading timed out"
         }
-    }
-}
-
-// MARK: - Timer Extension for Weak Target
-extension Timer {
-    static func scheduledTimer(withTimeInterval interval: TimeInterval, repeats: Bool, weakTarget target: AnyObject, block: @escaping (Timer) -> Void) -> Timer {
-        let timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: repeats) { [weak target] timer in
-            guard target != nil else {
-                timer.invalidate()
-                return
-            }
-            block(timer)
-        }
-        return timer
     }
 }

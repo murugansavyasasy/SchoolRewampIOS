@@ -745,7 +745,6 @@ class AudioMessageView: UIView {
                     }
                 }
             } else if let error = error {
-                print("Error loading duration: \(error.localizedDescription)")
                 DispatchQueue.main.async {
                     self.durationLabel.text = "Error"
                 }
@@ -767,7 +766,6 @@ class AudioMessageView: UIView {
 
     func startPlaybackAnimation() {
         guard let player = audioPlayer else {
-            print("Audio player not initialized")
             return
         }
         
@@ -1035,7 +1033,6 @@ class AudioProcessor {
                     completion(finalAmplitudes)
                 }
             } catch {
-                print("Error processing audio: \(error.localizedDescription)")
                 DispatchQueue.main.async {
                     completion(generateDefaultAmplitudes(count: sampleCount))
                 }

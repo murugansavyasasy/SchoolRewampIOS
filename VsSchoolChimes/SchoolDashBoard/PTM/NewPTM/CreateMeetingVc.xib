@@ -359,8 +359,8 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No classes found!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5pY-zz-qtY">
-                                            <rect key="frame" x="20" y="94.333333333333371" width="323" height="20.333333333333329"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <rect key="frame" x="20" y="67" width="323" height="15.666666666666671"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -371,13 +371,13 @@
                                         <constraint firstItem="e7m-ef-T7U" firstAttribute="top" secondItem="yQo-yz-anq" secondAttribute="bottom" constant="12" id="0tG-rG-LaZ"/>
                                         <constraint firstAttribute="bottom" secondItem="4hm-TS-hdK" secondAttribute="bottom" constant="12" id="5hb-GE-unw"/>
                                         <constraint firstItem="5pY-zz-qtY" firstAttribute="leading" secondItem="W2B-yy-aZf" secondAttribute="leading" constant="20" id="HZC-92-m1q"/>
+                                        <constraint firstItem="5pY-zz-qtY" firstAttribute="top" secondItem="yQo-yz-anq" secondAttribute="bottom" constant="10" id="Udo-SP-zH4"/>
                                         <constraint firstItem="e7m-ef-T7U" firstAttribute="leading" secondItem="W2B-yy-aZf" secondAttribute="leading" constant="10" id="ZKD-s5-yEd"/>
                                         <constraint firstAttribute="trailing" secondItem="5pY-zz-qtY" secondAttribute="trailing" constant="20" id="ZjF-am-sfU"/>
                                         <constraint firstAttribute="trailing" secondItem="4hm-TS-hdK" secondAttribute="trailing" constant="10" id="asc-GV-RQs"/>
                                         <constraint firstItem="4hm-TS-hdK" firstAttribute="leading" secondItem="W2B-yy-aZf" secondAttribute="leading" constant="10" id="ggu-xm-upO"/>
                                         <constraint firstAttribute="trailing" secondItem="e7m-ef-T7U" secondAttribute="trailing" constant="10" id="lfx-2e-mRh"/>
                                         <constraint firstAttribute="trailing" secondItem="yQo-yz-anq" secondAttribute="trailing" constant="10" id="n75-8N-sG3"/>
-                                        <constraint firstItem="5pY-zz-qtY" firstAttribute="top" secondItem="e7m-ef-T7U" secondAttribute="bottom" constant="5" id="o7l-vX-iFe"/>
                                         <constraint firstItem="yQo-yz-anq" firstAttribute="top" secondItem="W2B-yy-aZf" secondAttribute="top" constant="12" id="pFF-hl-FIg"/>
                                         <constraint firstItem="yQo-yz-anq" firstAttribute="leading" secondItem="W2B-yy-aZf" secondAttribute="leading" constant="10" id="x1U-ZZ-UDb"/>
                                     </constraints>

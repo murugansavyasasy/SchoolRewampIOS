@@ -102,7 +102,6 @@ class AddAttachmentTVC: UITableViewCell,
     private func reloadAttachments() {
         // Prevent concurrent reloads
         guard !isReloading else {
-            print("⚠️ Reload already in progress, skipping...")
             return
         }
         
@@ -115,8 +114,6 @@ class AddAttachmentTVC: UITableViewCell,
             isReloading = false
             return
         }
-        
-        print("🔄 Reloading with \(attachments.count) attachments")
         collectionView.collectionViewLayout.invalidateLayout()
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -225,7 +222,6 @@ class AddAttachmentTVC: UITableViewCell,
         
         // Prevent crash
         guard realIndex >= 0, realIndex < attachments.count else {
-            print("❌ getCellType out of range → index: \(index), attachments: \(attachments.count)")
             return "invalid"
         }
         
@@ -236,7 +232,6 @@ class AddAttachmentTVC: UITableViewCell,
     // MARK: - DataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let count = 1 + attachments.count
-        print("📊 Collection view items: \(count)")
         return count
     }
     
@@ -302,42 +297,61 @@ class AddAttachmentTVC: UITableViewCell,
     
     // MARK: - Delete Delegate
     func deleteImage(index: Int) {
-        guard index < attachments.count else {
-            return
-        }
+        guard index < attachments.count else { return }
+
+        // Stop playback if audio cell is visible
         if let collectionView = addAttachmentView.imageCollectionview {
-            let cellIndexPath = IndexPath(item: index + 1, section: 0) // +1 for add button
-            if let audioCell = collectionView.cellForItem(at: cellIndexPath) as? AudioCVC {
+            let indexPath = IndexPath(item: index + 1, section: 0) // +1 for add button
+            if let audioCell = collectionView.cellForItem(at: indexPath) as? AudioCVC {
                 audioCell.stopPlayback()
             }
         }
-        let urlString = attachments[index].imageURL
-//        if let url = urlString.flatMap(URL.init), url.isFileURL {
-//            url.stopAccessingSecurityScopedResource()
-//        }
-        if let urlStr = attachments[index].imageURL,
-               let url = URL(string: urlStr),
-               url.isFileURL {
-            removeTempRecording(at: index)
-                try? FileManager.default.removeItem(at: url)
-            }
+
+        // Delete local audio file
+        if let urlStr = attachments[index].imageURL {
+            deleteAudioFile(urlString: urlStr)
+            removeTempRecording(urlString: urlStr)
+        }
+
         attachments.remove(at: index)
         reloadAttachments()
     }
-    func removeTempRecording(at index: Int) {
+
+    func removeTempRecording(urlString: String) {
         var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
-        guard index < list.count else { return }
-        let urlString = list[index]
-        if let url = URL(string: urlString), url.isFileURL {
+
+        if let idx = list.firstIndex(of: urlString) {
+            list.remove(at: idx)
+            UserDefaults.standard.set(list, forKey: tempKey)
+        }
+    }
+
+    private func deleteAudioFile(urlString: String) {
+        let fileURL: URL
+
+        if urlString.hasPrefix("file://") {
+            let path = urlString.replacingOccurrences(of: "file://", with: "")
+            fileURL = URL(fileURLWithPath: path)
+
+        } else if urlString.hasPrefix("/") {
+            // plain local path
+            fileURL = URL(fileURLWithPath: urlString)
+
+        } else if let url = URL(string: urlString),
+                  let scheme = url.scheme,
+                  scheme == "http" || scheme == "https" {
+            return
+
+        } else {
+            return
+        }
+        if FileManager.default.fileExists(atPath: fileURL.path) {
             do {
-                try FileManager.default.removeItem(at: url)
-                print("✅ File deleted: \(url.lastPathComponent)")
+                try FileManager.default.removeItem(at: fileURL)
             } catch {
-                print("❌ Failed to delete file: \(error.localizedDescription)")
+                print("❌ Delete failed:", error.localizedDescription)
             }
         }
-        list.remove(at: index)
-        UserDefaults.standard.set(list, forKey: tempKey)
     }
 
 
@@ -501,13 +515,12 @@ class AddAttachmentTVC: UITableViewCell,
 
         // Allow external file access
         guard fileURL.startAccessingSecurityScopedResource() else {
-            print("❌ Cannot access file")
             return
         }
         
         attachments.append(.init(
             image: nil,
-            imageURL: fileURL.path,      // store original path
+            imageURL: fileURL.path,
             fileType: CommonStringFile.audio
         ))
 

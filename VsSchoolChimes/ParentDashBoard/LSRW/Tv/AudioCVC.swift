@@ -28,11 +28,7 @@ class AudioCVC: UICollectionViewCell {
     var audioURL: URL? {
         didSet {
             guard let url = audioURL else { return }
-            if url.isFileURL {
                 waveView.audioURL = url
-            } else {
-                downloadAndPrepareAudio(from: url)
-            }
         }
     }
     

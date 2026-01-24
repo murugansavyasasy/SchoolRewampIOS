@@ -20,6 +20,9 @@ class AppTourVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         imageView.image = UIImage(named: image[currentIntdex])
+        nextBtn.layer.cornerRadius = nextBtn.frame.height/2
+        skipBtn.layer.cornerRadius = skipBtn.frame.height/2
+        previousBtn.layer.cornerRadius = previousBtn.frame.height/2
     }
     @IBAction func skip(_ sender: UIButton) {
             if let tourKey = tourKey{
