@@ -103,7 +103,11 @@ class RippleRingView: UIView {
 
 // MARK: - SplashVC
 @available(iOS 14.0, *)
-class SplashVC: UIViewController, ViewAttachments {
+class SplashVC: UIViewController, ViewAttachments, DismissDelegate {
+    func checkLaterFunc(isNewUser: Bool) {
+        appFlowChecking()
+    }
+    
     
     
     // MARK: - IBOutlets
@@ -617,14 +621,17 @@ class SplashVC: UIViewController, ViewAttachments {
                     if response.status ?? false {
                         self.versionData = response.data?.first
                         if let countryDetails = self.versionData?.country_details {
-                            
                             UserDefaultFileManager.saveCountryDetails(data: countryDetails)
                             ServiceUrl.baseurl = countryDetails.base_url ?? ""
                             ServiceUrl.Reporting_baseurl = countryDetails.reporting_url ?? ""
                         }
-                            if self.versionData?.update_available == true {
+                        self.versionData?.force_update = false
+                        self.versionData?.update_available = false
+                            if self.versionData?.update_available == true{
                                 self.showUpdatePopup()
-                            } else {
+                            }
+                      
+                        else {
                                 self.appFlowChecking()
                             }
                     } else {
@@ -775,25 +782,17 @@ class SplashVC: UIViewController, ViewAttachments {
             appFlowChecking()
             return
         }
-        let alert = UIAlertController(
-            title: versionData.toaster_title,
-            message: versionData.new_version_updates,
-            preferredStyle: .alert
-        )
-        
-        if versionData.force_update ?? false {
-            alert.addAction(UIAlertAction(title: "Update", style: .default) { [weak self] _ in
-                self?.openAppStore(link: versionData.app_store_link ?? "")
-            })
-        } else {
-            alert.addAction(UIAlertAction(title: "Not Now", style: .default) { [weak self] _ in
-                self?.appFlowChecking()
-            })
-            alert.addAction(UIAlertAction(title: "Update", style: .default) { [weak self] _ in
-                self?.openAppStore(link: versionData.app_store_link ?? "")
-            })
-        }
-        present(alert, animated: true)
+            DispatchQueue.main.async {
+                let popup = ForceUpdateVc()
+                popup.modalPresentationStyle = .overFullScreen
+                popup.is_forceUpdate =  versionData.force_update ?? false
+                popup.appRedirectLink = versionData.app_store_link ?? ""
+                popup.delegate = self
+                popup.titlle = versionData.toaster_title ?? ""
+                popup.descriptions = versionData.new_version_updates ?? ""
+                popup.modalTransitionStyle = .crossDissolve
+                popup.view.backgroundColor = UIColor.black.withAlphaComponent(0.5) // dim effect
+                self.present(popup, animated: true, completion: nil)}
     }
     
     private func openAppStore(link: String) {
