@@ -935,10 +935,12 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
     
     //MARK: DOCUMENT PICKER
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        showActivityLoader()
         guard let selectedFileURL = urls.first else {
             print("No file selected.")
             return
         }
+        AudioPlayUrl = selectedFileURL.absoluteString
         // Access the file securely if necessary
         if selectedFileURL.startAccessingSecurityScopedResource() {
             defer { selectedFileURL.stopAccessingSecurityScopedResource() }
@@ -948,6 +950,20 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
                 let duration = CMTimeGetSeconds(asset.duration)
                 guard duration.isFinite else { return }
                 voiceRecordedDuration = Int(duration)
+                recordImgHeightCon.constant = 0
+                Timinglbl.isHidden = true
+                addfile.isHidden = true
+                btnplay.setImage(ImageName.playbutton, for: .normal)
+                let formatter = DateFormatter()
+                formatter.timeStyle = .short
+                messageSendTime.text = "\(formatter.string(from: Date()))"
+                getAudioDuration(from: selectedFileURL) { seconds, formatted in
+                    self.voiceTiming.text = formatted
+                }
+                playerheight.constant = 60
+                playerview.isHidden = false
+                dltbtn.isHidden = false
+                recoderbtn.isEnabled = false
                 if emengencyCall.isOn{
                     if duration > 30 {
                         alert
@@ -968,28 +984,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
                         return
                     }
                 }
-                // Proceed if valid duration
-                recordImgHeightCon.constant = 0
-                Timinglbl.isHidden = true
-                addfile.isHidden = true
-                setupRecorder()
-                btnplay.setImage(ImageName.playbutton, for: .normal)
-                let formatter = DateFormatter()
-                formatter.timeStyle = .short
-                messageSendTime.text = "\(formatter.string(from: Date()))"
-                let destinationURL = getFileUrl(for: selectedFileURL.lastPathComponent)
-                if !FileManager.default.fileExists(atPath: destinationURL.path) {
-                    try FileManager.default.copyItem(at: selectedFileURL, to: destinationURL)
-                }
-                AudioPlayUrl = destinationURL.absoluteString
-                if let filePath = AudioPlayUrl,
-                   let durationStr = getAudioDuration(from: filePath) {
-                    voiceTiming.text = durationStr
-                }
-                playerheight.constant = 60
-                playerview.isHidden = false
-                dltbtn.isHidden = false
-                recoderbtn.isEnabled = false
+               
                 if let audioUrl = URL(string: AudioPlayUrl ?? "") {
                     if audioUrl.isFileURL {
                         do {
@@ -997,19 +992,16 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
                             waveView.durationLabel.isHidden = true
                             waveView.audioURL = audioUrl
                             waveView.updateWaveformColor(progress: 0.0)
-                            saveTempRecording(audioUrl.absoluteString)
+                            hideActivityLoader()
                         } catch {
                             print("❌ Failed to set up audio player:", error)
                         }
                     } else {
                         waveView.audioURL = audioUrl
                         waveView.durationLabel.isHidden = true
-            //            downloadAndPrepareAudio(from: url)
                     }
                 }
                 
-            } catch {
-                print("Error copying file: \(error.localizedDescription)")
             }
         } else {
             print("Failed to access security scoped resource.")
@@ -1018,16 +1010,35 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
     
     
     
-    func getAudioDuration(from filePath: String) -> String? {
-        let fileURL = URL(fileURLWithPath: filePath)
-        let asset = AVAsset(url: fileURL)
-        let duration = asset.duration
-        let durationInSeconds = CMTimeGetSeconds(duration)
-        guard durationInSeconds.isFinite else { return nil }
-        let minutes = Int(durationInSeconds) / 60
-        let seconds = Int(durationInSeconds) % 60
-        return String(format: CommonStringFile.Time_formate, minutes, seconds) // e.g., "01:27"
+    func getAudioDuration(from url: URL, completion: @escaping (Int, String) -> Void) {
+
+        let asset = AVURLAsset(url: url)
+
+        asset.loadValuesAsynchronously(forKeys: ["duration"]) {
+
+            var error: NSError?
+            let status = asset.statusOfValue(forKey: "duration", error: &error)
+
+            guard status == .loaded else {
+                print("❌ Duration load failed:", error?.localizedDescription ?? "")
+                return
+            }
+
+            let durationSeconds = CMTimeGetSeconds(asset.duration)
+            guard durationSeconds.isFinite else { return }
+
+            let totalSeconds = Int(durationSeconds)
+            let minutes = totalSeconds / 60
+            let seconds = totalSeconds % 60
+            let formatted = String(format: "%02d:%02d", minutes, seconds)
+
+            DispatchQueue.main.async {
+                completion(totalSeconds, formatted)
+            }
+        }
     }
+
+
     
     // Handle cancellation
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
