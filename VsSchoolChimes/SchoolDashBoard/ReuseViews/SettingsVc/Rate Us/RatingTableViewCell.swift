@@ -126,8 +126,6 @@ extension RatingTableViewCell {
                 })
             }
         }
-
-        // Notify parent
         RatingDelegate?.rating(value)
     }
 }

@@ -345,6 +345,12 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         profileImageView.layer.borderWidth = 2
         profileImageView.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
         profileImageView.isUserInteractionEnabled = true
+        profileImageView.contentMode = .scaleAspectFit
+        profileImageView.clipsToBounds = true
+
+
+//        profileImageView.contentMode = .scaleAspectFill
+//        profileImageView.clipsToBounds = true
         // 2️⃣ Add tap gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
         profileImageView.addGestureRecognizer(tapGesture)
