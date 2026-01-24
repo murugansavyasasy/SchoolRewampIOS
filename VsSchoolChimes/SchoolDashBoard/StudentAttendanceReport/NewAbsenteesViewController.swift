@@ -543,6 +543,25 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
         let formatter = DateFormatter()
         formatter.dateFormat = DateInputs.MMMM_yyyy   // Example: "September 2025"
         mothLbl.text = formatter.string(from: calendar.currentPage)
+        let date = calendar.currentPage
+
+        guard let text = mothLbl.text else { return }
+
+        // DateFormatter to read "MMMM yyyy"
+        let formatter2 = DateFormatter()
+        formatter2.dateFormat = "MMMM yyyy"
+        formatter2.locale = Locale(identifier: "en_US_POSIX")
+
+        if let date = formatter2.date(from: text) {
+
+            let calendar = Calendar.current
+
+            let month = String(calendar.component(.month, from: date))
+            let year  = String(calendar.component(.year, from: date))
+            self.month = month
+            self.year = year
+        }
+
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView,
