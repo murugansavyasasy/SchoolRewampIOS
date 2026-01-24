@@ -210,6 +210,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
                     self.attachmentData = response.data ?? []
                     self.filteredAttachments = response.data
                     self.SearchAttachments = response.data
+                    self.noDataLabel.text = response.message
                     self.noDataLabel.isHidden = !(response.data?.isEmpty ?? false)
                     self.noDataImg.isHidden = !(response.data?.isEmpty ?? false)
                     self.tv.reloadData()

@@ -178,26 +178,34 @@ class LSRWVC: UIViewController, FilterDelegate, SelectedId {
                 let firstData = response.data?.first
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
+
                     self.dashboardData = firstData?.overview ?? []
                     self.activeTask = firstData?.active ?? []
                     self.completedTask = firstData?.completed ?? []
+
                     self.recentTasks = []
                     self.recentTasks.append(.overview(self.dashboardData))
+
                     if !self.activeTask.isEmpty {
                         self.recentTasks.append(.active(self.activeTask))
                     }
+
                     if !self.completedTask.isEmpty {
                         self.recentTasks.append(.completed(self.completedTask))
                     }
+
                     if !self.activeTask.isEmpty || !self.completedTask.isEmpty {
                         self.recentTasks.insert(.filterArray(self.filterArray), at: 1)
                     }
                     self.filterTask = self.recentTasks
                     self.allTask = firstData
-                    self.nodataImg.isHidden = !self.filterTask.isEmpty
-                    self.nodataLbl.isHidden = !self.filterTask.isEmpty
+                    let hasData = self.filterTask.count > 1
+                    self.nodataImg.isHidden = hasData
+                    self.nodataLbl.isHidden = hasData
+
                     self.lsrwTable.reloadData()
                 }
+
 
             case .failure(let error):
                 DispatchQueue.main.async {
