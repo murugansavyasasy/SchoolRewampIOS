@@ -15,6 +15,7 @@ class HomePaucktVC: UIViewController
     @IBOutlet weak var norecordLbl: UILabel!
     @IBOutlet weak var norecordImg: UIImageView!
     
+    
     enum SectionType: Int, CaseIterable {
         case firstCellType
         case secondCellType
@@ -34,6 +35,9 @@ class HomePaucktVC: UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        BackBtn.setTitle(MenuStringFile.selectedMenuName, for: .normal)
+        
         searchBar.placeholder = "Search"
         searchBar.delegate = self
         

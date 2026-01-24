@@ -980,6 +980,13 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
 //                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
 //                            self.dismiss(animated: true)
 //                        }
+                        classList.removeAll()
+                        selectedClasses.removeAll()
+                        classCv.reloadData()
+                        classCv.layoutIfNeeded()
+                        classCVHeight.constant =
+                        classCv.collectionViewLayout.collectionViewContentSize.height
+                        view.layoutIfNeeded()
                         noClassLbl.isHidden = false
                         noClassLbl.text = success.message ?? ""
                         selectClassDefLbl.isHidden = true
@@ -989,6 +996,13 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
 //                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {
 //                        self.dismiss(animated: true)
 //                    }
+                    classList.removeAll()
+                    selectedClasses.removeAll()
+                    classCv.reloadData()
+                    classCv.layoutIfNeeded()
+                    classCVHeight.constant =
+                    classCv.collectionViewLayout.collectionViewContentSize.height
+                    view.layoutIfNeeded()
                     noClassLbl.isHidden = false
                     noClassLbl.text = failure.localizedDescription
                     selectClassDefLbl.isHidden = true
