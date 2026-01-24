@@ -92,11 +92,11 @@ extension RatingTableViewCell {
         // Text
         let ratingText: String
         switch value {
-        case 1: ratingText = categorySections?[0].name ?? ""
-        case 2: ratingText = categorySections?[1].name ?? ""
-        case 3: ratingText = categorySections?[2].name ?? ""
-        case 4: ratingText = categorySections?[3].name ?? ""
-        case 5: ratingText = categorySections?[4].name ?? ""
+        case 1: ratingText = categorySections?[0].value ?? ""
+        case 2: ratingText = categorySections?[1].value ?? ""
+        case 3: ratingText = categorySections?[2].value ?? ""
+        case 4: ratingText = categorySections?[3].value ?? ""
+        case 5: ratingText = categorySections?[4].value ?? ""
         default: ratingText = ""
         }
 
