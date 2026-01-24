@@ -13,10 +13,11 @@ import FirebaseCrashlytics
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
-
+    
     var notificationAlreadyHandled = false
     var deviceTokenString: String?
     var window: UIWindow?
+    
     var languages: String!
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
@@ -24,13 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     // MARK: - Application Life Cycle
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
-
+        
         FirebaseApp.configure()
         UNUserNotificationCenter.current().delegate = self
         Messaging.messaging().delegate = self
-
+        
         UIApplication.shared.applicationIconBadgeNumber = 0   // 🔥 ADD THIS
-
+        
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, _ in
             if granted {
                 DispatchQueue.main.async {
@@ -38,12 +39,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
                 }
             }
         }
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(cleanupTempRecordings),
+            name: UIApplication.willTerminateNotification,
+            object: nil
+        )
+        return true
+    }
+    @objc func cleanupTempRecordings() {
+        let tempKey = "TempRecordings"
         let list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
         for item in list {
             if let url = URL(string: item){
                 deleteFile(at: url)
             }
         }
+        
         UserDefaults.standard.removeObject(forKey: tempKey)
         return true
     }

@@ -29,6 +29,9 @@ class ImageShowCVCell: UICollectionViewCell, UIScrollViewDelegate {
         scrollView.zoomScale = 1.0
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
+        
+//        imageView.contentMode = .scaleAspectFill
+//        imageView.clipsToBounds = true
 
         // Double tap gesture
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
@@ -42,9 +45,13 @@ class ImageShowCVCell: UICollectionViewCell, UIScrollViewDelegate {
 
     @objc func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
         if scrollView.zoomScale == 1.0 {
+            FulView.layer.borderWidth = 0
             scrollView.setZoomScale(2.5, animated: true)
         } else {
             scrollView.setZoomScale(1.0, animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.FulView.layer.borderWidth = 0.5
+            }
         }
     }
 }

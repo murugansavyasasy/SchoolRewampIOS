@@ -9,6 +9,7 @@ import UIKit
 import AVFoundation
 
 class MsgViewVC: UIViewController,UIScrollViewDelegate {
+    @IBOutlet weak var EmergencyBtnName: UIButton!
     @IBOutlet weak var typeLbl: UILabel!
     @IBOutlet weak var postedOn: UILabel!
     @IBOutlet weak var postedByLbl: UILabel!
@@ -61,6 +62,7 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
             AudioFullView.isHidden = false
             separatorView.isHidden = false
             cv.isHidden = true
+            configureAudioSession()
             setupAudio()
         }else{
             AudioFullView.isHidden = true
@@ -78,11 +80,22 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
             MsgFromManagmentData.time ?? "" )
         if MsgFromManagmentData.is_emergency ?? false{
             typeLbl.text = EmergencyVoice
+            typeLbl.textColor = .systemRed
         }else{
             typeLbl.text = Voice
+            typeLbl.textColor = .black
+        }
+        
+    }
+    func configureAudioSession() {
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playback, mode: .default, options: [])
+            try session.setActive(true)
+        } catch {
+            print("Audio session error: \(error)")
         }
     }
-    
     @IBAction func backBtnAct(_ sender: Any) {
         player?.pause()
         delegate?.dismiss(true)
@@ -94,6 +107,8 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
         }
         playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)
+        player?.volume = 1.0
+
         // Observe when playback finishes
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(playerDidFinishPlaying),
@@ -161,10 +176,13 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
     
     @objc func playerDidFinishPlaying() {
         timer?.invalidate()
+        
+        player?.seek(to: .zero)   // 🔥 IMPORTANT
         slider.value = 0
         reminingLbl.text = formatTime(0)
         playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
     }
+
     
     // MARK: - Helper
     func formatTime(_ seconds: Double) -> String {

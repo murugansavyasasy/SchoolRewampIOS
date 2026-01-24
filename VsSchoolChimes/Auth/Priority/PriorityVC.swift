@@ -317,8 +317,6 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
         let gradient = gradientcolour[indexPath.row % gradientcolour.count]
         let colour2 =  UIColor(named: gradient)
         
-        let image = UIImage(named: ProfileImage[indexPath.row % ProfileImage.count])
-        
         if login_astype  == 1 {
            
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SchoolTVCell, for: indexPath) as! SchoolTVCell

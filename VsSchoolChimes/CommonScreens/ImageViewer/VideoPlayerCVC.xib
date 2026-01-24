@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,7 +20,21 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uip-IP-jpD">
                         <rect key="frame" x="10" y="10" width="222" height="391"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sNF-KJ-2xj">
+                                <rect key="frame" x="10" y="186" width="202" height="19.333333333333343"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="sNF-KJ-2xj" firstAttribute="centerY" secondItem="uip-IP-jpD" secondAttribute="centerY" id="2tP-3m-o50"/>
+                            <constraint firstAttribute="trailing" secondItem="sNF-KJ-2xj" secondAttribute="trailing" constant="10" id="OpR-z3-h1R"/>
+                            <constraint firstItem="sNF-KJ-2xj" firstAttribute="leading" secondItem="uip-IP-jpD" secondAttribute="leading" constant="10" id="RsA-Ti-6CZ"/>
+                            <constraint firstItem="sNF-KJ-2xj" firstAttribute="centerX" secondItem="uip-IP-jpD" secondAttribute="centerX" id="xyR-yu-wqd"/>
+                        </constraints>
                     </view>
                 </subviews>
             </view>
@@ -33,9 +47,10 @@
             </constraints>
             <size key="customSize" width="242" height="411"/>
             <connections>
+                <outlet property="AlertLbl" destination="sNF-KJ-2xj" id="srx-j9-LbG"/>
                 <outlet property="videoPlayer" destination="uip-IP-jpD" id="h7c-ww-n5a"/>
             </connections>
-            <point key="canvasLocation" x="177.09923664122135" y="146.83098591549296"/>
+            <point key="canvasLocation" x="175.57251908396947" y="146.83098591549296"/>
         </collectionViewCell>
     </objects>
     <resources>

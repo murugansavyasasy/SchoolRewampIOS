@@ -107,6 +107,7 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         ContinueManuallyBtn.layer.cornerRadius = 10
         
         AIview.isHidden = !(SelectedExam?.ai_mark_entry ?? false)
+        uploadImageForAIDescLbl.isHidden = !(SelectedExam?.ai_mark_entry ?? false)
     }
     
     func setFont() {
@@ -180,8 +181,12 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         AiInstructionView.isHidden = true
         uploadView.isHidden = true
         separatorView.isHidden = true
+        ContinuewithUploadBtn.isHidden = true
         imgiconBaseView.backgroundColor = .systemGray6
         documentIcon.tintColor = .darkGray
+        selectedImage = nil
+        selectedImageData = nil
+        pickedFilenameLbl.text = ExamMarkUploadString.Click_to_upload.translated()
         showPopup()
     }
     

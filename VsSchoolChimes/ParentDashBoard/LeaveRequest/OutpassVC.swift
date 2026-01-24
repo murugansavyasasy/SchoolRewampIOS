@@ -24,6 +24,7 @@ class OutpassVC: UIViewController {
     @IBOutlet weak var BottomLightView: UIView!
     @IBOutlet weak var outpassBaseView: UIView!
     @IBOutlet weak var outpassView: UIView!
+    @IBOutlet weak var topLightColourView: UIView!
     
     @IBOutlet weak var ReasonSubview: UIView!
     @IBOutlet weak var ImageView: UIImageView!
@@ -43,7 +44,7 @@ class OutpassVC: UIViewController {
         }
         
         let imageUrl = URL(string: UserDefaultFileManager.get_child_Details()?.profile ?? "")
-        ImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(systemName: "Default_profile"))
+        ImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "Default_profile"))
         ImageView.layer.cornerRadius = ImageView.frame.height / 2
         
         [outpassBaseView, outpassView].forEach {
@@ -65,6 +66,10 @@ class OutpassVC: UIViewController {
         
         ReasonView.layer.cornerRadius = 8
         ReasonSubview.layer.cornerRadius = 8
+        
+        topLightColourView.backgroundColor = .backGroundClr.withAlphaComponent(0.7)
+        ReasonSubview.backgroundColor = .white.withAlphaComponent(0.5)//.backGroundClr.lighter(by: 15)
+        BottomLightView.backgroundColor = .backGroundClr.withAlphaComponent(0.7)
     }
     
 

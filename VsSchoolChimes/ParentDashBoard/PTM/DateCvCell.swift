@@ -25,6 +25,7 @@ class DateCvCell: UICollectionViewCell {
         
         monthLbl.setFont(style: .body, size: FontSize.BodySize)
         dateLbl.setFont(style: .body, size: FontSize.BodySize)
+        countBtn.setTitleFont(style: .body, size: 10)
     }
 
 }

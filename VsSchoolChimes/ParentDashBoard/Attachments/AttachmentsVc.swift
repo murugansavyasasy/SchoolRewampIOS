@@ -7,8 +7,7 @@
 
 import UIKit
 
-
-class AttachmentsVc: UIViewController {
+class AttachmentsVc: UIViewController, Datepicker {
     
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var noDataLabel: UILabel!
@@ -18,6 +17,18 @@ class AttachmentsVc: UIViewController {
     @IBOutlet weak var MenuNameLbl: UILabel!
     @IBOutlet weak var TitleLbl: UILabel!
     @IBOutlet weak var noDataImage: UIImageView!
+    @IBOutlet weak var UnreadBtn: UIButton!
+    @IBOutlet weak var ReadBtn: UIButton!
+    @IBOutlet weak var AllBtn: UIButton!
+    @IBOutlet weak var fromDateView: UIView!
+    @IBOutlet weak var toDateView: UIView!
+    @IBOutlet weak var fromDateLbl: UILabel!
+    @IBOutlet weak var toDateLbl: UILabel!
+    @IBOutlet weak var filterImage: UIImageView!
+    @IBOutlet weak var searchStack: UIStackView!
+    @IBOutlet weak var filterStack: UIStackView!
+    @IBOutlet weak var clearBtn: UIButton!
+    
     
     var attachmentFiles: [[FilePath]]?
     var studentDetails = UserDefaultFileManager.get_child_Details()
@@ -32,12 +43,21 @@ class AttachmentsVc: UIViewController {
     var ArchiveMessage = ""
     let transitionDelegate = TransitioningDelegate()
     let ATTACHMENT = "ATTACHMENT"
+    var isFromDate = false
+    var selectedReadStatus: ReadStatus = .all
+    var fromDate: Date?
+    var toDate: Date?
+    var currentSearchText: String = ""
+    
     var tourKey = "ParentAttachment"
     override func viewDidLoad() {
         super.viewDidLoad()
         TitleLbl.configureAsBackTitle(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         MenuNameLbl.text = MenuStringFile.selectedMenuName
-        searchBar.isHidden = true
+        SetupUI()
+        clearBtn.isHidden = true
+        filterStack.isHidden = true
+        searchStack.isHidden = true
         searchBar.searchTextField.addDoneButton()
         searchBar.delegate = self
         searchBar.placeholder = CommonStringFile.Search
@@ -53,6 +73,30 @@ class AttachmentsVc: UIViewController {
         tv.delegate = self
         tv.dataSource = self
         fetchAttachments()
+        
+        fromDateView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SelectFromDate)))
+        toDateView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SelectToDate)))
+        filterImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShowFilters)))
+        filterImage.isUserInteractionEnabled = true
+    }
+    
+    func SetupUI(){
+        ReadBtn.layer.cornerRadius = 12
+        UnreadBtn.layer.cornerRadius = 12
+        AllBtn.layer.cornerRadius = 12
+        
+        AllBtn.backgroundColor = .systemGreen.withAlphaComponent(0.4)
+        
+        ReadBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        UnreadBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        AllBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        applyShadowAndCornerRadius(to: fromDateView, cornerRadius: 6)
+        applyShadowAndCornerRadius(to: toDateView, cornerRadius: 6)
+        toDateLbl.setFont(style: .title, size: FontSize.BodySize)
+        fromDateLbl.setFont(style: .title, size: FontSize.BodySize)
+        fromDateLbl.textColor = .darkGray
+        toDateLbl.textColor = .darkGray
     }
     
     @IBAction func back(_ sender: Any) {
@@ -62,17 +106,27 @@ class AttachmentsVc: UIViewController {
     @IBAction func searchBtnCilck(_ sender: UIButton) {
         sender.isSelected.toggle()
         if sender.isSelected{
-            searchBar.isHidden = false
-            searchBar.becomeFirstResponder()
+            searchStack.isHidden = false
+            //searchBar.becomeFirstResponder()
             sender.setImage(ImageName.magnifyingglass_circle_fill, for: .normal)
         }else{
-            searchBar.isHidden = true
+            searchStack.isHidden = true
+            filterStack.isHidden = true
+            clearBtn.isHidden = true
             searchBar.resignFirstResponder()
             sender.setImage(ImageName.magnifyingglass, for: .normal)
             noDataImage.isHidden = true
             noDataLabel.isHidden = true
             tv.isScrollEnabled = true
             searchBar.searchTextField.text = ""
+            updateFilterButtons(selected: AllBtn)
+            selectedReadStatus = .all
+            fromDate = nil
+            toDate = nil
+            fromDateLbl.text = "--From date--"
+            toDateLbl.text = "--To date--"
+            fromDateLbl.textColor = .darkGray
+            toDateLbl.textColor = .darkGray
             filteredAttachments = attachmentData
             tv.reloadData()
         }
@@ -134,8 +188,8 @@ class AttachmentsVc: UIViewController {
         tv.scrollToRow(at: indexPath, at: .middle, animated: true)
         // Optionally highlight the cell for 1 second
         if let cell = tv.cellForRow(at: indexPath) {
-            UIView.animate(withDuration: 0.3, animations: {
-                cell.contentView.backgroundColor = UIColor.lightGray
+            UIView.animate(withDuration: 0.5, animations: {
+                cell.contentView.backgroundColor = UIColor.notificationLandingClr
                     .withAlphaComponent(0.3)
             }) { _ in
                 UIView.animate(withDuration: 0.5, delay: 1.0, options: []) {
@@ -166,13 +220,14 @@ class AttachmentsVc: UIViewController {
                     if response.status == true {
                         self.attachmentData.append(contentsOf: response.data ?? [])
                         self.filteredAttachments = self.attachmentData
+                        self.applyFilters()
                         let isEmpty = self.filteredAttachments?.isEmpty ?? false
                         self.searchBtn.isHidden = isEmpty
                         self.noDataImage.isHidden = !isEmpty
                         self.noDataLabel.isHidden = !isEmpty
                         self.tv.isScrollEnabled = !isEmpty
                         self.noDataLabel.text = response.message
-                        self.tv.reloadData()
+                      //  self.tv.reloadData()
                         
                     } else {
                         
@@ -245,6 +300,113 @@ class AttachmentsVc: UIViewController {
         }
     }
     
+    //MARK: Filter Buttons Actions
+    
+    @IBAction func ShowFilters(){
+        filterStack.isHidden.toggle()
+        if filterStack.isHidden {
+            clearBtn.isHidden = true
+        }else{
+            clearBtn.isHidden = !(fromDate != nil || toDate != nil)
+        }
+    }
+    
+    private lazy var apiDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy hh:mm a"   // API: 05-01-2026 09:55 AM
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter
+    }()
+
+    private lazy var pickerDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy"          // Picker: 05 Jan 2026
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter
+    }()
+    
+    @IBAction func SelectFromDate(){
+        isFromDate = true
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.date = fromDateLbl.text
+        if let maxDate = toDate{
+            vc.maximumDate = maxDate
+        }else{
+            vc.maximumDate = Date()
+        }
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
+    }
+    
+    @IBAction func SelectToDate(){
+        isFromDate = false
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.date = toDateLbl.text
+        vc.maximumDate = Date()
+        if let minDate = fromDate{
+            vc.minimumDate = minDate
+        }
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
+    }
+    
+    func date(date: String) {
+        if isFromDate {
+            fromDateLbl.text = date
+            fromDateLbl.textColor = .black
+            fromDate = pickerDateFormatter.date(from: date)
+        } else {
+            toDateLbl.text = date
+            toDateLbl.textColor = .black
+            toDate = pickerDateFormatter.date(from: date)
+        }
+        clearBtn.isHidden = false
+        applyFilters()
+    }
+    
+    @IBAction func allAction(_ sender: Any) {
+        updateFilterButtons(selected: AllBtn)
+        selectedReadStatus = .all
+        applyFilters()
+    }
+    
+    @IBAction func readAction(_ sender: Any) {
+        updateFilterButtons(selected: ReadBtn)
+        selectedReadStatus = .read
+        applyFilters()
+    }
+    
+    @IBAction func unreadAction(_ sender: Any) {
+        updateFilterButtons(selected: UnreadBtn)
+        selectedReadStatus = .unread
+        applyFilters()
+    }
+    
+    func updateFilterButtons(selected button: UIButton) {
+        [AllBtn, ReadBtn, UnreadBtn].forEach { btn in
+            btn?.backgroundColor = (btn == button) ? .systemGreen.withAlphaComponent(0.4) : .white
+        }
+    }
+    
+    
+    @IBAction func clearBtnAct(_ sender: Any) {
+        
+        fromDate = nil
+        toDate = nil
+        fromDateLbl.text = "--From date--"
+        toDateLbl.text = "--To date--"
+        fromDateLbl.textColor = .darkGray
+        toDateLbl.textColor = .darkGray
+        applyFilters()
+        clearBtn.isHidden = true
+    }
+    
 }
 
 extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate {
@@ -257,7 +419,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ContentCell, for: indexPath) as? ContentCell else {
             return UITableViewCell()
         }
-        let displayText = formattedDateStatus(from: filteredAttachments?[indexPath.row].date ?? "")
+        let displayText = filteredAttachments?[indexPath.row].date?.convertToTargetDateFormat() ?? ""//formattedDateStatus(from: filteredAttachments?[indexPath.row].date ?? "")
         cell
             .configureCell(
                 with: filteredAttachments?[indexPath.row].file_path ?? [],
@@ -318,7 +480,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
             button.translatesAutoresizingMaskIntoConstraints = false
             button.titleLabel?.textAlignment = .right
             // Create underlined attributed text
-            let title = "See Archived Messages"
+            let title = CommonStringFile.Show_old_Messages.translated()
             let attributedTitle = NSAttributedString(
                 string: title,
                 attributes: [
@@ -390,6 +552,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
         let detailVC = PrivewVc()
         detailVC.attachmetList = attach.file_path
         detailVC.selectedDate = attach.date
+        detailVC.dateAndTimeForVideo = attach.date ?? ""
         detailVC.titleString = attach.title
         detailVC.descriptionString = attach.description
         detailVC.postedBy = attach.sent_by
@@ -419,36 +582,102 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filterAttachments(with: searchText)
+        currentSearchText = searchText
+        applyFilters()
     }
     
-    private func filterAttachments(with searchText: String) {
-        if searchText.isEmpty {
-            self.filteredAttachments = self.attachmentData
-        } else {
-            self.filteredAttachments = self.attachmentData.filter { item in
-                let titleMatch = item.title?.lowercased().contains(searchText.lowercased()) ?? false
-                let descriptionMatch = item.description?.lowercased().contains(searchText.lowercased()) ?? false
-                return titleMatch || descriptionMatch
-            }
-        }
-        
-        UIView.performWithoutAnimation {
-            self.tv.reloadData()
-            self.tv.layoutIfNeeded()
-        }
-        
-        if self.filteredAttachments?.isEmpty ?? true {
-            self.noDataLabel.isHidden = false
-            self.noDataImage.isHidden = false
-            self.tv.isScrollEnabled = false
-            self.noDataLabel.text = "No Attachment Found"
-        } else {
-            self.noDataLabel.isHidden = true
-            self.noDataImage.isHidden = true
-            self.tv.isScrollEnabled = true
+    private func applyFilters() {
+        filteredAttachments = attachmentData.filter { item in
             
+            // MARK: - Text Filter
+            let textMatch: Bool = {
+                guard !currentSearchText.isEmpty else { return true }
+                let text = currentSearchText.lowercased()
+                return (item.title?.lowercased().contains(text) ?? false) ||
+                       (item.description?.lowercased().contains(text) ?? false)
+            }()
+            
+            // MARK: - Read / Unread Filter
+            let readMatch: Bool = {
+                switch selectedReadStatus {
+                case .all:
+                    return true
+                case .read:
+                    return item.is_unread == false
+                case .unread:
+                    return item.is_unread == true
+                }
+            }()
+            
+            // MARK: - Date Filter
+            let dateMatch: Bool = {
+                guard let apiDateString = item.date,
+                      let apiDateTime = apiDateFormatter.date(from: apiDateString)
+                else { return true }
+
+                let calendar = Calendar.current
+                let itemDay = calendar.startOfDay(for: apiDateTime)
+
+                if let from = fromDate,
+                   itemDay < calendar.startOfDay(for: from) {
+                    return false
+                }
+
+                if let to = toDate,
+                   itemDay > calendar.startOfDay(for: to) {
+                    return false
+                }
+
+                return true
+            }()
+            
+            return textMatch && readMatch && dateMatch
         }
+        
+        reloadTableView()
     }
+
+private func reloadTableView() {
+    UIView.performWithoutAnimation {
+        tv.reloadData()
+        tv.layoutIfNeeded()
+    }
+    
+    let isEmpty = filteredAttachments?.isEmpty ?? true
+    noDataLabel.isHidden = !isEmpty
+    noDataImage.isHidden = !isEmpty
+    tv.isScrollEnabled = !isEmpty
+    noDataLabel.text = "No Attachment Found"
+}
+
+    
+//    private func applyFilters() {
+//        if currentSearchText.isEmpty {
+//            self.filteredAttachments = self.attachmentData
+//        } else {
+//            self.filteredAttachments = self.attachmentData.filter { item in
+//                let titleMatch = item.title?.lowercased().contains(searchText.lowercased()) ?? false
+//                let descriptionMatch = item.description?.lowercased().contains(searchText.lowercased()) ?? false
+//                return titleMatch || descriptionMatch
+//            }
+//        }
+//        
+//        UIView.performWithoutAnimation {
+//            self.tv.reloadData()
+//            self.tv.layoutIfNeeded()
+//        }
+//        
+//        if self.filteredAttachments?.isEmpty ?? true {
+//            self.noDataLabel.isHidden = false
+//            self.noDataImage.isHidden = false
+//            self.tv.isScrollEnabled = false
+//            self.noDataLabel.text = "No Attachment Found"
+//        } else {
+//            self.noDataLabel.isHidden = true
+//            self.noDataImage.isHidden = true
+//            self.tv.isScrollEnabled = true
+//            
+//        }
+//    }
 }
 

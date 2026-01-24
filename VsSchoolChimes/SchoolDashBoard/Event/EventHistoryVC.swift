@@ -548,10 +548,11 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
         detailVC.selectedDate = event.date
         detailVC.titleString = event.title
         detailVC.descriptionString = event.description
+        detailVC.dateAndTimeForVideo = (event.date ?? "") + " " + (event.time ?? "") 
         detailVC.postedBy = event.sent_by
         detailVC.params = ["id": event.id ?? ""]
         detailVC.EndUrl = ServiceUrl.event_target_details
-        detailVC.subject_name = "Event".translated()
+        detailVC.subject_name = MenuStringFile.selectedMenuName
         detailVC.modalPresentationStyle = .custom
         transitionDelegate.originFrame = cellFrameInSuperview
         detailVC.transitioningDelegate = transitionDelegate

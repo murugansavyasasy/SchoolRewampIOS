@@ -397,7 +397,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         APIService.shared.makeApi(url: ServiceUrl.version_check,
                                   parameters: params,
                                   type: ApitTypeSringFile.POST,
-                                  token: ServiceUrl.token, isBaseUrl: false) { [weak self] (result: Result<VersionCheckResponse, Error>) in
+                                  token: "", isBaseUrl: false) { [weak self] (result: Result<VersionCheckResponse, Error>) in
             guard let self else { return }
             switch result {
             case .success(let response):
@@ -445,7 +445,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
             mobileNumber.password: password
         ]
         
-        APIService.shared.makeApi(url: ServiceUrl.validate_validate_user, parameters: parameters, type: ApitTypeSringFile.POST, token: ServiceUrl.token, isBaseUrl: true) { [weak self] (result: Result<UserValidationResponseSuc, Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.validate_validate_user, parameters: parameters, type: ApitTypeSringFile.POST, token: "", isBaseUrl: true) { [weak self] (result: Result<UserValidationResponseSuc, Error>) in
             guard let self = self else { return }
             switch result {
             case .success(let response):

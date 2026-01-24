@@ -54,6 +54,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             detailVC.homeWorkid  = FilterHomeWorkList[indexPath.row].id
             detailVC.postedBy  = FilterHomeWorkList[indexPath.row].sent_by
             detailVC.subject_name  = FilterHomeWorkList[indexPath.row].subject_name
+            detailVC.dateAndTimeForVideo  = FilterHomeWorkList[indexPath.row].created_on ?? ""
             detailVC.delegate = self
             detailVC.modalPresentationStyle = .fullScreen
             detailVC.modalPresentationStyle = .custom
@@ -64,35 +65,14 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         }else{
             
             scrollToCenter(of: indexPath, in: collectionView)
-            
             if selectedIndexPath == indexPath {
                 return // do nothing if already selected
             }
             selectedIndexPath = indexPath
             let selectedDate = convertDateToString(calendarItems[indexPath.item].date)
-            updateHomeworkUI(for: selectedDate)
+            GetHomeWorkReport(date: selectedDate )
             self.cv.reloadData()
         }
-    }
-    
-    func updateHomeworkUI(for date: String) {
-        self.selectedDate = date
-        self.FilterHomeWorkList = self.filterHomeworkGroupByDate(from: self.allHomeworkData, date: date)
-        
-        let isEmpty = self.FilterHomeWorkList.isEmpty
-        self.NodataFoundLbl.isHidden = !isEmpty
-        self.noDataImage.isHidden = !isEmpty
-        self.homeWorkDefaultLbl.isHidden = isEmpty
-        self.searchBtnName.isHidden = isEmpty
-        self.searchbar.searchTextField.text = ""
-        view.endEditing(true)
-        if searchBtnName.isSelected && searchBtnName.isHidden == false {
-            self.searchbar.isHidden = false
-        }else {
-            self.searchbar.isHidden = true
-        }
-        
-        self.bottomCV.reloadData()
     }
     
     
@@ -203,7 +183,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     var selectedIndexPath: IndexPath?
     let today = Date()
     var selectedDate  : String?
-    var allHomeworkData: [HomeworkList] = []
+    var allHomeworkData: [Homework] = []
     var isReadStatus : Bool?
     var toggle = true
     var clickedMessageId : String?
@@ -231,9 +211,8 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             selectedIndexPath = IndexPath(item: todayIndex, section: 0)
         }
         cv.reloadData()
-        
         scrollToToday(in: cv, with: calendarItems)
-        GetHomeWorkReport()
+        GetHomeWorkReport(date:self.getCurrentDateString())
         
     }
     
@@ -266,10 +245,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             NodataFoundLbl.isHidden = true
             noDataImage.isHidden = true
             searchbar.resignFirstResponder()
-            self.FilterHomeWorkList = self.filterHomeworkGroupByDate(
-                from: self.allHomeworkData,
-                date: self.selectedDate ?? ""
-            )
+            self.FilterHomeWorkList = allHomeworkData
             bottomCV.reloadData()
             view.endEditing(true)
         }
@@ -296,14 +272,14 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     
     
     
-    func GetHomeWorkReport() {
+    func GetHomeWorkReport(date: String?) {
         
         FilterHomeWorkList.removeAll()
         if #available(iOS 15.0, *) { showActivityLoader() }
         
         APIService.shared.makeApi(
             url: ServiceUrl.comm_homework_get_homework_list,
-            parameters: [:],
+            parameters: ["date": date ?? ""],
             type: ApitTypeSringFile.GET,
             token: studentDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<HomeworListkResponse, Error>) in
@@ -315,13 +291,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                 switch result {
                 case .success(let response):
                     self.allHomeworkData = response.data ?? []
-                    let today = self.getCurrentDateString()
-                    let filteredHomework = self.filterHomeworkGroupByDate(
-                        from: self.allHomeworkData,
-                        date: today
-                    )
-                    self.selectedDate = today
-                    self.FilterHomeWorkList = filteredHomework
+                    self.FilterHomeWorkList = self.allHomeworkData
                     self.bottomCV.delegate  = self
                     self.bottomCV.dataSource  = self
                     self.bottomCV.reloadData()
@@ -334,19 +304,14 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
                                 let indexPath = IndexPath(item: index, section: 0)
                                 self.bottomCV.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
                             }
-                            
                         }
                     }
-                    let isEmpty = filteredHomework.isEmpty
-                    
+                    let isEmpty = self.FilterHomeWorkList.isEmpty
                     self.NodataFoundLbl.isHidden = !isEmpty
-                    
                     self.noDataImage.isHidden = !isEmpty
                     self.homeWorkDefaultLbl.isHidden = isEmpty
                     self.searchBtnName.isHidden = isEmpty
-                    
-                    
-                    
+
                 case .failure(let error):
                     
                     self.noDataImage.isHidden = false
@@ -441,20 +406,14 @@ extension homeWorkVc: UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
             // Reset to full filtered list for selected date
-            self.FilterHomeWorkList = self.filterHomeworkGroupByDate(
-                from: self.allHomeworkData,
-                date: self.selectedDate ?? ""
-            )
+            self.FilterHomeWorkList = allHomeworkData
             self.NodataFoundLbl.isHidden = !self.FilterHomeWorkList.isEmpty
             self.noDataImage.isHidden = !self.FilterHomeWorkList.isEmpty
             self.bottomCV.reloadData()
             return
         }
         
-        let allItems = self.filterHomeworkGroupByDate(
-            from: self.allHomeworkData,
-            date: self.selectedDate ?? ""
-        )
+        let allItems = allHomeworkData
         
         self.FilterHomeWorkList = allItems.filter {
             ($0.title ?? "").localizedCaseInsensitiveContains(searchText) ||

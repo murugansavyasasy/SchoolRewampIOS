@@ -34,15 +34,15 @@ class shareAndDownloadVc: UIViewController {
                 sender.isEnabled = true
                 return
             }
-            if FolderName != ""{
-                let fileType = fileType?.lowercased() == "image" ? "Photos":"Document"
-                FolderName = fileType
-            }
-           
+//            if FolderName != ""{
+//                let fileType = fileType?.lowercased() == "image" ? "Photos":"Document"
+//                FolderName = fileType
+//            }
+            let fileType = fileType?.lowercased() == "image" ? "Photos":"Document"
             let downloader = FileDownloader()
             downloader.downloadFile(
                 from: fileURL,
-                folderName: FolderName,
+                folderName: fileType,
                 fileName: filename
             ) { result in
                 DispatchQueue.main.async { [self] in

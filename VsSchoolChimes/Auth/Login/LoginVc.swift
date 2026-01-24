@@ -197,8 +197,9 @@ class LoginVc: UIViewController {
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                         }else{
+                                            if let staffData = data.user_details?.staff_details?.first{
+                                                UserDefaultFileManager.saveStaffDetails(data: staffData)}
                                             let vc = TapBarVC()
-                                            ServiceUrl.token = data.user_details?.staff_details?.first?.access_token ?? ""
                                             vc.login_astype = 1
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
@@ -210,9 +211,10 @@ class LoginVc: UIViewController {
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                         }else{
+                                            if let student_data = data.user_details?.child_details?.first{
+                                                UserDefaultFileManager.saveChildDetails(data: student_data)}
                                             let vc = TapBarVC()
                                             vc.login_astype = 2
-                                            ServiceUrl.token = data.user_details?.child_details?.first?.access_token ?? ""
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                         }
@@ -257,7 +259,7 @@ class LoginVc: UIViewController {
             showActivityLoader()
         }
         APIService.shared
-            .makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : MobilTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token, isBaseUrl: true){[self] (
+            .makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : MobilTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: "", isBaseUrl: true){[self] (
                 result : Result<ForgotPasswordResponeSuc,
                 Error>
             ) in

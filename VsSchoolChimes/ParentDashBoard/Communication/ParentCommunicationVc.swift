@@ -5,12 +5,24 @@
 //  Created by admin on 19/12/24.
 //
 
+enum CommunicationMessageType {
+    case all
+    case voice
+    case text
+}
+
+enum ReadStatus{
+    case all
+    case read
+    case unread
+}
+
+
 import UIKit
-//import DropDown
 import AVFoundation
 
-class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPalyingDelegate, AudioPlaybackDelegate1{
-   
+class ParentCommunicationVc: UIViewController, AudioPlaybackDelegate1, Datepicker{
+    
     
     func audioCell(_ cell: CommunicationTVC, willStartPlayingAtIndex index: Int) {
         
@@ -39,15 +51,13 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
             cell.stopPlayback()
         }
     }
-
+    
     
     func audioCell(_ cell: CommunicationTVC, didStopPlayingAtIndex index: Int) {
         if playIndex == index {
             playIndex = nil
         }
     }
-    
-   
     
     @IBOutlet weak var ReadUnreadStack: UIStackView!
     @IBOutlet weak var UnreadBtn: UIButton!
@@ -65,12 +75,14 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
     @IBOutlet weak var menuNameLbl: UILabel!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var TitleLbl: UILabel!
+    @IBOutlet weak var fromDateView: UIView!
+    @IBOutlet weak var toDateView: UIView!
+    @IBOutlet weak var fromDateLbl: UILabel!
+    @IBOutlet weak var toDateLbl: UILabel!
+    @IBOutlet weak var clearBtn: UIButton!
+    @IBOutlet weak var DateFilterStack: UIStackView!
     
-    
-    //var playIndex :Int?
-    var AudioPlayUrl: String?
-    var passValue = 0
-    var count = 5
+   
     var shouldShowFooter = true
     var shouldShowFooterLabel = false
     var ArchiveMessage = ""
@@ -81,17 +93,22 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
     let dateFormatter = DateFormatter()
     let Filters = ["All","VOICE","TEXT"/*,"Read","Unread"*/]
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
-    var readStatus = 0
-    var selectedFilterType: String?
-    var showfilter = false
     var clickedMessageId : String?
     var playIndex: Int?
-    var lastPlaybackTime: CMTime?
-    var lastMessageId: String?
+//    var lastPlaybackTime: CMTime?
+//    var lastMessageId: String?
     private let threshold = 120
     private let viewText = "View"
     private let seeMoreText = "See more"
     private let seeLessText = "See less"
+    var isFromDate = false
+    var selectedReadStatus: ReadStatus = .all
+    var selectedMessageType: CommunicationMessageType = .all
+    var fromDate: Date?
+    var toDate: Date?
+    var currentSearchText: String = ""
+    
+    var tourKey = "ParentCommunication"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,6 +122,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
         backBtn.applyBackButton()
         RegisterCell()
         getCommunicationList()
+        fromDateView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SelectFromDate)))
+        toDateView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SelectToDate)))
         let Filtertap = UITapGestureRecognizer(target: self, action: #selector(filter))
         FilterImage.addGestureRecognizer(Filtertap)
         FilterImage.isUserInteractionEnabled = true
@@ -134,6 +153,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
         FilterCV.isHidden = true
         ReadUnreadStack.isHidden = true
         SearchbarStack.isHidden = true
+        DateFilterStack.isHidden = true
+        clearBtn.isHidden = true
         
         ReadBtn.layer.cornerRadius = 12
         UnreadBtn.layer.cornerRadius = 12
@@ -149,6 +170,12 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
         NodataImage.isHidden = true
         NodataLbl.setFont(style: .title, size: 17)
         
+        applyShadowAndCornerRadius(to: fromDateView, cornerRadius: 6)
+        applyShadowAndCornerRadius(to: toDateView, cornerRadius: 6)
+        toDateLbl.setFont(style: .title, size: FontSize.BodySize)
+        fromDateLbl.setFont(style: .title, size: FontSize.BodySize)
+        fromDateLbl.textColor = .darkGray
+        toDateLbl.textColor = .darkGray
     }
     
     //MARK: Cell registration
@@ -168,7 +195,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
     func deleteDelegate(index: Int) {
         ""
     }
-    func reload(index: Int) {
+    /*func reload(index: Int) {
         let message = displayedMessages[index]
         if let currentIndex = playIndex, currentIndex != index {
             let previousIndexPath = IndexPath(row: currentIndex, section: 0)
@@ -262,22 +289,22 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
             }
             playIndex = nil
         }
-    }
+    } */
     
     private func stopPlayingAudioIfNeeded() {
         
         guard let index = playIndex else { return }
-
+        
         let indexPath = IndexPath(row: index, section: 0)
-
+        
         if let cell = tv.cellForRow(at: indexPath) as? CommunicationTVC {
             cell.stopPlayback()
         }
-
+        
         playIndex = nil
     }
-
-
+    
+    
     
     @IBAction func backBtn(_ sender: Any) {
         
@@ -287,32 +314,104 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
     //MARK: Filter Buttons Actions
     
     @IBAction func allAction(_ sender: Any) {
-        stopPlayingAudioIfNeeded()
         updateFilterButtons(selected: AllBtn)
-        readStatus = 0
+        selectedReadStatus = .all
         applyFilters()
     }
     
     @IBAction func readAction(_ sender: Any) {
-        stopPlayingAudioIfNeeded()
         updateFilterButtons(selected: ReadBtn)
-        readStatus = 1
+        selectedReadStatus = .read
         applyFilters()
     }
     
     @IBAction func unreadAction(_ sender: Any) {
-        stopPlayingAudioIfNeeded()
         updateFilterButtons(selected: UnreadBtn)
-        readStatus = 2
+        selectedReadStatus = .unread
         applyFilters()
     }
     
+    private lazy var apiDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"   // API: 05-01-2026 09:55 AM
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter
+    }()
     
+    private lazy var pickerDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy"          // Picker: 05 Jan 2026
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter
+    }()
+    
+    @IBAction func SelectFromDate(){
+        isFromDate = true
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.date = fromDateLbl.text
+        if let maxDate = toDate{
+            vc.maximumDate = maxDate
+        }else{
+            vc.maximumDate = Date()
+        }
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
+    }
+    
+    @IBAction func SelectToDate(){
+        isFromDate = false
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.date = toDateLbl.text
+        vc.maximumDate = Date()
+        if let minDate = fromDate{
+            vc.minimumDate = minDate
+        }
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
+    }
+    
+    func date(date: String) {
+        if isFromDate {
+            fromDateLbl.text = date
+            fromDateLbl.textColor = .black
+            fromDate = pickerDateFormatter.date(from: date)
+        } else {
+            toDateLbl.text = date
+            toDateLbl.textColor = .black
+            toDate = pickerDateFormatter.date(from: date)
+        }
+        clearBtn.isHidden = false
+        applyFilters()
+    }
+  
+    @IBAction func clearBtnAct(_ sender: Any) {
+        
+        fromDate = nil
+        toDate = nil
+        fromDateLbl.text = "--From date--"
+        toDateLbl.text = "--To date--"
+        fromDateLbl.textColor = .darkGray
+        toDateLbl.textColor = .darkGray
+        applyFilters()
+        clearBtn.isHidden = true
+    }
     
     @IBAction func filter(_ sender: UIButton) {
         
         FilterCV.isHidden.toggle()
         ReadUnreadStack.isHidden.toggle()
+        DateFilterStack.isHidden.toggle()
+        if DateFilterStack.isHidden{
+            clearBtn.isHidden = true
+        }else{
+            clearBtn.isHidden = !(fromDate != nil || toDate != nil)
+        }
     }
     
     func updateFilterButtons(selected button: UIButton) {
@@ -321,12 +420,12 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
         }
     }
     
-    func applyFilters() {
-        let selectedType = (selectedIndex.row == 0) ? nil : Filters[selectedIndex.row]
-        displayedMessages = allMessages.filtered(readStatus: readStatus, type: selectedType)
-        playIndex = nil
-        updateUIAfterFiltering()
-    }
+    //    func applyFilters() {
+    //        let selectedType = (selectedIndex.row == 0) ? nil : Filters[selectedIndex.row]
+    //        displayedMessages = allMessages.filtered(readStatus: selectedReadStatus, type: selectedType)
+    //        playIndex = nil
+    //        updateUIAfterFiltering()
+    //    }
     
     
     func getCommunicationList() {
@@ -391,10 +490,10 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
         tv.scrollToRow(at: indexPath, at: .middle, animated: true)
         if let cell = tv.cellForRow(at: indexPath) {
             UIView.animate(withDuration: 0.3, animations: {
-                cell.contentView.backgroundColor = UIColor.lightGray
+                cell.contentView.backgroundColor = UIColor.notificationLandingClr
                     .withAlphaComponent(0.3)
             }) { _ in
-                UIView.animate(withDuration: 0.5, delay: 1.0, options: []) {
+                UIView.animate(withDuration: 0.5, delay: 5.0, options: []) {
                     cell.contentView.backgroundColor = .white
                 }
             }
@@ -402,7 +501,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
     }
     
     func GetArchiveCommunicationList() {
-        //savePlaybackStateBeforeReload()
+        
+        showActivityLoader()
         
         APIService.shared.makeApi(
             url: ServiceUrl.comm_communication_list_archive,
@@ -420,16 +520,15 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
                     if response.status == true {
                         self.allMessages.append(contentsOf: response.data ?? [])
                         self.applyFilters()
-                        self.NodataLbl.isHidden = true
-                        self.NodataImage.isHidden = true
+//                        self.NodataLbl.isHidden = true
+//                        self.NodataImage.isHidden = true
                         self.shouldShowFooterLabel = false
                         self.tv.isHidden = false
                         self.searchBtn.isHidden = false
                         self.tv.isScrollEnabled = true
-                       // self.restorePlaybackStateAfterReload()
+                    
                     } else {
                         self.tv.reloadData()
-                       // self.restorePlaybackStateAfterReload()
                         
                         if self.allMessages.isEmpty {
                             self.NodataLbl.text = response.message
@@ -464,6 +563,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
                     }
                 }
             }
+            
+            self.hideActivityLoader()
         }
     }
     
@@ -524,10 +625,21 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, HistoryFinishPaly
             tv.reloadData()
             SearchbarStack.isHidden = true
             SearchBar.searchTextField.text = ""
+            currentSearchText = ""
+            selectedReadStatus = .all
+            selectedMessageType = .all
+            fromDate = nil
+            toDate = nil
+            fromDateLbl.text = "--From date--"
+            toDateLbl.text = "--To date--"
+            fromDateLbl.textColor = .darkGray
+            toDateLbl.textColor = .darkGray
             SearchBar.resignFirstResponder()
             sender.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
             FilterCV.isHidden = true
             ReadUnreadStack.isHidden = true
+            DateFilterStack.isHidden = true
+            clearBtn.isHidden = true
             NodataImage.isHidden = true
             NodataLbl.isHidden = true
             AllBtn.backgroundColor = .systemGreen.withAlphaComponent(0.4)
@@ -566,6 +678,8 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.NewImageView.isHidden = true
             cell.descriptContent.tag = indexPath.row
             cell.descriptContent.isUserInteractionEnabled = true
+            cell.PostedByLbl.isHidden = false
+            cell.PostedByLbl.text = "Posted By - \(message.sent_by ?? "")"
             cell.MessageTitle.text = message.title
             let formattedDateString = dateFormatter.convertDate(message.date ?? "") ?? ""
             cell.DateLabel.setStyledDateTime(dateString: formattedDateString, timeString: message.time)
@@ -594,7 +708,8 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             let formattedDateString = dateFormatter.convertDate(message.date ?? "") ?? ""
             cell.dateLbl.setStyledDateTime(dateString: formattedDateString, timeString: message.time)
             cell.waveView.durationLabel.isHidden = true
-            
+            cell.PostedByLbl.isHidden = false
+            cell.PostedByLbl.text = "Posted By - \(voiceData.sent_by ?? "")"
             cell.titleLbl.text = voiceData.title
             let duration = voiceData.duration ?? 0
             let formattedDuration = formatDuration(duration)
@@ -611,15 +726,15 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     }
     
     private func configureAudioCell(_ cell: CommunicationTVC, at indexPath: IndexPath) {
-//        if displayedMessages[indexPath.item].loadFile != true{
-            let file = displayedMessages[indexPath.item]
-            let url = URL(string: file.content ?? "")
-            cell.audioURL = url
-            cell.audioDelegate = self
-            cell.cellIndex = indexPath.item
-            cell.waveView.setParentCell(cell)
-//            displayedMessages[indexPath.item].loadFile = true
-//        }
+        //        if displayedMessages[indexPath.item].loadFile != true{
+        let file = displayedMessages[indexPath.item]
+        let url = URL(string: file.content ?? "")
+        cell.audioURL = url
+        cell.audioDelegate = self
+        cell.cellIndex = indexPath.item
+        cell.waveView.setParentCell(cell)
+        //            displayedMessages[indexPath.item].loadFile = true
+        //        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -634,7 +749,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             let button = UIButton(type: .system)
             button.translatesAutoresizingMaskIntoConstraints = false
             button.titleLabel?.textAlignment = .right
-            let title = "See Archived Messages"
+            let title = CommonStringFile.Show_old_Messages.translated()
             let attributedTitle = NSAttributedString(
                 string: title,
                 attributes: [
@@ -699,35 +814,35 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             let label = gesture.view as? UILabel,
             let text = label.attributedText?.string
         else { return }
-
+        
         let ranges = [viewText,seeMoreText,seeLessText].map { (text as NSString).range(of: $0) }
-
+        
         if ranges.contains(where: { gesture.didTapAttributedTextInLabel(label: label, inRange: $0) }) {
             handleSeeMoreTap(gesture)
         }
     }
-
+    
     
     @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
         guard let label = sender.view as? UILabel else { return }
-
+        
         let indexPath = IndexPath(row: label.tag, section: 0)
         var message = displayedMessages[indexPath.row]
-
+        
         guard let fullDescription = message.content else { return }
-
+        
         let threshold = 120
         let isLong = fullDescription.count > threshold
-
+        
         if message.isExpand == nil {
             message.isExpand = false
         }
-
+        
         if message.is_unread == true {
             // First tap on unread
             message.is_unread = false
             message.isExpand = isLong
-
+            
             if message.is_archive ?? false {
                 ReadStatusUpdateArchive(type: message.type ?? "", detail_id: message.id ?? "")
             } else {
@@ -737,38 +852,38 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             // Toggle only for long text
             message.isExpand!.toggle()
         }
-
+        
         label.attributedText = descript(
             for: fullDescription,
             expanded: message.isExpand ?? false,
             isUnread: message.is_unread ?? false
         )
-
+        
         displayedMessages[indexPath.row] = message
-
+        
         if let cell = tv.cellForRow(at: indexPath) as? TextHistoryTVCell {
             cell.NewImageView.isHidden = true
             cell.newImageOuterView.isHidden = true
         }
-
+        
         tv.beginUpdates()
         tv.endUpdates()
     }
-
-
-   
+    
+    
+    
     func descript(
         for fullDescription: String,
         expanded: Bool,
         isUnread: Bool
     ) -> NSAttributedString {
-
+        
         let threshold = 120
         let isLong = fullDescription.count > threshold
-
+        
         var displayText = fullDescription
         var actionText: String?
-
+        
         // UNREAD: always collapsed + "View"
         if isUnread {
             if isLong {
@@ -791,24 +906,24 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
                 displayText = fullDescription
             }
         }
-
+        
         let finalString: String
         if let action = actionText {
             finalString = displayText + " " + action
         } else {
             finalString = displayText
         }
-
+        
         let attributed = NSMutableAttributedString(string: finalString)
-
+        
         if let action = actionText {
             let range = (finalString as NSString).range(of: action)
             attributed.addAttribute(.foregroundColor, value: UIColor.link, range: range)
         }
-
+        
         return attributed
     }
-
+    
     
     
     // Method to load the footer from nib and set it as tableFooterView
@@ -867,14 +982,18 @@ extension ParentCommunicationVc : UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        stopPlayingAudioIfNeeded()
         selectedIndex = indexPath
-        
-        selectedFilterType = (indexPath.row == 0) ? nil : Filters[indexPath.row]
-        
-        displayedMessages = allMessages.filtered(readStatus: readStatus, type: selectedFilterType)
-        playIndex = nil
-        updateUIAfterFiltering()
+        switch selectedIndex.item {
+        case 0:
+            selectedMessageType = .all
+        case 1:
+            selectedMessageType = .voice
+        case 2:
+            selectedMessageType = .text
+        default:
+            selectedMessageType = .all
+        }
+        applyFilters()
         FilterCV.reloadData()
     }
     
@@ -894,34 +1013,105 @@ extension ParentCommunicationVc : UICollectionViewDelegate, UICollectionViewData
 extension ParentCommunicationVc : UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        stopPlayingAudioIfNeeded()
+        //stopPlayingAudioIfNeeded()
         
-        let trimmedText = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        let baseList = allMessages.filtered(readStatus: readStatus, type: selectedFilterType)
-        if trimmedText.isEmpty {
-            displayedMessages = baseList
-        } else {
-//            displayedMessages = baseList.filter { msg in
-//                let date = dateFormatter.convertDate(msg.date ?? "")?.lowercased() ?? ""
-//                return [msg.title, msg.content, msg.type, date]
-//                    .map { $0?.lowercased() }
-//                    .contains { $0.contains(trimmedText) }
-//            }
-            displayedMessages = baseList.filter { msg in
-                let date = dateFormatter
-                    .convertDate(msg.date ?? "")?
-                    .lowercased() ?? ""
-
-                let searchableFields = [
-                    msg.title,
-                    msg.content,
-                    msg.type,
-                    date
-                ]
-                .compactMap { $0?.lowercased() }
-
-                return searchableFields.contains { $0.contains(trimmedText) }
-            }
+        //        let trimmedText = searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        //        let baseList = allMessages.filtered(readStatus: selectedReadStatus, type: selectedFilterType)
+        //        if trimmedText.isEmpty {
+        //            displayedMessages = baseList
+        //        } else {
+        ////            displayedMessages = baseList.filter { msg in
+        ////                let date = dateFormatter.convertDate(msg.date ?? "")?.lowercased() ?? ""
+        ////                return [msg.title, msg.content, msg.type, date]
+        ////                    .map { $0?.lowercased() }
+        ////                    .contains { $0.contains(trimmedText) }
+        ////            }
+        //            displayedMessages = baseList.filter { msg in
+        //                let date = dateFormatter
+        //                    .convertDate(msg.date ?? "")?
+        //                    .lowercased() ?? ""
+        //
+        //                let searchableFields = [
+        //                    msg.title,
+        //                    msg.content,
+        //                    msg.type,
+        //                    date
+        //                ]
+        //                .compactMap { $0?.lowercased() }
+        //
+        //                return searchableFields.contains { $0.contains(trimmedText) }
+        //            }
+        //        }
+        //
+        //       updateUIAfterFiltering()
+        
+        currentSearchText = searchText
+        applyFilters()
+    }
+    
+    private func applyFilters() {
+        
+        stopPlayingAudioIfNeeded()
+        displayedMessages = allMessages.filter { item in
+            
+            // MARK: - Text Filter
+            let textMatch: Bool = {
+                guard !currentSearchText.isEmpty else { return true }
+                let text = currentSearchText.lowercased()
+                return (item.title?.lowercased().contains(text) ?? false) ||
+                (item.content?.lowercased().contains(text) ?? false) ||
+                (item.type?.lowercased().contains(text) ?? false) ||
+                (item.date?.convertToTargetDateFormat()?.lowercased().contains(text) ?? false)
+            }()
+            
+            // MARK: - Read / Unread Filter
+            let readMatch: Bool = {
+                switch selectedReadStatus {
+                case .all:
+                    return true
+                case .read:
+                    return item.is_unread == false
+                case .unread:
+                    return item.is_unread == true
+                }
+            }()
+            
+            // MARK: - message type
+            let typeMatch : Bool = {
+                switch selectedMessageType{
+                case .all:
+                    return true
+                case .text:
+                    return item.type == "TEXT"
+                case .voice:
+                    return item.type == "VOICE"
+                }
+            }()
+            
+            
+            // MARK: - Date Filter
+            let dateMatch: Bool = {
+                guard let apiDateString = item.date,
+                      let apiDateTime = apiDateFormatter.date(from: apiDateString)
+                else { return true }
+                
+                let calendar = Calendar.current
+                let itemDay = calendar.startOfDay(for: apiDateTime)
+                
+                if let from = fromDate,
+                   itemDay < calendar.startOfDay(for: from) {
+                    return false
+                }
+                
+                if let to = toDate,
+                   itemDay > calendar.startOfDay(for: to) {
+                    return false
+                }
+                
+                return true
+            }()
+            
+            return textMatch && readMatch && dateMatch && typeMatch
         }
         
         updateUIAfterFiltering()
@@ -935,7 +1125,6 @@ extension ParentCommunicationVc : UISearchBarDelegate {
         tv.isScrollEnabled = !isEmpty
         tv.reloadData()
     }
-    
 }
 
 extension Array where Element == CommunicationReciverData {

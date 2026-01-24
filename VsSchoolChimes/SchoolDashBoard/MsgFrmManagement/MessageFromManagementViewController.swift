@@ -253,6 +253,7 @@ class MessageFromManagementViewController: UIViewController {
                 }
                 self.shouldShowFooter = false
                 self.tv.reloadData()
+                self.hideActivityLoader()
             }
         }
     }
@@ -469,7 +470,7 @@ extension MessageFromManagementViewController: UITableViewDelegate {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         let attributedTitle = NSAttributedString(
-            string: MenuStringFile.See_Archived_Messages,
+            string: CommonStringFile.Show_old_Messages.translated(),
             attributes: [
                 .underlineStyle: NSUnderlineStyle.single.rawValue,
                 .foregroundColor: UIColor.systemBlue,
@@ -542,6 +543,7 @@ extension MessageFromManagementViewController: ViewAttachments {
     private func presentPopover(with message: ManagemantMessageData) {
         let popoverVC = MsgViewVC()
         popoverVC.modalPresentationStyle = .popover
+        popoverVC.isModalInPresentation = true
         popoverVC.MsgFromManagmentData = message
         popoverVC.file_path = message.file_path
         popoverVC.delegate = self

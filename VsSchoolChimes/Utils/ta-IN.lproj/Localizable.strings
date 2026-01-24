@@ -178,6 +178,8 @@
 "Help" = "உதவி";
 "Logout" = "வெளியேறு";
 "Chapters Completed" = "முடித்த அத்தியாயங்கள்";
+"Show old Messages" = "பழைய செய்திகளை காண்பிக்கவும்";
+
 // MARK: Days
 "Sunday" = "ஞாயிற்றுக்கிழமை";
 "Monday" = "திங்கட்கிழமை";

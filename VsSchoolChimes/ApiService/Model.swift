@@ -390,6 +390,7 @@ struct Homework: Codable {
     var detail_id : String?
     var can_edit : Bool?
     var can_delete : Bool?
+    var created_on : String?
     
 }
 
@@ -399,7 +400,7 @@ struct Homework: Codable {
 struct HomeworListkResponse: Codable {
     let status: Bool?
     let message: String?
-    let data: [HomeworkList]?
+    let data: [Homework]?
 }
 struct HomeworkList: Codable {
     let date: String?
@@ -452,6 +453,7 @@ class CommunicationReciverData: Codable {
     let duration : Int?
     var playbackSeconds: Double?
     var loadFile: Bool?
+    let sent_by: String?
 }
 
 struct ReadStatusResponse: Codable {

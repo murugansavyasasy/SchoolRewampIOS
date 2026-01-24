@@ -105,7 +105,7 @@ class QuizVC: UIViewController, UISearchBarDelegate {
         tv.scrollToRow(at: indexPath, at: .middle, animated: true)
         // Optionally highlight the cell for 1 second
         if let cell = tv.cellForRow(at: indexPath) {
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: 0.5, animations: {
                 cell.contentView.backgroundColor = UIColor.lightGray
                     .withAlphaComponent(0.3)
             }) { _ in

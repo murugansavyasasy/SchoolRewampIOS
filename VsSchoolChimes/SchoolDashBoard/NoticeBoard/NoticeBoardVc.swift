@@ -75,9 +75,9 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
 
         searchBar.searchTextField.addDoneButton()
         if let staffToken = staffdetails?.access_token {
-            let matchedSchoolName = school_details?
-                .first?
-                .school_name
+//            let matchedSchoolName = school_details?
+//                .first?
+//                .school_name
             token = staffToken
             schoolName.text = "All"
             
@@ -454,6 +454,7 @@ extension NoticeBoardVc: UICollectionViewDataSource, UICollectionViewDelegateFlo
         detailVC.targetCvdata.append(data1)
         detailVC.ComFromNoticeBoard = true
         detailVC.descriptionString  = notice.description
+        detailVC.dateAndTimeForVideo  = notice.created_on ?? ""
         detailVC.subject_name = "Notice Board".translated()
         detailVC.postedBy  = notice.sent_by
         detailVC.modalPresentationStyle = .custom
