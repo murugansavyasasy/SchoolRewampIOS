@@ -90,21 +90,21 @@ extension RatingTableViewCell {
         currentRating = value
 
         // Text
-        let ratingText: String
+        let ratingText: Int?
         switch value {
-        case 1: ratingText = categorySections?[0].value ?? ""
-        case 2: ratingText = categorySections?[1].value ?? ""
-        case 3: ratingText = categorySections?[2].value ?? ""
-        case 4: ratingText = categorySections?[3].value ?? ""
-        case 5: ratingText = categorySections?[4].value ?? ""
-        default: ratingText = ""
+        case 1: ratingText = 0
+        case 2: ratingText = 1
+        case 3: ratingText = 2
+        case 4: ratingText = 3
+        case 5: ratingText = 4
+        default: ratingText = 0
         }
-
+        
         // Update label/button
-        RatingValue.setTitle(ratingText, for: .normal)
+        RatingValue.setTitle(categorySections?[ratingText ?? 0].value ?? "", for: .normal)
+        HowSatisfiedLbl.text = categorySections?[ratingText ?? 0].name ?? ""
         RatingValue.tintColor = .systemOrange
         RatingValue.layer.borderColor = UIColor.clear.cgColor
-
         // Stars
         for (index, button) in groupButtons.enumerated() {
 
