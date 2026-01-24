@@ -417,6 +417,7 @@ extension SenderHomeWorkVC: UICollectionViewDelegate,UICollectionViewDataSource,
         detailVC.titleString  = FilterHomeWorkList?[indexPath.row].title
         detailVC.descriptionString  = FilterHomeWorkList?[indexPath.row].description
         detailVC.postedBy  = FilterHomeWorkList?[indexPath.row].sent_by
+        detailVC.dateAndTimeForVideo  = FilterHomeWorkList?[indexPath.row].created_on ?? ""
         detailVC.subject_name  = FilterHomeWorkList?[indexPath.row].subject_name
         detailVC.modalPresentationStyle = .custom
         transitionDelegate.originFrame = cellFrameInSuperview

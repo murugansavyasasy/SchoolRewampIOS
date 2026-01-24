@@ -30,7 +30,6 @@ class APIService: NSObject, URLSessionDelegate {
             completionHandler(.failure(error))
             return
         }
-        
         print("✅ Request URL: \(fullURL)")
         print("📦 Parameters: \(parameters ?? [:])")
         print("TOKEN : \(token)")
@@ -50,7 +49,6 @@ class APIService: NSObject, URLSessionDelegate {
             request.addValue(PaucketHeader.partner_name_value, forHTTPHeaderField: PaucketHeader.partner_name)
         }
         
-        
         if (type == "POST" || type == "PUT"), let parameters = parameters {
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: parameters)
@@ -59,9 +57,6 @@ class APIService: NSObject, URLSessionDelegate {
                 print("❌ JSON Encoding Error: \(jsonError.localizedDescription)")
             }
         }
-        
-        
-        
         session.dataTask(with: request) { data, response, error in
             if let httpResponse = response as? HTTPURLResponse, let data = data {
                 do {
@@ -102,14 +97,12 @@ class APIService: NSObject, URLSessionDelegate {
         } else {
                 baseURL = ServiceUrl.Pacukt_baseurl
         }
-        
         var components = URLComponents(string: baseURL + path)
         if method.uppercased() == "GET", let queryParams = queryParams {
             components?.queryItems = queryParams.map {
                 URLQueryItem(name: $0.key, value: "\($0.value)")
             }
         }
-        
         return components?.url
     }
     

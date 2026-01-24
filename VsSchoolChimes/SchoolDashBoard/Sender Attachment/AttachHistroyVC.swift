@@ -334,6 +334,7 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
         detailVC.selectedDate = attach.date
         detailVC.titleString = attach.title
         detailVC.descriptionString = attach.description
+        detailVC.dateAndTimeForVideo = attach.date ?? ""
         detailVC.postedBy = attach.sent_by
         detailVC.params = [
             SendAttachmentStringFile.id: attach.id ?? "",

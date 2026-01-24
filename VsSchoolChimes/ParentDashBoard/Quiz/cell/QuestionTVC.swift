@@ -87,7 +87,7 @@ extension QuestionTVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
             if let urlStr = item.url, let videoURL = URL(string: urlStr) {
                 cell.configure(
                     with: videoURL,
-                    parentVC: parentController ?? UIViewController()
+                    parentVC: parentController ?? UIViewController(), dateAndTimeForVideo: ""
                 )
             }
 

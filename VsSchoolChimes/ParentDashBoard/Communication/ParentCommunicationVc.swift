@@ -490,10 +490,10 @@ class ParentCommunicationVc: UIViewController, AudioPlaybackDelegate1, Datepicke
         tv.scrollToRow(at: indexPath, at: .middle, animated: true)
         if let cell = tv.cellForRow(at: indexPath) {
             UIView.animate(withDuration: 0.3, animations: {
-                cell.contentView.backgroundColor = UIColor.lightGray
+                cell.contentView.backgroundColor = UIColor.notificationLandingClr
                     .withAlphaComponent(0.3)
             }) { _ in
-                UIView.animate(withDuration: 0.5, delay: 1.0, options: []) {
+                UIView.animate(withDuration: 0.5, delay: 5.0, options: []) {
                     cell.contentView.backgroundColor = .white
                 }
             }

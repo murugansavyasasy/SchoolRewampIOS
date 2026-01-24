@@ -13,6 +13,11 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
         let imageVC = ImageShowVc(nibName: nil, bundle: nil)
         imageVC.fileURL = allAttachments
         imageVC.subjectName = data?.subject ?? ""
+        if data?.created_time == ""{
+            imageVC.dateAndTimeForVideo = data?.created_date ?? ""
+        }else{
+            imageVC.dateAndTimeForVideo = (data?.created_date ?? "")  + " " + (data?.created_time ?? "")
+        }
         imageVC.scrollIndex = IndexPath(index:index)
         imageVC.index = index
         imageVC.modalPresentationStyle = .fullScreen

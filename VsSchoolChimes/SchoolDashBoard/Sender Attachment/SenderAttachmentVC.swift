@@ -514,6 +514,7 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
             }
             
         }else{
+            
             let attachment = attachments[indexPath.item - 1]
             let imageVC = ImageShowVc(nibName: nil, bundle: nil)
             imageVC.attachment = attachments

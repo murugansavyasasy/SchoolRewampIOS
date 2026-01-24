@@ -270,7 +270,7 @@ class LSRWSubmisionListVC: UIViewController,
                         withReuseIdentifier: CellConfingName.VideoPlayerCVC,
                         for: indexPath) as! VideoPlayerCVC
                     if let url = URL(string: file.url ?? "") {
-                        cell.configure(with: url, parentVC: self)
+                        cell.configure(with: url, parentVC: self, dateAndTimeForVideo: "")
                     }
                     return cell
                 } else {
