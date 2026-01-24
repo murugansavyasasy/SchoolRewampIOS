@@ -30,8 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         UNUserNotificationCenter.current().delegate = self
         Messaging.messaging().delegate = self
         
-        UIApplication.shared.applicationIconBadgeNumber = 0   // 🔥 ADD THIS
-        
+        UIApplication.shared.applicationIconBadgeNumber = 0
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, _ in
             if granted {
                 DispatchQueue.main.async {
@@ -57,7 +56,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         }
         
         UserDefaults.standard.removeObject(forKey: tempKey)
-        return true
     }
     
     func deleteFile(at url: URL) {
