@@ -625,12 +625,9 @@ class SplashVC: UIViewController, ViewAttachments, DismissDelegate {
                             ServiceUrl.baseurl = countryDetails.base_url ?? ""
                             ServiceUrl.Reporting_baseurl = countryDetails.reporting_url ?? ""
                         }
-                        self.versionData?.force_update = false
-                        self.versionData?.update_available = false
                             if self.versionData?.update_available == true{
                                 self.showUpdatePopup()
                             }
-                      
                         else {
                                 self.appFlowChecking()
                             }

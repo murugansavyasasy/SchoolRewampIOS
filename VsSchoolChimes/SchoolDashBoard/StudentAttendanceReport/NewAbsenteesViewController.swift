@@ -95,6 +95,7 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         calendar.placeholderType = .none
         calendar.headerHeight = 0
         calendar.allowsMultipleSelection = false
+        calendar.scrollEnabled = false
         mothView.layer.cornerRadius = 10
         fullview.layer.cornerRadius = 10
         cvIcon.register(UINib(nibName: CellConfingName.CVIconCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.CVIconCollectionViewCell)
@@ -201,6 +202,16 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         }
     }
     
+    func noRecord(){
+        self.studentLbl.isHidden = false
+        self.dateLbl.isHidden = false
+        self.cvIcon.isHidden = false
+        self.infoStack.isHidden = false
+        self.Tv.isHidden = false
+        self.fullview.backgroundColor = .white
+        self.fullview.isHidden = false
+        self.noRecordView.isHidden = true
+    }
     func setAbsentButtonTitle(totalAbsent: String) {
         let titleText = "Total Absent: \(totalAbsent)"
 
@@ -530,14 +541,46 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
         moveCurrentPage(isNext: false)
     }
     
+//    func moveCurrentPage(isNext: Bool) {
+//        let current = calendar.currentPage
+//        var dateComponents = DateComponents()
+//        dateComponents.month = isNext ? 1 : -1
+//        //let newDate = Calendar.current.date(byAdding: dateComponents, to: current)!
+//        guard let newDate = Calendar.current.date(byAdding: dateComponents, to: current) else {  return }
+//        calendar.setCurrentPage(newDate, animated: true)
+//        updateMonthLabel()
+//    }
+    
     func moveCurrentPage(isNext: Bool) {
-        let current = calendar.currentPage
+        let currentPage = calendar.currentPage
+
         var dateComponents = DateComponents()
         dateComponents.month = isNext ? 1 : -1
-        let newDate = Calendar.current.date(byAdding: dateComponents, to: current)!
+
+        guard let newDate = Calendar.current.date(byAdding: dateComponents, to: currentPage) else {
+            return
+        }
+
+        // 1. Remove currently selected date (if any)
+        if let selectedDate = calendar.selectedDate {
+            calendar.deselect(selectedDate)
+        }
+
         calendar.setCurrentPage(newDate, animated: true)
+
+        // 2. If moved to the current month, select today
+        let today = Date()
+        if Calendar.current.isDate(newDate, equalTo: today, toGranularity: .month) {
+            calendar.select(today)
+            let showFormatter = DateFormatter()
+                showFormatter.dateFormat = DateOutPut.EE_MMM_dd_yyyy
+            let selectedDateForLabel = showFormatter.string(from: today)
+            dateLbl.text = selectedDateForLabel
+        }
+
         updateMonthLabel()
     }
+
     
     func updateMonthLabel() {
         let formatter = DateFormatter()
@@ -562,6 +605,8 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
             self.year = year
         }
 
+        Absentees_Response()
+        //dateLbl.text =
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView,
