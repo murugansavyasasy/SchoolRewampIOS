@@ -80,23 +80,16 @@ class RecorderTVC: UITableViewCell {
     }
 
     private func beginRecording() {
-        // UI setup
         isRecording = true
         recordingStartTime = Date()
         recoderTime.text = "00:00"
-
-        // Start a 1s tick timer
         recordingTimer = Timer.scheduledTimer(
             withTimeInterval: 1.0,
             repeats: true
         ) { [weak self] _ in
             self?.updateRecordingTime()
         }
-
-        // Start recording
         audioManager.startRecording()
-
-        // Optional animated indicator
         if let gif = UIImage.gifImageWithName("Mic") {
             vicecImg.image = gif
         } else {
@@ -119,15 +112,12 @@ class RecorderTVC: UITableViewCell {
                 if let url = url {
                     self.audioURL = url
                     self.isRemoteAudio = false
-                    
-                    // IMPORTANT: Save only the path, not the full URL string
-                    // This prevents the "file://" prefix issue
                     self.saveTempRecording(url.path)
                     
                     self.delegate?.editDta(
                         edit: AttachmentItem(
                             image: nil,
-                            imageURL: url.path,  // Changed from url.absoluteString to url.path
+                            imageURL: url.path, 
                             fileType: "audio",
                             VideoURl: nil,
                             VimeoVideoURL: nil
