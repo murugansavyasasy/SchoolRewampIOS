@@ -230,7 +230,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.faceIdSwitch.isHidden = item != menuname.faceID
         cell.arrowImg.isHidden = item == menuname.faceID
         if item == menuname.Exciting_features {
-            cell.imgView.image = UIImage(named: "WhatNews")
+            cell.imgView.image = UIImage(named: "features")
         } else {
             cell.imgView.image = image
         }
