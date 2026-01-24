@@ -114,15 +114,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 editId: Editattachment.id ?? ""
             )
         }
-        if !UserDefaults.standard.bool(forKey: tourKey){
-            DispatchQueue.main.asyncAfter(deadline:.now() + 0.5){
-                let vc = AppTourVC()
-                vc.modalPresentationStyle = .overFullScreen
-                vc.tourKey = self.tourKey
-                vc.modalTransitionStyle = .crossDissolve
-                self.present(vc, animated: true)
-            }
-        }
     }
     
     @IBAction func backBtnAct(_ sender: Any) {

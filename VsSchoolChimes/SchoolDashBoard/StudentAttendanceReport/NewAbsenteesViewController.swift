@@ -59,6 +59,8 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
     var Absent   = "Absent : "
     var Absentees   = "Absentees : "
     var Total_students   = "Total students : "
+    var month: String = ""
+    var year: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -101,6 +103,18 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         cvIcon.delegate = self
         Tv.dataSource = self
         Tv.delegate = self
+        
+        let currentDate = Date()
+        let calendar = Calendar.current
+
+        let month = String(calendar.component(.month, from: currentDate))
+        let year = String(calendar.component(.year, from: currentDate))
+
+        self.month = month
+        self.year = year
+        print(month) // e.g. "4"
+        print(year)  // e.g. "2025"
+
         Absentees_Response()
     }
     
@@ -117,7 +131,7 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
     }
     
     func Absentees_Response() {
-        APIService.shared.makeApi(url: ServiceUrl.stud_attd_api_attendance_get_absentees_count_by_date, parameters: [:], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<AbsenteesResponse, Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.stud_attd_api_attendance_get_absentees_count_by_date, parameters: ["month_id": month ,"year_id" : year], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<AbsenteesResponse, Error>) in
             guard let self = self else { return }
             switch result {
             case .success(let response):
