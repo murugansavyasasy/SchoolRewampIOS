@@ -339,7 +339,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     }
     
     private func setupProfileImage() {
-        profileImageView.kf.setImage(with: URL(string: childDetails?.school_logo_url ?? ""),placeholder:UIImage(systemName: "School Needs"))
+        profileImageView.kf.setImage(with: URL(string: childDetails?.school_logo_url ?? ""),placeholder:UIImage(named: "School Needs"))
         profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
         profileImageView.clipsToBounds = true
         profileImageView.layer.borderWidth = 2
