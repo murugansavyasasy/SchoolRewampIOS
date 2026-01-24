@@ -29,12 +29,12 @@
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="communicationInfo" translatesAutoresizingMaskIntoConstraints="NO" id="Rox-6p-xwS">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                         </imageView>
-                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="I4d-py-EKy">
-                            <rect key="frame" x="163" y="714.66666666666663" width="220" height="34.333333333333371"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="I4d-py-EKy">
+                            <rect key="frame" x="143" y="714.66666666666663" width="240" height="34.333333333333371"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvy-6V-6jP">
                                     <rect key="frame" x="0.0" y="0.0" width="80" height="34.333333333333336"/>
-                                    <color key="backgroundColor" white="1" alpha="0.80687012964365423" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" white="1" alpha="0.48925376424984046" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="34.333333333333336" id="VyV-zT-cJr"/>
                                         <constraint firstAttribute="width" constant="80" id="tV9-2O-O04"/>
@@ -47,8 +47,8 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hQA-hJ-JNW">
-                                    <rect key="frame" x="90" y="0.0" width="50" height="34.333333333333336"/>
-                                    <color key="backgroundColor" white="1" alpha="0.78857515296157532" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <rect key="frame" x="100" y="0.0" width="50" height="34.333333333333336"/>
+                                    <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="34.333333333333336" id="Hop-vz-NO8"/>
                                         <constraint firstAttribute="width" constant="50" id="fZC-8m-cQT"/>
@@ -61,8 +61,8 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nc9-0p-RPM">
-                                    <rect key="frame" x="150" y="0.0" width="70" height="34.333333333333336"/>
-                                    <color key="backgroundColor" white="1" alpha="0.8087524621665072" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <rect key="frame" x="170" y="0.0" width="70" height="34.333333333333336"/>
+                                    <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="70" id="Hvs-1J-vZ2"/>
                                         <constraint firstAttribute="height" constant="34.333333333333336" id="rDE-gX-lHR"/>

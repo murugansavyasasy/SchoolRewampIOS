@@ -864,15 +864,27 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
     }
     
     func deleteFile(at url: URL) {
+
         var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
-        if let index = list.firstIndex(where: { $0 == url.absoluteString }) {
-            if url.isFileURL {
-                try? FileManager.default.removeItem(at: url)
+
+        if let index = list.firstIndex(where: {
+            URL(string: $0)?.path == url.path
+        }) {
+
+            if FileManager.default.fileExists(atPath: url.path) {
+                do {
+                    try FileManager.default.removeItem(at: url)
+                    print("✅ File deleted:", url.lastPathComponent)
+                } catch {
+                    print("❌ Delete failed:", error)
+                }
             }
+
             list.remove(at: index)
             UserDefaults.standard.set(list, forKey: tempKey)
         }
     }
+
     
     func getFileUrl() -> URL {
         let filename = RecordedAudioFormat
@@ -1138,6 +1150,9 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
     }
     
     func startRecording() {
+        if let url = URL(string: AudioPlayUrl ?? ""){
+            deleteFile(at:url)
+        }
         player?.pause()
         playVoicce = false
         btnplay.setImage(ImageName.playbutton, for: .normal)
@@ -1174,7 +1189,6 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
                 let totalSeconds = convertTimeStringToSeconds(durationString)
                 voiceRecordedDuration = totalSeconds
             }
-            // Set message send time
             let formatter = DateFormatter()
             formatter.timeStyle = .short
             messageSendTime.text = "\(formatter.string(from: Date()))"
@@ -1186,30 +1200,30 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
             voiceTileTextFldCount.isHidden = true
         }
         guard let url = URL(string: AudioPlayUrl ?? "") else { return }
-        // Check if it's a remote URL (http or https)
         if url.isFileURL {
             do {
                 try audioManager.setupPlayer(with: url)
                 waveView.durationLabel.isHidden = true
                 waveView.audioURL = url
                 waveView.updateWaveformColor(progress: 0.0)
+                saveTempRecording(url.absoluteString)
             } catch {
                 print("❌ Failed to set up audio player:", error)
             }
         } else {
-            // Remote URL - download it first
+            waveView.audioURL = url
             waveView.durationLabel.isHidden = true
-            downloadAndPrepareAudio(from: url)
+//            downloadAndPrepareAudio(from: url)
         }
-        
-        print("AudioPlayUrlAudioPlayUrl",AudioPlayUrl)
     }
   
+
     func saveTempRecording(_ url: String) {
         var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
         list.append(url)
         UserDefaults.standard.set(list, forKey: tempKey)
     }
+
     func showTimePicker(for button: UIButton) {
         activeButton = button
 
@@ -1249,7 +1263,6 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
             timePicker.minimumDate = minToTime
             timePicker.setDate(minToTime, animated: false)
         }
-
         timePicker.maximumDate = nil
         timePicker.fadeAndPopIn()
         doneButton.fadeAndPopIn()
@@ -1739,7 +1752,6 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         do {
             try audioManager.setupPlayer(with: url)
             waveView.audioURL = url
-            saveTempRecording(url.absoluteString)
         } catch {
             print("❌ Failed to set up audio player:", error)
             showErrorAlert(message: "Failed to load audio file")

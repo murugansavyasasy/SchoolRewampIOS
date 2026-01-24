@@ -111,14 +111,14 @@
 "Create Leave Request" = "Create Leave Request";
 "LeaveRequestInfo" = "Leave Request Info";
 "Student/Parent" = "Student/Parent";
-"LoginAsStudentParent" = "Login As Student/Parent";
+"LoginAsStudentParent" = "Login as Student/Parent";
 "ClickProceedToContinue" = "Click proceed to continue";
 "or Student/Parent" = "or Student/Parent";
 "Principal" = "Principal";
 "Login As Teacher Or Parent" = "Login as Teacher or Parent";
-"Login As" = "Login As";
+"Login As" = "Login as";
 "Management" = "Management";
-"Choose Your Role" = "Choose Your Role";
+"Choose Your Role" = "Choose your role";
 "Proceed" = "Proceed";
 "Create Event" = "Create Event";
 "Title" = "Title";
@@ -267,7 +267,7 @@
 "privacyPolicy" = "Privacy Policy";
 "aboutApp" = "About the App";
 "howToUse" = "How to Use?";
-"whatsNew" = "What's New";
+"Exciting features" = "Exciting features";
 "appVersion" = "App Version";
 "Settings" = "Settings";
 

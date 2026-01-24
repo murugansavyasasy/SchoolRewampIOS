@@ -17,11 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     var notificationAlreadyHandled = false
     var deviceTokenString: String?
     var window: UIWindow?
-
     var languages: String!
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
-
+    let tempKey = "TempRecordings"
     // MARK: - Application Life Cycle
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
@@ -39,25 +38,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
                 }
             }
         }
-        NotificationCenter.default.addObserver(
-                   self,
-                   selector: #selector(cleanupTempRecordings),
-                   name: UIApplication.willTerminateNotification,
-                   object: nil
-               )
-        return true
-    }
-    @objc func cleanupTempRecordings() {
-        let tempKey = "TempRecordings"
         let list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
-
-        let fileManager = FileManager.default
-        for urlString in list {
-            if let url = URL(string: urlString), url.isFileURL {
-                try? fileManager.removeItem(at: url)
+        for item in list {
+            if let url = URL(string: item){
+                deleteFile(at: url)
             }
         }
         UserDefaults.standard.removeObject(forKey: tempKey)
+        return true
+    }
+    
+    func deleteFile(at url: URL) {
+
+        var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
+
+        if let index = list.firstIndex(where: {
+            URL(string: $0)?.path == url.path
+        }) {
+
+            if FileManager.default.fileExists(atPath: url.path) {
+                do {
+                    try FileManager.default.removeItem(at: url)
+                    print("✅ File deleted:", url.lastPathComponent)
+                } catch {
+                    print("❌ Delete failed:", error)
+                }
+            }
+
+            list.remove(at: index)
+            UserDefaults.standard.set(list, forKey: tempKey)
+        }
     }
     func applicationDidBecomeActive(_ application: UIApplication) {
         application.applicationIconBadgeNumber = 0

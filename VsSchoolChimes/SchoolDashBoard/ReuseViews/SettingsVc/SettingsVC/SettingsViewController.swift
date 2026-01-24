@@ -77,7 +77,7 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
                 menuname.privacyPolicy,
                 menuname.aboutApp,
                 menuname.howToUse,
-                menuname.whatsNew
+                menuname.Exciting_features
             ]
         ),
         Section(
@@ -108,7 +108,7 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
             "shield.lefthalf.filled",
             "info.circle.fill",
             "questionmark.circle",
-            "WhatNews"
+            "features"
         ]),
         Image(title: "Feedback", Imageitems: [
             "questionmark.diamond.fill",
@@ -229,7 +229,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.nameLbl.textColor = item == menuname.logout ? .red : .black
         cell.faceIdSwitch.isHidden = item != menuname.faceID
         cell.arrowImg.isHidden = item == menuname.faceID
-        if item == menuname.whatsNew {
+        if item == menuname.Exciting_features {
             cell.imgView.image = UIImage(named: "WhatNews")
         } else {
             cell.imgView.image = image
@@ -330,7 +330,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             vc.url = "https://schoolchimes.com/vs_web/terms_conditions/"
             present(vc, animated: true)
             
-        case menuname.whatsNew.translated():
+        case menuname.Exciting_features.translated():
             let vc = WhatsNewVc()
             vc.isStaff = passVale == 1
             vc.modalPresentationStyle = .overFullScreen

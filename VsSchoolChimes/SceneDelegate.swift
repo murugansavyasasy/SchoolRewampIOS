@@ -11,7 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate,UNUserNotificationCenter
 
     var window: UIWindow?
     var languages :String!
-
+    let tempKey = "TempRecordings"
     func scene(_ scene: UIScene,
                   willConnectTo session: UISceneSession,
                   options connectionOptions: UIScene.ConnectionOptions) {
@@ -63,9 +63,57 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate,UNUserNotificationCenter
        }
     
     func sceneDidDisconnect(_ scene: UIScene) {
-        print("sceneDidDisconnect")
+        let list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
+        for item in list {
+            deleteTempRecording(item)
+        }
+
+        UserDefaults.standard.removeObject(forKey: tempKey)
     }
-   
+    func deleteTempRecording(_ input: Any) {
+
+        var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
+        var fileURL: URL?
+        if let url = input as? URL {
+            fileURL = url
+
+        } else if let str = input as? String {
+
+            if str.hasPrefix("file://") {
+                fileURL = URL(fileURLWithPath: str.replacingOccurrences(of: "file://", with: ""))
+
+            } else if str.hasPrefix("/") {
+                fileURL = URL(fileURLWithPath: str)
+
+            } else {
+                return
+            }
+        }
+
+        guard let url = fileURL else { return }
+        if FileManager.default.fileExists(atPath: url.path) {
+            do {
+                try FileManager.default.removeItem(at: url)
+                print("✅ File deleted:", url.lastPathComponent)
+            } catch {
+                print("❌ Delete failed:", error.localizedDescription)
+            }
+        }
+        list.removeAll { item in
+            let itemPath: String
+
+            if item.hasPrefix("file://") {
+                itemPath = item.replacingOccurrences(of: "file://", with: "")
+            } else {
+                itemPath = item
+            }
+
+            return itemPath == url.path
+        }
+
+        UserDefaults.standard.set(list, forKey: tempKey)
+    }
+
 
      func sceneWillResignActive(_ scene: UIScene) {
      // Called when the scene will move from an active state to an inactive state.
