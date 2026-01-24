@@ -316,17 +316,28 @@ class AudioManager: NSObject {
             delegate?.audioManagerDidFailWithError(error)
         }
     }
-    
+
     func stopRecording(completion: @escaping (URL?, TimeInterval?) -> Void) {
         guard let recorder = audioRecorder else {
             completion(nil, nil)
             return
         }
+
         recorder.stop()
         stopLevelMonitoring()
+
         let duration = recorder.currentTime
-        completion(audioURL, duration)
+        let url = audioURL
+        do {
+            try AVAudioSession.sharedInstance()
+                .setActive(false, options: .notifyOthersOnDeactivation)
+        } catch {
+            print("❌ Failed to deactivate session:", error)
+        }
+
+        completion(url, duration)
     }
+
     
     // MARK: - Audio Session Setup
     private func setupAudioSession(forRecording: Bool = false) throws {
@@ -334,9 +345,9 @@ class AudioManager: NSObject {
         do {
             if forRecording {
                 try session.setCategory(
-                    .playback,
-                    mode: .spokenAudio,
-                    options: [.duckOthers]
+                    .playAndRecord,
+                    mode: .default,
+                    options: [.defaultToSpeaker, .allowBluetooth]
                 )
             } else {
                 try session.setCategory(.playback, mode: .default)
@@ -427,19 +438,18 @@ class AudioManager: NSObject {
         audioURL = url
     }
 
-
     private func setupLocalPlayer(with url: URL) throws {
         try setupAudioSession(forRecording: false)
-        
+
         guard FileManager.default.fileExists(atPath: url.path) else {
             throw AudioError.fileNotFound
         }
-        
+
         audioPlayer = try AVAudioPlayer(contentsOf: url)
         audioPlayer?.delegate = self
         audioPlayer?.prepareToPlay()
-        audioPlayer?.enableRate = true
     }
+
     
     func setupRemotePlayer(with url: URL) throws {
         try setupAudioSession(forRecording: false)
@@ -554,7 +564,14 @@ class AudioManager: NSObject {
         avPlayer?.pause()
         avPlayer?.seek(to: .zero)
         stopPlaybackTimer()
+        do {
+            try AVAudioSession.sharedInstance()
+                .setActive(false, options: .notifyOthersOnDeactivation)
+        } catch {
+            print("❌ Deactivate failed:", error)
+        }
     }
+
     
     func seek(to time: TimeInterval) throws {
         if let player = audioPlayer {
