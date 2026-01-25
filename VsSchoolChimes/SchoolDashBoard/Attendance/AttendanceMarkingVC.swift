@@ -432,7 +432,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
             let vc = absentPrivewVC(nibName: nil, bundle: nil)
             vc.StudentList = self.student_List
             vc.delegate = self
-            vc.modalPresentationStyle = .formSheet
+            vc.modalPresentationStyle = .overFullScreen
             vc.isModalInPresentation = true
             present(vc, animated: true)
         }
