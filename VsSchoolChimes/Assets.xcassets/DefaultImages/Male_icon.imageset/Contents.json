@@ -1,23 +1,15 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "avatar.svg",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "avatar 1.svg",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "avatar 2.svg",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "avatar.svg",
+      "idiom": "universal"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
+  },
+  "properties": {
+    "preserves-vector-representation": true
   }
 }
