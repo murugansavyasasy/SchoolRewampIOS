@@ -934,71 +934,67 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
             print("No file selected.")
             return
         }
+
+        // Start security access for external file
+        guard selectedFileURL.startAccessingSecurityScopedResource() else {
+            print("❌ Cannot access file")
+            return
+        }
         AudioPlayUrl = selectedFileURL.absoluteString
-        // Access the file securely if necessary
-        if selectedFileURL.startAccessingSecurityScopedResource() {
-            defer { selectedFileURL.stopAccessingSecurityScopedResource() }
-            do {
-                // Get the audio duration
-                let asset = AVAsset(url: selectedFileURL)
-                let duration = CMTimeGetSeconds(asset.duration)
-                guard duration.isFinite else { return }
-                voiceRecordedDuration = Int(duration)
-                recordImgHeightCon.constant = 0
-                Timinglbl.isHidden = true
-                addfile.isHidden = true
-                btnplay.setImage(ImageName.playbutton, for: .normal)
-                let formatter = DateFormatter()
-                formatter.timeStyle = .short
-                messageSendTime.text = "\(formatter.string(from: Date()))"
-                getAudioDuration(from: selectedFileURL) { seconds, formatted in
-                    self.voiceTiming.text = formatted
-                }
-                playerheight.constant = 60
-                playerview.isHidden = false
-                dltbtn.isHidden = false
-                recoderbtn.isEnabled = false
-                if emengencyCall.isOn{
-                    if duration > 30 {
-                        alert
-                            .showAlert(
-                                title: AlertstringFile.Alert_title,
-                                message: AlertstringFile.Audio_file_should80,
-                                on: self)
-                        return
-                    }
-                }else{
-                    if duration > 180 {
-                        alert
-                            .showAlert(
-                                title: AlertstringFile.Alert_title,
-                                message: AlertstringFile.Audio_file_should180,
-                                on: self
-                            )
-                        return
-                    }
-                }
-               
-                if let audioUrl = URL(string: AudioPlayUrl ?? "") {
-                    if audioUrl.isFileURL {
-                        do {
-                            try audioManager.setupPlayer(with: audioUrl)
-                            waveView.durationLabel.isHidden = true
-                            waveView.audioURL = audioUrl
-                            waveView.updateWaveformColor(progress: 0.0)
-                            hideActivityLoader()
-                        } catch {
-                            print("❌ Failed to set up audio player:", error)
-                        }
-                    } else {
-                        waveView.audioURL = audioUrl
-                        waveView.durationLabel.isHidden = true
-                    }
-                }
-                
+        let asset = AVAsset(url: selectedFileURL)
+        let duration = CMTimeGetSeconds(asset.duration)
+        guard duration.isFinite else { return }
+        voiceRecordedDuration = Int(duration)
+        recordImgHeightCon.constant = 0
+        Timinglbl.isHidden = true
+        addfile.isHidden = true
+        btnplay.setImage(ImageName.playbutton, for: .normal)
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        messageSendTime.text = "\(formatter.string(from: Date()))"
+        getAudioDuration(from: selectedFileURL) { seconds, formatted in
+            self.voiceTiming.text = formatted
+        }
+        playerheight.constant = 60
+        playerview.isHidden = false
+        dltbtn.isHidden = false
+        recoderbtn.isEnabled = false
+        if emengencyCall.isOn{
+            if duration > 30 {
+                alert
+                    .showAlert(
+                        title: AlertstringFile.Alert_title,
+                        message: AlertstringFile.Audio_file_should80,
+                        on: self)
+                return
             }
-        } else {
-            print("Failed to access security scoped resource.")
+        }else{
+            if duration > 180 {
+                alert
+                    .showAlert(
+                        title: AlertstringFile.Alert_title,
+                        message: AlertstringFile.Audio_file_should180,
+                        on: self
+                    )
+                return
+            }
+        }
+       
+        if let audioUrl = URL(string: AudioPlayUrl ?? "") {
+            if audioUrl.isFileURL {
+                do {
+                    try audioManager.setupPlayer(with: audioUrl)
+                    waveView.durationLabel.isHidden = true
+                    waveView.audioURL = audioUrl
+                    waveView.updateWaveformColor(progress: 0.0)
+                    hideActivityLoader()
+                } catch {
+                    print("❌ Failed to set up audio player:", error)
+                }
+            } else {
+                waveView.audioURL = audioUrl
+                waveView.durationLabel.isHidden = true
+            }
         }
     }
     

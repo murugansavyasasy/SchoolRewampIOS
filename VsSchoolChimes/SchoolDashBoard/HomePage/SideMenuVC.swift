@@ -52,8 +52,9 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         } else {
 
             userName.text = staffDetails?.name
+            let schoolname = staffDetailsCount?.count == 1 ? staffDetails?.school_name:""
             setWelcomeLabel(
-                firstLine: staffDetails?.school_name,
+                firstLine: schoolname,
                 secondLine: staffDetails?.role
             )
             setupProfileImage(url: URL(string: staffDetails?.staff_profile ?? ""))
@@ -106,6 +107,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             profileImgaView.image = UIImage(systemName: "person.circle.fill")
         }
         profileImgaView.layer.cornerRadius = profileImgaView.frame.width / 2
+        profileImgaView.contentMode = .scaleAspectFit
         profileImgaView.clipsToBounds = true
         profileImgaView.layer.borderWidth = 2
         profileImgaView.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor

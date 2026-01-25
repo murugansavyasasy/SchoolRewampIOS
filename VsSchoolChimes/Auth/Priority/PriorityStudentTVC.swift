@@ -24,6 +24,7 @@ class PriorityStudentTVC: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
+        
     }
     
     override func prepareForReuse() {
@@ -50,6 +51,8 @@ class PriorityStudentTVC: UITableViewCell {
         innerView.setShadow()
         StudentImage.layer.cornerRadius = StudentImage.frame.width / 2
         innerView.layer.cornerRadius = innerView.frame.width / 2
+        StudentImage.contentMode = .scaleAspectFit
+        StudentImage.clipsToBounds = true
         innerView.layer.borderWidth = 1
         innerView.layer.borderColor = UIColor.systemIndigo.withAlphaComponent(0.5).cgColor
     }
@@ -113,12 +116,8 @@ class PriorityStudentTVC: UITableViewCell {
             // Insert views
             Cellview.insertSubview(newBlurView, at: 0)
             Cellview.layer.insertSublayer(newGradientLayer, at: 0)
-            
-            // Store references
             gradientLayer = newGradientLayer
             blurView = newBlurView
-            
-            // Border for glass effect
             Cellview.layer.borderWidth = 1
             Cellview.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
         }
