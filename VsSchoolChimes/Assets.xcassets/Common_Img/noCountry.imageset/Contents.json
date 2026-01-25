@@ -1,12 +1,15 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "india-skyline.svg",
-      "idiom" : "universal"
+      "filename": "india-skyline.svg",
+      "idiom": "universal"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
+  },
+  "properties": {
+    "preserves-vector-representation": true
   }
 }

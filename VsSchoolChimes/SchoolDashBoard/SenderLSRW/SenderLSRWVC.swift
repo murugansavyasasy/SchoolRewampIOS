@@ -98,7 +98,7 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         ("Reading".translated(), "book"),
         ("Writing".translated(), "pencil")
     ]
-    
+    private let tempKey = "TempRecordings"
     var selectedTaskIndex: Int = 0
     
     // MARK: - View Lifecycle
@@ -303,6 +303,7 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
     }
     
     @IBAction func back(_ sender: UIButton) {
+        deleteAllLocalRecordingsFromAttachments()
         dismiss(animated: true)
     }
     
@@ -401,7 +402,27 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
             }
         }
     }
-    
+    func deleteAllLocalRecordingsFromAttachments() {
+        for item in attachments {
+            guard let urlString = item.imageURL else { continue }
+            if urlString.starts(with: "file://") {
+                if let fileURL = URL(string: urlString),
+                   FileManager.default.fileExists(atPath: fileURL.path) {
+
+                    do {
+                        try FileManager.default.removeItem(at: fileURL)
+                        var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
+                            list.removeAll { $0 == urlString }
+                            UserDefaults.standard.set(list, forKey: tempKey)
+                    } catch {
+                        print("❌ Delete failed:", error.localizedDescription)
+                    }
+                }
+            }
+        }
+        
+        attachments.removeAll()
+    }
     @objc private func updateRecordingTime() {
         guard let startTime = recordingStartTime, isRecording else { return }
         let elapsed = Date().timeIntervalSince(startTime)
