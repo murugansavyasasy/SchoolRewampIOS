@@ -187,7 +187,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             let label = UILabel()
             if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
                let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
-                label.text = "App Version - \(version) (\(build))"
+                label.text = "App Version - \(version)"
             }
             label.textColor = .secondaryLabel
             label.font = UIFont.systemFont(ofSize: 14)

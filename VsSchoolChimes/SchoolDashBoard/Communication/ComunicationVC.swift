@@ -1730,10 +1730,11 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
     
     @IBAction func addFileAction(_ sender: Any) {
         if #available(iOS 14.0, *) {
-            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.audio])
+            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.wav,.mpeg4Audio])
             documentPicker.delegate = self
             documentPicker.allowsMultipleSelection = false
             present(documentPicker, animated: true, completion: nil)
+            
         }
     }
     
@@ -1992,13 +1993,13 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     
     private func configureAudioCell(_ cell: CommunicationTVC, at indexPath: IndexPath) {
         let file = VoiceHistory?[indexPath.item]
-        if let urlString = file?.url,
-           let url = URL(string: urlString) {
-            cell.audioURL = url
+        if let urlString = URL(string: file?.url ?? "") {
+            cell.audioURL = urlString
+            
+            cell.audioDelegate = self
+            cell.cellIndex = indexPath.item
+            cell.waveView.setParentCell(cell)
         }
-        cell.audioDelegate = self
-        cell.cellIndex = indexPath.item
-        cell.waveView.setParentCell(cell)
        
     }
     

@@ -163,7 +163,8 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
             MarkAttendenceStringFile.section_id: user_inputs.section_id,
             MarkAttendenceStringFile.class_id: user_inputs.class_id,
             MarkAttendenceStringFile.date: user_inputs.attendance_date,
-            MarkAttendenceStringFile.attendance_type: user_inputs.attendance_type
+            MarkAttendenceStringFile.attendance_type: user_inputs.attendance_type,
+            MarkAttendenceStringFile.academic_year_id : String(selectedAcadimicYearId ?? 0 )
         ]
         
         APIService.shared.makeApi(url: ServiceUrl.stud_attd_api_attendance_student_list, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<AttendanceStudentListResponse, Error>) in

@@ -727,10 +727,13 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     
     func configureAudioCell(_ cell: CommunicationTVC, at indexPath: IndexPath) {
         let file = displayedMessages[indexPath.item]
-        cell.audioURL = URL(string: file.content ?? "")
-        cell.audioDelegate = self
-        cell.cellIndex = indexPath.item
-        cell.waveView.setParentCell(cell)
+        if let urlString = URL(string: file.content ?? "") {
+            cell.audioURL = urlString
+            
+            cell.audioDelegate = self
+            cell.cellIndex = indexPath.item
+            cell.waveView.setParentCell(cell)
+        }
     }
 
     
