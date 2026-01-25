@@ -69,6 +69,7 @@ class absentPrivewVC: UIViewController, call {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .black.withAlphaComponent(0.2)
         fullview.layer.cornerRadius = 10
         notesView.layer.cornerRadius = 10
         notesView.layer.borderWidth = 1

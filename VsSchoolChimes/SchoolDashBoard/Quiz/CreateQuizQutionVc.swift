@@ -93,6 +93,13 @@ extension CreateQuizQutionVc: QuestionCellDelegate {
             } onNo: {}
         }else{
             questions.remove(at: indexPath.row)
+            if questions.isEmpty {
+                noDataImage.isHidden = false
+                noDataLbl.isHidden = false
+            }else{
+                noDataImage.isHidden = true
+                noDataLbl.isHidden = true
+            }
             tv.reloadData()
         }
         
@@ -113,6 +120,9 @@ class CreateQuizQutionVc: UIViewController {
     @IBOutlet weak var sendQuizBtn: UIButton!
     @IBOutlet weak var QuestionNoLbl: UILabel!
     @IBOutlet weak var TitleLbl: UILabel!
+    @IBOutlet weak var addQuestionStack: UIStackView!
+    @IBOutlet weak var noDataLbl: UILabel!
+    @IBOutlet weak var noDataImage: UIImageView!
     
     
     let staffDetails = UserDefaultFileManager.get_staff_Details()
@@ -130,6 +140,8 @@ class CreateQuizQutionVc: UIViewController {
     var uploadedCount = 0
     override func viewDidLoad() {
         super.viewDidLoad()
+        noDataLbl.isHidden = true
+        noDataImage.isHidden = true
         popupBGview.isHidden = true
         popupView.layer.cornerRadius = 10
         popupView.layer.shadowColor = UIColor.black.cgColor
@@ -172,6 +184,29 @@ class CreateQuizQutionVc: UIViewController {
     }
     
     
+    @IBAction func addQuestionAct(_ sender: UIButton) {
+        if let errorMessage = validateQuestions() {
+            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Missing_Information, message: errorMessage, on: self)
+            return
+        }
+        
+        questions.append(QuizQuestiondata())
+        
+        noDataLbl.isHidden = true
+        noDataImage.isHidden = true
+
+            let indexPath = IndexPath(row: questions.count - 1, section: 0)
+
+            tv.beginUpdates()
+            tv.insertRows(at: [indexPath], with: .automatic)
+            tv.endUpdates()
+
+            QuestionNoLbl.text =
+                QuizListStringFile.Question_Limit.translated()
+                + "\(questions.count)/\(noOfQuestion)"
+        
+        tv.scrollToRow(at: indexPath, at: .bottom, animated: true)
+    }
     
     @IBAction func btnAct(_ sender: UIButton) {
         if let errorMessage = validateQuestions() {
@@ -269,13 +304,28 @@ class CreateQuizQutionVc: UIViewController {
                             self.infoLbl.text = "⏳ " + " The quiz will be visible to students only after all questions are filled and Submitted"
                         }
                     } else {
-                        self.questions = [QuizQuestiondata()] // fallback to one empty
+                        self.questions = [QuizQuestiondata()]
+                        // fallback to one empty
+                    }
+                    if self.questions.isEmpty {
+                        self.noDataImage.isHidden = false
+                        self.noDataLbl.isHidden = false
+                    }else{
+                        self.noDataImage.isHidden = true
+                        self.noDataLbl.isHidden = true
                     }
                     self.QuestionNoLbl.text = QuizListStringFile.Question_Limit.translated() + String(self.questions.count) + "/" + String(self.noOfQuestion)
                     self.tv.reloadData()
                 case .failure:
                     DispatchQueue.main.async {
                         self.questions = [QuizQuestiondata()] // fallback
+                        if self.questions.isEmpty {
+                            self.noDataImage.isHidden = false
+                            self.noDataLbl.isHidden = false
+                        }else{
+                            self.noDataImage.isHidden = true
+                            self.noDataLbl.isHidden = true
+                        }
                         self.tv.reloadData()
                     }
                 }
@@ -819,6 +869,7 @@ extension CreateQuizQutionVc: UITableViewDelegate, UITableViewDataSource {
                 numberofQuestion: noOfQuestion,
                 totalQuestion : questions.count
             )
+            cell.addAnotherName.isHidden = true
             return cell
         }else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.QuistionTvTableViewCell, for: indexPath) as? QuistionTvTableViewCell else {
