@@ -463,7 +463,7 @@ class AddAttachmentTVC: UITableViewCell,
     }
     
     func audio() {
-        let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.audio])
+        let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.wav,.mpeg4Audio])
         picker.delegate = self
         getCurrentViewController()?.present(picker, animated: true)
     }

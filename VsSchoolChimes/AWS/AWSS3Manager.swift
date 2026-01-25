@@ -65,6 +65,7 @@ class AWSUploadManager {
             
         // ---------------- FILE URL ----------------
         case let url as URL:
+            
             guard FileManager.default.fileExists(atPath: url.path) else {
                 completion(nil)
                 return

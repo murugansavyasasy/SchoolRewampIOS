@@ -1734,10 +1734,11 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
     
     @IBAction func addFileAction(_ sender: Any) {
         if #available(iOS 14.0, *) {
-            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.audio])
+            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.wav,.mpeg4Audio])
             documentPicker.delegate = self
             documentPicker.allowsMultipleSelection = false
             present(documentPicker, animated: true, completion: nil)
+            
         }
     }
     
