@@ -107,6 +107,7 @@ class UpdateProfileVC: UIViewController, reloadDelegate {
     
     private func setupUI() {
         profileImg.layer.cornerRadius = profileImg.frame.width / 2
+        profileImg.contentMode = .scaleAspectFit
         profileImg.clipsToBounds = true
         profileImg.layer.borderWidth = 1
         profileImg.layer.borderColor = UIColor.white.cgColor
