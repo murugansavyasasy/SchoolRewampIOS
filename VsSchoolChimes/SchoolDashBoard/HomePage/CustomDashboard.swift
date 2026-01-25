@@ -67,11 +67,12 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         recentActiveMenuCollection.register(UINib(nibName: CellConfingName.TopCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.TopCVCell)
         MenuCollection.register(UINib(nibName: CellConfingName.CustomMenuCVC, bundle: nil), forCellWithReuseIdentifier: CellConfingName.CustomMenuCVC)
         
-        if checkMutipleSchool(isSingle: true) {
+        if checkMutipleSchool(isSingle: staffDetailsCount?.count == 1) {
             profileImageView.isHidden = true
+            let schoolname = staffDetailsCount?.count == 1 ? staffDetails?.school_name:""
             setupLabels(
                 name: staffDetails?.name,
-                school: staffDetails?.school_name, roll:staffDetails?.role)
+                school: schoolname, roll:staffDetails?.role)
         } else {
             profileImageView.isHidden = false
             setupLabels(name: staffDetails?.name, school: staffDetails?.school_name, roll: nil)

@@ -42,8 +42,6 @@ class AWSUploadManager {
         var fileName = ""
         
         switch file {
-            
-        // ---------------- IMAGE ----------------
         case let image as UIImage:
             contentType = "image/jpeg"
             fileName = UUID().uuidString + ".jpg"
@@ -54,28 +52,22 @@ class AWSUploadManager {
                 return
             }
             try? data.write(to: fileURL!)
-            
-        // ---------------- RAW DATA ----------------
         case let data as Data:
             contentType = "application/octet-stream"
             fileName = UUID().uuidString + ".bin"
             
             fileURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
             try? data.write(to: fileURL!)
-            
-        // ---------------- FILE URL ----------------
         case let url as URL:
             guard FileManager.default.fileExists(atPath: url.path) else {
                 completion(nil)
                 return
             }
-            
-            // AUDIO → ALWAYS WAV
             if isAudioFile(url: url) {
                 let time = Int(Date().timeIntervalSince1970)
                 fileName = "original_\(time).m4a"
                 contentType = "audio/mp4"
-                fileURL = url   // Upload original audio file
+                fileURL = url
             }
             else {
                 // Non-audio files
@@ -94,8 +86,6 @@ class AWSUploadManager {
             completion(nil)
             return
         }
-        
-        // ---------------- FETCH PRESIGNED URL ----------------
         
         let BucketDetails = getBucketDetails()
         
