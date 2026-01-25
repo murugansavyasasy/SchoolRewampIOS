@@ -1993,13 +1993,13 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     
     private func configureAudioCell(_ cell: CommunicationTVC, at indexPath: IndexPath) {
         let file = VoiceHistory?[indexPath.item]
-        if let urlString = file?.url,
-           let url = URL(string: urlString) {
-            cell.audioURL = url
+        if let urlString = URL(string: file?.url ?? "") {
+            cell.audioURL = urlString
+            
+            cell.audioDelegate = self
+            cell.cellIndex = indexPath.item
+            cell.waveView.setParentCell(cell)
         }
-        cell.audioDelegate = self
-        cell.cellIndex = indexPath.item
-        cell.waveView.setParentCell(cell)
        
     }
     
