@@ -62,16 +62,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
 
         var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
 
-        if let index = list.firstIndex(where: {
-            URL(string: $0)?.path == url.path
+        if let index = list.firstIndex(where: { storedPath in
+            let storedURL = URL(fileURLWithPath: storedPath)
+            return storedURL.path == url.path
         }) {
 
             if FileManager.default.fileExists(atPath: url.path) {
                 do {
                     try FileManager.default.removeItem(at: url)
-                    print("✅ File deleted:", url.lastPathComponent)
                 } catch {
-                    print("❌ Delete failed:", error)
+                    print("❌ Delete failed:", error.localizedDescription)
                 }
             }
 
@@ -79,6 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
             UserDefaults.standard.set(list, forKey: tempKey)
         }
     }
+
     func applicationDidBecomeActive(_ application: UIApplication) {
         application.applicationIconBadgeNumber = 0
     }
