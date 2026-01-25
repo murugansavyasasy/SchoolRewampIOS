@@ -1,23 +1,15 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "golden-medal.svg",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "golden-medal 1.svg",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "golden-medal 2.svg",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "golden-medal.svg",
+      "idiom": "universal"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
+  },
+  "properties": {
+    "preserves-vector-representation": true
   }
 }

@@ -1,26 +1,16 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "female (1).svg",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "female (1) 1.svg",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "female (1) 2.svg",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "female (1).svg",
+      "idiom": "universal"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   },
-  "properties" : {
-    "template-rendering-intent" : "template"
+  "properties": {
+    "template-rendering-intent": "template",
+    "preserves-vector-representation": true
   }
 }

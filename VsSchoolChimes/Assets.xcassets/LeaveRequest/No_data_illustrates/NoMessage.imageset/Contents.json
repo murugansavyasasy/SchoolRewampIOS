@@ -1,23 +1,15 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "no-messages.svg",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "no-messages 1.svg",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "no-messages 2.svg",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "no-messages.svg",
+      "idiom": "universal"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
+  },
+  "properties": {
+    "preserves-vector-representation": true
   }
 }

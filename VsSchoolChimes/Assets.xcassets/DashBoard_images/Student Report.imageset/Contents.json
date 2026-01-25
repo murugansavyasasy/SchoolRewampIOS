@@ -1,26 +1,16 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "marketing-student.svg",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "marketing-student 1.svg",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "marketing-student 2.svg",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marketing-student.svg",
+      "idiom": "universal"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   },
-  "properties" : {
-    "template-rendering-intent" : "template"
+  "properties": {
+    "template-rendering-intent": "template",
+    "preserves-vector-representation": true
   }
 }
