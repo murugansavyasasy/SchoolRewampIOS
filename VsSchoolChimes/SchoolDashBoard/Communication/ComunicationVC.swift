@@ -853,12 +853,6 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         }
     }
     
-    
-    //MARK: GET FILE URL
-    func getFileUrl(for filename: String) -> URL {
-        return getDocumentsDirectory().appendingPathComponent(filename)
-    }
-    
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
@@ -1152,6 +1146,9 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
     }
     //MARK: DELETE RECORDING
     func deletRecoding(){
+        if let url = URL(string: AudioPlayUrl ?? ""){
+            deleteFile(at:url)
+        }
         recoderbtn.isEnabled = true
         dltbtn.isHidden = true
         playerview.isHidden = true
@@ -1167,9 +1164,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         }else{
             Timinglbl.text = defaultTime
         }
-        if let url = URL(string: AudioPlayUrl ?? ""){
-            deleteFile(at:url)
-        }
+        
         moveTextmessage.isHidden = false
         voiceTitleeTxt.text = ""
     }
