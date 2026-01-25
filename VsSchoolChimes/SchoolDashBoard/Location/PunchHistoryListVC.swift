@@ -72,13 +72,11 @@ class PunchHistoryListVC: UIViewController, UITableViewDelegate, UITableViewData
                 DispatchQueue.main.async {
                     if response.status == true {
                         self.noRecordLbl.isHidden = true
-                        self.tv.isHidden = false
                         self.PunchDetails = response.data?.first?.timings
                         self.tv.reloadData()
                     } else {
                         self.noRecordLbl.isHidden = false
                         self.noRecordLbl.text = response.message
-                        self.tv.isHidden = true
                         self.PunchDetails = response.data?.first?.timings
                         self.tv.reloadData()
                     }
@@ -87,6 +85,9 @@ class PunchHistoryListVC: UIViewController, UITableViewDelegate, UITableViewData
             case .failure(let error):
                 DispatchQueue.main.async {
                     print("API Error: \(error.localizedDescription)")
+                    self.noRecordLbl.isHidden = false
+                    self.noRecordLbl.text = error.localizedDescription
+                    self.PunchDetails = []
                 }
             }
         }
