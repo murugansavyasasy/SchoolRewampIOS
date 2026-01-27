@@ -46,20 +46,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     url: VoiceHistory?[index].url ?? ""
                 )
                 guard let url = URL(string: VoiceHistory?[index].url ?? "") else { return }
-                // Check if it's a remote URL (http or https)
-                if url.isFileURL {
-                    do {
-                        try audioManager.setupPlayer(with: url)
-                        waveView.audioURL = url
-                        self.waveView.onDurationUpdate = { [weak self] time in
-                            self?.voiceTiming.text = time
-                        }
-                    } catch {
-                        print("❌ Failed to set up audio player:", error)
+                do {
+                    try audioManager.setupPlayer(with: url)
+                    waveView.audioURL = url
+                    self.waveView.onDurationUpdate = { [weak self] time in
+                        self?.voiceTiming.text = time
                     }
-                } else {
-                    // Remote URL - download it first
-                    downloadAndPrepareAudio(from: url)
+                } catch {
+                    print("❌ Failed to set up audio player:", error)
                 }
             }else{
                 enabelVoice_view(
@@ -72,20 +66,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 AudioPlayUrl = VoiceHistory?[index].url ?? ""
                 
                 guard let url = URL(string: VoiceHistory?[index].url ?? "") else { return }
-                // Check if it's a remote URL (http or https)
-                if url.isFileURL {
-                    do {
-                        try audioManager.setupPlayer(with: url)
-                        waveView.audioURL = url
-                        self.waveView.onDurationUpdate = { [weak self] time in
-                            self?.voiceTiming.text = time
-                        }
-                    } catch {
-                        print("❌ Failed to set up audio player:", error)
+                do {
+                    try audioManager.setupPlayer(with: url)
+                    waveView.audioURL = url
+                    self.waveView.onDurationUpdate = { [weak self] time in
+                        self?.voiceTiming.text = time
                     }
-                } else {
-                    // Remote URL - download it first
-                    downloadAndPrepareAudio(from: url)
+                } catch {
+                    print("❌ Failed to set up audio player:", error)
                 }
             }
         }
@@ -112,20 +100,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
                 )
                 guard let url = URL(string: AudioPlayUrl ?? "") else { return }
-                // Check if it's a remote URL (http or https)
-                if url.isFileURL {
-                    do {
-                        try audioManager.setupPlayer(with: url)
-                        waveView.audioURL = url
-                        self.waveView.onDurationUpdate = { [weak self] time in
-                            self?.voiceTiming.text = time
-                        }
-                    } catch {
-                        print("❌ Failed to set up audio player:", error)
+                do {
+                    try audioManager.setupPlayer(with: url)
+                    waveView.audioURL = url
+                    self.waveView.onDurationUpdate = { [weak self] time in
+                        self?.voiceTiming.text = time
                     }
-                } else {
-                    // Remote URL - download it first
-                    downloadAndPrepareAudio(from: url)
+                } catch {
+                    print("❌ Failed to set up audio player:", error)
                 }
             }else{
                 enabelVoice_view(
@@ -137,21 +119,15 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 )
                 
                 guard let url = URL(string: AudioPlayUrl ?? "") else { return }
-                // Check if it's a remote URL (http or https)
-                if url.isFileURL {
-                    do {
-                        try audioManager.setupPlayer(with: url)
-                        waveView.audioURL = url
-                        waveView.updateWaveformColor(progress: 0.0)
-                        self.waveView.onDurationUpdate = { [weak self] time in
-                            self?.voiceTiming.text = time
-                        }
-                    } catch {
-                        print("❌ Failed to set up audio player:", error)
+                do {
+                    try audioManager.setupPlayer(with: url)
+                    waveView.audioURL = url
+                    waveView.updateWaveformColor(progress: 0.0)
+                    self.waveView.onDurationUpdate = { [weak self] time in
+                        self?.voiceTiming.text = time
                     }
-                } else {
-                    // Remote URL - download it first
-                    downloadAndPrepareAudio(from: url)
+                } catch {
+                    print("❌ Failed to set up audio player:", error)
                 }
             }
         }
@@ -279,7 +255,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var Defaultdurations = "00:00/00:30"
     var initialFromTime: Date?
     var tourKey = "StaffCommunication"
-var RecordedAudioFormat = "RecordedAudio.m4a"
+    var RecordedAudioFormat = "RecordedAudio.m4a"
     let defaultTime = "00:00/03:00"
     let tempKey = "TempRecordings"
     override func viewDidLoad() {
@@ -324,7 +300,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         }else{
             seduleClickView.isHidden = false
         }
-    
+        
         historytable.delegate = self
         historytable.dataSource = self
         DateSelection.delegate = self
@@ -447,7 +423,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         user_inputs.duration = voiceRecordedDuration ?? forWardVoiceDuraction ?? 0
         user_inputs.is_schedule = isScheduleSelected
         user_inputs.is_emergency = isEmergencyVoice ?? false
-        user_inputs.file_name = "sss-" + today_date + ".mp3"
+        user_inputs.file_name = "sss-" + today_date + "." + (URL(string: AudioPlayUrl ?? "")?.pathExtension ?? ".m4a")
         // If emergency or not scheduling, send immediately
         if emengencyCall.isOn || !isScheduleSelected {
             user_inputs.schedule_date = [today_date]
@@ -818,16 +794,16 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
     private func setInitialButtonTitles() {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
-
+        
         let initialFromTime = Date()
         let initialToTime = Calendar.current.date(byAdding: .minute, value: intervalMinutes, to: initialFromTime) ?? Date()
-
+        
         selectedFromTime = initialFromTime
-
+        
         fromTime.setTitle(formatter.string(from: initialFromTime), for: .normal)
         toTime.setTitle(formatter.string(from: initialToTime), for: .normal)
     }
-
+    
     
     //MARK: PERMISSION CHECKING
     func check_record_permission()
@@ -859,13 +835,13 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
     }
     
     func deleteFile(at url: URL) {
-
+        
         var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
-
+        
         if let index = list.firstIndex(where: {
             URL(string: $0)?.path == url.path
         }) {
-
+            
             if FileManager.default.fileExists(atPath: url.path) {
                 do {
                     try FileManager.default.removeItem(at: url)
@@ -874,12 +850,12 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
                     print("❌ Delete failed:", error)
                 }
             }
-
+            
             list.remove(at: index)
             UserDefaults.standard.set(list, forKey: tempKey)
         }
     }
-
+    
     
     func getFileUrl() -> URL {
         let filename = RecordedAudioFormat
@@ -934,7 +910,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
             print("No file selected.")
             return
         }
-
+        
         // Start security access for external file
         guard selectedFileURL.startAccessingSecurityScopedResource() else {
             print("❌ Cannot access file")
@@ -979,7 +955,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
                 return
             }
         }
-       
+        
         if let audioUrl = URL(string: AudioPlayUrl ?? "") {
             if audioUrl.isFileURL {
                 do {
@@ -1001,34 +977,34 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
     
     
     func getAudioDuration(from url: URL, completion: @escaping (Int, String) -> Void) {
-
+        
         let asset = AVURLAsset(url: url)
-
+        
         asset.loadValuesAsynchronously(forKeys: ["duration"]) {
-
+            
             var error: NSError?
             let status = asset.statusOfValue(forKey: "duration", error: &error)
-
+            
             guard status == .loaded else {
                 print("❌ Duration load failed:", error?.localizedDescription ?? "")
                 return
             }
-
+            
             let durationSeconds = CMTimeGetSeconds(asset.duration)
             guard durationSeconds.isFinite else { return }
-
+            
             let totalSeconds = Int(durationSeconds)
             let minutes = totalSeconds / 60
             let seconds = totalSeconds % 60
             let formatted = String(format: "%02d:%02d", minutes, seconds)
-
+            
             DispatchQueue.main.async {
                 completion(totalSeconds, formatted)
             }
         }
     }
-
-
+    
+    
     
     // Handle cancellation
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
@@ -1229,20 +1205,19 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         } else {
             waveView.audioURL = url
             waveView.durationLabel.isHidden = true
-//            downloadAndPrepareAudio(from: url)
         }
     }
-  
-
+    
+    
     func saveTempRecording(_ url: String) {
         var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
         list.append(url)
         UserDefaults.standard.set(list, forKey: tempKey)
     }
-
+    
     func showTimePicker(for button: UIButton) {
         activeButton = button
-
+        
         let buttonFrame = button.convert(button.bounds, to: self.view)
         timePicker.frame = CGRect(
             x: (self.view.frame.width - 250) / 2,
@@ -1250,21 +1225,21 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
             width: 250,
             height: 200
         )
-
+        
         doneButton.frame = CGRect(
             x: timePicker.frame.maxX - 80,
             y: timePicker.frame.maxY - 40,
             width: 70,
             height: 30
         )
-
+        
         timePicker.datePickerMode = .time
         timePicker.backgroundColor = .white
         timePicker.addTarget(self, action: #selector(timePickerChanged(_:)), for: .valueChanged)
-
+        
         let calendar = Calendar.current
         let now = Date()
-
+        
         if button == fromTime {
             if isTodaySelected() {
                 let minFromTime = calendar.date(byAdding: .minute, value: 10, to: now)!
@@ -1273,7 +1248,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
             } else {
                 timePicker.minimumDate = nil
             }
-
+            
         } else if button == toTime, let from = selectedFromTime {
             let minToTime = calendar.date(byAdding: .minute, value: 40, to: from)!
             timePicker.minimumDate = minToTime
@@ -1283,17 +1258,17 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         timePicker.fadeAndPopIn()
         doneButton.fadeAndPopIn()
     }
-
-
+    
+    
     @objc func timePickerChanged(_ picker: UIDatePicker) {
         let calendar = Calendar.current
-
+        
         if activeButton == fromTime {
             selectedFromTime = picker.date
-
+            
             // If To Time picker is opened later, it will always be >= From + 40
         }
-
+        
         if activeButton == toTime, let from = selectedFromTime {
             let minToTime = calendar.date(byAdding: .minute, value: 40, to: from)!
             if picker.date < minToTime {
@@ -1301,37 +1276,37 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
             }
         }
     }
-
+    
     func isTodaySelected() -> Bool {
         let today = Date()
         return selectedDates.contains {
             Calendar.current.isDate($0, inSameDayAs: today)
         }
     }
-
-
+    
+    
     // MARK: - Done Button Action
     @objc func doneButtonTapped() {
         guard let activeButton = activeButton else { return }
-
+        
         let formatter = DateFormatter()
         formatter.timeStyle = .short
-
+        
         if activeButton == fromTime {
             selectedFromTime = timePicker.date
             fromTime.setTitle(formatter.string(from: timePicker.date), for: .normal)
-
+            
             // Auto update To Time = From + 40 min
             let newToTime = Calendar.current.date(byAdding: .minute, value: intervalMinutes, to: timePicker.date)!
             toTime.setTitle(formatter.string(from: newToTime), for: .normal)
-
+            
         } else if activeButton == toTime {
             guard let from = selectedFromTime else { return }
             let minAllowed = Calendar.current.date(byAdding: .minute, value: intervalMinutes, to: from)!
             let selectedDate = timePicker.date < minAllowed ? minAllowed : timePicker.date
             toTime.setTitle(formatter.string(from: selectedDate), for: .normal)
         }
-
+        
         timePicker.isHidden = true
         doneButton.isHidden = true
         self.activeButton = nil
@@ -1364,7 +1339,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         }
     }
     
-   
+    
     
     func setupWaveBars() {
         // Define the width and spacing of each bar
@@ -1385,7 +1360,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
             bars.append(bar)
         }
     }
-   
+    
     private func formatTime(_ seconds: Double) -> String {
         let minutes = Int(seconds) / 60
         let seconds = Int(seconds) % 60
@@ -1541,6 +1516,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         voiceClickView.backgroundColor = .white
         seduleClickView.backgroundColor = .white
         clickTextView.textColor = .white
+        voiceTitleeTxt.endEditing(true)
         clickSchedule.textColor = .black
         clickVoiceLbl.textColor = .black
         voiceBtn.tintColor = .black
@@ -1699,6 +1675,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
             textBtn.tintColor = .black
             scheduleBtn.tintColor = .white
             voiceBtn.tintColor = .black
+            voiceTitleeTxt.endEditing(true)
             ViewAnimator.hideFade(emengencyCall)
             ViewAnimator.hideFade(EnableCallLbl)
         }
@@ -1730,7 +1707,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
     
     @IBAction func addFileAction(_ sender: Any) {
         if #available(iOS 14.0, *) {
-            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.wav,.mpeg4Audio])
+            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.wav,.mpeg4Audio,.mp3])
             documentPicker.delegate = self
             documentPicker.allowsMultipleSelection = false
             present(documentPicker, animated: true, completion: nil)
@@ -1745,7 +1722,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         }
     }
     
-
+    
     // Play Button Action
     @IBAction func playButtonTapped(_ sender: UIButton) {
         if waveView.isPlaying {
@@ -1761,7 +1738,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         waveView.isPlaying = false
         waveView.stopPlaybackAnimation()
         updatePlayButtonState(isPlaying: false)
-//        audioDelegate?.audioCell(self, didStopPlayingAtIndex: cellIndex)
+        //        audioDelegate?.audioCell(self, didStopPlayingAtIndex: cellIndex)
     }
     
     private func prepareLocalAudio(url: URL) {
@@ -1786,50 +1763,6 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         guard let playingCellIndex = notification.object as? Int,
               playingCellIndex != 0 else { return }
         stopPlayback()
-    }
-    
-    private func downloadAndPrepareAudio(from remoteURL: URL) {
-        // Show loading state
-        btnplay.isEnabled = false
-        
-        let session = URLSession.shared
-        let task = session.downloadTask(with: remoteURL) { [weak self] (tempURL, response, error) in
-            guard let self = self else { return }
-            
-            if let error = error {
-                print("Download error: \(error.localizedDescription)")
-                DispatchQueue.main.async {
-                    self.btnplay.isEnabled = true
-                    self.showErrorAlert(message: "Audio download failed.")
-                }
-                return
-            }
-            
-            guard let tempURL = tempURL else {
-                DispatchQueue.main.async {
-                    self.btnplay.isEnabled = true
-                    self.showErrorAlert(message: "Audio download failed.")
-                }
-                return
-            }
-            
-            // Save to permanent location
-            let permanentURL = self.saveToPermanentLocation(tempURL: tempURL, originalURL: remoteURL)
-            
-            DispatchQueue.main.async {
-                self.btnplay.isEnabled = true
-                if let url = permanentURL {
-                    self.waveView.audioURL = url
-                    self.waveView.updateWaveformColor(progress: 0.0)
-                    self.waveView.onDurationUpdate = { [weak self] time in
-                        self?.voiceTiming.text = time
-                    }
-                } else {
-                    self.showErrorAlert(message: "Failed to save audio file")
-                }
-            }
-        }
-        task.resume()
     }
     
     private func saveToPermanentLocation(tempURL: URL, originalURL: URL) -> URL? {
@@ -1875,7 +1808,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         waveView.startPlaybackAnimation()
         updatePlayButtonState(isPlaying: true)
     }
-
+    
     
     private func updatePlayButtonState(isPlaying: Bool) {
         btnplay.isSelected = isPlaying
@@ -1947,7 +1880,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         }else{
             
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.CommunicationTVC, for: indexPath) as? CommunicationTVC else {
-           return UITableViewCell()
+                return UITableViewCell()
             }
             
             let voiceData = VoiceHistory?[indexPath.row]
@@ -1964,7 +1897,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             let duration = voiceData?.duration ?? 0
             let formattedDuration = formatDuration(duration)
             cell.tottalDurationLbl.text = formattedDuration
-                cell.newImageView.isHidden = true
+            cell.newImageView.isHidden = true
             configureAudioCell(cell, at: indexPath)
             
             return cell
@@ -2000,7 +1933,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             cell.cellIndex = indexPath.item
             cell.waveView.setParentCell(cell)
         }
-       
+        
     }
     
     func playTapped(at index: Int) {

@@ -581,7 +581,6 @@ extension SubmitVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
     
     
-    
     func sendAttachment(with uploadedFiles: [[String: String]],iframe:String,file_size:String) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }

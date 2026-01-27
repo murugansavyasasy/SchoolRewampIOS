@@ -175,8 +175,7 @@ class  commonApi_forSending {
         Common_request_params: [String: Any]? = nil,
         isBaseUrls : Bool,
         subjectId: String, onComplete : @escaping(Send_AttachmentResponse) -> Void) {
-            
-            
+        
             var parameters: [String: Any] = [
                 SendAttachmentStringFile.file_path: uploadedFiles,
                 SendAttachmentStringFile.iframe: iframe,
@@ -494,7 +493,10 @@ class  commonApi_forSending {
                         self.uploadedURLs.append(fileURLStr)
                         completed += 1
                         updateAndCheckCompletion(total: total)
-                    } else if let fileURL = URL(string: fileURLStr) {
+                    } else if var fileURL = URL(string: fileURLStr) {
+                        if item.fileType.uppercased() == CommonStringFile.audio.uppercased(){
+                            fileURL = self.fileURL(from: item.imageURL ?? "") ?? fileURL
+                        }
                      AWSUploadManager.shared.uploadFileToAWS(
                             file: fileURL,
                             progressHandler: nil,
@@ -518,5 +520,11 @@ class  commonApi_forSending {
             return
         }
     }
-    
+    func fileURL(from input: String) -> URL? {
+        if input.hasPrefix("file://") {
+            return URL(string: input)
+        } else {
+            return URL(fileURLWithPath: input)
+        }
+    }
 }

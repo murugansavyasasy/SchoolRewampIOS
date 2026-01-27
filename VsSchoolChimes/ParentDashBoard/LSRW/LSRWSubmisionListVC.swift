@@ -310,6 +310,7 @@ class LSRWSubmisionListVC: UIViewController,
                     cell.audioURL = url
                 }
                 cell.audioDelegate = self
+                cell.cellIndex = indexPath.item - 1
                 cell.waveView.setParentCell(cell)
                 return cell
             }

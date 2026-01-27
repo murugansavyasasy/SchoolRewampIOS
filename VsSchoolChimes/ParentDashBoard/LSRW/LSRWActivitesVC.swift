@@ -337,7 +337,6 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                 
                 for urlString in urls {
                     guard let url = URL(string: urlString) else { continue }
-                    
                     let ext = url.pathExtension.lowercased()
                     var type = ""
                     
@@ -512,7 +511,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                     }
                     
                 } else if let fileURLStr = item.imageURL,
-                          let fileURL = URL(string: fileURLStr) {
+                          var fileURL = URL(string: fileURLStr) {
                     
                     if item.fileType.uppercased() == CommonStringFile.VIDEO {
                         if fileURLStr.contains("vimeo.com") {
@@ -555,6 +554,11 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                             completed += 1
                             updateAndCheckCompletion(total: total)
                         } else {
+                            
+                            if item.fileType.uppercased() == CommonStringFile.audio.uppercased(){
+                                fileURL = self.fileURL(from: item.imageURL ?? "") ?? fileURL
+                            }
+                            
                             AWSUploadManager.shared.uploadFileToAWS(
                                 file: fileURL,
                                 progressHandler: { progress in
@@ -565,6 +569,7 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
                                 if let uploadedURL = url {
                                     uploadedURLs.append(uploadedURL)
                                 }
+                                
                                 currentProgressValues[index] = 1.0
                                 completed += 1
                                 updateAndCheckCompletion(total: total)
@@ -583,7 +588,13 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
             completion([], nil, nil, nil)
         }
     }
-    
+    func fileURL(from input: String) -> URL? {
+        if input.hasPrefix("file://") {
+            return URL(string: input)
+        } else {
+            return URL(fileURLWithPath: input)
+        }
+    }
 }
 
 // MARK: - CaptionType Enum
