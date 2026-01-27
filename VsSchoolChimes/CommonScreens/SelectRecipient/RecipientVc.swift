@@ -1709,7 +1709,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     DispatchQueue.main.async {
                         self.alert
                             .showAlert(
-                                title: AlertstringFile.Alert_title,
+                                title: AlertstringFile.Oops,
                                 message: succesmessage.message ?? "" ,
                                 on: self)
                     }
@@ -1718,6 +1718,11 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             case.failure(let error) :
                 DispatchQueue.main.async {
                     print(error.localizedDescription)
+                    self.alert
+                        .showAlert(
+                            title: AlertstringFile.Oops,
+                            message: error.localizedDescription ?? "",
+                            on: self)
                 }
             }
             }
@@ -1777,7 +1782,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             CircularProgressLoader.shared.hide()
                             self.alert
                                 .showAlert(
-                                    title: AlertstringFile.Alert_title,
+                                    title: AlertstringFile.Oops,
                                     message: succesmessage.message ?? "" ,
                                     on: self
                                 )
@@ -1791,7 +1796,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         print(error.localizedDescription)
                         self.alert
                             .showAlert(
-                                title: AlertstringFile.Alert_title,
+                                title: AlertstringFile.Oops,
                                 message: error.localizedDescription ,
                                 on: self
                             )
