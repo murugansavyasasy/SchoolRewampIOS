@@ -544,7 +544,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                             
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: AlertstringFile.Success,
+                                    title: AlertstringFile.Oops,
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) { [self] in
@@ -558,7 +558,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                         print(error.localizedDescription)
                         CustomAlert
                             .showAlertWithOkAction(
-                                title: AlertstringFile.Success,
+                                title: AlertstringFile.Oops,
                                 message: error.localizedDescription,
                                 on: self
                             ) { [self] in
@@ -609,7 +609,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                         DispatchQueue.main.async {
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: AlertstringFile.Success,
+                                    title: AlertstringFile.Oops,
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
@@ -623,7 +623,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                         print(error.localizedDescription)
                         CustomAlert
                             .showAlertWithOkAction(
-                                title: AlertstringFile.Success,
+                                title: AlertstringFile.Oops,
                                 message: error.localizedDescription,
                                 on: self
                             ) {
