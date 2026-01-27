@@ -23,40 +23,45 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
     }
     
     
-    func back(logout: Bool) {
+    func back(logout: Bool, _ viewController: UIViewController) {
         if logout {
-            let userDefaults = UserDefaults.standard
-            userDefaults.set(true, forKey: "Logout")
-            let vc = LogoutViewController(nibName: nil, bundle: nil)
+            UserDefaults.standard.set(true, forKey: "Logout")
+            let vc = LogoutViewController()
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: false)
-        } else {
-            // Check if we can pop from navigation stack
-            //            if let navController = self.navigationController,
-            //               navController.viewControllers.count > 1 {
-            //                navController.popViewController(animated: true)
-            //            } else if let presentingVC = self.presentingViewController {
-            //                // If this controller was presented modally, dismiss it
-            //                self.dismiss(animated: true, completion: nil)
-            //            } else {
-            //                // If neither, pop to root
-            //                self.navigationController?.popToRootViewController(animated: true)
-            //            }
-            
-            
-            if let presentedVC = self.presentedViewController {
+            return
+        }
+        if viewController is CustomDashboard || viewController is CustomParentDashboardVC {
+            tabBar.selectedItem = tabBar.items?[0]
+            handleHomeTabSelection()
+            return
+
+        } else if viewController is HolidayVC {
+            tabBar.selectedItem = tabBar.items?[1]
+            selectViewController(secondVCNav)
+            return
+
+        } else if viewController is SettingsViewController {
+            tabBar.selectedItem = tabBar.items?[2]
+            selectViewController(thirdVCNav)
+            return
+
+        } else if viewController is UpdateProfileVC {
+            tabBar.selectedItem = tabBar.items?[3]
+            selectViewController(fourthVCNav)
+            return
+        }
+        if type(of: viewController) == UIViewController.self {
+            if let presentedVC = presentedViewController {
                 presentedVC.dismiss(animated: false) { [weak self] in
                     self?.presentPriorityVC()
                 }
             } else {
                 presentPriorityVC()
             }
-            
         }
     }
-    
-    
-    
+
     private func presentPriorityVC() {
         let vc = PriorityVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen

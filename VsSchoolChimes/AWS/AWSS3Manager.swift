@@ -59,23 +59,34 @@ class AWSUploadManager {
             fileURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
             try? data.write(to: fileURL!)
         case let url as URL:
-            
             guard FileManager.default.fileExists(atPath: url.path) else {
                 completion(nil)
                 return
             }
-            if isAudioFile(url: url) {
-                let time = Int(Date().timeIntervalSince1970)
-                fileName = "original_\(time).m4a"
-                contentType = "audio/mp4"
-                fileURL = url
-            }
-            else {
-                // Non-audio files
-                let time = Int(Date().timeIntervalSince1970)
-                fileName = "file_\(time).\(url.pathExtension)"
-                contentType = getContentType(from: fileName)
-                fileURL = url
+            if   Menu_id.staffSelectedMenuId == Menu_id.lsrw{
+                if isAudioFile(url: url) {
+                    let timestamp = Int(Date().timeIntervalSince1970 * 1000)
+                    fileName = "\(timestamp).wav"
+                    contentType = "audio/wav"
+                    fileURL = url
+                }else {
+                    let time = Int(Date().timeIntervalSince1970)
+                    fileName = "file_\(time).\(url.pathExtension)"
+                    contentType = getContentType(from: fileName)
+                    fileURL = url
+                }
+            }else{
+                if isAudioFile(url: url) {
+                    let timestamp = Int(Date().timeIntervalSince1970)
+                    fileName = "original_\(timestamp).\(url.pathExtension)"
+                    contentType = "audio/\(url.pathExtension)"
+                    fileURL = url
+                }else {
+                    let time = Int(Date().timeIntervalSince1970)
+                    fileName = "file_\(time).\(url.pathExtension)"
+                    contentType = getContentType(from: fileName)
+                    fileURL = url
+                }
             }
             
         default:
@@ -205,7 +216,7 @@ class AWSUploadManager {
         
         var Bucket = ""
         var Path = ""
-        
+      
         switch Menu_id.staffSelectedMenuId {
             
         case Menu_id.communicationMenuId:

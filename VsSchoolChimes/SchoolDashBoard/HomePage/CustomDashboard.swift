@@ -177,7 +177,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                 if let settingsVC = vc as? SettingsViewController {
                     settingsVC.passVale = 1
                 }
-                self.navigationController?.pushViewController(vc, animated: true)
+                delegate?.back(logout: false, vc)
             } else if vc is LogoutViewController {
                 let userDefaults = UserDefaults.standard
                 userDefaults.set(true, forKey: "Logout")
@@ -187,7 +187,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             }else if vc is CustomDashboard {
                 hideSideMenu()
             }else{
-                delegate?.back(logout: false)
+                delegate?.back(logout: false, UIViewController())
             }
         }
     }

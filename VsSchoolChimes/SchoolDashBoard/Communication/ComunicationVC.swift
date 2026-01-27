@@ -1541,6 +1541,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
         voiceClickView.backgroundColor = .white
         seduleClickView.backgroundColor = .white
         clickTextView.textColor = .white
+        voiceTitleeTxt.endEditing(true)
         clickSchedule.textColor = .black
         clickVoiceLbl.textColor = .black
         voiceBtn.tintColor = .black
@@ -1699,6 +1700,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
             textBtn.tintColor = .black
             scheduleBtn.tintColor = .white
             voiceBtn.tintColor = .black
+            voiceTitleeTxt.endEditing(true)
             ViewAnimator.hideFade(emengencyCall)
             ViewAnimator.hideFade(EnableCallLbl)
         }
@@ -1730,7 +1732,7 @@ var RecordedAudioFormat = "RecordedAudio.m4a"
     
     @IBAction func addFileAction(_ sender: Any) {
         if #available(iOS 14.0, *) {
-            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.wav,.mpeg4Audio])
+            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.wav,.mpeg4Audio,.mp3])
             documentPicker.delegate = self
             documentPicker.allowsMultipleSelection = false
             present(documentPicker, animated: true, completion: nil)

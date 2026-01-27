@@ -8,7 +8,7 @@
 import UIKit
 
 protocol backNavigation {
-    func back(logout:Bool)
+    func back(logout:Bool,_ viewContreoller:UIViewController)
 }
 
 @available(iOS 14.0, *)
@@ -35,7 +35,8 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         hideSideMenu()
         if let vc = viewController {
             if vc is SettingsViewController || vc is UpdateProfileVC || vc is HelpVc {
-                navigationController?.pushViewController(vc, animated: true)
+//                navigationController?.pushViewController(vc, animated: true)
+                delegate?.back(logout: false, vc)
             } else if vc is LogoutViewController {
                 let userDefaults = UserDefaults.standard
                 userDefaults.set(true, forKey: "Logout")
@@ -45,7 +46,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             }else if vc is CustomDashboard {
                 hideSideMenu()
             }else{
-                delegate?.back(logout: false)
+                delegate?.back(logout: false, UIViewController())
             }
         }
     }
