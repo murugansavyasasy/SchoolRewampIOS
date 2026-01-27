@@ -28,16 +28,9 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
     var delete:Bool?
     var selectedId:String?
     private weak var parentTableView: UITableView?
+    var dateAndTimeForVideo : String?
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        // Initialization code
-        
-//        cellView.layer.cornerRadius = 10
-//        cellView.layer.shadowColor = UIColor.black.cgColor
-//        cellView.layer.shadowOffset = CGSize(width: 0, height: 2)
-//        cellView.layer.shadowRadius = 5
-//        cellView.layer.shadowOpacity = 0.3
         
         roundView.layer.cornerRadius = roundView.frame.width/2
         
@@ -98,15 +91,6 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
         editAndDeleteBtnName.isHidden = !(edit || delete)
     }
     
-    
-   
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        descriptionLbl.preferredMaxLayoutWidth = descriptionLbl.frame.width
-//        cv.layoutIfNeeded()
-//        cvHeight.constant = cv.contentSize.height
-//    }
-
     private func updateCollectionHeight() {
         self.cv.layoutIfNeeded()
         let newHeight = self.cv.collectionViewLayout.collectionViewContentSize.height
@@ -123,32 +107,7 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
         super.layoutSubviews()
         self.cv.collectionViewLayout.invalidateLayout()
         self.cv.layoutIfNeeded()
-        //self.updateCollectionHeight()
     }
-
-//    func configureCell(with files: [FilePath]?,
-//                       title: String,
-//                       description: String,
-//                       date: String,
-//                       sendBy: String,
-//                       isunread: Bool,
-//                       parentTableView: UITableView) {
-//        
-//        self.titleLbl.text = title
-//        self.sendByLbl.text = sendBy
-//        self.dateLbl.text = date
-//        self.roundView.isHidden = !isunread
-//        self.attachmentFiles = files
-//        self.parentTableView = parentTableView
-//
-//        // Reload and force layout updates for collection view
-//        DispatchQueue.main.async {
-//            self.cv.reloadData()
-//            self.cv.collectionViewLayout.invalidateLayout()
-//            self.cv.layoutIfNeeded()
-//            self.updateCollectionHeight()
-//        }
-//    }
 
     func configureCell(with files: [FilePath]?,
                        title: String,
@@ -156,6 +115,7 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
                        date: String,
                        sendBy: String,
                        isunread: Bool,
+                       dateAndTimeForVideo :String,
                        parentTableView: UITableView) {
         
         titleLbl.text = title
@@ -164,7 +124,7 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
         roundView.isHidden = !isunread
         attachmentFiles = files
         self.parentTableView = parentTableView
-
+        self.dateAndTimeForVideo = dateAndTimeForVideo
         cv.reloadData()
         cv.setNeedsLayout()
         cv.layoutIfNeeded()
@@ -175,16 +135,6 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
             self.updateCollectionHeight()
         }
     }
-
-
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return attachmentFiles?.count ?? 0
     }
@@ -274,13 +224,11 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
             let homeworkDocs = attachmentFiles ?? []
             imageVC.fileURL = homeworkDocs
             imageVC.subjectName = MenuStringFile.selectedMenuName
+            imageVC.dateAndTimeForVideo = dateAndTimeForVideo ?? ""
             imageVC.pdfUrl = file.url
             imageVC.scrollIndex = indexPath
             imageVC.index = indexPath.row
-//            imageVC.type = isImage ? 2 : 0
-            
             imageVC.modalPresentationStyle = .fullScreen
-//            imageVC.FileURL = attachmetList ?? []
             let currentController = getCurrentViewController()
             currentController?.present(imageVC, animated: true)
         
