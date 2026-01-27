@@ -43,6 +43,12 @@ class ImageShowCVCell: UICollectionViewCell, UIScrollViewDelegate {
         return imageView
     }
 
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        UIView.animate(withDuration: 0.15) {
+            self.FulView.layer.borderWidth = scrollView.zoomScale <= 1.0 ? 1 : 0
+        }
+    }
+
     @objc func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
         if scrollView.zoomScale == 1.0 {
             FulView.layer.borderWidth = 0

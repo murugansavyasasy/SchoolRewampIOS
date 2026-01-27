@@ -627,8 +627,7 @@ class SplashVC: UIViewController, ViewAttachments, DismissDelegate {
                         }
                             if self.versionData?.update_available == true{
                                 self.showUpdatePopup()
-                            }
-                        else {
+                            }else {
                                 self.appFlowChecking()
                             }
                     } else {

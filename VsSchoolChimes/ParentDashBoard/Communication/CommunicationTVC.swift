@@ -109,8 +109,6 @@ class CommunicationTVC: UITableViewCell {
         let fileManager = FileManager.default
         let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let audioFolderPath = documentsPath.appendingPathComponent("AudioFiles", isDirectory: true)
-        
-        // Create directory if needed
         if !fileManager.fileExists(atPath: audioFolderPath.path) {
             try? fileManager.createDirectory(at: audioFolderPath, withIntermediateDirectories: true)
         }
