@@ -105,18 +105,18 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         Tv.dataSource = self
         Tv.delegate = self
         
-        let currentDate = Date()
-        let calendar = Calendar.current
-
-        let month = String(calendar.component(.month, from: currentDate))
-        let year = String(calendar.component(.year, from: currentDate))
-
-        self.month = month
-        self.year = year
-        print(month) // e.g. "4"
-        print(year)  // e.g. "2025"
-
-        Absentees_Response()
+//        let currentDate = Date()
+//        let calendar = Calendar.current
+//
+//        let month = String(calendar.component(.month, from: currentDate))
+//        let year = String(calendar.component(.year, from: currentDate))
+//
+//        self.month = month
+//        self.year = year
+//        print(month) // e.g. "4"
+//        print(year)  // e.g. "2025"
+//
+//        Absentees_Response()
     }
     
     @IBAction func BackAct() {

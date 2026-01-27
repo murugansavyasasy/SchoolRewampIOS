@@ -389,7 +389,7 @@ class  commonApi_forSending {
                     //                    CircularProgressLoader.shared.updateProgress(to: progress)
                     
                     if completed == total {
-                        //                        CircularProgressLoader.shared.hide()
+//                        CircularProgressLoader.shared.hide()
                         completion()
                     }
                 }

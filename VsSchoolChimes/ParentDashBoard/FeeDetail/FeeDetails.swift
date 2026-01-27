@@ -187,11 +187,11 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = feeDetailTableView.dequeueReusableCell(withIdentifier: CellConfingName.FeedetailTVC, for: indexPath) as! FeedetailTVC
         let feeDetail = feeDetailsList[indexPath.row]
-        cell.invoceNo.text = "InvoiceNo: \(feeDetail.invoice_no ?? "")"
+        cell.invoceNo.text = "Receipt No: \(feeDetail.invoice_no ?? "")"
         let result = extractDateAndTime(from: feeDetail.invoice_date ?? "")
         cell.invoceDate.text = "\(result.date ?? "") \(result.time ?? "")"
         cell.timeLbl.text = result.time
-        cell.invoceAmount.text = "Invoice Amount: \(feeDetail.invoice_amount ?? "")"
+        cell.invoceAmount.text = "Paid Amount: \(feeDetail.invoice_amount ?? "")"
         let iconImage = UIImage(named: "pdf (1)")
         cell.document.image = iconImage
         return cell

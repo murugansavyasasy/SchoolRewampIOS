@@ -184,14 +184,38 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
                     self.collectionView.reloadData()
                     DispatchQueue.main.async {
                         if self.clickedMessageId != "" {
-                            if let index = self.searchData.firstIndex(
-                                where: { $0.id == self.clickedMessageId
-                                }) {
+                            if let index = self.searchData.firstIndex(where: { $0.id == self.clickedMessageId }) {
+
                                 let indexPath = IndexPath(item: index, section: 0)
-                                self.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+
+                                // Scroll to item
+                                self.collectionView.scrollToItem(
+                                    at: indexPath,
+                                    at: .centeredVertically,
+                                    animated: true
+                                )
+
+                                // Ensure the cell is visible before accessing it
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                    if let cell = self.collectionView.cellForItem(at: indexPath) {
+
+                                        UIView.animate(withDuration: 0.3, animations: {
+                                            cell.contentView.backgroundColor =
+                                                UIColor.notificationLandingClr.withAlphaComponent(0.3)
+                                        }) { _ in
+                                            UIView.animate(
+                                                withDuration: 0.5,
+                                                delay: 5.0,
+                                                options: []
+                                            ) {
+                                                cell.contentView.backgroundColor = .white
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                            
                         }
+
                     }
                     if successResponse.status == true{
                         if user_inputs.clearTempData(){
@@ -208,6 +232,7 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
             }
         }
     }
+    
     
         func paketApiCall(params:[String:Any]){
             APIService.shared.makeApi(

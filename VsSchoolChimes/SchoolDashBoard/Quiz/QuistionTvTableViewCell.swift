@@ -390,7 +390,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         if totalQuestion == numberofQuestion {
             addAnotherName.isHidden = true
         }else {
-            addAnotherName.isHidden = !(isLast)
+            addAnotherName.isHidden = true//!(isLast)
         }
         checkBoxBtn.isHidden = true
         [opATxtView, opBTxtView, opCTxtView, opDTxtView, questionTxtView].forEach { tv in
@@ -495,7 +495,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         }
     }
     func configureCell(isLast: Bool) {
-        addAnotherName.isHidden = !isLast
+        addAnotherName.isHidden = true//!isLast
     }
     
     @IBAction func AddAnotherAct(_ sender: UIButton) {

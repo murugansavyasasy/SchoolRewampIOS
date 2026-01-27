@@ -52,7 +52,7 @@ class LocationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let segments = ["Punch In".translated(), "Reports".translated()]
+        let segments = ["Punch".translated(), "Reports".translated()]
         SegmentControl.removeAllSegments()
         segments.enumerated().forEach {
             SegmentControl.insertSegment(withTitle: $1, at: $0, animated: false)

@@ -41,23 +41,29 @@ class CommunicationTVC: UITableViewCell {
    weak var selectedAudioDelegate: selectedAudio?
     // MARK: - Properties
     var cellIndex: Int = 0
-    private let audioManager = AudioManager()
+//    private let audioManager = AudioManager()
 
-    var audioURL: URL?
+    var audioURL: URL?{
+        didSet {
+            guard let url = audioURL else { return }
+                waveView.audioURL = url
+        }
+    }
 
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
         setupNotifications()
+        waveView.setParentCell(self)
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
         stopPlayback()
-        audioManager.stop()
+//        audioManager.stop()
         waveView.reset()
-        waveView.audioURL = nil
+        audioURL = nil
         runningDurationLbl.text = "00:00"
         tottalDurationLbl.text = "00:00"
         playBtn.isSelected = false
@@ -98,58 +104,6 @@ class CommunicationTVC: UITableViewCell {
         )
     }
 
-    // MARK: - Audio Setup
-    private func prepareLocalAudio(url: URL) {
-        do {
-            try audioManager.setupPlayer(with: url)
-            waveView.audioURL = url
-        } catch {
-            showErrorAlert(message: "Failed to load audio file")
-        }
-    }
-
-    private func downloadAndPrepareAudio(from remoteURL: URL) {
-        // Show loading state
-        playBtn.isEnabled = false
-        
-        let session = URLSession.shared
-        let task = session.downloadTask(with: remoteURL) { [weak self] (tempURL, response, error) in
-            guard let self = self else { return }
-            
-            if let error = error {
-                print("Download error: \(error.localizedDescription)")
-                DispatchQueue.main.async {
-                    self.playBtn.isEnabled = true
-                    self.showErrorAlert(message: "Audio download failed.")
-                }
-                return
-            }
-            
-            guard let tempURL = tempURL else {
-                DispatchQueue.main.async {
-                    self.playBtn.isEnabled = true
-                    self.showErrorAlert(message: "Audio download failed.")
-                }
-                return
-            }
-            
-            // Save to permanent location
-            let permanentURL = self.saveToPermanentLocation(tempURL: tempURL, originalURL: remoteURL)
-            
-            DispatchQueue.main.async {
-                self.playBtn.isEnabled = true
-                if let url = permanentURL {
-                    self.waveView.audioURL = url
-                    self.waveView.onDurationUpdate = { [weak self] time in
-                        self?.runningDurationLbl.text = time
-                    }
-                } else {
-                    self.showErrorAlert(message: "Failed to save audio file")
-                }
-            }
-        }
-        task.resume()
-    }
     
     private func saveToPermanentLocation(tempURL: URL, originalURL: URL) -> URL? {
         let fileManager = FileManager.default
@@ -189,34 +143,26 @@ class CommunicationTVC: UITableViewCell {
         }
     }
     private func startPlayback() {
-        guard let url = audioURL else {
-            print("❌ Audio URL nil")
+        guard waveView.audioURL != nil else {
+            showErrorAlert(message: "Audio not loaded yet")
             return
         }
         NotificationCenter.default.post(
             name: NSNotification.Name("AudioCellStartedPlaying"),
             object: cellIndex
         )
-
-        do {
-            try audioManager.setupPlayer(with: url)
-            try audioManager.play()
-
-            waveView.audioURL = url
-            waveView.isPlaying = true
-            waveView.startPlaybackAnimation()
-            updatePlayButtonState(isPlaying: true)
-
-        } catch {
-            print("❌ Play error:", error)
-            showErrorAlert(message: "Unable to play audio")
+        audioDelegate?.audioCell(self, willStartPlayingAtIndex: cellIndex)
+        self.waveView.onDurationUpdate = { [weak self] time in
+            self?.runningDurationLbl.text = time
         }
+        waveView.isPlaying = true
+        waveView.startPlaybackAnimation()
+        updatePlayButtonState(isPlaying: true)
     }
 
 
 
     func stopPlayback() {
-        audioManager.stop()
         waveView.isPlaying = false
         waveView.stopPlaybackAnimation()
         updatePlayButtonState(isPlaying: false)

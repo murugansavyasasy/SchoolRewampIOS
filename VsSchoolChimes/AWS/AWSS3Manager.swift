@@ -59,6 +59,7 @@ class AWSUploadManager {
             fileURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
             try? data.write(to: fileURL!)
         case let url as URL:
+            
             guard FileManager.default.fileExists(atPath: url.path) else {
                 completion(nil)
                 return
