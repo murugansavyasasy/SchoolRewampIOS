@@ -57,15 +57,15 @@ extension TextMessageVC : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if IsSelectedHistory{
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
-            cell.descriptContent
-                .setupExpandable(
-                    text: TextHistory?[indexPath.row].content ?? ""
-                )
-            cell.descriptContent.onExpandableTap = {
-                cell.descriptContent.isExpanded.toggle()
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
+//            cell.descriptContent
+//                .setupExpandable(
+//                    text: TextHistory?[indexPath.row].content ?? ""
+//                )
+//            cell.descriptContent.onExpandableTap = {
+//                cell.descriptContent.isExpanded.toggle()
+//                tableView.beginUpdates()
+//                tableView.endUpdates()
+//            }
             cell.descriptiontext = TextHistory?[indexPath.row].content ?? ""
             cell.MessageTitle.text = TextHistory?[indexPath.row].title
             cell.delegate = self

@@ -49,6 +49,7 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     var SubjectList : [SubjectExamData] = []
     var is_aiViewCliked : Bool = false
     var SelectedExam : StaffExamData?
+    var section_id : String?
     private var selectedImageData: Data?
     private var selectedImage: UIImage?
     var academicYearId: Int?
@@ -265,8 +266,10 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     
     @IBAction func ContinueManuallyAct(_ sender: Any) {
         hidePopup()
+        manualView.layer.borderColor = UIColor.systemGray5.cgColor
         let vc = ExamActivitySelectionVC()
         vc.ExamID = SelectedExam?.id ?? ""
+        vc.section_Id = section_id ?? ""
         vc.academicYearId = academicYearId
         vc.isAIFlow = false
         vc.SelectedExam = SelectedExam

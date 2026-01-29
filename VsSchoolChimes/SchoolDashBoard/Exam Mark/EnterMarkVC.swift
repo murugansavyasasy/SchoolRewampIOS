@@ -1145,6 +1145,7 @@ struct ActivityMark: Codable {
     let name: String?
     var mark: String?
     let max_mark: String?
+    let is_edit: Bool?
     var selected_name: String?
     var change_mark: String?
     var isReview: Bool?

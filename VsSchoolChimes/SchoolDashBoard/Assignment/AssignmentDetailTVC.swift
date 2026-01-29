@@ -15,7 +15,7 @@ protocol AssignmentDetailTVCDelegate: AnyObject {
 class AssignmentDetailTVC: UITableViewCell {
     
     // MARK: - IBOutlets
-    @IBOutlet weak var descriptionLbl: UILabel!
+    @IBOutlet weak var descriptionLbl: UITextView!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var attachmentLbl: UILabel!
     @IBOutlet weak var attachmentCollectionView: UICollectionView!
@@ -28,6 +28,9 @@ class AssignmentDetailTVC: UITableViewCell {
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
+        descriptionLbl.isScrollEnabled = false
+        descriptionLbl.textContainerInset = .zero
+        descriptionLbl.textContainer.lineFragmentPadding = 0
         setupCollectionView()
     }
     

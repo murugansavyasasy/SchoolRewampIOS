@@ -1862,16 +1862,25 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tittlemessage.text == CommonStringFile.TextMessage.translated(){
             let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
-            cell.descriptContent
-                .setupExpandable(
-                    text: TextHistory?[indexPath.row].content ?? ""
-                )
-            cell.descriptContent.onExpandableTap = {
-                cell.descriptContent.isExpanded.toggle()
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
+//            cell.descriptContent
+//                .setupExpandable(
+//                    text: TextHistory?[indexPath.row].content ?? ""
+//                )
+//            cell.descriptContent.onExpandableTap = {
+//                cell.descriptContent.isExpanded.toggle()
+//                tableView.beginUpdates()
+//                tableView.endUpdates()
+//            }
             cell.descriptiontext = TextHistory?[indexPath.row].content ?? ""
+            
+            cell.descriptContent.delegate = self
+            cell.descriptContent.tag = indexPath.row
+
+            cell.descriptContent.attributedText = descript(
+                for: TextHistory?[indexPath.row].content ?? "",
+                expanded: TextHistory?[indexPath.row].isExpand ?? false
+            )
+            
             cell.MessageTitle.text = TextHistory?[indexPath.row].title
             cell.delegate = self
             DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
@@ -1890,6 +1899,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
                 }
                 cell.DateLabel.attributedText = attributedText
             }
+           // cell.descriptContent.enableLinkDetection()
             return cell
             
         }else{
@@ -2178,6 +2188,60 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func descript(
+        for fullDescription: String,
+        expanded: Bool
+    ) -> NSAttributedString {
+
+        let threshold = 120
+        let isLong = fullDescription.count > threshold
+
+        var displayText = fullDescription
+        var actionText: String?
+        var actionURL: String?
+
+        if isLong {
+            if expanded {
+                actionText = "See less"
+                actionURL = "app://seeLess"
+            } else {
+                displayText = String(fullDescription.prefix(threshold))
+                actionText = "See more"
+                actionURL = "app://seeMore"
+            }
+        }
+
+        let finalString = actionText == nil
+            ? displayText
+            : displayText + " " + actionText!
+
+        // 🔥 Base font applied to entire string
+        let baseFont = UIFont(name: "Poppins-Medium", size: 13)
+            ?? UIFont.systemFont(ofSize: 13, weight: .medium)
+
+        let attributed = NSMutableAttributedString(
+            string: finalString,
+            attributes: [
+                .font: baseFont,
+                .foregroundColor: UIColor.label
+            ]
+        )
+
+        // 🔥 Only override action text
+        if let action = actionText,
+           let url = actionURL {
+
+            let range = (finalString as NSString).range(of: action)
+            attributed.addAttributes([
+                .link: URL(string: url)!,
+                .foregroundColor: UIColor.link
+            ], range: range)
+        }
+
+        return attributed
+    }
+
 }
 
 extension ComunicationVC: UITextFieldDelegate, UITextViewDelegate {
@@ -2196,6 +2260,49 @@ extension ComunicationVC: UITextFieldDelegate, UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         activeField = nil
     }
+    
+    func textView(
+        _ textView: UITextView,
+        shouldInteractWith URL: URL,
+        in characterRange: NSRange,
+        interaction: UITextItemInteraction
+    ) -> Bool {
+
+        // REAL URLs → let UIKit open them
+        if URL.scheme == "http" || URL.scheme == "https" {
+            return true
+        }
+
+        let index = textView.tag
+        guard var message = TextHistory?[index],
+              let fullText = message.content else {
+            return false
+        }
+
+        switch URL.absoluteString {
+        case "app://seeMore":
+            message.isExpand = true
+
+        case "app://seeLess":
+            message.isExpand = false
+
+        default:
+            return false
+        }
+
+        TextHistory?[index] = message
+
+        textView.attributedText = descript(
+            for: fullText,
+            expanded: message.isExpand ?? false
+        )
+
+        historytable.beginUpdates()
+        historytable.endUpdates()
+
+        return false
+    }
+
 }
 
 extension AVPlayer {
