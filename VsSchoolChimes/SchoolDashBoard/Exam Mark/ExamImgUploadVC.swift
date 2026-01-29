@@ -265,6 +265,7 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     
     @IBAction func ContinueManuallyAct(_ sender: Any) {
         hidePopup()
+        manualView.layer.borderColor = UIColor.systemGray5.cgColor
         let vc = ExamActivitySelectionVC()
         vc.ExamID = SelectedExam?.id ?? ""
         vc.academicYearId = academicYearId

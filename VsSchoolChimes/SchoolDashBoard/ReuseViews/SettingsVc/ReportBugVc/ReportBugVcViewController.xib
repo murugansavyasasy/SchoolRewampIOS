@@ -13,11 +13,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReportBugVcViewController" customModule="School_Chimes" customModuleProvider="target">
             <connections>
-                <outlet property="AttachmentView" destination="cwQ-w9-oKP" id="Udf-hT-o2D"/>
                 <outlet property="BackBtn" destination="0GI-RM-qsb" id="MDj-8R-Xlf"/>
                 <outlet property="BugsTextview" destination="jM9-T9-Jfa" id="NXb-sI-ssP"/>
                 <outlet property="ModuleDropDown" destination="dNE-co-qhR" id="b5F-qx-568"/>
-                <outlet property="collectionViewHeight" destination="bxV-SK-p1G" id="1h6-Ui-VNh"/>
                 <outlet property="noteView" destination="S8e-SL-2ns" id="4fX-Ed-1WA"/>
                 <outlet property="outerView" destination="saK-iD-kGY" id="e1t-Vr-siP"/>
                 <outlet property="remarkDefaultLbl" destination="uo8-qH-x4w" id="YHg-q6-uBL"/>
@@ -25,6 +23,7 @@
                 <outlet property="selectDefaultLbl" destination="wyz-2C-SR1" id="SEZ-dT-h02"/>
                 <outlet property="selectModuleLbl" destination="YAJ-9I-Bor" id="i3L-ZI-ZSF"/>
                 <outlet property="sendBtn" destination="l7M-L4-UsU" id="qVf-2B-VJN"/>
+                <outlet property="textViewHeight" destination="r9F-Cv-3JA" id="Jo0-5d-VhM"/>
                 <outlet property="textViewStack" destination="dfE-vw-itN" id="o0M-gR-vfE"/>
                 <outlet property="topView" destination="QNo-Ss-75G" id="HVm-9f-RLV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -138,37 +137,6 @@
                                                 </textView>
                                             </subviews>
                                         </stackView>
-                                        <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="5FR-nx-9Nq">
-                                            <rect key="frame" x="0.0" y="315" width="363" height="155"/>
-                                            <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fR9-vu-132">
-                                                    <rect key="frame" x="0.0" y="0.0" width="363" height="20"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Attachment (Optional?)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uqd-oF-JYf">
-                                                            <rect key="frame" x="0.0" y="0.0" width="343" height="20"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="attachment (1)" translatesAutoresizingMaskIntoConstraints="NO" id="0uA-Aw-WKk">
-                                                            <rect key="frame" x="343" y="0.0" width="20" height="20"/>
-                                                            <color key="tintColor" systemColor="systemGreenColor"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="20" id="B1v-8P-ddc"/>
-                                                                <constraint firstAttribute="height" constant="20" id="cHp-r4-UeC"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                    </subviews>
-                                                </stackView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cwQ-w9-oKP" customClass="ImageSelection" customModule="School_Chimes" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="25" width="363" height="130"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="130" id="bxV-SK-p1G"/>
-                                                    </constraints>
-                                                </view>
-                                            </subviews>
-                                        </stackView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S8e-SL-2ns">
                                             <rect key="frame" x="0.0" y="325" width="363" height="121.66666666666669"/>
                                             <subviews>
@@ -241,7 +209,6 @@
         </view>
     </objects>
     <resources>
-        <image name="attachment (1)" width="24" height="24"/>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="envelope" catalog="system" width="128" height="85"/>
@@ -256,9 +223,6 @@
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

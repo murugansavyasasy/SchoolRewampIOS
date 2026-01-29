@@ -677,7 +677,6 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.sendBtn.isHidden = true
             cell.NewImageView.isHidden = true
             cell.descriptContent.tag = indexPath.row
-            cell.descriptContent.isUserInteractionEnabled = true
             cell.PostedByLbl.isHidden = false
             cell.PostedByLbl.text = "Posted By - \(message.sent_by ?? "")"
             cell.MessageTitle.text = message.title
@@ -688,8 +687,8 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
                 expanded: message.isExpand ?? false,
                 isUnread: message.is_unread ?? false
             )
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleLabelTap(_:)))
-            cell.descriptContent.addGestureRecognizer(tapGesture)
+//            cell.descriptContent.text = message.content
+            cell.descriptContent.delegate = self
             cell.layoutIfNeeded()
             cell.configureShimmer()
             if message.is_unread == true{
@@ -872,59 +871,122 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     
     
     
+//    func descript(
+//        for fullDescription: String,
+//        expanded: Bool,
+//        isUnread: Bool
+//    ) -> NSAttributedString {
+//        
+//        let threshold = 120
+//        let isLong = fullDescription.count > threshold
+//        
+//        var displayText = fullDescription
+//        var actionText: String?
+//        
+//        // UNREAD: always collapsed + "View"
+//        if isUnread {
+//            if isLong {
+//                displayText = String(fullDescription.prefix(threshold))
+//            }
+//            actionText = "View"
+//        }
+//        // READ
+//        else {
+//            if isLong {
+//                if expanded {
+//                    displayText = fullDescription
+//                    actionText = "See less"
+//                } else {
+//                    displayText = String(fullDescription.prefix(threshold))
+//                    actionText = "See more"
+//                }
+//            } else {
+//                // Short text, read → show nothing extra
+//                displayText = fullDescription
+//            }
+//        }
+//        
+//        let finalString: String
+//        if let action = actionText {
+//            finalString = displayText + " " + action
+//        } else {
+//            finalString = displayText
+//        }
+//        
+//        let attributed = NSMutableAttributedString(string: finalString)
+//        
+//        if let action = actionText {
+//            let range = (finalString as NSString).range(of: action)
+//            attributed.addAttribute(.foregroundColor, value: UIColor.link, range: range)
+//        }
+//        
+//        return attributed
+//    }
+//
+    
     func descript(
         for fullDescription: String,
         expanded: Bool,
         isUnread: Bool
     ) -> NSAttributedString {
-        
+
         let threshold = 120
         let isLong = fullDescription.count > threshold
-        
+
         var displayText = fullDescription
         var actionText: String?
-        
-        // UNREAD: always collapsed + "View"
+        var actionURL: String?
+
         if isUnread {
             if isLong {
                 displayText = String(fullDescription.prefix(threshold))
             }
             actionText = "View"
-        }
-        // READ
-        else {
+            actionURL = "app://view"
+        } else {
             if isLong {
                 if expanded {
                     displayText = fullDescription
                     actionText = "See less"
+                    actionURL = "app://seeLess"
                 } else {
                     displayText = String(fullDescription.prefix(threshold))
                     actionText = "See more"
+                    actionURL = "app://seeMore"
                 }
-            } else {
-                // Short text, read → show nothing extra
-                displayText = fullDescription
             }
         }
-        
-        let finalString: String
-        if let action = actionText {
-            finalString = displayText + " " + action
-        } else {
-            finalString = displayText
-        }
-        
-        let attributed = NSMutableAttributedString(string: finalString)
-        
-        if let action = actionText {
+
+        let finalString = actionText == nil
+            ? displayText
+            : displayText + " " + actionText!
+
+        // 🔥 APPLY BASE FONT TO ENTIRE STRING
+        let baseFont = UIFont(name: "Poppins-Medium", size: 13)
+            ?? UIFont.systemFont(ofSize: 13, weight: .medium)
+
+        let attributed = NSMutableAttributedString(
+            string: finalString,
+            attributes: [
+                .font: baseFont,
+                .foregroundColor: UIColor.label
+            ]
+        )
+
+        // 🔥 OVERRIDE ONLY THE ACTION TEXT
+        if let action = actionText,
+           let url = actionURL {
+
             let range = (finalString as NSString).range(of: action)
-            attributed.addAttribute(.foregroundColor, value: UIColor.link, range: range)
+            attributed.addAttributes([
+                .link: URL(string: url)!,
+                .foregroundColor: UIColor.link
+            ], range: range)
         }
-        
+
         return attributed
     }
-    
-    
+
     
     // Method to load the footer from nib and set it as tableFooterView
     func setupTableFooter() {
@@ -1141,4 +1203,70 @@ extension Array where Element == CommunicationReciverData {
             return matchesType && matchesReadStatus
         }
     }
+}
+
+extension ParentCommunicationVc: UITextViewDelegate {
+
+    func textView(
+        _ textView: UITextView,
+        shouldInteractWith URL: URL,
+        in characterRange: NSRange,
+        interaction: UITextItemInteraction
+    ) -> Bool {
+
+        // REAL LINKS → let UIKit handle
+        if URL.scheme == "http" || URL.scheme == "https" {
+            return true
+        }
+
+        let indexPath = IndexPath(row: textView.tag, section: 0)
+        var message = displayedMessages[indexPath.row]
+
+        guard let fullDescription = message.content else { return false }
+
+        let threshold = 120
+        let isLong = fullDescription.count > threshold
+
+        switch URL.absoluteString {
+
+        case "app://view":
+            message.is_unread = false
+            message.isExpand = isLong
+
+            if message.is_archive ?? false {
+                ReadStatusUpdateArchive(type: message.type ?? "", detail_id: message.id ?? "")
+            } else {
+                ReadStatusUpdate(type: message.type ?? "", detail_id: message.id ?? "")
+            }
+
+        case "app://seeMore":
+            message.isExpand = true
+
+        case "app://seeLess":
+            message.isExpand = false
+
+        default:
+            return false
+        }
+
+        displayedMessages[indexPath.row] = message
+
+        textView.attributedText = descript(
+            for: fullDescription,
+            expanded: message.isExpand ?? false,
+            isUnread: message.is_unread ?? false
+        )
+
+        if let cell = tv.cellForRow(at: indexPath) as? TextHistoryTVCell {
+            cell.NewImageView.isHidden = true
+            cell.newImageOuterView.isHidden = true
+        }
+
+        tv.beginUpdates()
+        tv.endUpdates()
+
+        return false
+    }
+
+
 }

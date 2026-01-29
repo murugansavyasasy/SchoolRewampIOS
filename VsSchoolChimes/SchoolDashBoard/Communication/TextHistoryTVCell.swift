@@ -25,7 +25,7 @@ class TextHistoryTVCell: UITableViewCell {
     @IBOutlet weak var sendBtnWidth: NSLayoutConstraint!
     @IBOutlet weak var DateLabel: ShimmerLabel!
     @IBOutlet weak var MessageTitle: ShimmerLabel!
-    @IBOutlet weak var descriptContent: ShimmerLabel!
+    @IBOutlet weak var descriptContent: UITextView!
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var outerview: ShimmerView2!
     @IBOutlet weak var PostedByLbl: UILabel!
@@ -39,6 +39,16 @@ class TextHistoryTVCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+         // 🔥 REQUIRED
+        descriptContent.isScrollEnabled = false
+        descriptContent.dataDetectorTypes = [.link]   // 🔥 REQUIRED
+        
+        descriptContent.textContainerInset = .zero
+        descriptContent.textContainer.lineFragmentPadding = 0
+        
+        descriptContent.setContentHuggingPriority(.required, for: .vertical)
+        descriptContent.setContentCompressionResistancePriority(.required, for: .vertical)
+        
         outerview.layer.shadowColor = UIColor.black.cgColor
         outerview.layer.shadowOffset = CGSize(width: 0, height: 2)
         outerview.layer.shadowRadius = 5
@@ -49,17 +59,17 @@ class TextHistoryTVCell: UITableViewCell {
         DateLabel.removeShimmer()
         DateLabel.setFont(style: .body, size: FontSize.BodySize)
         MessageTitle.setFont(style: .title, size: FontSize.TitleSize)
-        descriptContent.setFont(style: .body, size: FontSize.BodySize)
+        descriptContent.font = UIFont(name: "Poppins-Medium", size: 16) ?? UIFont.systemFont(ofSize: 16)
         PostedByLbl.setFont(style: .body, size: FontSize.BodySize)
         PostedByLbl.isHidden = true
         sendBtn.isHidden = true
-        setupTapGesture()
+       // setupTapGesture()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         // Assuming 'myLabel' is your UILabel
-        descriptContent.preferredMaxLayoutWidth = descriptContent.frame.width
+//        descriptContent.preferredMaxLayoutWidth = descriptContent.frame.width
         configureShimmer()
     }
     
@@ -69,7 +79,7 @@ class TextHistoryTVCell: UITableViewCell {
     func configureShimmer() {
         MessageTitle.removeShimmer()
         DateLabel.removeShimmer()
-        descriptContent.removeShimmer()
+       
         outerview.removeShimmer()
         sendBtn.isHidden = false
     }
@@ -78,7 +88,7 @@ class TextHistoryTVCell: UITableViewCell {
         self.fullText = text
         self.isExpanded = expanded
         self.descriptContent.attributedText = getAttributedText(for: text, expanded: expanded)
-        self.descriptContent.numberOfLines = expanded ? 0 : (text.count > 120 ? 3 : 0)
+       // self.descriptContent.numberOfLines = expanded ? 0 : (text.count > 120 ? 3 : 0)
         self.NewImageView.isHidden = !isUnread
         self.newImageOuterView.isHidden = !isUnread
     }
@@ -100,9 +110,9 @@ class TextHistoryTVCell: UITableViewCell {
         guard let target = keyword else { return }
         
         let tapRange = (text as NSString).range(of: target)
-        if gesture.didTapAttributedTextInLabel(label: descriptContent, inRange: tapRange) {
-            ExpandDelegate?.didTapExpand(in: self)
-        }
+//        if gesture.didTapAttributedTextInLabel(label: descriptContent, inRange: tapRange) {
+//            ExpandDelegate?.didTapExpand(in: self)
+//        }
     }
     
     

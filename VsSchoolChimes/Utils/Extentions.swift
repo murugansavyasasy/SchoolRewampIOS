@@ -1212,3 +1212,86 @@ class LocalizationLabel: UILabel {
         self.text = key.translated()
     }
 }
+
+
+import UIKit
+
+extension UILabel {
+
+    func enableLinkDetection() {
+        guard let text = self.text else { return }
+
+        let attributedText = NSMutableAttributedString(string: text)
+        let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+
+        detector?.enumerateMatches(in: text, options: [], range: NSRange(location: 0, length: text.utf16.count)) { match, _, _ in
+            guard let match = match, let url = match.url else { return }
+
+            attributedText.addAttributes([
+                .foregroundColor: UIColor.systemBlue,
+                .underlineStyle: NSUnderlineStyle.single.rawValue
+            ], range: match.range)
+
+            attributedText.addAttribute(.link, value: url, range: match.range)
+        }
+
+        self.attributedText = attributedText
+        self.isUserInteractionEnabled = true
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleLabelTap(_:)))
+        self.addGestureRecognizer(tap)
+    }
+
+    @objc private func handleLabelTap(_ gesture: UITapGestureRecognizer) {
+        guard let attributedText = self.attributedText else { return }
+
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: self.bounds.size)
+        let textStorage = NSTextStorage(attributedString: attributedText)
+
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+
+        textContainer.lineFragmentPadding = 0
+        textContainer.maximumNumberOfLines = self.numberOfLines
+        textContainer.lineBreakMode = self.lineBreakMode
+
+        // Force layout
+        layoutManager.ensureLayout(for: textContainer)
+
+        // 🔴 ACTUAL text rect inside UILabel
+        let textBoundingBox = layoutManager.usedRect(for: textContainer)
+
+        // 🔴 Horizontal alignment correction
+        var xOffset: CGFloat = 0
+        switch self.textAlignment {
+        case .center:
+            xOffset = (self.bounds.width - textBoundingBox.width) / 2 - textBoundingBox.origin.x
+        case .right:
+            xOffset = self.bounds.width - textBoundingBox.width - textBoundingBox.origin.x
+        default:
+            xOffset = -textBoundingBox.origin.x
+        }
+
+        // 🔴 Vertical centering correction
+        let yOffset = (self.bounds.height - textBoundingBox.height) / 2 - textBoundingBox.origin.y
+
+        let location = gesture.location(in: self)
+        let correctedLocation = CGPoint(
+            x: location.x - xOffset,
+            y: location.y - yOffset
+        )
+
+        let index = layoutManager.characterIndex(
+            for: correctedLocation,
+            in: textContainer,
+            fractionOfDistanceBetweenInsertionPoints: nil
+        )
+
+        if let url = attributedText.attribute(.link, at: index, effectiveRange: nil) as? URL {
+            UIApplication.shared.open(url)
+        }
+    }
+
+
+}

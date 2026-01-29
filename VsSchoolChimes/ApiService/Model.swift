@@ -371,6 +371,7 @@ struct TextDetail: Codable {
     let title: String?
     let content: String?
     let date: String?
+    var isExpand: Bool?
 }
 struct HomeworkResponse: Codable {
     let status: Bool?

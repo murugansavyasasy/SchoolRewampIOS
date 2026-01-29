@@ -27,7 +27,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     @IBOutlet weak var attachDefultLbl: UILabel!
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var backBtn: UIButton!
-    @IBOutlet weak var discreption: UILabel!
+    @IBOutlet weak var discreption: UITextView!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var cvHeight: NSLayoutConstraint!
@@ -134,6 +134,9 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         let displayText = selectedDate?.convertToTargetDateFormat() ?? ""
         titleLbl.text = titleString
         discreption.text = descriptionString
+        discreption.isScrollEnabled = false
+        discreption.textContainerInset = .zero
+        discreption.textContainer.lineFragmentPadding = 0
         dateLbl.text =  MenuStringFile.posted_on + "\(displayText)"
         postedByLbl.text = MenuStringFile.Posted_By + "\(postedBy ?? "")"
         
