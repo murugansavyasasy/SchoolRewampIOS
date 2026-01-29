@@ -6,6 +6,8 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var nameWidth: NSLayoutConstraint!
     @IBOutlet weak var headerCollectionview: UICollectionView!
+    @IBOutlet weak var nodataImg: UIImageView!
+    @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var listLableView: UITableView!
     @IBOutlet weak var saveMarksBtn: UIButton!
     @IBOutlet weak var titleLbl: UILabel!
@@ -363,7 +365,6 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
         listLableView.dataSource = self
         listLableView.delegate = self
         listLableView.showsVerticalScrollIndicator = true
-        listLableView.backgroundColor = .white
         listLableView.register(UINib(nibName: "MarksTableViewCell", bundle: nil), forCellReuseIdentifier: "MarksTableViewCell")
     }
     
@@ -572,28 +573,33 @@ extension EnterMarkVC: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
+
         let height: CGFloat = 70
         let column = subjectColumns[indexPath.item]
-        
-        var widths: [CGFloat] = []
-        
-        if let display = column.displayName {
-            let font = UIFont.systemFont(ofSize: 13, weight: .medium)
-            widths.append(display.width(usingFont: font))
+
+        var textWidths: [CGFloat] = []
+        if let subjectName = column.subjectName {
+            let font = UIFont.systemFont(ofSize: 12, weight: .regular)
+            textWidths.append(subjectName.uppercased().width(usingFont: font))
         }
-        
+        if let displayName = column.displayName {
+            let font = UIFont.systemFont(ofSize: 13, weight: .medium)
+            textWidths.append(displayName.width(usingFont: font))
+        }
         if let max = column.maxMarks {
             let font = UIFont.systemFont(ofSize: 12, weight: .regular)
-            widths.append("Max: \(max)".width(usingFont: font))
+            textWidths.append("Max: \(max)".width(usingFont: font))
         }
-        
+
         let padding: CGFloat = 16
         let minWidth: CGFloat = 110
-        let maxTextWidth = widths.max() ?? minWidth
+
+        let maxTextWidth = textWidths.max() ?? minWidth
         let finalWidth = max(maxTextWidth + padding, minWidth)
+
         return CGSize(width: finalWidth, height: height)
     }
+
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == headerCollectionview {
@@ -909,6 +915,8 @@ extension EnterMarkVC: UISearchBarDelegate, UIPopoverPresentationControllerDeleg
     func applySearchAndReload(searchText: String) {
         guard !searchText.isEmpty else {
             studentRecords = allStudents
+            nodataImg.isHidden = true
+            nodataLbl.isHidden = true
             listLableView.reloadData()
             return
         }
@@ -921,8 +929,19 @@ extension EnterMarkVC: UISearchBarDelegate, UIPopoverPresentationControllerDeleg
             ($0.admission_no ?? "").lowercased().contains(key)
         }
 
+        if studentRecords.isEmpty {
+            nodataImg.isHidden = false
+            nodataLbl.isHidden = false
+            nodataLbl.text = "No students found for \"\(searchText)\""
+            nodataLbl.textAlignment = .center
+        } else {
+            nodataImg.isHidden = true
+            nodataLbl.isHidden = true
+        }
+
         listLableView.reloadData()
     }
+
 
     func showPopover(from sender: UIView, contentVC: FilterPopover) {
 

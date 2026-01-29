@@ -142,11 +142,12 @@ class ParentCommunicationVc: UIViewController, AudioPlaybackDelegate1, Datepicke
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         for cell in tv.visibleCells {
-            if let historyCell = cell as? HistoryTC {
-                historyCell.stopAudioPlayback()
+            if let historyCell = cell as? CommunicationTVC {
+                historyCell.stopPlayback()
             }
         }
     }
+
     //MARK: StyleAndTranslate
     func StyleAndTranslate(){
         
@@ -520,8 +521,6 @@ class ParentCommunicationVc: UIViewController, AudioPlaybackDelegate1, Datepicke
                     if response.status == true {
                         self.allMessages.append(contentsOf: response.data ?? [])
                         self.applyFilters()
-//                        self.NodataLbl.isHidden = true
-//                        self.NodataImage.isHidden = true
                         self.shouldShowFooterLabel = false
                         self.tv.isHidden = false
                         self.searchBtn.isHidden = false
