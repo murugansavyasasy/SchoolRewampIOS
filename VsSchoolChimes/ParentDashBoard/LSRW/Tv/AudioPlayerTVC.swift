@@ -591,12 +591,10 @@ class AudioMessageView: UIView {
             audioPlayer?.pause()
             audioPlayer = nil
             isPlaying = false
-            
             DispatchQueue.main.async {
                 self.progressView.alpha = 0
                 self.durationLabel.text = "0:00"
             }
-            
             loadAudio()
         }
     }
@@ -700,7 +698,6 @@ class AudioMessageView: UIView {
             barHeightConstraints.append(heightConstraint)
         }
     }
-
     private func loadAudio() {
         guard let url = audioURL else {
             DispatchQueue.main.async {
@@ -709,60 +706,116 @@ class AudioMessageView: UIView {
             return
         }
 
-        // Setup audio session (ignore errors in Simulator)
+        // Audio session
         #if !targetEnvironment(simulator)
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
-            print("Failed to set audio session: \(error.localizedDescription)")
+            print("Audio session error: \(error.localizedDescription)")
         }
         #endif
 
         let playerItem = AVPlayerItem(url: url)
         audioPlayer = AVPlayer(playerItem: playerItem)
-        
-        // Observe playback end
+
+        // Playback finished observer
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(playerDidFinishPlaying),
             name: .AVPlayerItemDidPlayToEndTime,
             object: playerItem
         )
-        
-        // Get duration
+
+        // Load duration only
         playerItem.asset.loadValuesAsynchronously(forKeys: ["duration"]) { [weak self] in
             guard let self = self else { return }
-            
+
             var error: NSError?
             let status = playerItem.asset.statusOfValue(forKey: "duration", error: &error)
-            
-            if status == .loaded {
-                let duration = CMTimeGetSeconds(playerItem.asset.duration)
-                if duration.isFinite && duration > 0 {
-                    DispatchQueue.main.async {
+
+            DispatchQueue.main.async {
+                if status == .loaded {
+                    let duration = CMTimeGetSeconds(playerItem.asset.duration)
+                    if duration.isFinite && duration > 0 {
                         self.durationLabel.text = self.formatTime(duration)
+                    } else {
+                        self.durationLabel.text = "0:00"
                     }
-                }
-            } else if let error = error {
-                DispatchQueue.main.async {
+                } else {
                     self.durationLabel.text = "Error"
                 }
             }
         }
-        
-        // Setup waveform
         DispatchQueue.main.async {
-            let sampleCount = Int(self.bounds.width / 4)
-            AudioProcessor.extractAmplitudes(from: url, sampleCount: sampleCount) { [weak self] amplitudes in
-                guard let self = self else { return }
-                if self.waveformBars.isEmpty {
-                    self.generateWaveformBars()
-                }
-                self.barsGenerated = true
+            if self.waveformBars.isEmpty {
+                self.generateWaveformBars()
             }
         }
     }
+
+//    private func loadAudio() {
+//        guard let url = audioURL else {
+//            DispatchQueue.main.async {
+//                self.durationLabel.text = "Error"
+//            }
+//            return
+//        }
+//
+//        // Setup audio session (ignore errors in Simulator)
+//        #if !targetEnvironment(simulator)
+//        do {
+//            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+//            try AVAudioSession.sharedInstance().setActive(true)
+//        } catch {
+//            print("Failed to set audio session: \(error.localizedDescription)")
+//        }
+//        #endif
+//
+//        let playerItem = AVPlayerItem(url: url)
+//        audioPlayer = AVPlayer(playerItem: playerItem)
+//        
+//        // Observe playback end
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(playerDidFinishPlaying),
+//            name: .AVPlayerItemDidPlayToEndTime,
+//            object: playerItem
+//        )
+//        
+//        // Get duration
+//        playerItem.asset.loadValuesAsynchronously(forKeys: ["duration"]) { [weak self] in
+//            guard let self = self else { return }
+//            
+//            var error: NSError?
+//            let status = playerItem.asset.statusOfValue(forKey: "duration", error: &error)
+//            
+//            if status == .loaded {
+//                let duration = CMTimeGetSeconds(playerItem.asset.duration)
+//                if duration.isFinite && duration > 0 {
+//                    DispatchQueue.main.async {
+//                        self.durationLabel.text = self.formatTime(duration)
+//                    }
+//                }
+//            } else if let error = error {
+//                DispatchQueue.main.async {
+//                    self.durationLabel.text = "Error"
+//                }
+//            }
+//        }
+//        
+//        // Setup waveform
+//        DispatchQueue.main.async {
+//            let sampleCount = Int(self.bounds.width / 4)
+//            AudioProcessor.extractAmplitudes(from: url, sampleCount: sampleCount) { [weak self] amplitudes in
+//                guard let self = self else { return }
+//                if self.waveformBars.isEmpty {
+//                    self.generateWaveformBars()
+//                }
+//                self.barsGenerated = true
+//            }
+//        }
+//    }
 
     func startPlaybackAnimation() {
         guard let player = audioPlayer else {
@@ -904,23 +957,21 @@ class AudioMessageView: UIView {
 
     func reset() {
         stopPlaybackAnimation()
+        audioPlayer?.pause()
         audioPlayer?.seek(to: .zero)
         isPlaying = false
-        
-        UIView.animate(withDuration: 0.3) {
-            self.progressView.alpha = 0
-        }
-        
+        layer.removeAllAnimations()
+        progressView.alpha = 0
+        progressView.layer.removeAllAnimations()
+        updateWaveformColor(progress: 0)
         if let duration = audioPlayer?.currentItem?.duration {
             let durationSeconds = CMTimeGetSeconds(duration)
             if durationSeconds.isFinite {
                 durationLabel.text = formatTime(durationSeconds)
             }
         }
-        
-        updateWaveformColor(progress: 0)
     }
-    
+
     private func resetState() {
         removePeriodicTimeObserver()
         audioPlayer?.pause()

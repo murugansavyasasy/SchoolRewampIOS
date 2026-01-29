@@ -55,14 +55,11 @@ class CommunicationTVC: UITableViewCell {
         super.awakeFromNib()
         setupUI()
         setupNotifications()
-        waveView.setParentCell(self)
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
         stopPlayback()
-//        audioManager.stop()
-        waveView.reset()
         audioURL = nil
         runningDurationLbl.text = "00:00"
         tottalDurationLbl.text = "00:00"
