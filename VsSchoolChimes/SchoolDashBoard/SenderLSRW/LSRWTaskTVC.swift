@@ -59,7 +59,6 @@ class LSRWTaskTVC: UITableViewCell, SelectedId, UIPopoverPresentationControllerD
     }
 
     @IBAction func editBtn(_ sender: UIButton) {
-        let result = isDateExpired(expiryDate ?? "")
             let popoverVC = PopoverViewVC(nibName: nil, bundle: nil)
         if delete ?? false{
             popoverVC.configureButtons(with: [

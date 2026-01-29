@@ -38,7 +38,7 @@ class QuizSubmissionVc: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
         quizNmaeLbl.configureAsBackTitle(firstLine: MenuStringFile.Quiz_Submission_List,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         discreptionsLbl.text = senderQuizlist.description
-        titleLbl.text = senderQuizlist.title//"Type: " + (senderQuizlist.type_name ?? "")
+        titleLbl.text = senderQuizlist.title
         subjectLbl.text = senderQuizlist.subject
         QuizDetailsView.layer.cornerRadius = 10
         DescriptionBaseview.layer.cornerRadius = 10

@@ -6,7 +6,6 @@
 //
 
 protocol ReportsQuizDelegate: AnyObject {
-    
     func didSelectQuizForEdit(quiz: EditQuiz)
 }
 
@@ -19,7 +18,6 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
     @IBOutlet weak var noDataImg: UIImageView!
     @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var tv: UITableView!
-    
     // MARK: - Properties
     var get_QuizDetails: [senderQuizListData] = []
     var filteredData: [senderQuizListData] = []
@@ -88,8 +86,6 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
     
     @IBAction func search(_ sender: UIButton) {
         sender.isSelected.toggle()
-        //        let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
-        //        searchBtn.setImage(UIImage(systemName: icon), for: .normal)
         searchView.isHidden = !sender.isSelected
         if sender.isSelected {
             searchView.becomeFirstResponder()
@@ -134,7 +130,6 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
     }
         
     func selectId(id: String?, edit: Bool?) {
-        
         if edit == true {
             update_Quiz_Api(id: id ?? "")
         } else {
@@ -177,12 +172,9 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
             guard let self = self else {return}
             
             DispatchQueue.main.async {
-                
                 switch result {
                 case .success(let success):
-                    
                     if success.status == true{
-                        
                         if let index = self.filteredData.firstIndex(where: {$0.id == id}),
                            let mainIndex = self.get_QuizDetails.firstIndex(where: {$0.id == id}){
                             

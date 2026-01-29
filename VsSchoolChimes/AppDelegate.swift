@@ -44,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
             name: UIApplication.willTerminateNotification,
             object: nil
         )
+        checkNotificationPermission()
         return true
     }
     @objc func cleanupTempRecordings() {
@@ -54,10 +55,67 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
                 deleteFile(at: url)
             }
         }
-        
         UserDefaults.standard.removeObject(forKey: tempKey)
     }
     
+    func checkNotificationPermission() {
+        let center = UNUserNotificationCenter.current()
+
+        center.getNotificationSettings { settings in
+            DispatchQueue.main.async {
+                switch settings.authorizationStatus {
+
+                case .authorized, .provisional, .ephemeral:
+                    print("✅ Notification Allowed")
+
+                case .denied:
+                    print("❌ Notification Denied")
+                    self.showNotificationPermissionAlert()
+
+                case .notDetermined:
+                    print("⚠️ Not Determined")
+                    self.requestNotificationPermission()
+
+                @unknown default:
+                    break
+                }
+            }
+        }
+    }
+    
+    func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: [.alert, .sound, .badge]
+        ) { granted, error in
+            DispatchQueue.main.async {
+                if granted {
+                    print("✅ User Granted Permission")
+                } else {
+                    print("❌ User Denied Permission")
+                    self.showNotificationPermissionAlert()
+                }
+            }
+        }
+    }
+    
+    func showNotificationPermissionAlert() {
+        let alert = UIAlertController(
+            title: "Enable Notifications",
+            message: "Please enable notifications to receive important updates.",
+            preferredStyle: .alert
+        )
+
+        alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+            }
+        })
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+        UIApplication.shared.windows.first?.rootViewController?
+            .present(alert, animated: true)
+    }
     func deleteFile(at url: URL) {
 
         var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
@@ -285,4 +343,7 @@ extension UIApplication {
         if let presented = vc?.presentedViewController { return topViewController(presented) }
         return vc
     }
+  
+
+
 }
