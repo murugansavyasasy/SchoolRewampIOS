@@ -427,7 +427,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
                 description: filteredAttachments?[indexPath.row].description ?? "",
                 date: MenuStringFile.posted_on + displayText,
                 sendBy:  MenuStringFile.Posted_By + (filteredAttachments?[indexPath.row].sent_by ?? ""),
-                isunread: filteredAttachments?[indexPath.row].is_unread ?? false,
+                isunread: filteredAttachments?[indexPath.row].is_unread ?? false, dateAndTimeForVideo:   filteredAttachments?[indexPath.row].date ?? "",
                 parentTableView: tv
             )
         
