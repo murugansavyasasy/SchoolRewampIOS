@@ -25,6 +25,7 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
     var classList: [ClassDisplayItem] = []
     var filteredClassList: [ClassDisplayItem] = []
     var staffDetails = UserDefaultFileManager.get_staff_Details()
+    var selectedAcademicYearId: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +64,7 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         AcadimicYears = localData.accidamic_year_data?.data ?? []
         let currentYear = AcadimicYears.first(where: { $0.current_academic_year == true })
         academicYearBtn.setTitle(currentYear?.year, for: .normal)
+        selectedAcademicYearId = currentYear?.id
         Get_standardSection_Api(academicId: currentYear?.id ?? 0)
     }
     
@@ -201,6 +203,7 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         
         let vc  = ExamListVC()
         vc.standard = filteredClassList[indexPath.row]
+        vc.academicYearId = selectedAcademicYearId
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
