@@ -142,7 +142,7 @@ class RecipientVc: UIViewController{
         switch staff_role {
         case PriorityType.is_staff:
             cv_itemsarry = [
-                recipeint_tabBarName.Standard,
+//                recipeint_tabBarName.Standard,
                 recipeint_tabBarName.Section_Student,
                 recipeint_tabBarName.Group
             ]
