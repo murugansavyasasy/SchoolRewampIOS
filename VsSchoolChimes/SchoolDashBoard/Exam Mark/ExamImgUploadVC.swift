@@ -49,6 +49,7 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     var SubjectList : [SubjectExamData] = []
     var is_aiViewCliked : Bool = false
     var SelectedExam : StaffExamData?
+    var section_id : String?
     private var selectedImageData: Data?
     private var selectedImage: UIImage?
     var academicYearId: Int?
@@ -267,6 +268,7 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         hidePopup()
         let vc = ExamActivitySelectionVC()
         vc.ExamID = SelectedExam?.id ?? ""
+        vc.section_Id = section_id ?? ""
         vc.academicYearId = academicYearId
         vc.isAIFlow = false
         vc.SelectedExam = SelectedExam
