@@ -27,6 +27,8 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
     var attachments: [Attachments] = []
     let dropDown = DropDown()
     var docController: UIDocumentInteractionController?
+    var Supportmail = UserDefaultFileManager.get_globalSelection()?.support_email
+    var passValue = 1
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -154,7 +156,8 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
             }
 
             // Case 4: All good
-            sendEmailWithAttachmentsToGmail()
+            //sendEmailWithAttachmentsToGmail()
+             sendEmailWithGmailOnly()
     }
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -163,58 +166,86 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
     }
 
     // MARK: - Gmail / Share Sheet
-    func sendEmailWithAttachmentsToGmail() {
+//    func sendEmailWithAttachmentsToGmail() {
+//        
+//        let toEmail = Supportmail?.split(separator: "/") /*"support@savyasasy.com"*/
+//        let ccEmails = "murugan@savyasasy.com,swathi@savyasasy.com"
+//        let subject = "Bug Report - \(selectModuleLbl.text ?? "")"
+//        let body = BugsTextview.text ?? ""
+//        
+//        let gmailURLString =
+//        "googlegmail://co?to=\(toEmail, default: "support@savyasasy.com")&cc=\(ccEmails)&subject=\(subject)&body=\(body)"
+//            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+//        
+//        if let gmailURL = URL(string: gmailURLString),
+//           UIApplication.shared.canOpenURL(gmailURL) {
+//            UIApplication.shared.open(gmailURL)
+//            
+//        } else {
+//            let gmailWebURLString =
+//            "https://mail.google.com/mail/u/0/?view=cm&to=\(toEmail)&cc=\(ccEmails)&su=\(subject)&body=\(body)"
+//                .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+//            
+//            if let gmailWebURL = URL(string: gmailWebURLString) {
+//                UIApplication.shared.open(gmailWebURL)
+//            }
+//        }
+//    }
+    
+    func sendEmailWithGmailOnly() {
+        
+        var name  = ""
+        var mobilenumber = UserDefaultFileManager.getLoginCredentials()?.mobile_number
+        
+        if passValue == 1 {
+            let user = UserDefaultFileManager.get_staff_Details()
+            name = user?.name ?? ""
+        }else{
+            let user = UserDefaultFileManager.get_child_Details()
+            name = user?.name ?? ""
+        }
 
-        let toEmail = "support@savyasasy.com"
-        let ccEmails = "murugan@savyasasy.com,swathi@savyasasy.com"
+        let toEmail = Supportmail?.components(separatedBy: "/").first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "support@savyasasy.com"
+
+            //let toEmail = "support@savyasasy.com"
+
+        let ccEmails = [
+            "murugan@savyasasy.com",
+            "swathi@savyasasy.com"
+        ].joined(separator: ",")
+
+        let studentName = name
+        let mobileNumber = mobilenumber
+        let queryText = BugsTextview.text ?? ""
+
+        let body = """
+        Dear School Chimes Team,
+
+        Name - \(studentName)
+        Mobile number - \(mobileNumber ?? "")
+
+        Query :
+        \(queryText)
+        """
+
         let subject = "Bug Report - \(selectModuleLbl.text ?? "")"
-        let body = BugsTextview.text ?? ""
 
         let gmailURLString =
-            "googlegmail://co?to=\(toEmail)&cc=\(ccEmails)&subject=\(subject)&body=\(body)"
-                .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        "googlegmail://co?to=\(toEmail, default: "support@savyasasy.com")&cc=\(ccEmails)&subject=\(subject)&body=\(body)"
+            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
 
         if let gmailURL = URL(string: gmailURLString),
            UIApplication.shared.canOpenURL(gmailURL) {
+
             UIApplication.shared.open(gmailURL)
 
         } else {
-            let gmailWebURLString =
-                "https://mail.google.com/mail/u/0/?view=cm&to=\(toEmail)&cc=\(ccEmails)&su=\(subject)&body=\(body)"
-                    .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-
-            if let gmailWebURL = URL(string: gmailWebURLString) {
-                UIApplication.shared.open(gmailWebURL)
-            }
+            showAlert(title: "Gmail Not Installed",
+                      message: "Please install the Gmail app to send email.")
         }
-
-        // Attachments
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-//            var items: [Any] = []
-//
-//            for item in self.attachments {
-//                if let img = item.image,
-//                   let data = img.jpegData(compressionQuality: 0.8) {
-//                    let tempURL = self.saveTempFile(
-//                        data: data,
-//                        fileName: item.displayName ?? "image.jpg"
-//                    )
-//                    items.append(tempURL)
-//                }
-//
-//                if let url = item.videoURL {
-//                    items.append(url)
-//                }
-//            }
-//
-//            let activityVC = UIActivityViewController(
-//                activityItems: items,
-//                applicationActivities: nil
-//            )
-//            activityVC.popoverPresentationController?.sourceView = self.view
-//            self.present(activityVC, animated: true)
-//        }
     }
+
+    
     func saveTempFile(data: Data, fileName: String) -> URL {
         let url = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
         try? data.write(to: url)

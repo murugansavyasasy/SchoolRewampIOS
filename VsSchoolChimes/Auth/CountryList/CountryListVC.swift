@@ -161,6 +161,7 @@ class CountryListVC: UIViewController {
     
     // MARK: - API
     private func get_CountryListApi() {
+        showActivityLoader()
         APIService.shared.makeApi(url: ServiceUrl.country_list,
                                   parameters: [:],
                                   type: ApitTypeSringFile.GET,
@@ -183,6 +184,7 @@ class CountryListVC: UIViewController {
             case .failure(let error):
                 showNoData(text: error.localizedDescription)
             }
+            self.hideActivityLoader()
         }
     }
     

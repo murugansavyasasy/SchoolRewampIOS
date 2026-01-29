@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -36,10 +36,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QNo-Ss-75G">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="124"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="183"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0GI-RM-qsb">
-                            <rect key="frame" x="15" y="69" width="363" height="35"/>
+                            <rect key="frame" x="15" y="128" width="363" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="LPv-v0-Dhw"/>
                             </constraints>
@@ -62,7 +62,7 @@
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HqN-K1-hJk">
-                    <rect key="frame" x="0.0" y="124" width="393" height="694"/>
+                    <rect key="frame" x="0.0" y="183" width="393" height="601"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="saK-iD-kGY">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="541.66666666666663"/>
@@ -86,13 +86,13 @@
                                                             <rect key="frame" x="10" y="5" width="343" height="40"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select the menu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YAJ-9I-Bor">
-                                                                    <rect key="frame" x="0.0" y="11.666666666666657" width="308" height="17"/>
+                                                                    <rect key="frame" x="0.0" y="11.666666666666686" width="308" height="17"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P9a-RC-vB2">
-                                                                    <rect key="frame" x="308" y="2.6666666666666572" width="35" height="35"/>
+                                                                    <rect key="frame" x="308" y="2.6666666666666856" width="35" height="35"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="35" id="TPB-Rl-m1M"/>
                                                                         <constraint firstAttribute="height" constant="35" id="zPQ-gT-Bgx"/>
@@ -174,7 +174,7 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7j-qY-4Ei">
                                                     <rect key="frame" x="10" y="10" width="343" height="101.66666666666667"/>
-                                                    <string key="text">⚠️ Please attach any type of file related to your issue — image, video, PDF, document, screenshot, or any other format. Once added, the file will be uploaded and included in the Gmail bug report automatically</string>
+                                                    <string key="text">ℹ️To help us understand the issue better and investigate it more effectively, kindly attach a relevant screenshot or screen recording when sending the email. This will allow our team to identify the problem faster and provide a more accurate solution.</string>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
