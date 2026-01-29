@@ -64,7 +64,11 @@ class LSRWSubmisionListVC: UIViewController,
         slider.maximumValue = 100
         setSlider(from: mark ?? "50%")
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopAllAudioPlayback()
+    }
+
     func setSlider(from percentageString: String) {
         let cleanString = percentageString
             .replacingOccurrences(of: "%", with: "")

@@ -25,6 +25,7 @@ class ExamActivitySelectionVC: UIViewController {
     var SubjectList : [SubjectExamData] = []
     var isAIFlow: Bool = false
     var ExamID = ""
+    var section_Id = ""
     let staffDetails = UserDefaultFileManager.get_staff_Details()
     var selectedSplits: [SelectedSplit] = []
     var selectedColoumns:[String] = []
@@ -101,7 +102,7 @@ class ExamActivitySelectionVC: UIViewController {
     
     func Get_exam_activities_Api(for examId: String) {
         SubjectList.removeAll()
-        let param:[String:Any] = ["exam_id": examId]
+        let param:[String:Any] = ["exam_id": examId,"section_id": section_Id]
 
         APIService.shared.makeApi(
             url: ServiceUrl.exam_get_subject_wise_activities,

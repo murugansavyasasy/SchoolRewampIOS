@@ -30,10 +30,8 @@ class ExamListVC: UIViewController, UISearchBarDelegate {
     var selectedExam : StaffExamData?
     var apiCalledForIndex: IndexPath?
     var academicYearId : Int?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         titleLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         classNameLbl.text = standard?.displayName
         classNameLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -109,7 +107,7 @@ class ExamListVC: UIViewController, UISearchBarDelegate {
     
     func loadSubjectList(for examId: String, reloadIndex: IndexPath) {
         SubjectList.removeAll()
-        let param:[String:Any] = ["exam_id": examId]
+        let param:[String:Any] = ["exam_id": examId,"section_id":standard?.sectionId ?? ""]
         
         APIService.shared.makeApi(
             url: ServiceUrl.exam_get_subject_wise_activities,
@@ -173,6 +171,7 @@ class ExamListVC: UIViewController, UISearchBarDelegate {
         
         let vc = ExamImgUploadVC()
         vc.SelectedExam = selectedExam
+        vc.section_id = standard?.sectionId ?? ""
         vc.academicYearId = academicYearId
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
@@ -254,11 +253,9 @@ extension ExamListVC: UITableViewDelegate, UITableViewDataSource {
             let old = self.expandedRow
             self.expandedRow = (old == indexPath) ? nil : indexPath
             
-            // Call API only when expanding (not collapsing)
             if self.expandedRow == indexPath {
                 let examId = self.FilteredExamList[indexPath.row].id ?? ""
                 self.loadSubjectList(for: examId, reloadIndex: indexPath)
-                // selectedExam = examId
             }
             
             var reload: [IndexPath] = [indexPath]

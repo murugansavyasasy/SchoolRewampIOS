@@ -172,19 +172,39 @@ class FilterPopover: UIViewController {
             guard let self = self else { return }
             btn.setTitle(item, for: .normal)
             
+            // Get the previously selected type for this stack (if any)
+            let previouslySelectedType = self.selectedFilters.first(where: { $0.stackIndex == stackIndex })?.type
+            
+            // Get the newly selected filter
             let selectedFilter = self.availableFilters[index]
+            
+            // Remove the newly selected filter from available
             self.availableFilters.remove(at: index)
+            
+            // If there was a previously selected type that's different, add it back to available
+            if let previousType = previouslySelectedType, previousType != selectedFilter.type {
+                if let previousFilter = self.filterSection?.first(where: { $0.type == previousType }) {
+                    self.availableFilters.append(previousFilter)
+                    self.availableFilters.sort { $0.type < $1.type }
+                }
+            }
+            
             self.updateAllTypeDropdowns()
             
+            // Update or add to selected filters - reset sort value when type changes
             if let existingIndex = self.selectedFilters.firstIndex(where: { $0.stackIndex == stackIndex }) {
                 self.selectedFilters[existingIndex] = (selectedFilter.type, nil, stackIndex)
             } else {
                 self.selectedFilters.append((selectedFilter.type, nil, stackIndex))
             }
             
+            // Setup sort dropdown with the new filter section
             if let sortView = self.getSortViewForStack(at: stackIndex) {
                 self.setupSortDropdown(for: sortView, filterSection: selectedFilter, stackIndex: stackIndex)
             }
+            
+            // Update button state immediately
+            self.updateAddRemoveButton(at: stackIndex)
         }
         
         if dropdowns[stackIndex] == nil {
@@ -234,19 +254,39 @@ class FilterPopover: UIViewController {
             guard let self = self else { return }
             btn.setTitle(item, for: .normal)
             
+            // Get the previously selected type for this stack (if any)
+            let previouslySelectedType = self.selectedFilters.first(where: { $0.stackIndex == stackIndex })?.type
+            
+            // Get the newly selected filter
             let selectedFilter = self.availableFilters[index]
+            
+            // Remove the newly selected filter from available
             self.availableFilters.remove(at: index)
+            
+            // If there was a previously selected type that's different, add it back to available
+            if let previousType = previouslySelectedType, previousType != selectedFilter.type {
+                if let previousFilter = self.filterSection?.first(where: { $0.type == previousType }) {
+                    self.availableFilters.append(previousFilter)
+                    self.availableFilters.sort { $0.type < $1.type }
+                }
+            }
+            
             self.updateAllTypeDropdowns()
             
+            // Update or add to selected filters - reset sort value when type changes
             if let existingIndex = self.selectedFilters.firstIndex(where: { $0.stackIndex == stackIndex }) {
                 self.selectedFilters[existingIndex] = (selectedFilter.type, nil, stackIndex)
             } else {
                 self.selectedFilters.append((selectedFilter.type, nil, stackIndex))
             }
             
+            // Setup sort dropdown with the new filter section
             if let sortView = self.getSortViewForStack(at: stackIndex) {
                 self.setupSortDropdown(for: sortView, filterSection: selectedFilter, stackIndex: stackIndex)
             }
+            
+            // Update button state immediately
+            self.updateAddRemoveButton(at: stackIndex)
         }
         
         if dropdowns[stackIndex] == nil {
@@ -402,36 +442,35 @@ class FilterPopover: UIViewController {
     func updateAddRemoveButton(at index: Int) {
         guard index < (addBtns?.count ?? 0) else { return }
         
+        let btn = addBtns[index]
         let hasSelectedSort = selectedFilters.first(where: { $0.stackIndex == index })?.sortValue != nil
         
-        let btn = addBtns[index]
-        guard hasSelectedSort else {
-            btn.isHidden = true
-            return
-        }
         guard let lastVisibleIndex = getLastVisibleStackIndex() else {
             btn.isHidden = true
             return
         }
         
+        // Always show button for visible stacks
+        btn.isHidden = false
+        
         if index == lastVisibleIndex {
+            // Last visible stack
             let nextStackCanBeAdded = !availableFilters.isEmpty && (index + 1) < (horizontalstackViews?.count ?? 0)
             
-            if nextStackCanBeAdded {
-                btn.isHidden = false
+            if nextStackCanBeAdded && hasSelectedSort {
+                // Show plus to add next stack (only if sort is selected)
                 btn.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
                 btn.tintColor = .systemGreen
+            } else if index > 0 {
+                // Show minus to remove this stack (if not first stack)
+                btn.setImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
+                btn.tintColor = .systemRed
             } else {
-                if index > 0 {
-                    btn.isHidden = false
-                    btn.setImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
-                    btn.tintColor = .systemRed
-                } else {
-                    btn.isHidden = true
-                }
+                // First stack - hide button
+                btn.isHidden = true
             }
         } else {
-            btn.isHidden = false
+            // Not the last stack - always show minus
             btn.setImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
             btn.tintColor = .systemRed
         }
@@ -476,11 +515,12 @@ class FilterPopover: UIViewController {
     @objc func toggleAddRemoveBtn(_ sender: UIButton) {
         let stackIndex = sender.tag
         
-        guard let lastVisibleIndex = getLastVisibleStackIndex() else { return }
-        
-        if stackIndex == lastVisibleIndex {
+        // Check if this is a plus or minus button based on tint color
+        if sender.tintColor == .systemGreen {
+            // It's a plus button - add next stack
             addNextStack(from: stackIndex)
         } else {
+            // It's a minus button - remove current stack
             removeStack(at: stackIndex)
         }
     }
@@ -510,6 +550,7 @@ class FilterPopover: UIViewController {
         }
         
         updateAddRemoveButton(at: currentStackIndex)
+        updateAddRemoveButton(at: nextIndex)
         notifyParentForSizeUpdate()
     }
     

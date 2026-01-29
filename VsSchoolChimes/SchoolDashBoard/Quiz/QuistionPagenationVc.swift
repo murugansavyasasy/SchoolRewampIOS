@@ -15,7 +15,6 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
     @IBOutlet weak var createLbl: UILabel!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var presentView: UIView!
-    
     @IBOutlet weak var toolbarTitle: UILabel!
     var pageViewController: UIPageViewController!
     var pages: [UIViewController] = []
@@ -61,14 +60,12 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
     
     func gradientcolours(button: UIButton, colours: [CGColor]) {
         button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
-        
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = colours
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
         gradientLayer.frame = button.bounds
         gradientLayer.cornerRadius = button.layer.cornerRadius
-        
         button.layer.insertSublayer(gradientLayer, at: 0)
     }
     
@@ -76,7 +73,6 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
         dismiss(animated: true)
     }
     
-    //    @IBAction func switchController(_ sender: UIButton) {
     @IBAction func segment(_ sender: UIButton) {
         let index = sender.tag
         guard index >= 0 && index < pages.count else {
@@ -89,7 +85,7 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
             if let senderVC = pages.first as? SenderQuizVc {
                 senderVC.editQuiz = nil
                 senderVC.isReset = true
-               }
+            }
         }else if index == 1{
             createBtn.setTitle("Create", for: .normal)
         }
@@ -116,10 +112,8 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
     }
     
     func didSelectQuizForEdit(quiz: EditQuiz) {
-        
         createBtn.setTitle("Edit", for: .normal)
         updateTabUI(for: 0)
-        
         if let senderVC = pages.first as? SenderQuizVc {
             senderVC.editQuiz = quiz
             let currentIndex = pageViewController.viewControllers?.first.flatMap{pages.firstIndex(of: $0)} ?? 0
@@ -131,7 +125,6 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
     
     func SelectedVC(index: Int) {
         guard index >= 0 && index < pages.count else {
-            print("Index out of bounds")
             return
         }
         let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0

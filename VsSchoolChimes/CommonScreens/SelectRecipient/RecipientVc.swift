@@ -142,7 +142,7 @@ class RecipientVc: UIViewController{
         switch staff_role {
         case PriorityType.is_staff:
             cv_itemsarry = [
-                recipeint_tabBarName.Standard,
+//                recipeint_tabBarName.Standard,
                 recipeint_tabBarName.Section_Student,
                 recipeint_tabBarName.Group
             ]
@@ -1564,12 +1564,22 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         sendbtnName.isEnabled = false
                         sendbtnName.backgroundColor = .gray
                         speficBtnName.backgroundColor = .gray
-                        view.makeToast(successMessage.message ?? "")
+                        self.alert
+                            .showAlert(
+                                title: AlertstringFile.Oops,
+                                message: successMessage.message ?? "",
+                                on: self
+                            )
                     }
                 }
             case .failure(let error):
                 print(error.localizedDescription)
-                view.makeToast(error.localizedDescription)
+                self.alert
+                    .showAlert(
+                        title: AlertstringFile.Oops,
+                        message: error.localizedDescription,
+                        on: self
+                    )
             }
         }
     }

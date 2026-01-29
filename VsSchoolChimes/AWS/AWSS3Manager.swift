@@ -285,16 +285,18 @@ class AWSPreSignedURL {
     ) {
         let fileBaseName = (fileName as NSString).lastPathComponent
         print("fname \(fileBaseName)")
-        
-        var components = URLComponents(string: "https://api.schoolchimes.com/nodejs/api/MergedApi/get-s3-presigned-url")!
-        components.queryItems = [
+      
+        let baseURL = UserDefaultFileManager.get_globalSelection()?.presigned_cred_base_url ?? ""
+        let fullURL = baseURL + "get-s3-presigned-url"
+        var components = URLComponents(string: fullURL)
+        components?.queryItems = [
             URLQueryItem(name: "bucket", value: bucket),
             URLQueryItem(name: "fileName", value: fileBaseName),
             URLQueryItem(name: "bucketPath", value: bucketPath),
             URLQueryItem(name: "fileType", value: fileType)
         ]
         
-        guard let url = components.url else {
+        guard let url = components?.url else {
             completion(.failure(NSError(domain: "", code: 400,
                                         userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
             return

@@ -210,9 +210,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             case Menu_id.LessonPlan:
                 MenuRedirect.senderLessonplanNavigate(from: self)
             case Menu_id.MessageFromManagement:
-                ""
-                //                MenuRedirect.senderMgmt(from: self)
-            case Menu_id.MessageFromManagement:
                 MenuRedirect.Senderchat(from: self)
             case Menu_id.ptm :
                 MenuRedirect.senderPtmNavigate(from: self, PushNotiMsgId: "")
@@ -249,12 +246,36 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             }else{
                 if let data = school_details?[indexPath.row]{
                     UserDefaultFileManager.saveStaffDetails(data: data)}
-                let vc = RecipientVc(nibName: nil, bundle: nil)
-                vc.communicatio_textDetails = communicatio_textDetails
-                vc.Common_request_params = Common_request_params
-                vc.ScreenType = screen_type
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
+                DispatchQueue.main.async { [self] in
+                    getacadmicYr{ [self] in
+                        let vc = RecipientVc(nibName: nil, bundle: nil)
+                        vc.communicatio_textDetails = communicatio_textDetails
+                        vc.Common_request_params = Common_request_params
+                        vc.ScreenType = screen_type
+                        vc.modalPresentationStyle = .fullScreen
+                        present(vc, animated: true)
+                    }
+                }
+               
+            }
+        }
+    }
+    
+    func getacadmicYr(onComplete: @escaping () -> Void) {
+            APIService.shared.makeApi(
+                url: ServiceUrl.comm_recipient_get_academic_year_list,
+                parameters: [:],
+                type: ApitTypeSringFile.GET,
+                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
+            ) { (result: Result<get_academic_yearSuc, Error>) in
+                DispatchQueue.main.async { [self] in
+                switch result {
+                case .success(let successMessage):
+                    localData.accidamic_year_data = successMessage
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+                onComplete()
             }
         }
     }
@@ -621,6 +642,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         
         
     }
+    
+    
     
     @objc func handleEmailTap(_ gesture: UITapGestureRecognizer) {
         guard let text = noRecordLbl.attributedText?.string else { return }

@@ -170,42 +170,16 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         }
     }
     
-//        func reloadAttachmentUI() {
-//            self.QuestionImageCv.imageCollectionview.reloadData()
-//            DispatchQueue.main.async {
-//                let totalItems = self.file_path.count
-//                self.collectionViewHeight.constant =
-//                    totalItems <= 2 ? 120 :
-//                    self.QuestionImageCv.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
-//            }
-//            if let table = self.superview as? UITableView {
-//                table.beginUpdates()
-//                table.endUpdates()
-//            }
-//        }
-    
     func reloadAttachmentUI() {
-        
         QuestionImageCv.imageCollectionview.reloadData()
-        
         let totalItems = self.file_path.count
-        
         self.collectionViewHeight.constant =
         totalItems <= 2
         ? 120
         : self.calculatedCollectionHeight()
-        
         self.contentView.layoutIfNeeded()
-        
         parentTableView?.beginUpdates()
         parentTableView?.endUpdates()
-        //
-        //            if let tableView = self.parentTableView,
-        //               let indexPath = tableView.indexPath(for: self) {
-        //                tableView.reloadRows(at: [indexPath], with: .none)
-        //            }
-        
-        
     }
     
     
@@ -720,7 +694,6 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
     }
     
     @IBAction func addAttachAct(_ sender: UIButton) {
-        guard let index = indexPath else { return }
         let actionSheet = UIAlertController(title: AlertstringFile.addAttachment,
                                             message: AlertstringFile.Choose_file_type,
                                             preferredStyle: .actionSheet)
@@ -783,9 +756,6 @@ extension QuistionTvTableViewCell: UIImagePickerControllerDelegate, UINavigation
             fileURL: url,
             fileType: .document
         )
-        //        if let index = indexPath {
-        //            delegate?.addAttachment(at: index, file: file)
-        //        }
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {

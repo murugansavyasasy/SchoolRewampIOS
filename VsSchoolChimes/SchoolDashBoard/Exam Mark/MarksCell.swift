@@ -31,11 +31,10 @@ class MarksCell: UICollectionViewCell {
         super.awakeFromNib()
         markTxt.delegate = self
         markTxt.textAlignment = .center
-        markTxt.borderStyle = .roundedRect
+        markTxt.cornerRadius(6)
         markTxt.placeholder = "--"
         markTxt.font = .systemFont(ofSize: 15)
         markTxt.keyboardType = .numberPad
-        markTxt.layer.cornerRadius = 8
         let toolbar = UIToolbar()
         toolbar.isTranslucent = false
         toolbar.barTintColor = .systemGray6
@@ -142,8 +141,6 @@ class MarksCell: UICollectionViewCell {
         return button
     }
 
-
-
     @objc private func keyDown(_ sender: UIButton) {
         UIView.animate(
             withDuration: 0.14,
@@ -193,69 +190,66 @@ class MarksCell: UICollectionViewCell {
                    alignment: NSTextAlignment = .center,
                    parentVC: EnterMarkVC?,
                    hasFlaggedIssue: Bool = false,
+                   is_edit: Bool,
                    maxMark: Int = 0) {
-        
+
         self.rowIndex = rowIndex
         self.columnIndex = columnIndex
         self.hasFlaggedIssue = hasFlaggedIssue
         self.parentVC = parentVC
+
         tittleLbl.isHidden = true
+        infoBtn.isHidden = true
+
         markTxt.isHidden = false
         markTxt.text = mark
         markTxt.textAlignment = alignment
+        markTxt.font = UIFont.systemFont(ofSize: 15)
+        markTxt.cornerRadius(6)
+        markTxt.isEnabled = is_edit
+        markTxt.isUserInteractionEnabled = is_edit
+        markTxt.backgroundColor = is_edit ? .systemGray6 : .systemGray5
+        markTxt.textColor = is_edit ? .label : .darkGray
         markTxt.layer.borderWidth = 0
-        markTxt.borderStyle = .none
-        markTxt.backgroundColor = .clear
-        infoBtn.isHidden = true
-        
+        markTxt.layer.borderColor = nil
         if let changemark = channgeMark, !changemark.isEmpty {
             tittleLbl.text = "was : \(changemark)"
             tittleLbl.isHidden = false
-            markTxt.textColor = .systemGreen
-            markTxt.layer.borderWidth = 2
-            markTxt.layer.borderColor = UIColor.systemGreen.withAlphaComponent(0.4).cgColor
-            markTxt.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.1)
-            markTxt.borderStyle = .roundedRect
-            infoBtn.isHidden = false
-            infoBtn.tintColor = .systemGreen
-            markTxt.font = UIFont.systemFont(ofSize: 15)
-            markTxt.isUserInteractionEnabled = true
-            return
-        }
-        
-        if hasFlaggedIssue {
-            markTxt.textColor = .orange
-            markTxt.layer.borderWidth = 2
-            markTxt.layer.borderColor = UIColor.orange.withAlphaComponent(0.4).cgColor
-            markTxt.backgroundColor = UIColor.orange.withAlphaComponent(0.1)
-            markTxt.borderStyle = .roundedRect
-            infoBtn.isHidden = false
-            infoBtn.tintColor = .orange
-            markTxt.font = UIFont.systemFont(ofSize: 15)
-            markTxt.isUserInteractionEnabled = true
-            return
-        }
-        
-        if let markValue = Int(mark), !mark.isEmpty, markValue > maxMark {
-            markTxt.textColor = .orange
-            markTxt.layer.borderWidth = 2
-            markTxt.layer.borderColor = UIColor.orange.cgColor
-            markTxt.backgroundColor = UIColor.orange.withAlphaComponent(0.1)
-            markTxt.borderStyle = .roundedRect
-            infoBtn.isHidden = false
-            infoBtn.tintColor = .systemRed
-            markTxt.font = UIFont.systemFont(ofSize: 15)
-            markTxt.isUserInteractionEnabled = true
-            return
-        }
 
-        markTxt.backgroundColor = UIColor.systemGray6
-        markTxt.textColor = .label
-        markTxt.font = UIFont.systemFont(ofSize: 15)
+            applyHighlight(
+                color: .systemGreen,
+                infoColor: .systemGreen
+            )
+            return
+        }
+        if hasFlaggedIssue {
+            applyHighlight(
+                color: .orange,
+                infoColor: .orange
+            )
+            return
+        }
+        if let markValue = Int(mark),
+           !mark.isEmpty,
+           markValue > maxMark {
+
+            applyHighlight(
+                color: .orange,
+                infoColor: .systemRed
+            )
+            return
+        }
+    }
+
+    private func applyHighlight(color: UIColor, infoColor: UIColor) {
+        markTxt.textColor = color
+        markTxt.backgroundColor = color.withAlphaComponent(0.1)
+        markTxt.layer.borderWidth = 2
+        markTxt.layer.borderColor = color.withAlphaComponent(0.4).cgColor
+        markTxt.isEnabled = true
         markTxt.isUserInteractionEnabled = true
-        markTxt.borderStyle = .roundedRect
-        infoBtn.isHidden = true
-        markTxt.layer.borderWidth = 0
+        infoBtn.isHidden = false
+        infoBtn.tintColor = infoColor
     }
 
     override func prepareForReuse() {
@@ -264,7 +258,7 @@ class MarksCell: UICollectionViewCell {
         markTxt.textColor = .label
         markTxt.font = UIFont.systemFont(ofSize: 15)
         markTxt.isUserInteractionEnabled = true
-        markTxt.borderStyle = .roundedRect
+        markTxt.cornerRadius(6)
         markTxt.textAlignment = .center
         markTxt.resignFirstResponder()
         markTxt.layer.borderWidth = 0
@@ -301,7 +295,7 @@ class MarksCell: UICollectionViewCell {
         markTxt.textColor = .label
         markTxt.font = UIFont.systemFont(ofSize: 15)
         markTxt.isUserInteractionEnabled = true
-        markTxt.borderStyle = .roundedRect
+        markTxt.cornerRadius(6)
         infoBtn.isHidden = true
         markTxt.layer.borderWidth = 0
     }

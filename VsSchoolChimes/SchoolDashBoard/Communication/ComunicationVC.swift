@@ -136,7 +136,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     var isKeyboardVisible = false
-    var selectedDates: [Date] = [] // Store selected dates
+    var selectedDates: [Date] = []
     var audioRecorder: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
     var player : AVPlayer?
@@ -145,7 +145,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var updateTimer: Timer?
     var recordingTimer: Timer?
     var recordingStartTime: Date?
-    var bars: [UIView] = [] // Array to hold individual wave bars
+    var bars: [UIView] = []
     var playerItem : AVPlayerItem?
     var playIndex :Int?
     var playVoicce = false
@@ -155,7 +155,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var doneButton: UIButton!
     var activeButton: UIButton?
     var isScheduleSelected = false
-    let backgroundcolor: UIColor = .backGroundClr//Colornames.topBackgroundCLr1
+    let backgroundcolor: UIColor = .backGroundClr
     let tapColor: UIColor = .backGroundClr
     var placeholderLabel: UILabel!
     let alert = CustomAlert()
@@ -295,12 +295,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         else{
             isEmergencyVoice = false
         }
-        if staff_role == "p3"{
+        if staff_role == PriorityType.is_staff || staff_role == PriorityType.is_non_teaching_staff{
             seduleClickView.isHidden = true
+            enableVoiceHistory.isHidden = true
+            enableVoiceHistoryLabel.isHidden = true
         }else{
             seduleClickView.isHidden = false
         }
-        
+        waveView.durationLabel.isHidden = true
         historytable.delegate = self
         historytable.dataSource = self
         DateSelection.delegate = self
@@ -335,7 +337,16 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         super.viewWillDisappear(animated)
         player?.pause()
         playVoicce = false
+        stopAllPlayingAudio()
     }
+    private func stopAllPlayingAudio() {
+        for cell in historytable.visibleCells {
+            if let audioCell = cell as? CommunicationTVC {
+                audioCell.stopPlayback()
+            }
+        }
+    }
+
     func applyShadowAndCornerRadius(to view: UIView, cornerRadius: CGFloat = 10, shadowColor: UIColor = .black, shadowOffset: CGSize = CGSize(width: 4, height: 4), shadowOpacity: Float = 0.5, shadowRadius: CGFloat = 4, backgroundColor: UIColor = .white) {
         view.layer.cornerRadius = cornerRadius
         view.layer.shadowColor = shadowColor.cgColor
@@ -920,6 +931,30 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         let asset = AVAsset(url: selectedFileURL)
         let duration = CMTimeGetSeconds(asset.duration)
         guard duration.isFinite else { return }
+        if emengencyCall.isOn{
+            if duration > 30 {
+                hideActivityLoader()
+                alert
+                    .showAlert(
+                        title: AlertstringFile.Alert_title,
+                        message: AlertstringFile.Audio_file_should80,
+                        on: self)
+                return
+            }
+        }else{
+            if duration > 180 {
+                hideActivityLoader()
+                alert
+                    .showAlert(
+                        title: AlertstringFile.Alert_title,
+                        message: AlertstringFile.Audio_file_should180,
+                        on: self
+                    )
+                
+                return
+            }
+        }
+        
         voiceRecordedDuration = Int(duration)
         recordImgHeightCon.constant = 0
         Timinglbl.isHidden = true
@@ -935,26 +970,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         playerview.isHidden = false
         dltbtn.isHidden = false
         recoderbtn.isEnabled = false
-        if emengencyCall.isOn{
-            if duration > 30 {
-                alert
-                    .showAlert(
-                        title: AlertstringFile.Alert_title,
-                        message: AlertstringFile.Audio_file_should80,
-                        on: self)
-                return
-            }
-        }else{
-            if duration > 180 {
-                alert
-                    .showAlert(
-                        title: AlertstringFile.Alert_title,
-                        message: AlertstringFile.Audio_file_should180,
-                        on: self
-                    )
-                return
-            }
-        }
         
         if let audioUrl = URL(string: AudioPlayUrl ?? "") {
             if audioUrl.isFileURL {

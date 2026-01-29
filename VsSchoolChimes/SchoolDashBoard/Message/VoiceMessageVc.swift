@@ -53,7 +53,6 @@ class VoiceMessageVc: UIViewController {
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
         selectFromHisBtnName.setAttributedTitle(attributedTitle, for: .normal)
-//        moveVoiceMessage.setAttributedTitle(attributedTitle, for: .normal)
     }
 
     @IBAction func BackToComposeBtnAct(_ sender: UIButton) {

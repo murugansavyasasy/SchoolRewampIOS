@@ -120,12 +120,13 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
         var mark = ""
         var changeMark: String? = nil
         var hasFlaggedIssue = false
-        
+        var is_edit : Bool?
         if let subject = student.marks?.first(where: { $0.subject_id == column.subjectId }),
            let activity = subject.activities?.first(where: { $0.id == column.activityId }) {
             mark = activity.mark ?? ""
             changeMark = activity.change_mark
             hasFlaggedIssue = activity.isReview ?? false
+            is_edit = activity.is_edit ?? true
         }
         
         cell.configure(
@@ -135,7 +136,7 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
             columnIndex: indexPath.item,
             alignment: .center,
             parentVC: parentVC,
-            hasFlaggedIssue: hasFlaggedIssue,
+            hasFlaggedIssue: hasFlaggedIssue, is_edit: is_edit ?? true,
             maxMark: column.maxMarks ?? 0)
         cell.delegate = self
         cell.markTxt.tag = (studentIndex * 1000) + indexPath.item
