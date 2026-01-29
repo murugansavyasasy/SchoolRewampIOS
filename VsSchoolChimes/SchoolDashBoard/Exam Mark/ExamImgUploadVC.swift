@@ -51,7 +51,7 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     var SelectedExam : StaffExamData?
     private var selectedImageData: Data?
     private var selectedImage: UIImage?
-    
+    var academicYearId: Int?
     var selectedColumns: [String] = []
     var reviewFlags : [ReviewFlag] = []
     var convertedRecords: [ConvertedStudentRecord] = []
@@ -267,6 +267,7 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         hidePopup()
         let vc = ExamActivitySelectionVC()
         vc.ExamID = SelectedExam?.id ?? ""
+        vc.academicYearId = academicYearId
         vc.isAIFlow = false
         vc.SelectedExam = SelectedExam
         vc.modalPresentationStyle = .fullScreen

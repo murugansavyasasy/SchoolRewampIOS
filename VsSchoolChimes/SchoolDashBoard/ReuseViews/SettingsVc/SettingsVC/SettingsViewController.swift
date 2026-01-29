@@ -300,7 +300,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         case menuname.reportABug.translated():
             let vc = ReportBugVcViewController()
             vc.modalPresentationStyle = .overFullScreen
-//            vc.passValue = passVale
+            vc.passValue = passVale
             present(vc, animated: true)
             
         case menuname.feedback.translated():

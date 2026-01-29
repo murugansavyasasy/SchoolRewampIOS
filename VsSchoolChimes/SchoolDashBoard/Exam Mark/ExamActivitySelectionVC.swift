@@ -30,6 +30,7 @@ class ExamActivitySelectionVC: UIViewController {
     var selectedColoumns:[String] = []
     var convertedRecords:[ConvertedStudentRecord] = []
     var SelectedExam : StaffExamData?
+    var academicYearId: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -184,6 +185,7 @@ class ExamActivitySelectionVC: UIViewController {
             "class_id": SubjectList.first?.class_id ?? "",
             "section_id": SubjectList.first?.section_id ?? "",
             "exam_id": ExamID,
+            "academic_year_id": String(academicYearId ?? 0),
             "selected_activities": selectedActivities
         ]
     }

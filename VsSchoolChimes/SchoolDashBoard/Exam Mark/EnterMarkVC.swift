@@ -305,6 +305,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
         let classId   = payload["class_id"] as? String ?? ""
         let sectionId = payload["section_id"] as? String ?? ""
         let examId    = payload["exam_id"] as? String ?? ""
+        let academicYearId    = payload["academic_year_id"] as? String ?? ""
         
         var resultSubjects: [[String: Any]] = []
         
@@ -339,7 +340,8 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
             "class_id": classId,
             "section_id": sectionId,
             "exam_id": examId,
-            "selected_activities": resultSubjects
+            "selected_activities": resultSubjects,
+            "academic_year_id" : academicYearId
         ]
     }
     
