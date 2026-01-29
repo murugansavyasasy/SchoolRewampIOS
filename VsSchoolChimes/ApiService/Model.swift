@@ -2643,6 +2643,7 @@ struct GlobalVariable: Codable {
     var privacy_policy: String?
     var about_the_app: String?
     var how_to_use: String?
+    var presigned_cred_base_url: String?
 }
 
 struct checkQuizLevelSuc : Codable{

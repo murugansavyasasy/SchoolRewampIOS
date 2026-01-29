@@ -25,6 +25,8 @@ struct NotificationData {
 
 class NotificationCallVC: UIViewController {
     
+    @IBOutlet weak var answerStack: UIStackView!
+    @IBOutlet weak var declineStack: UIStackView!
     // MARK: - IBOutlets
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var durationLbl: UILabel!
@@ -32,13 +34,8 @@ class NotificationCallVC: UIViewController {
     @IBOutlet weak var speakerBtn: UIButton!
     @IBOutlet weak var logoImg: UIImageView!
     @IBOutlet weak var swipeView: UIView!
-    @IBOutlet weak var answerCallImg: UIButton!
-    @IBOutlet weak var declineCallImg: UIButton!
-    @IBOutlet weak var slideLabel: UILabel!
     @IBOutlet weak var rightIndicationStack: UIStackView!
     @IBOutlet weak var leftIndicationStack: UIStackView!
-    @IBOutlet weak var draggableButton: UIButton!
-    
     @IBOutlet var rightArrowBtns: [UIButton]!
     @IBOutlet var leftArrowBtns: [UIButton]!
     
@@ -91,8 +88,6 @@ class NotificationCallVC: UIViewController {
         stopLocalRingtone()
         setupModernUI()
         setupCallerInfo()
-        setupSlideToAnswerAnimation()
-        addSwipeGesture()
         cutCallBtn.isHidden = true
         speakerBtn.isHidden = true
         cutCallBtn.layer.cornerRadius = cutCallBtn.frame.width / 2
@@ -101,9 +96,13 @@ class NotificationCallVC: UIViewController {
         
         configureAudioSessionForRingtone()
         
-//        if let url = URL(string: ringTone) {
             playLocalRingtone(named: "schoolchimes_tone", ext: "wav")
-//        }
+        
+        let declineClick = UITapGestureRecognizer(target: self, action: #selector(DeclineBtnAct))
+        declineStack.addGestureRecognizer(declineClick)
+        
+         let AnswerClick = UITapGestureRecognizer(target: self, action: #selector(AnswerBtnAct))
+        answerStack.addGestureRecognizer(AnswerClick)
         
         setupVolumeObserver()
         setupPowerButtonObserver()
@@ -157,17 +156,7 @@ class NotificationCallVC: UIViewController {
         }
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        gradientLayer?.frame = slideLabel.bounds
-        originalCenter = draggableButton.center
-        
-        if draggableButton.layer.animation(forKey: "buttonBounce") == nil {
-            addPulsatingRingAnimation()
-            startChevronAnimation()
-        }
-    }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         cleanup()
@@ -272,38 +261,7 @@ class NotificationCallVC: UIViewController {
             return false
         }
     }
-//    private func playRingtone(from url: URL) {
-//        let cacheKey = url.absoluteString as NSString
-//        // Check cache first
-//        if let cachedData = Self.audioCache.object(forKey: cacheKey) {
-//            playRingtoneData(cachedData as Data)
-//            return
-//        }
-//        // Download if not cached
-//        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-//            guard let self = self else { return }
-//            if let error = error {
-//                DispatchQueue.main.async {
-//                    self.playSystemDefaultTone()
-//                }
-//                return
-//            }
-//            guard let data = data else {
-//                DispatchQueue.main.async {
-//                    self.playSystemDefaultTone()
-//                }
-//                return
-//            }
-//            // Cache the downloaded data
-//            Self.audioCache.setObject(data as NSData, forKey: cacheKey, cost: data.count)
-//            
-//            DispatchQueue.main.async {
-//                self.playRingtoneData(data)
-//            }
-//        }
-//        task.resume()
-//    }
-//
+
     private func playLocalRingtone(named name: String, ext: String) {
         guard let path = Bundle.main.url(forResource: name, withExtension: ext) else {
             playSystemDefaultTone()
@@ -418,37 +376,6 @@ class NotificationCallVC: UIViewController {
         
         addLogoPulseAnimation()
         
-        // Swipe view with glassmorphism effect
-        swipeView.layer.cornerRadius = 30
-        swipeView.backgroundColor = UIColor.white.withAlphaComponent(0.08)
-        swipeView.clipsToBounds = false
-        swipeView.layer.borderWidth = 1.5
-        swipeView.layer.borderColor = UIColor.white.withAlphaComponent(0.15).cgColor
-        
-        swipeView.layer.shadowColor = UIColor.black.cgColor
-        swipeView.layer.shadowOpacity = 0.3
-        swipeView.layer.shadowOffset = CGSize(width: 0, height: 10)
-        swipeView.layer.shadowRadius = 20
-        
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialDark)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.frame = swipeView.bounds
-        blurView.layer.cornerRadius = 30
-        blurView.clipsToBounds = true
-        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        swipeView.insertSubview(blurView, at: 0)
-        
-        // Draggable button with enhanced styling
-        draggableButton.layer.cornerRadius = draggableButton.frame.width / 2
-        draggableButton.backgroundColor = .white
-        draggableButton.layer.shadowColor = UIColor.black.cgColor
-        draggableButton.layer.shadowOpacity = 0.4
-        draggableButton.layer.shadowOffset = CGSize(width: 0, height: 8)
-        draggableButton.layer.shadowRadius = 20
-        
-        answerCallImg.tintColor = UIColor.systemGreen
-        declineCallImg.tintColor = UIColor.systemRed
-        
         cutCallBtn.backgroundColor = UIColor.systemRed
         cutCallBtn.tintColor = .white
         cutCallBtn.layer.shadowColor = UIColor.systemRed.cgColor
@@ -464,6 +391,18 @@ class NotificationCallVC: UIViewController {
         
         cutCallBtn.addTarget(self, action: #selector(cutCallAction), for: .touchUpInside)
         speakerBtn.addTarget(self, action: #selector(toggleSpeaker), for: .touchUpInside)
+    }
+    
+    
+    @IBAction func DeclineBtnAct() {
+        
+        declineCallAction()
+    }
+    
+    
+    @IBAction func AnswerBtnAct() {
+        
+        answerCallAction()
     }
     
     private func setupCallerInfo() {
@@ -516,7 +455,7 @@ class NotificationCallVC: UIViewController {
         bounceAnimation.duration = 2.0
         bounceAnimation.repeatCount = .infinity
         bounceAnimation.isRemovedOnCompletion = false
-        draggableButton.layer.add(bounceAnimation, forKey: "buttonBounce")
+//        draggableButton.layer.add(bounceAnimation, forKey: "buttonBounce")
         
         let scaleAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
         scaleAnimation.values = [1.0, 1.05, 1.0, 1.05, 1.0]
@@ -525,7 +464,7 @@ class NotificationCallVC: UIViewController {
         scaleAnimation.duration = 2.0
         scaleAnimation.repeatCount = .infinity
         scaleAnimation.isRemovedOnCompletion = false
-        draggableButton.layer.add(scaleAnimation, forKey: "buttonScale")
+//        draggableButton.layer.add(scaleAnimation, forKey: "buttonScale")
     }
     
     // MARK: - Synchronized Arrow Animation
@@ -567,115 +506,114 @@ class NotificationCallVC: UIViewController {
     }
     
     // MARK: - Slide to Answer Label Animation
-    private func setupSlideToAnswerAnimation() {
-        slideLabel.text = "slide to answer or decline"
-        slideLabel.textAlignment = .center
-        slideLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-        slideLabel.textColor = UIColor.white.withAlphaComponent(0.9)
-        
-        let gradient = CAGradientLayer()
-        gradient.frame = slideLabel.bounds
-        gradient.colors = [
-            UIColor.clear.cgColor,
-            UIColor.white.cgColor,
-            UIColor.clear.cgColor
-        ]
-        gradient.locations = [0.0, 0.5, 1.0]
-        gradient.startPoint = CGPoint(x: 0, y: 0.5)
-        gradient.endPoint = CGPoint(x: 1, y: 0.5)
-        
-        let animation = CABasicAnimation(keyPath: "locations")
-        animation.fromValue = [-0.5, 0.0, 0.5]
-        animation.toValue = [0.5, 1.0, 1.5]
-        animation.duration = 2.5
-        animation.repeatCount = .infinity
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        
-        gradient.add(animation, forKey: "slideAnimation")
-        slideLabel.layer.mask = gradient
-        gradientLayer = gradient
-    }
-    
+//    private func setupSlideToAnswerAnimation() {
+//        slideLabel.text = "slide to answer or decline"
+//        slideLabel.textAlignment = .center
+//        slideLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+//        slideLabel.textColor = UIColor.white.withAlphaComponent(0.9)
+//        
+//        let gradient = CAGradientLayer()
+//        gradient.frame = slideLabel.bounds
+//        gradient.colors = [
+//            UIColor.clear.cgColor,
+//            UIColor.white.cgColor,
+//            UIColor.clear.cgColor
+//        ]
+//        gradient.locations = [0.0, 0.5, 1.0]
+//        gradient.startPoint = CGPoint(x: 0, y: 0.5)
+//        gradient.endPoint = CGPoint(x: 1, y: 0.5)
+//        
+//        let animation = CABasicAnimation(keyPath: "locations")
+//        animation.fromValue = [-0.5, 0.0, 0.5]
+//        animation.toValue = [0.5, 1.0, 1.5]
+//        animation.duration = 2.5
+//        animation.repeatCount = .infinity
+//        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+//        
+//        gradient.add(animation, forKey: "slideAnimation")
+//        slideLabel.layer.mask = gradient
+//        gradientLayer = gradient
+//    }
+//    
     // MARK: - Swipe Gesture
-    private func addSwipeGesture() {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
-        draggableButton.addGestureRecognizer(panGesture)
-    }
+//    private func addSwipeGesture() {
+//        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+//        draggableButton.addGestureRecognizer(panGesture)
+//    }
     
-    @objc private func handlePan(_ gesture: UIPanGestureRecognizer) {
-        let translation = gesture.translation(in: swipeView)
-        let buttonSize = draggableButton.frame.width
-        let maxSwipe = (swipeView.frame.width - buttonSize) / 2 - 15
-        
-        switch gesture.state {
-        case .began:
-            isDragging = true
-            draggableButton.layer.removeAnimation(forKey: "buttonBounce")
-            draggableButton.layer.removeAnimation(forKey: "buttonScale")
-            
-            UIView.animate(withDuration: 0.2) {
-                self.draggableButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-                self.rightIndicationStack.alpha = 0
-                self.leftIndicationStack.alpha = 0
-            }
-            
-        case .changed:
-            let newX = originalCenter.x + translation.x
-            let minX = buttonSize / 2 + 15
-            let maxX = swipeView.frame.width - buttonSize / 2 - 15
-            draggableButton.center.x = max(minX, min(maxX, newX))
-            
-            let offset = draggableButton.center.x - originalCenter.x
-            let progress = min(abs(offset) / maxSwipe, 1.0)
-            
-            if offset > 0 {
-                let greenColor = UIColor.systemGreen.withAlphaComponent(0.3 * progress)
-                swipeView.backgroundColor = greenColor
-                swipeView.layer.borderColor = UIColor.systemGreen.withAlphaComponent(0.5 * progress).cgColor
-                answerCallImg.alpha = 1.0
-                declineCallImg.alpha = max(0.3, 1.0 - (0.7 * progress))
-            } else if offset < 0 {
-                let redColor = UIColor.systemRed.withAlphaComponent(0.3 * progress)
-                swipeView.backgroundColor = redColor
-                swipeView.layer.borderColor = UIColor.systemRed.withAlphaComponent(0.5 * progress).cgColor
-                declineCallImg.alpha = 1.0
-                answerCallImg.alpha = max(0.3, 1.0 - (0.7 * progress))
-            } else {
-                resetSwipeViewColors()
-            }
-            
-        case .ended, .cancelled:
-            isDragging = false
-            let velocity = gesture.velocity(in: swipeView).x
-            let offset = draggableButton.center.x - originalCenter.x
-            
-            UIView.animate(withDuration: 0.2) {
-                self.draggableButton.transform = .identity
-            }
-            
-            if offset > maxSwipe * 0.65 || velocity > 600 {
-                answerCallAction()
-            } else if offset < -maxSwipe * 0.65 || velocity < -600 {
-                declineCallAction()
-            } else {
-                resetSwipeView()
-            }
-            
-        default:
-            break
-        }
-    }
+//    @objc private func handlePan(_ gesture: UIPanGestureRecognizer) {
+//        let translation = gesture.translation(in: swipeView)
+//        let buttonSize = draggableButton.frame.width
+//        let maxSwipe = (swipeView.frame.width - buttonSize) / 2 - 15
+//        
+//        switch gesture.state {
+//        case .began:
+//            isDragging = true
+//            draggableButton.layer.removeAnimation(forKey: "buttonBounce")
+//            draggableButton.layer.removeAnimation(forKey: "buttonScale")
+//            
+//            UIView.animate(withDuration: 0.2) {
+//                self.draggableButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+//                self.rightIndicationStack.alpha = 0
+//                self.leftIndicationStack.alpha = 0
+//            }
+//            
+//        case .changed:
+//            let newX = originalCenter.x + translation.x
+//            let minX = buttonSize / 2 + 15
+//            let maxX = swipeView.frame.width - buttonSize / 2 - 15
+//            draggableButton.center.x = max(minX, min(maxX, newX))
+//            
+//            let offset = draggableButton.center.x - originalCenter.x
+//            let progress = min(abs(offset) / maxSwipe, 1.0)
+//            
+//            if offset > 0 {
+//                let greenColor = UIColor.systemGreen.withAlphaComponent(0.3 * progress)
+//                swipeView.backgroundColor = greenColor
+//                swipeView.layer.borderColor = UIColor.systemGreen.withAlphaComponent(0.5 * progress).cgColor
+//                answerCallImg.alpha = 1.0
+//                declineCallImg.alpha = max(0.3, 1.0 - (0.7 * progress))
+//            } else if offset < 0 {
+//                let redColor = UIColor.systemRed.withAlphaComponent(0.3 * progress)
+//                swipeView.backgroundColor = redColor
+//                swipeView.layer.borderColor = UIColor.systemRed.withAlphaComponent(0.5 * progress).cgColor
+//                declineCallImg.alpha = 1.0
+//                answerCallImg.alpha = max(0.3, 1.0 - (0.7 * progress))
+//            } else {
+//                resetSwipeViewColors()
+//            }
+//            
+//        case .ended, .cancelled:
+//            isDragging = false
+//            let velocity = gesture.velocity(in: swipeView).x
+//            let offset = draggableButton.center.x - originalCenter.x
+//            
+//            UIView.animate(withDuration: 0.2) {
+//                self.draggableButton.transform = .identity
+//            }
+//            
+//            if offset > maxSwipe * 0.65 || velocity > 600 {
+//                answerCallAction()
+//            } else if offset < -maxSwipe * 0.65 || velocity < -600 {
+//                declineCallAction()
+//            } else {
+//                resetSwipeView()
+//            }
+//            
+//        default:
+//            break
+//        }
+//    }
     
     private func resetSwipeViewColors() {
         swipeView.backgroundColor = UIColor.white.withAlphaComponent(0.08)
         swipeView.layer.borderColor = UIColor.white.withAlphaComponent(0.15).cgColor
-        answerCallImg.alpha = 1.0
-        declineCallImg.alpha = 1.0
+
     }
     
     private func resetSwipeView() {
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseOut) {
-            self.draggableButton.center = self.originalCenter
+//            self.draggableButton.center = self.originalCenter
             self.resetSwipeViewColors()
             self.rightIndicationStack.alpha = 1.0
             self.leftIndicationStack.alpha = 1.0
@@ -700,16 +638,9 @@ class NotificationCallVC: UIViewController {
         
         callState = .connecting
         
-        UIView.animate(withDuration: 0.4, animations: {
-            self.draggableButton.center.x = self.swipeView.frame.width - self.draggableButton.frame.width / 2 - 15
-            self.draggableButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-            self.answerCallImg.alpha = 1.0
-            self.declineCallImg.alpha = 0
-            self.slideLabel.alpha = 0
-        }) { _ in
             self.startTime = self.getCurrentDateTimeString()
             self.navigateToCallScreen()
-        }
+       
     }
     
     private func declineCallAction() {
@@ -726,17 +657,9 @@ class NotificationCallVC: UIViewController {
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.warning)
         
-        callState = .ended
-        UIView.animate(withDuration: 0.4, animations: {
-            self.draggableButton.center.x = self.draggableButton.frame.width / 2 + 15
-            self.draggableButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-            self.declineCallImg.alpha = 1.0
-            self.answerCallImg.alpha = 0
-            self.slideLabel.alpha = 0
-        }) { [self] _ in
+           callState = .ended
             call_status = "NO"
             self.dismissCallScreen()
-        }
     }
     
     @objc private func cutCallAction() {
@@ -1058,11 +981,8 @@ class NotificationCallVC: UIViewController {
     
     private func stopAllAnimations() {
         stopChevronAnimation()
-        draggableButton.layer.removeAnimation(forKey: "buttonBounce")
-        draggableButton.layer.removeAnimation(forKey: "buttonScale")
         logoImg.layer.removeAnimation(forKey: "logoPulse")
         logoImg.layer.removeAnimation(forKey: "shadowPulse")
-        slideLabel.layer.mask = nil
         gradientLayer = nil
     }
     

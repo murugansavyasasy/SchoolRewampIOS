@@ -295,8 +295,10 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         else{
             isEmergencyVoice = false
         }
-        if staff_role == "p3"{
+        if staff_role == PriorityType.is_staff || staff_role == PriorityType.is_non_teaching_staff{
             seduleClickView.isHidden = true
+            enableVoiceHistory.isHidden = true
+            enableVoiceHistoryLabel.isHidden = true
         }else{
             seduleClickView.isHidden = false
         }

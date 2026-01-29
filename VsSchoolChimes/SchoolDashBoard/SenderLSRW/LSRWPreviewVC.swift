@@ -110,7 +110,7 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             if let firstLetter = student.student_name?.first {
                 cell.initialBtn.setTitle(String(firstLetter).uppercased(), for: .normal)
             } else {
-                cell.initialBtn.setTitle("-", for: .normal) // fallback if name is nil or empty
+                cell.initialBtn.setTitle("-", for: .normal)
             }
             cell.standerdScection?.text = "\(student.standard ?? "") - \(student.section ?? "")"
             let isNotSubmitted = student.submit_status == "NOTSUBMITTED"
@@ -151,7 +151,6 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             cell.submitDate.text = "\(txt): \(ConvertDateStringSmart(date ?? "",toFormat: "dd MMM yyyy h.mm a"))"
             cell.statusView.setImage(icon, for: .normal)
             cell.statusView.tintColor = statusColor
-            // Optional: Adjust image & title spacing
             cell.statusView.imageEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
             cell.statusView.titleEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
             cell.outerView.setShadow()

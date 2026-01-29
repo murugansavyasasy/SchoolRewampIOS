@@ -65,7 +65,6 @@ class QuizAttachmentPicker: NSObject {
         let picker = UIImagePickerController()
         picker.sourceType = .camera
         picker.delegate = self
-
         presenter.present(picker, animated: true)
     }
 

@@ -229,9 +229,7 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             )
             return
         }
-
-        print("Title: \(trimmedTitle), Description: \(trimmedDescription), Count: \(questionCount)")
-
+        
         let params: [String: Any] = [
             QuizRequestStringFile.title: trimmedTitle,
             QuizRequestStringFile.description: trimmedDescription,

@@ -191,12 +191,10 @@ class CreateQuizQutionVc: UIViewController {
         }
         
         questions.append(QuizQuestiondata())
-        
         noDataLbl.isHidden = true
         noDataImage.isHidden = true
 
             let indexPath = IndexPath(row: questions.count - 1, section: 0)
-
             tv.beginUpdates()
             tv.insertRows(at: [indexPath], with: .automatic)
             tv.endUpdates()
@@ -305,7 +303,6 @@ class CreateQuizQutionVc: UIViewController {
                         }
                     } else {
                         self.questions = [QuizQuestiondata()]
-                        // fallback to one empty
                     }
                     if self.questions.isEmpty {
                         self.noDataImage.isHidden = false
@@ -374,7 +371,6 @@ class CreateQuizQutionVc: UIViewController {
     
     func uploadForQuestion(index: Int) {
         if index >= questions.count {
-            // 🔥 ALL DONE → Now call API
             uploadAllQuestionsOptionImages {
                 let params = self.buildQuizParams()
                 self.submitQuestions(params: params)
@@ -390,7 +386,6 @@ class CreateQuizQutionVc: UIViewController {
             description: ""
         ) { [weak self] urls, iframe, fileSize, embedUrl in
             guard let self = self else { return }
-            // 🔥 Save uploaded URLs in this specific question
             var updated = q
             updated.q_file_path = urls.map {
                 FilePath(url: $0, type: self.detectType(url: $0))
@@ -781,10 +776,8 @@ class CreateQuizQutionVc: UIViewController {
             }
         }
         
-        // 3. Refresh main table
         tv.reloadData()
-        
-        // 4. Dismiss popup
+
         popupBGview.isHidden = true
         
         QuestionNoLbl.text = "\(QuizListStringFile.Question_Limit.translated()) \(questions.count)/\(noOfQuestion)"
