@@ -104,7 +104,7 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
         setTwoPartAttributedText(label: cell.otersCountLbl,
                                  firstText: Unspecified,
                                  firstColor: .darkGray,
-                                 secondText: "\(section.other_count ?? "0")",
+                                 secondText: "\(section.others_count ?? "0")",
                                  secondColor: .black)
         
         // Student Count Button Title

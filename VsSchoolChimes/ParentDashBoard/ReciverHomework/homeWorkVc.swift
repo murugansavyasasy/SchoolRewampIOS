@@ -46,7 +46,8 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             let detailVC = PrivewVc()
             detailVC.attachmetList = FilterHomeWorkList[indexPath.row].file_path
             detailVC.isCompleted = FilterHomeWorkList[indexPath.row].is_completed ?? false
-            detailVC.selectedDate  = selectedDate
+            detailVC.selectedDate  = FilterHomeWorkList[indexPath.row].date ?? ""
+//            detailVC.selectedDate  = selectedDate
             detailVC.is_unreadStatus = FilterHomeWorkList[indexPath.row].is_unread
             detailVC.titleString  = FilterHomeWorkList[indexPath.row].title
             detailVC.descriptionString  = FilterHomeWorkList[indexPath.row].description
