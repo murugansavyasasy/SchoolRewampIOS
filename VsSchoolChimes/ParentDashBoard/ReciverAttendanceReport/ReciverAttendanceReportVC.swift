@@ -121,9 +121,6 @@ class ReciverAttendanceReportVC: UIViewController {
         var config = UIButton.Configuration.plain()
            config.imagePadding = spacing
            WeekStatusDefBtn.configuration = config
-
-//        WeekStatusDefBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: spacing, bottom: 0, right: -spacing)
-//        WeekStatusDefBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: -spacing, bottom: 0, right: spacing)
         
         let today = Date()
         
@@ -230,68 +227,6 @@ class ReciverAttendanceReportVC: UIViewController {
         
         return attributed
     }
-    
-    
-    
-//    func setupDayButtons() {
-//        Stackview.arrangedSubviews.forEach { view in
-//            Stackview.removeArrangedSubview(view)
-//            view.removeFromSuperview()
-//        }
-//        
-//        let dayInitials = ["M", "T", "W", "T", "F", "S", "S"]
-//        let attList = studentStats?.first?.weekly_status?.att_list ?? []
-//        for (index,initial) in dayInitials.enumerated() {
-//            let verticalStack = UIStackView()
-//            verticalStack.axis = .vertical
-//            verticalStack.alignment = .center
-//            verticalStack.spacing = 4
-//            
-//            // Create the day label
-//            let label = UILabel()
-//            label.text = initial
-//            label.textAlignment = .center
-//            label.font = UIFont.systemFont(ofSize: 13)
-//            label.textColor = .black.withAlphaComponent(0.8)
-//            
-//            // Create the image view
-//            let imageView = UIImageView()
-//            let status = attList.indices.contains(index) ? attList[index] : nil
-//            switch status{
-//            case "-":
-//                imageView.image = UIImage(systemName: "circle")
-//                imageView.tintColor = .systemPink
-//            case "x":
-//                imageView.image = UIImage(systemName: "checkmark.circle.fill")
-//                imageView.tintColor = .backGroundClr
-//            case "A":
-//                imageView.image = UIImage(systemName: "a.circle.fill")
-//                imageView.tintColor = .systemRed
-//            case "S":
-//                imageView.image = UIImage(systemName: "h.circle.fill")
-//                imageView.tintColor = .systemPink
-//            case "/" :
-//                imageView.image = UIImage(systemName: "circle.lefthalf.filled")
-//                imageView.tintColor = .backGroundClr
-//            case "SH" :
-//                imageView.image = UIImage(systemName: "circle.righthalf.filled")
-//                imageView.tintColor = .backGroundClr
-//            default:
-//                imageView.image = UIImage(systemName: "circle")
-//                imageView.tintColor = .systemPink
-//            }
-//            
-//            imageView.contentMode = .scaleAspectFit
-//            imageView.translatesAutoresizingMaskIntoConstraints = false
-//            NSLayoutConstraint.activate([
-//                imageView.widthAnchor.constraint(equalToConstant: 20),
-//                imageView.heightAnchor.constraint(equalToConstant: 20)
-//            ])
-//            verticalStack.addArrangedSubview(label)
-//            verticalStack.addArrangedSubview(imageView)
-//            Stackview.addArrangedSubview(verticalStack)
-//        }
-//    }
     
     func setupDayButtons() {
         Stackview.arrangedSubviews.forEach {
@@ -417,9 +352,6 @@ class ReciverAttendanceReportVC: UIViewController {
             return (.system("minus.circle.fill"), .systemRed)
         }
     }
-
-
-
     
     func Set_Piechart_data(){
         let stats = studentStats?.first
@@ -511,8 +443,6 @@ class ReciverAttendanceReportVC: UIViewController {
         pieChart.centerAttributedText = attributedText
         pieChart.centerTextRadiusPercent = 0.9
     }
-    
-    
     
     func colorForPercentage(_ percentage: Double) -> UIColor {
         switch percentage {

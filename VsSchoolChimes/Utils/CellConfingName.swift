@@ -157,4 +157,7 @@ class CellConfingName {
     static let  CommunicationTVC = "CommunicationTVC"
     static let  SubjectsTVCell = "SubjectsTVCell"
     static let  ActivitiesTVCell = "ActivitiesTVCell"
+    static let  DateCvCell = "DateCvCell"
+    static let  parentPTMcell = "parentPTMcell"
+    static let  TimetableTvCell = "TimetableTvCell"
 }

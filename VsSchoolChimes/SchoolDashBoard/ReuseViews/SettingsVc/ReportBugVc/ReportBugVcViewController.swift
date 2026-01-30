@@ -277,23 +277,31 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
 
         var name = ""
         let mobilenumber = UserDefaultFileManager.getLoginCredentials()?.mobile_number
+        var schoolName = ""
+        var schoolId = ""
 
         if passValue == 1 {
             name = UserDefaultFileManager.get_staff_Details()?.name ?? ""
+            schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
+            schoolId = UserDefaultFileManager.get_staff_Details()?.school_id ?? ""
         } else {
             name = UserDefaultFileManager.get_child_Details()?.name ?? ""
+            schoolName = UserDefaultFileManager.get_child_Details()?.school_name ?? ""
+            schoolId = UserDefaultFileManager.get_child_Details()?.school_id ?? ""
         }
 
         let body = """
         Dear School Chimes Team,
 
-        Name - \(name)
-        Mobile number - \(mobilenumber ?? "")
+        School Name : \(schoolName)
+        School ID : \(schoolId)
+        
+        Name : \(name)
+        Mobile number : \(mobilenumber ?? "")
 
-        Query :
-        \(BugsTextview.text ?? "")
+        Query : \(BugsTextview.text ?? "")
         """
-
+ 
         let subject = "Bug Report - \(selectModuleLbl.text ?? "")"
         return (subject, body)
     }

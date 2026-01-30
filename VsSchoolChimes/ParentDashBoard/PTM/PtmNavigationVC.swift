@@ -8,7 +8,7 @@
 import UIKit
 
 class PtmNavigationVC: UIViewController {
-
+    
     
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var StudentNameLbl: UILabel!
@@ -24,7 +24,7 @@ class PtmNavigationVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let name = childDetails?.name ?? ""
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
         StudentNameLbl.configureAsBackTitle(firstLine: name, secondLine: standard)
@@ -40,11 +40,9 @@ class PtmNavigationVC: UIViewController {
         scheduleMeetingBtn.layer.cornerRadius = 12
         scheduleMeetingBtn.backgroundColor = .white
         yourMeetingBtn.layer.cornerRadius = 12
-        // Do any additional setup after loading the view.
         currentChildVC = firstChildVC
         add(asChildViewController: firstChildVC)
     }
-    
     
     @IBAction func scheduleMeetingAct(_ sender: Any) {
         scheduleMeetingBtn.backgroundColor = .white
@@ -52,16 +50,13 @@ class PtmNavigationVC: UIViewController {
         searchBtn.isHidden = true
         firstChildVC.Reload()
         transition(to: firstChildVC)
-//        removeChildVc()
-//        getSlotsApi()
     }
+    
     @IBAction func yourMeetingAct(_ sender: Any) {
         scheduleMeetingBtn.backgroundColor = .clear
         yourMeetingBtn.backgroundColor = .white
         searchBtn.isHidden = false
-        
         transition(to: secondChildVC)
-       // addChildVc()
     }
     
     func childViewController(_ child: UIViewController, didUpdateDataIsEmpty isEmpty: Bool) {
@@ -81,7 +76,7 @@ class PtmNavigationVC: UIViewController {
             child.searchBtnAct(selected: sender.isSelected)
         }
     }
-
+    
     func add(asChildViewController viewController: UIViewController) {
         // Add Child View Controller
         addChild(viewController)

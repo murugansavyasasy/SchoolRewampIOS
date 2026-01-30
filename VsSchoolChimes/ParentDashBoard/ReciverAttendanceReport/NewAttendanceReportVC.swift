@@ -128,7 +128,7 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
         let ishidden = !(FilteredReportData?.isEmpty == true)
         NoDataImage.isHidden = ishidden
         NoDataLbl.isHidden = ishidden
-        NoDataLbl.text = "No Data Found"
+        NoDataLbl.text = AlertstringFile.No_Data_Found.translated()
         cv.reloadData()
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

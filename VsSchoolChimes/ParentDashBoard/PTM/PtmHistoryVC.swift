@@ -190,7 +190,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     @IBAction func ContinueCalncelationAct(_ sender: Any) {
         if reasonTextfield.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true{
-            CustomAlert.showAlertWithOkAction(title: "Missing Information", message: "Please enter reson for cancelation", on: self)
+            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Missing_Information.translated(), message: "Please enter reason for cancelation", on: self)
         }else {
             Cancel_meeting_Api()
         }

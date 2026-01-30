@@ -17,7 +17,6 @@ class BookedSlotTV: UITableViewCell {
     @IBOutlet weak var TimeBtn: UIButton!
     @IBOutlet weak var ModeBtn: UIButton!
     @IBOutlet weak var DurationBtn: UIButton!
-   // @IBOutlet weak var callBtn: UIButton!
     @IBOutlet weak var subjectBGview: UIView!
     @IBOutlet weak var cancelBtn: UIButton!
     @IBOutlet weak var callBtn: UIButton!

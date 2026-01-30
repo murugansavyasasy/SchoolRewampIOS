@@ -12,8 +12,8 @@ class PopoverTVC: UITableViewCell {
     @IBOutlet weak var tittleLbl: UILabel!
     @IBOutlet weak var iconImg: UIImageView!
     @IBOutlet weak var iconBtn: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 }

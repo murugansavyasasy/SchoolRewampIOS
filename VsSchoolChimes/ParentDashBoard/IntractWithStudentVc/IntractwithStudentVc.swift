@@ -249,7 +249,7 @@ class IntractwithStudentVc: UIViewController {
             filteredData = getStandardDetails
             noDataFoundLbl.isHidden = !(filteredData?.isEmpty ?? true)
             imgView.isHidden = !(filteredData?.isEmpty ?? true)
-            noDataFoundLbl.text = CommonStringFile.No_data_found
+            noDataFoundLbl.text = CommonStringFile.No_data_found.translated()
             tv.reloadData()
         }
     }
@@ -286,7 +286,7 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
                 cell.unReadCountBtn.isHidden = unreadCount == 0
                 cell.unReadCountBtn.setTitle("\(unreadCount)", for: .normal)
                 
-                cell.lastMessageLbl.text = (datas.last_msg?.isEmpty == false) ? datas.last_msg : "No messages yet"
+                cell.lastMessageLbl.text = (datas.last_msg?.isEmpty == false) ? datas.last_msg : MenuStringFile.No_messages_yet.translated()
                 
                 // Last update time
                 if let submittedDate = datas.last_msg_time?.chatTimeDisplay() {
@@ -362,7 +362,6 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
 
 }
 
-// ✅ UISearchBar Delegate
 extension IntractwithStudentVc: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
