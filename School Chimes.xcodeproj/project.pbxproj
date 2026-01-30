@@ -4780,7 +4780,7 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -4805,7 +4805,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.isss.schoolchimes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4823,7 +4823,7 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
@@ -4847,7 +4847,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.isss.schoolchimes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
