@@ -37,6 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
                     application.registerForRemoteNotifications()
                 }
             }
+//            }else{
+//                self.checkNotificationPermission()
+//            }
         }
         NotificationCenter.default.addObserver(
             self,
@@ -44,7 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
             name: UIApplication.willTerminateNotification,
             object: nil
         )
-        checkNotificationPermission()
         return true
     }
     @objc func cleanupTempRecordings() {
@@ -60,11 +62,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     
     func checkNotificationPermission() {
         let center = UNUserNotificationCenter.current()
-
         center.getNotificationSettings { settings in
             DispatchQueue.main.async {
                 switch settings.authorizationStatus {
-
                 case .authorized, .provisional, .ephemeral:
                     print("✅ Notification Allowed")
 

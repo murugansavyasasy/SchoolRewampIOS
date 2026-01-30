@@ -153,8 +153,6 @@ class RecipientVc: UIViewController{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
                 getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             }
-//            segmentName.isHidden = false
-//            heightSegment.constant = 40
             defaultIndex = 0
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
             if Menu_id.event == Menu_id.staffSelectedMenuId {
