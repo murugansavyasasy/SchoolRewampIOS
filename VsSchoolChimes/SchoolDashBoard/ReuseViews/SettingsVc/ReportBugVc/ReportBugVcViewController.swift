@@ -3,7 +3,7 @@ import MessageUI
 
 @available(iOS 14.0, *)
 class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailComposeViewControllerDelegate {
-
+    
     // MARK: - IBOutlets
     @IBOutlet weak var remarkDefaultLbl: UILabel!
     @IBOutlet weak var selectDefaultLbl: UILabel!
@@ -23,7 +23,9 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
     let dropDown = DropDown()
     var Supportmail = UserDefaultFileManager.get_globalSelection()?.support_email
     var passValue = 1
-
+    var placeholderLabel: UILabel!
+    var isMenuSelected = false
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,12 +47,8 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
         NotificationCenter.default.removeObserver(self)
     }
     
-    
-
     // MARK: - UI Setup
     func setupUI() {
-        BugsTextview.text = "Type content"
-        BugsTextview.textColor = .lightGray
         BugsTextview.delegate = self
         BugsTextview.layer.cornerRadius = 8
         BugsTextview.layer.borderWidth = 0.5
@@ -60,40 +58,41 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
         remarkDefaultLbl.setRequiredText("Remarks")
         selectDefaultLbl.setRequiredText("Select Module")
         hideKeyboardWhenSwipedDown()
-
+        setupPlaceholder()
+        
         let gesture = UITapGestureRecognizer(target: self, action: #selector(categoryDropdown))
         ModuleDropDown.addGestureRecognizer(gesture)
     }
-
+    
     func hideKeyboardWhenSwipedDown() {
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         swipeDown.direction = .down
         swipeDown.delegate = self
         view.addGestureRecognizer(swipeDown)
     }
-
+    
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
-
+    
+    func setupPlaceholder() {
+        placeholderLabel = UILabel()
+        placeholderLabel.text = "Type content"
+        placeholderLabel.font = BugsTextview.font
+        placeholderLabel.textColor = .lightGray
+        placeholderLabel.sizeToFit()
+        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        BugsTextview.applyRightTxt()
+        BugsTextview.applyRightTxt(with: placeholderLabel)
+        BugsTextview.addSubview(placeholderLabel)
+        placeholderLabel.isHidden = !BugsTextview.text.isEmpty // Hide if text exists
+    }
+    
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
-
+    
     // MARK: - TextView
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if BugsTextview.text == "Type content" {
-            BugsTextview.text = ""
-            BugsTextview.textColor = .black
-        }
-    }
-
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if BugsTextview.text.isEmpty {
-            BugsTextview.text = "Type content"
-            BugsTextview.textColor = .lightGray
-        }
-    }
     
     func textViewDidChange(_ textView: UITextView) {
         
@@ -115,8 +114,9 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
         }
         
         textView.isScrollEnabled = newSize.height > maxHeight
+        placeholderLabel.isHidden = !textView.text.isEmpty
     }
-
+    
     // MARK: - Dropdown
     @objc func categoryDropdown() {
         dropDown.dataSource = user_inputs.menuList
@@ -125,37 +125,35 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
         dropDown.direction = .bottom
         dropDown.selectionAction = { [weak self] index, item in
             self?.selectModuleLbl.text = item
+            self?.isMenuSelected = true
         }
         dropDown.show()
     }
-
+    
     // MARK: - Send Button
     @IBAction func SendBtnAct(_ sender: Any) {
-        let module = selectModuleLbl.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-            let details = BugsTextview.text.trimmingCharacters(in: .whitespacesAndNewlines)
-
-            let modulePlaceholder = "Select the menu"
-            let detailsPlaceholder = "Type Content"
-            let isModuleEmpty = module.isEmpty || module == modulePlaceholder
-            let isDetailsEmpty = details.isEmpty || details == detailsPlaceholder
-            if isModuleEmpty && isDetailsEmpty {
-                showAlert(title: "Missing Information",
-                          message: "Please select a module and enter bug details.")
-                return
-            }
-            if isModuleEmpty {
-                showAlert(title: "Missing Module",
-                          message: "Please select a module.")
-                return
-            }
-            if isDetailsEmpty {
-                showAlert(title: "Missing Details",
-                          message: "Please enter bug details.")
-                return
-            }
-
-            // Case 4: All good
-             openPreferredMail()
+      
+        let details = BugsTextview.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        let isDetailsEmpty = details.isEmpty
+        
+        if !isMenuSelected && isDetailsEmpty {
+            showAlert(title: "Missing Information",
+                      message: "Please select a module and enter bug details.")
+            return
+        }
+        if !isMenuSelected {
+            showAlert(title: "Missing Module",
+                      message: "Please select a module.")
+            return
+        }
+        if isDetailsEmpty {
+            showAlert(title: "Missing Details",
+                      message: "Please enter bug details.")
+            return
+        }
+        
+        // Case 4: All good
+        openPreferredMail()
     }
     
     func showAlert(title: String, message: String) {
@@ -165,23 +163,23 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
     }
     
     func showMailOptions() {
-
+        
         let alert = UIAlertController(
             title: "Send Email",
             message: "Choose mail app",
             preferredStyle: .actionSheet
         )
-
+        
         alert.addAction(UIAlertAction(title: "Apple Mail", style: .default) { _ in
             self.sendViaAppleMail()
         })
-
+        
         alert.addAction(UIAlertAction(title: "Gmail", style: .default) { _ in
             self.sendViaGmail()
         })
-
+        
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-
+        
         if let popover = alert.popoverPresentationController {
             popover.sourceView = self.view
             popover.sourceRect = CGRect(x: view.bounds.midX,
@@ -189,24 +187,24 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
                                         width: 0,
                                         height: 0)
         }
-
+        
         present(alert, animated: true)
     }
     
     func openPreferredMail() {
-
+        
         if MFMailComposeViewController.canSendMail() {
             showMailOptions()        // Apple Mail + Gmail
         } else {
             sendViaGmail()           // Direct redirect
         }
     }
-
+    
     func sendViaAppleMail() {
-
+        
         let toEmail = getToEmail()
         let content = getMailContent()
-
+        
         guard MFMailComposeViewController.canSendMail() else {
             showAlert(
                 title: "Apple Mail Not Available",
@@ -214,10 +212,10 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
             )
             return
         }
-
+        
         let mailVC = MFMailComposeViewController()
         mailVC.mailComposeDelegate = self
-
+        
         mailVC.setToRecipients([toEmail])
         mailVC.setCcRecipients([
             "murugan@savyasasy.com",
@@ -225,41 +223,41 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
         ])
         mailVC.setSubject(content.subject)
         mailVC.setMessageBody(content.body, isHTML: false)
-
+        
         present(mailVC, animated: true)
     }
     
     func sendViaGmail() {
-
+        
         let toEmail = getToEmail()
         let content = getMailContent()
-
+        
         let ccEmails = [
             "murugan@savyasasy.com",
             "swathi@savyasasy.com"
         ].joined(separator: ",")
-
+        
         let gmailURLString =
-            "googlegmail://co?to=\(toEmail)&cc=\(ccEmails)&subject=\(content.subject)&body=\(content.body)"
+        "googlegmail://co?to=\(toEmail)&cc=\(ccEmails)&subject=\(content.subject)&body=\(content.body)"
             .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-
+        
         if let gmailURL = URL(string: gmailURLString),
            UIApplication.shared.canOpenURL(gmailURL) {
-
+            
             UIApplication.shared.open(gmailURL)
         } else {
             openGmailWeb(to: toEmail, subject: content.subject, body: content.body)
         }
     }
-
+    
     func openGmailWeb(to: String, subject: String, body: String) {
-
+        
         let ccEmails = "murugan@savyasasy.com,swathi@savyasasy.com"
-
+        
         let webURLString =
-            "https://mail.google.com/mail/u/0/?view=cm&to=\(to)&cc=\(ccEmails)&su=\(subject)&body=\(body)"
+        "https://mail.google.com/mail/u/0/?view=cm&to=\(to)&cc=\(ccEmails)&su=\(subject)&body=\(body)"
             .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-
+        
         if let url = URL(string: webURLString) {
             UIApplication.shared.open(url)
         }
@@ -270,16 +268,16 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
             .components(separatedBy: "/")
             .first?
             .trimmingCharacters(in: .whitespacesAndNewlines)
-            ?? "support@savyasasy.com"
+        ?? "support@savyasasy.com"
     }
-
+    
     func getMailContent() -> (subject: String, body: String) {
-
+        
         var name = ""
         let mobilenumber = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         var schoolName = ""
         var schoolId = ""
-
+        
         if passValue == 1 {
             name = UserDefaultFileManager.get_staff_Details()?.name ?? ""
             schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
@@ -289,23 +287,23 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
             schoolName = UserDefaultFileManager.get_child_Details()?.school_name ?? ""
             schoolId = UserDefaultFileManager.get_child_Details()?.school_id ?? ""
         }
-
+        
         let body = """
         Dear School Chimes Team,
-
+        
         School Name : \(schoolName)
         School ID : \(schoolId)
         
         Name : \(name)
         Mobile number : \(mobilenumber ?? "")
-
+        
         Query : \(BugsTextview.text ?? "")
         """
- 
+        
         let subject = "Bug Report - \(selectModuleLbl.text ?? "")"
         return (subject, body)
     }
-
+    
     func mailComposeController(_ controller: MFMailComposeViewController,
                                didFinishWith result: MFMailComposeResult,
                                error: Error?) {
@@ -327,8 +325,8 @@ extension ReportBugVcViewController {
     @objc func keyboardWillShow(_ notification: Notification) {
         
         guard let userInfo = notification.userInfo,
-        let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
-        let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
+              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
         else { return }
         
         let keyboardHeight = keyboardFrame.height + 50

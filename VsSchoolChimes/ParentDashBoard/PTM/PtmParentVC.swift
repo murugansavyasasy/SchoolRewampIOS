@@ -426,13 +426,13 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBAction func BookSlotsAct(_ sender: Any) {
         if selectedSlots.isEmpty {
             CustomAlert.showAlertWithOkAction(title: AlertstringFile.Missing_Information.translated(),
-                                              message: "Please select at least one slot to continue",
+                                              message: PTMString.Please_select_at_least_one_slot_to_continue.translated(),
                                               on: self)
         } else {
-            alert.showAlertCancel(title: AlertstringFile.Confirm,
-                                  message: "Are you sure you want to book selected slots?",
-                                  actionLbl1: AlertstringFile.OK,
-                                  actionLbl2: AlertstringFile.Cancel,
+            alert.showAlertCancel(title: AlertstringFile.Confirm.translated(),
+                                  message: PTMString.Are_you_sure_you_want_to_book_selected_slots.translated(),
+                                  actionLbl1: AlertstringFile.OK.translated(),
+                                  actionLbl2: AlertstringFile.Cancel.translated(),
                                   on: self) {
                 self.Book_Slots_Api()
             } onNo: { }

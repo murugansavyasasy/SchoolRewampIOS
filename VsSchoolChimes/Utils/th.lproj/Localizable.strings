@@ -179,6 +179,9 @@
 "Logout" = "ออกจากระบบ";
 "Chapters Completed" = "บทเรียนที่เสร็จสมบูรณ์";
 "Show old Messages" = "แสดงข้อความเก่า";
+"--From date--" = "--ตั้งแต่วันที่--";
+"--To date--" = "--ถึงวันที่--";
+"Select Date" = "เลือกวันที่";
 
 // MARK: Days
 "Sunday" = "วันอาทิตย์";
@@ -557,6 +560,10 @@
 "Edit Leave Request" = "แก้ไขคำขอลาหยุด";
 "Update for" = "อัปเดตสำหรับ";
 "Days Leave" = "วันลาหยุด";
+"Please select a Leave Type." = "กรุณาเลือกประเภทการลา";
+"Cause should not be empty." = "เหตุผลต้องไม่เว้นว่าง";
+"Please select a From Date." = "กรุณาเลือกวันที่เริ่มต้น";
+"Please select a To Date." = "กรุณาเลือกวันที่สิ้นสุด";
 
 //MARK: PTM
 "PTM" = "การประชุมผู้ปกครอง-ครู";
@@ -621,7 +628,9 @@
 "Book PTM Slots" = "จองช่วงเวลา PTM";
 "Join" = "เข้าร่วม";
 "Are you sure want to create this PTM meeting?" = "คุณแน่ใจหรือไม่ว่าต้องการสร้างการประชุม PTM นี้?";
-
+"Please select at least one slot to continue" = "กรุณาเลือกอย่างน้อยหนึ่งช่วงเวลาเพื่อดำเนินการต่อ";
+"Are you sure you want to book selected slots?" = "คุณแน่ใจหรือไม่ว่าต้องการจองช่วงเวลาที่เลือก?";
+"Please enter reason for cancelation" = "กรุณากรอกเหตุผลในการยกเลิก";
 
 //MARK: Quiz Page
 "No of question" = "จำนวนคำถาม";
@@ -779,3 +788,19 @@
 "Please select atleast one activity to continue" = "กรุณาเลือกอย่างน้อยหนึ่งกิจกรรมเพื่อดำเนินการต่อ";
 "All %d activities mapped" = "กิจกรรมทั้งหมด %d รายการถูกเชื่อมโยงแล้ว";
 "%d of %d activities mapped" = "เชื่อมโยงแล้ว %d จาก %d กิจกรรม";
+
+//MARK: Chat
+"No Blocked Students" = "ไม่มีนักเรียนที่ถูกบล็อก";
+"No messages yet" = "ยังไม่มีข้อความ";
+"Reason: " = "เหตุผล: ";
+"Unblock" = "ปลดบล็อก";
+
+//MARK: Report Bug
+"Type content" = "พิมพ์เนื้อหา";
+"Please select a module and enter bug details." = "กรุณาเลือกโมดูลและกรอกรายละเอียดบั๊ก";
+"Please select a module." = "กรุณาเลือกโมดูล";
+"Please enter bug details." = "กรุณากรอกรายละเอียดบั๊ก";
+"Send Email" = "ส่งอีเมล";
+"Choose mail app" = "เลือกแอปอีเมล";
+"Apple Mail" = "Apple Mail";
+"Gmail" = "Gmail";

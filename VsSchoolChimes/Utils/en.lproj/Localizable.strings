@@ -180,6 +180,9 @@
 "Logout" = "Logout";
 "Chapters Completed" = "Chapters Completed";
 "Show old Messages" = "Show old Messages";
+"--From date--" = "--From date--";
+"--To date--" = "--To date--";
+"Select Date" = "Select Date";
 // MARK: Days
 "Sunday" = "Sunday";
 "Monday" = "Monday";
@@ -542,6 +545,10 @@
 "Edit Leave Request" = "Edit Leave Request";
 "Update for" = "Update for";
 "Days Leave" = "Days Leave";
+"Please select a Leave Type." = "Please select a Leave Type.";
+"Cause should not be empty." = "Cause should not be empty.";
+"Please select a From Date." = "Please select a From Date.";
+"Please select a To Date." = "Please select a To Date.";
 
 //MARK: PTM
 "PTM" = "PTM";
@@ -605,6 +612,9 @@
 "No Slot Booked yet" = "No Slot Booked yet";
 "Book PTM Slots" = "Book PTM Slots";
 "Join" = "Join";
+"Please select at least one slot to continue" = "Please select at least one slot to continue";
+"Are you sure you want to book selected slots?" = "Are you sure you want to book selected slots?";
+"Please enter reason for cancelation" = "Please enter reason for cancelation";
 
 
 
@@ -762,4 +772,18 @@
 "All %d activities mapped" = "All %d activities mapped";
 "%d of %d activities mapped" = "%d of %d activities mapped";
 
+//MARK: chat
+"No Blocked Students" = "No Blocked Students";
+"No messages yet" = "No messages yet";
+"Reason: " = "Reason: ";
+"Unblock" = "Unblock";
 
+//MARK: Report Bug
+"Type content" = "Type content";
+"Please select a module and enter bug details." = "Please select a module and enter bug details.";
+"Please select a module." = "Please select a module.";
+"Please enter bug details." = "Please enter bug details.";
+"Send Email" = "Send Email";
+"Choose mail app" = "Choose mail app";
+"Apple Mail" = "Apple Mail";
+"Gmail" = "Gmail";
