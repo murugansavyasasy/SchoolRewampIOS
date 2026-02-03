@@ -357,7 +357,7 @@ struct VoiceData: Codable {
     let school_id: String?
     let header_id: String?
     let duration: Int?
-    var playDruration:Int?
+    var playDruration:Double?
     var isPlaying:Bool?
 }
 struct TextDetailsResponse: Codable {
