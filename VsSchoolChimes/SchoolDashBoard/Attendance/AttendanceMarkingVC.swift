@@ -254,7 +254,8 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
-                                    self.attendaceGoBackDashBoard()
+//                                    self.attendaceGoBackDashBoard()
+                                    self.dismiss(animated: true)
                                 }
                         }
                     }else {
@@ -265,7 +266,8 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
-                                    self.attendaceGoBackDashBoard()
+//                                    self.attendaceGoBackDashBoard()
+                                     self.dismiss(animated: true)
                                 }
                         }
                     }
