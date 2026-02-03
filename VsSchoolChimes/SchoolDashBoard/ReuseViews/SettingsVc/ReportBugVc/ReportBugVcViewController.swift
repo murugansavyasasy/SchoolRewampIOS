@@ -1,8 +1,5 @@
 import UIKit
-import PhotosUI
-import UniformTypeIdentifiers
 import MessageUI
-import AVFoundation
 
 @available(iOS 14.0, *)
 class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailComposeViewControllerDelegate {
@@ -13,8 +10,6 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var BugsTextview: UITextView!
     @IBOutlet weak var noteView: UIView!
-    @IBOutlet weak var AttachmentView: ImageSelection!
-    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var ModuleDropDown: UIView!
     @IBOutlet weak var BackBtn: UIButton!
@@ -22,11 +17,10 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var textViewStack: UIStackView!
     @IBOutlet weak var outerView: UIView!
-
+    @IBOutlet weak var textViewHeight: NSLayoutConstraint!
+    
     // MARK: - Properties
-    var attachments: [Attachments] = []
     let dropDown = DropDown()
-    var docController: UIDocumentInteractionController?
     var Supportmail = UserDefaultFileManager.get_globalSelection()?.support_email
     var passValue = 1
 
@@ -34,12 +28,24 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupPickerCallbacks()
-        setupCollectionView()
         ModuleDropDown.setShadow()
         noteView.layer.cornerRadius = 10
         sendBtn.layer.cornerRadius = 10
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    
 
     // MARK: - UI Setup
     func setupUI() {
@@ -74,35 +80,6 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
         dismiss(animated: true)
     }
 
-    func setupCollectionView() {
-        AttachmentView.imageCollectionview.delegate = self
-        AttachmentView.imageCollectionview.dataSource = self
-    }
-
-    // MARK: - Picker Callbacks
-    func setupPickerCallbacks() {
-        PhotoPickerManager.shared.onImagesPicked = { [weak self] images in
-            guard let self = self else { return }
-            let added = images.map { Attachments(image: $0, videoURL: nil, fileType: "image", displayName: "image.jpg") }
-            self.attachments.append(contentsOf: added)
-            self.AttachmentView.imageCollectionview.reloadData()
-            self.adjustHeight()
-        }
-
-        PhotoPickerManager.shared.onVideoPicked = { [weak self] url in
-            guard let self = self else { return }
-            let item = Attachments(image: nil, videoURL: url, fileType: "video", displayName: "video.mp4")
-            self.attachments.append(item)
-            self.AttachmentView.imageCollectionview.reloadData()
-            self.adjustHeight()
-        }
-    }
-
-    func adjustHeight() {
-        let rows = ceil(CGFloat(attachments.count + 1) / 3.0)
-        collectionViewHeight.constant = rows * 110
-    }
-
     // MARK: - TextView
     func textViewDidBeginEditing(_ textView: UITextView) {
         if BugsTextview.text == "Type content" {
@@ -116,6 +93,28 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
             BugsTextview.text = "Type content"
             BugsTextview.textColor = .lightGray
         }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        
+        let fixedwidth = textView.frame.width
+        let newSize = textView.sizeThatFits(CGSize(width: fixedwidth, height: .greatestFiniteMagnitude))
+        
+        let minHeight:CGFloat = 120
+        let maxHeight:CGFloat = 300
+        
+        let changedHeight = max(minHeight,newSize.height)
+        let finalHeight = min(maxHeight, changedHeight)
+        
+        if textViewHeight.constant != finalHeight {
+            
+            textViewHeight.constant = finalHeight
+            UIView.animate(withDuration: 0.15){
+                self.view.layoutIfNeeded()
+            }
+        }
+        
+        textView.isScrollEnabled = newSize.height > maxHeight
     }
 
     // MARK: - Dropdown
@@ -156,143 +155,147 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
             }
 
             // Case 4: All good
-            //sendEmailWithAttachmentsToGmail()
-             sendEmailWithGmailOnly()
+             openPreferredMail()
     }
+    
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
-
-    // MARK: - Gmail / Share Sheet
-//    func sendEmailWithAttachmentsToGmail() {
-//        
-//        let toEmail = Supportmail?.split(separator: "/") /*"support@savyasasy.com"*/
-//        let ccEmails = "murugan@savyasasy.com,swathi@savyasasy.com"
-//        let subject = "Bug Report - \(selectModuleLbl.text ?? "")"
-//        let body = BugsTextview.text ?? ""
-//        
-//        let gmailURLString =
-//        "googlegmail://co?to=\(toEmail, default: "support@savyasasy.com")&cc=\(ccEmails)&subject=\(subject)&body=\(body)"
-//            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-//        
-//        if let gmailURL = URL(string: gmailURLString),
-//           UIApplication.shared.canOpenURL(gmailURL) {
-//            UIApplication.shared.open(gmailURL)
-//            
-//        } else {
-//            let gmailWebURLString =
-//            "https://mail.google.com/mail/u/0/?view=cm&to=\(toEmail)&cc=\(ccEmails)&su=\(subject)&body=\(body)"
-//                .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-//            
-//            if let gmailWebURL = URL(string: gmailWebURLString) {
-//                UIApplication.shared.open(gmailWebURL)
-//            }
-//        }
-//    }
     
-    func sendEmailWithGmailOnly() {
-        
-        var name  = ""
-        var mobilenumber = UserDefaultFileManager.getLoginCredentials()?.mobile_number
-        
-        if passValue == 1 {
-            let user = UserDefaultFileManager.get_staff_Details()
-            name = user?.name ?? ""
-        }else{
-            let user = UserDefaultFileManager.get_child_Details()
-            name = user?.name ?? ""
+    func showMailOptions() {
+
+        let alert = UIAlertController(
+            title: "Send Email",
+            message: "Choose mail app",
+            preferredStyle: .actionSheet
+        )
+
+        alert.addAction(UIAlertAction(title: "Apple Mail", style: .default) { _ in
+            self.sendViaAppleMail()
+        })
+
+        alert.addAction(UIAlertAction(title: "Gmail", style: .default) { _ in
+            self.sendViaGmail()
+        })
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+        if let popover = alert.popoverPresentationController {
+            popover.sourceView = self.view
+            popover.sourceRect = CGRect(x: view.bounds.midX,
+                                        y: view.bounds.midY,
+                                        width: 0,
+                                        height: 0)
         }
 
-        let toEmail = Supportmail?.components(separatedBy: "/").first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "support@savyasasy.com"
+        present(alert, animated: true)
+    }
+    
+    func openPreferredMail() {
 
-            //let toEmail = "support@savyasasy.com"
+        if MFMailComposeViewController.canSendMail() {
+            showMailOptions()        // Apple Mail + Gmail
+        } else {
+            sendViaGmail()           // Direct redirect
+        }
+    }
+
+    func sendViaAppleMail() {
+
+        let toEmail = getToEmail()
+        let content = getMailContent()
+
+        guard MFMailComposeViewController.canSendMail() else {
+            showAlert(
+                title: "Apple Mail Not Available",
+                message: "Please configure Apple Mail or choose Gmail."
+            )
+            return
+        }
+
+        let mailVC = MFMailComposeViewController()
+        mailVC.mailComposeDelegate = self
+
+        mailVC.setToRecipients([toEmail])
+        mailVC.setCcRecipients([
+            "murugan@savyasasy.com",
+            "swathi@savyasasy.com"
+        ])
+        mailVC.setSubject(content.subject)
+        mailVC.setMessageBody(content.body, isHTML: false)
+
+        present(mailVC, animated: true)
+    }
+    
+    func sendViaGmail() {
+
+        let toEmail = getToEmail()
+        let content = getMailContent()
 
         let ccEmails = [
             "murugan@savyasasy.com",
             "swathi@savyasasy.com"
         ].joined(separator: ",")
 
-        let studentName = name
-        let mobileNumber = mobilenumber
-        let queryText = BugsTextview.text ?? ""
-
-        let body = """
-        Dear School Chimes Team,
-
-        Name - \(studentName)
-        Mobile number - \(mobileNumber ?? "")
-
-        Query :
-        \(queryText)
-        """
-
-        let subject = "Bug Report - \(selectModuleLbl.text ?? "")"
-
         let gmailURLString =
-        "googlegmail://co?to=\(toEmail, default: "support@savyasasy.com")&cc=\(ccEmails)&subject=\(subject)&body=\(body)"
+            "googlegmail://co?to=\(toEmail)&cc=\(ccEmails)&subject=\(content.subject)&body=\(content.body)"
             .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
 
         if let gmailURL = URL(string: gmailURLString),
            UIApplication.shared.canOpenURL(gmailURL) {
 
             UIApplication.shared.open(gmailURL)
-
         } else {
-            showAlert(title: "Gmail Not Installed",
-                      message: "Please install the Gmail app to send email.")
+            openGmailWeb(to: toEmail, subject: content.subject, body: content.body)
         }
     }
 
+    func openGmailWeb(to: String, subject: String, body: String) {
+
+        let ccEmails = "murugan@savyasasy.com,swathi@savyasasy.com"
+
+        let webURLString =
+            "https://mail.google.com/mail/u/0/?view=cm&to=\(to)&cc=\(ccEmails)&su=\(subject)&body=\(body)"
+            .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+
+        if let url = URL(string: webURLString) {
+            UIApplication.shared.open(url)
+        }
+    }
     
-    func saveTempFile(data: Data, fileName: String) -> URL {
-        let url = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
-        try? data.write(to: url)
-        return url
+    func getToEmail() -> String {
+        return Supportmail?
+            .components(separatedBy: "/")
+            .first?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            ?? "support@savyasasy.com"
     }
 
-    // MARK: - iOS Mail (optional)
-    func composeEmail() {
-        guard MFMailComposeViewController.canSendMail() else {
-            showAlert("Mail is not configured on this device")
-            return
+    func getMailContent() -> (subject: String, body: String) {
+
+        var name = ""
+        let mobilenumber = UserDefaultFileManager.getLoginCredentials()?.mobile_number
+
+        if passValue == 1 {
+            name = UserDefaultFileManager.get_staff_Details()?.name ?? ""
+        } else {
+            name = UserDefaultFileManager.get_child_Details()?.name ?? ""
         }
 
-        let mail = MFMailComposeViewController()
-        mail.mailComposeDelegate = self
-        mail.setToRecipients(["support@example.com"])
-        mail.setSubject("Bug Report - \(selectModuleLbl.text ?? "")")
-        mail.setMessageBody(BugsTextview.text, isHTML: false)
+        let body = """
+        Dear School Chimes Team,
 
-        for item in attachments {
-            if let img = item.image,
-               let data = img.jpegData(compressionQuality: 0.8) {
-                mail.addAttachmentData(data, mimeType: "image/jpeg", fileName: item.displayName ?? "image.jpg")
-            }
-            if let url = item.videoURL,
-               let data = try? Data(contentsOf: url) {
-                mail.addAttachmentData(data, mimeType: getMimeType(for: url), fileName: url.lastPathComponent)
-            }
-        }
-        present(mail, animated: true)
-    }
+        Name - \(name)
+        Mobile number - \(mobilenumber ?? "")
 
-    func getMimeType(for url: URL) -> String {
-        switch url.pathExtension.lowercased() {
-        case "jpg", "jpeg": return "image/jpeg"
-        case "png": return "image/png"
-        case "mp4": return "video/mp4"
-        case "mov": return "video/quicktime"
-        case "pdf": return "application/pdf"
-        default: return "application/octet-stream"
-        }
-    }
+        Query :
+        \(BugsTextview.text ?? "")
+        """
 
-    func showAlert(_ msg: String) {
-        let alert = UIAlertController(title: "", message: msg, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
+        let subject = "Bug Report - \(selectModuleLbl.text ?? "")"
+        return (subject, body)
     }
 
     func mailComposeController(_ controller: MFMailComposeViewController,
@@ -302,91 +305,47 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
     }
 }
 
-// MARK: - CollectionView
-@available(iOS 14.0, *)
-extension ReportBugVcViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return attachments.count + 1
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        if indexPath.item == 0 {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "AttachmentCVCell", for: indexPath)
-        }
-
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCvCell", for: indexPath) as! ImageCvCell
-        let item = attachments[indexPath.item - 1]
-
-        cell.imageViews.image = item.image ?? UIImage(named: "file_icon")
-        cell.deleteBtn.tag = indexPath.item - 1
-        cell.delegate = self
-        return cell
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.item == 0 {
-            let alert = UIAlertController(title: "Select", message: "Choose option", preferredStyle: .actionSheet)
-            alert.addAction(UIAlertAction(title: "Photos", style: .default, handler: { _ in
-                PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 10 - self.attachments.count), from: self)
-            }))
-            alert.addAction(UIAlertAction(title: "Video", style: .default, handler: { _ in
-                PhotoPickerManager.shared.presentPicker(ofType: .video, from: self)
-            }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-            present(alert, animated: true)
-            return
-        }
-
-        let item = attachments[indexPath.item - 1]
-        let vc = PreviewImageVC()
-        vc.modalPresentationStyle = .fullScreen
-
-        if item.fileType == "image" {
-            vc.img = item.image
-        } else {
-            vc.selectedFileURL = item.videoURL
-        }
-
-        vc.type = item.fileType
-        present(vc, animated: true)
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let w = (collectionView.frame.width - 20) / 3
-        return CGSize(width: w, height: w)
-    }
-}
-
-// MARK: - Delete Protocol
-@available(iOS 14.0, *)
-extension ReportBugVcViewController: DeleteImge {
-    func deleteImage(index: Int) {
-        attachments.remove(at: index)
-        AttachmentView.imageCollectionview.reloadData()
-        adjustHeight()
-    }
-}
-
 // MARK: - Swipe Down Gesture Delegate
 @available(iOS 14.0, *)
 extension ReportBugVcViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if touch.view?.isDescendant(of: AttachmentView.imageCollectionview) == true {
-            return false
-        }
         return true
     }
 }
 
-// MARK: - Attachment Struct
-struct Attachments {
-    var image: UIImage?
-    var videoURL: URL?
-    var fileType: String
-    var displayName: String?
+
+extension ReportBugVcViewController {
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        
+        guard let userInfo = notification.userInfo,
+        let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
+        let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
+        else { return }
+        
+        let keyboardHeight = keyboardFrame.height + 50
+        
+        let bottomInset = keyboardHeight - view.safeAreaInsets.bottom
+        
+        scrollView.contentInset.bottom = bottomInset
+        scrollView.verticalScrollIndicatorInsets.bottom = bottomInset
+        
+        UIView.animate(withDuration: duration){
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        
+        guard let userInfo = notification.userInfo,
+              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
+        else {return}
+        
+        scrollView.contentInset.bottom = 0
+        scrollView.verticalScrollIndicatorInsets.bottom = 0
+        
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+        }
+    }
 }

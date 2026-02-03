@@ -9,6 +9,7 @@ import UIKit
 
 class RecipientVc: UIViewController{
     
+    @IBOutlet weak var subjectDefaultLbl: UILabel!
     @IBOutlet weak var addLevel: UIView!
     @IBOutlet weak var chooseDefaultLbl: UILabel!
     @IBOutlet weak var acidmicYrLbl: UILabel!
@@ -115,6 +116,7 @@ class RecipientVc: UIViewController{
         applyShadowAndCornerRadius(to: getSubject)
         applyShadowAndCornerRadius(to: acidamicYrDropView)
         selectSubject.isHidden = true
+        subjectDefaultLbl.isHidden = true
         selectLevel.isHidden = true
         spaceView.isHidden = true
         getSubject.isHidden = true
@@ -151,8 +153,6 @@ class RecipientVc: UIViewController{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
                 getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             }
-//            segmentName.isHidden = false
-//            heightSegment.constant = 40
             defaultIndex = 0
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
             if Menu_id.event == Menu_id.staffSelectedMenuId {
@@ -185,81 +185,7 @@ class RecipientVc: UIViewController{
         handleSegmentSelection(index: defaultIndex)
     }
     
-//    func configureRecipientTabs() {
-//        segmentName.removeAllSegments()
-//        cv_itemsarry.removeAll()
-//
-//        segmentName.setTitleTextAttributes([
-//            .font: UIFont.boldSystemFont(ofSize: 10),
-//            .foregroundColor: UIColor.black
-//        ], for: .normal)
-//
-//        var defaultIndex = 0   // Default tab index
-//
-//        switch staff_role {
-//
-//        case PriorityType.is_staff:
-//            cv_itemsarry = [
-//                recipeint_tabBarName.Standard,
-//                recipeint_tabBarName.Section_Student,
-//                recipeint_tabBarName.Group
-//            ]
-//
-//            target_type = TargetTypes.standard
-//            circular_types = circular_type.standard
-//
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
-//                getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-//            }
-//
-//            segmentName.isHidden = false
-//            heightSegment.constant = 40
-//
-//        case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
-//
-//            cv_itemsarry = Menu_id.event == Menu_id.staffSelectedMenuId ?
-//            [
-//                recipeint_tabBarName.Entier_School,
-//                recipeint_tabBarName.Standard,
-//                recipeint_tabBarName.Group
-//            ] :
-//            [
-//                recipeint_tabBarName.Entier_School,
-//                recipeint_tabBarName.Standard,
-//                recipeint_tabBarName.Section_Student,
-//                recipeint_tabBarName.Group,
-//                recipeint_tabBarName.Staff
-//            ]
-//
-//            circular_types = circular_type.school
-//            target_type = TargetTypes.school
-//
-//            noRecordLbl.text = CommonStringFile.Tap_SEND_to_share_this
-//
-//            array_selectedId.append(
-//                UserDefaultFileManager.get_staff_Details()?.school_id ?? ""
-//            )
-//
-//            nodataFound.isHidden = false
-//            noRecordLbl.isHidden = false
-//            segmentName.isHidden = false
-//            heightSegment.constant = 40
-//            nodataFound.image = ImageName.girl_and_boy_are
-//
-//            defaultIndex = 1  // ❗ Admin / Principal / GroupHead → Default select index 1
-//
-//        default:
-//            print("Unhandled staff role")
-//        }
-//
-//        // Add segments
-//        cv_itemsarry.enumerated().forEach { index, title in
-//            segmentName.insertSegment(withTitle: title, at: index, animated: false)
-//        }
-//
-//        // Set default selection
-//        segmentName.selectedSegmentIndex = defaultIndex
-//    }
+
     
     func handleSegmentSelection(index: Int) {
         segment_selected_index = index
@@ -836,8 +762,10 @@ class RecipientVc: UIViewController{
             }
         }
         selectSubject.isHidden = !(selectedSections.count >= 1)
+        subjectDefaultLbl.isHidden = !(selectedSections.count >= 1)
         getSubject.isHidden = true
         selectSubject.isHidden = false
+        subjectDefaultLbl.isHidden = false
         selectLevel.isHidden = Menu_id.staffSelectedMenuId == Menu_id.quiz ? false : true
         spaceView.isHidden = true
     }
@@ -1001,6 +929,7 @@ class RecipientVc: UIViewController{
             guard let self = self else { return }
             array_selectedId.removeAll()
             selectSubject.isHidden = true
+            subjectDefaultLbl.isHidden = true
             subjectId = ""
             self.sectionsDetails = self.standardDetails?.first(where: { $0.name == item })?.sections
             if let label = self.selectStandardDropDown.subviews.first(where: { $0 is UILabel }) as? UILabel {
@@ -1008,13 +937,23 @@ class RecipientVc: UIViewController{
             }
             classID = self.standardDetails?[index].id
             speficBtnName.isHidden = true
-            self.tv.isHidden = false
-            self.tv.dataSource = self
-            self.tv.delegate = self
-            self.tv.reloadData()
-            DispatchQueue.main.async {
-                self.tableHeight.constant = self.tv.contentSize.height
-                self.view.layoutIfNeeded()
+            if sectionsDetails?.count == 0{
+                self.tv.isHidden = true
+                self.alert
+                    .showAlert(
+                        title: AlertstringFile.Oops,
+                        message: "No Section Found",
+                        on: self
+                    )
+            }else{
+                self.tv.isHidden = false
+                self.tv.dataSource = self
+                self.tv.delegate = self
+                self.tv.reloadData()
+                DispatchQueue.main.async {
+                    self.tableHeight.constant = self.tv.contentSize.height
+                    self.view.layoutIfNeeded()
+                }
             }
         }
     }
@@ -1225,9 +1164,11 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.lsrw == Menu_id.staffSelectedMenuId || Menu_id.staffSelectedMenuId == Menu_id.quiz {
                     if (selectedSections.count >= 1){
                         selectSubject.isHidden = false
+                        subjectDefaultLbl.isHidden = false
                         getSubjectListAPI(sectionIds ?? "")
                     }else{
                         selectSubject.isHidden = true
+                        subjectDefaultLbl.isHidden = true
                         subjectId = ""
                     }
                 }else{
@@ -1235,6 +1176,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         speficBtnName.isHidden = !(selectedSections.count == 1)
                         speficBtnName.isEnabled = true
                         selectSubject.isHidden = false
+                        subjectDefaultLbl.isHidden = true
                         getSubjectListAPI(sectionIds ?? "")
                     }else{
                         speficBtnName.isHidden = !(selectedSections.count == 1)
@@ -1319,6 +1261,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 spaceView.isHidden = true
                 subjectId = selectedSections.count == 0 ? "" : subjectId
                 selectSubject.isHidden = sectionIds == "" || sectionIds == nil
+                subjectDefaultLbl.isHidden = sectionIds == "" || sectionIds == nil
                 if sectionIds?.count != 0{
                     getSubjectListAPI(sectionIds ?? "")
                 }
@@ -1359,6 +1302,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     if successmessage.status == true{
                         DispatchQueue.main.async {[self] in
                             selectSubject.isHidden = true
+                            subjectDefaultLbl.isHidden = true
+                            
                             //                            spaceView.isHidden = false
                             spaceView.isHidden = true
                             groupDetails = successmessage.data
@@ -1395,6 +1340,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 if successMessage.status == true{
                     DispatchQueue.main.async { [self] in
                         selectSubject.isHidden = true
+                        subjectDefaultLbl.isHidden = true
                         spaceView.isHidden = true
                         tv.isHidden = false
                         noRecordLbl.isHidden = true
@@ -1422,11 +1368,21 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             self.tableHeight.constant = self.tv.contentSize.height
                             self.view.layoutIfNeeded()
                         }
+                        if sectionsDetails?.count == 0{
+                            tv.isHidden = true
+                            self.alert
+                                .showAlert(
+                                    title: AlertstringFile.Oops,
+                                    message: "No Section Found",
+                                    on: self
+                                )
+                        }
                     }
                 }else{
                     DispatchQueue.main.async { [self] in
                         selectStandardDropDown.isHidden = true
                         selectSubject.isHidden = true
+                        subjectDefaultLbl.isHidden = true
                         nodata(false, message: successMessage.message ?? "")
                     }
                 }
@@ -1479,6 +1435,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }else{
                         DispatchQueue.main.async { [self] in
                             selectSubject.isHidden = true
+                            subjectDefaultLbl.isHidden = true
                             spaceView.isHidden = true
                             sendbtnName.isHidden = true
                             tv.isHidden = true
@@ -1558,6 +1515,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 }else{
                     DispatchQueue.main.async { [self] in
                         selectSubject.isHidden = true
+                        subjectDefaultLbl.isHidden = true
                         IsNoSubjectData = true
                         spaceView.isHidden = true
                         speficBtnName.isEnabled = false

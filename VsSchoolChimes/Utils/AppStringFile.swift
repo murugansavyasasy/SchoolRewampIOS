@@ -157,7 +157,7 @@ struct AlertstringFile{
     static let Warning = "Warning"
     static let Confirm = "Confirm"
     static let Change_academic_year = "NOTE : This message is addressed to students in"
-    static let Change_academic_year1 = " which is not the communication academic year "
+    static let Change_academic_year1 = " this does not match the current academic year "
     static let Change_academic_year2 = "Do you want to proceed?"
     static let Selected_target = "Selected target : "
     static let AreYouSureYouWantToProceed = "Are you sure you want to send this message?"

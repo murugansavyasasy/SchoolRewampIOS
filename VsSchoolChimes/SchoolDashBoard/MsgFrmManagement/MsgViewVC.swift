@@ -25,7 +25,7 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
     @IBOutlet weak var reasonImgView: UIImageView!
     @IBOutlet weak var reasonDfltLbl: UILabel!
     @IBOutlet weak var voiceTitle: UILabel!
-    @IBOutlet weak var reasonLbl: UILabel!
+    @IBOutlet weak var reasonLbl: UITextView!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var slider: UISlider!
@@ -42,6 +42,11 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
     let VOICE = "VOICE"
     override func viewDidLoad() {
         super.viewDidLoad()
+        reasonLbl.isScrollEnabled = false
+        reasonLbl.textContainerInset = .zero
+        reasonLbl.textContainer.lineFragmentPadding = 0
+        reasonLbl.setContentHuggingPriority(.required, for: .vertical)
+        reasonLbl.setContentCompressionResistancePriority(.required, for: .vertical)
         backBtn.layer.cornerRadius = backBtn.frame.width/2
         cv.isHidden = file_path?.count == 0
         AudioFullView.isHidden = file_path?.count != 0
@@ -74,7 +79,7 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
         reasonImgView.isHidden = reasonLbl.isHidden
         postedByLbl.text = (MenuStringFile.Posted_By) + (MsgFromManagmentData.sent_by ?? "")
         titleLbl.text = MsgFromManagmentData.title?.capitalized
-        reasonLbl.text = MsgFromManagmentData.description?.capitalized
+        reasonLbl.text = MsgFromManagmentData.description
         voiceTitle.text = MsgFromManagmentData.title
         postedOn.text = formattedDateStatus(from: MsgFromManagmentData.date ?? "" ) + " " +  (
             MsgFromManagmentData.time ?? "" )

@@ -371,6 +371,7 @@ struct TextDetail: Codable {
     let title: String?
     let content: String?
     let date: String?
+    var isExpand: Bool?
 }
 struct HomeworkResponse: Codable {
     let status: Bool?
@@ -391,6 +392,7 @@ struct Homework: Codable {
     var can_edit : Bool?
     var can_delete : Bool?
     var created_on : String?
+    var date : String?
     
 }
 
@@ -820,7 +822,7 @@ struct SectionList: Codable {
     let id: String?
     let boys_count: String?
     let girls_count: String?
-    let other_count: String?
+    let others_count: String?
     let total_students: String?
 }
 

@@ -111,6 +111,8 @@ class SubjectsTVCell: UITableViewCell {
         }else{
             statusLbl.text = String(format: ExamMarkUploadString.Activities_selected_count.translated(),selected,splits.count)
         }
+        
+        statusLbl.isHidden = !(selected > 0)
     }
     
     func configureExpandState() {

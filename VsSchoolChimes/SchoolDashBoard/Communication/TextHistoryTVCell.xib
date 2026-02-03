@@ -53,24 +53,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZhC-TO-4ad" customClass="ShimmerLabel" customModule="School_Chimes" customModuleProvider="target">
-                                <rect key="frame" x="16" y="51.333333333333343" width="297" height="46"/>
-                                <string key="text">Single Section TableView: If your table view has only one section, you don’t need to implement this method because the default number of sections is 1.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="ShimmerHeight">
-                                        <real key="value" value="40"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shimmerLeadingInset">
-                                        <real key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="shimmerTrailingInset">
-                                        <real key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="0jJ-Af-jMa">
                                 <rect key="frame" x="16" y="112.33333333333333" width="297" height="42.666666666666671"/>
                                 <subviews>
@@ -117,20 +99,29 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Wkd-r6-E57">
+                                <rect key="frame" x="16" y="51.333333333333336" width="297" height="46.000000000000007"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="ZhC-TO-4ad" firstAttribute="top" secondItem="E6K-XD-RuD" secondAttribute="bottom" constant="15" id="2CO-qg-V6E"/>
-                            <constraint firstAttribute="trailing" secondItem="ZhC-TO-4ad" secondAttribute="trailing" constant="16" id="A4d-96-Phh"/>
-                            <constraint firstItem="ZhC-TO-4ad" firstAttribute="leading" secondItem="PuL-ZK-Yro" secondAttribute="leading" constant="16" id="FNp-wa-w5F"/>
+                            <constraint firstItem="0jJ-Af-jMa" firstAttribute="top" secondItem="Wkd-r6-E57" secondAttribute="bottom" constant="15" id="4V5-fW-ljq"/>
+                            <constraint firstItem="Wkd-r6-E57" firstAttribute="leading" secondItem="PuL-ZK-Yro" secondAttribute="leading" constant="16" id="5vm-B6-JVb"/>
                             <constraint firstItem="0jJ-Af-jMa" firstAttribute="leading" secondItem="PuL-ZK-Yro" secondAttribute="leading" constant="16" id="Gp6-dz-0kD"/>
                             <constraint firstItem="E6K-XD-RuD" firstAttribute="leading" secondItem="PuL-ZK-Yro" secondAttribute="leading" constant="16" id="Gt3-ub-Ckj"/>
-                            <constraint firstItem="0jJ-Af-jMa" firstAttribute="top" secondItem="ZhC-TO-4ad" secondAttribute="bottom" constant="15" id="Kgf-5R-CR5"/>
                             <constraint firstAttribute="bottom" secondItem="0jJ-Af-jMa" secondAttribute="bottom" constant="10" id="O0N-at-Jz9"/>
                             <constraint firstItem="E6K-XD-RuD" firstAttribute="top" secondItem="PuL-ZK-Yro" secondAttribute="top" constant="16" id="OJi-7Y-eam"/>
                             <constraint firstAttribute="trailing" secondItem="E6K-XD-RuD" secondAttribute="trailing" constant="16" id="Qjd-4J-WAq"/>
+                            <constraint firstAttribute="trailing" secondItem="Wkd-r6-E57" secondAttribute="trailing" constant="16" id="SKp-WT-9jz"/>
                             <constraint firstAttribute="trailing" secondItem="gF1-fd-HlY" secondAttribute="trailing" id="ewW-Te-CYc"/>
                             <constraint firstAttribute="trailing" secondItem="0jJ-Af-jMa" secondAttribute="trailing" constant="16" id="jgs-Nf-9H2"/>
+                            <constraint firstItem="Wkd-r6-E57" firstAttribute="top" secondItem="E6K-XD-RuD" secondAttribute="bottom" constant="15" id="mI8-gc-WQQ"/>
                             <constraint firstItem="gF1-fd-HlY" firstAttribute="top" secondItem="PuL-ZK-Yro" secondAttribute="top" id="qLT-QP-vJB"/>
                         </constraints>
                     </view>
@@ -150,7 +141,7 @@
                 <outlet property="MessageTitle" destination="E6K-XD-RuD" id="ZkO-qV-XKD"/>
                 <outlet property="NewImageView" destination="kfH-7D-VaO" id="giV-67-XAh"/>
                 <outlet property="PostedByLbl" destination="H73-as-gtb" id="AJg-du-fC1"/>
-                <outlet property="descriptContent" destination="ZhC-TO-4ad" id="C04-QW-SRb"/>
+                <outlet property="descriptContent" destination="Wkd-r6-E57" id="M0h-5P-QbH"/>
                 <outlet property="newImageOuterView" destination="gF1-fd-HlY" id="D9s-QM-OML"/>
                 <outlet property="outerview" destination="PuL-ZK-Yro" id="kpn-zC-XoS"/>
                 <outlet property="sendBtn" destination="vwk-N1-Vce" id="hqK-2M-2ub"/>
@@ -166,8 +157,14 @@
         <namedColor name="PrimeryColor">
             <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -14,7 +14,7 @@ class LSWTaskTVC: UITableViewCell, AudioPlaybackDelegate{
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var subject: UILabel!
-    @IBOutlet weak var descriptionLbl: UILabel!
+    @IBOutlet weak var descriptionLbl: UITextView!
     @IBOutlet weak var attachmentLbl: UILabel!
     @IBOutlet weak var attachmentCollectionView: UICollectionView!
     @IBOutlet weak var attachmentCollectionHeight: NSLayoutConstraint!
@@ -29,6 +29,11 @@ class LSWTaskTVC: UITableViewCell, AudioPlaybackDelegate{
     weak var delegate: AssignmentDetailTVCDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
+        descriptionLbl.isScrollEnabled = false
+        descriptionLbl.textContainerInset = .zero
+        descriptionLbl.textContainer.lineFragmentPadding = 0
+        descriptionLbl.setContentHuggingPriority(.required, for: .vertical)
+           descriptionLbl.setContentCompressionResistancePriority(.required, for: .vertical)
         attachmentCollectionView.delegate = self
         attachmentCollectionView.dataSource = self
         attachmentCollectionView.register(UINib(nibName: CellConfingName.AttachmentCVC, bundle: nil), forCellWithReuseIdentifier: CellConfingName.AttachmentCVC)
@@ -40,6 +45,9 @@ class LSWTaskTVC: UITableViewCell, AudioPlaybackDelegate{
         titleLbl.text = assignment.title
         subject.text = assignment.subject
         descriptionLbl.text = assignment.description
+        descriptionLbl.invalidateIntrinsicContentSize()
+            descriptionLbl.setNeedsLayout()
+            descriptionLbl.layoutIfNeeded()
         // Icon button setup
         if let type = assignment.activity_type{
             self.type.text = "\(type)".translated()
