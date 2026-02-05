@@ -16,7 +16,7 @@ protocol selectedAudio : AnyObject{
 }
 @available(iOS 15.0, *)
 class CommunicationTVC: UITableViewCell {
-
+    
     @IBOutlet weak var selectBtnHeight: NSLayoutConstraint!
     @IBOutlet weak var selectBtnName: UIButton!
     @IBOutlet weak var runningDurationLbl: UILabel!
@@ -24,7 +24,6 @@ class CommunicationTVC: UITableViewCell {
     @IBOutlet weak var newImageView: UIImageView!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var emergencyBtnName: UIButton!
-    // MARK: - Outlets
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var timeLbl: UILabel!
@@ -35,12 +34,11 @@ class CommunicationTVC: UITableViewCell {
     @IBOutlet weak var PostedByLbl: UILabel!
     
     
-    // MARK: - Delegates
     var delegate: DeleteImge?
     weak var audioDelegate: AudioPlaybackDelegate1?
-   weak var selectedAudioDelegate: selectedAudio?
-    // MARK: - Properties
+    weak var selectedAudioDelegate: selectedAudio?
     var cellIndex: Int = 0
+<<<<<<< HEAD
 //    private let audioManager = AudioManager()
     var loadedAudioURL:URL?
 //    var audioURL: URL?{
@@ -53,12 +51,23 @@ class CommunicationTVC: UITableViewCell {
 //    }
 
     // MARK: - Lifecycle
+=======
+    //    private let audioManager = AudioManager()
+    
+    var audioURL: URL?{
+        didSet {
+            guard let url = audioURL else { return }
+            waveView.audioURL = url
+        }
+    }
+    
+>>>>>>> development
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
         setupNotifications()
     }
-
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         stopPlayback()
@@ -74,11 +83,11 @@ class CommunicationTVC: UITableViewCell {
         selectedAudioDelegate = nil
         cellIndex = -1
     }
-
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-
+    
     // MARK: - Setup
     private func setupUI() {
         outerView.setShadow(cornerRadius: 10)
@@ -89,7 +98,7 @@ class CommunicationTVC: UITableViewCell {
         PostedByLbl.setFont(style: .body, size: FontSize.BodySize)
         PostedByLbl.isHidden = true
     }
-
+    
     @IBAction func selectBtnAct(_ sender: UIButton) {
         selectedAudioDelegate?.selectedAudio(index: sender.tag)
     }
@@ -101,7 +110,7 @@ class CommunicationTVC: UITableViewCell {
             object: nil
         )
     }
-
+    
     
     private func saveToPermanentLocation(tempURL: URL, originalURL: URL) -> URL? {
         let fileManager = FileManager.default
@@ -129,7 +138,7 @@ class CommunicationTVC: UITableViewCell {
               playingCellIndex != cellIndex else { return }
         stopPlayback()
     }
-
+    
     // MARK: - Actions
     @IBAction func playAudio(_ sender: UIButton) {
         if waveView.isPlaying {
@@ -155,29 +164,29 @@ class CommunicationTVC: UITableViewCell {
         waveView.startPlaybackAnimation()
         updatePlayButtonState(isPlaying: true)
     }
-
-
-
+    
+    
+    
     func stopPlayback() {
         waveView.isPlaying = false
         waveView.stopPlaybackAnimation()
         updatePlayButtonState(isPlaying: false)
         audioDelegate?.audioCell(self, didStopPlayingAtIndex: cellIndex)
     }
-
+    
     private func updatePlayButtonState(isPlaying: Bool) {
         playBtn.isSelected = isPlaying
         let imageName = isPlaying ? "pause-button" : "play-button"
         playBtn.setImage(UIImage(named: imageName), for: .normal)
     }
-
+    
     // MARK: - Error Handling
     private func showErrorAlert(message: String) {
         let alert = UIAlertController(title: "Audio Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         getCurrentViewController()?.present(alert, animated: true)
     }
-
+    
     private func getCurrentViewController() -> UIViewController? {
         UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }

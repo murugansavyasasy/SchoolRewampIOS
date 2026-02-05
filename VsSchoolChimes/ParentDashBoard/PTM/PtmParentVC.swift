@@ -97,7 +97,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
         CV.layer.cornerRadius = 12
         CV.backgroundColor = .clear
-        CV.register(UINib(nibName: "DateCvCell", bundle: nil), forCellWithReuseIdentifier: "DateCvCell")
+        CV.register(UINib(nibName:CellConfingName.DateCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.DateCvCell)
         CV.delegate = self
         CV.dataSource = self
         
@@ -108,7 +108,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
         BookSlotBtn.layer.cornerRadius = 12
         
-        tv.register(UINib(nibName: "parentPTMcell", bundle: nil), forCellReuseIdentifier: "parentPTMcell")
+        tv.register(UINib(nibName: CellConfingName.parentPTMcell, bundle: nil), forCellReuseIdentifier: CellConfingName.parentPTMcell)
         tv.delegate = self
         tv.dataSource = self
     }
@@ -425,14 +425,14 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     @IBAction func BookSlotsAct(_ sender: Any) {
         if selectedSlots.isEmpty {
-            CustomAlert.showAlertWithOkAction(title: "Missing Information",
-                                              message: "Please select at least one slot to continue",
+            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Missing_Information.translated(),
+                                              message: PTMString.Please_select_at_least_one_slot_to_continue.translated(),
                                               on: self)
         } else {
-            alert.showAlertCancel(title: AlertstringFile.Confirm,
-                                  message: "Are you sure you want to book selected slots?",
-                                  actionLbl1: AlertstringFile.OK,
-                                  actionLbl2: AlertstringFile.Cancel,
+            alert.showAlertCancel(title: AlertstringFile.Confirm.translated(),
+                                  message: PTMString.Are_you_sure_you_want_to_book_selected_slots.translated(),
+                                  actionLbl1: AlertstringFile.OK.translated(),
+                                  actionLbl2: AlertstringFile.Cancel.translated(),
                                   on: self) {
                 self.Book_Slots_Api()
             } onNo: { }
@@ -469,8 +469,6 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         searchBtn.isHidden = false
         let vc = PtmHistoryVC(nibName: nil, bundle: nil)
         addChild(vc)
-//        vc.view.frame = containerView.bounds
-//        containerView.addSubview(vc.view)
         containerView.addSubview(vc.view)
         vc.view.translatesAutoresizingMaskIntoConstraints = false
 
@@ -501,7 +499,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tv.dequeueReusableCell(withIdentifier: "parentPTMcell",
+        let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.parentPTMcell,
                                           for: indexPath) as! parentPTMcell
         let event = events[indexPath.row]
         cell.configure(with: event.slots ?? [], parentTableView: tv)
@@ -547,7 +545,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
    func collectionView(_ collectionView: UICollectionView,
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = CV.dequeueReusableCell(withReuseIdentifier: "DateCvCell", for: indexPath) as! DateCvCell
+       let cell = CV.dequeueReusableCell(withReuseIdentifier: CellConfingName.DateCvCell, for: indexPath) as! DateCvCell
         let comp = dateComponents[indexPath.item]
         cell.monthLbl.text = comp.month
         cell.dateLbl.text = comp.day

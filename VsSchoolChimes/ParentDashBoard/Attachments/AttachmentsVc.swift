@@ -227,7 +227,7 @@ class AttachmentsVc: UIViewController, Datepicker {
                         self.noDataLabel.isHidden = !isEmpty
                         self.tv.isScrollEnabled = !isEmpty
                         self.noDataLabel.text = response.message
-                      //  self.tv.reloadData()
+                        //  self.tv.reloadData()
                         
                     } else {
                         
@@ -317,7 +317,7 @@ class AttachmentsVc: UIViewController, Datepicker {
         formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter
     }()
-
+    
     private lazy var pickerDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMM yyyy"          // Picker: 05 Jan 2026
@@ -594,7 +594,7 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
                 guard !currentSearchText.isEmpty else { return true }
                 let text = currentSearchText.lowercased()
                 return (item.title?.lowercased().contains(text) ?? false) ||
-                       (item.description?.lowercased().contains(text) ?? false)
+                (item.description?.lowercased().contains(text) ?? false)
             }()
             
             // MARK: - Read / Unread Filter
@@ -614,20 +614,20 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
                 guard let apiDateString = item.date,
                       let apiDateTime = apiDateFormatter.date(from: apiDateString)
                 else { return true }
-
+                
                 let calendar = Calendar.current
                 let itemDay = calendar.startOfDay(for: apiDateTime)
-
+                
                 if let from = fromDate,
                    itemDay < calendar.startOfDay(for: from) {
                     return false
                 }
-
+                
                 if let to = toDate,
                    itemDay > calendar.startOfDay(for: to) {
                     return false
                 }
-
+                
                 return true
             }()
             
@@ -636,48 +636,19 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
         
         reloadTableView()
     }
-
-private func reloadTableView() {
-    UIView.performWithoutAnimation {
-        tv.reloadData()
-        tv.layoutIfNeeded()
+    
+    private func reloadTableView() {
+        UIView.performWithoutAnimation {
+            tv.reloadData()
+            tv.layoutIfNeeded()
+        }
+        
+        let isEmpty = filteredAttachments?.isEmpty ?? true
+        noDataLabel.isHidden = !isEmpty
+        noDataImage.isHidden = !isEmpty
+        tv.isScrollEnabled = !isEmpty
+        noDataLabel.text = "No Attachment Found"
     }
     
-    let isEmpty = filteredAttachments?.isEmpty ?? true
-    noDataLabel.isHidden = !isEmpty
-    noDataImage.isHidden = !isEmpty
-    tv.isScrollEnabled = !isEmpty
-    noDataLabel.text = "No Attachment Found"
-}
-
-    
-//    private func applyFilters() {
-//        if currentSearchText.isEmpty {
-//            self.filteredAttachments = self.attachmentData
-//        } else {
-//            self.filteredAttachments = self.attachmentData.filter { item in
-//                let titleMatch = item.title?.lowercased().contains(searchText.lowercased()) ?? false
-//                let descriptionMatch = item.description?.lowercased().contains(searchText.lowercased()) ?? false
-//                return titleMatch || descriptionMatch
-//            }
-//        }
-//        
-//        UIView.performWithoutAnimation {
-//            self.tv.reloadData()
-//            self.tv.layoutIfNeeded()
-//        }
-//        
-//        if self.filteredAttachments?.isEmpty ?? true {
-//            self.noDataLabel.isHidden = false
-//            self.noDataImage.isHidden = false
-//            self.tv.isScrollEnabled = false
-//            self.noDataLabel.text = "No Attachment Found"
-//        } else {
-//            self.noDataLabel.isHidden = true
-//            self.noDataImage.isHidden = true
-//            self.tv.isScrollEnabled = true
-//            
-//        }
-//    }
 }
 

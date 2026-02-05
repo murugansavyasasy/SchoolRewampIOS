@@ -1,0 +1,13 @@
+//
+//  Base.xcconfig
+//  School Chimes
+//
+//  Created by Lakshmanan on 04/02/26.
+//
+
+MARKETING_VERSION = 1.4
+CURRENT_PROJECT_VERSION = 1.5
+PRODUCT_NAME = School Chimes
+APP_DISPLAY_NAME = School Chimes
+PRODUCT_BUNDLE_IDENTIFIER = com.isss.schoolchimes
+GOOGLE_REVERSED_CLIENT_ID = com.googleusercontent.apps.937637023219-a8hmc1tcvthebl8nm6sjl62idbm3g7kh

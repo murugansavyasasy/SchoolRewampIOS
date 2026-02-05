@@ -148,23 +148,23 @@ class IntractwithStudentVc: UIViewController {
                     switch result {
                     case .success(let success):
                         if success.status == true {
-                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: success.message ?? "", on: self) {
+                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success.translated(), message: success.message ?? "", on: self) {
                                 if var blockList = self.BlockList,
                                    let index = blockList.firstIndex(where: { $0.id == student.id }) {
                                     blockList.remove(at: index)
                                     self.BlockList = blockList
                                     self.blockListTV.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
                                     self.NodataView.isHidden = !blockList.isEmpty
-                                    self.popupNodataLbl.text = "No Blocked Students"
+                                    self.popupNodataLbl.text = CommonStringFile.No_Blocked_Students.translated()
                                 }
                             }
                         }else{
-                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {}
+                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: success.message ?? "", on: self) {}
                         }
                         
                     case .failure(let failure):
                         print("Error",failure.localizedDescription)
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {}
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: failure.localizedDescription, on: self) {}
                     }
                 }
             }
@@ -249,7 +249,7 @@ class IntractwithStudentVc: UIViewController {
             filteredData = getStandardDetails
             noDataFoundLbl.isHidden = !(filteredData?.isEmpty ?? true)
             imgView.isHidden = !(filteredData?.isEmpty ?? true)
-            noDataFoundLbl.text = CommonStringFile.No_data_found
+            noDataFoundLbl.text = CommonStringFile.No_data_found.translated()
             tv.reloadData()
         }
     }
@@ -286,7 +286,7 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
                 cell.unReadCountBtn.isHidden = unreadCount == 0
                 cell.unReadCountBtn.setTitle("\(unreadCount)", for: .normal)
                 
-                cell.lastMessageLbl.text = (datas.last_msg?.isEmpty == false) ? datas.last_msg : "No messages yet"
+                cell.lastMessageLbl.text = (datas.last_msg?.isEmpty == false) ? datas.last_msg : CommonStringFile.No_messages_yet.translated()
                 
                 // Last update time
                 if let submittedDate = datas.last_msg_time?.chatTimeDisplay() {
@@ -321,13 +321,13 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
                 cell.initialBtn.setTitle(String(initials), for: .normal)
             }
             cell.standerdScection.text = (student?.class_name ?? "") + " - " + (student?.section_name ?? "")
-            cell.reasonLbl.text = "Reason: " + (student?.reason ?? "")
+            cell.reasonLbl.text = CommonStringFile.Reason.translated() + (student?.reason ?? "")
             cell.reasonLbl.isHidden = false
             cell.submitDate.text = MenuStringFile.Blocked_on + (student?.blocked_on ?? "")
             cell.statusView.layer.cornerRadius = 10
             cell.statusView.backgroundColor = .systemBlue
             cell.statusView.setTitleColor(.white, for: .normal)
-            cell.statusView.setTitle("Unblock", for: .normal)
+            cell.statusView.setTitle(CommonStringFile.Unblock.translated(), for: .normal)
             cell.statusView.isUserInteractionEnabled = true
             cell.onBlock = { [weak self] in
                 self?.UnBlock_Api(student: student)
@@ -362,7 +362,6 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
 
 }
 
-// ✅ UISearchBar Delegate
 extension IntractwithStudentVc: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {

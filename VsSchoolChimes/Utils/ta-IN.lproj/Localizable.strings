@@ -179,6 +179,9 @@
 "Logout" = "வெளியேறு";
 "Chapters Completed" = "முடித்த அத்தியாயங்கள்";
 "Show old Messages" = "பழைய செய்திகளை காண்பிக்கவும்";
+"--From date--" = "--தேதி முதல்--";
+"--To date--" = "--தேதி வரை--";
+"Select Date" = "தேதியைத் தேர்வு செய்க";
 
 // MARK: Days
 "Sunday" = "ஞாயிற்றுக்கிழமை";
@@ -567,6 +570,10 @@
 "Edit Leave Request" = "விடுப்பு கோரிக்கையை திருத்து";
 "Update for" = "புதுப்பிப்பு -";
 "Days Leave" = "நாட்கள் விடுப்பு";
+"Please select a Leave Type." = "விடுப்பு வகையைத் தேர்வு செய்யவும்.";
+"Cause should not be empty." = "காரணம் காலியாக இருக்கக்கூடாது.";
+"Please select a From Date." = "தொடக்க தேதியைத் தேர்வு செய்யவும்.";
+"Please select a To Date." = "முடிவு தேதியைத் தேர்வு செய்யவும்.";
 
 //MARK: PTM
 "PTM" = "பெற்றோர்-ஆசிரியர் கூட்டம்";
@@ -631,6 +638,9 @@
 "Book PTM Slots" = "PTM ஸ்லாட் பதிவு";
 "Join" = "சேரவும்";
 "Are you sure want to create this PTM meeting?" = "இந்த PTM கூட்டத்தை உருவாக்க நீங்கள் உறுதியாக இருக்கிறீர்களா?";
+"Please select at least one slot to continue" = "தொடர குறைந்தது ஒரு ஸ்லாட்டையாவது தேர்வு செய்யவும்";
+"Are you sure you want to book selected slots?" = "தேர்வு செய்யப்பட்ட ஸ்லாட்களை பதிவு செய்ய விரும்புகிறீர்களா?";
+"Please enter reason for cancelation" = "ரத்து செய்வதற்கான காரணத்தை உள்ளிடவும்";
 
 
 //MARK: Quiz Page
@@ -789,3 +799,19 @@
 "Please select atleast one activity to continue" = "தொடர குறைந்தது ஒரு செயல்பாட்டையாவது தேர்வு செய்யவும்";
 "All %d activities mapped" = "அனைத்து %d செயல்பாடுகளும் மேப் செய்யப்பட்டுள்ளன";
 "%d of %d activities mapped" = "%d / %d செயல்பாடுகள் மேப் செய்யப்பட்டுள்ளன";
+
+//MARK: Chat
+"No Blocked Students" = "தடுக்கப்பட்ட மாணவர்கள் இல்லை";
+"No messages yet" = "இதுவரை எந்த செய்தியும் இல்லை";
+"Reason: " = "காரணம்: ";
+"Unblock" = "தடையை நீக்கு";
+
+//MARK: Report Bug
+"Type content" = "உள்ளடக்கத்தை உள்ளிடவும்";
+"Please select a module and enter bug details." = "ஒரு மொட்யூலைத் தேர்வு செய்து பிழை விவரங்களை உள்ளிடவும்.";
+"Please select a module." = "ஒரு மொட்யூலைத் தேர்வு செய்யவும்.";
+"Please enter bug details." = "பிழை விவரங்களை உள்ளிடவும்.";
+"Send Email" = "மின்னஞ்சல் அனுப்பு";
+"Choose mail app" = "மின்னஞ்சல் செயலியைத் தேர்வு செய்க";
+"Apple Mail" = "ஆப்பிள் மெயில்";
+"Gmail" = "ஜிமெயில்";

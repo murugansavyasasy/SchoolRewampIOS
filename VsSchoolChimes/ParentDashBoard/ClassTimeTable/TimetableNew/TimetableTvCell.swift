@@ -22,7 +22,6 @@ class TimetableTvCell: UITableViewCell {
         super.awakeFromNib()
         
         cellView.layer.cornerRadius = 10
-        
         TimeLbl.setFont(style: .title, size: FontSize.BodySize)
         toTimeLbl.setFont(style: .title, size: FontSize.BodySize)
         SubjectLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -30,7 +29,6 @@ class TimetableTvCell: UITableViewCell {
         startEndTimeLbl.setFont(style: .body, size: FontSize.BodySize)
         DurationLbl.setFont(style: .body, size: FontSize.BodySize)
         DurationLbl.cornerRadius(5)
-        //DurationLbl.backgroundColor = .systemGreen.withAlphaComponent(0.2)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

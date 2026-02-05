@@ -1,0 +1,16 @@
+{
+  "flavours": [
+    {
+      "id": "VAGGISVARI",
+      "targetName": "VAGGISVARI",
+      "bundleId": "com.vaggisvari.connect",
+      "displayName": "VAGGISVARI VIDYALAYA",
+      "strings": {
+        "WELCOME_STRING": "Welcome to VAGGISVARI VIDYALAYA!",
+        "TERMS_URL": "https://apps.apple.com/in/app/school-chimes-sss/id6758079127",
+        "REPORT_BUG_STRING": "Dear VAGGISVARI Team"
+      }
+    }
+  ]
+}
+

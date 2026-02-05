@@ -79,7 +79,6 @@ struct MenuStringFile{
     static let No_Student_Data_Found   = "No Student Data Found"
     static let No_home_work_found   = "No home work found"
     static let See_Archived_Messages  = "See Archived Messages"
-    static let No_messages_yet   = "No messages yet"
     static let  No_Absentees_Report_from_this_date   = "No Absentees Report from this date"
     static let  Absent_students_list   = "👨🏻‍🎓 Absent  students list"
     static let  Pin_your_location_name   = "Pin your location name"
@@ -450,6 +449,13 @@ struct CommonStringFile {
     static let all = "All"
     static let edit = "Edit"
     static let Show_old_Messages = "Show old Messages"
+    static let No_Blocked_Students = "No Blocked Students"
+    static let No_messages_yet = "No messages yet"
+    static let Reason = "Reason: "
+    static let Unblock = "Unblock"
+    static let From_date_placeholder = "--From date--"
+    static let To_date_placeholder = "--To date--"
+    static let Select_Date = "Select Date"
 }
 
 
@@ -620,6 +626,10 @@ struct AttendanceString {
     static let editLeaveRequest = "Edit Leave Request"
     static let updateFor = "Update for"
     static let daysLeave = "Days Leave"
+    static let Please_select_a_Leave_Type = "Please select a Leave Type."
+    static let Cause_should_not_be_empty = "Cause should not be empty."
+    static let Please_select_a_From_Date = "Please select a From Date."
+    static let Please_select_a_To_Date = "Please select a To Date."
 }
 
 struct PTMString {
@@ -687,7 +697,9 @@ struct PTMString {
     static let No_Slot_Booked_yet = "No Slot Booked yet";
     static let Book_PTM_Slots = "Book PTM Slots";
     static let Join = "Join";
-    
+    static let Please_select_at_least_one_slot_to_continue = "Please select at least one slot to continue"
+    static let Are_you_sure_you_want_to_book_selected_slots = "Are you sure you want to book selected slots?"
+    static let Please_enter_reason_for_cancelation = "Please enter reason for cancelation"
 }
 
 struct ExamMarkUploadString {
@@ -726,8 +738,16 @@ struct ExamMarkUploadString {
     static let Please_Map_atleast_one_activity_to_continue = "Please Map atleast one activity to continue"
     static let Please_select_atleast_one_activity_to_continue = "Please select atleast one activity to continue"
     static let All_activities_mapped = "All %d activities mapped"
+}
 
-
+struct reportBugStringFile{
+    static let Please_select_a_module_and_enter_bug_details = "Please select a module and enter bug details."
+    static let Please_select_a_module = "Please select a module."
+    static let Please_enter_bug_details = "Please enter bug details."
+    static let Send_Email = "Send Email"
+    static let Choose_mail_app = "Choose mail app"
+    static let Apple_Mail = "Apple Mail"
+    static let Gmail = "Gmail"
 }
 
 struct BucketName {

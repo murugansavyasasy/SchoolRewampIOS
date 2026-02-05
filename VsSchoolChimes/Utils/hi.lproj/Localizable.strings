@@ -205,6 +205,9 @@
 "Proceed" = "जारी रखें";
 "Management" = "प्रबंधन";
 "Show old Messages" = "पुराने संदेश दिखाएँ";
+"--From date--" = "--आरंभ तिथि--";
+"--To date--" = "--समाप्ति तिथि--";
+"Select Date" = "तारीख़ चुनें";
 
 // MARK: Days
 "Sunday" = "रविवार";
@@ -550,6 +553,10 @@
 "Edit Leave Request" = "अवकाश अनुरोध संपादित करें";
 "Update for" = "के लिए अपडेट";
 "Days Leave" = "दिनों की छुट्टी";
+"Please select a Leave Type." = "कृपया अवकाश प्रकार चुनें।";
+"Cause should not be empty." = "कारण खाली नहीं होना चाहिए।";
+"Please select a From Date." = "कृपया आरंभ तिथि चुनें।";
+"Please select a To Date." = "कृपया समाप्ति तिथि चुनें।";
 
 //MARK: PTM
 "PTM" = "अभिभावक-शिक्षक बैठक";
@@ -614,6 +621,9 @@
 "Book PTM Slots" = "PTM स्लॉट बुक करें";
 "Join" = "जुड़ें";
 "Are you sure want to create this PTM meeting?" = "क्या आप निश्चित हैं कि आप यह PTM बैठक बनाना चाहते हैं?";
+"Please select at least one slot to continue" = "जारी रखने के लिए कृपया कम से कम एक स्लॉट चुनें";
+"Are you sure you want to book selected slots?" = "क्या आप चयनित स्लॉट बुक करना चाहते हैं?";
+"Please enter reason for cancelation" = "कृपया रद्द करने का कारण दर्ज करें";
 
 
 
@@ -774,3 +784,19 @@
 "Please select atleast one activity to continue" = "जारी रखने के लिए कृपया कम से कम एक गतिविधि चुनें";
 "All %d activities mapped" = "सभी %d गतिविधियाँ मैप की गई हैं";
 "%d of %d activities mapped" = "%d में से %d गतिविधियाँ मैप की गई हैं";
+
+//MARK: Chat
+"No Blocked Students" = "कोई अवरुद्ध छात्र नहीं";
+"No messages yet" = "अभी कोई संदेश नहीं";
+"Reason: " = "कारण: ";
+"Unblock" = "अनब्लॉक करें";
+
+//MARK: Report Bug
+"Type content" = "सामग्री लिखें";
+"Please select a module and enter bug details." = "कृपया एक मॉड्यूल चुनें और बग विवरण दर्ज करें।";
+"Please select a module." = "कृपया एक मॉड्यूल चुनें।";
+"Please enter bug details." = "कृपया बग विवरण दर्ज करें।";
+"Send Email" = "ईमेल भेजें";
+"Choose mail app" = "मेल ऐप चुनें";
+"Apple Mail" = "एप्पल मेल";
+"Gmail" = "जीमेल";

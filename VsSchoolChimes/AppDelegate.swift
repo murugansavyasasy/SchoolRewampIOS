@@ -150,6 +150,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
 
     func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("APNS TOKEN RECEIVED FOR NEW TARGET")
         Messaging.messaging().apnsToken = deviceToken
     }
 
