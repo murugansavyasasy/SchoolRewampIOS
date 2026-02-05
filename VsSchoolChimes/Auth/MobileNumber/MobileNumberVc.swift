@@ -89,7 +89,7 @@ class MobileNumberVc: UIViewController{
         MobilenumLabel.setFont(style: .body, size: 13)
         continueBtnName.setTitleFont(style: .primary, size: FontSize.TitleSize)
         addPadding(to: MobilTextFld, amount: 10)
-        
+        WelcomeLbl.text = NSLocalizedString("WELCOME_STRING", comment: "")//"WELCOME_STRING".translated()
     }
     
     func addPadding(to textField: UITextField, amount: CGFloat) {

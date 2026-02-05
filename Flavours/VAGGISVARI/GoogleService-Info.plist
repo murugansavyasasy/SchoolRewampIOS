@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>937637023219-a8hmc1tcvthebl8nm6sjl62idbm3g7kh.apps.googleusercontent.com</string>
+	<string>937637023219-j78t1v4c76o3hhbe6no7odtpo4rbm42t.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.937637023219-a8hmc1tcvthebl8nm6sjl62idbm3g7kh</string>
+	<string>com.googleusercontent.apps.937637023219-j78t1v4c76o3hhbe6no7odtpo4rbm42t</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDj8hLnT0gCZYFYjbQAzfrP61b6KD3UZw4</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.isss.schoolchimes</string>
+	<string>com.vaggisvari.connect</string>
 	<key>PROJECT_ID</key>
 	<string>school-chimes-new</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:937637023219:ios:d8f5febfbd7ffbef26d686</string>
+	<string>1:937637023219:ios:f1040b14b1d87e5526d686</string>
 </dict>
 </plist>

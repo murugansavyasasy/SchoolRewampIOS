@@ -827,8 +827,8 @@ class GradientView: UIView {
     
     private var gradientLayer: CAGradientLayer?
     private let lightColors: [CGColor] = [
-        UIColor(hex: "#6EC9F5").cgColor,
-        UIColor(hex: "#B3E5FC").cgColor,
+        UIColor.splashLight1.cgColor,
+        UIColor.splashLight2.cgColor,
         UIColor(hex: "#FFFFFF").cgColor
     ]
     private let darkColors: [CGColor] = [

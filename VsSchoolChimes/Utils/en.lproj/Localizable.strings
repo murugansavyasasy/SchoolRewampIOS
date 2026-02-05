@@ -787,3 +787,7 @@
 "Choose mail app" = "Choose mail app";
 "Apple Mail" = "Apple Mail";
 "Gmail" = "Gmail";
+
+
+//MARK: Flavour strings
+"WELCOME_STRING" = "Welcome to School Chimes!";
