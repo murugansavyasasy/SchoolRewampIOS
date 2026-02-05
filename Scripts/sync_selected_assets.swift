@@ -12,7 +12,8 @@ let selected = [
     "splashLight1",
     "splashLight2",
     "school 2",
-    "school_chimes 2"
+    "school_chimes 2",
+    "MenuClr"
 ]
 
 // BASE assets (SOURCE)

@@ -200,7 +200,7 @@ class SenderAssignmentTextViewController: UIViewController,
         contentTextView.layer.borderWidth = 1
         contentTextView.layer.borderColor = UIColor.gray.cgColor
         
-        chooseRecipientsBtn.backgroundColor = .link
+        chooseRecipientsBtn.backgroundColor = UIColor.primery
         cancelBtn.backgroundColor = .red
         chooseRecipientsBtn.layer.cornerRadius = 10
         cancelBtn.layer.cornerRadius = 10

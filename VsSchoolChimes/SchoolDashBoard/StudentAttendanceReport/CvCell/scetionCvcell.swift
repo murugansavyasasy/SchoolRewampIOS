@@ -18,6 +18,7 @@ class scetionCvcell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+
     }
     
     func updateProgress(absentees: String, total: String) {

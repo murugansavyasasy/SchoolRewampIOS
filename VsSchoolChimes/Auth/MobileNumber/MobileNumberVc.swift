@@ -89,7 +89,7 @@ class MobileNumberVc: UIViewController{
         MobilenumLabel.setFont(style: .body, size: 13)
         continueBtnName.setTitleFont(style: .primary, size: FontSize.TitleSize)
         addPadding(to: MobilTextFld, amount: 10)
-        WelcomeLbl.text = NSLocalizedString("WELCOME_STRING", comment: "")//"WELCOME_STRING".translated()
+        WelcomeLbl.text = NSLocalizedString("WELCOME_STRING", comment: "") + "!"//"WELCOME_STRING".translated()
     }
     
     func addPadding(to textField: UITextField, amount: CGFloat) {
@@ -101,7 +101,7 @@ class MobileNumberVc: UIViewController{
     func textFieldDidBeginEditing(_ textField: UITextField) {
         // Active/focused text field
         textField.backgroundColor = .white
-        textField.layer.borderColor = UIColor.systemBlue.cgColor
+        textField.layer.borderColor = UIColor.backGroundClr.cgColor
         textField.layer.borderWidth = 1
         textField.layer.cornerRadius = 20
     }

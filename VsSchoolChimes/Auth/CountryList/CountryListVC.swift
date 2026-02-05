@@ -50,6 +50,7 @@ class CountryListVC: UIViewController {
         newNextBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)
         NoDataImg.isHidden = true
         NoDataLbl.isHidden = true
+        termsCheckBtn.tintColor = .backGroundClr
     }
     
     private func configureBottomView() {
@@ -254,7 +255,7 @@ extension CountryListVC: UITableViewDelegate, UITableViewDataSource {
         cell.checkImage.isHidden = !isSelected
         cell.cellView.backgroundColor = isSelected ? .white : .systemGray5
         cell.cellView.layer.borderWidth = isSelected ? 1 : 0
-        cell.cellView.layer.borderColor = isSelected ? UIColor.systemBlue.cgColor : UIColor.clear.cgColor
+        cell.cellView.layer.borderColor = isSelected ? UIColor.backGroundClr.cgColor : UIColor.clear.cgColor
         
         return cell
     }
