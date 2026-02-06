@@ -36,7 +36,6 @@ class BookedSlotTV: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         cellView.layer.cornerRadius = 10
         cellView.layer.borderWidth = 1
         cellView.layer.borderColor = UIColor.systemGray4.cgColor
@@ -95,11 +94,6 @@ class BookedSlotTV: UITableViewCell {
         }
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-    }
-    
     @IBAction func cancelBtn(_ sender: Any) {
         
         onCancel?()

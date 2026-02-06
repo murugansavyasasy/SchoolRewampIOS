@@ -326,7 +326,6 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         }
         
         cell.onCall = { [weak self] in
-            
             self?.callButtonTapped(Mobile: slot?.staff_mobile_no ?? "")
         }
         

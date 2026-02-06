@@ -86,7 +86,7 @@ class ExamDetailsVC: UIViewController, Searchable {
         // Add new underline
         let underline = UIView()
         underline.tag = 999
-        underline.backgroundColor = .systemBlue
+        underline.backgroundColor = .backGroundClr
         underline.translatesAutoresizingMaskIntoConstraints = false
         selectedButton.addSubview(underline)
 
@@ -97,7 +97,7 @@ class ExamDetailsVC: UIViewController, Searchable {
             underline.bottomAnchor.constraint(equalTo: selectedButton.bottomAnchor)
         ])
 
-        selectedButton.tintColor = .systemBlue
+        selectedButton.tintColor = .backGroundClr
     }
 
     // MARK: - SEARCH

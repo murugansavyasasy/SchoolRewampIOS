@@ -165,10 +165,10 @@ class QuizVC: UIViewController, UISearchBarDelegate {
             button.tintColor = .black
         }
         // Add underline to the selected button
-        selectedButton.tintColor = .systemBlue
+        selectedButton.tintColor = .backGroundClr
         let underline = UIView()
         underline.tag = 999
-        underline.backgroundColor = .systemBlue
+        underline.backgroundColor = .backGroundClr
         underline.translatesAutoresizingMaskIntoConstraints = false
         selectedButton.addSubview(underline)
         NSLayoutConstraint.activate([

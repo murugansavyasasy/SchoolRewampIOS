@@ -90,10 +90,10 @@ class absentPrivewVC: UIViewController, call {
             button.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
             button.tintColor = .black
         }
-        selectedButton.tintColor = .systemBlue
+        selectedButton.tintColor = .backGroundClr
         let underline = UIView()
         underline.tag = 999
-        underline.backgroundColor = .systemBlue
+        underline.backgroundColor = .backGroundClr
         underline.translatesAutoresizingMaskIntoConstraints = false
         selectedButton.addSubview(underline)
         

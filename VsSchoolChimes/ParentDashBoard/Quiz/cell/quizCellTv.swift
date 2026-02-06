@@ -28,6 +28,7 @@ class quizCellTv: UITableViewCell {
         applyCardShadow(to: parentFullview)
         applyCardShadow(to: child1View)
         applyCardShadow(to: child2View)
+        child1View.backgroundColor = .backGroundClr.lighter(by: 10)
         playBtn.layer.shadowColor = UIColor(red: 0/255, green: 122/255, blue: 255/255, alpha: 1).cgColor // #007AFF
         playBtn.layer.shadowOpacity = 0.2 // 20%
         playBtn.layer.shadowOffset = CGSize(width: 0, height: 2) // Y-offset 2pt

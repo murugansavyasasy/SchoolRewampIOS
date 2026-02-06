@@ -552,13 +552,13 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
         // Configure selection UI
         if selectedIndex == indexPath {
-            cell.cellView.backgroundColor = .systemBlue
+            cell.cellView.backgroundColor = .backGroundClr
             cell.monthLbl.textColor = .white
             cell.dateBaseView.backgroundColor = .white
         } else {
             cell.cellView.backgroundColor = .white
             cell.monthLbl.textColor = .black
-            cell.dateBaseView.backgroundColor = .white
+            cell.dateBaseView.backgroundColor = .attendence.lighter(by:10)
         }
         
         // Show count if available

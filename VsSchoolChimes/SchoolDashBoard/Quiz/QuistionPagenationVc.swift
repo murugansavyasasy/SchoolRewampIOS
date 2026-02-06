@@ -95,10 +95,10 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
     
     func updateTabUI(for index: Int) {
         UIView.animate(withDuration: 0.25) {
-            self.createLbl.backgroundColor = index == 0 ? .blue : .systemGray5
-            self.reportsLb.backgroundColor = index == 0 ? .systemGray5 : .blue
-            self.reportsBtn.tintColor = index == 0 ? .black : .blue
-            self.createBtn.tintColor = index == 1 ? .black : .blue
+            self.createLbl.backgroundColor = index == 0 ? .backGroundClr : .systemGray5
+            self.reportsLb.backgroundColor = index == 0 ? .systemGray5 : .backGroundClr
+            self.reportsBtn.tintColor = index == 0 ? .black : .backGroundClr
+            self.createBtn.tintColor = index == 1 ? .black : .backGroundClr
         }
     }
     func loadPages(_ CV: [UIViewController]) {

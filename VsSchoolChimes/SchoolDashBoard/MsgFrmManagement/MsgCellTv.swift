@@ -115,7 +115,7 @@ class MsgCellTv: UITableViewCell {
         
         if #available(iOS 15.0, *) {
             var config = UIButton.Configuration.filled()
-            config.baseBackgroundColor = .systemBlue
+            config.baseBackgroundColor = .backGroundClr
             config.baseForegroundColor = .white
             config.cornerStyle = .capsule
             config.image = UIImage(systemName: "eye.fill")
