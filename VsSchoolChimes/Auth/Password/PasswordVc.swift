@@ -64,7 +64,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         PasswordBaseview.backgroundColor = .white
-        PasswordBaseview.layer.borderColor = UIColor.systemBlue.cgColor
+        PasswordBaseview.layer.borderColor = UIColor.backGroundClr.cgColor
         PasswordBaseview.layer.borderWidth = 1
         PasswordBaseview.layer.cornerRadius = 20
     }

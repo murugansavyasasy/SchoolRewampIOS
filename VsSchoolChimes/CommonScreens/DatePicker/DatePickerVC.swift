@@ -28,7 +28,7 @@ class DatePickerVC: UIViewController {
         let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
         let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
         let locale = Locale(identifier: normalizedCode)
-        
+        datepicker.tintColor = UIColor.primery
         datepicker.locale = locale
         
         if let date = minimumDate {

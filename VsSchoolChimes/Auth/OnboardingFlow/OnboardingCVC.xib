@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -24,6 +24,7 @@
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboardingImg" translatesAutoresizingMaskIntoConstraints="NO" id="Pvi-BX-7CA">
                                 <rect key="frame" x="0.0" y="239" width="317" height="270"/>
+                                <color key="tintColor" name="BackGroundClr"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="270" id="l2a-bf-Gvk"/>
                                 </constraints>
@@ -37,7 +38,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8SF-aN-ZS2">
                                 <rect key="frame" x="20" y="5" width="287" height="64"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
-                                <color key="textColor" name="ParentClr"/>
+                                <color key="textColor" name="BackGroundClr"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ezK-nM-B76">
@@ -89,8 +90,8 @@
     </objects>
     <resources>
         <image name="onboardingImg" width="400" height="216"/>
-        <namedColor name="ParentClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        <namedColor name="BackGroundClr">
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

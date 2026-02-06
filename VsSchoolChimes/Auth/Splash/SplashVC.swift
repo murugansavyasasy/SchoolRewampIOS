@@ -174,6 +174,7 @@ class SplashVC: UIViewController, ViewAttachments, DismissDelegate {
     
     // MARK: - Setup
     private func setupUI() {
+        headerLabel.text = NSLocalizedString("WELCOME_STRING", comment: "")
         setColoredEmpoweringText()
         headerLabel.alpha = 0
         headerLabel.textColor = UIColor.black

@@ -24,7 +24,7 @@ class MsgTvCell: UITableViewCell {
         super.awakeFromNib()
         viewBtn.layer.cornerRadius = 5
         viewBtn.layer.borderWidth = 1
-        viewBtn.layer.borderColor = UIColor.systemBlue
+        viewBtn.layer.borderColor = UIColor.primery
             .withAlphaComponent(0.6).cgColor
         alphbetView.layer.cornerRadius = alphbetView.frame.height/2
         fullview.setShadow()

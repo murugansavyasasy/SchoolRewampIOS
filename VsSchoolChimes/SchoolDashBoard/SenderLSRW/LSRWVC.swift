@@ -382,7 +382,7 @@ extension LSRWVC {
         button.setTitle("New Task".translated(), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = UIColor.primery
         button.layer.cornerRadius = 8
         button.addTarget(self, action: #selector(newTaskTapped), for: .touchUpInside)
         return button

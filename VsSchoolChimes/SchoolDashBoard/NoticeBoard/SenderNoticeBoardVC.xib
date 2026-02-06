@@ -194,6 +194,7 @@
                                                                                                         <constraint firstAttribute="height" constant="25" id="Jvk-pu-h5B"/>
                                                                                                         <constraint firstAttribute="width" constant="25" id="r91-wL-6kf"/>
                                                                                                     </constraints>
+                                                                                                    <color key="tintColor" name="BackGroundClr"/>
                                                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                     <state key="normal" image="calender123"/>
                                                                                                 </button>
@@ -286,6 +287,7 @@
                                                                                                         <constraint firstAttribute="width" constant="25" id="kvS-PA-owh"/>
                                                                                                         <constraint firstAttribute="height" constant="25" id="lff-a4-qJT"/>
                                                                                                     </constraints>
+                                                                                                    <color key="tintColor" name="BackGroundClr"/>
                                                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                     <state key="normal" image="calender123"/>
                                                                                                 </button>
@@ -495,6 +497,9 @@
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="exchange" width="24" height="24"/>
         <image name="list.bullet.clipboard" catalog="system" width="98" height="128"/>
+        <namedColor name="BackGroundClr">
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="PrimeryColor">
             <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -502,16 +507,16 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

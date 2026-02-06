@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -192,11 +192,11 @@
                                                 <constraint firstAttribute="width" constant="80" id="vAn-aS-uK8"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
-                                            <color key="tintColor" systemColor="linkColor"/>
+                                            <color key="tintColor" name="BackGroundClr"/>
                                             <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="History" image="list.bullet.clipboard" catalog="system">
-                                                <color key="titleColor" systemColor="linkColor"/>
+                                                <color key="titleColor" name="BackGroundClr"/>
                                             </state>
                                             <connections>
                                                 <action selector="viewHistory:" destination="-1" eventType="touchUpInside" id="hr4-nE-Mqd"/>
@@ -210,7 +210,7 @@
                                                 <constraint firstAttribute="height" constant="35" id="eou-qe-OyB"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
-                                            <color key="tintColor" systemColor="linkColor"/>
+                                            <color key="tintColor" name="BackGroundClr"/>
                                             <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" image="chevron.forward.dotted.chevron.forward" catalog="system">
@@ -391,9 +391,6 @@
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

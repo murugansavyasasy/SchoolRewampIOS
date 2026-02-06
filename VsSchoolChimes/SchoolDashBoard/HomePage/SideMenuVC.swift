@@ -138,7 +138,7 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                                                  for: indexPath) as! SideTvcell
         let item = menuArray[indexPath.row]
         cell.ExameLbl.text = item.name
-        cell.cellView.backgroundColor = indexPath.row == selectedIndex ? .parentClr.withAlphaComponent(0.5):.clear
+        cell.cellView.backgroundColor = indexPath.row == selectedIndex ? .backGroundClr.withAlphaComponent(0.7):.clear
         if let iconName = item.icon {
             if let systemImage = UIImage(systemName: iconName) {
                 cell.iconBtn.setImage(systemImage, for: .normal)

@@ -90,8 +90,8 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         scrollview.alwaysBounceVertical = true
         calendar.appearance.headerTitleColor = .systemBlue
         calendar.appearance.weekdayTextColor = .darkGray
-        calendar.appearance.selectionColor = .error
-        calendar.appearance.todayColor = UIColor.error.withAlphaComponent(0.6)
+        calendar.appearance.selectionColor = .primery
+        calendar.appearance.todayColor = UIColor.primery.withAlphaComponent(0.6)
         calendar.placeholderType = .none
         calendar.headerHeight = 0
         calendar.allowsMultipleSelection = false
@@ -105,18 +105,6 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         Tv.dataSource = self
         Tv.delegate = self
         
-//        let currentDate = Date()
-//        let calendar = Calendar.current
-//
-//        let month = String(calendar.component(.month, from: currentDate))
-//        let year = String(calendar.component(.year, from: currentDate))
-//
-//        self.month = month
-//        self.year = year
-//        print(month) // e.g. "4"
-//        print(year)  // e.g. "2025"
-//
-//        Absentees_Response()
     }
     
     @IBAction func BackAct() {
@@ -324,7 +312,7 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
             sectionLbl.text =  data.section_name
             abesentCountLbl.text =  Absentees + "\(data.total_absentees)"
             totalLbl.text = Absentees + "\(data.student_counts)"
-            cell.absentFullview.backgroundColor = .attendence
+            cell.absentFullview.backgroundColor = UIColor.attendence.lighter(by: 20)
         } else {
             cell.fullview.backgroundColor = .systemGray6
             cell.fullview.layer.cornerRadius = 10

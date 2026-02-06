@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -224,6 +224,7 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar.badge.clock" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Nld-Oh-TAN">
                                                     <rect key="frame" x="8.0000000000000018" y="9.6666666666666092" width="22.666666666666671" height="19.666666666666671"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" name="BackGroundClr"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="20" id="0pS-qO-0jH"/>
                                                         <constraint firstAttribute="height" constant="20" id="mYs-T1-uiP"/>
@@ -263,6 +264,7 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pin.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="JKu-Sy-kTc">
                                                     <rect key="frame" x="8" y="7.6666666666666643" width="20" height="21.333333333333336"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" name="BackGroundClr"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="20" id="PxM-O2-sIz"/>
                                                         <constraint firstAttribute="height" constant="20" id="TEb-yP-Uhu"/>
@@ -302,6 +304,7 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="highlighter" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="M7o-61-U2i">
                                                     <rect key="frame" x="8" y="8.3333333333333304" width="20" height="19.666666666666671"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" name="BackGroundClr"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="20" id="0Pl-dM-VEK"/>
                                                         <constraint firstAttribute="height" constant="20" id="Q5j-X6-ug0"/>
@@ -350,6 +353,7 @@
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="gYK-9w-qLf">
                                                     <rect key="frame" x="8" y="30.666666666666664" width="20" height="18.666666666666664"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" name="BackGroundClr"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="IsP-gE-Pp3"/>
                                                         <constraint firstAttribute="width" constant="20" id="xmk-LI-Isa"/>
@@ -474,6 +478,9 @@
         <image name="podcast" width="2500" height="2500"/>
         <namedColor name="AccentColor">
             <color red="1" green="0.79199999570846558" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="BackGroundClr">
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="PrimeryColor">
             <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

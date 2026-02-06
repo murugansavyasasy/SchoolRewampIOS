@@ -160,7 +160,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         contentTextView.layer.cornerRadius = 10
         contentTextView.layer.borderWidth = 1
         contentTextView.layer.borderColor = UIColor.gray.cgColor
-        chooseRecipientsBtn.backgroundColor = UIColor.parentClr
+        chooseRecipientsBtn.backgroundColor = UIColor.backGroundClr
         chooseRecipientsBtn.layer.cornerRadius = 10
         AssignmentTypeview.layer.cornerRadius = 10
         AssignmentTypeview.layer.borderWidth = 1

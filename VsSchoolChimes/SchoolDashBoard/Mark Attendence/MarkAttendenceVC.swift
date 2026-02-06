@@ -224,7 +224,7 @@ class MarkAttendenceVC: UIViewController {
         SectionView.layer.cornerRadius = 5
         SectionView.layer.borderWidth =  1
         SectionView.layer.borderColor =  UIColor.primery.cgColor
-        FulldayBtn.backgroundColor = .systemBlue.withAlphaComponent(0.8)
+        FulldayBtn.backgroundColor = UIColor.primery.withAlphaComponent(0.8)
         FulldayBtn.layer.cornerRadius = 8
         HalfDayBtn.backgroundColor = .systemGray4
         HalfDayBtn.layer.cornerRadius = 8
@@ -236,14 +236,14 @@ class MarkAttendenceVC: UIViewController {
         absentView.setShadow()
         AcademicYearView.setShadow()
         calendar.select(Date(), scrollToDate: true)
-        calendar.appearance.headerTitleColor = .systemBlue
+//        calendar.appearance.headerTitleColor = .systemBlue
         calendar.appearance.weekdayTextColor = .darkGray
         calendar.placeholderType = .none
         calendar.headerHeight = 0
         calendar.allowsMultipleSelection = false
         calendar.appearance.todayColor = .clear      // removes the circle background
-        calendar.appearance.titleTodayColor = .systemBlue   // set text color for today
-        calendar.appearance.selectionColor = .backGroundClr
+        calendar.appearance.titleTodayColor = UIColor.primery  // set text color for today
+        calendar.appearance.selectionColor = UIColor.primery
         calendar.appearance.titleSelectionColor = .white
         fulldayAction()
     }
@@ -345,7 +345,7 @@ class MarkAttendenceVC: UIViewController {
         ])
     }
     @IBAction func fullDayBtnAct(_ sender: UIButton) {
-        FulldayBtn.backgroundColor = .systemBlue.withAlphaComponent(0.8)
+        FulldayBtn.backgroundColor = UIColor.primery.withAlphaComponent(0.8)
         HalfDayBtn.backgroundColor = .systemGray4
         AttendaceSectionStac.isHidden = true
         fulldayAction()
@@ -353,7 +353,7 @@ class MarkAttendenceVC: UIViewController {
     @IBAction func halfDayBtnAct(_ sender: UIButton) {
         FirsthalfAct()
         FulldayBtn.backgroundColor = .systemGray4
-        HalfDayBtn.backgroundColor = .systemBlue.withAlphaComponent(0.8)
+        HalfDayBtn.backgroundColor = UIColor.primery.withAlphaComponent(0.8)
         AttendaceSectionStac.isHidden = false
     }
     @IBAction func segmentAct(_ sender: UISegmentedControl) {
