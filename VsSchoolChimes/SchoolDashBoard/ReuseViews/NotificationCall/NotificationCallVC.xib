@@ -64,7 +64,7 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="AON-vG-7Kn">
-                            <rect key="frame" x="166.66666666666666" y="622" width="60" height="60"/>
+                            <rect key="frame" x="134" y="622" width="125" height="60"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AuC-1v-Dom">
                                     <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
@@ -79,8 +79,8 @@
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="60"/>
                                     </state>
                                 </button>
-                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WmT-Ue-N0H">
-                                    <rect key="frame" x="0.0" y="12.666666666666629" width="35" height="35"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WmT-Ue-N0H">
+                                    <rect key="frame" x="90" y="12.666666666666629" width="35" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="35" id="Ivo-Yt-KhK"/>
                                         <constraint firstAttribute="height" constant="35" id="QwD-v4-ZVx"/>

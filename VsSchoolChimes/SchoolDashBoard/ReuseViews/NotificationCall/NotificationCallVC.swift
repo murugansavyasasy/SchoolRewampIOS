@@ -680,7 +680,7 @@ class NotificationCallVC: UIViewController {
             self.swipeView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             
             self.cutCallBtn.isHidden = false
-//            self.speakerBtn.isHidden = false
+            self.speakerBtn.isHidden = false
             
             self.cutCallBtn.alpha = 1.0
             self.durationLbl.alpha = 1.0

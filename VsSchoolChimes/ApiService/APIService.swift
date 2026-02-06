@@ -248,11 +248,14 @@ class APIService: NSObject, URLSessionDelegate {
                 completionHandler(.failure(error))
                 return
             }
-
+            print("📡 Status Code:", httpResponse.statusCode)
+                 print("📦 Raw Response:\n", data.toPrettyString())
             do {
                 let result = try JSONDecoder().decode(T.self, from: data)
                 completionHandler(.success(result))
             } catch {
+                print("❌ Decoding Error:", error)
+                print("📦 Failed JSON:\n", data.toPrettyString())
                 if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                    let message = json["message"] as? String {
                     let error = self.getError(statusCode: httpResponse.statusCode, description: message)
@@ -270,5 +273,16 @@ class APIService: NSObject, URLSessionDelegate {
 extension Data {
     mutating func append(_ string: String) {
         append(string.data(using: .utf8)!)
+    }
+    
+}
+extension Data {
+    func toPrettyString() -> String {
+        if let jsonObject = try? JSONSerialization.jsonObject(with: self),
+           let prettyData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted),
+           let prettyString = String(data: prettyData, encoding: .utf8) {
+            return prettyString
+        }
+        return String(data: self, encoding: .utf8) ?? "❌ Unable to convert data to string"
     }
 }
