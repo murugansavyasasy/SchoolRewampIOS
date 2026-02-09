@@ -28,7 +28,7 @@ class AudioCVC: UICollectionViewCell {
     var audioURL: URL? {
         didSet {
             guard let url = audioURL else { return }
-                waveView.audioURL = url
+                waveView.setupAudioUrl(url)
         }
     }
     

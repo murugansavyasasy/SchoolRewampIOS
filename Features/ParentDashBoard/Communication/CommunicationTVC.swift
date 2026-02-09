@@ -38,6 +38,18 @@ class CommunicationTVC: UITableViewCell {
     weak var audioDelegate: AudioPlaybackDelegate1?
     weak var selectedAudioDelegate: selectedAudio?
     var cellIndex: Int = 0
+//    private let audioManager = AudioManager()
+    var loadedAudioURL:URL?
+//    var audioURL: URL?{
+//        didSet {
+//            guard let url = audioURL else { return }
+//            if loadedAudioURL == url { return }
+//                    loadedAudioURL = url
+//                waveView.audioURL = url
+//        }
+//    }
+
+    // MARK: - Lifecycle
     //    private let audioManager = AudioManager()
     
     var audioURL: URL?{
@@ -46,7 +58,6 @@ class CommunicationTVC: UITableViewCell {
             waveView.audioURL = url
         }
     }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
@@ -56,7 +67,6 @@ class CommunicationTVC: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         stopPlayback()
-        audioURL = nil
         runningDurationLbl.text = "00:00"
         tottalDurationLbl.text = "00:00"
         playBtn.isSelected = false

@@ -111,18 +111,40 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         searchBar.placeholder = "Search"
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
-        if !UserDefaults.standard.bool(forKey: tourKey){
-            DispatchQueue.main.asyncAfter(deadline:.now() + 0.5){
-                let vc = AppTourVC()
-                vc.modalPresentationStyle = .overFullScreen
-                vc.tourKey = self.tourKey
-                vc.image = self.tourImg
-                vc.modalTransitionStyle = .crossDissolve
-                self.present(vc, animated: true)
+        handleBiometricAuthentication()
+    }
+    private func handleBiometricAuthentication() {
+
+        if !BiometricAuthentication.shared.isBiometricEnabledInApp(),
+           !BiometricAuthentication.shared.isBiometricDeclineInApp() {
+
+            BiometricAuthentication.shared.showEnableBiometricPopup(
+                from: self,
+                message: "Would you like to enable Face ID / Touch ID for this app?"
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.presentAppTourIfNeeded()
             }
+
+        } else {
+            presentAppTourIfNeeded()
         }
     }
-    
+    private func presentAppTourIfNeeded() {
+        let bundleID = Bundle.main.bundleIdentifier
+
+        guard bundleID == "com.isss.schoolchimes" else { return }
+        guard !UserDefaults.standard.bool(forKey: tourKey) else { return }
+
+        DispatchQueue.main.asyncAfter(deadline:.now() + 0.5){
+            let vc = AppTourVC()
+            vc.modalPresentationStyle = .overFullScreen
+            vc.tourKey = self.tourKey
+            vc.image = self.tourImg
+            vc.modalTransitionStyle = .crossDissolve
+            self.present(vc, animated: true)
+        }
+    }
     init(
         comefromNotification: Bool = false,
         menuId : String = "" ,

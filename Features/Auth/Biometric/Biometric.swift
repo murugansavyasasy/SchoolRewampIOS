@@ -28,7 +28,7 @@ class BiometricAuthentication {
         guard context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else {
             let errorMessage = getBiometricStatus()
             DispatchQueue.main.async {
-                self.showEnableBiometricPopup(from: viewController, message: errorMessage)
+                self.showAlertWithTitle(from: viewController, title: "Authentication Failed", message: errorMessage)
             }
             completion(false)
             return
@@ -92,22 +92,33 @@ class BiometricAuthentication {
     }
     
     // MARK: - Show Enable Biometric Popup
-    func showEnableBiometricPopup(from viewController: UIViewController, message: String) {
-        let alert = UIAlertController(title: "Enable Face ID / Touch ID", message: "Do you want to enable biometric authentication for this app?", preferredStyle: .alert)
-        
+    func showEnableBiometricPopup(
+        from viewController: UIViewController,
+        message: String,
+        completion: @escaping (Bool) -> Void
+    ) {
+        let alert = UIAlertController(
+            title: "Enable Face ID / Touch ID",
+            message: message,
+            preferredStyle: .alert
+        )
+
         alert.addAction(UIAlertAction(title: "Enable", style: .default) { _ in
             self.enableBiometric(true)
+            completion(true)
         })
-        
+
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
             self.enableBiometric(false)
             self.DeclineBiometric(true)
+            completion(false)
         })
-        
+
         DispatchQueue.main.async {
             viewController.present(alert, animated: true)
         }
     }
+
     
     // MARK: - Show Alert
     private func showAlertWithTitle(from viewController: UIViewController, title: String, message: String) {

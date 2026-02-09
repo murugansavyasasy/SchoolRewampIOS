@@ -97,7 +97,7 @@ class HistoryTC: UITableViewCell {
     
     @IBAction func play(_ sender: UIButton) {
         sender.isSelected.toggle()
-        delegate?.reload(index: sender.tag)
+//        delegate?.reload(index: sender.tag)
     }
     
     func updatePlayState(isPlaying: Bool, url: String?) {

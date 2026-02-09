@@ -807,7 +807,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OCm-ZA-WCG">
-                                            <rect key="frame" x="16" y="115" width="361" height="1"/>
+                                            <rect key="frame" x="16" y="118" width="361" height="1"/>
                                             <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="IJX-d9-LVK"/>
@@ -817,7 +817,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 / 500" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lMc-Eo-2Iz">
-                                            <rect key="frame" x="16" y="125.99999999999999" width="361" height="20.333333333333329"/>
+                                            <rect key="frame" x="16" y="129" width="361" height="20.333333333333343"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -869,7 +869,7 @@
                                         <constraint firstAttribute="trailing" secondItem="8z8-G9-XF2" secondAttribute="trailing" constant="16" id="DV1-OG-k0i"/>
                                         <constraint firstItem="bXD-4C-iTD" firstAttribute="top" secondItem="ew1-NT-jsT" secondAttribute="bottom" constant="10" id="HfH-p1-h1s"/>
                                         <constraint firstAttribute="trailing" secondItem="M6c-Ki-T0n" secondAttribute="trailing" constant="16" id="HhD-yH-2mN"/>
-                                        <constraint firstItem="OCm-ZA-WCG" firstAttribute="top" secondItem="hdb-AK-WZb" secondAttribute="bottom" id="Lge-OQ-vMj"/>
+                                        <constraint firstItem="OCm-ZA-WCG" firstAttribute="top" secondItem="hdb-AK-WZb" secondAttribute="bottom" constant="3" id="Lge-OQ-vMj"/>
                                         <constraint firstAttribute="trailing" secondItem="ge9-GQ-MId" secondAttribute="trailing" constant="10" id="MUa-bq-tqw"/>
                                         <constraint firstAttribute="trailing" secondItem="lMc-Eo-2Iz" secondAttribute="trailing" constant="16" id="Usn-tV-yzh"/>
                                         <constraint firstItem="8z8-G9-XF2" firstAttribute="top" secondItem="hdb-AK-WZb" secondAttribute="bottom" constant="20" id="Vwm-VB-DvE"/>
