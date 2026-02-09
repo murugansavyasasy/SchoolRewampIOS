@@ -1,10 +1,6 @@
 #!/usr/bin/env swift
 import Foundation
 
-// =======================================================
-// PATHS
-// =======================================================
-
 let root = FileManager.default.currentDirectoryPath
 let jsonPath = "\(root)/Scripts/flavours.json"
 let flavoursRoot = "\(root)/Flavours"
@@ -33,7 +29,7 @@ let data = try JSONDecoder().decode(
     from: Data(contentsOf: URL(fileURLWithPath: jsonPath))
 )
 
-print("🧾 Generating flavour .strings files (no subfolders)…")
+print("🧾 Generating flavour Localizable.strings…")
 
 // =======================================================
 // GENERATION
@@ -42,9 +38,8 @@ print("🧾 Generating flavour .strings files (no subfolders)…")
 for flavour in data.flavours {
 
     let flavourDir = "\(flavoursRoot)/\(flavour.id)"
-    let filePath = "\(flavourDir)/\(flavour.id).strings"
+    let filePath = "\(flavourDir)/Localizable.strings"
 
-    // Ensure flavour folder exists
     try fm.createDirectory(
         atPath: flavourDir,
         withIntermediateDirectories: true
@@ -69,7 +64,7 @@ for flavour in data.flavours {
         encoding: .utf8
     )
 
-    print("   ✔ \(flavour.id).strings created")
+    print("   ✔ \(flavour.id)/Localizable.strings created")
 }
 
 print("✅ Flavour string generation complete")

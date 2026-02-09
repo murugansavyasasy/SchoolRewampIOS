@@ -1671,8 +1671,6 @@
 		189AFD372F24C98700BDF3A0 /* ForceUpdateVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForceUpdateVc.swift; sourceTree = "<group>"; };
 		189AFD382F24C98700BDF3A0 /* ForceUpdateVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForceUpdateVc.xib; sourceTree = "<group>"; };
 		189E991D2CE3286600FE98A5 /* VsSchoolChimes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VsSchoolChimes.entitlements; sourceTree = "<group>"; };
-		189E997F2CE3794A00FE98A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		189E99802CE3794A00FE98A5 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		18D09A3C2EFFECF700D1930D /* VoiceCellTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCellTV.swift; sourceTree = "<group>"; };
 		18D09A3D2EFFECF700D1930D /* VoiceCellTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoiceCellTV.xib; sourceTree = "<group>"; };
 		18D09A402F00055E00D1930D /* VoiceMessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMessagesVC.swift; sourceTree = "<group>"; };
@@ -2448,6 +2446,131 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1803F48C2F3714FB002B6471 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				84A5BE412C19719700E32496 /* AppDelegate.swift */,
+				84A5BE452C19719700E32496 /* ViewController.swift */,
+				84A5BE4C2C19719900E32496 /* LaunchScreen.storyboard */,
+				84A5BE472C19719700E32496 /* Main.storyboard */,
+				84A5BE432C19719700E32496 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		1803F48D2F37153B002B6471 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				1888705D2EEAED86008B71FF /* ApiService */,
+				1803F4942F371B0E002B6471 /* UserDefaultFiles */,
+				1803F4932F371A2A002B6471 /* ExtenstionsFiles */,
+				1803F4922F3719F7002B6471 /* CommonAlertFile */,
+				1803F4912F3719B9002B6471 /* AppCommonStringFile */,
+				84A5BE772C19730500E32496 /* AWS */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		1803F48E2F3715C8002B6471 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				84A5BE712C19728F00E32496 /* Auth */,
+				84A5BE812C19776600E32496 /* SchoolDashBoard */,
+				84A5BE822C19777500E32496 /* ParentDashBoard */,
+				84DCF5F02CECC03200C42504 /* CommonScreens */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		1803F48F2F3716BB002B6471 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				84A5BE4A2C19719900E32496 /* BaseAssets.xcassets */,
+				849E572D2C1FF656006119DA /* Gif */,
+				849E57302C1FF6A9006119DA /* Fonts */,
+				84C829F92D086A490024A46A /* Fireworks */,
+				84C829C02D0807CD0024A46A /* Confetti */,
+				8442A9502CDE83C80006068E /* Localizable.strings */,
+				8449D8D32ED4647300822FAC /* normal.mp3 */,
+				18D09B3E2F0288FE00D1930D /* schoolchimes_tone.wav */,
+				18D09B402F02894500D1930D /* emergency_voice.mp3 */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		1803F4902F37181E002B6471 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				FA43D0982F322CCB0046B966 /* GoogleService-Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		1803F4912F3719B9002B6471 /* AppCommonStringFile */ = {
+			isa = PBXGroup;
+			children = (
+				84B5D0322D030C24003CFAAF /* AppStringFile.swift */,
+				842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */,
+			);
+			path = AppCommonStringFile;
+			sourceTree = "<group>";
+		};
+		1803F4922F3719F7002B6471 /* CommonAlertFile */ = {
+			isa = PBXGroup;
+			children = (
+				84EFF9982CCBA7E800C11C26 /* CustomAlert.swift */,
+				84A5BE8D2C197C3000E32496 /* Toast.swift */,
+			);
+			path = CommonAlertFile;
+			sourceTree = "<group>";
+		};
+		1803F4932F371A2A002B6471 /* ExtenstionsFiles */ = {
+			isa = PBXGroup;
+			children = (
+				1803F4962F371CBC002B6471 /* NetworkMoniter */,
+				1803F4952F371C7D002B6471 /* CommonImgAndFilesPick */,
+				188EBD8D2ED5632F00BEA524 /* DropDown */,
+				189AFD332F23803500BDF3A0 /* TimeAccessManager.swift */,
+				843BCD832E2FB1B700D4364A /* CustomTransition.swift */,
+				84127DBD2E152DDB0092159D /* chatAttachmentPicker.swift */,
+				FA0C88B22DC4CD470042DD24 /* VimeoUpload.swift */,
+				84F911862DB0C13F001A6408 /* bubbleview.swift */,
+				8476882C2D892D7D00EAB9DB /* DeviceUUIDManager.swift */,
+				8463D0EA2D6EF5CD00361F55 /* Extentions.swift */,
+				84EFFA3E2CCCC98100C11C26 /* Shimmer.swift */,
+				84EFF9DE2CCC89CF00C11C26 /* CellConfingName.swift */,
+				8441887B2CC90E98006483C3 /* Colornames.swift */,
+				84CAE5BA2D5DEF7B0091C671 /* ColourManager.swift */,
+				84A5BE932C197CF500E32496 /* UIViewX.swift */,
+				8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */,
+			);
+			path = ExtenstionsFiles;
+			sourceTree = "<group>";
+		};
+		1803F4942F371B0E002B6471 /* UserDefaultFiles */ = {
+			isa = PBXGroup;
+			children = (
+				8476882A2D88316C00EAB9DB /* userDefaultFileManager.swift */,
+			);
+			path = UserDefaultFiles;
+			sourceTree = "<group>";
+		};
+		1803F4952F371C7D002B6471 /* CommonImgAndFilesPick */ = {
+			isa = PBXGroup;
+			children = (
+				FA8166482F33188D00ADA8F3 /* PhotoPickManager.swift */,
+			);
+			path = CommonImgAndFilesPick;
+			sourceTree = "<group>";
+		};
+		1803F4962F371CBC002B6471 /* NetworkMoniter */ = {
+			isa = PBXGroup;
+			children = (
+				849D72352D14272C0060E222 /* NetworkMoniter.swift */,
+			);
+			path = NetworkMoniter;
+			sourceTree = "<group>";
+		};
 		187A0B3A2F10E9A7008CF5B7 /* IntractWithStudentVc */ = {
 			isa = PBXGroup;
 			children = (
@@ -2762,15 +2885,6 @@
 				189AFD382F24C98700BDF3A0 /* ForceUpdateVc.xib */,
 			);
 			path = ForceUpdatePopup;
-			sourceTree = "<group>";
-		};
-		189E99812CE3794A00FE98A5 /* ImageNotificationService */ = {
-			isa = PBXGroup;
-			children = (
-				189E997F2CE3794A00FE98A5 /* Info.plist */,
-				189E99802CE3794A00FE98A5 /* NotificationService.swift */,
-			);
-			path = ImageNotificationService;
 			sourceTree = "<group>";
 		};
 		18D09A3B2EFFECC600D1930D /* New Group */ = {
@@ -3558,6 +3672,8 @@
 			isa = PBXGroup;
 			children = (
 				8442A8E72CDC83860006068E /* GifImage.swift */,
+				FA43D0992F322CCB0046B966 /* Mic.gif */,
+				FA43D0972F322CCB0046B966 /* done.json */,
 				849E572E2C1FF65F006119DA /* right-arrow.json */,
 				8464BA682DA6774100A52D8B /* percentage-circle.json */,
 				841ACC8E2DA5076800326D52 /* loader.json */,
@@ -3570,6 +3686,7 @@
 			isa = PBXGroup;
 			children = (
 				849E57362C1FF6BD006119DA /* roboto-slab */,
+				84385F672CF842F60020E94D /* Fonts.swift */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -3610,13 +3727,17 @@
 		84A5BE352C19719700E32496 = {
 			isa = PBXGroup;
 			children = (
+				1803F48C2F3714FB002B6471 /* App */,
+				1803F48D2F37153B002B6471 /* Core */,
+				1803F48E2F3715C8002B6471 /* Features */,
+				1803F48F2F3716BB002B6471 /* Resource */,
+				1803F4902F37181E002B6471 /* SupportingFiles */,
 				FA81631A2F3314B000ADA8F3 /* Flavours */,
 				FA8163192F33142E00ADA8F3 /* Scripts */,
 				FA8163122F33006800ADA8F3 /* BaseConfig */,
 				84A5BE402C19719700E32496 /* VsSchoolChimes */,
 				84A5BE572C19719A00E32496 /* VsSchoolChimesTests */,
 				84A5BE612C19719A00E32496 /* VsSchoolChimesUITests */,
-				189E99812CE3794A00FE98A5 /* ImageNotificationService */,
 				84A5BE3F2C19719700E32496 /* Products */,
 				3CDBD330E75F67CE1AED6022 /* Frameworks */,
 			);
@@ -3637,23 +3758,8 @@
 		84A5BE402C19719700E32496 /* VsSchoolChimes */ = {
 			isa = PBXGroup;
 			children = (
-				189E991D2CE3286600FE98A5 /* VsSchoolChimes.entitlements */,
-				1888705D2EEAED86008B71FF /* ApiService */,
-				849E57302C1FF6A9006119DA /* Fonts */,
-				849E572D2C1FF656006119DA /* Gif */,
-				84A5BE7E2C1973F400E32496 /* Utils */,
-				84A5BE772C19730500E32496 /* AWS */,
-				84DCF5F02CECC03200C42504 /* CommonScreens */,
-				84A5BE822C19777500E32496 /* ParentDashBoard */,
-				84A5BE812C19776600E32496 /* SchoolDashBoard */,
-				84A5BE712C19728F00E32496 /* Auth */,
-				84A5BE412C19719700E32496 /* AppDelegate.swift */,
-				84A5BE432C19719700E32496 /* SceneDelegate.swift */,
-				84A5BE452C19719700E32496 /* ViewController.swift */,
-				84A5BE472C19719700E32496 /* Main.storyboard */,
-				84A5BE4A2C19719900E32496 /* BaseAssets.xcassets */,
-				84A5BE4C2C19719900E32496 /* LaunchScreen.storyboard */,
 				84A5BE4F2C19719900E32496 /* Info.plist */,
+				189E991D2CE3286600FE98A5 /* VsSchoolChimes.entitlements */,
 			);
 			path = VsSchoolChimes;
 			sourceTree = "<group>";
@@ -3698,7 +3804,6 @@
 		84A5BE772C19730500E32496 /* AWS */ = {
 			isa = PBXGroup;
 			children = (
-				FA8166492F33188D00ADA8F3 /* ImagePickerView */,
 				84A5BE872C197B4A00E32496 /* AWSS3Manager.swift */,
 				840D6CE62DDB0E0100FD7620 /* FileDownloader.swift */,
 			);
@@ -3725,41 +3830,6 @@
 				FA82918A2E4379960051844E /* CountryTvcell.xib */,
 			);
 			path = CountryList;
-			sourceTree = "<group>";
-		};
-		84A5BE7E2C1973F400E32496 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				18D09B402F02894500D1930D /* emergency_voice.mp3 */,
-				18D09B3E2F0288FE00D1930D /* schoolchimes_tone.wav */,
-				188EBD8D2ED5632F00BEA524 /* DropDown */,
-				84C829F92D086A490024A46A /* Fireworks */,
-				84C829C02D0807CD0024A46A /* Confetti */,
-				FA43D09A2F322CCB0046B966 /* GIFASSETS */,
-				84385F672CF842F60020E94D /* Fonts.swift */,
-				84A5BE8D2C197C3000E32496 /* Toast.swift */,
-				84A5BE932C197CF500E32496 /* UIViewX.swift */,
-				8441887B2CC90E98006483C3 /* Colornames.swift */,
-				84EFF9982CCBA7E800C11C26 /* CustomAlert.swift */,
-				84EFF9DE2CCC89CF00C11C26 /* CellConfingName.swift */,
-				84EFFA3E2CCCC98100C11C26 /* Shimmer.swift */,
-				8442A9502CDE83C80006068E /* Localizable.strings */,
-				84B5D0322D030C24003CFAAF /* AppStringFile.swift */,
-				8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */,
-				849D72352D14272C0060E222 /* NetworkMoniter.swift */,
-				84CAE5BA2D5DEF7B0091C671 /* ColourManager.swift */,
-				8463D0EA2D6EF5CD00361F55 /* Extentions.swift */,
-				842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */,
-				8476882A2D88316C00EAB9DB /* userDefaultFileManager.swift */,
-				8476882C2D892D7D00EAB9DB /* DeviceUUIDManager.swift */,
-				84F911862DB0C13F001A6408 /* bubbleview.swift */,
-				FA0C88B22DC4CD470042DD24 /* VimeoUpload.swift */,
-				84127DBD2E152DDB0092159D /* chatAttachmentPicker.swift */,
-				843BCD832E2FB1B700D4364A /* CustomTransition.swift */,
-				8449D8D32ED4647300822FAC /* normal.mp3 */,
-				189AFD332F23803500BDF3A0 /* TimeAccessManager.swift */,
-			);
-			path = Utils;
 			sourceTree = "<group>";
 		};
 		84A5BE812C19776600E32496 /* SchoolDashBoard */ = {
@@ -4291,16 +4361,6 @@
 			path = "Sender Attachment";
 			sourceTree = "<group>";
 		};
-		FA43D09A2F322CCB0046B966 /* GIFASSETS */ = {
-			isa = PBXGroup;
-			children = (
-				FA43D0972F322CCB0046B966 /* done.json */,
-				FA43D0982F322CCB0046B966 /* GoogleService-Info.plist */,
-				FA43D0992F322CCB0046B966 /* Mic.gif */,
-			);
-			path = GIFASSETS;
-			sourceTree = "<group>";
-		};
 		FA43D0A12F322CD50046B966 /* ShimmerView */ = {
 			isa = PBXGroup;
 			children = (
@@ -4432,14 +4492,6 @@
 				FA81663E2F33183600ADA8F3 /* HomeWorkCvCell.xib */,
 			);
 			path = CalanderCv;
-			sourceTree = "<group>";
-		};
-		FA8166492F33188D00ADA8F3 /* ImagePickerView */ = {
-			isa = PBXGroup;
-			children = (
-				FA8166482F33188D00ADA8F3 /* PhotoPickManager.swift */,
-			);
-			path = ImagePickerView;
 			sourceTree = "<group>";
 		};
 		FA99ED352DA656E700F6AF0E /* Seemore Footer */ = {
@@ -6816,6 +6868,7 @@
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
@@ -6860,6 +6913,7 @@
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(APP_DISPLAY_NAME)";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
