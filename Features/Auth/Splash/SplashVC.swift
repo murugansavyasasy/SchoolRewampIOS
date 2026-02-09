@@ -496,6 +496,9 @@ class SplashVC: UIViewController, ViewAttachments, DismissDelegate {
     }
     
     private func animateEmpoweringSection() {
+        let bundleID = Bundle.main.bundleIdentifier
+
+        guard bundleID == "com.isss.schoolchimes" else { return }
         empoweringLabel.transform = CGAffineTransform(translationX: 0, y: 30)
         UIView.animate(
             withDuration: 0.6,
