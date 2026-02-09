@@ -340,7 +340,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     @IBAction func inpersonAct(_ sender: Any) {
         
         meetingMode = "In Person"
-        inpersonBtn.backgroundColor = .systemBlue
+        inpersonBtn.backgroundColor = .parentClr
         inpersonBtn.setTitleColor(.white, for: .normal)
         
         phonecallBtn.backgroundColor = .systemGray5
@@ -355,7 +355,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     @IBAction func PhoneCallAct(_ sender: Any) {
         
         meetingMode = "Phone Call"
-        phonecallBtn.backgroundColor = .systemBlue
+        phonecallBtn.backgroundColor = .parentClr
         phonecallBtn.setTitleColor(.white, for: .normal)
         
         inpersonBtn.backgroundColor = .systemGray5
@@ -370,7 +370,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
     @IBAction func OnlineAct(_ sender: Any) {
         
         meetingMode = "Online"
-        onlineBtn.backgroundColor = .systemBlue
+        onlineBtn.backgroundColor = .parentClr
         onlineBtn.setTitleColor(.white, for: .normal)
         
         inpersonBtn.backgroundColor = .systemGray5
@@ -513,7 +513,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         doneButton.setTitle("Done", for: .normal)
         doneButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
         doneButton.setTitleColor(.white, for: .normal)
-        doneButton.backgroundColor = UIColor.systemBlue
+        doneButton.backgroundColor = UIColor.parentClr
         doneButton.layer.cornerRadius = 6
         doneButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 12, bottom: 6, right: 12)
         doneButton.translatesAutoresizingMaskIntoConstraints = false
@@ -1121,7 +1121,7 @@ extension CreateMeetingVc: UICollectionViewDelegate, UICollectionViewDataSource,
             }
             
             // ✅ Update UI here
-            cell.cellView.backgroundColor = isSelected ? .systemBlue : .systemGray4
+            cell.cellView.backgroundColor = isSelected ? .parentClr : .systemGray4
             cell.label.textColor = isSelected ? .white : .black
             
             return cell

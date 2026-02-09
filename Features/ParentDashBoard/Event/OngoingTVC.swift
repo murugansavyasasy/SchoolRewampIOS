@@ -89,7 +89,7 @@ class OngoingTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDat
             let isSelected = indexPath.item == selectedIndex
             if isSelected {
                 cell.iconView.setShadow(shadowColor: UIColor(hex: "377DF4"), shadowOpacity: 0.6, shadowOffset: CGSize(width: 0, height: 4), shadowRadius: 8)
-                cell.iconView.layer.borderColor = UIColor(hex: "377DF4").cgColor
+                cell.iconView.layer.borderColor = UIColor.parentClr.cgColor
                 cell.iconView.layer.borderWidth = 2
             } else {
                 cell.iconView.setShadow(shadowOpacity: 0)

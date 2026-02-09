@@ -153,7 +153,7 @@ extension TimetableVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         ) as! WeekDaysNameCollectionViewCell
         let day = days[indexPath.row].translated()
         cell.weekDaysNameLbl.text = day
-        cell.bgView.backgroundColor = (indexPath.row == selectedIndex) ? UIColor.backGroundClr.withAlphaComponent(0.5) : .clear
+        cell.bgView.backgroundColor = (indexPath.row == selectedIndex) ? Colornames.Timetable : .clear
         cell.bgView.layer.borderColor = (indexPath.row == selectedIndex) ? Colornames.Timetable.cgColor : UIColor.white.cgColor
         return cell
     }

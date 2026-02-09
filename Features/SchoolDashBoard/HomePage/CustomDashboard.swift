@@ -577,41 +577,19 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         }
     }
     
-//    func applyGradientBackground(to view: UIView) {
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.frame = view.bounds
-//        gradientLayer.colors = [
-//            UIColor(red: 0.31, green: 0.58, blue: 0.98, alpha: 1.0).cgColor,
-//            UIColor(red: 0.18, green: 0.42, blue: 0.85, alpha: 1.0).cgColor
-//        ]
-//        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
-//        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
-//        view.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
-//        view.layer.insertSublayer(gradientLayer, at: 0)
-//    }
-    
     func applyGradientBackground(to view: UIView) {
-        let primary = UIColor.backGroundClr
-        
-        let topColor = primary.lighter(by: 18).cgColor
-        let middleColor = primary.cgColor
-        let bottomColor = primary.darker(by: 18).cgColor
-
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
-        gradientLayer.colors = [topColor, middleColor, bottomColor]
-        gradientLayer.locations = [0.0, 0.5, 1.0]
-
-        // Vertical gradient (top → bottom)
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-
-        // Remove existing gradients
-        view.layer.sublayers?.removeAll { $0 is CAGradientLayer }
-
-        // Insert at bottom
+        gradientLayer.colors = [
+            UIColor.backGroundClr,
+            UIColor.backGroundClr.darker(by: 15)
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
+        view.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
         view.layer.insertSublayer(gradientLayer, at: 0)
     }
+    
     
     // MARK: - CollectionView DataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
