@@ -38,7 +38,6 @@ class CommunicationTVC: UITableViewCell {
     weak var audioDelegate: AudioPlaybackDelegate1?
     weak var selectedAudioDelegate: selectedAudio?
     var cellIndex: Int = 0
-<<<<<<< HEAD
 //    private let audioManager = AudioManager()
     var loadedAudioURL:URL?
 //    var audioURL: URL?{
@@ -51,7 +50,6 @@ class CommunicationTVC: UITableViewCell {
 //    }
 
     // MARK: - Lifecycle
-=======
     //    private let audioManager = AudioManager()
     
     var audioURL: URL?{
@@ -60,8 +58,6 @@ class CommunicationTVC: UITableViewCell {
             waveView.audioURL = url
         }
     }
-    
->>>>>>> development
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
