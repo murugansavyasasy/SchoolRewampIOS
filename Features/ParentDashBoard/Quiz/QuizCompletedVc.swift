@@ -17,13 +17,25 @@ class QuizCompletedVc: UIViewController {
     var subjet_name = ""
     var completed_date = ""
     var message = ""
-
+    var selected_StudentId: String = ""
+    var Selected_StudentName : String?
+    var Selected_Sections: String?
+    var Selected_Standards : String?
+    var Token : String? // this token passed  from  QuizSubmissionVc  and also used in same page  childDetails?.access_token ??   because   this view contoller use both staff and student
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let name = childDetails?.name ?? ""
-        let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
-        backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
+        if selected_StudentId == ""{
+            let name = childDetails?.name ?? ""
+            let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
+            backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
+            Token = childDetails?.access_token ?? ""
+        }else{
+            let name = Selected_StudentName ?? ""
+            let standard = (Selected_Standards ?? "") + " - " + (Selected_Sections ?? "")
+            backBtn.configureAsBackButton(firstLine: name, secondLine: standard)
+        }
+       
 
         menuNameLbl.text = MenuStringFile.selectedMenuName + " Submission"
 
@@ -150,7 +162,7 @@ extension QuizCompletedVc: UITableViewDelegate, UITableViewDataSource {
         } else {
             cell.ansImg.isHidden = true
         }
-        cell.ansLbl.text = option?.option
+        cell.ansLbl.text = option?.value
         return cell
     }
 
@@ -202,7 +214,7 @@ extension QuizCompletedVc {
 
     func mySubmission() {
         APIService.shared
-            .makeApi(url: ServiceUrl.my_submissions, parameters: [QuizKeys.id : selected_QuizId ?? "" ], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (
+            .makeApi(url: ServiceUrl.my_submissions, parameters: [QuizKeys.id : selected_QuizId ?? "",QuizKeys.student_id : selected_StudentId ], type: ApitTypeSringFile.GET, token: Token ?? ""  , isBaseUrl: false) { [weak self] (
                 result: Result<MyQuizSuc,
                 Error>
             ) in

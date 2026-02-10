@@ -7,7 +7,20 @@
 
 import UIKit
 
-class QuizSubmissionVc: UIViewController, UISearchBarDelegate {
+class QuizSubmissionVc: UIViewController, UISearchBarDelegate,call {
+    func callMobileNumber(indexPath: Int) {
+        let vc = QuizCompletedVc()
+        vc.selected_QuizId = QuizStudentRepo[indexPath].id ?? ""
+        vc.selected_StudentId  = QuizStudentRepo[indexPath].student_id ?? ""
+        vc.Selected_Standards = QuizStudentRepo[indexPath].standard ?? ""
+        vc.Selected_Sections = QuizStudentRepo[indexPath].section ?? ""
+        vc.Selected_StudentName = QuizStudentRepo[indexPath].student_name ?? ""
+        vc.Token = staffDetails?.access_token ?? ""
+        vc.completed_date = QuizStudentRepo[indexPath].submitted_on ?? ""
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
     
     @IBOutlet weak var discreptionsLbl: UILabel!
     @IBOutlet weak var submitBtn: UIButton!
@@ -166,23 +179,27 @@ extension QuizSubmissionVc: UITableViewDelegate, UITableViewDataSource {
         let student = FilteredQuizStudentRepo[indexPath.row]
         cell.nameLbl.text = student.student_name
         cell.classLbl.text = (student.standard ?? "") + "-" + (student.section ?? "")
+        cell.SubmittedOnBtn.isHidden = true
         if student.gender == "male"{
             cell.profileImage.image = UIImage(named: "Male_icon")
         }else if student.gender == "female"{
             cell.profileImage.image = UIImage(named: "Female_icon")
         }else{
-            cell.profileImage.image = UIImage(named: "person.fill")
+            cell.profileImage.image = UIImage(systemName: "person.fill")
         }
         if student.is_submit ?? false{
             cell.StatusBtn.backgroundColor = .systemGreen
-            cell.StatusBtn.setTitle(MenuStringFile.Submitted, for: .normal)
-            let submittedOn = student.submitted_on?.convertToTargetDateFormat()
-            cell.SubmittedOnBtn.setTitle("Submitted On:\n\(submittedOn ?? "")", for: .normal)
-            cell.SubmittedOnBtn.isHidden = false
+            cell.StatusBtn.setTitle(MenuStringFile.Submitted + " >>", for: .normal)
+//            let submittedOn = student.submitted_on?.convertToTargetDateFormat()
+//            cell.SubmittedOnBtn.setTitle("Submitted On:\n\(submittedOn ?? "")", for: .normal)
+            cell.StatusBtn.tag = indexPath.row
+            cell.delegate = self
+            cell.StatusBtn.isUserInteractionEnabled = true
         }else{
             cell.StatusBtn.backgroundColor = .pending
             cell.StatusBtn.setTitle(MenuStringFile.Pending, for: .normal)
-            cell.SubmittedOnBtn.isHidden = true
+            cell.StatusBtn.isUserInteractionEnabled = false
+            
         }
         
         return cell
