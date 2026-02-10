@@ -135,7 +135,7 @@
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Dt-8q-mCW">
-                    <rect key="frame" x="0.0" y="223.33333333333331" width="393" height="560.66666666666674"/>
+                    <rect key="frame" x="0.0" y="223.33333333333331" width="393" height="560.66666666666652"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sGM-ox-xz4">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="1140.6666666666667"/>
@@ -765,7 +765,7 @@
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YSk-Gg-MWC">
                                     <rect key="frame" x="30" y="1080.6666666666667" width="333" height="40"/>
-                                    <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                    <color key="backgroundColor" name="BackGroundClr"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="l3Y-jo-yNA"/>
                                     </constraints>
@@ -848,7 +848,7 @@
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OdC-tN-LWX">
                                     <rect key="frame" x="263" y="253" width="75" height="35"/>
-                                    <color key="backgroundColor" red="0.31896537539999997" green="0.51547533270000001" blue="0.90984463689999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="backgroundColor" name="BackGroundClr"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="35" id="WdF-bw-6CP"/>
                                         <constraint firstAttribute="width" constant="75" id="kJS-wQ-DT4"/>
@@ -936,9 +936,6 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

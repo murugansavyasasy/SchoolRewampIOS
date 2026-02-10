@@ -18,7 +18,7 @@ let selected = [
 
 // BASE assets (SOURCE)
 let root = FileManager.default.currentDirectoryPath
-let basePath = "\(root)/VsSchoolChimes/BaseAssets.xcassets"
+let basePath = "\(root)/Resource/BaseAssets.xcassets"
 
 // Flavours (DESTINATION)
 let flavoursRoot = "\(root)/Flavours"

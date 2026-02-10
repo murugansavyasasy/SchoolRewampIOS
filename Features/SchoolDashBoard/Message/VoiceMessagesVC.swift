@@ -118,10 +118,10 @@ extension VoiceMessagesVC : UITableViewDataSource, UITableViewDelegate {
     // MARK: - Audio Cell Configuration
     private func configureAudioCell(_ cell: CommunicationTVC, at indexPath: IndexPath) {
         let file = VoiceHistory?[indexPath.item]
-        if let urlString = file?.url,
-           let url = URL(string: urlString) {
-            cell.audioURL = url
-        }
+//        if let urlString = file?.url,
+//           let url = URL(string: urlString) {
+//            cell.audioURL = url
+//        }
         cell.audioDelegate = self
         cell.cellIndex = indexPath.item
         cell.waveView.setParentCell(cell)

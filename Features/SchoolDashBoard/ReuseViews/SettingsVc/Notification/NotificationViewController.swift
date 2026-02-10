@@ -20,6 +20,7 @@ class NotificationViewController: UIViewController {
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var BackBtn: UIButton!
+    @IBOutlet weak var menuNameLbl: UILabel!
     
     // MARK: - Variables
     let MenuRedirect = MenuRedirectHandler.shared
@@ -42,13 +43,17 @@ class NotificationViewController: UIViewController {
     
     // MARK: - Setup UI
     private func setupUI() {
-        BackBtn.setTitle(MenuTapbar.shared.Notifications, for: .normal)
+        //BackBtn.setTitle(MenuTapbar.shared.Notifications, for: .normal)
        
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft : .forceLeftToRight
-        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right : .left
-        BackBtn.imageView?.applyRTLFlip(Language == "ar")
-        BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        //let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+//        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft : .forceLeftToRight
+//        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right : .left
+//        BackBtn.imageView?.applyRTLFlip(Language == "ar")
+//        BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        menuNameLbl.text = MenuTapbar.shared.Notifications
+        menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        
+        
         
         searchBar.searchTextField.borderStyle = .none
         searchBar.backgroundImage = UIImage()

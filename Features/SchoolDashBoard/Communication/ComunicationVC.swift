@@ -5,163 +5,12 @@ import UniformTypeIdentifiers
 import AVFAudio
 import AudioToolbox
 protocol reloadDelegate{
-    func reload(index: Int)
     func deleteDelegate(index:Int)
 }
 
-extension ComunicationVC: UIPopoverPresentationControllerDelegate {
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none // Ensures popover on iPhone
-    }
-}
-class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, SelectedTextDelegate, ForwordDelegate, HistoryFinishPalyingDelegate, selectedAudio, AudioPlaybackDelegate1{
-    func audioCell(_ cell: CommunicationTVC, willStartPlayingAtIndex index: Int) {
-        if let audioCell = cell as? CommunicationTVC,
-           audioCell.cellIndex != index {
-            audioCell.stopPlayback()
-        }
-    }
+
+class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource{
     
-    func audioCell(_ cell: CommunicationTVC, didStopPlayingAtIndex index: Int) {
-        ""
-    }
-    
-    func selectedAudio(index: Int) {
-        voiceTitleeTxt.text = VoiceHistory?[index].title ?? ""
-        if emengencyCall.isOn && (VoiceHistory?[index].duration ?? 0) >=  30{
-            let alert = UIAlertController(
-                title: "Oops!",
-                message: "Your Emergency call is ON. You can't forward Above 30 mins voice message",
-                preferredStyle: .alert
-            )
-            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))
-            self.present(alert, animated: true, completion: nil)
-        }else{
-            if isScheduleSelected{
-                enabelScheduleView(
-                    isforward: true,
-                    voiceUrl:VoiceHistory?[index].url ?? "",
-                    title: VoiceHistory?[index].title ?? "",
-                    durations: VoiceHistory?[index].duration ?? 0,
-                    url: VoiceHistory?[index].url ?? ""
-                )
-                guard let url = URL(string: VoiceHistory?[index].url ?? "") else { return }
-                do {
-                    try audioManager.setupPlayer(with: url)
-                    waveView.audioURL = url
-                    self.waveView.onDurationUpdate = { [weak self] time in
-                        self?.voiceTiming.text = time
-                    }
-                } catch {
-                    print("❌ Failed to set up audio player:", error)
-                }
-            }else{
-                enabelVoice_view(
-                    isforward: true,
-                    voiceUrl:VoiceHistory?[index].url ?? "",
-                    title: VoiceHistory?[index].title ?? "",
-                    durations: VoiceHistory?[index].duration ?? 0,
-                    url: VoiceHistory?[index].url ?? ""
-                )
-                AudioPlayUrl = VoiceHistory?[index].url ?? ""
-                
-                guard let url = URL(string: VoiceHistory?[index].url ?? "") else { return }
-                do {
-                    try audioManager.setupPlayer(with: url)
-                    waveView.audioURL = url
-                    self.waveView.onDurationUpdate = { [weak self] time in
-                        self?.voiceTiming.text = time
-                    }
-                } catch {
-                    print("❌ Failed to set up audio player:", error)
-                }
-            }
-        }
-    }
-    
-    
-    func voiceforword(selectedIndex: Int?) {
-        voiceTitleeTxt.text = VoiceHistory?[selectedIndex ?? 0].title ?? ""
-        if emengencyCall.isOn && (VoiceHistory?[selectedIndex ?? 0].duration ?? 0) >=  30{
-            let alert = UIAlertController(
-                title: "Oops!",
-                message: "Your Emergency call is ON. You can't forward Above 30 mins voice message",
-                preferredStyle: .alert
-            )
-            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))
-            self.present(alert, animated: true, completion: nil)
-        }else{
-            if isScheduleSelected{
-                enabelScheduleView(
-                    isforward: true,
-                    voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "",
-                    title: VoiceHistory?[selectedIndex ?? 0].title ?? "",
-                    durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0,
-                    url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
-                )
-                guard let url = URL(string: AudioPlayUrl ?? "") else { return }
-                do {
-                    try audioManager.setupPlayer(with: url)
-                    waveView.audioURL = url
-                    self.waveView.onDurationUpdate = { [weak self] time in
-                        self?.voiceTiming.text = time
-                    }
-                } catch {
-                    print("❌ Failed to set up audio player:", error)
-                }
-            }else{
-                enabelVoice_view(
-                    isforward: true,
-                    voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "",
-                    title: VoiceHistory?[selectedIndex ?? 0].title ?? "",
-                    durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0,
-                    url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
-                )
-                
-                guard let url = URL(string: AudioPlayUrl ?? "") else { return }
-                do {
-                    try audioManager.setupPlayer(with: url)
-                    waveView.audioURL = url
-                    waveView.updateWaveformColor(progress: 0.0)
-                    self.waveView.onDurationUpdate = { [weak self] time in
-                        self?.voiceTiming.text = time
-                    }
-                } catch {
-                    print("❌ Failed to set up audio player:", error)
-                }
-            }
-        }
-    }
-    
-    
-    
-    var isKeyboardVisible = false
-    var selectedDates: [Date] = []
-    var audioRecorder: AVAudioRecorder?
-    var audioPlayer: AVAudioPlayer?
-    var player : AVPlayer?
-    var AudioPlayUrl: String?
-    var isRecording = false
-    var updateTimer: Timer?
-    var recordingTimer: Timer?
-    var recordingStartTime: Date?
-    var bars: [UIView] = []
-    var playerItem : AVPlayerItem?
-    var playIndex :Int?
-    var playVoicce = false
-    var timeObserver: Any?
-    var isAudioRecordingGranted : Bool?
-    var timePicker: UIDatePicker!
-    var doneButton: UIButton!
-    var activeButton: UIButton?
-    var isScheduleSelected = false
-    let backgroundcolor: UIColor = .backGroundClr
-    let tapColor: UIColor = .backGroundClr
-    var placeholderLabel: UILabel!
-    let alert = CustomAlert()
-    var activeField: UIView?
-    var selectedFromTime: Date?
-    let intervalMinutes = 40
     @IBOutlet weak var textMsgVoiceCountLbl: UILabel!
     @IBOutlet weak var voiceTileTextFldCount: UILabel!
     @IBOutlet weak var acidmicYrLbl: UILabel!
@@ -234,7 +83,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var recordImgHeightCon: NSLayoutConstraint!
     @IBOutlet weak var menuNameLbl: UILabel!
     @IBOutlet weak var dateBtn: UIButton!
-    private let audioManager = AudioManager()
+
     let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     
@@ -258,6 +107,31 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var RecordedAudioFormat = "RecordedAudio.m4a"
     let defaultTime = "00:00/03:00"
     let tempKey = "TempRecordings"
+    
+    var isKeyboardVisible = false
+    var selectedDates: [Date] = []
+    var audioRecorder: AVAudioRecorder?
+    var AudioPlayUrl: String?
+    var isRecording = false
+    var updateTimer: Timer?
+    var recordingTimer: Timer?
+    var recordingStartTime: Date?
+    var playVoicce = false
+    var timeObserver: Any?
+    var isAudioRecordingGranted : Bool?
+    var timePicker: UIDatePicker!
+    var doneButton: UIButton!
+    var activeButton: UIButton?
+    var isScheduleSelected = false
+    let backgroundcolor: UIColor = .backGroundClr
+    let tapColor: UIColor = .backGroundClr
+    var placeholderLabel: UILabel!
+    let alert = CustomAlert()
+    var activeField: UIView?
+    var selectedFromTime: Date?
+    let intervalMinutes = 40
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         acidamicYrDropView.isHidden = true
@@ -280,7 +154,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         setupPlaceholder()
         setupAudioSession()
         CellRegistre()
-        setupWaveBars()
         setupTimePicker()
         TxtTitle.addDoneButton()
         voiceTitleeTxt.addDoneButton()
@@ -321,8 +194,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         let bubbleClick = UITapGestureRecognizer(target: self, action: #selector(Enabel_buble))
         EnableCallLbl.addGestureRecognizer(bubbleClick)
         waveView.setParentCell(self)
-        
-        //view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ContentViewTapped)))
     }
     
     @IBAction func ContentViewTapped(){
@@ -335,7 +206,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        player?.pause()
         playVoicce = false
         stopAllPlayingAudio()
     }
@@ -346,7 +216,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             }
         }
     }
-
+    
     func applyShadowAndCornerRadius(to view: UIView, cornerRadius: CGFloat = 10, shadowColor: UIColor = .black, shadowOffset: CGSize = CGSize(width: 4, height: 4), shadowOpacity: Float = 0.5, shadowRadius: CGFloat = 4, backgroundColor: UIColor = .white) {
         view.layer.cornerRadius = cornerRadius
         view.layer.shadowColor = shadowColor.cgColor
@@ -457,8 +327,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             alert.showAlert(title: "", message: MenuStringFile.Invalid_time_selection, on: self)
             return
         }
-        
-        // 1️⃣ Validate To Time > From Time
         guard let sampleDate = selectedDates.first,
               let fromDateSample = combineDateAndTime(date: sampleDate, timeString: fromTimeText),
               let toDateSample = combineDateAndTime(date: sampleDate, timeString: toTimeText),
@@ -466,8 +334,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             alert.showAlert(title: "", message: MenuStringFile.End_time_must_be_greater_than_start_time, on: self)
             return
         }
-        
-        // 2️⃣ Validate no past times for today in *any* selected date
         let now = Date()
         let calendar = Calendar.current
         for selectedDate in selectedDates {
@@ -478,7 +344,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 return
             }
         }
-        // ✅ All good — proceed
         user_inputs.start_time = fromTimeText
         user_inputs.end_time = toTimeText
         recienpient_validation(isVoice: true)
@@ -973,17 +838,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         if let audioUrl = URL(string: AudioPlayUrl ?? "") {
             if audioUrl.isFileURL {
-                do {
-                    try audioManager.setupPlayer(with: audioUrl)
-                    waveView.durationLabel.isHidden = true
-                    waveView.audioURL = audioUrl
-                    waveView.updateWaveformColor(progress: 0.0)
-                    hideActivityLoader()
-                } catch {
-                    print("❌ Failed to set up audio player:", error)
-                }
+                waveView.durationLabel.isHidden = true
+                waveView.setupAudioUrl(audioUrl)
+                waveView.updateWaveformColor(progress: 0.0)
+                hideActivityLoader()
             } else {
-                waveView.audioURL = audioUrl
+                waveView.setupAudioUrl(audioUrl)
                 waveView.durationLabel.isHidden = true
             }
         }
@@ -1025,15 +885,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         print("Document picker was cancelled.")
     }
-    
-    //MARK: PLAY AUDIO
-    func playAudio() {
-        if let audioUrlString = AudioPlayUrl, let audioUrl = URL(string: audioUrlString) {
-            playerItem = AVPlayerItem(url: audioUrl)
-            player = AVPlayer(playerItem: playerItem)
-            player?.play()
-        }
-    }
+ 
     //MARK: VOICE MESSAGE VIEW
     func showVoiceMessageView() {
         ViewAnimator.showFade(voiceview)
@@ -1142,7 +994,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         addfile.isHidden = false
         recordImgHeightCon.constant = 80
         Timinglbl.isHidden = false
-        player?.pause()
         AudioPlayUrl = ""
         stopPlayback()
         playerheight.constant = 0
@@ -1160,7 +1011,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         if let url = URL(string: AudioPlayUrl ?? ""){
             deleteFile(at:url)
         }
-        player?.pause()
         playVoicce = false
         btnplay.setImage(ImageName.playbutton, for: .normal)
         addfile.isHidden = true
@@ -1208,17 +1058,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
         guard let url = URL(string: AudioPlayUrl ?? "") else { return }
         if url.isFileURL {
-            do {
-                try audioManager.setupPlayer(with: url)
-                waveView.durationLabel.isHidden = true
-                waveView.audioURL = url
-                waveView.updateWaveformColor(progress: 0.0)
-                saveTempRecording(url.absoluteString)
-            } catch {
-                print("❌ Failed to set up audio player:", error)
-            }
+            waveView.durationLabel.isHidden = true
+            waveView.setupAudioUrl(url)
+            waveView.updateWaveformColor(progress: 0.0)
+            saveTempRecording(url.absoluteString)
         } else {
-            waveView.audioURL = url
+            waveView.setupAudioUrl(url)
             waveView.durationLabel.isHidden = true
         }
     }
@@ -1354,28 +1199,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
     }
     
-    
-    
-    func setupWaveBars() {
-        // Define the width and spacing of each bar
-        let barWidth: CGFloat = 6
-        let barSpacing: CGFloat = 2
-        let numberOfBars = Int(waveView.frame.width / (barWidth + barSpacing))
-        
-        // Remove existing bars if any
-        bars.forEach { $0.removeFromSuperview() }
-        bars.removeAll()
-        
-        // Create and add bars to the wave view
-        for i in 0..<numberOfBars {
-            let bar = UIView()
-            bar.frame = CGRect(x: CGFloat(i) * (barWidth + barSpacing), y: waveView.frame.height / 2, width: barWidth, height: 0)
-            bar.backgroundColor = .blue
-            waveView.addSubview(bar)
-            bars.append(bar)
-        }
-    }
-    
     private func formatTime(_ seconds: Double) -> String {
         let minutes = Int(seconds) / 60
         let seconds = Int(seconds) % 60
@@ -1398,7 +1221,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     @IBAction func backToHome(_ sender: UIButton) {
-        playbackOff()
         if tittlemessage.text == CommonStringFile.TextMessage.translated(){
             showTextMessageView(isforwardtext: false)
             
@@ -1420,7 +1242,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     @IBAction func voiceview(_ sender: Any) {
-        playbackOff()
         let title = CommonStringFile.Select_from_history
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
@@ -1428,18 +1249,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         moveTextmessage.setAttributedTitle(attributedTitle, for: .normal)
         moveVoiceMessage.setAttributedTitle(attributedTitle, for: .normal)
         enabelVoice_view(isforward: false,voiceUrl: "",title: "",durations: 0, url: "")
-    }
-    
-    func playbackOff(){
-        if let currentIndex = playIndex{
-            let previousIndexPath = IndexPath(row: currentIndex, section: 0)
-            if let previousCell = historytable.cellForRow(at: previousIndexPath) as? HistoryTC {
-                previousCell.updatePlayState(isPlaying: false, url: nil)
-                previousCell.player = nil
-                playIndex = nil
-                
-            }
-        }
     }
     
     @IBAction func doneSelection(_ sender: Any) {
@@ -1471,7 +1280,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
     }
     @IBAction func textviewshow(_ sender: Any) {
-        playbackOff()
         let title = CommonStringFile.Select_from_history
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
@@ -1496,7 +1304,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             DateSelection.deselect(selectedDates[i])
         }
         DateSelection.reloadData()
-        playbackOff()
         selectedDates.removeAll()
         let title = CommonStringFile.Select_from_history
         let attributedTitle = NSAttributedString(string: title, attributes: [
@@ -1574,12 +1381,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             ViewAnimator.showFade(playerview)
             ViewAnimator.showFade(dltbtn)
             recoderbtn.isEnabled = false
-            
-            if let audioUrl = URL(string: voiceUrl) {
-                playerItem = AVPlayerItem(url: audioUrl)
-                player = AVPlayer(playerItem: playerItem)
-            }
-            
             voiceTitleeTxt.text = title
         } else {
             recordImgHeightCon.constant = 80
@@ -1651,10 +1452,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 ViewAnimator.showFade(playerview)
                 ViewAnimator.showFade(dltbtn)
                 recoderbtn.isEnabled = false
-                if let audioUrl = URL(string: voiceUrl) {
-                    playerItem = AVPlayerItem(url: audioUrl)
-                    player = AVPlayer(playerItem: playerItem)
-                }
             } else {
                 recordImgHeightCon.constant = 80
                 Timinglbl.isHidden = false
@@ -1694,8 +1491,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             ViewAnimator.hideFade(emengencyCall)
             ViewAnimator.hideFade(EnableCallLbl)
         }
-    
-    // Record Button Action
     @IBAction func recordButtonTapped(_ sender: UIButton) {
         
         if isRecording {
@@ -1716,10 +1511,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
     }
     
-    @IBAction func enableHistoryEmergency(_ sender: UISwitch) {
-        
-    }
-    
     @IBAction func addFileAction(_ sender: Any) {
         if #available(iOS 14.0, *) {
             let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.wav,.mpeg4Audio,.mp3])
@@ -1730,15 +1521,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
     }
     
-    
     @IBAction func deleteVoicemsg(_ sender: UIButton) {
         if let url = URL(string:AudioPlayUrl ?? ""){
             deletRecoding()
         }
     }
     
-    
-    // Play Button Action
     @IBAction func playButtonTapped(_ sender: UIButton) {
         if waveView.isPlaying {
             stopPlayback()
@@ -1749,21 +1537,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     func stopPlayback() {
-        audioManager.stop()
         waveView.isPlaying = false
         waveView.stopPlaybackAnimation()
         updatePlayButtonState(isPlaying: false)
-        //        audioDelegate?.audioCell(self, didStopPlayingAtIndex: cellIndex)
     }
     
     private func prepareLocalAudio(url: URL) {
-        do {
-            try audioManager.setupPlayer(with: url)
-            waveView.audioURL = url
-        } catch {
-            print("❌ Failed to set up audio player:", error)
-            showErrorAlert(message: "Failed to load audio file")
-        }
+        waveView.setupAudioUrl(url)
     }
     private func setupNotifications() {
         NotificationCenter.default.addObserver(
@@ -1780,34 +1560,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         stopPlayback()
     }
     
-    private func saveToPermanentLocation(tempURL: URL, originalURL: URL) -> URL? {
-        let fileManager = FileManager.default
-        let documentsPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let audioFolderPath = documentsPath.appendingPathComponent("AudioFiles", isDirectory: true)
-        
-        // Create directory if needed
-        if !fileManager.fileExists(atPath: audioFolderPath.path) {
-            try? fileManager.createDirectory(at: audioFolderPath, withIntermediateDirectories: true)
-        }
-        
-        // Generate unique filename
-        let filename = originalURL.lastPathComponent.isEmpty ? UUID().uuidString + ".m4a" : originalURL.lastPathComponent
-        let permanentURL = audioFolderPath.appendingPathComponent(filename)
-        
-        // Remove if already exists
-        if fileManager.fileExists(atPath: permanentURL.path) {
-            try? fileManager.removeItem(at: permanentURL)
-        }
-        do {
-            try fileManager.copyItem(at: tempURL, to: permanentURL)
-            return permanentURL
-        } catch {
-            return nil
-        }
-    }
     
     private func startPlayback() {
-        // Check if audio is loaded
         guard waveView.audioURL != nil else {
             showErrorAlert(message: "Audio not loaded yet")
             return
@@ -1952,8 +1706,10 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     private func configureAudioCell(_ cell: CommunicationTVC, at indexPath: IndexPath) {
         let file = VoiceHistory?[indexPath.item]
         if let urlString = URL(string: file?.url ?? "") {
-            cell.audioURL = urlString
-            
+            cell.waveView.setupAudioUrl(urlString,file?.playDruration ?? 0)
+            cell.waveView.playDurationUpdate = { [weak self] time in
+                self?.VoiceHistory?[indexPath.item].playDruration = time
+            }
             cell.audioDelegate = self
             cell.cellIndex = indexPath.item
             cell.waveView.setParentCell(cell)
@@ -1961,38 +1717,12 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         
     }
     
-    func playTapped(at index: Int) {
-        if playIndex != index {
-            player?.pause()
-            updateTimer?.invalidate()
-        }
-        playIndex = index
-        historytable.reloadData()
-    }
-    
-    // MARK: - Finish Playing Delegate
-    func didFinishPlaying(at index: Int) {
-        playIndex = -1
-        historytable.reloadData()
-    }
     
     // Format seconds into mm:ss
     func formatDuration(_ seconds: Int) -> String {
         let minutes = seconds / 60
         let sec = seconds % 60
         return String(format: CommonStringFile.Time_formate, minutes, sec)
-    }
-    
-    func reload(index: Int) {
-        if let currentIndex = playIndex, currentIndex != index {
-            let previousIndexPath = IndexPath(row: currentIndex, section: 0)
-            if let previousCell = historytable.cellForRow(at: previousIndexPath) as? HistoryTC {
-                previousCell.updatePlayState(isPlaying: false, url: nil)
-            }
-        }
-        
-        playIndex = (playIndex == index) ? nil : index
-        historytable.reloadData()
     }
     
     func setupTimePicker() {
@@ -2127,19 +1857,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         cell.delegate = self
         return cell
     }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard let playIndex = playIndex else { return }
-        let indexPath = IndexPath(row: playIndex, section: 0)
-        if let visiblePaths = historytable.indexPathsForVisibleRows {
-            let isVisible = visiblePaths.contains(indexPath)
-            if !isVisible {
-                if let cell = historytable.cellForRow(at: indexPath) as? HistoryTC {
-                    self.playIndex = nil
-                    cell.player = nil
-                }
-            }
-        }
-    }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let with = dateCV.frame.size.width - 20
         let cwidth = with/3
@@ -2305,8 +2023,109 @@ extension ComunicationVC: UITextFieldDelegate, UITextViewDelegate {
 
 }
 
-extension AVPlayer {
-    var isPlaying: Bool {
-        return self.rate != 0 && self.error == nil
+extension ComunicationVC: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none // Ensures popover on iPhone
+    }
+}
+extension ComunicationVC:SelectedTextDelegate, ForwordDelegate, selectedAudio, AudioPlaybackDelegate1, reloadDelegate{
+    
+    func audioCell(_ cell: CommunicationTVC, willStartPlayingAtIndex index: Int) {
+        if let audioCell = cell as? CommunicationTVC,
+           audioCell.cellIndex != index {
+            audioCell.stopPlayback()
+        }
+    }
+    
+    func audioCell(_ cell: CommunicationTVC, didStopPlayingAtIndex index: Int) {
+        ""
+    }
+    
+    func selectedAudio(index: Int) {
+        voiceTitleeTxt.text = VoiceHistory?[index].title ?? ""
+        if emengencyCall.isOn && (VoiceHistory?[index].duration ?? 0) >=  30{
+            let alert = UIAlertController(
+                title: "Oops!",
+                message: "Your Emergency call is ON. You can't forward Above 30 mins voice message",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            if isScheduleSelected{
+                enabelScheduleView(
+                    isforward: true,
+                    voiceUrl:VoiceHistory?[index].url ?? "",
+                    title: VoiceHistory?[index].title ?? "",
+                    durations: VoiceHistory?[index].duration ?? 0,
+                    url: VoiceHistory?[index].url ?? ""
+                )
+                guard let url = URL(string: VoiceHistory?[index].url ?? "") else { return }
+                waveView.setupAudioUrl(url)
+                self.waveView.onDurationUpdate = { [weak self] time in
+                    self?.voiceTiming.text = time
+                }
+            }else{
+                enabelVoice_view(
+                    isforward: true,
+                    voiceUrl:VoiceHistory?[index].url ?? "",
+                    title: VoiceHistory?[index].title ?? "",
+                    durations: VoiceHistory?[index].duration ?? 0,
+                    url: VoiceHistory?[index].url ?? ""
+                )
+                AudioPlayUrl = VoiceHistory?[index].url ?? ""
+                
+                guard let url = URL(string: VoiceHistory?[index].url ?? "") else { return }
+                waveView.setupAudioUrl(url)
+                self.waveView.onDurationUpdate = { [weak self] time in
+                    self?.voiceTiming.text = time
+                }
+            }
+        }
+    }
+    
+    
+    func voiceforword(selectedIndex: Int?) {
+        voiceTitleeTxt.text = VoiceHistory?[selectedIndex ?? 0].title ?? ""
+        if emengencyCall.isOn && (VoiceHistory?[selectedIndex ?? 0].duration ?? 0) >=  30{
+            let alert = UIAlertController(
+                title: "Oops!",
+                message: "Your Emergency call is ON. You can't forward Above 30 mins voice message",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            if isScheduleSelected{
+                enabelScheduleView(
+                    isforward: true,
+                    voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "",
+                    title: VoiceHistory?[selectedIndex ?? 0].title ?? "",
+                    durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0,
+                    url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
+                )
+                guard let url = URL(string: AudioPlayUrl ?? "") else { return }
+                waveView.setupAudioUrl(url)
+                waveView.updateWaveformColor(progress: 0.0)
+                self.waveView.onDurationUpdate = { [weak self] time in
+                    self?.voiceTiming.text = time
+                }
+            }else{
+                enabelVoice_view(
+                    isforward: true,
+                    voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "",
+                    title: VoiceHistory?[selectedIndex ?? 0].title ?? "",
+                    durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0,
+                    url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
+                )
+                
+                guard let url = URL(string: AudioPlayUrl ?? "") else { return }
+                waveView.setupAudioUrl(url)
+                waveView.updateWaveformColor(progress: 0.0)
+                self.waveView.onDurationUpdate = { [weak self] time in
+                    self?.voiceTiming.text = time
+                }
+            }
+        }
     }
 }
