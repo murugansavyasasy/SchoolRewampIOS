@@ -158,7 +158,7 @@ class AudioMessageView: UIView {
     }
     
     private func setupProgressView() {
-        progressView.backgroundColor = .systemBlue.withAlphaComponent(0.3)
+        progressView.backgroundColor = .primery.withAlphaComponent(0.3)
         progressView.layer.cornerRadius = 8
         progressView.translatesAutoresizingMaskIntoConstraints = false
         progressView.alpha = 0
@@ -403,7 +403,7 @@ class AudioMessageView: UIView {
     func updateWaveformColor(progress: Double) {
         let index = Int(progress * Double(waveformBars.count))
         for (i, bar) in waveformBars.enumerated() {
-            bar.backgroundColor = i <= index ? .systemBlue : .systemGray4
+            bar.backgroundColor = i <= index ? .primery : .systemGray4
         }
     }
     

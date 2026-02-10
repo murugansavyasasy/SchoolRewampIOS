@@ -112,7 +112,7 @@
                                                 <rect key="frame" x="0.0" y="27.999999999999996" width="274" height="14.333333333333332"/>
                                                 <color key="tintColor" name="BackGroundClr"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
-                                                <color key="textColor" red="0.18823529410000001" green="0.53029624009999998" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" name="BackGroundClr"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>

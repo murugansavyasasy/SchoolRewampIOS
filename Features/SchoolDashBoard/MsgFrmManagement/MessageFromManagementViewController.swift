@@ -473,7 +473,7 @@ extension MessageFromManagementViewController: UITableViewDelegate {
             string: CommonStringFile.Show_old_Messages.translated(),
             attributes: [
                 .underlineStyle: NSUnderlineStyle.single.rawValue,
-                .foregroundColor: UIColor.systemBlue,
+                .foregroundColor: UIColor.primery,
                 .font: UIFont.systemFont(ofSize: 16, weight: .medium)
             ]
         )
