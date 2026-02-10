@@ -52,11 +52,19 @@ class SideMenuVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         } else {
 
             userName.text = staffDetails?.name
-            let schoolname = staffDetailsCount?.count == 1 ? staffDetails?.school_name:""
-            setWelcomeLabel(
-                firstLine: schoolname,
-                secondLine: staffDetails?.role
-            )
+            if PriorityType.is_staff == staffDetails?.priority_level{
+                setWelcomeLabel(
+                    firstLine: staffDetails?.school_name,
+                    secondLine: staffDetails?.role
+                )
+            }else{
+                let schoolname = staffDetailsCount?.count == 1 ? staffDetails?.school_name:""
+                setWelcomeLabel(
+                    firstLine: schoolname,
+                    secondLine: staffDetails?.role
+                )
+            }
+           
             setupProfileImage(url: URL(string: staffDetails?.staff_profile ?? ""))
         }
 
