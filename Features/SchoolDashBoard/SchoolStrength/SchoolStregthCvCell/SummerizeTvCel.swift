@@ -71,7 +71,7 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
                               present: item.Total, previous: item.previousYear,girls: item.Girl,boys: item.boys, message: item.message)
                 
                 cell.girlCount.isHidden = false
-                cell.boyCountLbl.textColor = .primery
+                cell.boyCountLbl.textColor = .systemBlue
                 cell.girlCount.textColor = .systemPink
                 cell.othersCountLbl.textColor = .systemGray
                 cell.boyCountLbl.text = "Male".translated() + ":" + String(item.boys)
@@ -86,7 +86,7 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
                               present: item.Total, previous: item.previousYear,girls: item.Girl,boys: item.boys,message: item.message)
                 
                 cell.girlCount.isHidden = false
-                cell.boyCountLbl.textColor = .primery
+                cell.boyCountLbl.textColor = .systemBlue
                 cell.girlCount.textColor = .femaleClr
                 cell.othersCountLbl.textColor = .lightGray
                 cell.boyCountLbl.text = "Boys".translated() + ":" + String(item.boys)
@@ -103,11 +103,11 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
                 
                 cell.girlCount.isHidden = true
                 cell.boyCountLbl.textColor = .aproved
-                cell.othersCountLbl.textColor = .primery
+                cell.othersCountLbl.textColor = .systemBlue
                 cell.boyCountLbl.text = "Staffs".translated() + ":" + String(item.boys)
                 cell.othersCountLbl.text = "Students".translated() + ":" + String(item.Girl)
                 cell.progress.segment1Color = .aproved.withAlphaComponent(0.7)
-                cell.progress.segment2Color = .primery.withAlphaComponent(0.7)
+                cell.progress.segment2Color = UIColor(hex: "#3D82ED")
                 
                 
                 

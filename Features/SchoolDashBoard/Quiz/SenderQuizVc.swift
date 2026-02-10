@@ -64,7 +64,6 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             placeholderLabel.isHidden = !discriptionsTextFild.text.isEmpty
             noOfQuestionDefaultLbl.alpha = 0.5
             numberOfQuestionText.textColor = .lightGray
-            checkBoxImage.tintColor = .systemBlue.withAlphaComponent(0.4)
             checkBoxDefaultLbl.textColor = .lightGray
             checkBox.isUserInteractionEnabled = false
             numberOfQuestionText.isUserInteractionEnabled = false
@@ -84,7 +83,6 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             numberOfQuestionText.isUserInteractionEnabled = true
             noOfQuestionDefaultLbl.alpha = 1
             numberOfQuestionText.textColor = .black
-            checkBoxImage.tintColor = .systemBlue
             checkBoxDefaultLbl.textColor = .black
         }
     }

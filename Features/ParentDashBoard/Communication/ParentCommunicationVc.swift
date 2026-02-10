@@ -753,7 +753,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
                 string: title,
                 attributes: [
                     .underlineStyle: NSUnderlineStyle.single.rawValue,
-                    .foregroundColor: UIColor.systemBlue,
+                    .foregroundColor: UIColor.primery,
                     .font: UIFont.systemFont(ofSize: 16, weight: .medium)
                 ]
             )

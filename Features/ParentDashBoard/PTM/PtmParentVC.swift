@@ -558,7 +558,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         } else {
             cell.cellView.backgroundColor = .white
             cell.monthLbl.textColor = .black
-            cell.dateBaseView.backgroundColor = .attendence.lighter(by:10)
+//            cell.dateBaseView.backgroundColor = .attendence.lighter(by:10)
         }
         
         // Show count if available
