@@ -2142,6 +2142,7 @@ struct QuizStudentReportData : Codable{
     var is_submitted : String?
     var is_submit : Bool?
     var submitted_on : String?
+    var student_id : String?
     var gender : String?
     var is_unread : Bool?
     
