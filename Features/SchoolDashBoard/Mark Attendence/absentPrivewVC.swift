@@ -18,6 +18,9 @@ class absentPrivewVC: UIViewController, call {
         let removeStudent = Filtered_StudentList?[index]
         if let mainIndex = StudentList?.firstIndex(where: {$0.id == removeStudent?.id}) {
             var components = StudentList?[mainIndex].att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
+            if components.count < 2 {
+                components = [components.first ?? "P", components.first ?? "P"]
+            }
             if user_inputs.attendance_type == "H"{
                 if user_inputs.session_type == "FH"{
                     components[0] = "P"
@@ -27,7 +30,7 @@ class absentPrivewVC: UIViewController, call {
                     }
                 }
             }else{
-                components[0] = "P"
+                components = ["P", "P"]
             }
             StudentList?[mainIndex].att_status = components.joined(separator: "/")
             Filtered_StudentList?.remove(at: index)
@@ -106,7 +109,10 @@ class absentPrivewVC: UIViewController, call {
     }
     func Apply_filter(){
         Filtered_StudentList = StudentList?.filter{ student in
-            let components = student.att_status?.split(separator: "/").map(String.init) ?? []
+            var components = student.att_status?.split(separator: "/").map(String.init) ?? ["P","P"]
+            if components.count < 2 {
+                components = [components.first ?? "P", components.first ?? "P"]
+            }
             var value = ""
             if user_inputs.attendance_type == "H" {
                 if user_inputs.session_type == "FH"{
@@ -146,7 +152,10 @@ class absentPrivewVC: UIViewController, call {
         }
         // Transform each student into their spl_attendance_type
         let statuses: [String] = students.map { student in
-            let components = student.att_status?.split(separator: "/").map(String.init) ?? []
+            var components = student.att_status?.split(separator: "/").map(String.init) ?? ["P","P"]
+            if components.count < 2 {
+                components = [components.first ?? "P", components.first ?? "P"]
+            }
             var value = ""
             if user_inputs.attendance_type == "H" {
                 if user_inputs.session_type == "FH" {
