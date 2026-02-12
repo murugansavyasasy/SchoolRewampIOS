@@ -19,8 +19,12 @@ class CustomTabVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let gradientLayer = CAGradientLayer()
+//        gradientLayer.colors = [
+//            UIColor(red: 135/255, green: 206/255, blue: 250/255, alpha: 1).cgColor, // Sky Blue
+//            UIColor.white.cgColor
+//        ]
         gradientLayer.colors = [
-            UIColor(red: 135/255, green: 206/255, blue: 250/255, alpha: 1).cgColor, // Sky Blue
+            UIColor.backGroundClr.lighter(by: 30).cgColor, // Sky Blue
             UIColor.white.cgColor
         ]
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)

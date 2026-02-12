@@ -113,6 +113,8 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
         setupContainerView()
     }
     
+ 
+    
     private func setupInitialViewController() {
         if login_astype == 2 {
             selectViewController(parentVCNav)
@@ -124,10 +126,7 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // Add any view will appear logic here if needed
-    }
+   
     
     private func setupTabBar() {
         let firstItem = UITabBarItem(

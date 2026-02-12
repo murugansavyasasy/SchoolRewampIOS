@@ -87,7 +87,7 @@ class MsgCellTv: UITableViewCell {
         roleContainerView.backgroundColor = UIColor(red: 0.85, green: 0.92, blue: 1.0, alpha: 1.0) // Light Blue
         roleContainerView.layer.cornerRadius = 10
         roleLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        roleLabel.textColor = .systemBlue
+        roleLabel.textColor = .parentClr
         
         // Content
         titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .semibold)

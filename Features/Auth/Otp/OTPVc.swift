@@ -44,6 +44,7 @@ class OTPVc: UIViewController {
         OtpContentLbl.setFont(style: .body, size: FontSize.BodySize)
         ResendLbl.setFont(style: .body, size: FontSize.BodySize)
         DidnotReciveOtpLbl.setFont(style: .body, size: FontSize.BodySize)
+        callUsLbl.textColor = .primery
         
         ResendLbl.isUserInteractionEnabled = true
         setupLabel()

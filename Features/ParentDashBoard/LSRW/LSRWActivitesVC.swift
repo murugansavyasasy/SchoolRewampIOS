@@ -624,7 +624,7 @@ class SubmitFooterCell: UITableViewCell {
         let button = UIButton(type: .system)
         button.setTitle("Submit", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = .backGroundClr
         button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
         return button

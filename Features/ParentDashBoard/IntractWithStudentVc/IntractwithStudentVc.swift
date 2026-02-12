@@ -325,7 +325,8 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
             cell.reasonLbl.isHidden = false
             cell.submitDate.text = MenuStringFile.Blocked_on + (student?.blocked_on ?? "")
             cell.statusView.layer.cornerRadius = 10
-            cell.statusView.backgroundColor = .systemBlue
+            cell.statusView.backgroundColor = .backGroundClr
+            cell.statusView.tintColor = .backGroundClr
             cell.statusView.setTitleColor(.white, for: .normal)
             cell.statusView.setTitle(CommonStringFile.Unblock.translated(), for: .normal)
             cell.statusView.isUserInteractionEnabled = true

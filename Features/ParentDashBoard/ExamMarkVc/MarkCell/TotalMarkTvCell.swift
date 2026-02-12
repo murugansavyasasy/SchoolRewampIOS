@@ -28,7 +28,7 @@ class TotalMarkTvCell: UITableViewCell {
         totalMarkLbl.setFont(style: .body, size: FontSize.BodySize)
 //        GradeLbl.setFont(style: .title, size: FontSize.TitleSize)
 //        RemarksLbl.setFont(style: .body, size: FontSize.BodySize)
-        RemarksLbl.textColor = .dotColour
+        RemarksLbl.textColor = .parentClr
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -42,9 +42,9 @@ class TotalMarkTvCell: UITableViewCell {
 
             // Only add dots once
         if !dotsAdded {
-            addDotRing(around: CircleView, dotCount: 36, radiusOffset: 20, dotSize: 5, color: .dotColour.withAlphaComponent(0.8))
-                   addDotRing(around: CircleView, dotCount: 28, radiusOffset: 38, dotSize: 7, color: .dotColour.withAlphaComponent(0.6))
-                   addDotRing(around: CircleView, dotCount: 20, radiusOffset: 55, dotSize: 9, color: .dotColour.withAlphaComponent(0.2))
+            addDotRing(around: CircleView, dotCount: 36, radiusOffset: 20, dotSize: 5, color: .parentClr.withAlphaComponent(0.8))
+                   addDotRing(around: CircleView, dotCount: 28, radiusOffset: 38, dotSize: 7, color: .parentClr.withAlphaComponent(0.6))
+                   addDotRing(around: CircleView, dotCount: 20, radiusOffset: 55, dotSize: 9, color: .parentClr.withAlphaComponent(0.2))
                    dotsAdded = true
                }
         }
