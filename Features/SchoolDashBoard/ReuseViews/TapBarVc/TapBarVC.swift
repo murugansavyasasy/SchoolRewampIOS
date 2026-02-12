@@ -105,23 +105,12 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
         super.viewDidLoad()
         
         setupUI()
-        handleBiometricAuthentication()
         setupInitialViewController()
     }
     
     private func setupUI() {
         setupTabBar()
         setupContainerView()
-    }
-    
-    private func handleBiometricAuthentication() {
-        if !BiometricAuthentication.shared.isBiometricEnabledInApp() &&
-            !BiometricAuthentication.shared.isBiometricDeclineInApp() {
-            BiometricAuthentication.shared.showEnableBiometricPopup(
-                from: self,
-                message: "Would you like to enable Face ID / Touch ID for this app?"
-            )
-        }
     }
     
     private func setupInitialViewController() {
