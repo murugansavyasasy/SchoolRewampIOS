@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -32,7 +32,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bpn-v8-6Cz">
-                    <rect key="frame" x="0.0" y="118" width="393" height="666"/>
+                    <rect key="frame" x="0.0" y="118" width="393" height="734"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C21-YM-E4i">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="180"/>
@@ -173,7 +173,6 @@
                         <constraint firstItem="C21-YM-E4i" firstAttribute="top" secondItem="bpn-v8-6Cz" secondAttribute="top" id="EaF-jt-kkD"/>
                         <constraint firstItem="C21-YM-E4i" firstAttribute="leading" secondItem="bpn-v8-6Cz" secondAttribute="leading" id="TZ5-5C-Ris"/>
                         <constraint firstItem="cyP-fz-QT9" firstAttribute="leading" secondItem="bpn-v8-6Cz" secondAttribute="leading" id="cuS-k3-4pc"/>
-                        <constraint firstAttribute="bottom" secondItem="cyP-fz-QT9" secondAttribute="bottom" id="omF-r5-t7l"/>
                         <constraint firstItem="cyP-fz-QT9" firstAttribute="top" secondItem="C21-YM-E4i" secondAttribute="bottom" id="pnq-2z-U9y"/>
                         <constraint firstAttribute="trailing" secondItem="cyP-fz-QT9" secondAttribute="trailing" id="vOA-tR-T7r"/>
                     </constraints>
@@ -183,6 +182,8 @@
             <color key="backgroundColor" name="BackGroundClr"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="bpn-v8-6Cz" secondAttribute="bottom" id="014-97-i2o"/>
+                <constraint firstAttribute="bottom" secondItem="bpn-v8-6Cz" secondAttribute="bottom" id="DIO-jb-Yea"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="cyP-fz-QT9" secondAttribute="bottom" id="E2J-pS-SeS"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="bpn-v8-6Cz" secondAttribute="trailing" id="LPa-5v-KIp"/>
                 <constraint firstItem="bpn-v8-6Cz" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ZrZ-RZ-oIX"/>
                 <constraint firstItem="bpn-v8-6Cz" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="dH6-Dh-o1p"/>
@@ -195,7 +196,7 @@
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <namedColor name="BackGroundClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94117647058823528" green="0.51764705882352946" blue="0.44705882352941179" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -11,6 +11,7 @@ class WeekDaysNameCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var weekDaysNameLbl: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         

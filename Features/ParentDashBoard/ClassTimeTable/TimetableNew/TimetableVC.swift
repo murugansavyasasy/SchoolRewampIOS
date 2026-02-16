@@ -8,7 +8,6 @@ import UIKit
 
 class TimetableVC: UIViewController {
     
-    
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var containerView: UIView!
@@ -16,6 +15,9 @@ class TimetableVC: UIViewController {
     @IBOutlet weak var TodayDateLbl: UILabel!
     @IBOutlet weak var TodayDefLbl: UILabel!
     @IBOutlet weak var studentNameLbl: UILabel!
+    @IBOutlet weak var backBtnStack: UIStackView!
+    @IBOutlet weak var menuNameStack: UIStackView!
+    @IBOutlet weak var cvHeight: NSLayoutConstraint!
     
     let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     let daysFullname = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -60,6 +62,24 @@ class TimetableVC: UIViewController {
         bottomSheet.DayLbl.text = daysFullname[selectedIndex].translated()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        let newHeight: CGFloat
+        
+        if traitCollection.horizontalSizeClass == .regular {
+            newHeight = 150   // iPad
+        } else {
+            newHeight = 90    // iPhone
+        }
+        
+        if cvHeight.constant != newHeight {
+            cvHeight.constant = newHeight
+            view.layoutIfNeeded()
+            cv.collectionViewLayout.invalidateLayout()
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         cv.layoutIfNeeded()
@@ -75,11 +95,14 @@ class TimetableVC: UIViewController {
         let nav = UINavigationController(rootViewController: bottomSheet)
         nav.modalPresentationStyle = .pageSheet
         
+        let Topheight = cv.frame.maxY + (view.bounds.height * 0.12)
+        let total = view.frame.height - Topheight
+        
         if #available(iOS 15.0, *) {
             if let sheet = nav.sheetPresentationController {
                 if #available(iOS 16.0, *) {
                     sheet.detents = [
-                        .medium(),
+                        .custom(resolver: { _ in total}),
                         .large()
                     ]
                 } else {
@@ -100,37 +123,6 @@ class TimetableVC: UIViewController {
         present(nav, animated: true)
         BottomsheetPresented = true
     }
-    
-    
-    
-    func PresentBottomSheet(animated: Bool) {
-        let bottomSheet = TimetableBottomVC()
-        self.bottomSheetVC = bottomSheet
-        let nav = UINavigationController(rootViewController: bottomSheet)
-        nav.modalPresentationStyle = .pageSheet
-        
-        // Pass today’s data
-        bottomSheet.DayId = selectedIndex + 1
-        bottomSheet.loadViewIfNeeded()
-        bottomSheet.DayLbl.text = daysFullname[selectedIndex].translated()
-        bottomSheet.get_Timetable()
-        
-        if #available(iOS 15.0, *) {
-            if let sheet = nav.sheetPresentationController {
-                if #available(iOS 16.0, *) {
-                    sheet.detents = [.custom(resolver: { _ in 510 }), .large()]
-                } else {
-                    sheet.detents = [.medium(), .large()]
-                }
-                sheet.largestUndimmedDetentIdentifier = .large
-                sheet.prefersGrabberVisible = true
-            }
-        }
-        
-        nav.isModalInPresentation = true
-        present(nav, animated: animated) // ✅ controlled by caller
-    }
-    
     
     @IBAction func BackAct(_ sender: Any) {
         self.presentingViewController?.dismiss(animated: true)
@@ -176,7 +168,9 @@ extension TimetableVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 80, height: 80)
+        
+        let size = collectionView.bounds.height * 0.9
+            return CGSize(width: size, height: size)
     }
 }
 
