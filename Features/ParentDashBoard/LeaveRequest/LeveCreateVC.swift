@@ -314,13 +314,13 @@ class LeveCreateVC: UIViewController{
         }
         
         if let fromDate = FromDateBtn.title(for: .normal),
-           fromDate.isEmpty || fromDate == AttendanceString.selectFromDate {
+           fromDate.isEmpty || fromDate == "Select Date" {
             showError("Please select a From Date.")
             return false
         }
         
         if let toDate = ToDateBtn.title(for: .normal),
-           toDate.isEmpty || toDate == AttendanceString.selectToDate {
+           toDate.isEmpty || toDate == "Select Date" {
             showError("Please select a To Date.")
             return false
         }

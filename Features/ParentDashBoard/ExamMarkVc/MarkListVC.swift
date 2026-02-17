@@ -182,8 +182,8 @@ extension MarkListVC: UITableViewDataSource, UITableViewDelegate {
             let data = groups?[indexPath.row]
             cell.subjectLbl.text = data?.mark
             cell.SubjectMarkBtn.setTitle(data?.name, for: .normal)
-            if data?.subgroups?.count ?? 0 > 1{
-                cell.configureGroup(data: data?.subgroups ?? [])
+            if data?.sub_groups?.count ?? 0 > 1{
+                cell.configureGroup(data: data?.sub_groups ?? [])
             }
             return cell
             

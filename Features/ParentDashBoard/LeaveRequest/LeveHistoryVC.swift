@@ -210,7 +210,10 @@ class LeveHistoryVC: UIViewController, EditDeleteDelegate {
                                 if self.filteredLeaveData[indexPath.section].details?.isEmpty ?? false {
                                     self.filteredLeaveData.remove(at: indexPath.section)
                                 }
-
+                                
+                                self.NodataLbl.text = CommonStringFile.No_data_found
+                                self.NodataLbl.isHidden = !self.filteredLeaveData.isEmpty
+                                self.NodataImage.isHidden = !self.filteredLeaveData.isEmpty
                                 self.historyTable.reloadData()
                             }
                         } else {
