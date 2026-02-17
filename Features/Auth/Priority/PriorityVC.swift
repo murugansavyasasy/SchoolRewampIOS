@@ -37,14 +37,12 @@ class PriorityVC: UIViewController {
     var IsAddPointApiCheck : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
-       
         self.containerViewHeightConstraint.constant = 300
         
         Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         UserDefaults.standard.set(login_astype, forKey: "passvalue")
     
         StyleAndTranslate()
-        
         teacherButton.tintColor = .white
     
         let nib1 = UINib(nibName: CellConfingName.SchoolTVCell, bundle: nil)
@@ -92,7 +90,6 @@ class PriorityVC: UIViewController {
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         apply_gradients()
     }
  
@@ -156,6 +153,7 @@ class PriorityVC: UIViewController {
      
        ParentButton.setTitle(CommonStringFile.Parent.translated(), for: .normal)
        teacherButton.setTitle(rollname.translated(), for: .normal)
+       apply_gradients()
     }
     
     func apply_gradients() {
