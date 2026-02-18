@@ -66,6 +66,8 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
     var pushnotificationMsg_id : String?
     let member_type = "STAFF"
     let leave_type = ["Approved","Rejected","Waiting for approval"]
+    var isStaff  : Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -88,6 +90,7 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
         leaveRequestTable.showsHorizontalScrollIndicator = false
         GetLeaveRequestAPI()
         leaveRequestTable.register(UINib(nibName: CellConfingName.LeveHistoryTV, bundle: nil), forCellReuseIdentifier: CellConfingName.LeveHistoryTV)
+        leaveRequestTable.register(UINib(nibName: "StaffLeaveReqTvCell", bundle: nil), forCellReuseIdentifier: "StaffLeaveReqTvCell")
         leaveRequestTable.delegate = self
         leaveRequestTable.dataSource = self
         
@@ -280,7 +283,12 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
 extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        filteredLeaveRecords?.count ?? 0
+        if isStaff{
+            return 1
+        }
+        else{
+           return filteredLeaveRecords?.count ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -299,52 +307,72 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredLeaveRecords?[section].details?.count ?? 0
+        if isStaff{
+            return 10
+        }else{
+            return filteredLeaveRecords?[section].details?.count ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = leaveRequestTable.dequeueReusableCell(withIdentifier: CellConfingName.LeveHistoryTV, for: indexPath) as! LeveHistoryTV
-        
-        guard let leaveData = filteredLeaveRecords?[indexPath.section].details?[indexPath.row] else { return cell }
-        
-        cell.nameLbl.text = leaveData.student_name
-        cell.dateLbl.text = "\(convertDate(leaveData.leave_from ?? "", toFormat: DateFormatString.StandardFormat) ?? "") - \(convertDate(leaveData.leave_to ?? "", toFormat: DateFormatString.StandardFormat) ?? "")"
-        cell.resonLbl.text = leaveData.reason
-        cell.aproveBtn.setTitle(leaveData.status, for: .normal)
-        cell.classLbl.text = (leaveData.class_name ?? "") + " - " + (leaveData.section_name ?? "")
-        cell.aproveBtn.isUserInteractionEnabled = true
-        cell.rejectBtn.isUserInteractionEnabled = true
-        cell.aproveBtn.tag = indexPath.row
-        cell.rejectBtn.tag = indexPath.row
-        cell.durationLbl.text = (leaveData.no_of_days ?? "") + MenuStringFile.DaysApplication
-        if leaveData.status == leave_type[0] {
-            cell.editClickBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
-            cell.editClickBtn.setTitleColor(.systemGreen, for: .normal)
-            cell.editClickBtn.setTitle(leave_type[0], for: .normal)
-            cell.aproveBtn.isHidden = true
-            cell.rejectBtn.isHidden = true
-            cell.editClickBtn.isHidden = false
-        } else if leaveData.status == leave_type[1] {
-            cell.aproveBtn.isHidden = true
-            cell.rejectBtn.isHidden = true
-            cell.editClickBtn.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
-            cell.editClickBtn.setTitleColor(.red, for: .normal)
-            cell.editClickBtn.setTitle(leave_type[1], for: .normal)
-            cell.editClickBtn.isHidden = false
-        } else {
-            cell.aproveBtn.backgroundColor = .systemGreen
-            cell.aproveBtn.setTitle(leave_type[0], for: .normal)
-            cell.rejectBtn.setTitle(leave_type[1], for: .normal)
-            cell.aproveBtn.isHidden = false
-            cell.rejectBtn.isHidden = false
-            cell.editClickBtn.isHidden = true
+        if isStaff{
+            guard let  cell = leaveRequestTable.dequeueReusableCell(withIdentifier: "StaffLeaveReqTvCell", for: indexPath) as? StaffLeaveReqTvCell else { return UITableViewCell() }
+            
+            return cell
         }
-        cell.LeaveTypeLbl.text = leaveData.leave_type
-        cell.indexPath = indexPath
-        cell.delegate = self
-        
-        return cell
+        else{
+            
+            let cell = leaveRequestTable.dequeueReusableCell(withIdentifier: CellConfingName.LeveHistoryTV, for: indexPath) as! LeveHistoryTV
+            
+            guard let leaveData = filteredLeaveRecords?[indexPath.section].details?[indexPath.row] else { return cell }
+            
+            cell.nameLbl.text = leaveData.student_name
+            cell.dateLbl.text = "\(convertDate(leaveData.leave_from ?? "", toFormat: DateFormatString.StandardFormat) ?? "") - \(convertDate(leaveData.leave_to ?? "", toFormat: DateFormatString.StandardFormat) ?? "")"
+            cell.resonLbl.text = leaveData.reason
+            cell.aproveBtn.setTitle(leaveData.status, for: .normal)
+            cell.classLbl.text = (leaveData.class_name ?? "") + " - " + (leaveData.section_name ?? "")
+            cell.aproveBtn.isUserInteractionEnabled = true
+            cell.rejectBtn.isUserInteractionEnabled = true
+            cell.aproveBtn.tag = indexPath.row
+            cell.rejectBtn.tag = indexPath.row
+            cell.durationLbl.text = (leaveData.no_of_days ?? "") + MenuStringFile.DaysApplication
+            if leaveData.status == leave_type[0] {
+                cell.editClickBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
+                cell.editClickBtn.setTitleColor(.systemGreen, for: .normal)
+                cell.editClickBtn.setTitle(leave_type[0], for: .normal)
+                cell.aproveBtn.isHidden = true
+                cell.rejectBtn.isHidden = true
+                cell.editClickBtn.isHidden = false
+            } else if leaveData.status == leave_type[1] {
+                cell.aproveBtn.isHidden = true
+                cell.rejectBtn.isHidden = true
+                cell.editClickBtn.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
+                cell.editClickBtn.setTitleColor(.red, for: .normal)
+                cell.editClickBtn.setTitle(leave_type[1], for: .normal)
+                cell.editClickBtn.isHidden = false
+            } else {
+                cell.aproveBtn.backgroundColor = .systemGreen
+                cell.aproveBtn.setTitle(leave_type[0], for: .normal)
+                cell.rejectBtn.setTitle(leave_type[1], for: .normal)
+                cell.aproveBtn.isHidden = false
+                cell.rejectBtn.isHidden = false
+                cell.editClickBtn.isHidden = true
+            }
+            cell.LeaveTypeLbl.text = leaveData.leave_type
+            cell.indexPath = indexPath
+            cell.delegate = self
+            
+            return cell
+            
+        }
     }
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        
+//        let vc = StaffDetailsPreviewVc()
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
+//    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
