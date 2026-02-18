@@ -147,8 +147,8 @@ class ForceUpdateVc: UIViewController {
         let gradient = CAGradientLayer()
 
         gradient.colors = [
-            UIColor(red: 0.239, green: 0.510, blue: 0.929, alpha: 1.0).cgColor, // RIGHT SIDE (#3D82ED)
-            UIColor.white.cgColor// LEFT SIDE
+            UIColor.backGroundClr.cgColor, // RIGHT SIDE (#3D82ED)
+            UIColor.backGroundClr.withAlphaComponent(0.4).cgColor// LEFT SIDE
         ]
 
         gradient.startPoint = CGPoint(x: 0, y: 0.5) // LEFT
@@ -168,8 +168,8 @@ class ForceUpdateVc: UIViewController {
 
         gradient.colors = [
            
-            UIColor(red: 0.239, green: 0.510, blue: 0.929, alpha: 1.0).cgColor, // RIGHT (#3D82ED)
-            UIColor.white.cgColor // LEFT
+            UIColor.backGroundClr.cgColor, // RIGHT (#3D82ED)
+            UIColor.backGroundClr.withAlphaComponent(0.4).cgColor // LEFT
         ]
 
         gradient.startPoint = CGPoint(x: 0, y: 0.5)

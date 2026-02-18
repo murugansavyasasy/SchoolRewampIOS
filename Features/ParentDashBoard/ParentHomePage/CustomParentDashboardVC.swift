@@ -97,6 +97,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             setupHeaderView()
             setupLabels()
             setupProfileImage()
+            DeviceTokenAPIcall()
             Global_variabel()
         if let id = messageId ,id != "" {
             handleMenuSelection(menuId: Int(menuId ?? "-1") ?? 0 , messageId: messageId ?? "")
@@ -133,7 +134,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     private func presentAppTourIfNeeded() {
         let bundleID = Bundle.main.bundleIdentifier
 
-        guard bundleID == "com.isss.schoolchimes" else { return }
+        guard bundleID == CommonStringFile.Base_bundle_id else { return }
         guard !UserDefaults.standard.bool(forKey: tourKey) else { return }
 
         DispatchQueue.main.asyncAfter(deadline:.now() + 0.5){
@@ -268,6 +269,47 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                     else {
                         print("Device token registration failed")
                     }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func DeviceTokenAPIcall() {
+        let secureID = SecureIDManager.getSecureID()
+        let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
+        var deviceToken: String?
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            deviceToken = appDelegate.deviceTokenString
+        }
+        let model = UIDevice.current.modelName
+        
+        APIService.shared.makeApi(
+            url: ServiceUrl.auth_device_token,
+            parameters: [
+                COMMON_PARAMETER.mobile_number: mobile_num ?? "",
+                DeviceTokenStringFile.device_token: deviceToken ?? "",
+                COMMON_PARAMETER.device_type: API_PARAMS_HOTCODE.device_type,
+                DeviceTokenStringFile.secure_id: secureID,
+                DeviceTokenStringFile.device_info: [
+                    DeviceTokenStringFile.manufacturer: API_PARAMS_HOTCODE.device_type,
+                    DeviceTokenStringFile.model: model,
+                    DeviceTokenStringFile.device: API_PARAMS_HOTCODE.device_type,
+                    DeviceTokenStringFile.brand: API_PARAMS_HOTCODE.device_type,
+                    DeviceTokenStringFile.os_version: UIDevice.current.systemVersion,
+                    DeviceTokenStringFile.app_version: 1
+                ]
+            ],
+            type: ApitTypeSringFile.POST,
+            token: "", isBaseUrl: true
+        ) { (result: Result<DeviceTokenResponseSuc, Error>) in
+            switch result {
+            case .success(let successMessage):
+                if successMessage.status == true {
+                    print("Device token registered successfully")
+                } else {
+                    print("Device token registration failed")
                 }
             case .failure(let error):
                 print(error.localizedDescription)
