@@ -7,9 +7,10 @@
       "displayName": "VAGGISVARI VIDYALAYA",
       "strings": {
         "WELCOME_STRING": "Welcome to VAGGISVARI VIDYALAYA",
-        "TERMS_URL": "https://apps.apple.com/in/app/school-chimes-sss/id6758079127",
+        "TERMS_URL": "https://www.schoolchimes.com/vs_web/wl_terms_of_use/?id=7415",
         "REPORT_BUG_STRING": "Dear VAGGISVARI Team",
-        "Empowering": "Dear VAGGISVARI Team"
+        "Empowering": "Dear VAGGISVARI Team",
+        "School_Id" : "7415"
       }
     }
   ]

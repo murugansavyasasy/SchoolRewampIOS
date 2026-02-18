@@ -51,6 +51,7 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
     var Language: String?
     var hideBack = false
     var isUpdatingPopover = false
+    var School_id_param = "?id=" + NSLocalizedString("School_Id", comment: "")
     private var popoverOverlayView: UIView?
     // MARK: - Section Data
     lazy var sections: [Section] = [
@@ -273,7 +274,11 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             let vc = TermsAndCondVC()
             vc.modalPresentationStyle = .overFullScreen
             vc.tittleString = "Privacy Policy"
-            vc.url = UserDefaultFileManager.get_globalSelection()?.privacy_policy
+            if Bundle.main.bundleIdentifier == CommonStringFile.Base_bundle_id {
+                vc.url = UserDefaultFileManager.get_globalSelection()?.privacy_policy
+            }else{
+                vc.url = (UserDefaultFileManager.get_globalSelection()?.wl_privacy ?? "") + School_id_param
+            }
             present(vc, animated: true)
         case menuname.aboutApp.translated():
             let vc = TermsAndCondVC()
@@ -327,7 +332,11 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             let vc = TermsAndCondVC()
             vc.modalPresentationStyle = .overFullScreen
             vc.tittleString = "Terms & Conditions"
-            vc.url = "https://schoolchimes.com/vs_web/terms_conditions/"
+            if Bundle.main.bundleIdentifier == CommonStringFile.Base_bundle_id {
+                vc.url = "https://schoolchimes.com/vs_web/terms_conditions/"
+            }else{
+                vc.url = (UserDefaultFileManager.get_globalSelection()?.wl_terms ?? "") + School_id_param
+            }
             present(vc, animated: true)
             
         case menuname.Exciting_features.translated():
