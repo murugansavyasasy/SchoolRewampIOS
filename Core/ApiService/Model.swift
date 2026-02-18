@@ -1602,7 +1602,7 @@ struct Assessment: Codable {
     var PresentDays: String?
     var TotalWorkingDays: String?
     var Remarks: String?
-    var Percentage: String?
+    var percentage: String?
     var total_mark: String?
     var total_obtained: String?
     var grade: String?
@@ -1612,7 +1612,7 @@ struct Assessment: Codable {
 struct Groups: Codable {
     var name: String?
     var mark: String?
-    var subgroups: [SubGroup]?
+    var sub_groups: [SubGroup]?
 }
 
 struct SubGroup: Codable {

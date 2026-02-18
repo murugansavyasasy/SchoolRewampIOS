@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,8 +15,11 @@
                 <outlet property="MenuTitleLbl" destination="wDF-cK-1iQ" id="oM8-BE-ztq"/>
                 <outlet property="TodayDateLbl" destination="8Mp-Vy-AYY" id="4D3-TD-nwU"/>
                 <outlet property="TodayDefLbl" destination="uG1-hy-jUV" id="Erp-AJ-E1H"/>
+                <outlet property="backBtnStack" destination="G6V-wb-Jml" id="i4U-5x-jfb"/>
                 <outlet property="containerView" destination="8es-bj-1VI" id="FTR-XL-6rJ"/>
                 <outlet property="cv" destination="trQ-OE-sTx" id="Fbo-cQ-JAo"/>
+                <outlet property="cvHeight" destination="npP-Oo-kNK" id="xzc-Up-JwX"/>
+                <outlet property="menuNameStack" destination="ejm-gp-RSR" id="O1b-Is-xau"/>
                 <outlet property="studentNameLbl" destination="2Xl-IC-cX4" id="6jg-lU-VXY"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -27,7 +30,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8es-bj-1VI">
-                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="G6V-wb-Jml">
                             <rect key="frame" x="10" y="10" width="373" height="35"/>
@@ -50,7 +53,7 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TimeTable" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Xl-IC-cX4">
-                                    <rect key="frame" x="35" y="7.3333333333333268" width="338" height="20.333333333333329"/>
+                                    <rect key="frame" x="35" y="7.333333333333341" width="338" height="20.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
@@ -127,7 +130,7 @@
     <resources>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <namedColor name="BackGroundClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94117647058823528" green="0.51764705882352946" blue="0.44705882352941179" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>

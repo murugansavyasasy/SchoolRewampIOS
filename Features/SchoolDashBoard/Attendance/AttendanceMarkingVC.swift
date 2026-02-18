@@ -6,42 +6,25 @@
 //
 
 import UIKit
-//import DropDown
 
-class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, markeAsAbsent {
+class AttendanceMarkingVC: UIViewController, UISearchBarDelegate, markeAsAbsent {
+    
     func markAsAbsent(AbsentStudent: [AttendanceStudentListDetails], CallAttendaceApi: Bool) {
         
         searchBar.searchTextField.text = ""
         searchQuery = ""
-        filterBtn.setTitle(CommonStringFile.NameASC, for: .normal)
         noDataLbl.isHidden = true
         noDataImage.isHidden = true
         
+        student_List = AbsentStudent
+        applyFilterAndSort()
+        getAttendanceCounts()
+        updateSelectAllCheckbox()
+        
         if CallAttendaceApi {
-            student_List = AbsentStudent
-            Filtered_stuent_Listt = student_List
             user_inputs.all_present = areAllStudentsPresent() ? "T" : "F"
             self.markAttendaceApi()
-            
-        }else {
-            student_List = AbsentStudent
-            Filtered_stuent_Listt = student_List
-            getAttendanceCounts()
-            tv.reloadData()
         }
-        
-    }
-    
-    func markStudentAsAbsent(studentId: String) {
-        filterData = filterData?.map { student in
-            var mutableStudent = student
-            if student.id == studentId {
-                mutableStudent.isAbsent = true
-            }
-            return mutableStudent
-        }
-        
-        tv.reloadData()
     }
     
     @IBOutlet weak var BackBtn: UIButton!
@@ -68,11 +51,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var TitleLbl: UILabel!
     
-    
-    var filterData : [StudentDetails]?
-    var abseentessData : [StudentDetails]?
-    var studentsDetails: [StudentDetails]?
-    var totalcount = 0
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var selected_sectionID = ""
     var selectedAcadimicYearId : Int?
@@ -81,7 +59,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
     let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     let staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var dropDown = DropDown()
-    var  MakeAbsentId: [[String: String]] = []
     var student_List: [AttendanceStudentListDetails]?
     var Filtered_stuent_Listt: [AttendanceStudentListDetails]?
     var searchQuery: String = ""
@@ -184,18 +161,9 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                         }
                         
                         self.student_List = success.data?.first?.attd_details
-                        self.Filtered_stuent_Listt = self.student_List
+                        self.applyFilterAndSort()
                         self.getAttendanceCounts()
-                        self.tv.reloadData()
-                        
-                        // Check if all students are absent
-                        let allAbsent = self.student_List?.allSatisfy { $0.att_status == "A/A" } ?? false
-                        
-                        if allAbsent {
-                            self.selectAllBtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
-                        } else {
-                            self.selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
-                        }
+                        self.updateSelectAllCheckbox()
                         
                     }else {
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
@@ -254,7 +222,7 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
-//                                    self.attendaceGoBackDashBoard()
+                                    //                                    self.attendaceGoBackDashBoard()
                                     self.dismiss(animated: true)
                                 }
                         }
@@ -266,8 +234,8 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
-//                                    self.attendaceGoBackDashBoard()
-                                     self.dismiss(animated: true)
+                                    //                                    self.attendaceGoBackDashBoard()
+                                    self.dismiss(animated: true)
                                 }
                         }
                     }
@@ -305,41 +273,24 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         }
     }
     
-    func getAttendanceCounts() /*-> (present: Int, absent: Int, od: Int)*/ {
-        // Safely unwrap your global array
-        guard let students = student_List else {
-            return //(0, 0, 0)
+    func getAttendanceCounts() {
+        guard let students = student_List else { return }
+        
+        var present = 0, absent = 0, od = 0
+        
+        students.forEach {
+            switch attendanceValue(for: $0) {
+            case "A": absent += 1
+            case "OD": od += 1
+            default: present += 1
+            }
         }
         
-        // Transform each student into their spl_attendance_type
-        let statuses: [String] = students.map { student in
-            let components = student.att_status?.split(separator: "/").map(String.init) ?? []
-            var value = ""
-            // Determine session value
-            if user_inputs.session_type == "FH" {
-                value = components.first ?? ""
-            } else if user_inputs.session_type == "SH" {
-                value = components.count > 1 ? components[1] : (components.first ?? "")
-            } else {
-                value = components.first ?? ""
-            }
-            switch value {
-            case "OD":
-                return "OD"
-            case "A":
-                return "ABSENT"
-            default:
-                return "PRESENT"
-            }
-        }
-        // Count occurrences
-        let presentCount = statuses.filter { $0 == "PRESENT" }.count
-        let absentCount = statuses.filter { $0 == "ABSENT" }.count
-        let odCount = statuses.filter { $0 == "OD" }.count
-        PresentCountLbl.text = formatCount(presentCount)
-        AbsentCountLbl.text = formatCount(absentCount)
-        OdCountLbl.text = formatCount(odCount)
+        PresentCountLbl.text = formatCount(present)
+        AbsentCountLbl.text = formatCount(absent)
+        OdCountLbl.text = formatCount(od)
     }
+    
     
     
     func attendaceGoBackDashBoard(){
@@ -359,20 +310,6 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         }
     }
     
-    func statusUpdate(status: Bool, index: Int) {
-        guard let studentId = filterData?[index].id else { return }
-        if let originalIndex = studentsDetails?.firstIndex(where: { $0.id == studentId }) {
-            studentsDetails?[originalIndex].isAbsent = status
-            filterData?[index].isAbsent = status
-            totalcount = studentsDetails?.filter { $0.isAbsent == false }.count ?? 0
-            let PresenrCount = studentsDetails?.filter { $0.isAbsent == true }.count ?? 0
-            PresentCountLbl.text = formatCount(PresenrCount)
-            AbsentCountLbl.text = formatCount(totalcount)
-            let image = totalcount == studentsDetails?.count ?? 0  ? ImageName.checkmark:ImageName.square
-            selectAllBtn.setImage(image, for: .normal)
-        }
-    }
-    
     func formatCount(_ count: Int) -> String {
         if count == 0 {
             return "0"
@@ -383,37 +320,35 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         }
     }
     @IBAction func selectAllAct(_ sender: UIButton) {
-        isAllAbsent.toggle()
-        if isAllAbsent {
-            sender.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
-        } else {
-            sender.setImage(UIImage(systemName: "square"), for: .normal)
-        }
         
-        // Update all students
-        guard var students = student_List else { return }
-        for i in 0..<students.count {
-            var components = students[i].att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
-            if user_inputs.attendance_type == "H" {
-                if user_inputs.session_type == "FH" {
-                    components[0] = isAllAbsent ? "A" : "P"
-                } else {
-                    if components.count > 1 {
-                        components[1] = isAllAbsent ? "A" : "P"
-                    } else {
-                        components.append(isAllAbsent ? "A" : "P")
-                    }
-                }
-            } else {
-                components = [isAllAbsent ? "A" : "P", isAllAbsent ? "A" : "P"]
+        let makeAbsent = !areAllstuentsAbsent()
+        
+        student_List = student_List?.map { student in
+            
+            var s = student
+            
+            var componets = s.att_status?.split(separator: "/").map(String.init) ?? ["P","P"]
+            
+            if componets.count < 2 {
+                componets = [componets.first ?? "P", componets.first ?? "P"]
             }
-            students[i].att_status = components.joined(separator: "/")
+            
+            if user_inputs.attendance_type == "H" {
+                
+                let index = user_inputs.session_type == "SH" ? 1 : 0
+                componets[index] = makeAbsent ? "A" : "P"
+            }else{
+                let value = makeAbsent ? "A" : "P"
+                componets = [value,value]
+            }
+            
+            s.att_status = componets.joined(separator: "/")
+            return s
         }
-        student_List = students
-        Filtered_stuent_Listt = students
-        getAttendanceCounts()
-        tv.reloadData()
         
+        applyFilterAndSort()
+        getAttendanceCounts()
+        updateSelectAllCheckbox()
     }
     
     @IBAction func BackAct(_ sender: Any) {
@@ -441,66 +376,19 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         
     }
     
-//    func areAllStudentsPresent() -> Bool {
-//        guard let students = student_List else { return false }
-//        return students.allSatisfy { student in
-//            let components = student.att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
-//            var value = ""
-//            if user_inputs.attendance_type == "H" {
-//                if user_inputs.session_type == "FH" {
-//                    value = components.first ?? ""
-//                } else {
-//                    value = components.count > 1 ? components[1] : (components.first ?? "")
-//                }
-//            } else {
-//                return components.allSatisfy { $0 == "P" || $0 == "P~" }
-//            }
-//            return value == "P" || value == "P~"
-//        }
-//    }
-    
-    
     func areAllStudentsPresent() -> Bool {
         guard let students = student_List else { return false }
-
-        return students.allSatisfy { student in
-            let components = student.att_status?
-                .split(separator: "/")
-                .map(String.init) ?? ["P", "P"]
-
-            if user_inputs.attendance_type == "H" {
-                let value: String
-
-                if user_inputs.session_type == "FH" {
-                    value = components.first ?? ""
-                } else {
-                    value = components.count > 1 ? components[1] : (components.first ?? "")
-                }
-
-                return value == "P" || value == "P~"
-            } else {
-                let value = components.first ?? ""
-                return value == "P" || value == "P~"
-            }
+        return students.allSatisfy {
+            let value = attendanceValue(for: $0)
+            return value == "P" || value == "P~"
         }
     }
-
-    
     
     func getSpecialAttendanceType(for student: AttendanceStudentListDetails) -> [String: String] {
-        let components = student.att_status?.split(separator: "/").map(String.init) ?? []
         
-        var value = ""
-        
-        if user_inputs.session_type == "FH" {
-            value = components.first ?? ""
-        } else if user_inputs.session_type == "SH" {
-            value = components.count > 1 ? components[1] : (components.first ?? "")
-        } else {
-            value = components.first ?? ""
-        }
-        
+        let value = attendanceValue(for: student)
         let splType: String
+        
         switch value {
         case "OD":
             splType = "OD"
@@ -530,17 +418,17 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         }
         switch selectedSort {
         case CommonStringFile.RollNoASC:
-            result.sort { ($0.roll_no ?? "") < ($1.roll_no ?? "") }
+            result.sort { ($0.roll_no ?? "").lowercased() < ($1.roll_no ?? "").lowercased() }
         case CommonStringFile.RollNoDESC:
-            result.sort { ($0.roll_no ?? "") > ($1.roll_no ?? "") }
+            result.sort { ($0.roll_no ?? "").lowercased() > ($1.roll_no ?? "").lowercased() }
         case CommonStringFile.NameASC:
-            result.sort { ($0.name ?? "") < ($1.name ?? "") }
+            result.sort { ($0.name ?? "").lowercased() < ($1.name ?? "").lowercased() }
         case CommonStringFile.NameDESC:
-            result.sort { ($0.name ?? "") > ($1.name ?? "") }
+            result.sort { ($0.name ?? "").lowercased() > ($1.name ?? "").lowercased() }
         case CommonStringFile.AdmissionNoASC:
-            result.sort { ($0.admission_no ?? "") < ($1.admission_no ?? "") }
+            result.sort { ($0.admission_no ?? "").lowercased() < ($1.admission_no ?? "").lowercased() }
         case CommonStringFile.AdmissionNoDESC:
-            result.sort { ($0.admission_no ?? "") > ($1.admission_no ?? "") }
+            result.sort { ($0.admission_no ?? "").lowercased() > ($1.admission_no ?? "").lowercased() }
         default:
             break
         }
@@ -588,6 +476,49 @@ class AttendanceMarkingVC: UIViewController, Attendence, UISearchBarDelegate, ma
         selectAllBtn.isHidden = !searchText.isEmpty
     }
     
+    // MARK: - Attendance Logic Helpers
+    
+    func attendanceValue(for student: AttendanceStudentListDetails) -> String {
+        
+        let components = student.att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
+        
+        if user_inputs.attendance_type == "H" {
+            
+            return (user_inputs.session_type == "SH" && components.count > 1) ? components[1] : components[0]
+        }else{
+            return components.first ?? "P"
+        }
+    }
+    
+    func updateAttendance(for studentId:String, to newValue:String) {
+        
+        guard let index = student_List?.firstIndex(where: {$0.id == studentId}) else { return }
+        
+        var components = student_List?[index].att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
+        
+        if user_inputs.attendance_type == "H" {
+            let sessionIndex = (user_inputs.session_type == "SH" && components.count>1) ? 1 : 0
+            components[sessionIndex] = newValue
+        }else{
+            components = [newValue, newValue]
+        }
+        
+        student_List?[index].att_status = components.joined(separator: "/")
+        applyFilterAndSort()
+    }
+    
+    func areAllstuentsAbsent() -> Bool {
+        guard let studentList = student_List, !studentList.isEmpty else { return false }
+        return studentList.allSatisfy{ attendanceValue(for: $0) == "A" }
+    }
+    
+    func updateSelectAllCheckbox() {
+        let allAbsent = areAllstuentsAbsent()
+        selectAllBtn.setImage(
+            UIImage(systemName: allAbsent ? "checkmark.square.fill" : "square"),
+            for: .normal
+        )
+    }
 }
 
 extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
@@ -599,32 +530,15 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AttendenceTVC, for: indexPath) as! AttendenceTVC
         
-        let student_data = Filtered_stuent_Listt?[indexPath.row]
-        cell.nameLbl.text = student_data?.name
-        cell.admissionlbl.text = MenuStringFile.ADMIS_No + (student_data?.admission_no ?? "")
-        cell.rollNoLbl.text = MenuStringFile.Roll_No + (student_data?.roll_no ?? "")
-        cell.rollNoLbl.isHidden = student_data?.roll_no?.isEmpty ?? false
-        let attendanceStatus = student_data?.att_status
-        let components = attendanceStatus?.split(separator: "/")
-        var attendanceType = ""
-        let allAbsent = self.student_List?.allSatisfy { $0.att_status == "A/A" } ?? false
+        guard let student_data = Filtered_stuent_Listt?[indexPath.row] else {return cell}
+        cell.nameLbl.text = student_data.name
+        cell.admissionlbl.text = MenuStringFile.ADMIS_No + (student_data.admission_no ?? "")
+        cell.rollNoLbl.text = MenuStringFile.Roll_No + (student_data.roll_no ?? "")
+        cell.rollNoLbl.isHidden = student_data.roll_no?.isEmpty ?? false
         
-        if allAbsent {
-            self.selectAllBtn.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
-        } else {
-            self.selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
-        }
-        if user_inputs.attendance_type == "H" {
-            if user_inputs.session_type == "FH" {
-                attendanceType = components?.first.map(String.init) ?? ""
-            } else {
-                attendanceType = components?.dropFirst().first.map(String.init) ?? ""
-            }
-        } else {
-            attendanceType = components?.first.map(String.init) ?? ""
-        }
+        let value = attendanceValue(for: student_data)
         
-        switch attendanceType{
+        switch value{
             
         case "P":
             cell.AttendanceBtn.backgroundColor = .systemGreen
@@ -658,8 +572,9 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
             cell.OnLateBtn.isHidden = false
             cell.OnLateBtn.setImage(UIImage(systemName: "square"), for: .normal)
             cell.ODSwitch.isOn = false
+            
         }
-        cell.studentId = student_data?.id
+        cell.studentId = student_data.id
         cell.delegate = self
         return cell
     }
@@ -672,84 +587,28 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
 extension AttendanceMarkingVC: studentAttenance {
     
     func didTapPresentAbsent(for id: String) {
-        guard let filteredList = Filtered_stuent_Listt,
-              let filterIndex = filteredList.firstIndex(where: { $0.id == id }) else { return }
-        var components = Filtered_stuent_Listt?[filterIndex].att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
-        if user_inputs.attendance_type == "H" {
-            if user_inputs.session_type == "FH" {
-                components[0] = (components.first == "P" || components.first == "P~") ? "A" : "P"
-            } else {
-                if components.count > 1 {
-                    components[1] = (components[1] == "P" || components[1] == "P~") ? "A" : "P"
-                }
-            }
-        } else {
-            components[0] = (components.first == "P" || components.first == "P~") ? "A" : "P"
-        }
-        Filtered_stuent_Listt?[filterIndex].att_status = components.joined(separator: "/")
-        
-        if let mainList = student_List,
-           let index = mainList.firstIndex(where: { $0.id == id }) {
-            student_List?[index].att_status = components.joined(separator: "/")
-        }
+        guard let student = student_List?.first(where: {$0.id == id}) else { return }
+        let current = attendanceValue(for: student)
+        let newValue = (current == "P" || current == "P~") ? "A" : "P"
+        updateAttendance(for: id, to: newValue)
         getAttendanceCounts()
-        tv.reloadRows(at: [IndexPath(row: filterIndex, section: 0)], with: .automatic)
+        updateSelectAllCheckbox()
     }
     
     
     func didTapLate(for id: String) {
-        guard let filteredList = Filtered_stuent_Listt,
-              let filterIndex = filteredList.firstIndex(where: { $0.id == id }) else { return }
-        
-        var components = Filtered_stuent_Listt?[filterIndex].att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
-        
-        if user_inputs.attendance_type == "H" {
-            if user_inputs.session_type == "FH" {
-                components[0] = (components.first == "P~") ? "P" : "P~"
-            } else {
-                if components.count > 1 {
-                    components[1] = (components[1] == "P~") ? "P" : "P~"
-                }
-            }
-        } else {
-            components[0] = (components.first == "P~") ? "P" : "P~"
-        }
-        
-        Filtered_stuent_Listt?[filterIndex].att_status = components.joined(separator: "/")
-        
-        if let mainList = student_List,
-           let index = mainList.firstIndex(where: { $0.id == id }) {
-            student_List?[index].att_status = components.joined(separator: "/")
-        }
-        
+        guard let student = student_List?.first(where: {$0.id == id}) else { return }
+        let current = attendanceValue(for: student)
+        let newValue = (current == "P~") ? "P" : "P~"
+        updateAttendance(for: id, to: newValue)
         getAttendanceCounts()
-        tv.reloadRows(at: [IndexPath(row: filterIndex, section: 0)], with: .automatic)
+        updateSelectAllCheckbox()
     }
     
     func didToggleOD(for id: String, isOn: Bool) {
-        guard let filteredList = Filtered_stuent_Listt,
-              let filterIndex = filteredList.firstIndex(where: { $0.id == id }) else { return }
         let newType = isOn ? "OD" : "P"
-        var components = Filtered_stuent_Listt?[filterIndex].att_status?.split(separator: "/").map(String.init) ?? ["P", "P"]
-        
-        if user_inputs.attendance_type == "H" {
-            if user_inputs.session_type == "FH" {
-                components[0] = newType
-            } else {
-                if components.count > 1 {
-                    components[1] = newType
-                }
-            }
-        } else {
-            components[0] = newType
-        }
-        
-        Filtered_stuent_Listt?[filterIndex].att_status = components.joined(separator: "/")
-        if let mainList = student_List,
-           let index = mainList.firstIndex(where: { $0.id == id }) {
-            student_List?[index].att_status = components.joined(separator: "/")
-        }
+        updateAttendance(for: id, to: newType)
         getAttendanceCounts()
-        tv.reloadRows(at: [IndexPath(row: filterIndex, section: 0)], with: .automatic)
+        updateSelectAllCheckbox()
     }
 }
