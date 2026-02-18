@@ -234,12 +234,12 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                 case .success(let response):
                     if response.status == true, let details = response.data?.first {
                         self.menu_details = details.menus
-                        self.menu_details?.append(
-                            MenuDetail(id: 112, name: "Bus Tracking", description: "Used to tracking")
-                        )
-                        self.menu_details?.append(
-                            MenuDetail(id: 113, name: "Staff Leave Request", description: "Used to apply leave")
-                        )
+//                        self.menu_details?.append(
+//                            MenuDetail(id: 112, name: "Bus Tracking", description: "Used to tracking")
+//                        )
+//                        self.menu_details?.append(
+//                            MenuDetail(id: 113, name: "Staff Leave Request", description: "Used to apply leave")
+//                        )
                         self.refreshCount = true
                         self.get_MenuCount()
                         self.recentMenuItems = details.frequently_used

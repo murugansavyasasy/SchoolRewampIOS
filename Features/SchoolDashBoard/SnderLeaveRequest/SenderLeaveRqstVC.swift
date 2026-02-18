@@ -132,7 +132,7 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
                     leaveRequestTable.reloadData()
                     if self.pushnotificationMsg_id != ""{
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                            self.scrollToLeave(with: pushnotificationMsg_id ?? "")
+                            self.scrollToLeave(with: self.pushnotificationMsg_id ?? "")
                         }
                     }
                 }
