@@ -7,6 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1803F6792F3DD489002B6471 /* busTracker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1803F6782F3DD489002B6471 /* busTracker.xib */; };
+		1803F67A2F3DD489002B6471 /* busTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1803F6772F3DD489002B6471 /* busTracker.swift */; };
+		1803F67B2F3DD489002B6471 /* busTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1803F6772F3DD489002B6471 /* busTracker.swift */; };
+		1803F67C2F3DD489002B6471 /* busTracker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1803F6782F3DD489002B6471 /* busTracker.xib */; };
+		1803F67F2F3DE196002B6471 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 1803F67E2F3DE196002B6471 /* GoogleMaps */; };
+		1803F6812F3DE248002B6471 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 1803F6802F3DE248002B6471 /* GoogleMaps */; };
+		185465142F42E7FB008B1551 /* StaffLeaveReqTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185465122F42E7FB008B1551 /* StaffLeaveReqTvCell.swift */; };
+		185465152F42E7FB008B1551 /* StaffLeaveReqTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185465132F42E7FB008B1551 /* StaffLeaveReqTvCell.xib */; };
+		185465162F42E7FB008B1551 /* StaffLeaveReqTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185465132F42E7FB008B1551 /* StaffLeaveReqTvCell.xib */; };
+		185465172F42E7FB008B1551 /* StaffLeaveReqTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185465122F42E7FB008B1551 /* StaffLeaveReqTvCell.swift */; };
+		1854651A2F431080008B1551 /* StaffDetailsPreviewVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185465192F431080008B1551 /* StaffDetailsPreviewVc.xib */; };
+		1854651B2F431080008B1551 /* StaffDetailsPreviewVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185465182F431080008B1551 /* StaffDetailsPreviewVc.swift */; };
+		1854651C2F431080008B1551 /* StaffDetailsPreviewVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185465192F431080008B1551 /* StaffDetailsPreviewVc.xib */; };
+		1854651D2F431080008B1551 /* StaffDetailsPreviewVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185465182F431080008B1551 /* StaffDetailsPreviewVc.swift */; };
+		185465202F431F30008B1551 /* staffContactTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1854651E2F431F30008B1551 /* staffContactTvCell.swift */; };
+		185465212F431F30008B1551 /* staffContactTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1854651F2F431F30008B1551 /* staffContactTvCell.xib */; };
+		185465222F431F30008B1551 /* staffContactTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1854651F2F431F30008B1551 /* staffContactTvCell.xib */; };
+		185465232F431F30008B1551 /* staffContactTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1854651E2F431F30008B1551 /* staffContactTvCell.swift */; };
 		187A0AB22F10CCD1008CF5B7 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 187A0AB12F10CCD1008CF5B7 /* DGCharts */; };
 		187A0B3B2F10E9A7008CF5B7 /* chatWithStudentVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A0B362F10E9A7008CF5B7 /* chatWithStudentVc.swift */; };
 		187A0B3C2F10E9A7008CF5B7 /* IntractwithStudentVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A0B382F10E9A7008CF5B7 /* IntractwithStudentVc.swift */; };
@@ -1581,6 +1599,14 @@
 
 /* Begin PBXFileReference section */
 		11488136D5686E65FD0FC70E /* Pods_School_Chimes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_School_Chimes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1803F6772F3DD489002B6471 /* busTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = busTracker.swift; sourceTree = "<group>"; };
+		1803F6782F3DD489002B6471 /* busTracker.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = busTracker.xib; sourceTree = "<group>"; };
+		185465122F42E7FB008B1551 /* StaffLeaveReqTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffLeaveReqTvCell.swift; sourceTree = "<group>"; };
+		185465132F42E7FB008B1551 /* StaffLeaveReqTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StaffLeaveReqTvCell.xib; sourceTree = "<group>"; };
+		185465182F431080008B1551 /* StaffDetailsPreviewVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffDetailsPreviewVc.swift; sourceTree = "<group>"; };
+		185465192F431080008B1551 /* StaffDetailsPreviewVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StaffDetailsPreviewVc.xib; sourceTree = "<group>"; };
+		1854651E2F431F30008B1551 /* staffContactTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = staffContactTvCell.swift; sourceTree = "<group>"; };
+		1854651F2F431F30008B1551 /* staffContactTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = staffContactTvCell.xib; sourceTree = "<group>"; };
 		187A0B362F10E9A7008CF5B7 /* chatWithStudentVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatWithStudentVc.swift; sourceTree = "<group>"; };
 		187A0B372F10E9A7008CF5B7 /* chatWithStudentVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = chatWithStudentVc.xib; sourceTree = "<group>"; };
 		187A0B382F10E9A7008CF5B7 /* IntractwithStudentVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntractwithStudentVc.swift; sourceTree = "<group>"; };
@@ -2403,6 +2429,7 @@
 				842F95CC2D85606E007A4A98 /* Kingfisher in Frameworks */,
 				189AFD442F258C4900BDF3A0 /* FirebaseCrashlytics in Frameworks */,
 				841ACC9C2DA50C7A00326D52 /* Lottie in Frameworks */,
+				1803F67F2F3DE196002B6471 /* GoogleMaps in Frameworks */,
 				189AFD3F2F258B9600BDF3A0 /* AWSS3 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2439,6 +2466,7 @@
 				FA8167F72F3318D100ADA8F3 /* Kingfisher in Frameworks */,
 				FA8167F82F3318D100ADA8F3 /* FirebaseCrashlytics in Frameworks */,
 				FA8167F92F3318D100ADA8F3 /* Lottie in Frameworks */,
+				1803F6812F3DE248002B6471 /* GoogleMaps in Frameworks */,
 				FA8167FA2F3318D100ADA8F3 /* AWSS3 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2600,6 +2628,8 @@
 			children = (
 				187A0B4C2F10E9B0008CF5B7 /* ParantMapVC.swift */,
 				187A0B4D2F10E9B0008CF5B7 /* ParantMapVC.xib */,
+				1803F6772F3DD489002B6471 /* busTracker.swift */,
+				1803F6782F3DD489002B6471 /* busTracker.xib */,
 			);
 			path = TrakingDriver;
 			sourceTree = "<group>";
@@ -3079,6 +3109,12 @@
 			children = (
 				840E44A32D1A85B000D561E8 /* SenderLeaveRqstVC.swift */,
 				840E44A42D1A85B000D561E8 /* SenderLeaveRqstVC.xib */,
+				185465122F42E7FB008B1551 /* StaffLeaveReqTvCell.swift */,
+				185465132F42E7FB008B1551 /* StaffLeaveReqTvCell.xib */,
+				185465182F431080008B1551 /* StaffDetailsPreviewVc.swift */,
+				185465192F431080008B1551 /* StaffDetailsPreviewVc.xib */,
+				1854651E2F431F30008B1551 /* staffContactTvCell.swift */,
+				1854651F2F431F30008B1551 /* staffContactTvCell.xib */,
 			);
 			path = SnderLeaveRequest;
 			sourceTree = "<group>";
@@ -4627,6 +4663,7 @@
 				189AFD412F258C4900BDF3A0 /* FirebaseCore */,
 				189AFD432F258C4900BDF3A0 /* FirebaseCrashlytics */,
 				189AFD452F258C4900BDF3A0 /* FirebaseMessaging */,
+				1803F67E2F3DE196002B6471 /* GoogleMaps */,
 			);
 			productName = VsSchoolChimes;
 			productReference = 84A5BE3E2C19719700E32496 /* School Chimes.app */;
@@ -4699,6 +4736,7 @@
 				FA81665D2F3318D100ADA8F3 /* FirebaseCore */,
 				FA81665F2F3318D100ADA8F3 /* FirebaseCrashlytics */,
 				FA8166602F3318D100ADA8F3 /* FirebaseMessaging */,
+				1803F6802F3DE248002B6471 /* GoogleMaps */,
 			);
 			productName = VsSchoolChimes;
 			productReference = FA8169642F3318D100ADA8F3 /* VAGGISVARI.app */;
@@ -4752,6 +4790,7 @@
 				187A0AB02F10CCD1008CF5B7 /* XCRemoteSwiftPackageReference "Charts" */,
 				189AFD3B2F258B9600BDF3A0 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */,
 				189AFD402F258C4800BDF3A0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				1803F67D2F3DE196002B6471 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
 			);
 			productRefGroup = 84A5BE3F2C19719700E32496 /* Products */;
 			projectDirPath = "";
@@ -4817,6 +4856,7 @@
 				847D1CA62DBB68B200A274D2 /* locationAnimation.json in Resources */,
 				FAFFBD082E336F8600F8B150 /* ExamListTV.xib in Resources */,
 				840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */,
+				185465152F42E7FB008B1551 /* StaffLeaveReqTvCell.xib in Resources */,
 				8442A86F2CDB787A0006068E /* SchoolTVCell.xib in Resources */,
 				84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */,
 				8451EC922E24E55B00D6DBB4 /* HolidayTVC.xib in Resources */,
@@ -4943,6 +4983,7 @@
 				84D85FF02DE5815200633784 /* SectionStregnthCVC.xib in Resources */,
 				8472BEBF2EF6737E00D3F6F5 /* descriptionCVC.xib in Resources */,
 				846CF7462E2F5B01000361CE /* OngoingTVC.xib in Resources */,
+				1803F67C2F3DD489002B6471 /* busTracker.xib in Resources */,
 				84C3A1F62E66EF4B002E7506 /* MsgVoiceCvCell.xib in Resources */,
 				84FC4DCC2DBCAE6700BBEDD7 /* ParentCommunicationVc.xib in Resources */,
 				844DF00A2E5AD28F0016A347 /* QuistionPagenationVc.xib in Resources */,
@@ -4965,6 +5006,7 @@
 				84017F792E447559006CB477 /* certificateReqTVCell.xib in Resources */,
 				84174EA92E717FA100AC7092 /* QuizSubmissionVc.xib in Resources */,
 				84E12C3B2ECC71F200FF614B /* PopoverTVC.xib in Resources */,
+				185465212F431F30008B1551 /* staffContactTvCell.xib in Resources */,
 				84235A0E2E1E27F4002F2E1D /* RecorderTVC.xib in Resources */,
 				849E57372C1FF6BD006119DA /* RobotoSlab-Bold.ttf in Resources */,
 				849970C92CF8752400800B07 /* DateCVC.xib in Resources */,
@@ -4977,6 +5019,7 @@
 				845CAC882E54B06C000FA540 /* LSRWSubmisionListVC.xib in Resources */,
 				FA3230972D95292B0070BA51 /* ExamDetailsVC.xib in Resources */,
 				84079FF82D15A7B000D6DF04 /* LeveHistoryVC.xib in Resources */,
+				1854651A2F431080008B1551 /* StaffDetailsPreviewVc.xib in Resources */,
 				845F217D2E45D9C40078AF69 /* AttachmentCVC.xib in Resources */,
 				84079FF92D15A7B000D6DF04 /* LeveHistoryTV.xib in Resources */,
 				84079FFA2D15A7B000D6DF04 /* LeveCreateVC.xib in Resources */,
@@ -5233,6 +5276,7 @@
 				FA8168482F3318D100ADA8F3 /* PopoverViewVC.xib in Resources */,
 				FA8168492F3318D100ADA8F3 /* WeekDaysNameCollectionViewCell.xib in Resources */,
 				FA81684A2F3318D100ADA8F3 /* EventHistoryVC.xib in Resources */,
+				1803F6792F3DD489002B6471 /* busTracker.xib in Resources */,
 				FA81684B2F3318D100ADA8F3 /* CreatePasswordVc.xib in Resources */,
 				FA81684C2F3318D100ADA8F3 /* SideMenuVC.xib in Resources */,
 				FA81684D2F3318D100ADA8F3 /* LoginVc.xib in Resources */,
@@ -5357,6 +5401,7 @@
 				FA8168C42F3318D100ADA8F3 /* LeveHistoryTV.xib in Resources */,
 				FA8168C52F3318D100ADA8F3 /* LeveCreateVC.xib in Resources */,
 				FA8168C62F3318D100ADA8F3 /* ReportStudentTVC.xib in Resources */,
+				1854651C2F431080008B1551 /* StaffDetailsPreviewVc.xib in Resources */,
 				FA8168C72F3318D100ADA8F3 /* ReportStudentListVC.xib in Resources */,
 				FA8168C82F3318D100ADA8F3 /* SubscriptionView.xib in Resources */,
 				FA8168C92F3318D100ADA8F3 /* SubscriptionTVCell.xib in Resources */,
@@ -5437,6 +5482,7 @@
 				FA8169152F3318D100ADA8F3 /* VoiceCellTV.xib in Resources */,
 				FA8169162F3318D100ADA8F3 /* OnlineMeetingVC.xib in Resources */,
 				FA8169172F3318D100ADA8F3 /* PreviewCell.xib in Resources */,
+				185465162F42E7FB008B1551 /* StaffLeaveReqTvCell.xib in Resources */,
 				FA8169182F3318D100ADA8F3 /* PtmCV.xib in Resources */,
 				FA8169192F3318D100ADA8F3 /* MeetingsTVcell.xib in Resources */,
 				FA81691A2F3318D100ADA8F3 /* NotificationCallVC.xib in Resources */,
@@ -5462,6 +5508,7 @@
 				FA81692E2F3318D100ADA8F3 /* SenderLeaveRqstVC.xib in Resources */,
 				FA81692F2F3318D100ADA8F3 /* CreatedSlotsTv.xib in Resources */,
 				FA8169302F3318D100ADA8F3 /* AssignmentPriview.xib in Resources */,
+				185465222F431F30008B1551 /* staffContactTvCell.xib in Resources */,
 				FA8169312F3318D100ADA8F3 /* LSRWTvCell.xib in Resources */,
 				FA8169322F3318D100ADA8F3 /* MobileNumberVc.xib in Resources */,
 				FA8169332F3318D100ADA8F3 /* NewAbsenteesViewController.xib in Resources */,
@@ -5800,6 +5847,7 @@
 				18D718DD2D0D479B00E9EDA3 /* NewAbsenteesViewController.swift in Sources */,
 				845F21792E45C2660078AF69 /* AssignmentDetailTVC.swift in Sources */,
 				189AFD392F24C98700BDF3A0 /* ForceUpdateVc.swift in Sources */,
+				1854651B2F431080008B1551 /* StaffDetailsPreviewVc.swift in Sources */,
 				84B57EE32D15533000E0EA29 /* SubmitVC.swift in Sources */,
 				84F9862D2D3A57FC009FF065 /* QuizVC.swift in Sources */,
 				84AC7F0F2E3C8EED0022BD63 /* SideMenuVC.swift in Sources */,
@@ -5818,6 +5866,7 @@
 				FAED58592E4B61B000497026 /* SlotListTV.swift in Sources */,
 				8451EC972E24E55B00D6DBB4 /* HolidayVC.swift in Sources */,
 				840A7CEE2D24FDAA0061EAEA /* ExammarkFooterView.swift in Sources */,
+				185465202F431F30008B1551 /* staffContactTvCell.swift in Sources */,
 				840A7CF02D24FDAA0061EAEA /* ExamMarkCV.swift in Sources */,
 				84A5BE8E2C197C3000E32496 /* Toast.swift in Sources */,
 				8442A8682CDB787A0006068E /* SchoolTVCell.swift in Sources */,
@@ -5832,6 +5881,7 @@
 				8481087B2E164CFE004A0F87 /* VideoPreviewVc.swift in Sources */,
 				187A0B3B2F10E9A7008CF5B7 /* chatWithStudentVc.swift in Sources */,
 				187A0B3C2F10E9A7008CF5B7 /* IntractwithStudentVc.swift in Sources */,
+				1803F67B2F3DD489002B6471 /* busTracker.swift in Sources */,
 				846CF7432E2F5AC7000361CE /* CatogoryCVC.swift in Sources */,
 				FA2A3FBA2DB0CABB0000AF55 /* SenderAttachmentVC.swift in Sources */,
 				848F7A702CF8CBCD004EF617 /* AnimatView.swift in Sources */,
@@ -5907,6 +5957,7 @@
 				8494B6652CD1EC8D004B0746 /* TapBarVC.swift in Sources */,
 				849970CD2CF8752400800B07 /* TextHistoryTVCell.swift in Sources */,
 				FA00B2662E640A8300260FEC /* DateCvCell.swift in Sources */,
+				185465142F42E7FB008B1551 /* StaffLeaveReqTvCell.swift in Sources */,
 				849970CE2CF8752400800B07 /* DateCVC.swift in Sources */,
 				849970CF2CF8752400800B07 /* WaveView .swift in Sources */,
 				84C829FA2D086A490024A46A /* ClassicSparkTrajectoryFactory.swift in Sources */,
@@ -6219,6 +6270,7 @@
 				FA8167082F3318D100ADA8F3 /* NewAbsenteesViewController.swift in Sources */,
 				FA8167092F3318D100ADA8F3 /* AssignmentDetailTVC.swift in Sources */,
 				FA81670A2F3318D100ADA8F3 /* ForceUpdateVc.swift in Sources */,
+				1854651D2F431080008B1551 /* StaffDetailsPreviewVc.swift in Sources */,
 				FA81670B2F3318D100ADA8F3 /* SubmitVC.swift in Sources */,
 				FA81670C2F3318D100ADA8F3 /* QuizVC.swift in Sources */,
 				FA81670D2F3318D100ADA8F3 /* SideMenuVC.swift in Sources */,
@@ -6237,6 +6289,7 @@
 				FA81671A2F3318D100ADA8F3 /* SlotListTV.swift in Sources */,
 				FA81671B2F3318D100ADA8F3 /* HolidayVC.swift in Sources */,
 				FA81671C2F3318D100ADA8F3 /* ExammarkFooterView.swift in Sources */,
+				185465232F431F30008B1551 /* staffContactTvCell.swift in Sources */,
 				FA81671D2F3318D100ADA8F3 /* ExamMarkCV.swift in Sources */,
 				FA81671E2F3318D100ADA8F3 /* Toast.swift in Sources */,
 				FA81671F2F3318D100ADA8F3 /* SchoolTVCell.swift in Sources */,
@@ -6251,6 +6304,7 @@
 				FA8167282F3318D100ADA8F3 /* VideoPreviewVc.swift in Sources */,
 				FA8167292F3318D100ADA8F3 /* chatWithStudentVc.swift in Sources */,
 				FA81672A2F3318D100ADA8F3 /* IntractwithStudentVc.swift in Sources */,
+				1803F67A2F3DD489002B6471 /* busTracker.swift in Sources */,
 				FA81672B2F3318D100ADA8F3 /* CatogoryCVC.swift in Sources */,
 				FA81672C2F3318D100ADA8F3 /* SenderAttachmentVC.swift in Sources */,
 				FA81672D2F3318D100ADA8F3 /* AnimatView.swift in Sources */,
@@ -6326,6 +6380,7 @@
 				FA8167732F3318D100ADA8F3 /* TapBarVC.swift in Sources */,
 				FA8167742F3318D100ADA8F3 /* TextHistoryTVCell.swift in Sources */,
 				FA8167752F3318D100ADA8F3 /* DateCvCell.swift in Sources */,
+				185465172F42E7FB008B1551 /* StaffLeaveReqTvCell.swift in Sources */,
 				FA8167762F3318D100ADA8F3 /* DateCVC.swift in Sources */,
 				FA8167772F3318D100ADA8F3 /* WaveView .swift in Sources */,
 				FA8167782F3318D100ADA8F3 /* ClassicSparkTrajectoryFactory.swift in Sources */,
@@ -7004,6 +7059,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1803F67D2F3DE196002B6471 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-maps-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.8.0;
+			};
+		};
 		187A0AB02F10CCD1008CF5B7 /* XCRemoteSwiftPackageReference "Charts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ChartsOrg/Charts";
@@ -7135,6 +7198,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1803F67E2F3DE196002B6471 /* GoogleMaps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1803F67D2F3DE196002B6471 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMaps;
+		};
+		1803F6802F3DE248002B6471 /* GoogleMaps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1803F67D2F3DE196002B6471 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMaps;
+		};
 		187A0AB12F10CCD1008CF5B7 /* DGCharts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 187A0AB02F10CCD1008CF5B7 /* XCRemoteSwiftPackageReference "Charts" */;

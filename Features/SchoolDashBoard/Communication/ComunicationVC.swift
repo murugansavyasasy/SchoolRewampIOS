@@ -657,6 +657,29 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         moveVoiceMessage.setAttributedTitle(attributedTitle, for: .normal)
         
         updatePlayButtonState(isPlaying: false)
+        
+        let Btntitle = "Choose pre recorded file\n"
+        let note = "Note:(Only .m4a, .mp3, .wav files are allowed)"
+
+        let attributedString = NSMutableAttributedString(
+            string: Btntitle,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 16, weight: .semibold)
+            ])
+
+        let noteAttr = NSAttributedString(
+            string: note,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 12),
+                .foregroundColor: UIColor.red1.withAlphaComponent(0.6)
+            ])
+
+        attributedString.append(noteAttr)
+
+        addfile.setAttributedTitle(attributedString, for: .normal)
+        addfile.titleLabel?.numberOfLines = 0
+        addfile.titleLabel?.textAlignment = .center
+
     }
     
     //MARK: CELL REGISTRATION

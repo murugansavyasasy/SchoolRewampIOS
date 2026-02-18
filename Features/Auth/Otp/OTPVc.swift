@@ -262,7 +262,14 @@ class OTPVc: UIViewController {
                                 vc.createNewPassword = true
                                 vc.mobile_number = mobileNumber
                                 present(vc, animated: true)
-                            }else {
+                            }
+                            else if ((UserDefaultFileManager.getLoginCredentials()?.pwd.isEmpty) == nil){
+                                let vc = PasswordVc(nibName: nil, bundle: nil)
+                                vc.modalPresentationStyle = .fullScreen
+                                vc.mobile_number = mobileNumber
+                                present(vc, animated: true)
+                            }
+                            else {
                                 
                                 let password = UserDefaultFileManager.getLoginCredentials()?.pwd
                                 UserDefaultFileManager

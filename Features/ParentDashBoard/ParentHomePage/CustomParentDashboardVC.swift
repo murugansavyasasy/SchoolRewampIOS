@@ -217,11 +217,11 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         self.recentActiveMenuCollection.isHidden = (details.frequently_used?.isEmpty ?? true)
                         self.filteredRecentMenu = details.frequently_used ?? []
                         
-                        if let frequent = details.frequently_used{
-//                            self.pagecontroller.isHidden = frequent.count < 1
-                        }else{
-//                            self.pagecontroller.isHidden = true
-                        }
+//                        if let frequent = details.frequently_used{
+////                            self.pagecontroller.isHidden = frequent.count < 1
+//                        }else{
+////                            self.pagecontroller.isHidden = true
+//                        }
                         self.pagecontroller.numberOfPages = details.frequently_used?.count ?? 0
                         self.filteredMenu = details.menus ?? []
                         self.recentActiveMenuCollection.reloadData()
