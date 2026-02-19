@@ -456,6 +456,7 @@ struct CommonStringFile {
     static let From_date_placeholder = "--From date--"
     static let To_date_placeholder = "--To date--"
     static let Select_Date = "Select Date"
+    static let Base_bundle_id = "com.isss.schoolchimes"
 }
 
 

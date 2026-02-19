@@ -382,6 +382,11 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
+    func privateBusTracker(from viewController: UIViewController){
+        let vc = busTracker(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
 }
 
 struct MenuImage{
