@@ -9,7 +9,7 @@ import Foundation
 
 class API_PARAMS_HOTCODE {
     static var device_type = "Iphone"
-    static var Version_Code =  206
+    static var Version_Code =  90
     static var staff = "staff"
     static var parent = "parent"
 }
