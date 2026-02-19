@@ -38,16 +38,12 @@ class PriorityVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.containerViewHeightConstraint.constant = 300
-        
         Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         UserDefaults.standard.set(login_astype, forKey: "passvalue")
-    
         StyleAndTranslate()
         teacherButton.tintColor = .white
-    
         let nib1 = UINib(nibName: CellConfingName.SchoolTVCell, bundle: nil)
         tableview.register(nib1, forCellReuseIdentifier: CellConfingName.SchoolTVCell)
-        
         let nib2 = UINib(nibName: CellConfingName.StudentTVCell, bundle: nil)
         let nib3 = UINib(nibName: CellConfingName.PriorityStudentTVC, bundle: nil)
         tableview.register(nib2, forCellReuseIdentifier: CellConfingName.StudentTVCell)
