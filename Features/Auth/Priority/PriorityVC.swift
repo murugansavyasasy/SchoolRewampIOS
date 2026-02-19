@@ -23,7 +23,7 @@ class PriorityVC: UIViewController {
     
     @IBOutlet weak var logoutBtn: UIButton!
     var selectedIndexPath : IndexPath!
-    
+
     let assetColors: [String] = ["Priority", "priortitClr1", "PriorityClr2"]
     let gradientcolour : [String] = ["gradient1", "gradient2", "gradient3"]
     let ProfileImage : [String] = ["Default_profile", "Default_profile_Male", "Default_profile_Female"]
@@ -86,8 +86,9 @@ class PriorityVC: UIViewController {
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        apply_gradients()
+            apply_gradients()
     }
+
  
    func StyleAndTranslate(){
         
@@ -149,7 +150,6 @@ class PriorityVC: UIViewController {
      
        ParentButton.setTitle(CommonStringFile.Parent.translated(), for: .normal)
        teacherButton.setTitle(rollname.translated(), for: .normal)
-       apply_gradients()
     }
     
     func apply_gradients() {
@@ -161,7 +161,6 @@ class PriorityVC: UIViewController {
         let parentVisible = !ParentButton.isHidden
         
         if teacherVisible && parentVisible {
-            // Both visible → highlight teacher by default if nothing selected
             if login_astype == 0 { // no selection yet
                 login_astype = 1
             }
@@ -240,25 +239,22 @@ class PriorityVC: UIViewController {
     }
     
     func gradientcolours(button: UIView, colours: [CGColor]) {
-        // Remove old gradient layers
-        button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
 
-        // Create new gradient
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = colours
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        gradientLayer.cornerRadius = button.layer.cornerRadius
-        gradientLayer.masksToBounds = true
-        gradientLayer.frame = button.bounds
-
-        // Insert gradient
-        button.layer.insertSublayer(gradientLayer, at: 0)
-        
-        // Update layout to ensure proper rendering
-        button.setNeedsLayout()
         button.layoutIfNeeded()
+
+        // remove only gradient layers
+        button.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
+
+        let gradient = CAGradientLayer()
+        gradient.colors = colours
+        gradient.startPoint = CGPoint(x: 0, y: 0.5)
+        gradient.endPoint = CGPoint(x: 1, y: 0.5)
+        gradient.cornerRadius = button.layer.cornerRadius
+        gradient.frame = button.bounds
+
+        button.layer.insertSublayer(gradient, at: 0)
     }
+
 
 
     

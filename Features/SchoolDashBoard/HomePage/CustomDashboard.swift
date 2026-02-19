@@ -126,7 +126,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
     private func presentAppTourIfNeeded() {
         let bundleID = Bundle.main.bundleIdentifier
 
-        guard bundleID == "com.isss.schoolchimes" else { return }
+        guard bundleID == CommonStringFile.Base_bundle_id else { return }
         guard !UserDefaults.standard.bool(forKey: tourKey) else { return }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
