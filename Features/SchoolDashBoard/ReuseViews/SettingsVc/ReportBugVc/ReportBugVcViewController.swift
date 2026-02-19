@@ -288,8 +288,10 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
             schoolId = UserDefaultFileManager.get_child_Details()?.school_id ?? ""
         }
         
+        let team_name = NSLocalizedString("REPORT_BUG_STRING", comment: "")
+        
         let body = """
-        Dear School Chimes Team,
+        \(team_name),
         
         School Name : \(schoolName)
         School ID : \(schoolId)

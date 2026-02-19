@@ -782,11 +782,15 @@ class SplashVC: UIViewController, ViewAttachments, DismissDelegate {
             appFlowChecking()
             return
         }
+        
             DispatchQueue.main.async {
+                let appStoreId = NSLocalizedString("APP_STORE_ID", comment: "")
                 let popup = ForceUpdateVc()
                 popup.modalPresentationStyle = .overFullScreen
                 popup.is_forceUpdate =  versionData.force_update ?? false
-                popup.appRedirectLink = versionData.app_store_link ?? ""
+                popup.appRedirectLink = 
+                "https://apps.apple.com/app/id\(appStoreId)"
+                print("appStoreId", popup.appRedirectLink)
                 popup.delegate = self
                 popup.titlle = versionData.toaster_title ?? ""
                 popup.descriptions = versionData.new_version_updates ?? ""
