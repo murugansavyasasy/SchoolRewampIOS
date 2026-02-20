@@ -76,8 +76,8 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
                 menuname.contactUs,
                 menuname.termsAndConditions,
                 menuname.privacyPolicy,
-                menuname.aboutApp,
-                menuname.howToUse,
+//                menuname.aboutApp,
+//                menuname.howToUse,
                 menuname.Exciting_features
             ]
         ),
@@ -107,8 +107,8 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
             "phone.arrow.up.right.circle.fill",
             "list.bullet.clipboard.fill",
             "shield.lefthalf.filled",
-            "info.circle.fill",
-            "questionmark.circle",
+//            "info.circle.fill",
+//            "questionmark.circle",
             "features"
         ]),
         Image(title: "Feedback", Imageitems: [
