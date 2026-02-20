@@ -311,7 +311,7 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
             classNameLbl.text =  data.class_name
             sectionLbl.text =  data.section_name
             abesentCountLbl.text =  Absentees + "\(data.total_absentees)"
-            totalLbl.text = Absentees + "\(data.student_counts)"
+            totalLbl.text = Total_students + "\(data.student_counts)"
             cell.absentFullview.backgroundColor = UIColor.attendence.lighter(by: 20)
         } else {
             cell.fullview.backgroundColor = .systemGray6
