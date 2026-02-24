@@ -200,8 +200,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         notificationAlreadyHandled = true
 
         let type = userInfo["type"] as? String
-        let voiceUrl = userInfo["voice_url"] as? String ?? ""
-        let welcomeURL = userInfo["WelcomeUrl"] as? String ?? ""
         if type == "normal" {
             handleNormalNotification(userInfo: userInfo, from: topVC)
         } else if type == "isCall" {
