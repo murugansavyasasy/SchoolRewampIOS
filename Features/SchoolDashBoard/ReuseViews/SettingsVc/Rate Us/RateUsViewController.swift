@@ -209,7 +209,8 @@ extension RateUsViewController {
     }
     
     func redirectToAppStoreWriteReview() {
-        if let url = URL(string:ServiceUrl.appStore_url) {
+        let appStoreId = NSLocalizedString("APP_STORE_ID", comment: "")
+        if let url = URL(string: "https://apps.apple.com/app/id\(appStoreId)") {
             UIApplication.shared.open(url)
         }
     }

@@ -288,8 +288,9 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
             schoolId = UserDefaultFileManager.get_child_Details()?.school_id ?? ""
         }
         
+        
         let body = """
-        Dear School Chimes Team,
+        Dear Team,
         
         School Name : \(schoolName)
         School ID : \(schoolId)

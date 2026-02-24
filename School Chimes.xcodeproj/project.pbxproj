@@ -13,6 +13,7 @@
 		1803F67C2F3DD489002B6471 /* busTracker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1803F6782F3DD489002B6471 /* busTracker.xib */; };
 		1803F67F2F3DE196002B6471 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 1803F67E2F3DE196002B6471 /* GoogleMaps */; };
 		1803F6812F3DE248002B6471 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 1803F6802F3DE248002B6471 /* GoogleMaps */; };
+		1834ED2F2F483B3C0006969F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1834ED2E2F483B3C0006969F /* GoogleService-Info.plist */; };
 		185465142F42E7FB008B1551 /* StaffLeaveReqTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185465122F42E7FB008B1551 /* StaffLeaveReqTvCell.swift */; };
 		185465152F42E7FB008B1551 /* StaffLeaveReqTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185465132F42E7FB008B1551 /* StaffLeaveReqTvCell.xib */; };
 		185465162F42E7FB008B1551 /* StaffLeaveReqTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185465132F42E7FB008B1551 /* StaffLeaveReqTvCell.xib */; };
@@ -669,7 +670,6 @@
 		FA3E28D22E4DDE48008885A3 /* CreateMeetingVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3E28D02E4DDE48008885A3 /* CreateMeetingVc.swift */; };
 		FA3E28D32E4DDE48008885A3 /* CreateMeetingVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA3E28D12E4DDE48008885A3 /* CreateMeetingVc.xib */; };
 		FA43D09B2F322CCB0046B966 /* done.json in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0972F322CCB0046B966 /* done.json */; };
-		FA43D09C2F322CCB0046B966 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0982F322CCB0046B966 /* GoogleService-Info.plist */; };
 		FA43D09D2F322CCB0046B966 /* Mic.gif in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0992F322CCB0046B966 /* Mic.gif */; };
 		FA43D0A42F322CD50046B966 /* NewShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA43D0A02F322CD50046B966 /* NewShimmerView.swift */; };
 		FA43D0AA2F322CDB0046B966 /* WhatsNewCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0A62F322CDB0046B966 /* WhatsNewCVC.xib */; };
@@ -1601,6 +1601,7 @@
 		11488136D5686E65FD0FC70E /* Pods_School_Chimes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_School_Chimes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1803F6772F3DD489002B6471 /* busTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = busTracker.swift; sourceTree = "<group>"; };
 		1803F6782F3DD489002B6471 /* busTracker.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = busTracker.xib; sourceTree = "<group>"; };
+		1834ED2E2F483B3C0006969F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		185465122F42E7FB008B1551 /* StaffLeaveReqTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffLeaveReqTvCell.swift; sourceTree = "<group>"; };
 		185465132F42E7FB008B1551 /* StaffLeaveReqTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StaffLeaveReqTvCell.xib; sourceTree = "<group>"; };
 		185465182F431080008B1551 /* StaffDetailsPreviewVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffDetailsPreviewVc.swift; sourceTree = "<group>"; };
@@ -2256,7 +2257,6 @@
 		FA3E28D02E4DDE48008885A3 /* CreateMeetingVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMeetingVc.swift; sourceTree = "<group>"; };
 		FA3E28D12E4DDE48008885A3 /* CreateMeetingVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateMeetingVc.xib; sourceTree = "<group>"; };
 		FA43D0972F322CCB0046B966 /* done.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = done.json; sourceTree = "<group>"; };
-		FA43D0982F322CCB0046B966 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA43D0992F322CCB0046B966 /* Mic.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Mic.gif; sourceTree = "<group>"; };
 		FA43D0A02F322CD50046B966 /* NewShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewShimmerView.swift; sourceTree = "<group>"; };
 		FA43D0A52F322CDB0046B966 /* WhatsNewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewCVC.swift; sourceTree = "<group>"; };
@@ -2529,7 +2529,7 @@
 		1803F4902F37181E002B6471 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				FA43D0982F322CCB0046B966 /* GoogleService-Info.plist */,
+				1834ED2E2F483B3C0006969F /* GoogleService-Info.plist */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -4854,6 +4854,7 @@
 				FAED58542E4B4E6E00497026 /* SlotListVC.xib in Resources */,
 				8480477A2E02DE920042BC5D /* SubmitedAssignmentVC.xib in Resources */,
 				847D1CA62DBB68B200A274D2 /* locationAnimation.json in Resources */,
+				1834ED2F2F483B3C0006969F /* GoogleService-Info.plist in Resources */,
 				FAFFBD082E336F8600F8B150 /* ExamListTV.xib in Resources */,
 				840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */,
 				185465152F42E7FB008B1551 /* StaffLeaveReqTvCell.xib in Resources */,
@@ -5053,7 +5054,6 @@
 				8481087C2E164CFE004A0F87 /* VideoPreviewVc.xib in Resources */,
 				848F7A6E2CF8CB85004EF617 /* AnimatView.xib in Resources */,
 				FA43D09B2F322CCB0046B966 /* done.json in Resources */,
-				FA43D09C2F322CCB0046B966 /* GoogleService-Info.plist in Resources */,
 				FA43D09D2F322CCB0046B966 /* Mic.gif in Resources */,
 				84EFFACC2CCF90DE00C11C26 /* SettingsTableViewCell.xib in Resources */,
 				FA6DF7F92E3CDF5700E70BEC /* LeaveHistoryTV.xib in Resources */,
@@ -6758,7 +6758,7 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
+				CURRENT_PROJECT_VERSION = 2.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -6783,7 +6783,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "$(MARKETING_VERSION)";
+				MARKETING_VERSION = 1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -6802,7 +6802,7 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
+				CURRENT_PROJECT_VERSION = 2.0;
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
@@ -6826,7 +6826,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "$(MARKETING_VERSION)";
+				MARKETING_VERSION = 1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -6918,7 +6918,7 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
+				CURRENT_PROJECT_VERSION = 1.9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -6944,7 +6944,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "$(MARKETING_VERSION)";
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -6964,7 +6964,7 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
+				CURRENT_PROJECT_VERSION = 1.9;
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
@@ -6989,7 +6989,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "$(MARKETING_VERSION)";
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
