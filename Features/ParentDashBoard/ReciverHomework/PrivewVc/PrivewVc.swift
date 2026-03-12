@@ -31,7 +31,11 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var cvHeight: NSLayoutConstraint!
+    @IBOutlet weak var tableviewHeight: NSLayoutConstraint!
+    @IBOutlet weak var assignmentTable: UITableView!
     
+    var homeworkDetails: [HomeworkDetails]?
+    var filterhomeworkDetails: [HomeworkDetails]?
     var attachmetList: [FilePath]?
     var studentDetails = UserDefaultFileManager.get_child_Details()
     let staffDetails = UserDefaultFileManager.get_staff_Details()
@@ -60,9 +64,57 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         cv.reloadData()
+        assignmentTable.rowHeight = UITableView.automaticDimension
+        assignmentTable.estimatedRowHeight = 80
         reloadCollectionAndUpdateHeight()
+        assignmentTable.register(UINib(nibName: "SubmitedStudentTVC", bundle: nil), forCellReuseIdentifier: "SubmitedStudentTVC")
+        assignmentTable.register(UINib(nibName: "AssignmentsearchTVC", bundle: nil), forCellReuseIdentifier: "AssignmentsearchTVC")
+        assignmentTable.delegate = self
+        assignmentTable.dataSource = self
+        assignmentTable.tableFooterView = UIView()
+        PrivewHomeWork()
     }
-    
+    func PrivewHomeWork() {
+        
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_api_homework_submissions_list,
+            parameters: ["id": homeWorkid ?? ""],
+            type: ApitTypeSringFile.GET,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
+            isBaseUrl: false
+        ) { [weak self] (result: Result<HomeWorkSubmissionList, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+                
+            case .success(let response):
+                
+                DispatchQueue.main.async {
+                    
+                    if response.status ?? false {
+                        
+                        self.homeworkDetails = response.data ?? []
+                        self.filterhomeworkDetails = response.data ?? []
+                    }
+                    
+                    self.assignmentTable.reloadData()
+                    
+                    self.assignmentTable.layoutIfNeeded()
+                    
+                    self.tableviewHeight.constant = self.assignmentTable.contentSize.height
+                }
+                
+            case .failure(let error):
+                
+                print("API Error: \(error.localizedDescription)")
+                
+                DispatchQueue.main.async {
+                    self.assignmentTable.reloadData()
+                }
+            }
+        }
+    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if let layout = cv.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -464,7 +516,199 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         }
     }
 }
+extension PrivewVc:UITableViewDataSource, UITableViewDelegate, SearchDelegate{
+    func searchText(_ searchText: String) {
+        
+        print(searchText)
+        
+        guard let list = homeworkDetails else { return }
+        
+        if searchText == "All" {
+            
+            filterhomeworkDetails = list
+            
+        } else if searchText == "Submited" {
+            
+            filterhomeworkDetails = list.filter { $0.status ?? "" == "Complete" }
+            
+        } else if searchText == "Pending" {
+            
+            filterhomeworkDetails = list.filter { $0.status ?? "" == "Not Complete" }
+            
+        } else if searchText.isEmpty {
+            
+            filterhomeworkDetails = list
+            
+        } else {
+            
+            filterhomeworkDetails = list.filter {
+                ($0.name?.localizedCaseInsensitiveContains(searchText) ?? false) ||
+                ($0.roll_no?.localizedCaseInsensitiveContains(searchText) ?? false) ||
+                ($0.admission_no?.localizedCaseInsensitiveContains(searchText) ?? false)
+            }
+        }
 
+        DispatchQueue.main.async {
+            
+            if self.assignmentTable.numberOfSections > 1 {
+                
+                UIView.performWithoutAnimation {
+                    self.assignmentTable.reloadSections(IndexSet(integer: 1), with: .none)
+                }
+                
+            } else {
+                
+                self.assignmentTable.reloadData()
+            }
+        }
+    }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0 :
+            return 1
+        default:
+            return filterhomeworkDetails?.count ?? 0
+        }
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.section {
+        case 0:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentsearchTVC", for: indexPath) as? AssignmentsearchTVC else {
+                return UITableViewCell()
+            }
+            cell.allBtn.setTitle("All Students(\(filterhomeworkDetails?.count ?? 0))", for: .normal)
+            let submitedCount = filterhomeworkDetails?.filter {$0.status == "Completed"}
+            let notsubmitedCount = filterhomeworkDetails?.filter {$0.status == "Not Complete"}
+            cell.submitedBtn.setTitle("Submitted(\(submitedCount?.count ?? 0))", for: .normal)
+            cell.pendingBtn.setTitle("Pending(\(notsubmitedCount?.count ?? 0))", for: .normal)
+            cell.delegate = self
+            return cell
+
+        case 1:
+            guard !(filterhomeworkDetails?.isEmpty ?? true) else {
+                let noDataCell = UITableViewCell(style: .default, reuseIdentifier: "NoDataCell")
+                    noDataCell.selectionStyle = .none
+                    noDataCell.backgroundColor = .clear
+
+                    // Image
+                    let imageView = UIImageView(image: UIImage(named: "noSearchData"))
+                    imageView.contentMode = .scaleAspectFit
+                    imageView.translatesAutoresizingMaskIntoConstraints = false
+
+                    // Label
+                    let label = UILabel()
+                    label.text = "No Data Found"
+                    label.textColor = .gray
+                    label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+                    label.textAlignment = .center
+                    label.numberOfLines = 0
+                    label.translatesAutoresizingMaskIntoConstraints = false
+
+                    noDataCell.contentView.addSubview(imageView)
+                    noDataCell.contentView.addSubview(label)
+
+                    NSLayoutConstraint.activate([
+                        // Image constraints
+                        imageView.topAnchor.constraint(equalTo: noDataCell.contentView.topAnchor, constant: 40),
+                        imageView.centerXAnchor.constraint(equalTo: noDataCell.contentView.centerXAnchor),
+                        imageView.widthAnchor.constraint(equalToConstant: 150),
+                        imageView.heightAnchor.constraint(equalToConstant: 150),
+
+                        // Label constraints
+                        label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
+                        label.leadingAnchor.constraint(equalTo: noDataCell.contentView.leadingAnchor, constant: 20),
+                        label.trailingAnchor.constraint(equalTo: noDataCell.contentView.trailingAnchor, constant: -20),
+                        label.bottomAnchor.constraint(lessThanOrEqualTo: noDataCell.contentView.bottomAnchor, constant: -40)
+                    ])
+                    return noDataCell
+            }
+
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitedStudentTVC", for: indexPath) as? SubmitedStudentTVC else {
+                return UITableViewCell()
+            }
+
+            let student = filterhomeworkDetails?[indexPath.row]
+            cell.studentNameLbl.text = student?.name ?? ""
+            if let firstLetter = student?.name?.first {
+                cell.initialBtn.setTitle(String(firstLetter).uppercased(), for: .normal)
+            } else {
+                cell.initialBtn.setTitle("-", for: .normal)
+            }
+            cell.standerdScection?.text = "RoleNo : \(student?.roll_no ?? "")"
+            let isNotSubmitted = student?.status == "Not Complete"
+            let statusText = isNotSubmitted ? "Pending" : "Submitted"
+            let statusColor = isNotSubmitted ? UIColor.brown : UIColor.systemGreen
+
+            cell.statusView.backgroundColor = isNotSubmitted ? UIColor.systemGray5 : UIColor.systemGray6
+            cell.statusView.layer.cornerRadius = 8
+            cell.statusView.clipsToBounds = true
+
+            let fullText = NSMutableAttributedString(
+                string: statusText,
+                attributes: [
+                    .font: UIFont.systemFont(ofSize: 13, weight: .medium),
+                    .foregroundColor: statusColor
+                ]
+            )
+            cell.statusView.setAttributedTitle(fullText, for: .normal)
+
+            let iconSize: CGFloat = 13
+            let iconConfig = UIImage.SymbolConfiguration(pointSize: iconSize, weight: .medium)
+            let icon = UIImage(systemName: isNotSubmitted ? "arrowshape.down.circle" : "checkmark.circle.fill", withConfiguration: iconConfig)
+
+            let lastSubmittedOn = "13-08-2025"
+//            let date: String? = lastSubmittedOn?.isEmpty == false ? lastSubmittedOn : data?.end_date
+            let txt = (lastSubmittedOn.isEmpty == false) ? "Submitted" : "Due Date"
+
+            cell.submitDate.text = "\(txt): \(formattedDateStatus(from: "13-08-2025"))"
+            cell.statusView.setImage(icon, for: .normal)
+            cell.statusView.tintColor = statusColor
+            cell.statusView.imageEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
+            cell.statusView.titleEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
+            return cell
+
+        default:
+            return UITableViewCell()
+        }
+    }
+
+//    // MARK: - TableView Delegate
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        guard indexPath.section == 3, indexPath.row < filterAssignment.count else { return }
+//
+//        let selectedStudent = filterAssignment[indexPath.row]
+//        if selectedStudent.submit_status == "NOTSUBMITTED" {
+//            let alert = UIAlertController(
+//                title: "No Submission",
+//                message: "\(selectedStudent.student_name ?? "This student") has not submitted the assignment yet.",
+//                preferredStyle: .alert
+//            )
+//            alert.addAction(UIAlertAction(title: "OK", style: .default))
+//            present(alert, animated: true)
+//            return
+//        }
+//
+//        let submissionVC = AssignmentSummitionVC(nibName: nil, bundle: nil)
+//        submissionVC.subject = data?.subject
+//        submissionVC.titleName = data?.title
+//        submissionVC.submitedList = true
+//        submissionVC.submissions_details = selectedStudent.submissions_details
+//        submissionVC.backBtnTittle1 = userNameValue ?? ""
+//        submissionVC.backBtnTittle2 = sectionValue ?? ""
+//        submissionVC.isStudent = "Submission"
+//        submissionVC.modalPresentationStyle = .fullScreen
+//        present(submissionVC, animated: false)
+//    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+}
 class LeftAlignedFlowLayout: UICollectionViewFlowLayout {
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         let attributes = super.layoutAttributesForElements(in: rect)

@@ -378,12 +378,12 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     func parantMapVC(from viewController: UIViewController){
-        let vc = ParantMapVC(nibName: nil, bundle: nil)
+        let vc = BusTrakingVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
     func privateBusTracker(from viewController: UIViewController){
-        let vc = busTracker(nibName: nil, bundle: nil)
+        let vc = BusTrakingVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

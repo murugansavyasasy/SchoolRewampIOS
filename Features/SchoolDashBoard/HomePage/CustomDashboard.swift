@@ -700,6 +700,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             39: { self.MenuRedirect.senderAttachment(from: self) },
             40: { self.MenuRedirect.receiverPauckt(from: self) },
             41: { self.MenuRedirect.senderExamMarkNavigate(from: self) },
+            112: { self.MenuRedirect.privateBusTracker(from: self) },
         ]
         
         guard let action = actions[menuId] else {
