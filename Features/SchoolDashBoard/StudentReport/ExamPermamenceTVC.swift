@@ -216,51 +216,78 @@ class ExamPermamenceTVC: UITableViewCell {
         lineChartView.isHidden = true
         barChartView.isHidden = false
 
+        // MARK: - Renderer
         let renderer = GradientBarChartRenderer(
             dataProvider: barChartView,
             animator: barChartView.chartAnimator,
             viewPortHandler: barChartView.viewPortHandler
         )
 
-        // ✅ Highest marks bar = Primary color
         renderer.primaryColorIndex = subjects.indices.max(by: {
             subjects[$0].marks < subjects[$1].marks
         }) ?? 0
 
         barChartView.renderer = renderer
 
+        // MARK: - Entries
         var entries: [BarChartDataEntry] = []
 
-        for (_, subject) in subjects.enumerated() {
+        for (index, subject) in subjects.enumerated() {
             entries.append(
                 BarChartDataEntry(
-                    x: Double(entries.count),
+                    x: Double(index),
                     y: subject.marks
                 )
             )
         }
 
         let dataSet = BarChartDataSet(entries: entries)
-        dataSet.colors = [UIColor.primery]
         dataSet.drawValuesEnabled = false
 
         let chartData = BarChartData(dataSet: dataSet)
+        chartData.barWidth = 0.6
+
         barChartView.data = chartData
 
+        // MARK: - X Axis
         barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(
             values: subjects.map { $0.subjectName }
         )
 
+        barChartView.xAxis.labelRotationAngle = -35
+        barChartView.xAxis.granularity = 1
+        barChartView.xAxis.granularityEnabled = true
+        barChartView.xAxis.centerAxisLabelsEnabled = false
+
+        // MARK: - Scroll Behaviour
+        let visibleCount = min(subjects.count, 6)
+
+        barChartView.setVisibleXRangeMaximum(Double(visibleCount))
+        barChartView.moveViewToX(0)
+
+        // Enable horizontal scroll
+        barChartView.dragEnabled = true
+        barChartView.setScaleEnabled(true)
+        barChartView.pinchZoomEnabled = false
+        barChartView.doubleTapToZoomEnabled = false
+
+        // MARK: - Marker
         let subjectMarker = SubjectMarkerView()
         subjectMarker.chartView = barChartView
         barChartView.marker = subjectMarker
 
+        // MARK: - Setup
         commonBarSetup()
 
+        // MARK: - Strong / Weak subject
         stregnthBtn.setTitle("Strong: \(data.strongestSubject ?? "")", for: .normal)
         weekBtn.setTitle("Weak: \(data.weakestSubject ?? "")", for: .normal)
+
+        // MARK: - Legend
         let legendColors = subjects.indices.map { renderer.barColor(for: $0) }
         buildLegend(subjects: subjects, colors: legendColors)
+
+        barChartView.notifyDataSetChanged()
     }
     private func buildLegend(subjects: [SubjectPerformance], colors: [UIColor]) {
 

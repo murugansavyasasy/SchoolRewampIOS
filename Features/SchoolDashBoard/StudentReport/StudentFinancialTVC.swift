@@ -41,13 +41,13 @@ class StudentFinancialTVC: UITableViewCell {
         paidProgressView.layer.cornerRadius = 6
         paidProgressView.clipsToBounds = true
     }
-    func configure(data: FeesOverview?) {
+    func configure(data: FeeSummary?) {
         
         guard let data = data else { return }
         
-        let total = data.totalAmount ?? 0
-        let paid = data.paidAmount ?? 0
-        let pending = data.pendingAmount ?? 0
+        let total = data.total_amount ?? 0
+        let paid = data.total_paid ?? 0
+        let pending = data.total_pending ?? 0
         let progress = data.paymentProgress ?? 0
         
         // Amount Labels

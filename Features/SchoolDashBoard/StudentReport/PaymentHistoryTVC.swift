@@ -24,18 +24,19 @@ class PaymentHistoryTVC: UITableViewCell {
     private func setupUI() {
         statusBtn.layer.cornerRadius = statusBtn.frame.height/2
         iconBtn.layer.cornerRadius = iconBtn.frame.height/2
-        outerView.setShadow()
         statusBtn.clipsToBounds = true
+        feesamoiuntLbl.numberOfLines = 0
+        feesamoiuntLbl.lineBreakMode = .byWordWrapping
     }
-    func configureInstallment(data: InstallmentBreakdown?) {
+    func configureInstallment(data: CarryoverBreakdown?) {
         iconBtn.isHidden = true
         transactionStack.isHidden = true
         guard let data = data else { return }
         
-        feesNameLbl.text = data.installmentName
-        dateLbl.text = "Due: \(data.dueDate ?? "")"
-        feesamoiuntLbl.text = "₹\(formatAmount(data.amount ?? 0))"
-        
+        feesNameLbl.text = data.fee_name
+        dateLbl.text = "Due: \(data.due_date ?? "")"
+        feesamoiuntLbl.text = "₹\(formatAmount(data.m_feeamount ?? 0))"
+        setAmountLabel(paid: data.paid_amount ?? 0, discount: data.discount_amount ?? 0, pending: data.pending_amount ?? 0)
         switch data.status {
             
         case .paid:
@@ -63,6 +64,35 @@ class PaymentHistoryTVC: UITableViewCell {
             break
         }
     }
+    func setAmountLabel(paid: Double, discount: Double, pending: Double) {
+
+        let paidText = "Paid: ₹\(paid)  "
+        let discountText = "(\u{00A0}Disc:\u{00A0}₹\(discount)\u{00A0})  "
+        let pendingText = "Pending:\u{00A0}₹\(pending)"
+        let finalText = paidText + discountText + pendingText
+        let attributed = NSMutableAttributedString(string: finalText)
+
+        // Paid Style
+        attributed.addAttributes([
+            .foregroundColor: UIColor.systemGreen,
+            .font: UIFont.boldSystemFont(ofSize: 14)
+        ], range: (finalText as NSString).range(of: paidText))
+
+        // Discount Style
+        attributed.addAttributes([
+            .foregroundColor: UIColor.systemPurple,
+            .font: UIFont.systemFont(ofSize: 13, weight: .medium)
+        ], range: (finalText as NSString).range(of: discountText))
+
+        // Pending Style
+        attributed.addAttributes([
+            .foregroundColor: UIColor.systemRed,
+            .font: UIFont.boldSystemFont(ofSize: 14)
+        ], range: (finalText as NSString).range(of: pendingText))
+        feesamoiuntLbl.numberOfLines = 0
+        feesamoiuntLbl.lineBreakMode = .byWordWrapping
+        feesamoiuntLbl.attributedText = attributed
+    }
     func configurePayment(data: PaymentHistory?) {
         
         guard let data = data else { return }
@@ -70,11 +100,11 @@ class PaymentHistoryTVC: UITableViewCell {
         iconBtn.isHidden = false
         transactionStack.isHidden = false
         
-        feesNameLbl.text = data.paymentMode
+        feesNameLbl.text = data.payment_mode
         transactionIdLbl.text = data.paymentId
-        dateLbl.text = data.paymentDate
-        feesamoiuntLbl.text = "₹\(formatAmount(data.amount ?? 0))"
-        
+        dateLbl.text = data.paid_date
+//        feesamoiuntLbl.text = "₹\(formatAmount(data.paid_amount ?? 0))"
+        setAmountLabel(paid: data.paid_amount ?? 0, discount: data.discount_amount ?? 0, pending: data.pending_amount ?? 0)
         statusBtn.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.15)
         statusBtn.setTitleColor(.systemBlue, for: .normal)
         statusBtn.tintColor = .systemBlue
@@ -82,7 +112,7 @@ class PaymentHistoryTVC: UITableViewCell {
         iconBtn.setImage(resizedSymbol(name: "checkmark.circle.fill"), for: .normal)
         iconBtn.tintColor = .systemGreen
         
-        let mode = data.paymentMode?.lowercased() ?? ""
+        let mode = data.payment_mode?.lowercased() ?? ""
         
         switch mode {
             
