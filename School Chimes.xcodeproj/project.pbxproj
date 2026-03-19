@@ -17,6 +17,10 @@
 		18074D3F2F6AB78400CC9244 /* HostelInformationTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18074D3C2F6AB78400CC9244 /* HostelInformationTvcell.swift */; };
 		18074D402F6AB78400CC9244 /* HostelInformationTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18074D3D2F6AB78400CC9244 /* HostelInformationTvcell.xib */; };
 		18074D412F6AB78400CC9244 /* HostelInformationTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18074D3C2F6AB78400CC9244 /* HostelInformationTvcell.swift */; };
+		182B09C22F6C25A0002C81A0 /* StatsticTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B09C12F6C25A0002C81A0 /* StatsticTvCell.xib */; };
+		182B09C32F6C25A0002C81A0 /* StatsticTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B09C02F6C25A0002C81A0 /* StatsticTvCell.swift */; };
+		182B09C42F6C25A0002C81A0 /* StatsticTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B09C02F6C25A0002C81A0 /* StatsticTvCell.swift */; };
+		182B09C52F6C25A0002C81A0 /* StatsticTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B09C12F6C25A0002C81A0 /* StatsticTvCell.xib */; };
 		1834ED2F2F483B3C0006969F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1834ED2E2F483B3C0006969F /* GoogleService-Info.plist */; };
 		1837C7EF2F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1837C7EE2F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.xib */; };
 		1837C7F02F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1837C7ED2F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.swift */; };
@@ -1723,6 +1727,8 @@
 		18074D372F6AA9B600CC9244 /* outpasssRequestTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = outpasssRequestTvcell.xib; sourceTree = "<group>"; };
 		18074D3C2F6AB78400CC9244 /* HostelInformationTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostelInformationTvcell.swift; sourceTree = "<group>"; };
 		18074D3D2F6AB78400CC9244 /* HostelInformationTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HostelInformationTvcell.xib; sourceTree = "<group>"; };
+		182B09C02F6C25A0002C81A0 /* StatsticTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsticTvCell.swift; sourceTree = "<group>"; };
+		182B09C12F6C25A0002C81A0 /* StatsticTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatsticTvCell.xib; sourceTree = "<group>"; };
 		1834ED2E2F483B3C0006969F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1837C7ED2F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dailyAttendaceDateTvCell.swift; sourceTree = "<group>"; };
 		1837C7EE2F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = dailyAttendaceDateTvCell.xib; sourceTree = "<group>"; };
@@ -2784,6 +2790,8 @@
 			children = (
 				1841DF302F58570000B88801 /* OutpassRequestCell.swift */,
 				1841DF312F58570000B88801 /* OutpassRequestCell.xib */,
+				182B09C02F6C25A0002C81A0 /* StatsticTvCell.swift */,
+				182B09C12F6C25A0002C81A0 /* StatsticTvCell.xib */,
 				1841DF322F58570000B88801 /* OutpassRequestsViewController.swift */,
 				1841DF332F58570000B88801 /* OutpassRequestsViewController.xib */,
 				1841DEF42F5841BC00B88801 /* AttendanceHistoryCell.swift */,
@@ -5165,6 +5173,7 @@
 				FA43D0CE2F322CFE0046B966 /* VideoPlayerCVC.xib in Resources */,
 				FAE4958A2E89AF960099DF24 /* PtmNavigationVC.xib in Resources */,
 				84444C522E66D3FF00B4B8EB /* UserDetailsTVC.xib in Resources */,
+				182B09C22F6C25A0002C81A0 /* StatsticTvCell.xib in Resources */,
 				8442A9522CDE83C80006068E /* Localizable.strings in Resources */,
 				84C08C692EB396E9009F657B /* PopoverViewVC.xib in Resources */,
 				187CF5BF2D13F009001422CE /* WeekDaysNameCollectionViewCell.xib in Resources */,
@@ -5868,6 +5877,7 @@
 				FA8169522F3318D100ADA8F3 /* SwitchRollVC.xib in Resources */,
 				FA8169532F3318D100ADA8F3 /* OngoingCVC.xib in Resources */,
 				1841DE6E2F56E86400B88801 /* ApplyLeaveReqVC.xib in Resources */,
+				182B09C52F6C25A0002C81A0 /* StatsticTvCell.xib in Resources */,
 				FA8169542F3318D100ADA8F3 /* NoticeCVC.xib in Resources */,
 				FA8169552F3318D100ADA8F3 /* FeePendingTVC.xib in Resources */,
 				FA8169562F3318D100ADA8F3 /* RatingTableViewCell.xib in Resources */,
@@ -6372,6 +6382,7 @@
 				846CF73F2E2F5A98000361CE /* OngoingCVC.swift in Sources */,
 				FAF43B602E02811E00F28A16 /* ViewLessonVC.swift in Sources */,
 				849970D02CF8752400800B07 /* HistoryTC.swift in Sources */,
+				182B09C32F6C25A0002C81A0 /* StatsticTvCell.swift in Sources */,
 				849970D12CF8752400800B07 /* ComunicationVC.swift in Sources */,
 				84A5BE422C19719700E32496 /* AppDelegate.swift in Sources */,
 				FABA6E7E2ED5776B00278807 /* ExamListVC.swift in Sources */,
@@ -6825,6 +6836,7 @@
 				FA8167B02F3318D100ADA8F3 /* OngoingCVC.swift in Sources */,
 				FA8167B12F3318D100ADA8F3 /* ViewLessonVC.swift in Sources */,
 				FA8167B22F3318D100ADA8F3 /* HistoryTC.swift in Sources */,
+				182B09C42F6C25A0002C81A0 /* StatsticTvCell.swift in Sources */,
 				FA8167B32F3318D100ADA8F3 /* ComunicationVC.swift in Sources */,
 				FA8167B42F3318D100ADA8F3 /* AppDelegate.swift in Sources */,
 				FA8167B52F3318D100ADA8F3 /* ExamListVC.swift in Sources */,
