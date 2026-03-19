@@ -605,7 +605,6 @@
 		84AA10DA2F4D77B7000B366F /* BusTrakingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA10CB2F4D77B7000B366F /* BusTrakingVC.swift */; };
 		84AA10DB2F4D77B7000B366F /* BusDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA10C72F4D77B7000B366F /* BusDetailsVC.swift */; };
 		84AA10DC2F4D77B7000B366F /* BusStopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA10C92F4D77B7000B366F /* BusStopTableViewCell.swift */; };
-		84AA10E22F4D78ED000B366F /* MapLibre in Frameworks */ = {isa = PBXBuildFile; productRef = 84AA10E12F4D78ED000B366F /* MapLibre */; };
 		84AC7F0F2E3C8EED0022BD63 /* SideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AC7F0D2E3C8EED0022BD63 /* SideMenuVC.swift */; };
 		84AC7F102E3C8EED0022BD63 /* SideMenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AC7F0E2E3C8EED0022BD63 /* SideMenuVC.xib */; };
 		84ADC9B92E98C3900092CCAD /* TargetCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ADC9B72E98C3900092CCAD /* TargetCvCell.swift */; };
@@ -1720,8 +1719,6 @@
 
 /* Begin PBXFileReference section */
 		11488136D5686E65FD0FC70E /* Pods_School_Chimes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_School_Chimes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1803F6772F3DD489002B6471 /* busTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = busTracker.swift; sourceTree = "<group>"; };
-		1803F6782F3DD489002B6471 /* busTracker.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = busTracker.xib; sourceTree = "<group>"; };
 		18074D362F6AA9B600CC9244 /* outpasssRequestTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = outpasssRequestTvcell.swift; sourceTree = "<group>"; };
 		18074D372F6AA9B600CC9244 /* outpasssRequestTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = outpasssRequestTvcell.xib; sourceTree = "<group>"; };
 		18074D3C2F6AB78400CC9244 /* HostelInformationTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostelInformationTvcell.swift; sourceTree = "<group>"; };
@@ -2603,7 +2600,6 @@
 				FAB037ED2E84194400C0D3D3 /* WebKit.framework in Frameworks */,
 				84759C632CEDE02400E7D367 /* SDWebImage in Frameworks */,
 				189AFD422F258C4900BDF3A0 /* FirebaseCore in Frameworks */,
-				84AA10E22F4D78ED000B366F /* MapLibre in Frameworks */,
 				FACD4D6A2E30BE6D0084B125 /* FSCalendar in Frameworks */,
 				849714622EC70D4400AA24F8 /* MarqueeLabel in Frameworks */,
 				187A0AB22F10CCD1008CF5B7 /* DGCharts in Frameworks */,
@@ -4932,7 +4928,6 @@
 				189AFD432F258C4900BDF3A0 /* FirebaseCrashlytics */,
 				189AFD452F258C4900BDF3A0 /* FirebaseMessaging */,
 				1803F67E2F3DE196002B6471 /* GoogleMaps */,
-				84AA10E12F4D78ED000B366F /* MapLibre */,
 			);
 			productName = VsSchoolChimes;
 			productReference = 84A5BE3E2C19719700E32496 /* School Chimes.app */;
@@ -5060,7 +5055,6 @@
 				189AFD3B2F258B9600BDF3A0 /* XCRemoteSwiftPackageReference "aws-sdk-ios-spm" */,
 				189AFD402F258C4800BDF3A0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				1803F67D2F3DE196002B6471 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
-				84AA10E02F4D78ED000B366F /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */,
 			);
 			productRefGroup = 84A5BE3F2C19719700E32496 /* Products */;
 			projectDirPath = "";
@@ -5778,7 +5772,6 @@
 				FA8168F82F3318D100ADA8F3 /* SubmitVC.xib in Resources */,
 				FA8168F92F3318D100ADA8F3 /* ViewLessonVC.xib in Resources */,
 				FA8168FA2F3318D100ADA8F3 /* MarkTvCell.xib in Resources */,
-				FA8168FB2F3318D100ADA8F3 /* ParantMapVC.xib in Resources */,
 				1841DF3E2F594B3000B88801 /* MesstimeTabelVC.xib in Resources */,
 				FA8168FC2F3318D100ADA8F3 /* OnboardingCVC.xib in Resources */,
 				FA8168FD2F3318D100ADA8F3 /* OnboardingVC.xib in Resources */,
@@ -7514,14 +7507,6 @@
 				minimumVersion = 4.5.3;
 			};
 		};
-		84AA10E02F4D78ED000B366F /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/maplibre/maplibre-gl-native-distribution";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.23.0;
-			};
-		};
 		FA81664E2F3318D100ADA8F3 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
@@ -7661,11 +7646,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 849714602EC70D4400AA24F8 /* XCRemoteSwiftPackageReference "MarqueeLabel" */;
 			productName = MarqueeLabel;
-		};
-		84AA10E12F4D78ED000B366F /* MapLibre */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 84AA10E02F4D78ED000B366F /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */;
-			productName = MapLibre;
 		};
 		FA81664D2F3318D100ADA8F3 /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
