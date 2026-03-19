@@ -11,10 +11,21 @@ protocol studentAttenance: AnyObject{
     func didToggleOD(for id: String, isOn: Bool)
 }
 
+protocol viewLeaveApplied: AnyObject{
+    func didTapViewAppliedLeave(index: Index)
+}
 class AttendenceTVC: UITableViewCell, Attendence {
     func statusUpdate(status: Bool, index: Int) {
         ""
     } 
+    @IBOutlet weak var LeaveAppliedFullView: UIView!
+    @IBOutlet weak var reasonLbl: UILabel!
+    @IBOutlet weak var ToDateLbl: UILabel!
+    @IBOutlet weak var fromDateLbl: UILabel!
+    @IBOutlet weak var reasonView: UIView!
+    @IBOutlet weak var todateView: UIView!
+    @IBOutlet weak var fromDateView: UIView!
+    @IBOutlet weak var fromdateAndTodateStack: UIStackView!
     @IBOutlet weak var admissionlbl: UILabel!
     @IBOutlet weak var phnBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
@@ -29,17 +40,26 @@ class AttendenceTVC: UITableViewCell, Attendence {
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var rollNoLbl: UILabel!
     @IBOutlet weak var onDutyDefLbl: UILabel!
+    @IBOutlet weak var leaveAppliedHeightConst: NSLayoutConstraint!
+    @IBAction func LeaveApliedBtnAct(_ sender: UIButton) {
+        leaveApplied?.didTapViewAppliedLeave(index: sender.tag)
+    }
     
+    @IBOutlet weak var LeaveAppliedBtnName: UIButton!
     var custSwitch: CustomSwitch1!
     var studentId: String?
     weak var delegate: studentAttenance?
+    weak var leaveApplied : viewLeaveApplied?
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        fromDateView.layer.cornerRadius = 10
+        reasonView.layer.cornerRadius = 10
+        todateView.layer.cornerRadius = 10
         AttendanceBtn.layer.cornerRadius = AttendanceBtn.frame.width / 2
         ODSwitch.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
         custSwitch = CustomSwitch1()
         custSwitch.delegate = self
+        outerView.layer.cornerRadius = 10
         nameLbl.setFont(style: .body, size: FontSize.BodySize)
         admissionlbl.setFont(style: .body, size: FontSize.BodySize)
         rollNoLbl.setFont(style: .body, size: FontSize.BodySize)

@@ -425,7 +425,7 @@ extension SettingsViewController {
             presentedVC.loadViewIfNeeded()
             presentedVC.view.layoutIfNeeded()
 
-            let scrollContentHeight = presentedVC.tableview.contentSize.height
+            let scrollContentHeight = presentedVC.tableview.contentSize.height + 60
             let paddingX: CGFloat = 20
             let width = self.view.frame.width - (paddingX * 2)
             let height = min(scrollContentHeight, self.view.frame.height * 0.85)

@@ -377,16 +377,42 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
-    func parantMapVC(from viewController: UIViewController){
-        let vc = ParantMapVC(nibName: nil, bundle: nil)
+//    func parantMapVC(from viewController: UIViewController){
+//        let vc = BusTrakingVC(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        viewController.present(vc, animated: true)
+//    }
+//    func privateBusTracker(from viewController: UIViewController){
+//        let vc = BusTrakingVC(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        viewController.present(vc, animated: true)
+//    }
+    
+    func staffApplyLeave(from viewContorller: UIViewController){
+        let vc = ApplyLeaveReqVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
+        viewContorller.present(vc, animated: true)
     }
-    func privateBusTracker(from viewController: UIViewController){
-        let vc = busTracker(nibName: nil, bundle: nil)
+    
+    func HostelManagment(from viewContorller: UIViewController){
+        let vc = HostelListVc(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
+        viewContorller.present(vc, animated: true)
     }
+    
+    func StaffLeaveRequest(from viewContorller: UIViewController){
+        let vc = SenderLeaveRqstVC(nibName: nil, bundle: nil)
+        vc.isPrincipal = true
+        vc.modalPresentationStyle = .fullScreen
+        viewContorller.present(vc, animated: true)
+    }
+    func ResiverHostelManagment(from viewContorller: UIViewController){
+        let vc = parentHostelDashboardVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewContorller.present(vc, animated: true)
+    }
+   
+    
 }
 
 struct MenuImage{

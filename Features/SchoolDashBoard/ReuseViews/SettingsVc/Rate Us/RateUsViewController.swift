@@ -28,6 +28,7 @@ class RateUsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         submitBtn.layer.cornerRadius = submitBtn.frame.height / 2
+        submitBtn.backgroundColor = .systemGreen
 
         submitBtn.layer.shadowColor = UIColor.black.cgColor
         submitBtn.layer.shadowOpacity = 0.4
@@ -151,6 +152,8 @@ extension RateUsViewController: RatingDelegate,RatingTypeCellDelegate,UITextView
                 }
             }
         }
+        tableview.reloadData()
+        descriptionContent = suggessions
     }
     
     func getReview() {
@@ -236,8 +239,8 @@ extension RateUsViewController {
                     if self.selectedRating >= 4 {
                         self.redirectToAppStoreWriteReview()
                     }
-//                    self.dismiss(animated: true)
-//                    self.delegate?.dismiss(true)
+                    self.dismiss(animated: true)
+                    self.delegate?.dismiss(true)
                 }
                 
             case .failure(let error):
