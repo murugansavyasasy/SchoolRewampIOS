@@ -64,31 +64,44 @@ class PaymentHistoryTVC: UITableViewCell {
             break
         }
     }
-    func setAmountLabel(paid: Double, discount: Double, pending: Double) {
+    func setAmountLabel(paid: Double?, discount: Double?, pending: Double?) {
 
-        let paidText = "Paid: ₹\(paid)  "
-        let discountText = "(\u{00A0}Disc:\u{00A0}₹\(discount)\u{00A0})  "
-        let pendingText = "Pending:\u{00A0}₹\(pending)"
-        let finalText = paidText + discountText + pendingText
+        var parts: [String] = []
+
+        if let paid = paid, paid != 0 {
+            parts.append("Paid: ₹\(paid)")
+        }
+        if let pending = pending, pending != 0 {
+            parts.append("Pending: ₹\(pending)")
+        }
+        if let discount = discount, discount != 0 {
+            parts.append("(Disc: ₹\(discount))")
+        }
+        let finalText = parts.joined(separator: "  ")
         let attributed = NSMutableAttributedString(string: finalText)
 
-        // Paid Style
-        attributed.addAttributes([
-            .foregroundColor: UIColor.systemGreen,
-            .font: UIFont.boldSystemFont(ofSize: 14)
-        ], range: (finalText as NSString).range(of: paidText))
+        // Apply styles only if text exists
+        for part in parts {
+            let range = (finalText as NSString).range(of: part)
 
-        // Discount Style
-        attributed.addAttributes([
-            .foregroundColor: UIColor.systemPurple,
-            .font: UIFont.systemFont(ofSize: 13, weight: .medium)
-        ], range: (finalText as NSString).range(of: discountText))
+            if part.contains("Paid") {
+                attributed.addAttributes([
+                    .foregroundColor: UIColor.systemGreen,
+                    .font: UIFont.boldSystemFont(ofSize: 14)
+                ], range: range)
+            } else if part.contains("Disc") {
+                attributed.addAttributes([
+                    .foregroundColor: UIColor.systemPurple,
+                    .font: UIFont.systemFont(ofSize: 13, weight: .medium)
+                ], range: range)
+            } else if part.contains("Pending") {
+                attributed.addAttributes([
+                    .foregroundColor: UIColor.systemRed,
+                    .font: UIFont.boldSystemFont(ofSize: 14)
+                ], range: range)
+            }
+        }
 
-        // Pending Style
-        attributed.addAttributes([
-            .foregroundColor: UIColor.systemRed,
-            .font: UIFont.boldSystemFont(ofSize: 14)
-        ], range: (finalText as NSString).range(of: pendingText))
         feesamoiuntLbl.numberOfLines = 0
         feesamoiuntLbl.lineBreakMode = .byWordWrapping
         feesamoiuntLbl.attributedText = attributed

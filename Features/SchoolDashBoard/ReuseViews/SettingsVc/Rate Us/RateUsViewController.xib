@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RateUsViewController" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="outerView" destination="Swq-u5-oa5" id="Xoi-Dt-uSN"/>
+                <outlet property="submitBtn" destination="mbT-cN-j6K" id="I5j-nC-4MP"/>
                 <outlet property="tableview" destination="33x-KJ-bEt" id="x9c-lN-hV3"/>
                 <outlet property="view" destination="sRa-T6-K2T" id="3Qn-FS-0Fx"/>
             </connections>
@@ -26,7 +27,7 @@
                     <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="33x-KJ-bEt">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="666"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="611"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="nQg-bE-hry"/>
@@ -48,15 +49,32 @@
                                 <action selector="close:" destination="-1" eventType="touchUpInside" id="tOG-2k-Nrw"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mbT-cN-j6K">
+                            <rect key="frame" x="136.66666666666666" y="616" width="119.99999999999997" height="40"/>
+                            <color key="backgroundColor" systemColor="systemBlueColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="MAe-vJ-Npb"/>
+                                <constraint firstAttribute="width" constant="120" id="WaZ-3p-TnI"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Submit"/>
+                            <connections>
+                                <action selector="submitBtn:" destination="-1" eventType="touchUpInside" id="F3G-Ai-2g1"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" name="topBackgroundCLr"/>
                     <constraints>
+                        <constraint firstItem="mbT-cN-j6K" firstAttribute="centerX" secondItem="Swq-u5-oa5" secondAttribute="centerX" id="GS1-kL-sSy"/>
                         <constraint firstItem="1lt-zH-mGI" firstAttribute="trailing" secondItem="33x-KJ-bEt" secondAttribute="trailing" constant="-5" id="YPs-sO-U7K"/>
                         <constraint firstItem="33x-KJ-bEt" firstAttribute="leading" secondItem="Swq-u5-oa5" secondAttribute="leading" id="cJG-zF-iwT"/>
                         <constraint firstItem="33x-KJ-bEt" firstAttribute="top" secondItem="Swq-u5-oa5" secondAttribute="top" id="dI8-VF-3dq"/>
                         <constraint firstAttribute="trailing" secondItem="33x-KJ-bEt" secondAttribute="trailing" id="k8y-QN-ga0"/>
                         <constraint firstItem="1lt-zH-mGI" firstAttribute="top" secondItem="33x-KJ-bEt" secondAttribute="top" constant="5" id="nIf-yR-HyI"/>
-                        <constraint firstAttribute="bottom" secondItem="33x-KJ-bEt" secondAttribute="bottom" id="rCR-op-BcY"/>
+                        <constraint firstAttribute="bottom" secondItem="mbT-cN-j6K" secondAttribute="bottom" constant="10" id="nmy-tU-Jry"/>
+                        <constraint firstItem="mbT-cN-j6K" firstAttribute="top" secondItem="33x-KJ-bEt" secondAttribute="bottom" constant="5" id="qeA-IP-UBm"/>
                     </constraints>
                 </view>
             </subviews>
@@ -81,6 +99,9 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

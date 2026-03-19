@@ -91,7 +91,11 @@ class RatingTypeTableViewCell: UITableViewCell,
         
         updateCollectionViewHeight()
     }
-    
+    func textViewDidChange(_ textView: UITextView) {
+        if let category = SelectedCategory {
+            ratingDelegate?.Submit(category, suggessions: textView.text)
+        }
+    }
     // MARK: - CollectionView Delegates
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return names.count
@@ -143,7 +147,9 @@ class RatingTypeTableViewCell: UITableViewCell,
         
         names.sort { ($0.selected ?? false) && !($1.selected ?? false) }
         SelectedCategory?.category = names
-        
+        if let ctegory = SelectedCategory {
+            ratingDelegate?.Submit(ctegory, suggessions: suggestContetTxtView.text)
+        }
         collectionView.reloadData()
         updateCollectionViewHeight()
     }

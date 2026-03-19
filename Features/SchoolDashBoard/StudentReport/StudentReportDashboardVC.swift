@@ -443,7 +443,6 @@ class StudentReportDashboardVC: UIViewController, UITableViewDelegate, UITableVi
 
             let cell = tableView.dequeueReusableCell(withIdentifier: "SectionHeaderView", for: indexPath) as! SectionHeaderView
             let installment = reportData?.quantity_fees
-
             cell.confic(breakDown: installment?.isExpand == true ? installment?.breakDown ?? [] : [])
             cell.setAmountLabel(paid: installment?.actual_amount ?? 0, discount: installment?.discount_amount ?? 0, pending: installment?.pending_amount ?? 0)
             let image = installment?.isExpand ?? false ? UIImage(systemName: "chevron.up"):UIImage(systemName: "chevron.down")
@@ -577,12 +576,10 @@ enum DashboardSection: Int, CaseIterable {
     case subjectWise
     case attendance
     case summary
-
     case termFees
     case otherFees
     case carryoverFees
     case quantityFees
-
     case paymentHistory
 }
 
@@ -597,12 +594,10 @@ struct FeeData1: Decodable {
     let transport_fee: TransportFee?
     let hostel_fee: TermFee?
     let paymentHistory: [PaymentHistory]?
-    
     var quantity_fees: TermFee?
     var other_fees: TermFee?
     var carryover_fees: TermFee?
     var term_fees: TermFee?
-    
     var Academic_Performance: AcademicPerformance?
     var ExamPerformance: ExamPerformance?
     var SubjectWisePerformance: SubjectWisePerformance?

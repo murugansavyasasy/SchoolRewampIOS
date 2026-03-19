@@ -52,32 +52,40 @@ class SectionHeaderView: UITableViewCell, UITableViewDelegate, UITableViewDataSo
         }
         
     }
-    func setAmountLabel(paid: Double, discount: Double, pending: Double) {
+    func setAmountLabel(paid: Double?, discount: Double?, pending: Double?) {
 
-        let paidText = "Paid: ₹\(paid)  "
-        let discountText = "(\u{00A0}Disc:\u{00A0}₹\(discount)\u{00A0})  "
-        let pendingText = "Pending:\u{00A0}₹\(pending)"
+        let attributed = NSMutableAttributedString()
 
-        let finalText = paidText + discountText + pendingText
-        let attributed = NSMutableAttributedString(string: finalText)
+        // Paid
+        if let paid = paid, paid > 0 {
+            let text = "Paid: ₹\(paid)"
+            let attr = NSAttributedString(string: text, attributes: [
+                .foregroundColor: UIColor.black,
+                .font: UIFont.boldSystemFont(ofSize: 14)
+            ])
+            attributed.append(attr)
+        }
+        // Pending
+        if let pending = pending, pending > 0 {
+            let text = " Pending: ₹\(pending)"
+            let attr = NSAttributedString(string: text, attributes: [
+                .foregroundColor: UIColor.systemRed,
+                .font: UIFont.boldSystemFont(ofSize: 13)
+            ])
+            attributed.append(attr)
+        }
+        
+        // Discount
+        if let discount = discount, discount > 0 {
+            let text = "( Disc: ₹\(discount)) "
+            let attr = NSAttributedString(string: text, attributes: [
+                .foregroundColor: UIColor.systemPurple,
+                .font: UIFont.systemFont(ofSize: 13, weight: .medium)
+            ])
+            attributed.append(attr)
+        }
 
-        // Paid Style
-        attributed.addAttributes([
-            .foregroundColor: UIColor.black,
-            .font: UIFont.boldSystemFont(ofSize: 14)
-        ], range: (finalText as NSString).range(of: paidText))
 
-        // Discount Style
-        attributed.addAttributes([
-            .foregroundColor: UIColor.systemPurple,
-            .font: UIFont.systemFont(ofSize: 13, weight: .medium)
-        ], range: (finalText as NSString).range(of: discountText))
-
-        // Pending Style
-        attributed.addAttributes([
-            .foregroundColor: UIColor.systemRed,
-            .font: UIFont.boldSystemFont(ofSize: 13)
-        ], range: (finalText as NSString).range(of: pendingText))
         totalLbl.numberOfLines = 0
         totalLbl.lineBreakMode = .byWordWrapping
         totalLbl.attributedText = attributed
