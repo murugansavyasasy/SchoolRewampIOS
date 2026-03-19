@@ -34,7 +34,7 @@ class MarksCell: UICollectionViewCell {
         markTxt.cornerRadius(6)
         markTxt.placeholder = "--"
         markTxt.font = .systemFont(ofSize: 15)
-        markTxt.keyboardType = .numberPad
+        markTxt.keyboardType = .decimalPad
         let toolbar = UIToolbar()
         toolbar.isTranslucent = false
         toolbar.barTintColor = .systemGray6
@@ -322,7 +322,7 @@ extension MarksCell: UITextFieldDelegate {
                    replacementString string: String) -> Bool {
         
         if !string.isEmpty {
-            let allowed = CharacterSet.decimalDigits
+            let allowed = CharacterSet(charactersIn: "0123456789.")
             let set = CharacterSet(charactersIn: string)
             if !allowed.isSuperset(of: set) { return false }
         }

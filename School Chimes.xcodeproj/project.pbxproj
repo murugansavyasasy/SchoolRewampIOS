@@ -598,6 +598,10 @@
 		84E70DD22D49F61900E916D1 /* DatePickerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E70DD02D49F61900E916D1 /* DatePickerVC.xib */; };
 		84E795E12D2FF684000B36BC /* InteractionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E795DF2D2FF684000B36BC /* InteractionVC.swift */; };
 		84E795E22D2FF684000B36BC /* InteractionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E795E02D2FF684000B36BC /* InteractionVC.xib */; };
+		84EF6F322F6BD2DC004E8436 /* TextviewTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EF6F302F6BD2DC004E8436 /* TextviewTVC.swift */; };
+		84EF6F332F6BD2DC004E8436 /* TextviewTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EF6F312F6BD2DC004E8436 /* TextviewTVC.xib */; };
+		84EF6F342F6BD2DC004E8436 /* TextviewTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EF6F312F6BD2DC004E8436 /* TextviewTVC.xib */; };
+		84EF6F352F6BD2DC004E8436 /* TextviewTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EF6F302F6BD2DC004E8436 /* TextviewTVC.swift */; };
 		84EF9D1E2E7A7B3600F57838 /* SwitchRollVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EF9D1D2E7A7B3600F57838 /* SwitchRollVC.xib */; };
 		84EF9D1F2E7A7B3600F57838 /* SwitchRollVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EF9D1C2E7A7B3600F57838 /* SwitchRollVC.swift */; };
 		84EF9D222E7A7B7E00F57838 /* SwitchRollTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EF9D212E7A7B7E00F57838 /* SwitchRollTVC.xib */; };
@@ -2185,6 +2189,8 @@
 		84E70DD02D49F61900E916D1 /* DatePickerVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DatePickerVC.xib; sourceTree = "<group>"; };
 		84E795DF2D2FF684000B36BC /* InteractionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionVC.swift; sourceTree = "<group>"; };
 		84E795E02D2FF684000B36BC /* InteractionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InteractionVC.xib; sourceTree = "<group>"; };
+		84EF6F302F6BD2DC004E8436 /* TextviewTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextviewTVC.swift; sourceTree = "<group>"; };
+		84EF6F312F6BD2DC004E8436 /* TextviewTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextviewTVC.xib; sourceTree = "<group>"; };
 		84EF9D1C2E7A7B3600F57838 /* SwitchRollVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchRollVC.swift; sourceTree = "<group>"; };
 		84EF9D1D2E7A7B3600F57838 /* SwitchRollVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwitchRollVC.xib; sourceTree = "<group>"; };
 		84EF9D202E7A7B7E00F57838 /* SwitchRollTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchRollTVC.swift; sourceTree = "<group>"; };
@@ -3349,6 +3355,8 @@
 				8442A8F12CDC83860006068E /* SuggestionsCollectionViewCell.xib */,
 				845AB86E2EC1F89C003C22E1 /* SuccesseRatusTVC.swift */,
 				845AB86F2EC1F89C003C22E1 /* SuccesseRatusTVC.xib */,
+				84EF6F302F6BD2DC004E8436 /* TextviewTVC.swift */,
+				84EF6F312F6BD2DC004E8436 /* TextviewTVC.xib */,
 			);
 			path = "Rate Us";
 			sourceTree = "<group>";
@@ -4974,6 +4982,7 @@
 				849970B42CF8750B00800B07 /* AssignmentListVC.xib in Resources */,
 				FACD4D722E30F46F0084B125 /* TimetableBottomVC.xib in Resources */,
 				8488061C2DF6A963004806BF /* SubmissionTVC.xib in Resources */,
+				84EF6F332F6BD2DC004E8436 /* TextviewTVC.xib in Resources */,
 				840658392CFD8D4E00080CF6 /* EventsVC.xib in Resources */,
 				84EF9D222E7A7B7E00F57838 /* SwitchRollTVC.xib in Resources */,
 				849AD0132D1A83CA002DEC07 /* SenderSideHomeWorkViewController.xib in Resources */,
@@ -5425,6 +5434,7 @@
 				FA8168DB2F3318D100ADA8F3 /* SelectedLSRWSubmissionVC.xib in Resources */,
 				FA8168DC2F3318D100ADA8F3 /* SenderLSRWVC.xib in Resources */,
 				FA8168DD2F3318D100ADA8F3 /* MeetingDetailTV.xib in Resources */,
+				84EF6F342F6BD2DC004E8436 /* TextviewTVC.xib in Resources */,
 				FA8168DE2F3318D100ADA8F3 /* StudentTVCell.xib in Resources */,
 				FA8168DF2F3318D100ADA8F3 /* SettingHeaderView.xib in Resources */,
 				FA8168E02F3318D100ADA8F3 /* CustomMenuCVC.xib in Resources */,
@@ -5879,6 +5889,7 @@
 				840E44A52D1A85B000D561E8 /* SenderLeaveRqstVC.swift in Sources */,
 				84BB5EB82D11467700AD0C87 /* SchedulePopupVC.swift in Sources */,
 				8481087B2E164CFE004A0F87 /* VideoPreviewVc.swift in Sources */,
+				84EF6F322F6BD2DC004E8436 /* TextviewTVC.swift in Sources */,
 				187A0B3B2F10E9A7008CF5B7 /* chatWithStudentVc.swift in Sources */,
 				187A0B3C2F10E9A7008CF5B7 /* IntractwithStudentVc.swift in Sources */,
 				1803F67B2F3DD489002B6471 /* busTracker.swift in Sources */,
@@ -6302,6 +6313,7 @@
 				FA8167262F3318D100ADA8F3 /* SenderLeaveRqstVC.swift in Sources */,
 				FA8167272F3318D100ADA8F3 /* SchedulePopupVC.swift in Sources */,
 				FA8167282F3318D100ADA8F3 /* VideoPreviewVc.swift in Sources */,
+				84EF6F352F6BD2DC004E8436 /* TextviewTVC.swift in Sources */,
 				FA8167292F3318D100ADA8F3 /* chatWithStudentVc.swift in Sources */,
 				FA81672A2F3318D100ADA8F3 /* IntractwithStudentVc.swift in Sources */,
 				1803F67A2F3DD489002B6471 /* busTracker.swift in Sources */,
@@ -6758,7 +6770,7 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.0;
+				CURRENT_PROJECT_VERSION = 2.4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -6778,12 +6790,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7;
+				MARKETING_VERSION = 1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -6802,7 +6814,7 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2.0;
+				CURRENT_PROJECT_VERSION = 2.4;
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
@@ -6821,12 +6833,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7;
+				MARKETING_VERSION = 1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

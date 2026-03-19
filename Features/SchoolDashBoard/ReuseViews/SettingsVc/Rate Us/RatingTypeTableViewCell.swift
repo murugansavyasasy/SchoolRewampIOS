@@ -7,22 +7,16 @@
 import UIKit
 
 protocol RatingTypeCellDelegate: AnyObject {
-    func didUpdateHeight()
+    func didUpdateHeight(_ set:Bool)
 }
 
 class RatingTypeTableViewCell: UITableViewCell,
                                UICollectionViewDelegate,
                                UICollectionViewDataSource,
-                               UICollectionViewDelegateFlowLayout,
-                               UITextViewDelegate {
-    
-    @IBOutlet weak var AnySuggestionsLbl: UILabel!
+                               UICollectionViewDelegateFlowLayout{
     @IBOutlet weak var collectionviewheight: NSLayoutConstraint!
-    @IBOutlet weak var textview: UITextView!
     @IBOutlet weak var collectionview: UICollectionView!
-    @IBOutlet weak var suggestContetTxtView: UITextView!
-    @IBOutlet weak var suggestLbl: UILabel!
-    @IBOutlet weak var SubmitBtn: UIButton!
+   
     
     var ratingDelegate: RatingDelegate?
     weak var heightDelegate: RatingTypeCellDelegate?
@@ -43,26 +37,10 @@ class RatingTypeTableViewCell: UITableViewCell,
     
     // MARK: - UI Setup
     func setupUI() {
-        AnySuggestionsLbl.setFont(style: .body, size: FontSize.BodySize)
-        SubmitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
-        textview.delegate = self
+        
         collectionview.delegate = self
         collectionview.dataSource = self
-        
-        textview.layer.cornerRadius = Colornames.CORadius10
-        textview.layer.borderWidth = 1
-        textview.layer.borderColor = UIColor.lightGray.cgColor
-        textview.addDoneButton()
-        
-        setAttributedText(for: suggestLbl,
-                          with: CommonStringFile.any_other_suggestions.translated(),
-                          firstString: CommonStringFile.Add_attachment.translated(),
-                          secondString: CommonStringFile.Optional.translated(),
-                          color1: .black,
-                          color2: .lightGray)
-        
-        SubmitBtn.layer.cornerRadius = SubmitBtn.frame.height / 2
         
         // Register Cell
         collectionview.register(
@@ -81,17 +59,12 @@ class RatingTypeTableViewCell: UITableViewCell,
     func configure(names: CategoriesSection?, rating: Int) {
         SelectedCategory = names
         self.names = names?.category ?? []
-        
-        AnySuggestionsLbl.text = names?.name ?? ""
-        AnySuggestionsLbl.isHidden = self.names.isEmpty
-        AnySuggestionsLbl.alpha = 0
-        
         collectionview.reloadData()
-        collectionview.layoutIfNeeded()
         
-        updateCollectionViewHeight()
+        DispatchQueue.main.async {
+            self.updateCollectionViewHeight()
+        }
     }
-    
     // MARK: - CollectionView Delegates
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return names.count
@@ -141,31 +114,23 @@ class RatingTypeTableViewCell: UITableViewCell,
             SelectedCategory?.category?[indexPath.item].selected = newValue
         }
         
-        names.sort { ($0.selected ?? false) && !($1.selected ?? false) }
+//        names.sort { ($0.selected ?? false) && !($1.selected ?? false) }
         SelectedCategory?.category = names
-        
-        collectionView.reloadData()
-        updateCollectionViewHeight()
-    }
-    
-    // MARK: - Update Height
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        updateCollectionViewHeight()
-    }
-    
-    func updateCollectionViewHeight() {
-        collectionview.layoutIfNeeded()
-        let height = collectionview.collectionViewLayout.collectionViewContentSize.height
-        collectionviewheight.constant = height
-        
-        heightDelegate?.didUpdateHeight()
-    }
-    
-    // MARK: - Submit
-    @IBAction func submit(_ sender: Any) {
         if let ctegory = SelectedCategory {
-            ratingDelegate?.Submit(ctegory, suggessions: suggestContetTxtView.text)
+            ratingDelegate?.Submit(ctegory)
+        }
+        collectionView.reloadData()
+    }
+
+    func updateCollectionViewHeight() {
+        collectionview.collectionViewLayout.invalidateLayout()
+        collectionview.layoutIfNeeded()
+        
+        let height = collectionview.collectionViewLayout.collectionViewContentSize.height
+        
+        if collectionviewheight.constant != height {
+            collectionviewheight.constant = height
+            heightDelegate?.didUpdateHeight(true)
         }
     }
 }

@@ -469,6 +469,9 @@ struct ChangePasswordStringFile{
     static let confirm_password = "Confirm the new  password"
     static let change_password = "Change password"
     static let Reset_password = "Reset password"
+    static let Create_New_Password = "Create New Password"
+    static let Confirm_New_Password = "Confirm New Password"
+    static let Create = "Create"
 }
 struct OTPScreenStringFile{
     
