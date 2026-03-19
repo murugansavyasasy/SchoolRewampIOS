@@ -7,7 +7,18 @@
 
 import UIKit
 
-class AttendanceMarkingVC: UIViewController, UISearchBarDelegate, markeAsAbsent {
+class AttendanceMarkingVC: UIViewController, UISearchBarDelegate, markeAsAbsent, viewLeaveApplied {
+    func didTapViewAppliedLeave(index: Int) {
+
+            if expandedIndex == index {
+                expandedIndex = nil
+            } else {
+                expandedIndex = index
+            }
+
+        tv.reloadData()
+        }
+    
     
     func markAsAbsent(AbsentStudent: [AttendanceStudentListDetails], CallAttendaceApi: Bool) {
         
@@ -65,7 +76,7 @@ class AttendanceMarkingVC: UIViewController, UISearchBarDelegate, markeAsAbsent 
     var selectedSort = CommonStringFile.NameASC
     var isAllAbsent = false
     var MARK_ATTENDANCE = "MARK_ATTENDANCE"
-    
+    var expandedIndex: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -576,6 +587,30 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
         }
         cell.studentId = student_data.id
         cell.delegate = self
+        if student_data.is_leave_approved{
+            cell.leaveAppliedHeightConst.constant = 25
+            cell.LeaveAppliedBtnName.isHidden = false
+            cell.LeaveAppliedFullView.backgroundColor = .clear
+            cell.reasonLbl.text = student_data.reason
+            cell.fromDateLbl.text = student_data.leave_from?.convertToTargetDateFormat() ?? ""
+            cell.ToDateLbl.text = student_data.leave_to?.convertToTargetDateFormat() ?? ""
+        }else{
+            cell.leaveAppliedHeightConst.constant = 0
+            cell.LeaveAppliedBtnName.isHidden = true
+        }
+        cell.leaveApplied = self
+        cell.LeaveAppliedBtnName.tag = indexPath.row
+        
+        if expandedIndex == indexPath.row {
+            cell.reasonView.isHidden = false
+            cell.fromdateAndTodateStack.isHidden = false
+            cell.LeaveAppliedFullView.backgroundColor = .expandAttendaceClr
+        } else {
+            cell.reasonView.isHidden = true
+            cell.fromdateAndTodateStack.isHidden = true
+            cell.LeaveAppliedFullView.backgroundColor = .clear
+        }
+        
         return cell
     }
     
