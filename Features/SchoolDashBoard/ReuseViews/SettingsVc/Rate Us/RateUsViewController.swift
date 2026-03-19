@@ -15,6 +15,7 @@ protocol RatingDelegate: AnyObject {
 
 class RateUsViewController: UIViewController {
     
+    @IBOutlet weak var submitBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var tableview: UITableView!
     var isSelected: Bool = false
@@ -25,6 +26,13 @@ class RateUsViewController: UIViewController {
     var categorySections: [CategoriesSection]?
     override func viewDidLoad() {
         super.viewDidLoad()
+        submitBtn.layer.cornerRadius = submitBtn.frame.height / 2
+        submitBtn.backgroundColor = .systemGreen
+
+        submitBtn.layer.shadowColor = UIColor.black.cgColor
+        submitBtn.layer.shadowOpacity = 0.4
+        submitBtn.layer.shadowOffset = CGSize(width: 0, height: 5)
+        submitBtn.layer.shadowRadius = 8
         setupUI()
         registerKeyboardNotifications()
         getReview()
@@ -78,6 +86,17 @@ class RateUsViewController: UIViewController {
         self.dismiss(animated: true)
         self.delegate?.dismiss(true)
     }
+    @IBAction func submitBtn(_ sender: UIButton) {
+        submit = true
+        isSelected = false
+        tableview.reloadData()
+        DispatchQueue.main.async {
+            self.delegate?.viewAttachment(sender: UIButton())
+        }
+        saveRatingToBackend(rating: selectedRating, description: descriptionContent)
+        
+    }
+    
 }
 
 
@@ -107,12 +126,8 @@ extension RateUsViewController: RatingDelegate,RatingTypeCellDelegate {
                 }
             }
         }
-        submit = true
-        isSelected = false
         tableview.reloadData()
-        delegate?.viewAttachment(sender: UIButton())
-        saveRatingToBackend(rating: selectedRating, description: suggessions)
-       
+        descriptionContent = suggessions
     }
     
     func getReview() {
@@ -198,8 +213,8 @@ extension RateUsViewController {
                     if self.selectedRating >= 4 {
                         self.redirectToAppStoreWriteReview()
                     }
-//                    self.dismiss(animated: true)
-//                    self.delegate?.dismiss(true)
+                    self.dismiss(animated: true)
+                    self.delegate?.dismiss(true)
                 }
                 
             case .failure(let error):

@@ -204,6 +204,7 @@ struct ServiceUrl{
     static let hostel_attendance_mark_attendance = "stud-attd/api/hostel-attendance/mark-attendance"
  static let hostel_attendance_session_types = "stud-attd/api/hostel-attendance/session-types"
 
+    static let comm_api_homework_submissions_list = "comm/api/homework/submissions-list"
 }
 
 struct localData{

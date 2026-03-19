@@ -45,6 +45,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBOutlet weak var TextViewheight: NSLayoutConstraint!
     @IBOutlet weak var VideoView: UIView!
     var attachments: [AttachmentItem] = []
+
     let photoPickManager = PhotoPickerManager.shared
     let Img = ImageName()
     let formatter = DateFormatter()
@@ -64,6 +65,9 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     let  video = "video"
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+      
+        
         BackBtnNm
             .configureAsBackButton(
                 firstLine: MenuStringFile.selectedMenuName,
@@ -126,6 +130,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
+
     func setSelectedHomeWork(
         title:String,
         content:String,
@@ -534,6 +539,7 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
         ])
     }
 }
+
 extension String {
     func boundingHeight(width: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)

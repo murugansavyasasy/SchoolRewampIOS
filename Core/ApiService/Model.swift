@@ -2987,3 +2987,18 @@ struct HostelSessionListData : Codable{
 
 
 //-------------------------------------------------------------------------------------------------------//
+
+//-------------------------------------------------------------------------------------------------------
+struct HomeWorkSubmissionList:Codable{
+    let status:Bool?
+    let message:String?
+    let data:[HomeworkDetails]?
+}
+struct HomeworkDetails:Codable{
+    let id:String?
+    let name:String?
+    let admission_no:String?
+    let roll_no:String?
+    let status:String?
+}
+

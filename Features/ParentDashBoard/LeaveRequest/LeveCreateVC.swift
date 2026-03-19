@@ -101,13 +101,12 @@ class LeveCreateVC: UIViewController{
         }
         
         CauseTextView.delegate = self
-        
         let currentDate = Date()
         
         // Calculate past month date (subtract 1 month)
         if let pastMonthDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) {
-            FromDatePicker.minimumDate = pastMonthDate  // 👈 Minimum selectable date
-            toDatePicker.minimumDate = pastMonthDate  // 👈 Minimum selectable date
+            FromDatePicker.minimumDate = pastMonthDate
+            toDatePicker.minimumDate = pastMonthDate
         }
         
         setupPlaceholder()

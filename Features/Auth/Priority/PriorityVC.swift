@@ -20,21 +20,20 @@ class PriorityVC: UIViewController {
     @IBOutlet weak var priorityview: UIView!
     @IBOutlet weak var teacherButton: UIButton!
     @IBOutlet weak var ParentButton: UIButton!
-    
     @IBOutlet weak var logoutBtn: UIButton!
+    
     var selectedIndexPath : IndexPath!
-
     let assetColors: [String] = ["Priority", "priortitClr1", "PriorityClr2"]
     let gradientcolour : [String] = ["gradient1", "gradient2", "gradient3"]
     let ProfileImage : [String] = ["Default_profile", "Default_profile_Male", "Default_profile_Female"]
     var login_astype = 1
     var Language :String?
-    
     var staffDetails = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
     var staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     let rollname = UserDefaultFileManager.getUserDetails()?.user_details?.role_name ?? ""
     var IsAddPointApiCheck : Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.containerViewHeightConstraint.constant = 300
@@ -59,6 +58,7 @@ class PriorityVC: UIViewController {
             paketApiCall(params:parms)
         }
     }
+    
     func paketApiCall(params:[String:Any]){
         APIService.shared.makeApi(
             url: ServiceUrl.dashboard_api_pauket_add_points,
@@ -84,72 +84,67 @@ class PriorityVC: UIViewController {
             }
         }
     }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-            apply_gradients()
+        apply_gradients()
     }
-
- 
-   func StyleAndTranslate(){
+    
+    
+    func StyleAndTranslate(){
         
-       //MARK: UI Changes
-       NextButtonView.layer.cornerRadius = 18
-       priorityview.setShadow()
-       teacherButton.layer.cornerRadius = 10
-       ParentButton.layer.cornerRadius = 10
-       ParentButton.setTitleColor(.black, for:.normal)
-      
-       
-       //MARK: Font Style
-       TeacherParentlbl.setFont(style: .body, size: FontSize.BodySize)
-       ChooseRoleLabel.setFont(style: .title, size: FontSize.TitleSize)
-       NextButtonView.setTitleFont(style: .body, size: FontSize.BodySize)
-       ChooseRoleLabel.setFont(style: .title, size: FontSize.TitleSize)
-       teacherButton.setTitleFont(style: .body, size: FontSize.BodySize)
-       ParentButton.setTitleFont(style: .body, size: FontSize.BodySize)
-       ProceedInstructionLbl.setFont(style: .body, size: FontSize.BodySize)
-       
-       //MARK: Translate
-      
-       ChooseRoleLabel.text =  CommonStringFile.ChooseYourRole.translated()
-       
-       let isstaff = UserDefaultFileManager.getUserDetails()?.user_details?.is_staff ?? false
-       let isParent = UserDefaultFileManager.getUserDetails()?.user_details?.is_parent ?? false
-      
-       
-       if(isstaff == true && isParent == true ){
-           ParentButton.isHidden = false
-           teacherButton.isHidden = false
-       }
-       else if(isstaff == true){
-           
-           ParentButton.isHidden = true
-           teacherButton.isHidden = false
-       }
-       else if(isParent == true){
-           ParentButton.isHidden = false
-           teacherButton.isHidden = true
-       }
-       
-       if staff_role == PriorityType.is_staff{
-           NextButtonView.isHidden = true
-           ProceedInstructionLbl.isHidden = true
-       }else{
-           NextButtonView.isHidden = false
-           ProceedInstructionLbl.isHidden = false
-       }
-       
-       
-       if staff_role == PriorityType.is_principal{
-           
-           TeacherParentlbl.text = "\(CommonStringFile.LoginAs.translated()) \( "Management".translated() )"
-       }else{
-           
-           TeacherParentlbl.text = CommonStringFile.LoginAsStudentParent.translated()
-       }
-     
-       ParentButton.setTitle(CommonStringFile.Parent.translated(), for: .normal)
-       teacherButton.setTitle(rollname.translated(), for: .normal)
+        //MARK: UI Changes
+        NextButtonView.layer.cornerRadius = 18
+        priorityview.setShadow()
+        teacherButton.layer.cornerRadius = 10
+        ParentButton.layer.cornerRadius = 10
+        ParentButton.setTitleColor(.black, for:.normal)
+        
+        
+        //MARK: Font Style
+        TeacherParentlbl.setFont(style: .body, size: FontSize.BodySize)
+        ChooseRoleLabel.setFont(style: .title, size: FontSize.TitleSize)
+        NextButtonView.setTitleFont(style: .body, size: FontSize.BodySize)
+        ChooseRoleLabel.setFont(style: .title, size: FontSize.TitleSize)
+        teacherButton.setTitleFont(style: .body, size: FontSize.BodySize)
+        ParentButton.setTitleFont(style: .body, size: FontSize.BodySize)
+        ProceedInstructionLbl.setFont(style: .body, size: FontSize.BodySize)
+        
+        //MARK: Translate
+        ChooseRoleLabel.text =  CommonStringFile.ChooseYourRole.translated()
+        let isstaff = UserDefaultFileManager.getUserDetails()?.user_details?.is_staff ?? false
+        let isParent = UserDefaultFileManager.getUserDetails()?.user_details?.is_parent ?? false
+        
+        if(isstaff == true && isParent == true ){
+            ParentButton.isHidden = false
+            teacherButton.isHidden = false
+        }else if(isstaff == true){
+            ParentButton.isHidden = true
+            teacherButton.isHidden = false
+        }else if(isParent == true){
+            ParentButton.isHidden = false
+            teacherButton.isHidden = true
+        }
+        
+        if staff_role == PriorityType.is_staff{
+            NextButtonView.isHidden = true
+            ProceedInstructionLbl.isHidden = true
+        }else{
+            NextButtonView.isHidden = false
+            ProceedInstructionLbl.isHidden = false
+        }
+        
+        
+        if staff_role == PriorityType.is_principal{
+            
+            TeacherParentlbl.text = "\(CommonStringFile.LoginAs.translated()) \( "Management".translated() )"
+        }else{
+            
+            TeacherParentlbl.text = CommonStringFile.LoginAsStudentParent.translated()
+        }
+        
+        ParentButton.setTitle(CommonStringFile.Parent.translated(), for: .normal)
+        teacherButton.setTitle(rollname.translated(), for: .normal)
     }
     
     func apply_gradients() {
@@ -198,13 +193,13 @@ class PriorityVC: UIViewController {
             }
         }
     }
-
+    
     
     @IBAction func teacherAct(_ sender: Any) {
         
         if staff_role == PriorityType.is_principal{
             TeacherParentlbl.text = "\(CommonStringFile.LoginAs.translated()) \( "Management".translated() )"
-
+            
         }else{
             
             TeacherParentlbl.text = (CommonStringFile.LoginAs.translated()) + " " + (rollname.translated())
@@ -235,28 +230,23 @@ class PriorityVC: UIViewController {
         login_astype = 2
         UserDefaults.standard.set(login_astype, forKey: "passvalue")
         tableview.reloadData()
-    
+        
     }
     
     func gradientcolours(button: UIView, colours: [CGColor]) {
-
         button.layoutIfNeeded()
-
-        // remove only gradient layers
         button.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
-
         let gradient = CAGradientLayer()
         gradient.colors = colours
         gradient.startPoint = CGPoint(x: 0, y: 0.5)
         gradient.endPoint = CGPoint(x: 1, y: 0.5)
         gradient.cornerRadius = button.layer.cornerRadius
         gradient.frame = button.bounds
-
         button.layer.insertSublayer(gradient, at: 0)
     }
-
-
-
+    
+    
+    
     
     @IBAction func NextAction(_ sender: Any) {
         if let data = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.first{
@@ -277,28 +267,19 @@ class PriorityVC: UIViewController {
         present(vc, animated: false)
     }
     
-    
 }
 
 @available(iOS 14.0, *)
 extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if login_astype == 1 {
-            
             return staffDetails?.count ?? 0
         }else{
-            
             return childDetails?.count ?? 0
             
         }
-        
-        
     }
-    
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -308,7 +289,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
         let colour2 =  UIColor(named: gradient)
         
         if login_astype  == 1 {
-           
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SchoolTVCell, for: indexPath) as! SchoolTVCell
             
             cell.NameLbl.text = staffDetails?[indexPath.row].name
@@ -328,7 +309,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
                 cell.SchoolNameRegional.isHidden = false
                 cell.SchoolNameRegional.text = staffDetails?[indexPath.row].school_name_regional
             }
-        
+            
             if let color1 = colour1, let color2 = colour2 {
                 cell.setGradientColors([color2.cgColor, color1.cgColor])
             }
@@ -341,9 +322,8 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         } else {
-        
+            
             let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.PriorityStudentTVC, for: indexPath) as! PriorityStudentTVC
-
             cell.NameLbl.text = childDetails?[indexPath.row].name
             cell.RollNo.text = CommonStringFile.RollNo + " : " + (childDetails?[indexPath.row].roll_number ?? "")
             cell.ClassLbl.text = (childDetails?[indexPath.row].standard_name ?? "") + " - " + (childDetails?[indexPath.row].section_name ?? "")
@@ -352,13 +332,12 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             cell.StudentImage.kf.setImage(with: URL(string: childDetails?[indexPath.row].profile ?? ""),placeholder: UIImage(systemName: "person.fill"))
             if #available(iOS 15.0, *) {
                 let gradientSets: [[CGColor]] = [ [UIColor.systemBlue.cgColor, UIColor.systemTeal.cgColor], [UIColor.systemPurple.cgColor,UIColor.systemPink.cgColor], [UIColor.systemOrange.cgColor,UIColor.systemRed.cgColor], [UIColor.systemGreen.cgColor,UIColor.systemMint.cgColor], [UIColor.systemIndigo.cgColor,UIColor.systemBlue.cgColor]]
-
                 
                 let colors = gradientSets[indexPath.row % gradientSets.count]
                 cell.setGradientColors(colors)
                 
             }
-               
+            
             cell.SchoolAdressLbl.text = childDetails?[indexPath.row].school_city ?? ""
             cell.academicYearLbl.text = CommonStringFile.Academic_Year.translated() + " : " + (childDetails?[indexPath.row].academic_year_name ?? "")
             DispatchQueue.main.async {
@@ -370,15 +349,15 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if login_astype  == 2 {
             if let data = childDetails?[indexPath.row]{
                 UserDefaultFileManager.saveChildDetails(data: data)}
             if IsAddPointApiCheck == false{
                 let parms = ["mobile_number": UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "",
-                              "activity": "LOGIN",
-                              "user_type": login_astype == 2 ? 1 : 2,
+                             "activity": "LOGIN",
+                             "user_type": login_astype == 2 ? 1 : 2,
                              "menu_id": 0] as [String : Any]
                 paketApiCall(params:parms)
             }
@@ -392,8 +371,8 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
                     UserDefaultFileManager.saveStaffDetails(data: data)
                     if IsAddPointApiCheck == false{
                         let parms = ["mobile_number": UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "",
-                                      "activity": "LOGIN",
-                                      "user_type": login_astype == 2 ? 1 : 2,
+                                     "activity": "LOGIN",
+                                     "user_type": login_astype == 2 ? 1 : 2,
                                      "menu_id": 0] as [String : Any]
                         paketApiCall(params:parms)
                     }
@@ -403,15 +382,13 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
                     present(vc, animated: true)
                 }
             }
-        
+            
         }
     }
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
     
 }
 

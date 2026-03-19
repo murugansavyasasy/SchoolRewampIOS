@@ -34,6 +34,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
             }
         }
     }
+ 
     @IBOutlet weak var backLbl: UILabel!
     @IBOutlet weak var headerView: UIView!
     
@@ -81,6 +82,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
     let alert = CustomAlert()
     let Today = "Today"
     let FutureDate = "Future Date"
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,7 +90,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         registerCVCells()
         searchBar.delegate = self
     }
-    
+
     @IBAction func backBtnAct(_ sender: UIButton) {
         dismiss(animated: true)
     }
@@ -144,6 +146,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         SectionLbl.setFont(style: .body, size: FontSize.BodySize)
         dateSelect(nil)
+        
     }
     
     private func registerCVCells() {
@@ -417,6 +420,7 @@ extension SenderHomeWorkVC: UICollectionViewDelegate,UICollectionViewDataSource,
         detailVC.titleString  = FilterHomeWorkList?[indexPath.row].title
         detailVC.descriptionString  = FilterHomeWorkList?[indexPath.row].description
         detailVC.postedBy  = FilterHomeWorkList?[indexPath.row].sent_by
+        detailVC.homeWorkid  = FilterHomeWorkList?[indexPath.row].id
         detailVC.dateAndTimeForVideo  = FilterHomeWorkList?[indexPath.row].created_on ?? ""
         detailVC.subject_name  = FilterHomeWorkList?[indexPath.row].subject_name
         detailVC.modalPresentationStyle = .custom
@@ -509,6 +513,7 @@ extension SenderHomeWorkVC:Datepicker, UISearchBarDelegate {
         Cv.reloadData()
     }
 }
+
 extension UIView{
     func cornerRadius(_ radius: CGFloat = 8) {
         self.layer.cornerRadius = radius
