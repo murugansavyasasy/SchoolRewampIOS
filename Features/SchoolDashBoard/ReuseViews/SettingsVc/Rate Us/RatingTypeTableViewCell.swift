@@ -65,11 +65,7 @@ class RatingTypeTableViewCell: UITableViewCell,
             self.updateCollectionViewHeight()
         }
     }
-    func textViewDidChange(_ textView: UITextView) {
-        if let category = SelectedCategory {
-            ratingDelegate?.Submit(category, suggessions: textView.text)
-        }
-    }
+
     // MARK: - CollectionView Delegates
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return names.count
