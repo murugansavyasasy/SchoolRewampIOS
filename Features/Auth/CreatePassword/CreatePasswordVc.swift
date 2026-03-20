@@ -35,9 +35,10 @@ class CreatePasswordVc: UIViewController{
         super.viewDidLoad()
         setUpUI()
         if createNewPassword == true {
-            createPassDefaultLbl.localizationKey = ChangePasswordStringFile.Enter_the_old_password
-            ConfirmPassLabel.localizationKey = ChangePasswordStringFile.Enter_the_new_password
-            titleLbl.localizationKey = ChangePasswordStringFile.change_password
+            createPassDefaultLbl.localizationKey = ChangePasswordStringFile.Create_New_Password
+                       ConfirmPassLabel.localizationKey = ChangePasswordStringFile.Confirm_New_Password
+                       titleLbl.localizationKey = ChangePasswordStringFile.create_newpassword
+                       confirmPassBtnNam.setTitle(ChangePasswordStringFile.Create, for: .normal)
         } else {
             createPassDefaultLbl.localizationKey = ChangePasswordStringFile.Enter_the_new_password
             ConfirmPassLabel.localizationKey = ChangePasswordStringFile.confirm_password

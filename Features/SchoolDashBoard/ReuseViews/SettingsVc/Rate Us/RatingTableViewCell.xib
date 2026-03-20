@@ -100,8 +100,8 @@
                                     <constraint firstAttribute="trailing" secondItem="BKt-q4-9Mv" secondAttribute="trailing" id="ndO-Xp-EUr"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zHg-Mh-5JT">
-                                <rect key="frame" x="303.66666666666669" y="124.66666666666666" width="32" height="35"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zHg-Mh-5JT">
+                                <rect key="frame" x="303.66666666666669" y="60" width="32" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="oMy-1i-r2x"/>
                                 </constraints>

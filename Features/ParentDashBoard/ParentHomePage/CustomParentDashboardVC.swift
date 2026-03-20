@@ -113,6 +113,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
         handleBiometricAuthentication()
+        
     }
     private func handleBiometricAuthentication() {
 
@@ -575,6 +576,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 39: MenuRedirect.receiverAttachment(from: self,PushNotiMsgId: messageId)
         case 40: MenuRedirect.receiverPauckt(from: self)
+        case 113: MenuRedirect.ResiverHostelManagment(from: self)
         default:
             let alert = UIAlertController(
                 title: nil,

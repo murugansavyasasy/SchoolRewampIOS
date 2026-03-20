@@ -32,74 +32,98 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate {
     var feeDetailsList: [InvoiceItem] = []
     var isWebViewLoaded = false
     var receipt_url: [String] = []
-    var newWebView: WKWebView?
+    var popupWebViews: [WKWebView]  = []
+    var alert = CustomAlert()
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self
         studentNameLbl.configureAsBackTitle(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         
         refreshBtn.layer.cornerRadius = 10
-        
-        menuNameLbl.text = MenuStringFile.selectedMenuName
-        tableOuterView.isHidden = true
-        NodataImage.isHidden = true
-        NoDataLbl.isHidden = true
-        newWebView = nil
-        webViewFeeLoader()
-    }
-
-    func webViewFeeLoader() {
-
-        let baseURL = global?.fees_url ?? ""
-        let studentId = studentDetails?.child_id ?? ""
-        let schoolId = studentDetails?.school_id ?? ""
-
-        // Same logic as old code
-        let cleanedBase = baseURL.replacingOccurrences(of: ":student_id/:school_id", with: "")
-
-        let finalURL = cleanedBase + "\(studentId)/\(schoolId)"
-
-        print("Final Fee URL:", finalURL)
-
-        if let url = URL(string: finalURL) {
-            webView.uiDelegate = self
-            webView.navigationDelegate = self
-            webView.load(URLRequest(url: url))
-        } else {
-            print("❌ Invalid URL:", finalURL)
-        }
-
-        // TableView setup (unchanged)
         feeDetailTableView.register(
             UINib(nibName: CellConfingName.FeedetailTVC, bundle: nil),
             forCellReuseIdentifier: CellConfingName.FeedetailTVC
         )
         feeDetailTableView.delegate = self
         feeDetailTableView.dataSource = self
+        menuNameLbl.text = MenuStringFile.selectedMenuName
+        tableOuterView.isHidden = true
+        NodataImage.isHidden = true
+        NoDataLbl.isHidden = true
+        popupWebViews = []
+        setupWebView()
+        loadFeeURL()
     }
 
-    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-            let newWebView = WKWebView(frame: self.view.bounds, configuration: configuration)
-            newWebView.uiDelegate = self
-            newWebView.navigationDelegate = self
-            self.view.addSubview(newWebView)
-            self.newWebView = newWebView
-            return newWebView
-        }
-        
-        // Handle closing the new tab
-        func webViewDidClose(_ webView: WKWebView) {
-            if webView == newWebView {
-                webView.removeFromSuperview()
-                newWebView = nil
-            }
-        }
+
+    func setupWebView() {
+
+               webView.navigationDelegate = self
+               webView.uiDelegate = self
+
+               webView.configuration.preferences.javaScriptEnabled = true
+               webView.configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
+
+               webView.scrollView.bounces = false
+           }
+
+           // MARK: - Load URL
+           func loadFeeURL() {
+
+               let baseURL = global?.fees_url ?? ""
+               let studentId = studentDetails?.child_id ?? ""
+               let schoolId = studentDetails?.school_id ?? ""
+
+               let cleanedBase = baseURL.replacingOccurrences(of: ":student_id/:school_id", with: "")
+               let finalURL = cleanedBase + "\(studentId)/\(schoolId)"
+
+               print("Final Fee URL:", finalURL)
+
+               if let url = URL(string: finalURL) {
+                   webView.load(URLRequest(url: url))
+               }
+           }
+
+    
+    func webView(_ webView: WKWebView,
+                        createWebViewWith configuration: WKWebViewConfiguration,
+                        for navigationAction: WKNavigationAction,
+                        windowFeatures: WKWindowFeatures) -> WKWebView? {
+
+               if navigationAction.targetFrame == nil {
+
+                   let newWebView = WKWebView(frame: webOuterView.bounds, configuration: configuration)
+                   newWebView.navigationDelegate = self
+                   newWebView.uiDelegate = self
+
+                   webOuterView.addSubview(newWebView)
+
+                   popupWebViews.append(newWebView)
+
+                   return newWebView
+               }
+               return nil
+           }
+
+           // MARK: - CLOSE POPUP
+           func webViewDidClose(_ webView: WKWebView) {
+
+               if let index = popupWebViews.firstIndex(of: webView) {
+                   let closingWebView = popupWebViews[index]
+                   closingWebView.removeFromSuperview()
+                   popupWebViews.remove(at: index)
+               }
+           }
+ 
     @IBAction func backBtn(_ sender: UIButton) {
-        dismiss(animated: true)
+        if !handleBack(){
+            dismiss(animated: true)
+        }
     }
     
     
     @IBAction func refreshBtnAct(_ sender: Any) {
+        webView.stopLoading()
         webView.reload()
     }
     
@@ -252,17 +276,86 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
        }
 
        // Hide loading animation when page finishes loading
-       func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-           LoadingView.isHidden = true
-           ActivityIndicator.stopAnimating()
-       }
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        // Stop loader
+        LoadingView.isHidden = true
+        ActivityIndicator.stopAnimating()
+        guard let urlString = webView.url?.absoluteString else { return }
+        print("callbackURL:", urlString)
+        // Handle payment result
+        if urlString.contains("/#/paymentsucccess/success") {
+            
+            alert.showAlert(
+                title: "Payment Done",
+                message: "Payment successful. You can download receipt in receipt tab.", on: self
+            )
+            
+        } else if urlString.contains("/#/paymentsucccess/failed") {
+            
+            alert.showAlert(
+                title: "Payment Failed",
+                message: "Please try again later.", on: self
+            )
+        }
+    }
+ 
+    
+    func webView(_ webView: WKWebView,
+                        didFail navigation: WKNavigation!,
+                        withError error: Error) {
 
-       // Hide loading animation in case of an error
-       func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-           LoadingView.isHidden = true
-           ActivityIndicator.stopAnimating()
-           print("Error loading page: \(error.localizedDescription)")
-       }
+               LoadingView.isHidden = true
+               ActivityIndicator.stopAnimating()
+               print("Error:", error.localizedDescription)
+           }
+
+           // MARK: - BACK HANDLING (Same as Android stack)
+           func handleBack() -> Bool {
+
+               if let lastPopup = popupWebViews.last {
+                   lastPopup.removeFromSuperview()
+                   popupWebViews.removeLast()
+                   return true
+
+               } else if webView.canGoBack {
+                   webView.goBack()
+                   return true
+               }
+
+               return false
+           }
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+
+        guard let url = navigationAction.request.url else {
+            decisionHandler(.allow)
+            return
+        }
+
+        print("URL:", url.absoluteString)
+
+        let scheme = url.scheme?.lowercased()
+
+        let upiSchemes = ["upi", "tez", "phonepe", "paytmmp", "credpay","gpay"]
+
+        if let scheme = scheme, upiSchemes.contains(scheme) {
+
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                print("❌ App not installed or scheme not allowed:", scheme)
+            }
+
+            decisionHandler(.cancel)
+            return
+        }
+
+        decisionHandler(.allow)
+    }
+    
+    
+                        
 }
 
 

@@ -9,12 +9,13 @@ import StoreKit
 
 protocol RatingDelegate: AnyObject {
     func rating(_ ratingcount: Int)
-    func Submit(_ category: CategoriesSection, suggessions: String)
+    func Submit(_ category: CategoriesSection )
 }
 
 
 class RateUsViewController: UIViewController {
     
+    @IBOutlet weak var submitView: UIView!
     @IBOutlet weak var submitBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var tableview: UITableView!
@@ -27,7 +28,6 @@ class RateUsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         submitBtn.layer.cornerRadius = submitBtn.frame.height / 2
-        submitBtn.backgroundColor = .systemGreen
 
         submitBtn.layer.shadowColor = UIColor.black.cgColor
         submitBtn.layer.shadowOpacity = 0.4
@@ -49,13 +49,32 @@ class RateUsViewController: UIViewController {
         tableview.showsHorizontalScrollIndicator = false
         tableview.showsVerticalScrollIndicator = false
         tableview.register(UINib(nibName: CellConfingName.BanerTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.BanerTableViewCell)
+        tableview.register(UINib(nibName: CellConfingName.TextviewTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.TextviewTVC)
         tableview.register(UINib(nibName: CellConfingName.RatingTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.RatingTableViewCell)
         tableview.register(UINib(nibName: CellConfingName.RatingTypeTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.RatingTypeTableViewCell)
         tableview.register(UINib(nibName: CellConfingName.SuccesseRatusTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.SuccesseRatusTVC)
         tableview.delegate = self
         tableview.dataSource = self
+        tableview.rowHeight = UITableView.automaticDimension
+        tableview.estimatedRowHeight = 100
     }
-    
+    override func viewDidLayoutSubviews() {
+            super.viewDidLayoutSubviews()
+            updatePreferredSize()
+        }
+    func updatePreferredSize() {
+            self.view.layoutIfNeeded()
+
+            let contentHeight = tableview.contentSize.height
+            let maxHeight = UIScreen.main.bounds.height * 0.85
+            let finalHeight = min(contentHeight, maxHeight)
+
+            self.preferredContentSize = CGSize(
+                width: self.view.frame.width,
+                height: finalHeight
+            )
+        }
+
     // MARK: - KEYBOARD
     
     private func registerKeyboardNotifications() {
@@ -64,22 +83,23 @@ class RateUsViewController: UIViewController {
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.scrollToBottom()
-        }
-    }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+               self.scrollToTextViewCell()
+           }
+       }
+       
+       @objc private func keyboardWillHide(notification: NSNotification) {
+           tableview.contentInset = .zero
+           tableview.scrollIndicatorInsets = .zero
+       }
     
-    @objc private func keyboardWillHide(notification: NSNotification) {
-        tableview.contentInset = .zero
-        tableview.scrollIndicatorInsets = .zero
-    }
-    
-    private func scrollToBottom() {
+    private func scrollToTextViewCell() {
         guard tableview.numberOfSections > 0 else { return }
-        let lastSection = tableview.numberOfSections - 1
-        guard tableview.numberOfRows(inSection: lastSection) > 0 else { return }
-        let lastRow = tableview.numberOfRows(inSection: lastSection) - 1
-        tableview.scrollToRow(at: IndexPath(row: lastRow, section: lastSection), at: .bottom, animated: true)
+               let lastSection = tableview.numberOfSections - 1
+               guard tableview.numberOfRows(inSection: lastSection) > 0 else { return }
+               let lastRow = tableview.numberOfRows(inSection: lastSection) - 1
+               tableview.scrollToRow(at: IndexPath(row: lastRow, section: lastSection), at: .bottom, animated: true)
     }
     
     @IBAction func close(_ sender: UIButton) {
@@ -88,6 +108,7 @@ class RateUsViewController: UIViewController {
     }
     @IBAction func submitBtn(_ sender: UIButton) {
         submit = true
+        submitView.isHidden = true
         isSelected = false
         tableview.reloadData()
         DispatchQueue.main.async {
@@ -101,10 +122,14 @@ class RateUsViewController: UIViewController {
 
 
 // MARK: - Rating Delegate
-extension RateUsViewController: RatingDelegate,RatingTypeCellDelegate {
-    func didUpdateHeight() {
-        self.tableview.beginUpdates()
-        self.tableview.endUpdates()
+extension RateUsViewController: RatingDelegate,RatingTypeCellDelegate,UITextViewDelegate {
+    func didUpdateHeight(_ set:Bool) {
+        DispatchQueue.main.async {
+            if set{
+                self.tableview.beginUpdates()
+                self.tableview.endUpdates()
+            }
+        }
     }
     func rating(_ ratingcount: Int) {
         selectedRating = ratingcount
@@ -115,7 +140,7 @@ extension RateUsViewController: RatingDelegate,RatingTypeCellDelegate {
         }
     }
 
-    func Submit(_ category: CategoriesSection, suggessions: String) {
+    func Submit(_ category: CategoriesSection) {
         if let index = categorySections?.firstIndex(where: { $0.rating == category.rating }) {
             categorySections?[index] = category
             for i in 0..<(categorySections?.count ?? 0) {
@@ -126,8 +151,6 @@ extension RateUsViewController: RatingDelegate,RatingTypeCellDelegate {
                 }
             }
         }
-        tableview.reloadData()
-        descriptionContent = suggessions
     }
     
     func getReview() {
@@ -150,13 +173,13 @@ extension RateUsViewController: RatingDelegate,RatingTypeCellDelegate {
                         self.selectedRating = review.rating ?? 0
                         self.isSelected = self.selectedRating > 0
                         self.categorySections = review.remarks
+                        
                         self.tableview.reloadData()
-                        self.tableview.layoutIfNeeded()
-                        UIView.performWithoutAnimation {
-                            self.tableview.beginUpdates()
-                            self.tableview.endUpdates()
-                        }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            UIView.performWithoutAnimation {
+                                self.tableview.beginUpdates()
+                                self.tableview.endUpdates()
+                            }
                             self.delegate?.viewAttachment(sender: UIButton())
                         }
                     }
@@ -209,7 +232,7 @@ extension RateUsViewController {
             
             switch result {
             case .success(_):
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
                     if self.selectedRating >= 4 {
                         self.redirectToAppStoreWriteReview()
                     }
@@ -235,7 +258,7 @@ extension RateUsViewController {
 extension RateUsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return submit ? 1 : (isSelected ? 3 : 2)
+        return submit ? 1 : 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -263,14 +286,21 @@ extension RateUsViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.RatingTypeTableViewCell, for: indexPath) as! RatingTypeTableViewCell
             cell.ratingDelegate = self
             cell.heightDelegate = self
-            cell.suggestContetTxtView.text = descriptionContent
+            
             let filtered = categorySections?.filter { $0.rating == selectedRating }
             cell.configure(names: filtered?.first, rating: selectedRating)
             return cell
-            
+        case 3:
+            let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.TextviewTVC, for: indexPath) as! TextviewTVC
+            cell.suggestContetTxtView.text = descriptionContent
+            cell.suggestContetTxtView.delegate = self
+        return cell
         default:
             return UITableViewCell()
         }
+    }
+    func textViewDidChange(_ textView: UITextView) {
+        descriptionContent = textView.text
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension

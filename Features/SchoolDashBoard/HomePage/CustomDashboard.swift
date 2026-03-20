@@ -234,12 +234,16 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                 case .success(let response):
                     if response.status == true, let details = response.data?.first {
                         self.menu_details = details.menus
-//                        self.menu_details?.append(
-//                            MenuDetail(id: 112, name: "Bus Tracking", description: "Used to tracking")
-//                        )
-//                        self.menu_details?.append(
-//                            MenuDetail(id: 113, name: "Staff Leave Request", description: "Used to apply leave")
-//                        )
+                        self.menu_details?.append(
+                            MenuDetail(id: 112, name: "Apply Leave", description: "Used to tracking")
+                        )
+                        self.menu_details?.append(
+                            MenuDetail(id: 113, name: "Hostel Management", description: "Used to apply leave")
+                        )
+                        
+                        self.menu_details?.append(
+                            MenuDetail(id: 114, name: "Staff Leave Request", description: "Used to apply leave")
+                        )
                         self.refreshCount = true
                         self.get_MenuCount()
                         self.recentMenuItems = details.frequently_used
@@ -700,8 +704,11 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             39: { self.MenuRedirect.senderAttachment(from: self) },
             40: { self.MenuRedirect.receiverPauckt(from: self) },
             41: { self.MenuRedirect.senderExamMarkNavigate(from: self) },
-            112: { self.MenuRedirect.privateBusTracker(from: self) },
+            112: { self.MenuRedirect.staffApplyLeave(from: self) },
+            113: { self.MenuRedirect.HostelManagment(from: self) },
+            114: { self.MenuRedirect.StaffLeaveRequest(from: self) },
         ]
+ 
         
         guard let action = actions[menuId] else {
             let alert = UIAlertController(

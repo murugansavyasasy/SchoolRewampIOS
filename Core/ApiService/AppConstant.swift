@@ -1,9 +1,4 @@
-//
-//  AppConstont.swift
-//  MyGrocery
-//
-//  Created by Chandhru veeramalai on 21/10/24.
-//
+
 
 import Foundation
 import UIKit
@@ -93,8 +88,11 @@ struct ServiceUrl{
     static let comm_api_assignment_submit_assignment = "comm/api/assignment/submit-assignment"
     static let comm_api_assignment_update_submission = "comm/api/assignment/update-submission"
     static let comm_api_leave_req_apply = "comm/api/leave-req/apply"
+    static let comm_api_leave_req_for_staff_apply = "comm/api/leave-req-for-staff/apply"
     static let comm_api_leave_req_list = "comm/api/leave-req/list"
-    static let comm_api_leave_req_update_status = "comm/api/leave-req/update-status"
+    static let comm_api_leave_req_list_staff = "comm/api//leave-req-for-staff/list"
+    static let comm_api_leave_req_update_status = "comm/api/leave-req/update-status" 
+    static let comm_api_leave_req_update_status_Staff = "comm/api/leave-req-for-staff/update-status"
     static let comm_api_assignment_report = "comm/api/assignment/report"
     static let comm_api_assignment_submissions_list = "comm/api/assignment/submissions-list"
     static let  comm_api_assignment_list = "comm/api/assignment/list"
@@ -137,10 +135,12 @@ struct ServiceUrl{
     static let interaction_classes_for_chat = "comm/api/interaction/classes-for-chat"
     static let comm_api_leave_req_delete = "comm/api/leave-req/delete"
     static let comm_api_leave_req_update = "comm/api/leave-req/update"
+    static let leave_req_for_staff_update_status = "comm/api/leave-req-for-staff/update-status"
     static let lms_api_lsrw_skill_list = "lms/api/lsrw/skill-list"
     static let lms_api_lsrw_submit_skill = "lms/api/lsrw/submit-skill"
     static let lms_api_lsrw_create_skill = "lms/api/lsrw/create-skill"
-    static let comm_api_leave_req_leave_categories = "comm/api/leave-req/leave-categories"
+    static let comm_api_leave_req_leave_categories = "comm/api/leave-req/leave-categories"  
+    static let comm_api_leave_req_for_staff_leave_categories = "comm/api/leave-req-for-staff/leave-categories"
     static let stud_attd_api_attendance_student_stats = "stud-attd/api/attendance/student-stats"
     static let ptm_api_ptm_schedule_slot_details_for_staff = "ptm/api/ptm-schedule/slot-details-for-staff"
     static let ptm_api_ptm_schedule_validate_slots_for_staff = "ptm/api/ptm-schedule/validate-slots-for-staff"
@@ -198,6 +198,12 @@ struct ServiceUrl{
     static let update_notification_call_log = "comm/api/voice/update-notification-call-log"
     static let exam_api_exam_get_mark_details = "exam/api/exam/get-mark-details"
     static let exam_api_exam_upload_marks = "exam/api/exam/upload-marks"
+    static let hostel_attendance_hostel_list = "stud-attd/api/hostel-attendance/hostel-list"
+    static let hostel_attendance_room_details = "stud-attd/api/hostel-attendance/room-details"
+    static let hostel_attendance_students_for_hostel_attd = "stud-attd/api/hostel-attendance/students-for-hostel-attd"
+    static let hostel_attendance_mark_attendance = "stud-attd/api/hostel-attendance/mark-attendance"
+ static let hostel_attendance_session_types = "stud-attd/api/hostel-attendance/session-types"
+
     static let comm_api_homework_submissions_list = "comm/api/homework/submissions-list"
 }
 

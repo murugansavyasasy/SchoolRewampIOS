@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,16 +18,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="elr-WS-GKD">
-                        <rect key="frame" x="16" y="10" width="661" height="742"/>
+                        <rect key="frame" x="16" y="10" width="661" height="201"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What went wrong?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qSu-TF-Qvb">
-                                <rect key="frame" x="0.0" y="0.0" width="661" height="20.333333333333332"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="o5S-ck-yDX">
-                                <rect key="frame" x="0.0" y="154" width="661" height="201"/>
+                                <rect key="frame" x="0.0" y="0.0" width="661" height="201"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="201" id="A5c-GE-pBX"/>
@@ -41,7 +34,7 @@
                                 </collectionViewFlowLayout>
                             </collectionView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OwH-HA-lme">
-                                <rect key="frame" x="0.0" y="360.33333333333331" width="661" height="1"/>
+                                <rect key="frame" x="0.0" y="201" width="661" height="1"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="L3w-XI-1SI"/>
@@ -50,60 +43,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Any other suggestions? (optional)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="So9-Ge-gsW">
-                                <rect key="frame" x="0.0" y="488.33333333333331" width="661" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="20R-PT-JsV"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fmu-oz-KDs">
-                                <rect key="frame" x="0.0" y="642" width="661" height="100"/>
-                                <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="uza-Jh-az8">
-                                        <rect key="frame" x="0.0" y="0.0" width="661" height="100"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="5Ma-Kl-HlJ"/>
-                                        </constraints>
-                                        <color key="textColor" systemColor="labelColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Kd-pJ-sxD">
-                                        <rect key="frame" x="0.0" y="100" width="661" height="80"/>
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Hxq-TR-6wP">
-                                                <rect key="frame" x="230.66666666666663" y="20" width="200" height="40"/>
-                                                <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IKB-ZF-dKc" customClass="LocalizationButton" customModule="School_Chimes" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="200" height="40"/>
-                                                        <color key="backgroundColor" name="ParentClr"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="200" id="TLb-HJ-WBU"/>
-                                                            <constraint firstAttribute="height" constant="40" id="k4g-I5-2gv"/>
-                                                        </constraints>
-                                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="Submit"/>
-                                                        <connections>
-                                                            <action selector="submit:" destination="vVX-nD-6fW" eventType="touchUpInside" id="rzm-TC-Fb6"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                            </stackView>
-                                        </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="Hxq-TR-6wP" secondAttribute="bottom" constant="20" symbolic="YES" id="42q-Mp-Ygy"/>
-                                            <constraint firstItem="Hxq-TR-6wP" firstAttribute="centerX" secondItem="4Kd-pJ-sxD" secondAttribute="centerX" id="51F-sN-ey0"/>
-                                            <constraint firstItem="Hxq-TR-6wP" firstAttribute="top" secondItem="4Kd-pJ-sxD" secondAttribute="top" constant="20" symbolic="YES" id="qoR-Dl-5Yv"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                            </stackView>
                         </subviews>
                     </stackView>
                 </subviews>
@@ -115,24 +54,13 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="AnySuggestionsLbl" destination="qSu-TF-Qvb" id="vue-N1-J7b"/>
-                <outlet property="SubmitBtn" destination="IKB-ZF-dKc" id="gqT-sq-YaE"/>
                 <outlet property="collectionview" destination="o5S-ck-yDX" id="bsU-lo-6Dq"/>
                 <outlet property="collectionviewheight" destination="A5c-GE-pBX" id="QeP-xn-EXJ"/>
-                <outlet property="suggestContetTxtView" destination="uza-Jh-az8" id="NRh-tc-4sW"/>
-                <outlet property="suggestLbl" destination="So9-Ge-gsW" id="jFw-iD-yry"/>
-                <outlet property="textview" destination="uza-Jh-az8" id="kBE-Uj-Udw"/>
             </connections>
             <point key="canvasLocation" x="153.43511450381678" y="70.422535211267615"/>
         </tableViewCell>
     </objects>
     <resources>
-        <namedColor name="ParentClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

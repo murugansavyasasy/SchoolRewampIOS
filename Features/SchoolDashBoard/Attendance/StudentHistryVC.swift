@@ -719,6 +719,7 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
         } else {
             cell.alphabetLbl.text = "" // Fallback for empty string
         }
+        
         cell.AlphabetView.backgroundColor = backgroundColor
         cell.DropdownImg.image = dataVisibility[indexPath.row] ? UIImage(named: "arrow_up") : UIImage(named: "arrow_down")
         

@@ -902,6 +902,7 @@ struct LeaveTypesResponse: Codable {
 struct LeaveType : Codable {
     var id: Int?
     var name:String?
+    var leave_name:String?
 }
 
 struct LeaveInfoResponse: Codable {
@@ -917,7 +918,9 @@ struct LeaveMonth: Codable {
 
 struct LeaveInfo: Codable {
     var id: String?
+    var staff_id: String?
     var applied_on: String?
+    var staff_name: String?
     var student_name: String?
     var class_name: String?
     var section_name: String?
@@ -931,7 +934,14 @@ struct LeaveInfo: Codable {
     var to_session: String?
     var approved_by: String?
     var leave_type: String?
-    var leave_type_id: Int?
+    var from_date: String?
+    var to_date: String?
+    var leave_type_id: String?
+    var status_id: String?
+    var role: String?
+    var mobile_no: String?
+    var email: String?
+    var address: String?
 }
 
 //MARK: ASSIGNMENT MY SUBMISION
@@ -2705,6 +2715,10 @@ struct AttendanceStudentListDetails: Codable {
     let roll_no: String?
     var att_type: String?
     var att_status: String?
+    var is_leave_approved: Bool
+    var leave_from: String?
+    var leave_to: String?
+    var reason: String?
 }
 
 // MARK: - FAQ Models
@@ -2890,6 +2904,89 @@ struct ConvertedStudentRecord:Codable {
     let studentName: String
     let marks: [RecordItem]
 }
+ 
+struct HostelListSuc : Codable{
+    let status : Bool?
+    let message : String?
+    let data : [HostelListData]?
+    
+}
+
+struct HostelListData : Codable{
+    let id : String?
+    let name : String?
+    let institute_id : String?
+    let institute_name : String?
+    let type : String?
+    let max_capacity : Int?
+    let address : String?
+    
+}
+
+struct HostelDashBoardSuc : Codable{
+    let status : Bool?
+    let message : String?
+    let data : [HostelDashBoardData]?
+}
+struct HostelDashBoardData : Codable{
+    let stats  : statsDataDetails?
+    let floors : [HostelDashBoardFloor]?
+}
+
+struct statsDataDetails : Codable{
+    let total_students : String?
+    let outpassRequests :String?
+}
+struct HostelDashBoardFloor : Codable{
+    
+    let id : String?
+    let floor_no : String?
+    let floor_name : String?
+    let rooms : [HostelDashBoardRooms]?
+    
+}
+
+struct HostelDashBoardRooms : Codable{
+    let id : String?
+    let number : String?
+    let currentOccupancy : Int?
+    let maxOccupancy : Int?
+    let totalBeds : Int?
+    let students : [String]?
+}
+
+struct HostelStudentListSuc : Codable{
+    let status : Bool?
+    let message : String?
+    let data : [HostelStudentListData]?
+}
+
+struct HostelStudentListData : Codable{
+    let student_id : String?
+    let student_name : String?
+    let admission_no : String?
+    let roll_no : String?
+    let gender : String?
+    let class_id : String?
+    let class_name : String?
+    let section_id : String?
+    let section_name: String?
+    let primary_mobile : String?
+    let status : String?
+}
+
+struct HostelSessionListSuc : Codable{
+    let status : Bool?
+    let message : String?
+    let data : [HostelSessionListData]?
+}
+struct HostelSessionListData : Codable{
+    let id : Int?
+    let name : String?
+}
+
+
+//-------------------------------------------------------------------------------------------------------//
 
 //-------------------------------------------------------------------------------------------------------
 struct HomeWorkSubmissionList:Codable{
