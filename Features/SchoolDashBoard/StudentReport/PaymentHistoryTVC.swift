@@ -101,11 +101,11 @@ class PaymentHistoryTVC: UITableViewCell {
                 ], range: range)
             }
         }
-
         feesamoiuntLbl.numberOfLines = 0
         feesamoiuntLbl.lineBreakMode = .byWordWrapping
         feesamoiuntLbl.attributedText = attributed
     }
+    
     func configurePayment(data: PaymentHistory?) {
         
         guard let data = data else { return }
