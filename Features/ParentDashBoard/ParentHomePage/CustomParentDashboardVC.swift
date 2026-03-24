@@ -563,7 +563,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         case 7:  MenuRedirect.receiverCommunicationNavigate(from: self,PushNotiMsgId: messageId)
         case 9:  MenuRedirect.receiverEvent(from: self,PushNotiMsgId: messageId)
         case 10: MenuRedirect.resiverExamMark(from: self)
-        case 12: MenuRedirect.receiverFeeDetails(from: self)
+        case 12: MenuRedirect.ResiverHostelManagment(from: self)
         case 15: MenuRedirect.receiverHomework(from: self,PushNotiMsgId: messageId)
         case 16: MenuRedirect.receiverchat(from: self)
         case 20: MenuRedirect.receiverLsrwNavigate(from: self,PushNotiMsgId: messageId)

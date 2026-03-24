@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -28,6 +27,7 @@
                 <outlet property="progressLabel" destination="lbl-prg" id="out-prg"/>
                 <outlet property="progressView" destination="prg-vw" id="out-pvw"/>
                 <outlet property="selectDateView" destination="kEf-cg-FfM" id="RU2-92-blS"/>
+                <outlet property="sessionBtnName" destination="Kol-M7-hNN" id="uHb-3w-eYX"/>
                 <outlet property="sessionView" destination="ibK-Y6-855" id="ZPQ-av-Wqr"/>
                 <outlet property="subtitleLabel" destination="lbl-sub" id="out-sub"/>
                 <outlet property="tableView" destination="afu-eF-fFN" id="Wsf-rs-CqM"/>
@@ -151,7 +151,7 @@
                                         <constraint firstAttribute="height" constant="56" id="bh1"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                    <state key="normal" title="Mark All Students">
+                                    <state key="normal" title="Mark Attendace">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
                                     <connections>
@@ -204,13 +204,13 @@
                                                                             <rect key="frame" x="0.0" y="0.0" width="224.5" height="70"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="From" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kTz-rM-J8h">
-                                                                                    <rect key="frame" x="0.0" y="5" width="199.5" height="17"/>
+                                                                                    <rect key="frame" x="8" y="45" width="208.5" height="17"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                                 <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OP1-bd-LTd">
-                                                                                    <rect key="frame" x="0.0" y="27" width="219.5" height="38"/>
+                                                                                    <rect key="frame" x="8" y="8" width="208.5" height="29"/>
                                                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     <inset key="imageEdgeInsets" minX="5" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                     <state key="normal" title="Select  Date">
@@ -221,13 +221,13 @@
                                                                             </subviews>
                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                             <constraints>
-                                                                                <constraint firstItem="kTz-rM-J8h" firstAttribute="top" secondItem="kEf-cg-FfM" secondAttribute="top" constant="5" id="8Ub-My-XWU"/>
-                                                                                <constraint firstAttribute="trailing" secondItem="OP1-bd-LTd" secondAttribute="trailing" constant="5" id="EoB-n1-w8s"/>
-                                                                                <constraint firstItem="OP1-bd-LTd" firstAttribute="leading" secondItem="kEf-cg-FfM" secondAttribute="leading" id="PDl-Uk-jpv"/>
-                                                                                <constraint firstItem="kTz-rM-J8h" firstAttribute="leading" secondItem="kEf-cg-FfM" secondAttribute="leading" id="bCo-is-Kv2"/>
-                                                                                <constraint firstAttribute="bottom" secondItem="OP1-bd-LTd" secondAttribute="bottom" constant="5" id="otE-9E-rbP"/>
-                                                                                <constraint firstItem="OP1-bd-LTd" firstAttribute="top" secondItem="kTz-rM-J8h" secondAttribute="bottom" constant="5" id="yF6-zt-kTk"/>
-                                                                                <constraint firstAttribute="trailing" secondItem="kTz-rM-J8h" secondAttribute="trailing" constant="25" id="yaa-2q-GM2"/>
+                                                                                <constraint firstItem="kTz-rM-J8h" firstAttribute="top" secondItem="OP1-bd-LTd" secondAttribute="bottom" constant="8" id="4ed-Lx-j4a"/>
+                                                                                <constraint firstAttribute="trailing" secondItem="OP1-bd-LTd" secondAttribute="trailing" constant="8" id="AO5-Eg-Lof"/>
+                                                                                <constraint firstItem="kTz-rM-J8h" firstAttribute="leading" secondItem="kEf-cg-FfM" secondAttribute="leading" constant="8" id="GdK-OI-6mb"/>
+                                                                                <constraint firstItem="OP1-bd-LTd" firstAttribute="top" secondItem="kEf-cg-FfM" secondAttribute="top" constant="8" id="RoQ-EI-aE2"/>
+                                                                                <constraint firstAttribute="bottom" secondItem="kTz-rM-J8h" secondAttribute="bottom" constant="8" id="aUu-RH-qF4"/>
+                                                                                <constraint firstAttribute="trailing" secondItem="kTz-rM-J8h" secondAttribute="trailing" constant="8" id="cCp-kY-n5g"/>
+                                                                                <constraint firstItem="OP1-bd-LTd" firstAttribute="leading" secondItem="kEf-cg-FfM" secondAttribute="leading" constant="8" id="ciQ-At-Wv4"/>
                                                                             </constraints>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z61-AT-Rqf">
@@ -348,13 +348,23 @@
                                                                         <constraint firstAttribute="bottom" secondItem="TTT-tV-Et8" secondAttribute="bottom" constant="5" id="uC7-NT-pHy"/>
                                                                     </constraints>
                                                                 </view>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zjQ-8p-tXX">
+                                                                    <rect key="frame" x="324.5" y="320" width="64.5" height="0.0"/>
+                                                                    <state key="normal" title="Button"/>
+                                                                    <buttonConfiguration key="configuration" style="gray" title="Done"/>
+                                                                    <connections>
+                                                                        <action selector="CalanderDoneBtn:" destination="-1" eventType="touchUpInside" id="JiX-h5-zHk"/>
+                                                                    </connections>
+                                                                </button>
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
+                                                                <constraint firstItem="zjQ-8p-tXX" firstAttribute="top" secondItem="njN-IN-6Z7" secondAttribute="bottom" constant="5" id="1Ba-xR-eF2"/>
                                                                 <constraint firstAttribute="trailing" secondItem="njN-IN-6Z7" secondAttribute="trailing" constant="10" id="5gZ-cu-Mpk"/>
+                                                                <constraint firstAttribute="bottom" secondItem="zjQ-8p-tXX" secondAttribute="bottom" constant="5" id="IcN-1L-QSB"/>
                                                                 <constraint firstItem="wcc-0g-6T4" firstAttribute="top" secondItem="BAj-2d-5pL" secondAttribute="top" id="JbO-yZ-HRJ"/>
-                                                                <constraint firstAttribute="bottom" secondItem="njN-IN-6Z7" secondAttribute="bottom" constant="10" id="NIF-9X-CWU"/>
                                                                 <constraint firstAttribute="trailing" secondItem="wcc-0g-6T4" secondAttribute="trailing" id="NcB-1d-8Z9"/>
+                                                                <constraint firstAttribute="trailing" secondItem="zjQ-8p-tXX" secondAttribute="trailing" constant="5" id="Ogt-zq-b5e"/>
                                                                 <constraint firstItem="wcc-0g-6T4" firstAttribute="leading" secondItem="BAj-2d-5pL" secondAttribute="leading" id="Xxr-X8-zpA"/>
                                                                 <constraint firstItem="njN-IN-6Z7" firstAttribute="leading" secondItem="BAj-2d-5pL" secondAttribute="leading" constant="10" id="dNg-sW-ELU"/>
                                                                 <constraint firstItem="njN-IN-6Z7" firstAttribute="top" secondItem="wcc-0g-6T4" secondAttribute="bottom" constant="5" id="t04-3b-rgp"/>
@@ -437,19 +447,19 @@
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="BackGroundClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94117647058823528" green="0.51764705882352946" blue="0.44705882352941179" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="PrimeryColor">
-            <color red="0.94117647058823528" green="0.51764705882352946" blue="0.44705882352941179" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

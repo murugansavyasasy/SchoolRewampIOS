@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="DetailedAttendanceCell" rowHeight="450" id="KGk-i7-Jjw" customClass="DetailedAttendanceCell" customModule="hostelattendacestatics" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="450"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="450"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o8q-hD-Z8r" userLabel="Card View">
+                        <rect key="frame" x="16" y="8" width="343" height="434"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detailed Attendance Records" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t-lb">
+                                <rect key="frame" x="16" y="18" width="311" height="21.666666666666671"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3R-Xy-7pT">
+                                <rect key="frame" x="295" y="14" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="1hO-fR-1l3"/>
+                                    <constraint firstAttribute="width" constant="32" id="HnN-qj-I1k"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemBlueColor"/>
+                                <buttonConfiguration key="configuration" style="plain" image="line.3.horizontal.decrease.circle" catalog="system" title=" "/>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hdr-cn-R1e" userLabel="Header Container View">
+                                <rect key="frame" x="16" y="58" width="311" height="44"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="h-h8"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="N2k-jT-9rU">
+                                <rect key="frame" x="16" y="102" width="311" height="316"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Hdr-cn-R1e" firstAttribute="leading" secondItem="o8q-hD-Z8r" secondAttribute="leading" constant="16" id="Hdr-L1"/>
+                            <constraint firstAttribute="trailing" secondItem="Hdr-cn-R1e" secondAttribute="trailing" constant="16" id="Hdr-T1"/>
+                            <constraint firstItem="Hdr-cn-R1e" firstAttribute="top" secondItem="t-lb" secondAttribute="bottom" constant="18.329999999999998" id="Hdr-Top1"/>
+                            <constraint firstItem="t-lb" firstAttribute="leading" secondItem="o8q-hD-Z8r" secondAttribute="leading" constant="16" id="P2K-3M-Q80"/>
+                            <constraint firstItem="t-lb" firstAttribute="top" secondItem="o8q-hD-Z8r" secondAttribute="top" constant="18" id="P2K-3M-Q81"/>
+                            <constraint firstAttribute="trailing" secondItem="t-lb" secondAttribute="trailing" constant="16" id="P2K-3M-Q82"/>
+                            <constraint firstItem="N2k-jT-9rU" firstAttribute="leading" secondItem="o8q-hD-Z8r" secondAttribute="leading" constant="16" id="P2K-3M-Q83"/>
+                            <constraint firstItem="N2k-jT-9rU" firstAttribute="top" secondItem="Hdr-cn-R1e" secondAttribute="bottom" id="P2K-3M-Q84"/>
+                            <constraint firstAttribute="trailing" secondItem="N2k-jT-9rU" secondAttribute="trailing" constant="16" id="P2K-3M-Q85"/>
+                            <constraint firstAttribute="bottom" secondItem="N2k-jT-9rU" secondAttribute="bottom" constant="16" id="P2K-3M-Q86"/>
+                            <constraint firstAttribute="trailing" secondItem="m3R-Xy-7pT" secondAttribute="trailing" constant="16" id="p1Z-wN-J7R"/>
+                            <constraint firstItem="m3R-Xy-7pT" firstAttribute="centerY" secondItem="t-lb" secondAttribute="centerY" constant="1" id="q8Y-zV-v2W"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="o8q-hD-Z8r" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="om1"/>
+                    <constraint firstItem="o8q-hD-Z8r" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="om2"/>
+                    <constraint firstAttribute="trailing" secondItem="o8q-hD-Z8r" secondAttribute="trailing" constant="16" id="om3"/>
+                    <constraint firstAttribute="bottom" secondItem="o8q-hD-Z8r" secondAttribute="bottom" constant="8" id="om4"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="cardView" destination="o8q-hD-Z8r" id="c11"/>
+                <outlet property="headerContainerView" destination="Hdr-cn-R1e" id="c12"/>
+                <outlet property="innerTableView" destination="N2k-jT-9rU" id="c23"/>
+                <outlet property="titleLabel" destination="t-lb" id="c13"/>
+            </connections>
+            <point key="canvasLocation" x="138" y="129"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="line.3.horizontal.decrease.circle" catalog="system" width="128" height="123"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

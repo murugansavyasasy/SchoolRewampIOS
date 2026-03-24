@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -27,10 +26,10 @@
                                 <rect key="frame" x="5" y="5" width="384" height="266"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="stk-top">
-                                        <rect key="frame" x="0.0" y="0.0" width="384" height="206"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="384" height="71.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v-ava">
-                                                <rect key="frame" x="0.0" y="83" width="40" height="40"/>
+                                                <rect key="frame" x="0.0" y="16" width="40" height="40"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-ava">
                                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -50,7 +49,7 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="stk-nfo">
-                                                <rect key="frame" x="52" y="84" width="332" height="38"/>
+                                                <rect key="frame" x="52" y="17" width="332" height="38"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aarav Sharma" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-nam">
                                                         <rect key="frame" x="0.0" y="0.0" width="332" height="19.5"/>
@@ -68,20 +67,20 @@
                                             </stackView>
                                         </subviews>
                                     </stackView>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fGO-5E-PmM">
-                                        <rect key="frame" x="0.0" y="214" width="384" height="65"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fGO-5E-PmM">
+                                        <rect key="frame" x="0.0" y="87.5" width="384" height="118.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="c7H-qD-Rul">
-                                                <rect key="frame" x="5" y="10" width="374" height="45"/>
+                                                <rect key="frame" x="5" y="10" width="374" height="98.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="4gM-iA-ffZ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="98.5"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="KQE-bB-A9Z">
-                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="0.0"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="19.5"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OutPass Applied" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Maf-Q9-e2h">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="0.0"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="19.5"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
@@ -89,19 +88,19 @@
                                                                 </subviews>
                                                             </stackView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="i am not abel to atten the class" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cVF-U1-nCI">
-                                                                <rect key="frame" x="0.0" y="5" width="374" height="0.0"/>
+                                                                <rect key="frame" x="0.0" y="24.5" width="374" height="17"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="out  10:30  -  in 11 : 30" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IOG-Of-ZXh">
-                                                                <rect key="frame" x="0.0" y="10" width="374" height="0.0"/>
+                                                                <rect key="frame" x="0.0" y="46.5" width="374" height="17"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="AlI-ft-WAd">
-                                                                <rect key="frame" x="0.0" y="15" width="374" height="30"/>
+                                                                <rect key="frame" x="0.0" y="68.5" width="374" height="30"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhU-Z2-I0g">
                                                                         <rect key="frame" x="0.0" y="0.0" width="184.5" height="30"/>
@@ -200,6 +199,7 @@
                 <outlet property="OutPassRejectBtnName" destination="Jdl-h7-Wmd" id="eZL-eg-lgt"/>
                 <outlet property="OutPassTimmingLbl" destination="IOG-Of-ZXh" id="u3E-gO-NSO"/>
                 <outlet property="absentButton" destination="btn-abs" id="out-abs"/>
+                <outlet property="approveAndRejectFullStack" destination="AlI-ft-WAd" id="BgL-h8-Ywu"/>
                 <outlet property="avatarContainer" destination="v-ava" id="out-avc"/>
                 <outlet property="avatarLabel" destination="lbl-ava" id="out-avl"/>
                 <outlet property="cardView" destination="v-card" id="out-crd"/>
@@ -220,7 +220,7 @@
             <color red="0.89399999380111694" green="0.23499999940395355" blue="0.18400000035762787" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

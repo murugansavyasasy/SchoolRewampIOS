@@ -2962,8 +2962,8 @@ struct HostelStudentListSuc : Codable{
 }
 
 struct HostelStudentListData : Codable{
-    let student_id : String?
-    let student_name : String?
+    let id : String?
+    let name : String?
     let admission_no : String?
     let roll_no : String?
     let gender : String?
@@ -2973,6 +2973,14 @@ struct HostelStudentListData : Codable{
     let section_name: String?
     let primary_mobile : String?
     let status : String?
+    let outpass_id : String?
+    let is_outpass_approved : Bool
+    let out_date : String?
+    let in_date : String?
+    let reason : String?
+    let outpasss_status : String?
+    var is_select: Bool?
+    
 }
 
 struct HostelSessionListSuc : Codable{
@@ -2981,7 +2989,7 @@ struct HostelSessionListSuc : Codable{
     let data : [HostelSessionListData]?
 }
 struct HostelSessionListData : Codable{
-    let id : Int?
+    let id : String?
     let name : String?
 }
 
@@ -3002,3 +3010,155 @@ struct HomeworkDetails:Codable{
     let status:String?
 }
 
+struct DashboardModel {
+    var attendanceOverview: AttendanceOverviewModel
+    var sessionAnalysis: SessionAnalysisModel
+    var weeklyTrend: WeeklyTrendModel
+    var detailedRecords: DetailedAttendanceModel
+}
+
+struct AttendanceOverviewModel {
+    let title: String
+    let presentCount: Int
+    let absentCount: Int
+}
+
+struct SessionAnalysisSession {
+    let title: String
+    let presentCount: Int
+    let absentCount: Int
+    let percentageString: String
+}
+
+struct SessionAnalysisModel {
+    let title: String
+    let sessions: [SessionAnalysisSession]
+}
+
+struct WeeklyTrendPoint {
+    let dateLabel: String
+    let percentage: Double
+}
+
+struct WeeklyTrendModel {
+    let title: String
+    let points: [WeeklyTrendPoint]
+}
+
+// New detailed records models
+struct DetailedAttendanceDay: Codable {
+    let dayLabel: String
+    let status: [String] // "Present", "Absent", "Not Taken"
+}
+
+struct DetailedAttendanceModel: Codable {
+    let sessions: [String]
+    let days: [DetailedAttendanceDay]
+}
+
+struct OutpassStatsModel {
+    let totalRequests: String
+    let pending: String
+    let accepted: String
+    let declined: String // Extracted logically
+}
+
+struct OverallStatsModel {
+    let percentage: String
+    let presentCount: String
+    let absentCount: String
+}
+
+struct TodayAttendanceSession {
+    let rawString: String // e.g. "morning : Present"
+    
+    var sessionName: String {
+        return String(rawString.split(separator: ":").first ?? "").trimmingCharacters(in: .whitespacesAndNewlines).capitalized
+    }
+    
+    var status: String {
+        return String(rawString.split(separator: ":").last ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}
+
+struct TodayAttendanceModel {
+    let sessions: [TodayAttendanceSession]
+}
+struct OutpassRequestData {
+    let reason: String
+    let fromToDate: String
+    let requestTime: String
+    var status: String = "Pending" // Adding logically from UI since omitted in payload
+}
+
+struct OutpassRequestsModel {
+    let requests: [OutpassRequestData]
+}
+
+struct HostelInfoData {
+    let rawString: String // "warden name : saranraj "
+    
+    var title: String {
+        return String(rawString.split(separator: ":").first ?? "").trimmingCharacters(in: .whitespacesAndNewlines).capitalized
+    }
+    
+    var value: String {
+        return String(rawString.split(separator: ":").last ?? "").trimmingCharacters(in: .whitespacesAndNewlines).capitalized
+    }
+}
+
+struct HostelInformationModel {
+    let infoBlocks: [HostelInfoData]
+}
+
+struct AttendanceHistoryResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [AttendanceHistoryData]
+}
+
+struct AttendanceHistoryData: Codable {
+    let roomId: String
+    let sessions: [AttendanceHistorySession]
+    
+    enum CodingKeys: String, CodingKey {
+        case roomId = "room_id"
+        case sessions
+    }
+}
+
+struct AttendanceHistorySession: Codable {
+    let sessionTypeId: String
+    let sectionName: String
+    let presentStudent: String
+    let absentStudent: String
+    let students: [AttendanceHistoryStudent]
+    
+    enum CodingKeys: String, CodingKey {
+        case sessionTypeId = "session_type_id"
+        case sectionName = "session_name"
+        case presentStudent = "present_count"
+        case absentStudent = "absent_count"
+        case students
+    }
+}
+
+struct AttendanceHistoryStudent: Codable {
+    let studentId: String
+    let studentName: String
+    let admissionNo: String
+    let className: String
+    let sectionName: String
+    let primaryMobile: String
+    let status: String
+    
+    enum CodingKeys: String, CodingKey {
+        case studentId = "student_id"
+        case studentName = "student_name"
+        case admissionNo = "admission_no"
+        case className = "class_name"
+        case sectionName = "section_name"
+        case primaryMobile = "primary_mobile"
+        case status
+    }
+}
