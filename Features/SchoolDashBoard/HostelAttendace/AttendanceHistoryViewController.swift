@@ -106,7 +106,9 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
     @objc private func selectDateTapped() {
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
-        vc.minimumDate = Date()
+        vc.minimumDate = nil
+        vc.maximumDate = Date()
+        vc.date = dateLbl.text
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
