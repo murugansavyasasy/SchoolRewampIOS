@@ -12,6 +12,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
                                     StudentAttendanceCellDelegate, FSCalendarDelegate, FSCalendarDataSource
 {
 
+    @IBOutlet weak var sessionBtnName: UIButton!
     @IBOutlet weak var mothLbl: UILabel!
     @IBOutlet weak var sessionView: UIView!
     @IBOutlet weak var SelectionDateFullView: UIView!
@@ -36,12 +37,16 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
 
     var roomTitle: String = ""
     var roomSubtitle: String = ""
-    var students: [StudentAttendanceInfo] = []
+    var studentsdataDetails: [HostelStudentListData] = []
     var is_calander_open : Bool = false
     var StaffDetails = UserDefaultFileManager.get_staff_Details()
     var HostelSessionListDataDetails : [HostelSessionListData] = []
     let dropDown = DropDown()
-    var sessionId : Int?
+    var sessionId : String?
+    var academic_year_id : String?
+    var hostelId : String?
+    var roomId : String?
+    var selectedDate : String?
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.modalPresentationStyle = .overFullScreen
@@ -58,20 +63,26 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
         setupUI()
         setupTableView()
+        GetSessionList()
         updateProgress()
         updateMonthLabel()
         
   let dateTap = UITapGestureRecognizer(target: self, action: #selector(Dateclick))
         selectDateView.addGestureRecognizer(dateTap)
   let seesionTap = UITapGestureRecognizer(target: self, action: #selector(SessionClikc))
-        
-        sessionView.addGestureRecognizer(seesionTap)
+    sessionView.addGestureRecognizer(seesionTap)
         bottomConstraint.constant = -1000
         dimmingButton.alpha = 0
         
         
     }
 
+    @IBAction func CalanderDoneBtn(_ sender: UIButton) {
+        calanderFulView.isHidden = true
+        
+        GetStudentList(roomId: roomId ?? "", academicYear: academic_year_id ?? "", date: selectedDate ?? "",sessionID: sessionId ?? "", hostelId: hostelId ?? "")
+        
+    }
     @IBAction func Dateclick(){
         is_calander_open.toggle()
         calanderFulView.isHidden = is_calander_open
@@ -88,7 +99,10 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         dropDown.bottomOffset = CGPoint(x: -20, y: sessionView.bounds.height - 10)
         dropDown.width = sessionView.bounds.width
         dropDown.selectionAction = { [weak self] index, item in
-            self?.sessionId = self?.HostelSessionListDataDetails[index].id
+            guard let self else { return }
+            self.sessionBtnName.setTitle(item, for: .normal)
+            self.sessionId = self.HostelSessionListDataDetails[index].id
+            self.GetStudentList(roomId: self.roomId ?? "", academicYear: self.academic_year_id ?? "", date: getCurrentDateString(),sessionID: self.sessionId ?? "", hostelId: self.hostelId ?? "")
         }
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -148,8 +162,8 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     }
 
     private func updateProgress() {
-        let markedCount = students.filter { $0.state != 0 }.count
-        let total = students.count
+        let markedCount = studentsdataDetails.filter { _ in 0 != 0 }.count
+        let total = studentsdataDetails.count
 
         progressLabel.text = "\(markedCount)/\(total)"
         progressView.progress = total > 0 ? Float(markedCount) / Float(total) : 0
@@ -180,18 +194,18 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     }
 
     @IBAction func markAllTapped(_ sender: Any) {
-        for i in 0..<students.count {
-            if students[i].state == 0 {
-                students[i].state = 1  // default to present if marking all
-            }
-        }
+//        for i in 0..<studentsdataDetails.count {
+//            if studentsdataDetails[i].state == 0 {
+//                studentsdataDetails[i].state = 1  // default to present if marking all
+//            }
+//        }
         tableView.reloadData()
         updateProgress()
     }
 
     // MARK: - Table view data source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return students.count
+        return studentsdataDetails.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -199,21 +213,32 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "StudentAttendanceCell", for: indexPath) as? StudentAttendanceCell
         else { return UITableViewCell() }
-        let student = students[indexPath.row]
+        var student = studentsdataDetails[indexPath.row]
+       
+        switch student.status{
+        case "ABSENT" :
+            student.is_select = false
+        case  "PRESENT" :
+            student.is_select = true
+        default:
+            student.is_select = nil
+        }
+        let inandoutdate = " out date : \(student.out_date ?? "") -   in date : \(student.in_date ?? "")"
         cell.configure(
-            name: student.name, id: student.id, parentNum: student.parentNum, state: student.state,
-            index: indexPath.row)
+            name: student.name ?? "", id: student.id ?? "", parentNum: student.primary_mobile ?? "", state: student.is_select ?? false,
+            index: indexPath.row, reason: student.reason ?? "", out_pass_status: student.outpasss_status ?? "",outDateInDate : inandoutdate)
         cell.delegate = self
         return cell
     }
 
     
-    func GetStudentList(roomId :String,academicYear:String,date:String) {
-        APIService.shared.makeApi(url: ServiceUrl.hostel_attendance_students_for_hostel_attd, parameters: [:], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) {[self] (result: Result<HostelStudentListSuc,Error>) in
+    func GetStudentList(roomId :String,academicYear:String,date:String,sessionID : String,hostelId : String) {
+        APIService.shared.makeApi(url: ServiceUrl.hostel_attendance_students_for_hostel_attd, parameters: ["session_type_id":sessionID,"hostel_id" : hostelId,"room_id":roomId,"academic_year_id" : academicYear, "date" : date], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) {[self] (result: Result<HostelStudentListSuc,Error>) in
             switch result{
             case .success(let Success):
                 DispatchQueue.main.async {[self] in
-                  
+                    studentsdataDetails = Success.data ?? []
+                    tableView.reloadData()
                 }
             case .failure(let error):
                 DispatchQueue.main.async { [self] in
@@ -224,12 +249,14 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func GetSessionList() {
-        APIService.shared.makeApi(url: ServiceUrl.hostel_attendance_session_types, parameters: [:], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) {[self] (result: Result<HostelSessionListSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.hostel_attendance_session_types, parameters: [:], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: true) {[self] (result: Result<HostelSessionListSuc,Error>) in
             switch result{
             case .success(let Success):
                 DispatchQueue.main.async {[self] in
                     HostelSessionListDataDetails = Success.data ?? []
                     setupDropDowns()
+                    sessionId = Success.data?.first?.id ?? ""
+                    GetStudentList(roomId: roomId ?? "", academicYear: academic_year_id ?? "", date: getCurrentDateString(),sessionID: sessionId ?? "" , hostelId: hostelId ?? "")
                 }
             case .failure(let error):
                 DispatchQueue.main.async { [self] in
@@ -237,6 +264,18 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
                 }
             }
         }
+    }
+    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        let filterFormatter = DateFormatter()
+        filterFormatter.dateFormat = DateInputs.dd_MM_yyyy
+        let showFormatter = DateFormatter()
+        showFormatter.dateFormat = DateOutPut.EE_MMM_dd_yyyy
+        let selectedDateForFilter = filterFormatter.string(from: date)
+        let selectedDateForLabel = showFormatter.string(from: date)
+        selectedDate = selectedDateForFilter
+        dateLbl.text = selectedDateForLabel
+        
     }
     
     func minimumDate(for calendar: FSCalendar) -> Date {
@@ -337,13 +376,13 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     
     // MARK: - StudentAttendanceCellDelegate
     func didTapPresent(for index: Int) {
-        students[index].state = 1
+        studentsdataDetails[index].is_select = true
         tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
         updateProgress()
     }
 
     func didTapAbsent(for index: Int) {
-        students[index].state = 2
+        studentsdataDetails[index].is_select = false
         tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
         updateProgress()
     }

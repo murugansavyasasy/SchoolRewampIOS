@@ -6,6 +6,7 @@ protocol StudentAttendanceCellDelegate: AnyObject {
 }
 
 class StudentAttendanceCell: UITableViewCell {
+    @IBOutlet weak var approveAndRejectFullStack: UIStackView!
     @IBOutlet weak var OutPassTimmingLbl: UILabel!
     @IBOutlet weak var OutPassReasonLbl: UILabel!
     @IBOutlet weak var outPassFullStackView: UIStackView!
@@ -41,9 +42,26 @@ class StudentAttendanceCell: UITableViewCell {
         presentButton.layer.cornerRadius = 10
         absentButton.layer.cornerRadius = 10
         outPassRequestFullView.layer.cornerRadius = 10
+        outpassApproveBtnName.layer.cornerRadius = 10
+        OutPassRejectBtnName.layer.cornerRadius = 10
     }
 
-    func configure(name: String, id: String, parentNum: String, state: Int, index: Int) {
+    func configure(name: String, id: String, parentNum: String, state: Bool, index: Int,reason:String,out_pass_status:String,outDateInDate:String) {
+        
+        if out_pass_status == ""{
+            outPassRequestFullView.isHidden = true
+        }else{
+            outPassRequestFullView.isHidden  = false
+            OutPassReasonLbl.text = reason
+            OutPassTimmingLbl.text = outDateInDate
+            if out_pass_status == "APPROVED"{
+                approveAndRejectFullStack.isHidden = true
+            }else if out_pass_status == "REJECTED"{
+                approveAndRejectFullStack.isHidden = true
+            }else if out_pass_status == "PENDING"{
+                approveAndRejectFullStack.isHidden = false
+            }
+        }
         self.studentIndex = index
         nameLabel.text = name
         detailsLabel.text = "Student ID: \(id) • \(parentNum)"
@@ -60,8 +78,8 @@ class StudentAttendanceCell: UITableViewCell {
     }
 
     // state: 0 = unset, 1 = present, 2 = absent
-    private func updateButtonStates(state: Int) {
-        if state == 1 {
+    private func updateButtonStates(state: Bool) {
+        if state == true {
             // Present Selected
             presentButton.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0.35, alpha: 1.0)
             presentButton.setTitleColor(.white, for: .normal)
@@ -73,7 +91,7 @@ class StudentAttendanceCell: UITableViewCell {
             absentButton.tintColor = .darkGray
             absentButton.layer.borderWidth = 1
             absentButton.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).cgColor
-        } else if state == 2 {
+        } else if state == false {
             // Absent Selected
             absentButton.backgroundColor = UIColor(red: 0.95, green: 0.3, blue: 0.3, alpha: 1.0)
             absentButton.setTitleColor(.white, for: .normal)
