@@ -18,7 +18,8 @@ class HostelDashBoardVc: UIViewController {
     var floors: [HostelDashBoardFloor] = []
     var StaffDetails = UserDefaultFileManager.get_staff_Details()
     var hostelData : HostelListData?
-    
+    @IBOutlet weak var acodemicdropView: UIView!
+    @IBOutlet weak var acodomicYearLbl: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         HostelDashboardDateView.layer.cornerRadius = 15
