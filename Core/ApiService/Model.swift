@@ -902,6 +902,7 @@ struct LeaveTypesResponse: Codable {
 struct LeaveType : Codable {
     var id: Int?
     var name:String?
+    var leave_name:String?
 }
 
 struct LeaveInfoResponse: Codable {
@@ -917,7 +918,9 @@ struct LeaveMonth: Codable {
 
 struct LeaveInfo: Codable {
     var id: String?
+    var staff_id: String?
     var applied_on: String?
+    var staff_name: String?
     var student_name: String?
     var class_name: String?
     var section_name: String?
@@ -931,7 +934,14 @@ struct LeaveInfo: Codable {
     var to_session: String?
     var approved_by: String?
     var leave_type: String?
-    var leave_type_id: Int?
+    var from_date: String?
+    var to_date: String?
+    var leave_type_id: String?
+    var status_id: String?
+    var role: String?
+    var mobile_no: String?
+    var email: String?
+    var address: String?
 }
 
 //MARK: ASSIGNMENT MY SUBMISION
@@ -2705,6 +2715,10 @@ struct AttendanceStudentListDetails: Codable {
     let roll_no: String?
     var att_type: String?
     var att_status: String?
+    var is_leave_approved: Bool
+    var leave_from: String?
+    var leave_to: String?
+    var reason: String?
 }
 
 // MARK: - FAQ Models
@@ -2890,5 +2904,419 @@ struct ConvertedStudentRecord:Codable {
     let studentName: String
     let marks: [RecordItem]
 }
+ 
+struct HostelListSuc : Codable{
+    let status : Bool?
+    let message : String?
+    let data : [HostelListData]?
+    
+}
+
+struct HostelListData : Codable{
+    let id : String?
+    let name : String?
+    let institute_id : String?
+    let institute_name : String?
+    let type : String?
+    let max_capacity : Int?
+    let address : String?
+    
+}
+
+struct HostelDashBoardSuc : Codable{
+    let status : Bool?
+    let message : String?
+    let data : [HostelDashBoardData]?
+}
+struct HostelDashBoardData : Codable{
+    let stats  : statsDataDetails?
+    let floors : [HostelDashBoardFloor]?
+}
+
+struct statsDataDetails : Codable{
+    let total_students : String?
+    let outpassRequests :String?
+}
+struct HostelDashBoardFloor : Codable{
+    
+    let id : String?
+    let floor_no : String?
+    let floor_name : String?
+    let rooms : [HostelDashBoardRooms]?
+    
+}
+
+struct HostelDashBoardRooms : Codable{
+    let id : String?
+    let number : String?
+    let max_occupancy : Int?
+    let current_occupancy : Int?
+    let total_beds : Int?
+    let students : [String]?
+}
+
+struct HostelStudentListSuc : Codable{
+    let status : Bool?
+    let message : String?
+    let data : [HostelStudentListData]?
+}
+
+struct HostelStudentListData : Codable{
+    let id : String?
+    let name : String?
+    let admission_no : String?
+    let roll_no : String?
+    let gender : String?
+    let class_id : String?
+    let class_name : String?
+    let section_id : String?
+    let section_name: String?
+    let primary_mobile : String?
+    let status : String?
+    let outpass_id : String?
+    let is_outpass_approved : Bool
+    let out_date : String?
+    let in_date : String?
+    let reason : String?
+    let outpasss_status : String?
+    var is_select: String?
+    
+}
+
+struct HostelSessionListSuc : Codable{
+    let status : Bool?
+    let message : String?
+    let data : [HostelSessionListData]?
+}
+struct HostelSessionListData : Codable{
+    let id : String?
+    let name : String?
+}
+
+
+//-------------------------------------------------------------------------------------------------------//
 
 //-------------------------------------------------------------------------------------------------------
+struct HomeWorkSubmissionList:Codable{
+    let status:Bool?
+    let message:String?
+    let data:[HomeworkDetails]?
+}
+struct HomeworkDetails:Codable{
+    let id:String?
+    let name:String?
+    let admission_no:String?
+    let roll_no:String?
+    let status:String?
+}
+
+struct DashboardModel {
+    var attendanceOverview: AttendanceOverviewModel
+    var sessionAnalysis: SessionAnalysisModel
+    var weeklyTrend: WeeklyTrendModel
+    var detailedRecords: DetailedAttendanceModel
+}
+
+struct AttendanceOverviewModel {
+    let title: String
+    let presentCount: Int
+    let absentCount: Int
+}
+
+struct SessionAnalysisSession {
+    let title: String
+    let presentCount: Int
+    let absentCount: Int
+    let percentageString: String
+}
+
+struct SessionAnalysisModel {
+    let title: String
+    let sessions: [SessionAnalysisSession]
+}
+
+struct WeeklyTrendPoint {
+    let dateLabel: String
+    let percentage: Double
+}
+
+struct WeeklyTrendModel {
+    let title: String
+    let points: [WeeklyTrendPoint]
+}
+
+// New detailed records models
+struct DetailedAttendanceDay: Codable {
+    let dayLabel: String
+    let status: [String] // "Present", "Absent", "Not Taken"
+}
+
+struct DetailedAttendanceModel: Codable {
+    let sessions: [String]
+    let days: [DetailedAttendanceDay]
+}
+
+struct OutpassStatsModel {
+    let totalRequests: String
+    let pending: String
+    let accepted: String
+    let declined: String // Extracted logically
+}
+
+struct OverallStatsModel {
+    let percentage: String
+    let presentCount: String
+    let absentCount: String
+}
+
+struct TodayAttendanceSession {
+    let rawString: String // e.g. "morning : Present"
+    
+    var sessionName: String {
+        return String(rawString.split(separator: ":").first ?? "").trimmingCharacters(in: .whitespacesAndNewlines).capitalized
+    }
+    
+    var status: String {
+        return String(rawString.split(separator: ":").last ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}
+
+struct TodayAttendanceModel {
+    let sessions: [TodayAttendanceSession]
+}
+struct OutpassRequestData {
+    let reason: String
+    let fromToDate: String
+    let requestTime: String
+    var status: String = "Pending" // Adding logically from UI since omitted in payload
+}
+
+struct OutpassRequestsModel {
+    let requests: [OutpassRequestData]
+}
+
+struct HostelInfoData {
+    let title: String
+    let value: String
+    
+    // Kept for backward compatibility if used elsewhere
+    init(title: String, value: String) {
+        self.title = title
+        self.value = value
+    }
+    
+    init(rawString: String) {
+        let parts = rawString.split(separator: ":", maxSplits: 1)
+        self.title = parts.first?.trimmingCharacters(in: .whitespacesAndNewlines).capitalized ?? ""
+        if parts.count > 1 {
+            self.value = parts.last?.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "\n", with: "") ?? ""
+        } else {
+            self.value = ""
+        }
+    }
+}
+
+struct HostelInformationModel {
+    let infoBlocks: [HostelInfoData]
+}
+
+struct AttendanceHistoryResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [AttendanceHistoryData]
+}
+
+struct AttendanceHistoryData: Codable {
+    let roomId: String
+    let sessions: [AttendanceHistorySession]
+    
+    enum CodingKeys: String, CodingKey {
+        case roomId = "room_id"
+        case sessions
+    }
+}
+
+struct AttendanceHistorySession: Codable {
+    let sessionTypeId: String
+    let sectionName: String
+    let presentStudent: String
+    let absentStudent: String
+    let students: [AttendanceHistoryStudent]
+    
+    enum CodingKeys: String, CodingKey {
+        case sessionTypeId = "session_type_id"
+        case sectionName = "session_name"
+        case presentStudent = "present_count"
+        case absentStudent = "absent_count"
+        case students
+    }
+}
+
+struct AttendanceHistoryStudent: Codable {
+    let studentId: String
+    let studentName: String
+    let admissionNo: String
+    let className: String
+    let sectionName: String
+    let primaryMobile: String
+    let status: String
+    
+    enum CodingKeys: String, CodingKey {
+        case studentId = "student_id"
+        case studentName = "student_name"
+        case admissionNo = "admission_no"
+        case className = "class_name"
+        case sectionName = "section_name"
+        case primaryMobile = "primary_mobile"
+        case status
+    }
+}
+// MARK: - Root Model
+struct OutpassResponseSuc : Codable {
+    var status: Bool
+    var message: String
+    var data: [OutpassSection]
+}
+
+// MARK: - Section Model
+struct OutpassSection  : Codable {
+    var status: String?
+    var attd_details: [OutpassStudent]?
+}
+
+// MARK: - Student Model
+struct OutpassStudent   : Codable{
+    var id: String?
+    var room_no: String?
+    var student_id: String?
+    var student_name: String?
+    var admission_no: String?
+    var class_name: String?
+    var section_name: String?
+    var primary_mobile: String?
+    var gender: String?
+    var out_date: String?
+    var in_date: String?
+    var reason: String?
+    var status: String?
+}
+// MARK: - Root
+struct HostelDashboardResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [HostelDashboardData]?
+}
+
+// MARK: - Data
+struct HostelDashboardData: Codable {
+    let gate_pass: [GatePass]?
+    let today_attendance: [String]?
+    let out_pass_requests: [OutPassRequest]?
+    let hostel_info: [HostelInfo]?
+    let attendance_details: [AttendanceDetails]?
+    let fee_details: [HostelFeeDetails]?
+}
+
+// MARK: - Gate Pass
+struct GatePass: Codable {
+    let action_by: String?
+    let admission_no: String?
+    let reason: String?
+    let profile: String?
+    let floor_no: String?
+    let room_no: String?
+    let fromdate_todate: String?
+    let request_time: String?
+    let status: String?
+}
+
+// MARK: - Out Pass Requests
+struct OutPassRequest: Codable {
+    let reason: String?
+    let fromdate_todate: String?
+    let request_time: String?
+    let status: String?
+}
+
+// MARK: - Hostel Info
+struct HostelInfo: Codable {
+    let hostel_id: String?
+    let hostel_name: String?
+    let hostel_type: String?
+    let no_of_floors: Int?
+    let no_of_rooms: Int?
+    let warden_type: String?
+    let max_capacity: Int?
+    let warden_name: [String]?
+    let institute_name: String?
+    let institute_address: String?
+}
+
+// MARK: - Attendance Details
+struct AttendanceDetails: Codable {
+    let sessions: [String]?
+    let days: [AttendanceDay]?
+}
+
+struct AttendanceDay: Codable {
+    let date_label: String?
+    let status: [String]?
+}
+
+// MARK: - Fee Details
+struct HostelFeeDetails: Codable {
+    let fee_id: Int?
+    let fee_name: String?
+    let fee_group: String?
+    let hostel_details: HostelRoomDetails?
+    let summary: hostelFeeSummary?
+    let payments: [Payment]?
+}
+
+// MARK: - Hostel Room Details
+struct HostelRoomDetails: Codable {
+    let hostel_name: String?
+    let room_no: String?
+    let bed_no: String?
+}
+
+// MARK: - Fee Summary
+struct hostelFeeSummary: Codable {
+    let total_amount: Int?
+    let paid_amount: Int?
+    let pending_amount: Int?
+    let discount: Int?
+    let status: String?
+}
+
+// MARK: - Payment
+struct Payment: Codable {
+    let paid_amount: Int?
+    let paid_date: String?
+    let payment_mode: String?
+}
+// MARK: - Root
+struct HostelDetailsResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [HostelDetailsData]?
+}
+
+// MARK: - Data
+struct HostelDetailsData: Codable {
+    let room_allocation_id: String?
+    let hostel_id: String?
+    let hostel_name: String?
+    let student_id: String?
+    let student_name: String?
+    let admission_no: String?
+    let primary_mobile: String?
+    let gender: String?
+    let floor_id: String?
+    let floor_no: String?
+    let floor_name: String?
+    let room_id: String?
+    let room_no: String?
+    let room_type_id: String?
+    let room_type: String?
+}

@@ -391,9 +391,8 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     func setupTimePicker() {
         timePicker = UIDatePicker()
         timePicker.datePickerMode = .time
-        if #available(iOS 13.4, *) {
-            timePicker.preferredDatePickerStyle = .wheels
-        }
+       
+        timePicker.preferredDatePickerStyle = .wheels
         timePicker.backgroundColor = .white
         timePicker.isHidden = true
         timePicker.minimumDate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())

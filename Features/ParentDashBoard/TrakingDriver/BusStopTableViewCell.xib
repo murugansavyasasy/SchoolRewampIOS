@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="KGk-i7-Jjw" customClass="BusStopTableViewCell" customModule="BusTraking" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+
+                    <!-- Status Indicator Circle View -->
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O9V-R7-Owo" userLabel="statusIndicatorView">
+                        <rect key="frame" x="20" y="8" width="32" height="32"/>
+                        <subviews>
+                            <!-- Status Icon Label -->
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center"
+                                   horizontalHuggingPriority="251" verticalHuggingPriority="251"
+                                   text="○" textAlignment="center"
+                                   translatesAutoresizingMaskIntoConstraints="NO" id="CmR-fR-Va5" userLabel="statusIconLabel">
+                                <rect key="frame" x="0" y="0" width="32" height="32"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                <color key="textColor" systemColor="systemGrayColor"/>
+                                <nil key="highlightedColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="O9V-R7-Owo" secondAttribute="centerX" id="icon-cx"/>
+                                    <constraint firstAttribute="centerY" secondItem="O9V-R7-Owo" secondAttribute="centerY" id="icon-cy"/>
+                                </constraints>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="32" id="ind-w"/>
+                            <constraint firstAttribute="height" constant="32" id="ind-h"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="16"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+
+                    <!-- Connecting Line View -->
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1z3-Oq-4LB" userLabel="connectingLineView">
+                        <rect key="frame" x="35" y="40" width="2" height="30"/>
+                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="2" id="KJm-8n-GSx"/>
+                        </constraints>
+                    </view>
+
+                    <!-- Stop Name Label -->
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left"
+                           horizontalHuggingPriority="251" verticalHuggingPriority="251"
+                           text="Stop Name" numberOfLines="2"
+                           translatesAutoresizingMaskIntoConstraints="NO" id="t5d-9s-7ZF" userLabel="stopNameLabel">
+                        <rect key="frame" x="64" y="10" width="291" height="18"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                        <color key="textColor" systemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+
+                    <!-- Stop Time Label -->
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left"
+                           horizontalHuggingPriority="251" verticalHuggingPriority="251"
+                           text="00:00 AM"
+                           translatesAutoresizingMaskIntoConstraints="NO" id="flc-gc-eSn" userLabel="stopTimeLabel">
+                        <rect key="frame" x="64" y="32" width="291" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" systemColor="systemGrayColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+
+                </subviews>
+
+                <constraints>
+                    <!-- statusIndicatorView: top=8, leading=20 -->
+                    <constraint firstItem="O9V-R7-Owo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="c-ind-top"/>
+                    <constraint firstItem="O9V-R7-Owo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="c-ind-lead"/>
+
+                    <!-- connectingLineView: top = statusIndicatorView.bottom, centerX = statusIndicatorView.centerX, bottom = contentView.bottom -->
+                    <constraint firstItem="1z3-Oq-4LB" firstAttribute="top" secondItem="O9V-R7-Owo" secondAttribute="bottom" id="c-line-top"/>
+                    <constraint firstItem="1z3-Oq-4LB" firstAttribute="centerX" secondItem="O9V-R7-Owo" secondAttribute="centerX" id="c-line-cx"/>
+                    <constraint firstItem="1z3-Oq-4LB" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottom" id="c-line-bot"/>
+
+                    <!-- stopNameLabel: top=10, leading = statusIndicatorView.trailing + 12, trailing = -20 -->
+                    <constraint firstItem="t5d-9s-7ZF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="c-name-top"/>
+                    <constraint firstItem="t5d-9s-7ZF" firstAttribute="leading" secondItem="O9V-R7-Owo" secondAttribute="trailing" constant="12" id="c-name-lead"/>
+                    <constraint firstAttribute="trailing" secondItem="t5d-9s-7ZF" secondAttribute="trailing" constant="20" id="c-name-trail"/>
+
+                    <!-- stopTimeLabel: top = stopNameLabel.bottom + 4, leading/trailing same, bottom >= -10 -->
+                    <constraint firstItem="flc-gc-eSn" firstAttribute="top" secondItem="t5d-9s-7ZF" secondAttribute="bottom" constant="4" id="c-time-top"/>
+                    <constraint firstItem="flc-gc-eSn" firstAttribute="leading" secondItem="t5d-9s-7ZF" secondAttribute="leading" id="c-time-lead"/>
+                    <constraint firstItem="flc-gc-eSn" firstAttribute="trailing" secondItem="t5d-9s-7ZF" secondAttribute="trailing" id="c-time-trail"/>
+                    <constraint firstAttribute="bottom" secondItem="flc-gc-eSn" secondAttribute="bottom" constant="10" relation="greaterThanOrEqual" id="c-time-bot"/>
+                </constraints>
+
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+
+            <!-- MARK: Corrected Outlet Connections -->
+            <connections>
+                <outlet property="statusIndicatorView" destination="O9V-R7-Owo" id="out-status-ind"/>
+                <outlet property="statusIconLabel" destination="CmR-fR-Va5" id="S1E-iR-tIs"/>
+                <outlet property="connectingLineView" destination="1z3-Oq-4LB" id="out-conn-line"/>
+                <outlet property="stopNameLabel" destination="t5d-9s-7ZF" id="dVU-C7-fTB"/>
+                <outlet property="stopTimeLabel" destination="flc-gc-eSn" id="Owb-qi-gE7"/>
+            </connections>
+
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.898" green="0.898" blue="0.918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

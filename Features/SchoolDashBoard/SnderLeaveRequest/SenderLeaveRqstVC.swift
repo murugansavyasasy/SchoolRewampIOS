@@ -10,8 +10,31 @@ protocol ConfirmDelegate{
     func confirm(index:Int,status:Bool)
 }
 @available(iOS 14.0, *)
-class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
+class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate, approvalAndReject {
+    func StaffUpdate(index: IndexPath) {
+        let studentId = filteredLeaveRecords?[index.section].details?[index.row].id
+        let message = AlertstringFile.toapprovethisleaverequest
+        alert.showAlertCancel(title: AlertstringFile.Confirm, message: message,
+                              actionLbl1: AlertstringFile.OK,
+                              actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
+            self.Leave_Update_status(id: studentId ?? "", status: true,indexPath: index)
+        }, onNo: {})
+    }
     
+    func StaffRejectUpdate(index: IndexPath) {
+        let studentId = filteredLeaveRecords?[index.section].details?[index.row].id
+        let message = AlertstringFile.toRejectthisleaverequest
+        alert.showAlertCancel(title: AlertstringFile.Confirm, message: message,
+                              actionLbl1: AlertstringFile.OK,
+                              actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
+            
+            self.Leave_Update_status(id: studentId ?? "", status: false,indexPath: index)
+        }, onNo: {})
+    }
+    
+   
+ 
+   
     
     func edit(edit: IndexPath?, delete: IndexPath?) {
         guard let indexPath = edit,
@@ -67,6 +90,8 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
     let member_type = "STAFF"
     let leave_type = ["Approved","Rejected","Waiting for approval"]
     var isStaff  : Bool = false
+    var isPrincipal  : Bool = false
+    var staffId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,7 +113,11 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
         NodataImage.isHidden = true
         leaveRequestTable.showsVerticalScrollIndicator = false
         leaveRequestTable.showsHorizontalScrollIndicator = false
-        GetLeaveRequestAPI()
+        if isStaff || isPrincipal{
+           GetStaffLeaveRequest()
+        }else{
+            GetLeaveRequestAPI()
+        }
         leaveRequestTable.register(UINib(nibName: CellConfingName.LeveHistoryTV, bundle: nil), forCellReuseIdentifier: CellConfingName.LeveHistoryTV)
         leaveRequestTable.register(UINib(nibName: "StaffLeaveReqTvCell", bundle: nil), forCellReuseIdentifier: "StaffLeaveReqTvCell")
         leaveRequestTable.delegate = self
@@ -148,6 +177,38 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
         }
     }
     
+    
+    func GetStaffLeaveRequest() {
+        APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_list_staff, parameters: ["staff_id":""], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) {[self] (result: Result<LeaveInfoResponse,Error>) in
+            switch result{
+            case .success(let Success):
+                DispatchQueue.main.async {[self] in
+                    allLeaveRecords = Success.data
+                    filteredLeaveRecords = allLeaveRecords
+                    NodateLbl.text = Success.message
+                    NodataImage.isHidden = !(allLeaveRecords?.isEmpty ?? false)
+                    NodateLbl.isHidden = !(allLeaveRecords?.isEmpty ?? false)
+                    searchBtn.isHidden = allLeaveRecords?.isEmpty ?? false
+                    filterBtnStack.isHidden = !(Success.status ?? true)
+                    leaveRequestTable.reloadData()
+                    if self.pushnotificationMsg_id != ""{
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            self.scrollToLeave(with: self.pushnotificationMsg_id ?? "")
+                        }
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async { [self] in
+                    NodateLbl.text = error.localizedDescription
+                    NodataImage.isHidden = false
+                    NodateLbl.isHidden = false
+                    searchBtn.isHidden = true
+                    print("Error: ",error.localizedDescription)
+                }
+            }
+        }
+    }
+    
     private func scrollToLeave(with id: String) {
         guard let data = filteredLeaveRecords else { return }
         for (sectionIndex, month) in data.enumerated() {
@@ -174,13 +235,13 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
     
     
     //MARK: update staus Api call
-    func Leave_Update_status(id: String, status: Bool, indexPath: IndexPath) {
+    func Leave_Update_status(id: String, status: Bool,indexPath: IndexPath) {
         let param: [String: Any] = [
             LeaveRequestStringFile.id: id,
             LeaveRequestStringFile.is_approve: status
         ]
         APIService.shared.makeApi(
-            url: ServiceUrl.comm_api_leave_req_update_status,
+            url: isPrincipal ? ServiceUrl.comm_api_leave_req_update_status_Staff:ServiceUrl.comm_api_leave_req_update_status,
             parameters: param,
             type: ApitTypeSringFile.PUT,
             token: StaffDetails?.access_token ?? "", isBaseUrl: true
@@ -227,6 +288,60 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
         }
     }
     
+    
+    func deleteLeave(id: String, indexPath: IndexPath) {
+        alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.deletemessage,
+                              actionLbl1: AlertstringFile.delete, actionLbl2: AlertstringFile.Cancel, on: self,
+        onOk: {
+            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_delete,
+                                      parameters: ["id": id],
+                                      type: ApitTypeSringFile.PUT,
+                                      token: self.StaffDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result: Result<CommonApiSuc, Error>) in
+
+                DispatchQueue.main.async {
+                    guard let self = self else { return }
+
+                    switch result {
+                    case .success(let success):
+                        if success.status == true {
+                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success,
+                                                              message: success.message ?? "", on: self) {
+
+                                // Remove from originalData
+                                if let originalSectionIndex = self.allLeaveRecords?.firstIndex(where: { $0.month == self.filteredLeaveRecords?[indexPath.section].month }),
+                                   let originalRowIndex = self.allLeaveRecords?[originalSectionIndex].details?.firstIndex(where: { $0.id == id }) {
+                                    self.allLeaveRecords?[originalSectionIndex].details?.remove(at: originalRowIndex)
+
+                                    // Remove entire section if empty
+                                    if self.allLeaveRecords?[originalSectionIndex].details?.isEmpty ?? false {
+                                        self.allLeaveRecords?.remove(at: originalSectionIndex)
+                                    }
+                                }
+
+                                // Remove from filteredData
+                                self.filteredLeaveRecords?[indexPath.section].details?.remove(at: indexPath.row)
+                                if self.filteredLeaveRecords?[indexPath.section].details?.isEmpty ?? false {
+                                    self.filteredLeaveRecords?.remove(at: indexPath.section)
+                                }
+                                
+//                                self.NodataLbl.text = CommonStringFile.No_data_found
+//                                self.NodataLbl.isHidden = !self.filteredLeaveData.isEmpty
+//                                self.NodataImage.isHidden = !self.filteredLeaveData.isEmpty
+                                self.leaveRequestTable.reloadData()
+                            }
+                        } else {
+                            self.alert.showAlert(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                        }
+
+                    case .failure(let error):
+                        self.alert.showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
+                    }
+                }
+            }
+        }, onNo: {
+            print("User canceled deletion")
+        })
+    }
     //MARK: Button actions
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
@@ -283,12 +398,7 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate {
 extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if isStaff{
-            return 1
-        }
-        else{
            return filteredLeaveRecords?.count ?? 0
-        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -307,17 +417,85 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isStaff{
-            return 10
-        }else{
+      
             return filteredLeaveRecords?[section].details?.count ?? 0
-        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if isStaff{
+        if isStaff || isPrincipal{
             guard let  cell = leaveRequestTable.dequeueReusableCell(withIdentifier: "StaffLeaveReqTvCell", for: indexPath) as? StaffLeaveReqTvCell else { return UITableViewCell() }
             
+            guard let leaveData = filteredLeaveRecords?[indexPath.section].details?[indexPath.row] else { return cell }
+            
+            cell.nameLbl.text = leaveData.staff_name
+//            cell.nameLbl.numberOfLines = 1
+            cell.priorityLbl.text = leaveData.role
+            let fromdate = leaveData.from_date ?? ""
+            let formformatted = formatDate(fromdate)
+            cell.staringDateLbl.text = formformatted
+            let todate = leaveData.to_date ?? ""
+            let toformatted = formatDate(todate)
+            cell.EnddateLbl.text = toformatted
+            cell.leaveReasonLbl.text = leaveData.reason
+//            cell.aproveBtn.setTitle(leaveData.status, for: .normal)
+            cell.aproveBtn.isUserInteractionEnabled = true
+            cell.RejectBtnName.isUserInteractionEnabled = true
+            cell.aproveBtn.tag = indexPath.row
+            cell.RejectBtnName.tag = indexPath.row
+            cell.ApprovalAndReject = self
+            cell.statusLbl.text = leaveData.status
+            cell.NoOfDaysLbl.text = (leaveData.no_of_days ?? "")
+            cell.edit(edit: true, delete: true, selectedId: leaveData.id ?? "")
+          
+            if isStaff{
+                cell.StatusView.isHidden = false
+                cell.viewDetailsLbl.isHidden = true
+                cell.aproveBtn.isHidden = true
+                cell.RejectBtnName.isHidden = true
+            }
+            else if isPrincipal{
+                cell.StatusView.isHidden = true
+                cell.aproveBtn.isHidden = false
+                cell.RejectBtnName.isHidden = false
+                cell.viewDetailsLbl.isHidden = false
+                cell.threeDotBtnName.isHidden = true
+            }
+            
+            switch leaveData.status {
+
+            case leave_type[0]: // Approved
+                cell.StatusView.isHidden = false
+                cell.StatusView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
+                cell.statusLbl.textColor = .systemGreen
+                cell.aproveBtn.isHidden = true
+                cell.RejectBtnName.isHidden = true
+                cell.threeDotBtnName.isHidden = true
+            case leave_type[1]: // Rejected
+                cell.StatusView.isHidden = false
+                cell.StatusView.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
+                cell.statusLbl.textColor = .systemRed
+                cell.aproveBtn.isHidden = true
+                cell.RejectBtnName.isHidden = true
+                cell.threeDotBtnName.isHidden = true
+
+            default: // Pending
+                if isStaff {
+                    cell.StatusView.isHidden = false
+                    cell.StatusView.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.3)
+                    cell.statusLbl.textColor = .systemOrange
+                    cell.aproveBtn.isHidden = true
+                    cell.RejectBtnName.isHidden = true
+                    cell.threeDotBtnName.isHidden = leaveData.status != "Waiting for approval"
+                } else  if isPrincipal{
+                    cell.StatusView.isHidden = true
+                    cell.aproveBtn.isHidden = false
+                    cell.RejectBtnName.isHidden = false
+                }
+            }
+            
+            cell.leaveTypeLbl.text = leaveData.leave_type
+            cell.indexPath = indexPath
+            cell.delegate = self
             return cell
         }
         else{
@@ -366,13 +544,30 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
             
         }
     }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        
-//        let vc = StaffDetailsPreviewVc()
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
-//    }
+    func formatDate(_ dateString: String) -> String {
+        
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd-MM-yyyy"
+        
+        if let date = inputFormatter.date(from: dateString) {
+            
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = "MMM dd"
+            
+            return outputFormatter.string(from: date)
+        }
+        
+        return ""
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isPrincipal{
+            let vc = StaffDetailsPreviewVc()
+            vc.staffID  = filteredLeaveRecords?[indexPath.section].details?[indexPath.row].staff_id ?? ""
+            vc.passedData = filteredLeaveRecords?[indexPath.section].details?[indexPath.row]
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }

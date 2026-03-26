@@ -1295,3 +1295,28 @@ extension UILabel {
 
 
 }
+class SelfSizingTableView: UITableView {
+
+    override var contentSize: CGSize {
+        didSet {
+            invalidateIntrinsicContentSize()
+        }
+    }
+
+    override var intrinsicContentSize: CGSize {
+        layoutIfNeeded()
+        return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
+    }
+}
+extension UITableView {
+
+    func register<T: UITableViewCell>(_ cell: T.Type) {
+        let name = String(describing: cell)
+        register(UINib(nibName: name, bundle: nil), forCellReuseIdentifier: name)
+    }
+
+    func dequeueReusableCell<T: UITableViewCell>(for indexPath: IndexPath) -> T? {
+        let name = String(describing: T.self)
+        return dequeueReusableCell(withIdentifier: name, for: indexPath) as? T
+    }
+}

@@ -9,9 +9,7 @@ import UIKit
 //import DropDown
 
 class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
-    @IBOutlet weak var searchHidBtn: UIButton!
     @IBOutlet weak var searchBtn: UIButton!
-    @IBOutlet weak var searchHeight: NSLayoutConstraint!
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var nodataImg: UIImageView!
     @IBOutlet weak var BackBtn: UIButton!
@@ -116,7 +114,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     @IBAction func Search(_ sender: UIButton) {
         sender.isSelected.toggle()
         showSearch.toggle()
-        searchHeight.constant = showSearch ? 60 : 0
+        searchBar.isHidden = showSearch ? false : true
         if sender.isSelected{
             searchBar.becomeFirstResponder()
             sender.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
@@ -132,17 +130,17 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             
         }
     }
-    @IBAction func hideSearch(_ sender: UIButton) {
-        showSearch.toggle()
-        searchHeight.constant = showSearch ? 60 : 0
-        let img = showSearch ? UIImage(systemName: "magnifyingglass.circle.fill") : UIImage(systemName: "magnifyingglass")
-        searchBtn.setImage(img, for: .normal)
-        searchBar.text = ""
-        nodataImg.isHidden = true
-        nodataLbl.isHidden = true
-        filterStudent = studentList
-        reportTable.reloadData()
-    }
+//    @IBAction func hideSearch(_ sender: UIButton) {
+//        showSearch.toggle()
+//        searchHeight.constant = showSearch ? 60 : 0
+//        let img = showSearch ? UIImage(systemName: "magnifyingglass.circle.fill") : UIImage(systemName: "magnifyingglass")
+//        searchBtn.setImage(img, for: .normal)
+//        searchBar.text = ""
+//        nodataImg.isHidden = true
+//        nodataLbl.isHidden = true
+//        filterStudent = studentList
+//        reportTable.reloadData()
+//    }
     
     @IBAction func sortArray(_ sender: UISegmentedControl) {
         guard let sortedStudent = sortedStudent else { return }
@@ -206,7 +204,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         AcodemicDropdown.width = selectedType.bounds.width
         AcodemicDropdown.show()
         AcodemicDropdown.selectionAction = { [self] (index: Int, item: String) in
-            searchHeight.constant = 0
+            searchBar.isHidden = true
             searchBar.text = ""
             searchBtn
                 .setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
@@ -493,6 +491,11 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             
         }
         return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = StudentReportDashboardVC()
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension

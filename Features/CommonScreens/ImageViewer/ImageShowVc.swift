@@ -6,6 +6,8 @@
 import UIKit
 import SDWebImage
 import WebKit
+//import QuickLook
+
 
 protocol DidSelectDelegate: AnyObject {
     func select(index: Int, value: String?, Img: [String], Pdf: String?, text: String?, type: String)
@@ -25,6 +27,27 @@ extension ImageShowVc: UIPopoverPresentationControllerDelegate {
 
 class ImageShowVc: UIViewController {
     
+//    func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+//        return previewURL == nil ? 0 : 1
+//    }
+//
+//    func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+//        return previewURL! as NSURL
+//    }
+//    
+//    func previewControllerDidDismiss(_ controller: QLPreviewController) {
+//
+//        guard let url = previewURL else { return }
+//
+//        do {
+//            try FileManager.default.removeItem(at: url)
+//            print("✅ File deleted")
+//        } catch {
+//            print("❌ Error deleting file:", error)
+//        }
+//
+//        previewURL = nil
+//    }
     @IBOutlet weak var saveBtn: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var pdfView: WKWebView!
@@ -49,6 +72,7 @@ class ImageShowVc: UIViewController {
     var fileType: String?
     var isPaymentReceipt = false
     var dateAndTimeForVideo : String = ""
+//    var previewURL: URL?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -191,6 +215,7 @@ extension ImageShowVc: UICollectionViewDelegate, UICollectionViewDataSource, UIC
                 } else {
                     print("Invalid URL: \(item.url ?? "")")
                 }
+//                cell.WebView.navigationDelegate = self
                 cell.imageView.isHidden = true
                 cell.WebView.isHidden = false
                 return cell
@@ -249,4 +274,59 @@ extension ImageShowVc: WKNavigationDelegate {
         activityIndicator.stopAnimating()
         print("❌ Provisional navigation failed: \(error.localizedDescription)")
     }
+    
+//    func webView(_ webView: WKWebView,
+//                 decidePolicyFor navigationResponse: WKNavigationResponse,
+//                 decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+//
+//        guard let response = navigationResponse.response as? HTTPURLResponse,
+//              let url = response.url else {
+//            decisionHandler(.allow)
+//            return
+//        }
+//
+//        let mimeType = response.mimeType ?? ""
+//
+//        print("MIME TYPE:", mimeType)
+//
+//        // Handle both correct + wrong MIME
+//        if mimeType == "application/pdf" ||
+//           mimeType == "filetype/pdf" ||
+//           url.absoluteString.lowercased().contains(".pdf") {
+//
+//            decisionHandler(.cancel)
+//            openPDFManually(url: url)
+//            return
+//        }
+//
+//        decisionHandler(.allow)
+//    }
+//    
+//    func openPDFManually(url: URL) {
+//
+//        URLSession.shared.downloadTask(with: url) { localURL, response, error in
+//
+//            guard let localURL = localURL else { return }
+//
+//            let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(url.lastPathComponent)
+//
+//            try? FileManager.default.removeItem(at: tempURL)
+//
+//            do {
+//                try FileManager.default.moveItem(at: localURL, to: tempURL)
+//
+//                DispatchQueue.main.async {
+//                    self.previewURL = tempURL
+//                    let previewVC = QLPreviewController()
+//                    previewVC.dataSource = self
+//                    previewVC.delegate = self
+//                    self.present(previewVC, animated: true)
+//                }
+//
+//            } catch {
+//                print("Error:", error)
+//            }
+//
+//        }.resume()
+//    }
 }
