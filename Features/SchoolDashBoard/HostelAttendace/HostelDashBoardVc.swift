@@ -12,22 +12,75 @@ class HostelDashBoardVc: UIViewController {
     
     @IBOutlet weak var HostelDashboardDateView: UIView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var acodemicdropView: UIView!
+    @IBOutlet weak var acodomicYearLbl: UILabel!
+    var AcadimicYearDatas: [AcadimicYearData] = []
     var stats: DashboardStats!
     var rooms: [Room] = []
     var dashBoardDataDetails: [HostelDashBoardData] = []
     var floors: [HostelDashBoardFloor] = []
     var StaffDetails = UserDefaultFileManager.get_staff_Details()
     var hostelData : HostelListData?
-    
+    let acidamicdrops = DropDown()
+    var accadimYr: [String] = []
+    var academicId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         HostelDashboardDateView.layer.cornerRadius = 15
         setupData()
         setupTableView()
         GetHostelListDashboard()
+        acodemicdropView.layer.cornerRadius = 8
+        acodemicdropView.layer.borderWidth = 1
+        acodemicdropView.layer.borderColor = UIColor.white.cgColor
+        getacadmicYr()
+        
+        let accadmicYrTap = UITapGestureRecognizer(target: self, action: #selector(selectAcodemic))
+        acodemicdropView.addGestureRecognizer(accadmicYrTap)
+       
     }
 
-
+    func getacadmicYr() {
+        showActivityLoader()
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_recipient_get_academic_year_list,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
+        ) { [self] (result: Result<get_academic_yearSuc, Error>) in
+            
+            switch result {
+            case .success(let response):
+                DispatchQueue.main.async { [self] in
+                    AcadimicYearDatas = response.data ?? []
+                   
+                    for year in AcadimicYearDatas where year.current_academic_year == true {
+                        acodomicYearLbl.text = year.year
+                        academicId = String(year.id ?? 0)
+                        GetHostelListDashboard()
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+              
+            }
+            hideActivityLoader()
+        }
+    }
+    
+    @IBAction func selectAcodemic() {
+        accadimYr = AcadimicYearDatas.compactMap { $0.year }
+        acidamicdrops.anchorView = acodemicdropView
+        acidamicdrops.dataSource = accadimYr
+        acidamicdrops.bottomOffset = CGPoint(x: 0, y: acodemicdropView.bounds.height)
+        acidamicdrops.show()
+        
+        acidamicdrops.selectionAction = { [self] (index: Int, item: String) in
+            acodomicYearLbl.text = item
+            academicId = String(AcadimicYearDatas[index].id ?? 0)
+            GetHostelListDashboard()
+        }
+    }
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
@@ -134,28 +187,13 @@ extension HostelDashBoardVc : UITableViewDataSource,UITableViewDelegate{
 
             guard let room = floors[safe: floorIndex]?.rooms?[safe: indexPath.row] else { return }
 
-            // Build student info dynamically based on existing room generic string entries just for UI showcase
-            // The user wanted parent phone number added natively.
-//            var studentInfos: [StudentAttendanceInfo] = []
-//
-//            for (idx, stName) in (room.students ?? []).enumerated() {
-//                var cleanName = stName
-//                if stName.contains("more") {
-//                    cleanName = "Other Student"
-//                }
-//                studentInfos.append(
-//                    StudentAttendanceInfo(
-//                        name: cleanName, id: "s\(idx + 1)", parentNum: "Parent: 9876543210",
-//                        state: 0))
-//            }
-
             let vc = MarkAttendanceViewController(
                 nibName: "MarkAttendanceViewController", bundle: nil)
             vc.roomTitle = room.number ?? ""
-            vc.roomSubtitle = "\(room.students?.count ?? 0) Students • \(room.totalBeds ?? 0) Beds"
+            vc.roomSubtitle = "\(room.students?.count ?? 0) Students • \(room.total_beds ?? 0) Beds"
             vc.hostelId = hostelData?.id ?? ""
             vc.roomId = room.id ?? ""
-            vc.academic_year_id = "7"
+            vc.academic_year_id = academicId
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: false, completion: nil)
         }
@@ -165,7 +203,7 @@ extension HostelDashBoardVc : UITableViewDataSource,UITableViewDelegate{
     }
     
     func GetHostelListDashboard() {
-        APIService.shared.makeApi(url: ServiceUrl.hostel_attendance_room_details, parameters: ["hostel_id": hostelData?.id ?? "" ,"academic_year_id" : "7"], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) {[self] (result: Result<HostelDashBoardSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.hostel_attendance_room_details, parameters: ["hostel_id": hostelData?.id ?? "" ,"academic_year_id" : academicId ?? ""], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) {[self] (result: Result<HostelDashBoardSuc,Error>) in
             switch result{
             case .success(let Success):
                 DispatchQueue.main.async {[self] in
@@ -190,7 +228,7 @@ extension HostelDashBoardVc: AttendanceSummaryCellDelegate {
         let vc = AttendanceHistoryViewController(
             nibName: "AttendanceHistoryViewController", bundle: nil)
         vc.hostelId = hostelData?.id
-        vc.academicYearId = "7"
+        vc.academicYearId = academicId
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: false, completion: nil)
     }
@@ -213,6 +251,8 @@ extension HostelDashBoardVc: DashboardStatsCellDelegate {
     func didTapOutpassRequests() {
         let vc = OutpassRequestsViewController(
             nibName: "OutpassRequestsViewController", bundle: nil)
+        vc.hostelId = hostelData?.id ?? ""
+        vc.accidemicyearId = academicId ?? ""
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: false, completion: nil)
         

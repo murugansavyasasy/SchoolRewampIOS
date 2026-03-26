@@ -34,15 +34,16 @@ class HostelRoomTvCell: UITableViewCell {
     }
 
     func configure(with room: HostelDashBoardRooms) {
-        let current = room.currentOccupancy ?? 0
-        let max = room.maxOccupancy ?? 0
+        let current = room.current_occupancy ?? 0
+        let max = room.max_occupancy ?? 0
         if let label = titleLabel { label.text = room.number }
         if let label = studentCapicatyLbl { label.text = " \(current)/\(max)" }
-        if let label = totalBedLbl { label.text = String(room.totalBeds ?? 0) }
+        
+        if let label = totalBedLbl { label.text = String(room.total_beds ?? 0) }
         
         
         let occupancyPercent =
-        room.maxOccupancy ?? 0 > 0 ? Float(room.currentOccupancy ?? 0) / Float(room.maxOccupancy ?? 0) : 0
+        room.max_occupancy ?? 0 > 0 ? Float(room.current_occupancy ?? 0) / Float(room.max_occupancy ?? 0) : 0
         if let occLabel = occupancyLabel { occLabel.text = "\(Int(occupancyPercent * 100))%" }
         if let prog = occupancyProgressView {
             prog.progress = occupancyPercent

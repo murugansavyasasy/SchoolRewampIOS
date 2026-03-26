@@ -15,19 +15,47 @@ class HostelInfoCell: UITableViewCell {
         cardView.backgroundColor = .white
     }
 
-    func configure(with model: HostelInformationModel) {
+    func configure(with data: HostelInfo) {
         // Clear old rows
         while containerStackView.arrangedSubviews.count > 2 {
             let view = containerStackView.arrangedSubviews.last!
             view.removeFromSuperview()
         }
         
-        for (index, info) in model.infoBlocks.enumerated() {
+        var blocks = [HostelInfoData]()
+        if let institute = data.institute_name {
+            blocks.append(HostelInfoData(title: "Institute", value: institute))
+        }
+        if let hostelName = data.hostel_name {
+            blocks.append(HostelInfoData(title: "Hostel Name", value: hostelName))
+        }
+//        if let hType = data.hostel_type {
+//            blocks.append(HostelInfoData(title: "Type", value: hType.capitalized))
+//        }
+//        if let capacity = data.max_capacity {
+//            blocks.append(HostelInfoData(title: "Capacity", value: "\(capacity) Students"))
+//        }
+//        if let floors = data.no_of_floors, let rooms = data.no_of_rooms {
+//            blocks.append(HostelInfoData(title: "Layout", value: "\(floors) Floors, \(rooms) Rooms"))
+//        }
+        if let wardens = data.warden_name {
+            var uniqueWardens = [String]()
+            for w in wardens where !uniqueWardens.contains(w) { uniqueWardens.append(w) }
+            blocks.append(HostelInfoData(title: "Wardens", value: uniqueWardens.joined(separator: ", ")))
+        }
+        if let wType = data.warden_type {
+            blocks.append(HostelInfoData(title: "Warden Type", value: wType))
+        }
+        if let address = data.institute_address {
+            blocks.append(HostelInfoData(title: "Address", value: address.trimmingCharacters(in: .whitespacesAndNewlines)))
+        }
+        
+        for (index, info) in blocks.enumerated() {
             let row = createInfoRow(title: info.title, value: info.value)
             containerStackView.addArrangedSubview(row)
             
             // Add separator if not last
-            if index < model.infoBlocks.count - 1 {
+            if index < blocks.count - 1 {
                 let sepContainer = UIView()
                 sepContainer.translatesAutoresizingMaskIntoConstraints = false
                 sepContainer.heightAnchor.constraint(equalToConstant: 1).isActive = true
@@ -51,13 +79,18 @@ class HostelInfoCell: UITableViewCell {
     private func createInfoRow(title: String, value: String) -> UIView {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
-        container.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        // Allow the container to expand vertically if needed
+        container.heightAnchor.constraint(greaterThanOrEqualToConstant: 50).isActive = true
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = title
         titleLabel.font = .systemFont(ofSize: 15, weight: .semibold)
         titleLabel.textColor = .darkText
+        
+        // Ensure title label doesn't compress and stays intact
+        titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        titleLabel.setContentHuggingPriority(.required, for: .horizontal)
         container.addSubview(titleLabel)
         
         let valueLabel = UILabel()
@@ -66,17 +99,22 @@ class HostelInfoCell: UITableViewCell {
         valueLabel.font = .systemFont(ofSize: 15, weight: .regular)
         valueLabel.textColor = .black
         valueLabel.textAlignment = .right
+        valueLabel.numberOfLines = 0 // Allow multiple lines for long texts like address
+        valueLabel.lineBreakMode = .byWordWrapping
         container.addSubview(valueLabel)
         
         NSLayoutConstraint.activate([
+            // Title constraints
+            titleLabel.topAnchor.constraint(greaterThanOrEqualTo: container.topAnchor, constant: 12),
             titleLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16),
+            titleLabel.bottomAnchor.constraint(lessThanOrEqualTo: container.bottomAnchor, constant: -12),
             
-            valueLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+            // Value constraints
+            valueLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: 12),
+            valueLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -12),
             valueLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16),
-            
-            // Allow title to squeeze if value is long
-            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: valueLabel.leadingAnchor, constant: -16)
+            valueLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 16)
         ])
         
         return container

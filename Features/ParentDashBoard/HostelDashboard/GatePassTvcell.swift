@@ -8,19 +8,28 @@
 import UIKit
 
 class GatePassTvcell: UITableViewCell {
+    @IBOutlet weak var studentRollNumberLbl: UILabel!
     @IBOutlet weak var cardView: UIView!
+    
+    @IBOutlet weak var AutjorizedByLbl: UILabel!
+    @IBOutlet weak var validUntilLbl: UILabel!
+    @IBOutlet weak var validFromLbl: UILabel!
+    @IBOutlet weak var floorLbl: UILabel!
+    @IBOutlet weak var roomNumberLbl: UILabel!
+    @IBOutlet weak var reasonLbl: UILabel!
+    @IBOutlet weak var exitingTimeLbl: UILabel!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var avatarView: UIView!
     @IBOutlet weak var purposeContainer: UIView!
     @IBOutlet weak var statusContainer: UIView!
     @IBOutlet weak var separatorView: UIView!
     
+    @IBOutlet weak var studentNameLbl: UILabel!
     private let dashedLineLayer = CAShapeLayer()
-    
     // Background half-circles (The "ticket" cutouts on left and right)
     private let leftCutout: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 250/255, alpha: 1.0)
+        view.backgroundColor = UIColor(white: 0.96, alpha: 1) // Matches ViewController background
         view.layer.cornerRadius = 16
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -28,7 +37,7 @@ class GatePassTvcell: UITableViewCell {
     
     private let rightCutout: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 250/255, alpha: 1.0)
+        view.backgroundColor = UIColor(white: 0.96, alpha: 1) // Matches ViewController background
         view.layer.cornerRadius = 16
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -44,12 +53,7 @@ class GatePassTvcell: UITableViewCell {
         dashedLineLayer.path = path.cgPath
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
+   
     private func setupStyling() {
         self.backgroundColor = .clear
         
@@ -70,11 +74,14 @@ class GatePassTvcell: UITableViewCell {
         ])
         
         // Card styling
+       
+        contentView.layer.shadowColor = UIColor.black.cgColor
+        contentView.layer.shadowOpacity = 0.25
+        contentView.layer.shadowOffset = CGSize(width: 0, height: 10)
+        contentView.layer.shadowRadius = 20
+        contentView.layer.masksToBounds = false
+
         cardView.layer.cornerRadius = 16
-        cardView.layer.shadowColor = UIColor.black.cgColor
-        cardView.layer.shadowOpacity = 0.5
-        cardView.layer.shadowOffset = CGSize(width: 0, height: 5)
-        cardView.layer.shadowRadius = 10
         cardView.clipsToBounds = true
         cardView.backgroundColor = .white
         // Avatar circular
@@ -99,4 +106,16 @@ class GatePassTvcell: UITableViewCell {
         separatorView.layer.addSublayer(dashedLineLayer)
     }
     
+    
+    func configure(with data: GatePass?) {
+        studentRollNumberLbl.text = data?.admission_no
+        reasonLbl.text = data?.reason
+        validUntilLbl.text = data?.fromdate_todate
+        floorLbl.text = data?.floor_no
+        roomNumberLbl.text = data?.room_no
+        validFromLbl.text = data?.request_time?.convertToTargetDateFormat()
+        validUntilLbl.text = data?.request_time?.convertToTargetDateFormat()
+        AutjorizedByLbl.text = data?.action_by
+    }
+  
 }

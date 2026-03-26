@@ -1,6 +1,6 @@
 import UIKit
 
-class NewOutpassRequestVC: UIViewController {
+class NewOutpassRequestVC: UIViewController,UITextViewDelegate {
 
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var reasonTextView: UITextView!
@@ -27,13 +27,28 @@ class NewOutpassRequestVC: UIViewController {
     private let toDatePicker = UIDatePicker()
     private let fromTimePicker = UIDatePicker()
     private let toTimePicker = UIDatePicker()
-
+    var studentDetails = UserDefaultFileManager.get_child_Details()
+    var studentHostelInfo  : HostelDetailsData?
+    let alert = CustomAlert()
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupPickers()
     }
 
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == "Enter reason..." {
+            textView.text = ""
+            textView.textColor = .black
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Enter reason..."
+            textView.textColor = .lightGray
+        }
+    }
     func setupUI() {
         // Corner Radii
         firstCardView.layer.cornerRadius = 16
@@ -54,6 +69,9 @@ class NewOutpassRequestVC: UIViewController {
         
         // Back Button action
         backBtn.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
+        reasonTextView.text = "Enter reason..."
+        reasonTextView.textColor = .lightGray
+        reasonTextView.delegate = self
     }
     
     @objc func backTapped() {
@@ -123,4 +141,126 @@ class NewOutpassRequestVC: UIViewController {
     @objc func donePicker() {
         view.endEditing(true)
     }
+    
+    func OutpassRequest() {
+        let outDate = "\(convertDate(fromDateTextField.text ?? "") ?? "") \(fromTimeTextField.text ?? "")".trimmingCharacters(in: .whitespaces)
+
+        let inDate = "\(convertDate(toDateTextField.text ?? "") ?? "") \(toTimeTextField.text ?? "")".trimmingCharacters(in: .whitespaces)
+        
+        APIService.shared.makeApi(url: ServiceUrl.hostel_attendance_apply_outpass, parameters: ["hostel_id" : studentHostelInfo?.hostel_id ?? "" , "room_id" : studentHostelInfo?.room_id ?? "","out_date" : outDate, "in_date" :inDate,"emergency_contact" : emergencyContactTextField.text ?? "" ,"reason" : reasonTextView.text ?? "",], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "", isBaseUrl: true) {[self] (result: Result<CommonApiSuc,Error>) in
+            switch result{
+            case .success(let Success):
+                DispatchQueue.main.async {[self] in
+                    if Success.status ?? false{
+                        self.alert
+                            .showAlert(
+                                title: AlertstringFile.Success,
+                                message: Success.message ?? "" ,
+                                on: self
+                            )
+                        
+                    }else{
+                        self.alert
+                            .showAlert(
+                                title: AlertstringFile.Oops,
+                                message: Success.message ?? "" ,
+                                on: self
+                            )
+                        
+                    }
+                    
+                }
+            case .failure(let error):
+                DispatchQueue.main.async { [self] in
+                    self.alert
+                        .showAlert(
+                            title: AlertstringFile.Oops,
+                            message: error.localizedDescription ,
+                            on: self
+                        )
+                   
+                }
+            }
+        }
+    }
+    
+    func formatDateTime(date: String?, time: String?) -> String {
+        let d = convertDate(date ?? "") ?? ""
+        let t = time ?? ""
+        return "\(d) \(t)".trimmingCharacters(in: .whitespaces)
+    }
+    
+    func validateFields() -> Bool {
+        
+        if !isValid(reasonTextView.text) {
+            alert.showAlert(title: AlertstringFile.Oops,
+                            message: "Enter reason",
+                            on: self)
+            return false
+        }
+        
+        
+        if !isValid(fromDateTextField.text) {
+            alert.showAlert(title: AlertstringFile.Oops,
+                            message: "Select from date",
+                            on: self)
+            return false
+        }
+        
+        if !isValid(toDateTextField.text) {
+            alert.showAlert(title: AlertstringFile.Oops,
+                            message: "Select to date",
+                            on: self)
+            return false
+        }
+        
+        if !isValid(fromTimeTextField.text) {
+            alert.showAlert(title: AlertstringFile.Oops,
+                            message: "Select from time",
+                            on: self)
+            return false
+        }
+        
+        if !isValid(toTimeTextField.text) {
+            alert.showAlert(title: AlertstringFile.Oops,
+                            message: "Select to time",
+                            on: self)
+            return false
+        }
+        
+        if !isValid(emergencyContactTextField.text) {
+            alert.showAlert(title: AlertstringFile.Oops,
+                            message: "Enter emergency contact",
+                            on: self)
+            return false
+        }
+        
+        return true
+    }
+    
+    func isValid(_ text: String?) -> Bool {
+        guard let text = text?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !text.isEmpty else {
+            return false
+        }
+        return true
+    }
+    @IBAction func submitActBtn(_ sender: UIButton) {
+        if validateFields() {
+            alert.showAlertCancel(
+                title: AlertstringFile.Confirm_title,
+                message: AlertstringFile.Are_you_sure_want_to_submit,
+                actionLbl1:  AlertstringFile.Yes_Send,
+                actionLbl2: AlertstringFile.Cancel,
+                on: self,
+                onOk: {
+                    self.OutpassRequest()
+                },
+                onNo: {
+                    
+                }
+            )
+        }
+        }
+        
 }

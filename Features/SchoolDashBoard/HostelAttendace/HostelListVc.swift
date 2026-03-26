@@ -39,7 +39,8 @@ class HostelListVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     
     
-
+    @IBOutlet weak var hostelAviabelCountLbl: UILabel!
+    
     @IBOutlet weak var tv: UITableView!
     var StaffDetails = UserDefaultFileManager.get_staff_Details()
     var hostelData : [HostelListData] = []
@@ -50,6 +51,7 @@ class HostelListVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
         tv.delegate = self
         tv.dataSource = self
         GetHostelList()
+       
     }
 
     func GetHostelList() {
@@ -58,6 +60,7 @@ class HostelListVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
             case .success(let Success):
                 DispatchQueue.main.async {[self] in
                     hostelData = Success.data ?? []
+                    hostelAviabelCountLbl.text = "\(Success.data?.count ?? 0) HOSTELS AVAILABLE"
                     tv.reloadData()
                 }
             case .failure(let error):

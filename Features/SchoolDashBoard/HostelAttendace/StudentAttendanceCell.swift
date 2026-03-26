@@ -46,7 +46,7 @@ class StudentAttendanceCell: UITableViewCell {
         OutPassRejectBtnName.layer.cornerRadius = 10
     }
 
-    func configure(name: String, id: String, parentNum: String, state: Bool, index: Int,reason:String,out_pass_status:String,outDateInDate:String) {
+    func configure(name: String, id: String, parentNum: String, state: String, index: Int,reason:String,out_pass_status:String,outDateInDate:String) {
         
         if out_pass_status == ""{
             outPassRequestFullView.isHidden = true
@@ -62,7 +62,6 @@ class StudentAttendanceCell: UITableViewCell {
                 approveAndRejectFullStack.isHidden = false
             }
         }
-        self.studentIndex = index
         nameLabel.text = name
         detailsLabel.text = "Student ID: \(id) • \(parentNum)"
 
@@ -78,8 +77,8 @@ class StudentAttendanceCell: UITableViewCell {
     }
 
     // state: 0 = unset, 1 = present, 2 = absent
-    private func updateButtonStates(state: Bool) {
-        if state == true {
+    private func updateButtonStates(state: String) {
+        if state == "2" {
             // Present Selected
             presentButton.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0.35, alpha: 1.0)
             presentButton.setTitleColor(.white, for: .normal)
@@ -91,7 +90,7 @@ class StudentAttendanceCell: UITableViewCell {
             absentButton.tintColor = .darkGray
             absentButton.layer.borderWidth = 1
             absentButton.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).cgColor
-        } else if state == false {
+        } else if state == "1" {
             // Absent Selected
             absentButton.backgroundColor = UIColor(red: 0.95, green: 0.3, blue: 0.3, alpha: 1.0)
             absentButton.setTitleColor(.white, for: .normal)
@@ -119,11 +118,11 @@ class StudentAttendanceCell: UITableViewCell {
         }
     }
 
-    @IBAction func presentTapped(_ sender: Any) {
-        delegate?.didTapPresent(for: studentIndex)
+    @IBAction func presentTapped(_ sender: UIButton) {
+        delegate?.didTapPresent(for: sender.tag)
     }
 
-    @IBAction func absentTapped(_ sender: Any) {
-        delegate?.didTapAbsent(for: studentIndex)
+    @IBAction func absentTapped(_ sender: UIButton) {
+        delegate?.didTapAbsent(for: sender.tag)
     }
 }

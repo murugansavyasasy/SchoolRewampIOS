@@ -81,13 +81,20 @@
                                     </view>
                                 </subviews>
                             </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="GmS-cL-EUV" customClass="SelfSizingTableView" customModule="School_Chimes" customModuleProvider="target">
+                                <rect key="frame" x="10" y="71" width="323" height="203"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="GmS-cL-EUV" firstAttribute="top" secondItem="stk-vW" secondAttribute="bottom" constant="10" id="AIG-ll-fmy"/>
+                            <constraint firstAttribute="bottom" secondItem="GmS-cL-EUV" secondAttribute="bottom" constant="10" id="I47-bN-fJ7"/>
+                            <constraint firstAttribute="trailing" secondItem="GmS-cL-EUV" secondAttribute="trailing" constant="10" id="aC9-5Z-Dzi"/>
                             <constraint firstItem="stk-vW" firstAttribute="top" secondItem="o8q-hD-Z8r" secondAttribute="top" id="c1"/>
                             <constraint firstAttribute="trailing" secondItem="stk-vW" secondAttribute="trailing" id="c2"/>
                             <constraint firstItem="stk-vW" firstAttribute="leading" secondItem="o8q-hD-Z8r" secondAttribute="leading" id="c3"/>
-                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="stk-vW" secondAttribute="bottom" id="c4"/>
+                            <constraint firstItem="GmS-cL-EUV" firstAttribute="leading" secondItem="o8q-hD-Z8r" secondAttribute="leading" constant="10" id="uEt-UR-E9s"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -101,6 +108,7 @@
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="Tv" destination="GmS-cL-EUV" id="kkT-98-0ga"/>
                 <outlet property="cardView" destination="o8q-hD-Z8r" id="c11"/>
                 <outlet property="containerStackView" destination="stk-vW" id="c12"/>
             </connections>
