@@ -7,7 +7,7 @@ class DetailedAttendanceCell: UITableViewCell, UITableViewDataSource, UITableVie
     @IBOutlet weak var headerContainerView: UIView!
     @IBOutlet weak var innerTableView: UITableView!
     
-    private var model: DetailedAttendanceModel?
+    private var model: AttendanceDetails?
     private var syncedOffset: CGPoint = .zero
     private var headerRowCell: DetailedDayRowCell?
 
@@ -59,18 +59,18 @@ class DetailedAttendanceCell: UITableViewCell, UITableViewDataSource, UITableVie
         innerTableView.layer.borderWidth = 1
     }
 
-    func configure(with model: DetailedAttendanceModel) {
+    func configure(with model: AttendanceDetails?) {
         self.model = model
         
         // Configure sticky static header
-        headerRowCell?.configure(dayLabel: "Date", statuses: model.sessions, isHeader: true)
+        headerRowCell?.configure(dayLabel: "Date", statuses: model?.sessions ?? [], isHeader: true)
         
         self.innerTableView.reloadData()
     }
     
     // MARK: - TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model?.days.count ?? 0
+        return model?.days?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -81,8 +81,8 @@ class DetailedAttendanceCell: UITableViewCell, UITableViewDataSource, UITableVie
         let cell = tableView.dequeueReusableCell(withIdentifier: "DetailedDayRowCell", for: indexPath) as! DetailedDayRowCell
         cell.delegate = self
         
-        if let dayData = model?.days[indexPath.row] {
-            cell.configure(dayLabel: dayData.dayLabel, statuses: dayData.status, isHeader: false)
+        if let dayData = model?.days?[indexPath.row] {
+            cell.configure(dayLabel: dayData.date_label ?? "", statuses: dayData.status ?? [], isHeader: false)
         }
         
         // Restore synced offset for horizontal collection view

@@ -11,37 +11,22 @@ struct OutpassRequest {
 }
 
 class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    @IBOutlet weak var norecordLbl: UILabel!
+    @IBOutlet weak var norecordImage: UIImageView!
     @IBOutlet weak var dimmingButton: UIButton!
     @IBOutlet weak var bottomSheetView: UIView!
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
-
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var newRequestButton: UIButton!
-
     @IBOutlet weak var tableView: UITableView!
-
-    var requests: [OutpassRequest] = [
-        OutpassRequest(
-            name: "Aarav Sharma", room: "Room 101", destination: "Library", description: "Study",
-            outDate: "Mar 5 at 10:00 AM", returnDate: "Mar 5 at 12:00 PM", status: "Pending"),
-        OutpassRequest(
-            name: "Ishaan Roy", room: "Room 108", destination: "Cafeteria", description: nil,
-            outDate: nil, returnDate: nil, status: "Approved"),
-        OutpassRequest(
-            name: "Myra Kapoor", room: "Room 105", destination: "Home", description: "Family event",
-            outDate: nil, returnDate: nil, status: "Rejected"),
-    ]
-
-    var pendingRequests: [OutpassRequest] {
-        requests.filter { $0.status.lowercased() == "pending" }
-    }
-    var approvedRequests: [OutpassRequest] {
-        requests.filter { $0.status.lowercased() == "approved" }
-    }
-    var rejectedRequests: [OutpassRequest] {
-        requests.filter { $0.status.lowercased() == "rejected" }
-    }
+    
+    var StaffDetails = UserDefaultFileManager.get_staff_Details()
+    var outpassDataDetails : [OutpassSection] = []
+    var pendingRequests : [OutpassStudent] = []
+    var approvedRequests : [OutpassStudent] = []
+    var rejectedRequests : [OutpassStudent] = []
+    var hostelId : String = ""
+    var accidemicyearId : String = ""
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -58,10 +43,9 @@ class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("OUT PASS REQUESTS", requests)
         setupUI()
         setupTableView()
-
+        GetOutPassReport(hostelId : hostelId,academicYearId : accidemicyearId)
         bottomConstraint.constant = -1000
         dimmingButton.alpha = 0
     }
@@ -141,7 +125,7 @@ class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UI
                 withIdentifier: "OutpassRequestCell", for: indexPath) as? OutpassRequestCell
         else { return UITableViewCell() }
 
-        let request: OutpassRequest
+        let request: OutpassStudent
         if indexPath.section == 0 {
             request = pendingRequests[indexPath.row]
         } else if indexPath.section == 1 {
@@ -151,9 +135,9 @@ class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UI
         }
 
         cell.configure(
-            name: request.name, room: request.room, status: request.status,
-            dest: request.destination, desc: request.description, outDate: request.outDate,
-            returnDate: request.returnDate)
+            name: request.student_name ?? "", room: request.room_no ?? "", status: request.status ?? "",
+            dest: request.reason ?? "", desc: request.reason ?? "", outDate: request.out_date ?? "",
+            returnDate: request.in_date ?? "")
 
         return cell
     }
@@ -223,5 +207,49 @@ class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UI
         if section == 1 && approvedRequests.isEmpty { return 0 }
         if section == 2 && rejectedRequests.isEmpty { return 0 }
         return 50
+    }
+    
+    func GetOutPassReport(hostelId : String,academicYearId : String) {
+        APIService.shared.makeApi(url: ServiceUrl.hostel_attendance_outpass_report, parameters: ["year_id" : String(getCurrentYear()) , "month_id" : String(getCurrentMonth()),"hostel_id" : hostelId,"academic_year_id": academicYearId], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) {[self] (result: Result<OutpassResponseSuc,Error>) in
+            switch result{
+            case .success(let Success):
+                DispatchQueue.main.async {[self] in
+                    if Success.status{
+                        outpassDataDetails = Success.data
+                        norecordLbl.isHidden = true
+                        norecordImage.isHidden = true
+                        tableView.isHidden = false
+                        pendingRequests = outpassDataDetails
+                            .filter { $0.status?.lowercased() == "pending" }
+                            .flatMap { $0.attd_details ?? [] }
+
+                        approvedRequests = outpassDataDetails
+                            .filter { $0.status?.lowercased() == "approved" || $0.status?.lowercased() == "approval" }
+                            .flatMap { $0.attd_details ?? [] }
+
+                        rejectedRequests = outpassDataDetails
+                            .filter { $0.status?.lowercased() == "rejected" }
+                            .flatMap { $0.attd_details ?? [] }
+                        tableView.reloadData()
+                    }else{
+                        norecordLbl.isHidden = false
+                        norecordImage.isHidden = false
+                        tableView.isHidden = true
+                        norecordLbl.text = Success.message
+                    }
+                   
+                }
+            case .failure(let error):
+                DispatchQueue.main.async { [self] in
+                   
+                }
+            }
+        }
+    }
+    func getCurrentMonth() -> Int {
+        return Calendar.current.component(.month, from: Date())
+    }
+    func getCurrentYear() -> Int {
+        return Calendar.current.component(.year, from: Date())
     }
 }

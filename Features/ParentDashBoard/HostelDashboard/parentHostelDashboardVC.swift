@@ -6,7 +6,14 @@
 //
 
 import UIKit
-
+enum DashboardRow {
+    case gatePass
+    case todayAttendance
+    case detailedAttendance
+    case outpassRequests
+    case hostelInfo
+    case feesinfo
+}
 class parentHostelDashboardVC: UIViewController {
    
     
@@ -15,96 +22,10 @@ class parentHostelDashboardVC: UIViewController {
     @IBOutlet weak var studentDataFullView: UIView!
     
    
-    @IBOutlet weak var monthStatusFullView: UIView!
-    @IBOutlet weak var attendaceStatusFullView: UIView!
+    @IBOutlet weak var schoolNameLbl: UILabel!
+    @IBOutlet weak var classNameLbl: UILabel!
+    @IBOutlet weak var studentNameLbl: UILabel!
     
-    // Dummy Data from the UI designs
-    var overviewModel = AttendanceOverviewModel(
-        title: "Attendance Overview - March 2026",
-        presentCount: 18,
-        absentCount: 3
-    )
-    
-    var sessionModel = SessionAnalysisModel(
-        title: "Session-wise Analysis",
-        sessions: [
-            SessionAnalysisSession(title: "Morning", presentCount: 0, absentCount: 6, percentageString: "86%"),
-            SessionAnalysisSession(title: "Afternoon", presentCount: 0, absentCount: 6, percentageString: "86%"),
-            SessionAnalysisSession(title: "Evening", presentCount: 0, absentCount: 6, percentageString: "86%")
-        ]
-    )
-    
-    var weeklyModel = WeeklyTrendModel(
-        title: "Weekly Attendance Trend",
-        points: [
-            WeeklyTrendPoint(dateLabel: "Mar 7", percentage: 65),
-            WeeklyTrendPoint(dateLabel: "Mar 6", percentage: 100),
-            WeeklyTrendPoint(dateLabel: "Mar 5", percentage: 65),
-            WeeklyTrendPoint(dateLabel: "Mar 4", percentage: 100),
-            WeeklyTrendPoint(dateLabel: "Mar 3", percentage: 10),
-            WeeklyTrendPoint(dateLabel: "", percentage: 100),
-            WeeklyTrendPoint(dateLabel: "Mar 1", percentage: 100)
-        ]
-    )
-    
-    var detailedModel = DetailedAttendanceModel(
-        sessions: ["Morning", "Afternoon", "Evening", "Night"],
-        days: [
-            DetailedAttendanceDay(dayLabel: "Mar 30", status: ["Present", "Present", "Present", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 29", status: ["Present", "Absent", "Present", "Not Taken"]),
-            DetailedAttendanceDay(dayLabel: "Mar 28", status: ["Present", "Present", "Present", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 27", status: ["Absent", "Present", "Present", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 26", status: ["Present", "Present", "Not Taken", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 25", status: ["Present", "Present", "Present", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 24", status: ["Present", "Absent", "Present", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 23", status: ["Present", "Present", "Present", "Not Taken"]),
-            DetailedAttendanceDay(dayLabel: "Mar 22", status: ["Present", "Present", "Absent", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 21", status: ["Present", "Present", "Present", "Present"]),
-            
-            DetailedAttendanceDay(dayLabel: "Mar 20", status: ["Absent", "Present", "Present", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 19", status: ["Present", "Present", "Present", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 18", status: ["Present", "Absent", "Present", "Not Taken"]),
-            DetailedAttendanceDay(dayLabel: "Mar 17", status: ["Present", "Present", "Present", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 16", status: ["Present", "Present", "Not Taken", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 15", status: ["Present", "Present", "Present", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 14", status: ["Absent", "Present", "Present", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 13", status: ["Present", "Present", "Present", "Not Taken"]),
-            DetailedAttendanceDay(dayLabel: "Mar 12", status: ["Present", "Absent", "Present", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 11", status: ["Present", "Present", "Present", "Present"]),
-            
-            DetailedAttendanceDay(dayLabel: "Mar 10", status: ["Present", "Present", "Absent", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 9", status: ["Present", "Present", "Present", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 8", status: ["Present", "Absent", "Not Taken", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 7", status: ["Present", "Present", "Absent", "Not Taken"]),
-            DetailedAttendanceDay(dayLabel: "Mar 6", status: ["Present", "Present", "Present", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 5", status: ["Absent", "Present", "Present", "Not Taken"]),
-            DetailedAttendanceDay(dayLabel: "Mar 4", status: ["Present", "Present", "Present", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 3", status: ["Present", "Absent", "Not Taken", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 2", status: ["Present", "Present", "Present", "Present"]),
-            DetailedAttendanceDay(dayLabel: "Mar 1", status: ["Absent", "Present", "Present", "Present"])
-        ]
-    )
-    
-    var outpassModel = OutpassStatsModel(
-        totalRequests: "25",
-        pending: "10",
-        accepted: "10",
-        declined: "5"
-    )
-
-    var overallModel = OverallStatsModel(
-        percentage: "80%",
-        presentCount: "20",
-        absentCount: "10"
-    )
-    
-    var todayModel = TodayAttendanceModel(
-        sessions: [
-            TodayAttendanceSession(rawString: "morning : Present"),
-            TodayAttendanceSession(rawString: "AfterNoon : Absent"),
-            TodayAttendanceSession(rawString: "Evening : Not taken")
-        ]
-    )
     
     var outpassRequestsModel = OutpassRequestsModel(
         requests: [
@@ -113,20 +34,19 @@ class parentHostelDashboardVC: UIViewController {
         ]
     )
     
-    var hostelInfoModel = HostelInformationModel(
-        infoBlocks: [
-            HostelInfoData(rawString: "warden name : saranraj "),
-            HostelInfoData(rawString: "Address : 3/18 kaverstreet")
-        ]
-    )
+  
+    
+    var studentDetails = UserDefaultFileManager.get_child_Details()
+    var HosteldataDetails   : [HostelDashboardData] = []
+    var rows: [DashboardRow] = []
+    var  datadetails: [HostelDetailsData]?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(white: 0.96, alpha: 1)
         studentDataFullView.layer.cornerRadius = 10
-        monthStatusFullView.layer.cornerRadius = 10
-        attendaceStatusFullView.layer.cornerRadius = 10
         studentDataFullView.layer.cornerRadius = 15
         setupTableView()
+        GetHostelDetails()
     }
 
 
@@ -138,8 +58,7 @@ class parentHostelDashboardVC: UIViewController {
 //        tableView = UITableView(frame: self.view.bounds, style: .grouped)
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.delegate = self
-        tableView.dataSource = self
+       
 //        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         // Register the awesome XIB custom cells
@@ -153,6 +72,7 @@ class parentHostelDashboardVC: UIViewController {
         tableView.register(UINib(nibName: "OutpassRequestsCell", bundle: nil), forCellReuseIdentifier: "OutpassRequestsCell")
         tableView.register(UINib(nibName: "HostelInfoCell", bundle: nil), forCellReuseIdentifier: "HostelInfoCell")
         tableView.register(UINib(nibName: "GatePassTvcell", bundle: nil), forCellReuseIdentifier: "GatePassTvcell")
+        tableView.register(UINib(nibName: "studentPendingFeeTv", bundle: nil), forCellReuseIdentifier: "studentPendingFeeTv")
         
     }
     
@@ -163,6 +83,7 @@ class parentHostelDashboardVC: UIViewController {
 extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,newRequestScreen {
     func newOutpassVc() {
         let vc = NewOutpassRequestVC(nibName: nil, bundle: nil)
+        vc.studentHostelInfo =  datadetails?.first
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
         
@@ -174,59 +95,169 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return rows.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if indexPath.row == 0 { return 110 } // Overall Stats
-//        else if indexPath.row == 1 { return 270 } // Today's Attendance
-       if indexPath.row == 2 { return 450 } // Attendance Overview
-//        else if indexPath.row == 3 { return 380 } // Session-wise Analysis
-//        else if indexPath.row == 4 { return 280 } // Weekly Trend
-//        else if indexPath.row == 5 { return 450 } // Detailed Records
-//        else if indexPath.row == 6 { return 260 } // Outpass stats
-//        else if indexPath.row == 7 { return 360 } // Outpass Requests
-//        else { return 200 } // Hostel Info
         
-        return UITableView.automaticDimension
+        switch rows[indexPath.row] {
+        case .detailedAttendance:
+            return 450
+        default:
+            return UITableView.automaticDimension
+        }
     }
     
+
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0{
+
+        guard let data = HosteldataDetails.first else {
+            return UITableViewCell()
+        }
+
+        let rowType = rows[indexPath.row]
+
+        switch rowType {
+            
+        case .gatePass:
             let cell = tableView.dequeueReusableCell(withIdentifier: "GatePassTvcell", for: indexPath) as! GatePassTvcell
             cell.selectionStyle = .none
+            cell.configure(with: data.gate_pass?.first)
             return cell
-        }
-
-    else if indexPath.row == 1 {
+            
+        case .feesinfo :
+            let cell = tableView.dequeueReusableCell(withIdentifier: "studentPendingFeeTv", for: indexPath) as! studentPendingFeeTv
+            cell.config(data: data.fee_details ?? [])
+            return cell
+            
+        case .todayAttendance:
             let cell = tableView.dequeueReusableCell(withIdentifier: "TodayAttendanceCell", for: indexPath) as! TodayAttendanceCell
-            cell.configure(with: todayModel)
-        cell.selectionStyle = .none
+            cell.selectionStyle = .none
+            cell.configure(with: data)
             return cell
-        }
-
-        else if indexPath.row == 2 {
+            
+        case .detailedAttendance:
             let cell = tableView.dequeueReusableCell(withIdentifier: "DetailedAttendanceCell", for: indexPath) as! DetailedAttendanceCell
-            cell.configure(with: detailedModel)
             cell.selectionStyle = .none
+            cell.configure(with: data.attendance_details?.first)
             return cell
-        }
-        else if indexPath.row == 3 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "OutpassStatsCell", for: indexPath) as! OutpassStatsCell
-            cell.configure(with: outpassModel)
-            cell.selectionStyle = .none
-            return cell
-        } else if indexPath.row == 4 {
+  
+        case .outpassRequests:
             let cell = tableView.dequeueReusableCell(withIdentifier: "OutpassRequestsCell", for: indexPath) as! OutpassRequestsCell
-            cell.configure(with: outpassRequestsModel)
+            cell.configure(data: data.out_pass_requests ?? [])
             cell.newRequestdelegate = self
-            cell.selectionStyle = .none
             return cell
-        } else {
+            
+        case .hostelInfo :
             let cell = tableView.dequeueReusableCell(withIdentifier: "HostelInfoCell", for: indexPath) as! HostelInfoCell
-            cell.configure(with: hostelInfoModel)
-            cell.selectionStyle = .none
+            if let datas = data.hostel_info?.first{
+                cell.configure(with: datas)
+            }
+            
             return cell
+            
+      
+        }
+        
+        
+        
+    }
+    
+    
+    func GetHostelDetails() {
+        APIService.shared.makeApi(url: ServiceUrl.hostel_attendance_hostel_info, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "", isBaseUrl: false) {[self] (result: Result<HostelDetailsResponse,Error>) in
+            switch result{
+            case .success(let Success):
+                DispatchQueue.main.async {[self] in
+                    if Success.status ?? false{
+                        datadetails = Success.data ?? []
+                        GetParentDashboardDetails(hostelId: Success.data?.first?.hostel_id ?? "", yearId: "2026", monthId: "3", academicYearId: "7")
+                        
+                    }else{
+                        
+                        
+                    }
+                    
+                }
+            case .failure(let error):
+                DispatchQueue.main.async { [self] in
+                    
+                    
+                   
+                }
+            }
+        }
+    }
+    
+    
+    func GetParentDashboardDetails(hostelId : String,yearId : String, monthId : String, academicYearId : String) {
+        
+        APIService.shared.makeApi(
+            url: ServiceUrl.hostel_attendance_parent_dashboard,
+            parameters: [
+                "hostel_id": hostelId,
+                "year_id": yearId,
+                "month_id": monthId,
+                "academic_year_id": academicYearId
+            ],
+            type: ApitTypeSringFile.GET,
+            token: studentDetails?.access_token ?? "",
+            isBaseUrl: false
+        ) { [weak self] (result: Result<HostelDashboardResponse, Error>) in
+            
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                    
+                case .success(let success):
+                    
+                    guard success.status == true,
+                          let data = success.data?.first else {
+                        self.rows = []
+                        self.tableView.reloadData()
+                        return
+                    }
+                    
+                    self.HosteldataDetails = [data]
+                    self.rows.removeAll()
+                    
+                    if !(data.gate_pass?.isEmpty ?? true) {
+                        self.rows.append(.gatePass)
+                    }
+                    
+                    if !(data.today_attendance?.isEmpty ?? true) {
+                        self.rows.append(.todayAttendance)
+                    }
+                    
+                    if !(data.attendance_details?.first?.days?.isEmpty ?? true) {
+                        self.rows.append(.detailedAttendance)
+                    }
+                    
+                    if !(data.out_pass_requests?.isEmpty ?? true) {
+                        self.rows.append(.outpassRequests)
+                    }
+                    
+                    if !(data.hostel_info?.isEmpty ?? true){
+                        self.rows.append(.hostelInfo)
+                    }
+                    
+                    if !(data.fee_details?.isEmpty ?? true){
+                        self.rows.append(.feesinfo)
+                    }
+                    
+                    self.tableView.dataSource = self
+                    self.tableView.delegate = self
+                    self.tableView.reloadData()
+                    
+                case .failure:
+                    self.rows = []
+                    self.tableView.reloadData()
+                }
+            }
         }
     }
 }

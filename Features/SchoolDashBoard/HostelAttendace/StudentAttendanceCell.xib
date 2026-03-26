@@ -152,7 +152,7 @@
                                                     <imageReference key="image" image="checkmark" catalog="system" symbolScale="small"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="presentTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="act-pre"/>
+                                                    <action selector="presentTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ZV0-XK-OMc"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="btn-abs">
@@ -164,7 +164,7 @@
                                                     <imageReference key="image" image="xmark" catalog="system" symbolScale="small"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="absentTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="act-abs"/>
+                                                    <action selector="absentTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="EUg-Y4-P9g"/>
                                                 </connections>
                                             </button>
                                         </subviews>

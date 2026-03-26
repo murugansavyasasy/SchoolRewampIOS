@@ -51,7 +51,7 @@ class OutpassRequestCell: UITableViewCell {
         }
 
         // Destination label mapping
-        destinationLabel.text = "Destination: \(dest)"
+        destinationLabel.text = "Reason : \(dest)"
         if let descText = desc, !descText.isEmpty {
             descriptionLabel.text = descText
             descriptionLabel.isHidden = false

@@ -47,6 +47,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     var hostelId : String?
     var roomId : String?
     var selectedDate : String?
+    let alert = CustomAlert()
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.modalPresentationStyle = .overFullScreen
@@ -169,16 +170,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         progressView.progress = total > 0 ? Float(markedCount) / Float(total) : 0
     }
 
-//    private func updateMarkAllButton() {
-//        let markedCount = students.filter { $0.state != 0 }.count
-//        if markedCount == students.count {
-//            markAllButton.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.0)
-//            markAllButton.setTitleColor(.lightGray, for: .normal)
-//        } else {
-//            markAllButton.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.0)
-//            markAllButton.setTitleColor(UIColor(white: 0.3, alpha: 1.0), for: .normal)
-//        }
-//    }
+
 
     @IBAction func closeTapped(_ sender: Any) {
         UIView.animate(
@@ -194,11 +186,19 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     }
 
     @IBAction func markAllTapped(_ sender: Any) {
-//        for i in 0..<studentsdataDetails.count {
-//            if studentsdataDetails[i].state == 0 {
-//                studentsdataDetails[i].state = 1  // default to present if marking all
-//            }
-//        }
+        alert.showAlertCancel(
+            title: AlertstringFile.Confirm_title,
+            message: AlertstringFile.Are_you_sure_want_to_submit,
+            actionLbl1:  AlertstringFile.Yes_Send,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: {
+                self.MarkAttendace()
+            },
+            onNo: {
+                
+            }
+        )
         tableView.reloadData()
         updateProgress()
     }
@@ -215,29 +215,27 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         else { return UITableViewCell() }
         var student = studentsdataDetails[indexPath.row]
        
-        switch student.status{
-        case "ABSENT" :
-            student.is_select = false
-        case  "PRESENT" :
-            student.is_select = true
-        default:
-            student.is_select = nil
-        }
         let inandoutdate = " out date : \(student.out_date ?? "") -   in date : \(student.in_date ?? "")"
         cell.configure(
-            name: student.name ?? "", id: student.id ?? "", parentNum: student.primary_mobile ?? "", state: student.is_select ?? false,
+            name: student.name ?? "", id: student.id ?? "", parentNum: student.primary_mobile ?? "", state: student.is_select ?? "",
             index: indexPath.row, reason: student.reason ?? "", out_pass_status: student.outpasss_status ?? "",outDateInDate : inandoutdate)
+        
+        cell.absentButton.tag = indexPath.row
+        cell.presentButton.tag = indexPath.row
         cell.delegate = self
         return cell
     }
 
     
     func GetStudentList(roomId :String,academicYear:String,date:String,sessionID : String,hostelId : String) {
-        APIService.shared.makeApi(url: ServiceUrl.hostel_attendance_students_for_hostel_attd, parameters: ["session_type_id":sessionID,"hostel_id" : hostelId,"room_id":roomId,"academic_year_id" : academicYear, "date" : date], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) {[self] (result: Result<HostelStudentListSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.hostel_attendance_students_for_hostel_attd, parameters: ["session_type_id":sessionID,"hostel_id" : hostelId,"room_id":roomId,"academic_year_id" : academicYear, "date" : date], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: true) {[self] (result: Result<HostelStudentListSuc,Error>) in
             switch result{
             case .success(let Success):
                 DispatchQueue.main.async {[self] in
                     studentsdataDetails = Success.data ?? []
+                    for i in studentsdataDetails.indices{
+                        studentsdataDetails[i].is_select = ""
+                    }
                     tableView.reloadData()
                 }
             case .failure(let error):
@@ -261,6 +259,60 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
             case .failure(let error):
                 DispatchQueue.main.async { [self] in
                    
+                }
+            }
+        }
+    }
+    
+    func MarkAttendace() {
+        
+        let studentDetailsArray = studentsdataDetails.compactMap { student -> [String: Any]? in
+            
+            guard let id = student.id else { return nil }
+            let status: String
+            if student.is_select == "2" {
+                status = "PRESENT"
+            } else if student.is_select == "1" {
+                status = "ABSENT"
+            } else {
+                status  = ""
+            }
+            
+            return [
+                "student_id": id,
+                "status": status
+            ]
+        }
+        
+        APIService.shared.makeApi(url: ServiceUrl.hostel_attendance_mark_attendance, parameters: ["hostel_id" : hostelId ?? "" , "session_type_id" : sessionId ?? "", "attendance_date" : selectedDate ?? "", "room_id"  : roomId ?? "","academic_year_id" : academic_year_id ?? "","student_details" : studentDetailsArray], type: ApitTypeSringFile.POST, token: StaffDetails?.access_token ?? "", isBaseUrl: true) {[self] (result: Result<HostelSessionListSuc,Error>) in
+            switch result{
+            case .success(let Success):
+                DispatchQueue.main.async {[self] in
+                    if Success.status ?? false {
+                        self.alert
+                            .showAlert(
+                                title: AlertstringFile.Success,
+                                message: Success.message ?? "" ,
+                                on: self
+                            )
+                    }else{
+                        self.alert
+                            .showAlert(
+                                title: AlertstringFile.Oops,
+                                message: Success.message ?? "" ,
+                                on: self
+                            )
+                    }
+                    
+                }
+            case .failure(let error):
+                DispatchQueue.main.async { [self] in
+                    self.alert
+                        .showAlert(
+                            title: AlertstringFile.Oops,
+                            message: error.localizedDescription ,
+                            on: self
+                        )
                 }
             }
         }
@@ -351,16 +403,6 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         formatter2.dateFormat = "MMMM yyyy"
         formatter2.locale = Locale(identifier: "en_US_POSIX")
 
-//        if let date = formatter2.date(from: text) {
-//
-//            let calendar = Calendar.current
-//
-//            let month = String(calendar.component(.month, from: date))
-//            let year  = String(calendar.component(.year, from: date))
-//            self.month = month
-//            self.year = year
-//        }
-
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView,
@@ -376,13 +418,13 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     
     // MARK: - StudentAttendanceCellDelegate
     func didTapPresent(for index: Int) {
-        studentsdataDetails[index].is_select = true
+        studentsdataDetails[index].is_select = "2"
         tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
         updateProgress()
     }
 
     func didTapAbsent(for index: Int) {
-        studentsdataDetails[index].is_select = false
+        studentsdataDetails[index].is_select = "1"
         tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
         updateProgress()
     }

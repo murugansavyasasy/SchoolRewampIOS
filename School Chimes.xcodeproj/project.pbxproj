@@ -53,16 +53,12 @@
 		182B0A8E2F6D3326002C81A0 /* WeeklyTrendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B0A752F6D3326002C81A0 /* WeeklyTrendCell.swift */; };
 		182B0A8F2F6D3326002C81A0 /* AttendanceOverviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B0A6A2F6D3326002C81A0 /* AttendanceOverviewCell.swift */; };
 		182B0A902F6D3326002C81A0 /* SessionAnalysisCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B0A712F6D3326002C81A0 /* SessionAnalysisCell.swift */; };
-		182B0AB52F6D47AB002C81A0 /* HostelInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B0AB12F6D47AB002C81A0 /* HostelInfoCell.swift */; };
 		182B0AB62F6D47AB002C81A0 /* DetailedDayRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B0AAF2F6D47AB002C81A0 /* DetailedDayRowCell.swift */; };
 		182B0AB72F6D47AB002C81A0 /* OutpassRequestsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B0AB32F6D47AB002C81A0 /* OutpassRequestsCell.swift */; };
-		182B0AB82F6D47AB002C81A0 /* HostelInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B0AB22F6D47AB002C81A0 /* HostelInfoCell.xib */; };
 		182B0AB92F6D47AB002C81A0 /* DetailedDayRowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B0AB02F6D47AB002C81A0 /* DetailedDayRowCell.xib */; };
 		182B0ABA2F6D47AB002C81A0 /* OutpassRequestsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B0AB42F6D47AB002C81A0 /* OutpassRequestsCell.xib */; };
-		182B0ABB2F6D47AB002C81A0 /* HostelInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B0AB12F6D47AB002C81A0 /* HostelInfoCell.swift */; };
 		182B0ABC2F6D47AB002C81A0 /* DetailedDayRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B0AAF2F6D47AB002C81A0 /* DetailedDayRowCell.swift */; };
 		182B0ABD2F6D47AB002C81A0 /* OutpassRequestsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B0AB32F6D47AB002C81A0 /* OutpassRequestsCell.swift */; };
-		182B0ABE2F6D47AB002C81A0 /* HostelInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B0AB22F6D47AB002C81A0 /* HostelInfoCell.xib */; };
 		182B0ABF2F6D47AB002C81A0 /* DetailedDayRowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B0AB02F6D47AB002C81A0 /* DetailedDayRowCell.xib */; };
 		182B0AC02F6D47AB002C81A0 /* OutpassRequestsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B0AB42F6D47AB002C81A0 /* OutpassRequestsCell.xib */; };
 		182B0AC32F6D47BF002C81A0 /* DetailedAttendanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B0AC12F6D47BF002C81A0 /* DetailedAttendanceCell.swift */; };
@@ -144,6 +140,22 @@
 		1854651B2F431080008B1551 /* StaffDetailsPreviewVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185465182F431080008B1551 /* StaffDetailsPreviewVc.swift */; };
 		1854651C2F431080008B1551 /* StaffDetailsPreviewVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185465192F431080008B1551 /* StaffDetailsPreviewVc.xib */; };
 		1854651D2F431080008B1551 /* StaffDetailsPreviewVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185465182F431080008B1551 /* StaffDetailsPreviewVc.swift */; };
+		185CC0B32F73E690002640CE /* HostelInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185CC0B12F73E690002640CE /* HostelInfoCell.swift */; };
+		185CC0B42F73E690002640CE /* HostelInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185CC0B22F73E690002640CE /* HostelInfoCell.xib */; };
+		185CC0B52F73E690002640CE /* HostelInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185CC0B22F73E690002640CE /* HostelInfoCell.xib */; };
+		185CC0B62F73E690002640CE /* HostelInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185CC0B12F73E690002640CE /* HostelInfoCell.swift */; };
+		185CC0B92F73F2D3002640CE /* PendingFeeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185CC0B82F73F2D3002640CE /* PendingFeeCell.xib */; };
+		185CC0BA2F73F2D3002640CE /* PendingFeeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185CC0B72F73F2D3002640CE /* PendingFeeCell.swift */; };
+		185CC0BB2F73F2D3002640CE /* PendingFeeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185CC0B82F73F2D3002640CE /* PendingFeeCell.xib */; };
+		185CC0BC2F73F2D3002640CE /* PendingFeeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185CC0B72F73F2D3002640CE /* PendingFeeCell.swift */; };
+		185CC0BF2F73F404002640CE /* studentPendingFeeTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185CC0BD2F73F404002640CE /* studentPendingFeeTv.swift */; };
+		185CC0C02F73F404002640CE /* studentPendingFeeTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185CC0BE2F73F404002640CE /* studentPendingFeeTv.xib */; };
+		185CC0C12F73F404002640CE /* studentPendingFeeTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185CC0BE2F73F404002640CE /* studentPendingFeeTv.xib */; };
+		185CC0C22F73F404002640CE /* studentPendingFeeTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185CC0BD2F73F404002640CE /* studentPendingFeeTv.swift */; };
+		185CC0C72F74EB49002640CE /* outpassRequestTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185CC0C62F74EB49002640CE /* outpassRequestTVcell.xib */; };
+		185CC0C82F74EB49002640CE /* outpassRequestTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185CC0C52F74EB49002640CE /* outpassRequestTVcell.swift */; };
+		185CC0C92F74EB49002640CE /* outpassRequestTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185CC0C62F74EB49002640CE /* outpassRequestTVcell.xib */; };
+		185CC0CA2F74EB49002640CE /* outpassRequestTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185CC0C52F74EB49002640CE /* outpassRequestTVcell.swift */; };
 		187A0AB22F10CCD1008CF5B7 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 187A0AB12F10CCD1008CF5B7 /* DGCharts */; };
 		187A0B3B2F10E9A7008CF5B7 /* chatWithStudentVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A0B362F10E9A7008CF5B7 /* chatWithStudentVc.swift */; };
 		187A0B3C2F10E9A7008CF5B7 /* IntractwithStudentVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187A0B382F10E9A7008CF5B7 /* IntractwithStudentVc.swift */; };
@@ -1811,8 +1823,6 @@
 		182B0A762F6D3326002C81A0 /* WeeklyTrendCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeeklyTrendCell.xib; sourceTree = "<group>"; };
 		182B0AAF2F6D47AB002C81A0 /* DetailedDayRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedDayRowCell.swift; sourceTree = "<group>"; };
 		182B0AB02F6D47AB002C81A0 /* DetailedDayRowCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailedDayRowCell.xib; sourceTree = "<group>"; };
-		182B0AB12F6D47AB002C81A0 /* HostelInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostelInfoCell.swift; sourceTree = "<group>"; };
-		182B0AB22F6D47AB002C81A0 /* HostelInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HostelInfoCell.xib; sourceTree = "<group>"; };
 		182B0AB32F6D47AB002C81A0 /* OutpassRequestsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutpassRequestsCell.swift; sourceTree = "<group>"; };
 		182B0AB42F6D47AB002C81A0 /* OutpassRequestsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OutpassRequestsCell.xib; sourceTree = "<group>"; };
 		182B0AC12F6D47BF002C81A0 /* DetailedAttendanceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedAttendanceCell.swift; sourceTree = "<group>"; };
@@ -1855,6 +1865,14 @@
 		185465132F42E7FB008B1551 /* StaffLeaveReqTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StaffLeaveReqTvCell.xib; sourceTree = "<group>"; };
 		185465182F431080008B1551 /* StaffDetailsPreviewVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffDetailsPreviewVc.swift; sourceTree = "<group>"; };
 		185465192F431080008B1551 /* StaffDetailsPreviewVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StaffDetailsPreviewVc.xib; sourceTree = "<group>"; };
+		185CC0B12F73E690002640CE /* HostelInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostelInfoCell.swift; sourceTree = "<group>"; };
+		185CC0B22F73E690002640CE /* HostelInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HostelInfoCell.xib; sourceTree = "<group>"; };
+		185CC0B72F73F2D3002640CE /* PendingFeeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingFeeCell.swift; sourceTree = "<group>"; };
+		185CC0B82F73F2D3002640CE /* PendingFeeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingFeeCell.xib; sourceTree = "<group>"; };
+		185CC0BD2F73F404002640CE /* studentPendingFeeTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = studentPendingFeeTv.swift; sourceTree = "<group>"; };
+		185CC0BE2F73F404002640CE /* studentPendingFeeTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = studentPendingFeeTv.xib; sourceTree = "<group>"; };
+		185CC0C52F74EB49002640CE /* outpassRequestTVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = outpassRequestTVcell.swift; sourceTree = "<group>"; };
+		185CC0C62F74EB49002640CE /* outpassRequestTVcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = outpassRequestTVcell.xib; sourceTree = "<group>"; };
 		187A0B362F10E9A7008CF5B7 /* chatWithStudentVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatWithStudentVc.swift; sourceTree = "<group>"; };
 		187A0B372F10E9A7008CF5B7 /* chatWithStudentVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = chatWithStudentVc.xib; sourceTree = "<group>"; };
 		187A0B382F10E9A7008CF5B7 /* IntractwithStudentVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntractwithStudentVc.swift; sourceTree = "<group>"; };
@@ -3265,8 +3283,6 @@
 				182B0B0A2F6D48B4002C81A0 /* SessionStatusCell.xib */,
 				182B0AAF2F6D47AB002C81A0 /* DetailedDayRowCell.swift */,
 				182B0AB02F6D47AB002C81A0 /* DetailedDayRowCell.xib */,
-				182B0AB12F6D47AB002C81A0 /* HostelInfoCell.swift */,
-				182B0AB22F6D47AB002C81A0 /* HostelInfoCell.xib */,
 				182B0AB32F6D47AB002C81A0 /* OutpassRequestsCell.swift */,
 				182B0AB42F6D47AB002C81A0 /* OutpassRequestsCell.xib */,
 				182B0A6A2F6D3326002C81A0 /* AttendanceOverviewCell.swift */,
@@ -3279,10 +3295,14 @@
 				182B0A6F2F6D3326002C81A0 /* OverallStatsCell.xib */,
 				182B0A702F6D3326002C81A0 /* PieChartCell.swift */,
 				182B0A712F6D3326002C81A0 /* SessionAnalysisCell.swift */,
+				185CC0B12F73E690002640CE /* HostelInfoCell.swift */,
+				185CC0B22F73E690002640CE /* HostelInfoCell.xib */,
 				182B0A722F6D3326002C81A0 /* SessionAnalysisCell.xib */,
 				182B0A732F6D3326002C81A0 /* TodayAttendanceCell.swift */,
 				182B0A742F6D3326002C81A0 /* TodayAttendanceCell.xib */,
 				182B0A752F6D3326002C81A0 /* WeeklyTrendCell.swift */,
+				185CC0B72F73F2D3002640CE /* PendingFeeCell.swift */,
+				185CC0B82F73F2D3002640CE /* PendingFeeCell.xib */,
 				182B0A762F6D3326002C81A0 /* WeeklyTrendCell.xib */,
 				182B09D42F6D0B94002C81A0 /* NewOutpassRequestVC.swift */,
 				182B09D52F6D0B94002C81A0 /* NewOutpassRequestVC.xib */,
@@ -3296,6 +3316,10 @@
 				1837C7EE2F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.xib */,
 				18B1908E2F713A84007E4F6F /* GatePassTvcell.swift */,
 				18B1908F2F713A84007E4F6F /* GatePassTvcell.xib */,
+				185CC0BD2F73F404002640CE /* studentPendingFeeTv.swift */,
+				185CC0BE2F73F404002640CE /* studentPendingFeeTv.xib */,
+				185CC0C52F74EB49002640CE /* outpassRequestTVcell.swift */,
+				185CC0C62F74EB49002640CE /* outpassRequestTVcell.xib */,
 			);
 			path = HostelDashboard;
 			sourceTree = "<group>";
@@ -5259,7 +5283,6 @@
 				847D1CA62DBB68B200A274D2 /* locationAnimation.json in Resources */,
 				1834ED2F2F483B3C0006969F /* GoogleService-Info.plist in Resources */,
 				FAFFBD082E336F8600F8B150 /* ExamListTV.xib in Resources */,
-				182B0AB82F6D47AB002C81A0 /* HostelInfoCell.xib in Resources */,
 				182B0AB92F6D47AB002C81A0 /* DetailedDayRowCell.xib in Resources */,
 				182B0ABA2F6D47AB002C81A0 /* OutpassRequestsCell.xib in Resources */,
 				840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */,
@@ -5301,6 +5324,7 @@
 				FA43D0CC2F322CFE0046B966 /* ImageShowCVCell.xib in Resources */,
 				FA43D0CD2F322CFE0046B966 /* ImageShowVc.xib in Resources */,
 				18D40AF22F614A7A00FE3B2C /* parentHostelDashboardVC.xib in Resources */,
+				185CC0C92F74EB49002640CE /* outpassRequestTVcell.xib in Resources */,
 				FA43D0CE2F322CFE0046B966 /* VideoPlayerCVC.xib in Resources */,
 				FAE4958A2E89AF960099DF24 /* PtmNavigationVC.xib in Resources */,
 				84444C522E66D3FF00B4B8EB /* UserDetailsTVC.xib in Resources */,
@@ -5314,6 +5338,7 @@
 				844188832CC91179006483C3 /* LoginVc.xib in Resources */,
 				8442A96F2CDE8B2C0006068E /* LangTvCellTableViewCell.xib in Resources */,
 				84D7858E2DFD3A3900A7B9E9 /* PaymentTypeTVC.xib in Resources */,
+				185CC0B42F73E690002640CE /* HostelInfoCell.xib in Resources */,
 				FA3E28D32E4DDE48008885A3 /* CreateMeetingVc.xib in Resources */,
 				FA43D0D62F322D0E0046B966 /* AttendanceRepCv.xib in Resources */,
 				187CF4922D11355D001422CE /* MessageFromManagementViewController.xib in Resources */,
@@ -5425,6 +5450,7 @@
 				848CC16C2D899E4000CD0255 /* OTPVc.xib in Resources */,
 				FAFB40BD2ED6E75A00783142 /* SubjectsTVCell.xib in Resources */,
 				FABA6E8A2ED5D2F700278807 /* ExamImgUploadVC.xib in Resources */,
+				185CC0C02F73F404002640CE /* studentPendingFeeTv.xib in Resources */,
 				84235A122E1E2819002F2E1D /* AddAttachmentTVC.xib in Resources */,
 				FA0EDF132E4A1752008EC30D /* NewPtmVC.xib in Resources */,
 				842ACE1E2F56A05500954404 /* TeacherRemarkTVC.xib in Resources */,
@@ -5563,6 +5589,7 @@
 				846D83E72D02D91000B69344 /* ExamTmTblVCViewController.xib in Resources */,
 				FA00B2652E640A8300260FEC /* DateCvCell.xib in Resources */,
 				840E44A62D1A85B000D561E8 /* SenderLeaveRqstVC.xib in Resources */,
+				185CC0B92F73F2D3002640CE /* PendingFeeCell.xib in Resources */,
 				FAB3C1D12E567B8400E361CA /* CreatedSlotsTv.xib in Resources */,
 				845F21762E45C0DD0078AF69 /* AssignmentPriview.xib in Resources */,
 				FA6B89272D633B2F00CB099D /* LSRWTvCell.xib in Resources */,
@@ -5780,6 +5807,7 @@
 				FA8168752F3318D100ADA8F3 /* LessonPlanTVC.xib in Resources */,
 				FA8168762F3318D100ADA8F3 /* NodataTVC.xib in Resources */,
 				FA8168772F3318D100ADA8F3 /* AttachHistroyVC.xib in Resources */,
+				185CC0C72F74EB49002640CE /* outpassRequestTVcell.xib in Resources */,
 				FA8168782F3318D100ADA8F3 /* ScheduleExamsList.xib in Resources */,
 				FA8168792F3318D100ADA8F3 /* LICENSE in Resources */,
 				182B0B272F6E5A0B002C81A0 /* AttendanceStudentCell.xib in Resources */,
@@ -5803,7 +5831,6 @@
 				FA8168842F3318D100ADA8F3 /* CatogoryCVC.xib in Resources */,
 				FA8168852F3318D100ADA8F3 /* SideTvcell.xib in Resources */,
 				FA8168862F3318D100ADA8F3 /* ExamCreatVC.xib in Resources */,
-				182B0ABE2F6D47AB002C81A0 /* HostelInfoCell.xib in Resources */,
 				182B0ABF2F6D47AB002C81A0 /* DetailedDayRowCell.xib in Resources */,
 				182B0AC02F6D47AB002C81A0 /* OutpassRequestsCell.xib in Resources */,
 				FA8168872F3318D100ADA8F3 /* ClaimCouponVc.xib in Resources */,
@@ -5949,6 +5976,7 @@
 				FA8169022F3318D100ADA8F3 /* ExamMarkTV.xib in Resources */,
 				FA8169032F3318D100ADA8F3 /* ExamMarkTvCell.xib in Resources */,
 				FA8169042F3318D100ADA8F3 /* ExammarkFooterView.xib in Resources */,
+				185CC0B52F73E690002640CE /* HostelInfoCell.xib in Resources */,
 				FA8169052F3318D100ADA8F3 /* ChatVC.xib in Resources */,
 				FA8169062F3318D100ADA8F3 /* QuizVC.xib in Resources */,
 				18D40AB52F5EDE9200FE3B2C /* HostelListVc.xib in Resources */,
@@ -6040,6 +6068,8 @@
 				FA8169552F3318D100ADA8F3 /* FeePendingTVC.xib in Resources */,
 				FA8169562F3318D100ADA8F3 /* RatingTableViewCell.xib in Resources */,
 				FA8169572F3318D100ADA8F3 /* RatingTypeTableViewCell.xib in Resources */,
+				185CC0C12F73F404002640CE /* studentPendingFeeTv.xib in Resources */,
+				185CC0BB2F73F2D3002640CE /* PendingFeeCell.xib in Resources */,
 				FA8169582F3318D100ADA8F3 /* StaffChatTV.xib in Resources */,
 				FA8169592F3318D100ADA8F3 /* absentPrivewVC.xib in Resources */,
 				FA81695A2F3318D100ADA8F3 /* SenderQuizVc.xib in Resources */,
@@ -6174,6 +6204,7 @@
 				84EFFA3D2CCCB49200C11C26 /* ContactUsTVCell.swift in Sources */,
 				18926C4D2D02DE81002BBB97 /* TestTVC.swift in Sources */,
 				18D09A532F02640900D1930D /* SendMsgTvCell.swift in Sources */,
+				185CC0BA2F73F2D3002640CE /* PendingFeeCell.swift in Sources */,
 				84174DF42E70061C00AC7092 /* QuizCompletedVc.swift in Sources */,
 				84235A0F2E1E27F4002F2E1D /* RecorderTVC.swift in Sources */,
 				849D72312D14270D0060E222 /* SubscriptionView.swift in Sources */,
@@ -6284,6 +6315,7 @@
 				188876152EF2D7E1008B71FF /* QuizAttachmentPicker.swift in Sources */,
 				84FC4DCA2DBCAE6700BBEDD7 /* FiltersCvCell.swift in Sources */,
 				84FC4DCB2DBCAE6700BBEDD7 /* ParentCommunicationVc.swift in Sources */,
+				185CC0BF2F73F404002640CE /* studentPendingFeeTv.swift in Sources */,
 				844DF0092E5AD28F0016A347 /* QuistionPagenationVc.swift in Sources */,
 				FAFF9E0C2D6C806700498368 /* NewLSRWTVcell.swift in Sources */,
 				848CC16B2D899E4000CD0255 /* OTPVc.swift in Sources */,
@@ -6385,6 +6417,7 @@
 				1841DE702F56E86400B88801 /* ApplyLeaveReqVC.swift in Sources */,
 				8451EC952E24E55B00D6DBB4 /* CalanderDateCVC.swift in Sources */,
 				8451EC962E24E55B00D6DBB4 /* HolidayTVC.swift in Sources */,
+				185CC0CA2F74EB49002640CE /* outpassRequestTVcell.swift in Sources */,
 				FAED58592E4B61B000497026 /* SlotListTV.swift in Sources */,
 				8451EC972E24E55B00D6DBB4 /* HolidayVC.swift in Sources */,
 				840A7CEE2D24FDAA0061EAEA /* ExammarkFooterView.swift in Sources */,
@@ -6411,6 +6444,7 @@
 				84A5BE942C197CF500E32496 /* UIViewX.swift in Sources */,
 				849AD0202D1A8402002DEC07 /* LessonPlanVC.swift in Sources */,
 				84C00E6E2CF6D7C500E34A83 /* TermsAndCondVC.swift in Sources */,
+				185CC0B32F73E690002640CE /* HostelInfoCell.swift in Sources */,
 				849AD0112D1A83CA002DEC07 /* SenderSideHomeWorkViewController.swift in Sources */,
 				FAD8BDA42E66BE6C00C7CD53 /* PtmHistoryVC.swift in Sources */,
 				840658442CFD9C3400080CF6 /* AttachmentCVCell.swift in Sources */,
@@ -6451,7 +6485,6 @@
 				FAF9F4A82DBA4952005F7272 /* LocationReportVC.swift in Sources */,
 				84C829C12D0807CD0024A46A /* ConfettiEmitter.swift in Sources */,
 				842ACE012F569F1400954404 /* StudentReportDashboardVC.swift in Sources */,
-				182B0AB52F6D47AB002C81A0 /* HostelInfoCell.swift in Sources */,
 				182B0AB62F6D47AB002C81A0 /* DetailedDayRowCell.swift in Sources */,
 				182B0AB72F6D47AB002C81A0 /* OutpassRequestsCell.swift in Sources */,
 				84C829C22D0807CD0024A46A /* ConfettiView.swift in Sources */,
@@ -6645,6 +6678,7 @@
 				FA8166632F3318D100ADA8F3 /* ContactUsTVCell.swift in Sources */,
 				FA8166642F3318D100ADA8F3 /* TestTVC.swift in Sources */,
 				FA8166652F3318D100ADA8F3 /* SendMsgTvCell.swift in Sources */,
+				185CC0BC2F73F2D3002640CE /* PendingFeeCell.swift in Sources */,
 				FA8166662F3318D100ADA8F3 /* QuizCompletedVc.swift in Sources */,
 				FA8166672F3318D100ADA8F3 /* RecorderTVC.swift in Sources */,
 				FA8166682F3318D100ADA8F3 /* SubscriptionView.swift in Sources */,
@@ -6755,6 +6789,7 @@
 				FA8166BD2F3318D100ADA8F3 /* QuizAttachmentPicker.swift in Sources */,
 				FA8166BE2F3318D100ADA8F3 /* FiltersCvCell.swift in Sources */,
 				FA8166BF2F3318D100ADA8F3 /* ParentCommunicationVc.swift in Sources */,
+				185CC0C22F73F404002640CE /* studentPendingFeeTv.swift in Sources */,
 				FA8166C02F3318D100ADA8F3 /* QuistionPagenationVc.swift in Sources */,
 				FA8166C12F3318D100ADA8F3 /* NewLSRWTVcell.swift in Sources */,
 				FA8166C22F3318D100ADA8F3 /* OTPVc.swift in Sources */,
@@ -6856,6 +6891,7 @@
 				1841DE6D2F56E86400B88801 /* ApplyLeaveReqVC.swift in Sources */,
 				FA8167182F3318D100ADA8F3 /* CalanderDateCVC.swift in Sources */,
 				FA8167192F3318D100ADA8F3 /* HolidayTVC.swift in Sources */,
+				185CC0C82F74EB49002640CE /* outpassRequestTVcell.swift in Sources */,
 				FA81671A2F3318D100ADA8F3 /* SlotListTV.swift in Sources */,
 				FA81671B2F3318D100ADA8F3 /* HolidayVC.swift in Sources */,
 				FA81671C2F3318D100ADA8F3 /* ExammarkFooterView.swift in Sources */,
@@ -6882,6 +6918,7 @@
 				FA81672E2F3318D100ADA8F3 /* UIViewX.swift in Sources */,
 				FA81672F2F3318D100ADA8F3 /* LessonPlanVC.swift in Sources */,
 				FA8167302F3318D100ADA8F3 /* TermsAndCondVC.swift in Sources */,
+				185CC0B62F73E690002640CE /* HostelInfoCell.swift in Sources */,
 				FA8167312F3318D100ADA8F3 /* SenderSideHomeWorkViewController.swift in Sources */,
 				FA8167322F3318D100ADA8F3 /* PtmHistoryVC.swift in Sources */,
 				FA8167332F3318D100ADA8F3 /* AttachmentCVCell.swift in Sources */,
@@ -6922,7 +6959,6 @@
 				FA8167562F3318D100ADA8F3 /* LocationReportVC.swift in Sources */,
 				FA8167572F3318D100ADA8F3 /* ConfettiEmitter.swift in Sources */,
 				842ACDFF2F569F1400954404 /* StudentReportDashboardVC.swift in Sources */,
-				182B0ABB2F6D47AB002C81A0 /* HostelInfoCell.swift in Sources */,
 				182B0ABC2F6D47AB002C81A0 /* DetailedDayRowCell.swift in Sources */,
 				182B0ABD2F6D47AB002C81A0 /* OutpassRequestsCell.swift in Sources */,
 				FA8167582F3318D100ADA8F3 /* ConfettiView.swift in Sources */,

@@ -15,20 +15,26 @@ class TodayAttendanceCell: UITableViewCell {
         cardView.backgroundColor = .white
     }
 
-    func configure(with model: TodayAttendanceModel) {
-        // Clear old dynamically added rows
-        // Keep index 0 (Title View) and 1 (Separator), clear the rest
+    func configure(with model: HostelDashboardData) {
+        
+        // clear old
         while containerStackView.arrangedSubviews.count > 2 {
             let view = containerStackView.arrangedSubviews.last!
             view.removeFromSuperview()
         }
         
-        for session in model.sessions {
-            let row = createSessionRow(sessionName: session.sessionName, status: session.status.lowercased())
+        for item in model.today_attendance ?? [] {
+            
+            // 🔥 Split "Morning : Not taken"
+            let components = item.components(separatedBy: ":")
+            
+            let sessionName = components.first?.trimmingCharacters(in: .whitespaces) ?? ""
+            let status = components.count > 1 ? components[1].trimmingCharacters(in: .whitespaces).lowercased() : ""
+            
+            let row = createSessionRow(sessionName: sessionName, status: status)
             containerStackView.addArrangedSubview(row)
         }
     }
-    
     private func createSessionRow(sessionName: String, status: String) -> UIView {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false

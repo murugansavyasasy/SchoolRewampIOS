@@ -202,9 +202,13 @@ struct ServiceUrl{
     static let hostel_attendance_room_details = "stud-attd/api/hostel-attendance/room-details"
     static let hostel_attendance_students_for_hostel_attd = "stud-attd/api/hostel-attendance/students-for-hostel-attd"
     static let hostel_attendance_mark_attendance = "stud-attd/api/hostel-attendance/mark-attendance"
- static let hostel_attendance_session_types = "stud-attd/api/hostel-attendance/session-types"
+ static let hostel_attendance_session_types = "stud-attd/api/hostel-attendance/session-types" 
+    static let hostel_attendance_outpass_report = "stud-attd/api/hostel-attendance/outpass-report" 
+    static let hostel_attendance_apply_outpass = "stud-attd/api/hostel-attendance/apply-outpass"
     static let comm_api_hostel_attendance_attendance_report = "stud-attd/api/hostel-attendance/attendance-report"
-    static let comm_api_homework_submissions_list = "comm/api/homework/submissions-list"
+    static let comm_api_homework_submissions_list = "comm/api/homework/submissions-list" 
+    static let hostel_attendance_parent_dashboard = "stud-attd/api/hostel-attendance/parent-dashboard"
+    static let hostel_attendance_hostel_info = "stud-attd/api/hostel-attendance/hostel-info"
    
 }
 
