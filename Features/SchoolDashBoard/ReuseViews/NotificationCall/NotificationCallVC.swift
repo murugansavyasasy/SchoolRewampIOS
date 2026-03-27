@@ -57,6 +57,8 @@ class NotificationCallVC: UIViewController {
     private var ringtonePlayer: AVAudioPlayer?
     private var volumeObserver: NSKeyValueObservation?
     private var totalQueueDuration: Double = 0
+    var itemDurations: [AVPlayerItem: Double] = [:]
+    var queueItems: [AVPlayerItem] = []
     var userInfo = [AnyHashable : Any]()
     var duration = "0"
     // Cache for downloaded audio to reduce I/O
@@ -81,7 +83,6 @@ class NotificationCallVC: UIViewController {
     }
     
     private var audioQueuePlayer: AVQueuePlayer?
-    private var queueItems: [Int: AVPlayerItem] = [:]
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,12 +108,12 @@ class NotificationCallVC: UIViewController {
         setupVolumeObserver()
         setupPowerButtonObserver()
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(queueDidFinish),
-            name: .AVPlayerItemDidPlayToEndTime,
-            object: nil
-        )
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(queueDidFinish),
+//            name: .AVPlayerItemDidPlayToEndTime,
+//            object: nil
+//        )
         
         if let ei1 = userInfo["ei1"] as? String {
             noti.ei1 = ei1
@@ -144,18 +145,26 @@ class NotificationCallVC: UIViewController {
         }
     }
     
-    @objc private func queueDidFinish() {
-        guard audioQueuePlayer?.items().isEmpty == true else { return }
-        
-        DispatchQueue.main.async {
-            self.durationLbl.text = "Call ended"
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                self.dismissCallScreen()
+    @objc private func queueFinished(notification: Notification) {
+
+        guard let player = audioQueuePlayer else { return }
+
+        // Wait a bit to allow queue update
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+
+            if player.items().isEmpty && player.currentItem == nil {
+                self.audioTimer?.invalidate()
+
+                DispatchQueue.main.async {
+                    self.durationLbl.text = "Call ended"
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        self.dismissCallScreen()
+                    }
+                }
             }
         }
     }
-
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -762,85 +771,56 @@ class NotificationCallVC: UIViewController {
             }
         }
     }
-
     private func setupAudioPlayer() {
         stopLocalRingtone()
-
-        // Re-configure audio session before playing
         configureAudioSessionForCall()
-        
-        audioQueuePlayer = AVQueuePlayer()
-        queueItems.removeAll()
-        totalQueueDuration = 0
 
-        var orderedUrls: [(Int, URL)] = []
+        audioQueuePlayer = AVQueuePlayer()
+        totalQueueDuration = 0
+        itemDurations.removeAll()
 
         if let w = URL(string: welcomeFileUrl), !welcomeFileUrl.isEmpty {
-            orderedUrls.append((0, w))
+            queueItems.append(AVPlayerItem(url: w))
         }
 
         if let v = URL(string: voiceUrl), !voiceUrl.isEmpty {
-            orderedUrls.append((1, v))
+            queueItems.append(AVPlayerItem(url: v))
         }
 
-        guard !orderedUrls.isEmpty else {
-            dismissCallScreen()
-            return
-        }
+        guard let player = audioQueuePlayer else { return }
 
-        let dispatchGroup = DispatchGroup()
+        Task {
+            for item in queueItems {
+                do {
+                    let duration = try await item.asset.load(.duration)
+                    let sec = CMTimeGetSeconds(duration)
 
-        for (index, url) in orderedUrls {
-            dispatchGroup.enter()
-
-            let cacheKey = url.absoluteString as NSString
-
-            if let cachedData = Self.audioCache.object(forKey: cacheKey) {
-                let item = self.createQueueItem(from: cachedData as Data)
-                self.queueItems[index] = item
-                dispatchGroup.leave()
-            } else {
-                URLSession.shared.dataTask(with: url) { data, _, error in
-                    defer { dispatchGroup.leave() }
-
-                    guard let data = data, error == nil else { return }
-
-                    Self.audioCache.setObject(data as NSData, forKey: cacheKey, cost: data.count)
-
-                    let item = self.createQueueItem(from: data)
-                    self.queueItems[index] = item
-                }.resume()
-            }
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            guard let player = self.audioQueuePlayer else { return }
-
-            self.totalQueueDuration = 0
-
-            let sortedKeys = self.queueItems.keys.sorted()
-
-            for key in sortedKeys {
-                if let item = self.queueItems[key] {
-                    player.insert(item, after: nil)
-
-                    let sec = CMTimeGetSeconds(item.asset.duration)
                     if sec.isFinite {
                         self.totalQueueDuration += sec
+                        self.itemDurations[item] = sec
                     }
+                } catch {
+                    print("Duration failed")
+                    self.itemDurations[item] = 0
                 }
+            }
+            for item in queueItems {
+                item.preferredForwardBufferDuration = 5
+                player.insert(item, after: nil)
             }
 
             player.actionAtItemEnd = .advance
+            player.automaticallyWaitsToMinimizeStalling = true
             player.volume = 1.0
 
-            self.startQueueTimer()
+            DispatchQueue.main.async {
+                self.startQueueTimer()
+            }
+
             self.observeQueueFinish()
             self.setDefaultSpeakerOn()
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                player.play()
-            }
+            player.play()
         }
     }
     private func observeQueueFinish() {
@@ -851,97 +831,35 @@ class NotificationCallVC: UIViewController {
             object: nil
         )
     }
-
-    @objc private func queueFinished(notification: Notification) {
-
-        guard let player = audioQueuePlayer,
-              let item = notification.object as? AVPlayerItem else { return }
-
-        if player.items().last == item {
-            audioTimer?.invalidate()
-            duration = durationStringToSeconds(durationLbl.text ?? "")
-            
-            DispatchQueue.main.async {
-                self.durationLbl.text = "Call ended"
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.dismissCallScreen()
-                }
-            }
-        }
-    }
-
-    
-    private func createQueueItem(from data: Data) -> AVPlayerItem {
-
-        let fileURL = FileManager.default.temporaryDirectory
-            .appendingPathComponent(UUID().uuidString + ".mp3")
-
-        try? data.write(to: fileURL, options: .atomic)
-
-        let asset = AVURLAsset(url: fileURL)
-        let item = AVPlayerItem(asset: asset)
-        item.preferredForwardBufferDuration = 0
-
-        return item
-    }
-    
+ 
     private func startQueueTimer() {
         audioTimer?.invalidate()
 
         audioTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             guard let self = self,
-                  let player = self.audioQueuePlayer else { return }
+                  let player = self.audioQueuePlayer,
+                  let currentItem = player.currentItem else { return }
 
-            let currentItemSeconds = CMTimeGetSeconds(player.currentTime())
-            guard currentItemSeconds.isFinite else { return }
+            var totalPlayed: Double = 0
 
-            let previousDuration = self.playedDurationTillCurrentItem()
-            let totalPlayed = previousDuration + currentItemSeconds
+            for item in self.queueItems {
 
-            guard self.totalQueueDuration > 0 else { return }
+                if item == currentItem {
+                    let current = CMTimeGetSeconds(player.currentTime())
+                    totalPlayed += current.isFinite ? current : 0
+                    break
+                }
 
-            let cur = Int(totalPlayed)
-            let total = Int(self.totalQueueDuration)
+                totalPlayed += self.itemDurations[item] ?? 0
+            }
+
+            let total = self.totalQueueDuration
 
             self.durationLbl.text = String(
                 format: "Connected\n\n%02d:%02d / %02d:%02d",
-                cur / 60, cur % 60,
-                total / 60, total % 60
+                Int(totalPlayed)/60, Int(totalPlayed)%60,
+                Int(total)/60, Int(total)%60
             )
-        }
-    }
-
-    private func playedDurationTillCurrentItem() -> Double {
-        guard let player = audioQueuePlayer,
-              let currentItem = player.currentItem else { return 0 }
-
-        var duration: Double = 0
-
-        let sortedKeys = queueItems.keys.sorted()
-
-        for key in sortedKeys {
-            guard let item = queueItems[key] else { continue }
-            if item == currentItem { break }
-
-            let sec = CMTimeGetSeconds(item.asset.duration)
-            if sec.isFinite {
-                duration += sec
-            }
-        }
-        return duration
-    }
-    
-    private func playAudioData(_ data: Data) {
-        do {
-            self.audioPlayer = try AVAudioPlayer(data: data)
-            self.audioPlayer?.delegate = self
-            self.audioPlayer?.prepareToPlay()
-            self.audioPlayer?.play()
-            
-            self.startAudioTimer()
-        } catch {
-            self.handleAudioPlaybackError()
         }
     }
     
@@ -950,23 +868,6 @@ class NotificationCallVC: UIViewController {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.dismissCallScreen()
-        }
-    }
-    
-    // MARK: - Timer
-    private func startAudioTimer() {
-        audioTimer?.invalidate()
-        audioTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            guard let self = self, let player = self.audioPlayer else { return }
-            let current = Int(player.currentTime)
-            let currentMinutes = current / 60
-            let currentSeconds = current % 60
-            let total = Int(player.duration)
-            let totalMinutes = total / 60
-            let totalSeconds = total % 60
-            self.durationLbl.text = String(format: "Connected\n\n%02d:%02d / %02d:%02d",
-                                           currentMinutes, currentSeconds,
-                                           totalMinutes, totalSeconds)
         }
     }
     
