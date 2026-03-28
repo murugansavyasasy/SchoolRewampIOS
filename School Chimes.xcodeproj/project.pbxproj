@@ -490,6 +490,10 @@
 		8442A96B2CDE8AE80006068E /* LanguageVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9672CDE8AE80006068E /* LanguageVc.swift */; };
 		8442A96F2CDE8B2C0006068E /* LangTvCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A96E2CDE8B2C0006068E /* LangTvCellTableViewCell.xib */; };
 		8442A9702CDE8B2C0006068E /* LangTvCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A96D2CDE8B2C0006068E /* LangTvCellTableViewCell.swift */; };
+		84443FA82F76542800DC70F1 /* OutpassRequestsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84443FA62F76542800DC70F1 /* OutpassRequestsVC.swift */; };
+		84443FA92F76542800DC70F1 /* OutpassRequestsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84443FA72F76542800DC70F1 /* OutpassRequestsVC.xib */; };
+		84443FAA2F76542800DC70F1 /* OutpassRequestsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84443FA62F76542800DC70F1 /* OutpassRequestsVC.swift */; };
+		84443FAB2F76542800DC70F1 /* OutpassRequestsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84443FA72F76542800DC70F1 /* OutpassRequestsVC.xib */; };
 		84444C522E66D3FF00B4B8EB /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C512E66D3FF00B4B8EB /* UserDetailsTVC.xib */; };
 		84444C532E66D3FF00B4B8EB /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C502E66D3FF00B4B8EB /* UserDetailsTVC.swift */; };
 		84444C562E66EE3B00B4B8EB /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */; };
@@ -798,6 +802,10 @@
 		84E0AA012E3894CB002BF40A /* AttachmentHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E0AA002E3894CB002BF40A /* AttachmentHeaderCell.swift */; };
 		84E12C3A2ECC71F200FF614B /* PopoverTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E12C382ECC71F200FF614B /* PopoverTVC.swift */; };
 		84E12C3B2ECC71F200FF614B /* PopoverTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E12C392ECC71F200FF614B /* PopoverTVC.xib */; };
+		84E397392F75168C00E61019 /* yearAndMonthCalenderVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E397372F75168C00E61019 /* yearAndMonthCalenderVc.swift */; };
+		84E3973A2F75168C00E61019 /* yearAndMonthCalenderVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E397382F75168C00E61019 /* yearAndMonthCalenderVc.xib */; };
+		84E3973B2F75168C00E61019 /* yearAndMonthCalenderVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E397372F75168C00E61019 /* yearAndMonthCalenderVc.swift */; };
+		84E3973C2F75168C00E61019 /* yearAndMonthCalenderVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E397382F75168C00E61019 /* yearAndMonthCalenderVc.xib */; };
 		84E420BE2D2CF11500AA9D87 /* SpecificStudentTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E420BC2D2CF11500AA9D87 /* SpecificStudentTvcell.swift */; };
 		84E420BF2D2CF11500AA9D87 /* SpecificStudentTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E420BD2D2CF11500AA9D87 /* SpecificStudentTvcell.xib */; };
 		84E5A25F2E53255100A71420 /* AudioCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E5A25E2E53255100A71420 /* AudioCVC.xib */; };
@@ -2189,6 +2197,8 @@
 		8442A96D2CDE8B2C0006068E /* LangTvCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangTvCellTableViewCell.swift; sourceTree = "<group>"; };
 		8442A96E2CDE8B2C0006068E /* LangTvCellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LangTvCellTableViewCell.xib; sourceTree = "<group>"; };
 		8442AA732CDF6B220006068E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		84443FA62F76542800DC70F1 /* OutpassRequestsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutpassRequestsVC.swift; sourceTree = "<group>"; };
+		84443FA72F76542800DC70F1 /* OutpassRequestsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OutpassRequestsVC.xib; sourceTree = "<group>"; };
 		84444C502E66D3FF00B4B8EB /* UserDetailsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsTVC.swift; sourceTree = "<group>"; };
 		84444C512E66D3FF00B4B8EB /* UserDetailsTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDetailsTVC.xib; sourceTree = "<group>"; };
 		84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileVC.swift; sourceTree = "<group>"; };
@@ -2491,6 +2501,8 @@
 		84E0AA002E3894CB002BF40A /* AttachmentHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentHeaderCell.swift; sourceTree = "<group>"; };
 		84E12C382ECC71F200FF614B /* PopoverTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverTVC.swift; sourceTree = "<group>"; };
 		84E12C392ECC71F200FF614B /* PopoverTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopoverTVC.xib; sourceTree = "<group>"; };
+		84E397372F75168C00E61019 /* yearAndMonthCalenderVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = yearAndMonthCalenderVc.swift; sourceTree = "<group>"; };
+		84E397382F75168C00E61019 /* yearAndMonthCalenderVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = yearAndMonthCalenderVc.xib; sourceTree = "<group>"; };
 		84E420BC2D2CF11500AA9D87 /* SpecificStudentTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificStudentTvcell.swift; sourceTree = "<group>"; };
 		84E420BD2D2CF11500AA9D87 /* SpecificStudentTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpecificStudentTvcell.xib; sourceTree = "<group>"; };
 		84E5A25D2E53255100A71420 /* AudioCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCVC.swift; sourceTree = "<group>"; };
@@ -3351,6 +3363,10 @@
 				185CC0BE2F73F404002640CE /* studentPendingFeeTv.xib */,
 				185CC0C52F74EB49002640CE /* outpassRequestTVcell.swift */,
 				185CC0C62F74EB49002640CE /* outpassRequestTVcell.xib */,
+				84E397372F75168C00E61019 /* yearAndMonthCalenderVc.swift */,
+				84E397382F75168C00E61019 /* yearAndMonthCalenderVc.xib */,
+				84443FA62F76542800DC70F1 /* OutpassRequestsVC.swift */,
+				84443FA72F76542800DC70F1 /* OutpassRequestsVC.xib */,
 			);
 			path = HostelDashboard;
 			sourceTree = "<group>";
@@ -5453,6 +5469,7 @@
 				8488061C2DF6A963004806BF /* SubmissionTVC.xib in Resources */,
 				84EF6F332F6BD2DC004E8436 /* TextviewTVC.xib in Resources */,
 				840658392CFD8D4E00080CF6 /* EventsVC.xib in Resources */,
+				84E3973A2F75168C00E61019 /* yearAndMonthCalenderVc.xib in Resources */,
 				84EF9D222E7A7B7E00F57838 /* SwitchRollTVC.xib in Resources */,
 				1841DEFB2F5841BC00B88801 /* AttendanceHistoryViewController.xib in Resources */,
 				849AD0132D1A83CA002DEC07 /* SenderSideHomeWorkViewController.xib in Resources */,
@@ -5568,6 +5585,7 @@
 				182B0AC62F6D47BF002C81A0 /* DetailedAttendanceCell.xib in Resources */,
 				840A7CE72D24FDAA0061EAEA /* MarkTvCell.xib in Resources */,
 				187A0B582F10E9BD008CF5B7 /* OnboardingCVC.xib in Resources */,
+				84443FA92F76542800DC70F1 /* OutpassRequestsVC.xib in Resources */,
 				187A0B592F10E9BD008CF5B7 /* OnboardingVC.xib in Resources */,
 				844DF0892E5ADBDE0016A347 /* ReportsQuizVc.xib in Resources */,
 				842ACE0A2F569F6500954404 /* StudentFinancialTVC.xib in Resources */,
@@ -5731,6 +5749,7 @@
 				FA8168122F3318D100ADA8F3 /* FeeDetails.xib in Resources */,
 				FA8168132F3318D100ADA8F3 /* FeedetailTVC.xib in Resources */,
 				FA8168142F3318D100ADA8F3 /* ViewPaymentVC.xib in Resources */,
+				84443FAB2F76542800DC70F1 /* OutpassRequestsVC.xib in Resources */,
 				FA8168152F3318D100ADA8F3 /* PunchHistoryListVC.xib in Resources */,
 				FA8168162F3318D100ADA8F3 /* ScheduleExamVC.xib in Resources */,
 				FA8168172F3318D100ADA8F3 /* certificateHstryCell.xib in Resources */,
@@ -6098,6 +6117,7 @@
 				FA81694F2F3318D100ADA8F3 /* AssignmentsearchTVC.xib in Resources */,
 				FA8169502F3318D100ADA8F3 /* FooterCvCell.xib in Resources */,
 				FA8169512F3318D100ADA8F3 /* NewPlayQuizVC.xib in Resources */,
+				84E3973C2F75168C00E61019 /* yearAndMonthCalenderVc.xib in Resources */,
 				FA8169522F3318D100ADA8F3 /* SwitchRollVC.xib in Resources */,
 				FA8169532F3318D100ADA8F3 /* OngoingCVC.xib in Resources */,
 				1841DE6E2F56E86400B88801 /* ApplyLeaveReqVC.xib in Resources */,
@@ -6433,6 +6453,7 @@
 				848126D92D91820500BE6979 /* CountryListVC.swift in Sources */,
 				84F911872DB0C13F001A6408 /* bubbleview.swift in Sources */,
 				84BB5EB02D11337E00AD0C87 /* ExamsListCVCell.swift in Sources */,
+				84E397392F75168C00E61019 /* yearAndMonthCalenderVc.swift in Sources */,
 				84017F7E2E44942A006CB477 /* certificateHstryCell.swift in Sources */,
 				18D718DD2D0D479B00E9EDA3 /* NewAbsenteesViewController.swift in Sources */,
 				845F21792E45C2660078AF69 /* AssignmentDetailTVC.swift in Sources */,
@@ -6576,6 +6597,7 @@
 				FA0C88B32DC4CD470042DD24 /* VimeoUpload.swift in Sources */,
 				FACD4D772E30F8B40084B125 /* TimetableTvCell.swift in Sources */,
 				188272342F680F18000E0901 /* HostelListTvCell.swift in Sources */,
+				84443FA82F76542800DC70F1 /* OutpassRequestsVC.swift in Sources */,
 				84C829FD2D086A490024A46A /* ImageSparkView.swift in Sources */,
 				84017F7A2E447559006CB477 /* certificateReqTVCell.swift in Sources */,
 				84C829FE2D086A490024A46A /* CGPoint+Extensions.swift in Sources */,
@@ -6910,6 +6932,7 @@
 				FA8167042F3318D100ADA8F3 /* CountryListVC.swift in Sources */,
 				FA8167052F3318D100ADA8F3 /* bubbleview.swift in Sources */,
 				FA8167062F3318D100ADA8F3 /* ExamsListCVCell.swift in Sources */,
+				84E3973B2F75168C00E61019 /* yearAndMonthCalenderVc.swift in Sources */,
 				FA8167072F3318D100ADA8F3 /* certificateHstryCell.swift in Sources */,
 				FA8167082F3318D100ADA8F3 /* NewAbsenteesViewController.swift in Sources */,
 				FA8167092F3318D100ADA8F3 /* AssignmentDetailTVC.swift in Sources */,
@@ -7053,6 +7076,7 @@
 				FA81677F2F3318D100ADA8F3 /* VimeoUpload.swift in Sources */,
 				FA8167802F3318D100ADA8F3 /* TimetableTvCell.swift in Sources */,
 				188272322F680F18000E0901 /* HostelListTvCell.swift in Sources */,
+				84443FAA2F76542800DC70F1 /* OutpassRequestsVC.swift in Sources */,
 				FA8167812F3318D100ADA8F3 /* ImageSparkView.swift in Sources */,
 				FA8167822F3318D100ADA8F3 /* certificateReqTVCell.swift in Sources */,
 				FA8167832F3318D100ADA8F3 /* CGPoint+Extensions.swift in Sources */,

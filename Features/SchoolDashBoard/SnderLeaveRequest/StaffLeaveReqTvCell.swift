@@ -15,6 +15,7 @@ protocol approvalAndReject: AnyObject {
 }
 class StaffLeaveReqTvCell: UITableViewCell,UIPopoverPresentationControllerDelegate, SelectedId {
     func selectId(id: String?, edit: Bool?) {
+        print("CELL RECEIVED", id, edit)
         EditLeave?.selectId(id:id, edit: edit)
     }
     @IBOutlet weak var threeDotBtnName: UIButton!
@@ -34,13 +35,15 @@ class StaffLeaveReqTvCell: UITableViewCell,UIPopoverPresentationControllerDelega
     @IBOutlet weak var StatusView: UIView!
     @IBOutlet weak var NameAroundView: UIView!
     @IBOutlet weak var RejectBtnName: UIButton!
+    
     var indexPath: IndexPath?
     weak var delegate: EditDeleteDelegate?
-    var EditLeave:SelectedId?
+    weak var EditLeave:SelectedId?
     var edit:Bool?
     var delete:Bool?
     var selectedId:String?
     weak var ApprovalAndReject : approvalAndReject?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -65,7 +68,7 @@ class StaffLeaveReqTvCell: UITableViewCell,UIPopoverPresentationControllerDelega
         fullView.cornerRadius(10)
         fullView.layer.borderWidth = 0.5
         fullView.layer.borderColor = UIColor.lightGray.cgColor
-        StatusView.backgroundColor = UIColor(red: 1.0, green: 0.85, blue: 0.85, alpha: 1.0) // Light Blue
+//        StatusView.backgroundColor = UIColor(red: 1.0, green: 0.85, blue: 0.85, alpha: 1.0) // Light Blue
         StatusView.layer.cornerRadius = 10
     }
     
@@ -88,12 +91,12 @@ class StaffLeaveReqTvCell: UITableViewCell,UIPopoverPresentationControllerDelega
             popoverContentVC.modalPresentationStyle = .overFullScreen
             popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3) // Optional dim effect
         }
+        
         if let topVC = getCurrentViewController() {
             topVC.present(popoverContentVC, animated: true, completion: nil)
         }
         
     }
-    
     
     func edit(edit:Bool,delete:Bool,selectedId:String){
         self.selectedId = selectedId

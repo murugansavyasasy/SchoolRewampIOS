@@ -19,7 +19,7 @@ class outpassRequestTVcell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         fullview.layer.cornerRadius = 10
-        fullview.layer.borderWidth = 0.5
+        fullview.layer.borderWidth = 1
         fullview.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
     }
 

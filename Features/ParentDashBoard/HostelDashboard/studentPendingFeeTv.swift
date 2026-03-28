@@ -12,6 +12,8 @@ class studentPendingFeeTv: UITableViewCell {
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var tabelview: SelfSizingTableView!
     var pendingFeesList: [HostelFeeDetails] = []
+    var onPaybuttonTapped : (() -> ())?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -42,9 +44,10 @@ extension studentPendingFeeTv : UITableViewDelegate,UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "PendingFeeCell", for: indexPath) as! PendingFeeCell
         let feeData = pendingFeesList[indexPath.row]
         cell.configure(with: feeData)
+        cell.onPayButtonTapped = { [weak self] in
+            self?.onPaybuttonTapped?()
+        }
         return cell
     }
-    
-    
     
 }

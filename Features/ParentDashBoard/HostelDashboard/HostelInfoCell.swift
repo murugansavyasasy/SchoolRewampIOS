@@ -29,15 +29,15 @@ class HostelInfoCell: UITableViewCell {
         if let hostelName = data.hostel_name {
             blocks.append(HostelInfoData(title: "Hostel Name", value: hostelName))
         }
-//        if let hType = data.hostel_type {
-//            blocks.append(HostelInfoData(title: "Type", value: hType.capitalized))
-//        }
-//        if let capacity = data.max_capacity {
-//            blocks.append(HostelInfoData(title: "Capacity", value: "\(capacity) Students"))
-//        }
-//        if let floors = data.no_of_floors, let rooms = data.no_of_rooms {
-//            blocks.append(HostelInfoData(title: "Layout", value: "\(floors) Floors, \(rooms) Rooms"))
-//        }
+        if let hType = data.hostel_type {
+            blocks.append(HostelInfoData(title: "Type", value: hType.capitalized))
+        }
+        if let capacity = data.max_capacity {
+            blocks.append(HostelInfoData(title: "Capacity", value: "\(capacity) Students"))
+        }
+        if let floors = data.no_of_floors, let rooms = data.no_of_rooms {
+            blocks.append(HostelInfoData(title: "Layout", value: "\(floors) Floors, \(rooms) Rooms"))
+        }
         if let wardens = data.warden_name {
             var uniqueWardens = [String]()
             for w in wardens where !uniqueWardens.contains(w) { uniqueWardens.append(w) }

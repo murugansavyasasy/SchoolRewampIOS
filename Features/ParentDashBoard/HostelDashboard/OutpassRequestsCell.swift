@@ -7,8 +7,10 @@ class OutpassRequestsCell: UITableViewCell {
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var containerStackView: UIStackView!
     @IBOutlet weak var Tv: SelfSizingTableView!
+    @IBOutlet weak var seeMoreBtn: UIButton!
     var newRequestdelegate : newRequestScreen?
     var  outPassData: [OutPassRequest]?
+    var onSeeMore: (() -> Void)?
     override func awakeFromNib() {
         super.awakeFromNib()
         cardView.layer.cornerRadius = 12
@@ -23,6 +25,7 @@ class OutpassRequestsCell: UITableViewCell {
   
     func configure(data : [OutPassRequest]){
         outPassData = data
+        seeMoreBtn.isHidden = (outPassData?.count ?? 0) <= 3 ? true : false
         Tv.delegate = self
         Tv.dataSource = self
         Tv.reloadData()
@@ -30,13 +33,19 @@ class OutpassRequestsCell: UITableViewCell {
     @IBAction func NewOutpassBtnName(_ sender: UIButton) {
         newRequestdelegate?.newOutpassVc()
     }
-   
+    @IBAction func seeMoreBtnAct(_ sender: Any) {
+        onSeeMore?()
+    }
+    
 }
 extension OutpassRequestsCell : UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return outPassData?.count ?? 0
+        if (outPassData?.count ?? 0) > 3 {
+            return 3
+        }else{
+            return outPassData?.count ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

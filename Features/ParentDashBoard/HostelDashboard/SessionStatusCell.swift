@@ -4,10 +4,18 @@ class SessionStatusCell: UICollectionViewCell {
     
     @IBOutlet weak var statusImageView: UIImageView!
     @IBOutlet weak var statusLabel: UILabel! // Used if not present/absent
+    @IBOutlet weak var cellView: UIView!
+    @IBOutlet weak var yearMonthLbl: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = .clear
+        
+        cellView.layer.cornerRadius = 2
+        cellView.layer.borderWidth = 1
+        cellView.layer.borderColor = UIColor.systemGray4.cgColor
+        
+        yearMonthLbl.setFont(style: .body, size: FontSize.BodySize)
     }
     
     func configure(status: String) {

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StaffWiseAttendaceVC: UIViewController {
+class StaffWiseAttendaceVC: UIViewController, Datepicker {
 
     @IBOutlet weak var menuNameLbl: UILabel!
     @IBOutlet weak var stafNameLbl: UILabel!
@@ -17,6 +17,7 @@ class StaffWiseAttendaceVC: UIViewController {
     @IBOutlet weak var tabelview: UITableView!
     @IBOutlet weak var fromDateTextField: UITextField!
     @IBOutlet weak var toDateTextField: UITextField!
+    
     var responseData: StaffAttendanceResponseSuc?
     var sortedDates: [String] = []
     let fromDatePicker = UIDatePicker()
@@ -27,6 +28,10 @@ class StaffWiseAttendaceVC: UIViewController {
     var staffDetails: [GetStaffDetails]?
     var staffId : String?
     var is_selectAllStaff : Bool = true
+    var isFromDate : Bool = true
+    var from_date : Date?
+    var To_date : Date?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
@@ -35,6 +40,12 @@ class StaffWiseAttendaceVC: UIViewController {
 
         menuNameLbl.setFont(style: .title, size: FontSize.TitleSize)
         menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        
+        let fromTap = UITapGestureRecognizer(target: self, action: #selector(SelectFromDate))
+        fromDateView.addGestureRecognizer(fromTap)
+        
+        let toTap = UITapGestureRecognizer(target: self, action: #selector(SelectToDate))
+        todateView.addGestureRecognizer(toTap)
     }
     func setupTableView() {
         tabelview.delegate = self
@@ -54,7 +65,65 @@ class StaffWiseAttendaceVC: UIViewController {
         
     }
 
+    @IBAction func SelectFromDate(){
+        isFromDate = true
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.date = fromDateTextField.text
+        if let maxDate = To_date{
+            vc.maximumDate = maxDate
+        }else{
+            vc.maximumDate = Date()
+        }
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
+    }
     
+    @IBAction func SelectToDate(){
+        isFromDate = false
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.date = toDateTextField.text
+        vc.maximumDate = Date()
+        if let minDate = from_date{
+            vc.minimumDate = minDate
+        }
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
+    }
+    
+    func date(date: String) {
+        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
+        let locale = Locale(identifier: normalizedCode)
+        
+        let inputFormatter = DateFormatter()
+        inputFormatter.locale = locale
+        inputFormatter.dateFormat = "dd MMM yyyy" // correct format
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.locale = locale
+        outputFormatter.dateFormat = "dd MMM yyyy"
+        
+        guard let parsedDate = inputFormatter.date(from: date) else {
+            print("❌ Could not parse: \(date)")
+            return
+        }
+        
+        let finalDateString = outputFormatter.string(from: parsedDate)
+        
+        if isFromDate {
+            fromDateTextField.text = finalDateString
+            from_date = parsedDate
+        } else {
+            toDateTextField.text = finalDateString
+            To_date = parsedDate
+        }
+    }
     
     @IBAction func BackBtnAct(_ sender: UIButton) {
         
