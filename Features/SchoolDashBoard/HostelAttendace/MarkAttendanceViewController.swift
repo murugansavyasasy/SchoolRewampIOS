@@ -119,7 +119,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
 
     private func setupUI() {
         view.backgroundColor = .clear
-
+        selectedDate = getCurrentDateString()
         bottomSheetView.layer.cornerRadius = 32
         bottomSheetView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         bottomSheetView.clipsToBounds = true
@@ -163,11 +163,14 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     }
 
     private func updateProgress() {
-        let markedCount = studentsdataDetails.filter { _ in 0 != 0 }.count
+        let markedCount = studentsdataDetails.filter {
+            !($0.is_select?.isEmpty ?? true)
+        }.count
+
         let total = studentsdataDetails.count
 
         progressLabel.text = "\(markedCount)/\(total)"
-        progressView.progress = total > 0 ? Float(markedCount) / Float(total) : 0
+        progressView.progress = total == 0 ? 0 : Float(markedCount) / Float(total)
     }
 
 
@@ -213,12 +216,34 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "StudentAttendanceCell", for: indexPath) as? StudentAttendanceCell
         else { return UITableViewCell() }
-        var student = studentsdataDetails[indexPath.row]
+        let student = studentsdataDetails[indexPath.row]
        
+        var state = ""
+
+        if student.is_select == "2" {
+            state = "2"
+        } else if student.is_select == "1" {
+            state = "1"
+        } else {
+            if student.status?.uppercased() == "PRESENT" {
+                state = "2"
+            } else if student.status?.uppercased() == "ABSENT" {
+                state = "1"
+            } else {
+                state = "0"
+            }
+        }
         let inandoutdate = " out date : \(student.out_date ?? "") -   in date : \(student.in_date ?? "")"
         cell.configure(
-            name: student.name ?? "", id: student.id ?? "", parentNum: student.primary_mobile ?? "", state: student.is_select ?? "",
-            index: indexPath.row, reason: student.reason ?? "", out_pass_status: student.outpasss_status ?? "",outDateInDate : inandoutdate)
+            name: student.name ?? "",
+            id: student.id ?? "",
+            parentNum: student.primary_mobile ?? "",
+            state: state,
+            index: indexPath.row,
+            reason: student.reason ?? "",
+            out_pass_status: student.outpasss_status ?? "",
+            outDateInDate: inandoutdate, outpass_id: student.outpass_id ?? ""
+        )
         
         cell.absentButton.tag = indexPath.row
         cell.presentButton.tag = indexPath.row
@@ -254,11 +279,13 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
                     HostelSessionListDataDetails = Success.data ?? []
                     setupDropDowns()
                     sessionId = Success.data?.first?.id ?? ""
+                   sessionBtnName.setTitle(Success.data?.first?.name ?? "", for: .normal)
                     GetStudentList(roomId: roomId ?? "", academicYear: academic_year_id ?? "", date: getCurrentDateString(),sessionID: sessionId ?? "" , hostelId: hostelId ?? "")
                 }
             case .failure(let error):
                 DispatchQueue.main.async { [self] in
                    
+                    
                 }
             }
         }
@@ -266,16 +293,17 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     
     func MarkAttendace() {
         
-        let studentDetailsArray = studentsdataDetails.compactMap { student -> [String: Any]? in
+        let studentDetailsArray: [[String: Any]] = studentsdataDetails.compactMap { student in
             
             guard let id = student.id else { return nil }
+            
             let status: String
             if student.is_select == "2" {
                 status = "PRESENT"
             } else if student.is_select == "1" {
                 status = "ABSENT"
             } else {
-                status  = ""
+                status = student.status?.uppercased() ?? "ABSENT"
             }
             
             return [
@@ -284,7 +312,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
             ]
         }
         
-        APIService.shared.makeApi(url: ServiceUrl.hostel_attendance_mark_attendance, parameters: ["hostel_id" : hostelId ?? "" , "session_type_id" : sessionId ?? "", "attendance_date" : selectedDate ?? "", "room_id"  : roomId ?? "","academic_year_id" : academic_year_id ?? "","student_details" : studentDetailsArray], type: ApitTypeSringFile.POST, token: StaffDetails?.access_token ?? "", isBaseUrl: true) {[self] (result: Result<HostelSessionListSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.hostel_attendance_mark_attendance, parameters: ["hostel_id" : hostelId ?? "" , "session_type_id" : Int(sessionId ?? "0") ?? 0, "attendance_date" : selectedDate ?? "", "room_id"  : roomId ?? "","academic_year_id" : academic_year_id ?? "","student_details" : studentDetailsArray], type: ApitTypeSringFile.POST, token: StaffDetails?.access_token ?? "", isBaseUrl: true) {[self] (result: Result<HostelSessionListSuc,Error>) in
             switch result{
             case .success(let Success):
                 DispatchQueue.main.async {[self] in
@@ -351,16 +379,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         moveCurrentPage(isNext: false)
     }
     
-//    func moveCurrentPage(isNext: Bool) {
-//        let current = calendar.currentPage
-//        var dateComponents = DateComponents()
-//        dateComponents.month = isNext ? 1 : -1
-//        //let newDate = Calendar.current.date(byAdding: dateComponents, to: current)!
-//        guard let newDate = Calendar.current.date(byAdding: dateComponents, to: current) else {  return }
-//        calendar.setCurrentPage(newDate, animated: true)
-//        updateMonthLabel()
-//    }
-    
+
     func moveCurrentPage(isNext: Bool) {
         let currentPage = calendar.currentPage
 
