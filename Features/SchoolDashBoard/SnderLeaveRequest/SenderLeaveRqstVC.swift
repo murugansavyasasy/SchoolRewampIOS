@@ -72,7 +72,7 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate, approvalAndReject
                     Tosession: leave.to_session ?? "",
                     NoOfDays: leave.no_of_days ?? "",
                     LeaveType: leave.leave_type ?? "",
-                    LeaveTypeId: Int(leave.leave_type_id ?? "0") ?? 0)
+                    LeaveTypeId: Int(leave.leave_type_id?.value ?? "0") ?? 0)
                 
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
@@ -563,15 +563,37 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
                 cell.editClickBtn.isHidden = false
             } else {
                 cell.aproveBtn.backgroundColor = .systemGreen
-                cell.aproveBtn.setTitle(leave_type[0], for: .normal)
-                cell.rejectBtn.setTitle(leave_type[1], for: .normal)
+                cell.aproveBtn.setTitle("Approve", for: .normal)
+                cell.rejectBtn.setTitle("Reject", for: .normal)
                 cell.aproveBtn.isHidden = false
                 cell.rejectBtn.isHidden = false
                 cell.editClickBtn.isHidden = true
             }
             cell.LeaveTypeLbl.text = leaveData.leave_type
-            cell.indexPath = indexPath
-            cell.delegate = self
+            
+            cell.onApprove = { [weak self] in
+                
+                guard let self = self else { return }
+                
+                let message = AlertstringFile.toapprovethisleaverequest
+                alert.showAlertCancel(title: AlertstringFile.Confirm, message: message,
+                                      actionLbl1: AlertstringFile.OK,
+                                      actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
+                    self.Leave_Update_status(id: leaveData.id ?? "", status: true, indexPath: indexPath)
+                }, onNo: {})
+            }
+            
+            cell.onReject = { [weak self] in
+                
+                guard let self = self else { return }
+                
+                let message = AlertstringFile.toRejectthisleaverequest
+                alert.showAlertCancel(title: AlertstringFile.Confirm, message: message,
+                                      actionLbl1: AlertstringFile.OK,
+                                      actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
+                    self.Leave_Update_status(id: leaveData.id ?? "", status: false, indexPath: indexPath)
+                }, onNo: {})
+            }
             
             return cell
             

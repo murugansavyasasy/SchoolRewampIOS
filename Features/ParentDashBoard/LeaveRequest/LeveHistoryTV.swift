@@ -24,9 +24,8 @@ class LeveHistoryTV: UITableViewCell {
     @IBOutlet weak var LeaveTypeLbl: UILabel!
     @IBOutlet weak var classLbl: UILabel!
     
-    
-    var indexPath: IndexPath?
-    weak var delegate: EditDeleteDelegate?
+    var onApprove: (() -> Void)?
+    var onReject: (() -> Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -55,14 +54,11 @@ class LeveHistoryTV: UITableViewCell {
     }
 
     @IBAction func aprove(_ sender: UIButton) {
-        if let indexPath = indexPath {
-                delegate?.edit(edit: indexPath, delete: IndexPath(row: 0, section: indexPath.section)) // use as needed
-            }
+       onApprove?()
     }
+    
     @IBAction func rejectAct(_ sender: UIButton) {
-        if let indexPath = indexPath {
-                delegate?.edit(edit: indexPath, delete: IndexPath(row: 1, section: indexPath.section)) // use as needed
-            }
+        onReject?()
     }
     
 }

@@ -936,12 +936,34 @@ struct LeaveInfo: Codable {
     var leave_type: String?
     var from_date: String?
     var to_date: String?
-    var leave_type_id: String?
+    var leave_type_id: FlexibleString?
     var status_id: String?
     var role: String?
     var mobile_no: String?
     var email: String?
     var address: String?
+}
+
+struct FlexibleString: Codable {
+    let value: String?
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+
+        if let str = try? container.decode(String.self) {
+            value = str
+        } else if let int = try? container.decode(Int.self) {
+            value = String(int)
+        } else {
+            value = nil
+        }
+    }
+
+    // Optional: for encoding back
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(value)
+    }
 }
 
 //MARK: ASSIGNMENT MY SUBMISION

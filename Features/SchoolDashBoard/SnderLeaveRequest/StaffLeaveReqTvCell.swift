@@ -38,7 +38,7 @@ class StaffLeaveReqTvCell: UITableViewCell,UIPopoverPresentationControllerDelega
     
     var indexPath: IndexPath?
     weak var delegate: EditDeleteDelegate?
-    var EditLeave:SelectedId?
+    weak var EditLeave:SelectedId?
     var edit:Bool?
     var delete:Bool?
     var selectedId:String?

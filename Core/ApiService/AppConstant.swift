@@ -212,7 +212,6 @@ struct ServiceUrl{
     static let hostel_attendance_hostel_info = "stud-attd/api/hostel-attendance/hostel-info"
     static let comm_api_leave_req_for_staff_delete = "comm/api/leave-req-for-staff/delete"
     static let comm_api_leave_req_for_staff_update = "comm/api/leave-req-for-staff/update"
-    static let hostel_attendance_hostel_info = "stud-attd/api/hostel-attendance/hostel-info" 
     static let hostel_attendance_update_status = "stud-attd/api/hostel-attendance/update-status"
    
 }
