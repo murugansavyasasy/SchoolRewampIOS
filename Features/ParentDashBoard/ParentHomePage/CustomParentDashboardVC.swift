@@ -213,6 +213,9 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                 case .success(let response):
                     if response.status == true, let details = response.data?.first {
                         self.menu_details = details.menus ?? []
+                        self.menu_details.append(
+                            MenuDetail(id: 113, name: "Hostel Management", description: "Used to apply leave")
+                        )
                         self.recentMenuItems = details.frequently_used
                         self.MenuCollection.reloadData()
                         self.refreshCount = true
@@ -226,6 +229,9 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
 //                        }
                         self.pagecontroller.numberOfPages = details.frequently_used?.count ?? 0
                         self.filteredMenu = details.menus ?? []
+                        self.filteredMenu.append(
+                            MenuDetail(id: 113, name: "Hostel Management", description: "Used to apply leave")
+                        )
                         self.recentActiveMenuCollection.reloadData()
                         self.get_MenuCount() // 🔹 after menus loaded
                         user_inputs.menuList = self.menu_details.compactMap{$0.name}
@@ -563,7 +569,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         case 7:  MenuRedirect.receiverCommunicationNavigate(from: self,PushNotiMsgId: messageId)
         case 9:  MenuRedirect.receiverEvent(from: self,PushNotiMsgId: messageId)
         case 10: MenuRedirect.resiverExamMark(from: self)
-        case 12: MenuRedirect.ResiverHostelManagment(from: self)
+        case 12: MenuRedirect.receiverFeeDetails(from: self)
         case 15: MenuRedirect.receiverHomework(from: self,PushNotiMsgId: messageId)
         case 16: MenuRedirect.receiverchat(from: self)
         case 20: MenuRedirect.receiverLsrwNavigate(from: self,PushNotiMsgId: messageId)

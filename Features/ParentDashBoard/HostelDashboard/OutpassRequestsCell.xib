@@ -82,15 +82,25 @@
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="GmS-cL-EUV" customClass="SelfSizingTableView" customModule="School_Chimes" customModuleProvider="target">
-                                <rect key="frame" x="10" y="71" width="323" height="203"/>
+                                <rect key="frame" x="10" y="71" width="323" height="165"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HB5-4Z-27M">
+                                <rect key="frame" x="267" y="246" width="66" height="30"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="See More"/>
+                                <connections>
+                                    <action selector="seeMoreBtnAct:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="7ne-N4-0Gf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="HB5-4Z-27M" secondAttribute="bottom" constant="8" id="8Ih-nY-PmV"/>
                             <constraint firstItem="GmS-cL-EUV" firstAttribute="top" secondItem="stk-vW" secondAttribute="bottom" constant="10" id="AIG-ll-fmy"/>
-                            <constraint firstAttribute="bottom" secondItem="GmS-cL-EUV" secondAttribute="bottom" constant="10" id="I47-bN-fJ7"/>
+                            <constraint firstItem="HB5-4Z-27M" firstAttribute="top" secondItem="GmS-cL-EUV" secondAttribute="bottom" constant="10" id="Rz4-pD-05J"/>
                             <constraint firstAttribute="trailing" secondItem="GmS-cL-EUV" secondAttribute="trailing" constant="10" id="aC9-5Z-Dzi"/>
+                            <constraint firstAttribute="trailing" secondItem="HB5-4Z-27M" secondAttribute="trailing" constant="10" id="aZT-UU-vEQ"/>
                             <constraint firstItem="stk-vW" firstAttribute="top" secondItem="o8q-hD-Z8r" secondAttribute="top" id="c1"/>
                             <constraint firstAttribute="trailing" secondItem="stk-vW" secondAttribute="trailing" id="c2"/>
                             <constraint firstItem="stk-vW" firstAttribute="leading" secondItem="o8q-hD-Z8r" secondAttribute="leading" id="c3"/>
@@ -111,8 +121,9 @@
                 <outlet property="Tv" destination="GmS-cL-EUV" id="kkT-98-0ga"/>
                 <outlet property="cardView" destination="o8q-hD-Z8r" id="c11"/>
                 <outlet property="containerStackView" destination="stk-vW" id="c12"/>
+                <outlet property="seeMoreBtn" destination="HB5-4Z-27M" id="7Rl-kj-M14"/>
             </connections>
-            <point key="canvasLocation" x="-138" y="21"/>
+            <point key="canvasLocation" x="-138.1679389312977" y="20.422535211267608"/>
         </tableViewCell>
     </objects>
     <resources>

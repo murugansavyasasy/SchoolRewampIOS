@@ -209,6 +209,8 @@ struct ServiceUrl{
     static let comm_api_homework_submissions_list = "comm/api/homework/submissions-list" 
     static let hostel_attendance_parent_dashboard = "stud-attd/api/hostel-attendance/parent-dashboard"
     static let hostel_attendance_hostel_info = "stud-attd/api/hostel-attendance/hostel-info"
+    static let comm_api_leave_req_for_staff_delete = "comm/api/leave-req-for-staff/delete"
+    static let comm_api_leave_req_for_staff_update = "comm/api/leave-req-for-staff/update"
    
 }
 
