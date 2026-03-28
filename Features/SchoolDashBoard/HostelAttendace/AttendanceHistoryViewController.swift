@@ -12,6 +12,7 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
         setInitialButtonTitles(date: date)
     }
     
+    @IBOutlet weak var selectDateDefaultLbl: UILabel!
     @IBOutlet weak var dateBtn: UIButton!
     @IBOutlet weak var DateFullView: UIView!
     @IBOutlet weak var dayLbl: UILabel!
@@ -33,7 +34,7 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
     var hostelId : String?
     var academicYearId : String?
     var dateString : String?
-   
+    var datas: [AttendanceHistoryData]?
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.modalPresentationStyle = .overFullScreen
@@ -130,7 +131,8 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
 
     private func setupUI() {
         view.backgroundColor = .clear
-
+      
+        selectDateDefaultLbl.setRequiredText(selectDateDefaultLbl.text ?? "")
         bottomSheetView.layer.cornerRadius = 32
         bottomSheetView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         bottomSheetView.clipsToBounds = true
@@ -206,7 +208,7 @@ extension AttendanceHistoryViewController : UITableViewDelegate, UITableViewData
                          section: section,
                          isExpanded: isExpanded,
                          roomId: rId,
-                         totalSessionsInRoom: sCount)
+                         totalSessionsInRoom: sCount,totalsessions : datas?.first?.sessions.count ?? 0 )
         header.delegate = self
         
         return header
@@ -243,7 +245,7 @@ extension AttendanceHistoryViewController : UITableViewDelegate, UITableViewData
                 DispatchQueue.main.async {[self] in
                     // Flatten the nested Room -> Session architecture
                     var flattened: [FlatSession] = []
-                    
+                    datas = Success.data
                     for room in Success.data {
                         for (index, session) in room.sessions.enumerated() {
                             let isFirst = (index == 0)

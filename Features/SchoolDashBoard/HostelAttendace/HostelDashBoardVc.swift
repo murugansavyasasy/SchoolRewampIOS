@@ -10,6 +10,7 @@ import UIKit
 class HostelDashBoardVc: UIViewController {
 
     
+    @IBOutlet weak var hostelNameLbl: UILabel!
     @IBOutlet weak var currentDateLbl: UILabel!
     @IBOutlet weak var HostelDashboardDateView: UIView!
     @IBOutlet weak var tableView: UITableView!
@@ -28,7 +29,7 @@ class HostelDashBoardVc: UIViewController {
         super.viewDidLoad()
         HostelDashboardDateView.layer.cornerRadius = 15
       
-        
+        hostelNameLbl.text = hostelData?.name ?? "" 
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE dd MMMM"
         formatter.locale = Locale(identifier: "en_US_POSIX")

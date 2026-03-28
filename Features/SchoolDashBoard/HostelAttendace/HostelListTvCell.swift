@@ -29,6 +29,7 @@ class HostelListTvCell: UITableViewCell {
     func configure(with data: HostelListData) {
            
            hostelName.text = data.name
+        HostelID.text = " # \(data.id ?? "")"
            instruteName.text = data.institute_name
            HostelLocationLbl.text = data.address
            maxCapicityLbl.text = "\(data.max_capacity ?? 0)"
