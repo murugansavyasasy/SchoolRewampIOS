@@ -1,0 +1,388 @@
+//
+//  StaffWiseAttendaceVC.swift
+//  School Chimes
+//
+//  Created by apple on 26/03/26.
+//
+
+import UIKit
+
+class StaffWiseAttendaceVC: UIViewController {
+
+    @IBOutlet weak var menuNameLbl: UILabel!
+    @IBOutlet weak var stafNameLbl: UILabel!
+    @IBOutlet weak var staffListDropDownView: UIView!
+    @IBOutlet weak var todateView: UIView!
+    @IBOutlet weak var fromDateView: UIView!
+    @IBOutlet weak var tabelview: UITableView!
+    @IBOutlet weak var fromDateTextField: UITextField!
+    @IBOutlet weak var toDateTextField: UITextField!
+    var responseData: StaffAttendanceResponseSuc?
+    var sortedDates: [String] = []
+    let fromDatePicker = UIDatePicker()
+    let toDatePicker = UIDatePicker()
+    var staffdetails = UserDefaultFileManager.get_staff_Details()
+    let dateFormatter = DateFormatter()
+    var dropDown  = DropDown()
+    var staffDetails: [GetStaffDetails]?
+    var staffId : String?
+    var is_selectAllStaff : Bool = true
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupTableView()
+        let staffDropDownClick =  UITapGestureRecognizer(target: self, action: #selector(staffDropDownList))
+        staffListDropDownView.addGestureRecognizer(staffDropDownClick)
+
+        menuNameLbl.setFont(style: .title, size: FontSize.TitleSize)
+        menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+    }
+    func setupTableView() {
+        tabelview.delegate = self
+        tabelview.dataSource = self
+        tabelview.separatorStyle = .none
+        tabelview.backgroundColor = UIColor(red: 0.96, green: 0.97, blue: 0.98, alpha: 1.0)
+        
+        tabelview.register(UINib(nibName: "OverallSummaryCell", bundle: nil), forCellReuseIdentifier: "OverallSummaryCell")
+        tabelview.register(UINib(nibName: "AttendanceHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "AttendanceHeaderView")
+        tabelview.register(UINib(nibName: "LocationTableViewCell", bundle: nil), forCellReuseIdentifier: "LocationTableViewCell")
+        
+        if #available(iOS 15.0, *) {
+            tabelview.sectionHeaderTopPadding = 0
+        }
+        
+        getStaffListAPI()
+        
+    }
+
+    
+    
+    @IBAction func BackBtnAct(_ sender: UIButton) {
+        
+        dismiss(animated: true)
+    }
+    
+}
+extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if is_selectAllStaff == true {
+            return 1 + sortedDates.count   // with summary
+        } else {
+            return sortedDates.count       // without summary
+        }
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if is_selectAllStaff == true {
+            if section == 0 {
+                return 1
+            }
+            let dateKey = sortedDates[section - 1]
+            let details = responseData?.data?.first?.all_attd?[dateKey]?.attd_details ?? []
+            return details.count
+            
+        } else {
+            let dateKey = sortedDates[section]
+            let details = responseData?.data?.first?.all_attd?[dateKey]?.attd_details ?? []
+            return details.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        if is_selectAllStaff == true {
+            if section == 0 { return nil }
+            let dateKey = sortedDates[section - 1]
+            let stat = responseData?.data?.first?.all_attd?[dateKey]?.stat
+            
+            let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "AttendanceHeaderView") as? AttendanceHeaderView
+            header?.configure(dateString: dateKey, stat: stat)
+            return header
+            
+        } else {
+            let dateKey = sortedDates[section]
+            let stat = responseData?.data?.first?.all_attd?[dateKey]?.stat
+            
+            let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "AttendanceHeaderView") as? AttendanceHeaderView
+            header?.configure(dateString: dateKey, stat: stat)
+            return header
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if is_selectAllStaff == true {
+            return section == 0 ? 0 : 90
+        } else {
+            return 90
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        // ✅ CASE 1: Show Overall Summary (only when is_selectAllStaff == true)
+        if is_selectAllStaff == true && indexPath.section == 0 {
+            
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: "OverallSummaryCell",
+                for: indexPath
+            ) as? OverallSummaryCell else {
+                return UITableViewCell()
+            }
+            
+            if let stat = responseData?.data?.first?.overall_stat {
+                cell.configure(with: stat)
+            }
+            
+            return cell
+        }
+        
+        // ✅ CASE 2: Normal attendance cells
+        
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: "LocationTableViewCell",
+            for: indexPath
+        ) as? LocationTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        cell.dateViewWidthCon.constant = 0
+        cell.dateViewHeightCon.constant = 0
+        
+        // 🔥 Correct date index handling
+        let dateIndex = (is_selectAllStaff == true) ? indexPath.section - 1 : indexPath.section
+        let dateKey = sortedDates[dateIndex]
+        
+        let details = responseData?.data?.first?.all_attd?[dateKey]?.attd_details ?? []
+        let attendanceData = details[indexPath.row]
+        
+        // UI setup
+        cell.fullView.setShadow()
+        cell.selectionStyle = .none
+        
+        // Name
+        cell.namelbl.text = attendanceData.name
+        
+        // Role / Designation
+        if let role = attendanceData.designation, !role.isEmpty {
+            cell.rollLable.text = role
+        } else {
+            cell.rollLable.text = attendanceData.role ?? "Not Mentioned"
+        }
+        
+        // Attendance Status Button
+        if let attendanceDict = attendanceData.attendance_type,
+           let first = attendanceDict.first {
+            
+            let key = first.key
+            let value = first.value
+            
+            let statusText = "\(key.uppercased()) | \(value)"
+            cell.statusBtn.setTitle(statusText, for: .normal)
+            
+            if value.lowercased() == "absent" {
+                cell.statusBtn.setTitleColor(.systemRed, for: .normal)
+                cell.statusBtn.backgroundColor = UIColor.systemRed.withAlphaComponent(0.2)
+            } else {
+                cell.statusBtn.setTitleColor(.systemGreen, for: .normal)
+                cell.statusBtn.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.2)
+            }
+            
+        } else {
+            cell.statusBtn.setTitle("N/A", for: .normal)
+            cell.statusBtn.setTitleColor(.systemGray, for: .normal)
+            cell.statusBtn.backgroundColor = UIColor.systemGray.withAlphaComponent(0.2)
+        }
+        
+        // Check-in / Check-out
+        cell.checkoutLbl.text = (attendanceData.out_time?.isEmpty == false) ? attendanceData.out_time : "-"
+        cell.checkinLbl.text = (attendanceData.in_time?.isEmpty == false) ? attendanceData.in_time : "-"
+        
+        // Working Hours
+        if let workingHours = attendanceData.working_hours,
+           let totalMinutes = Int(workingHours) {
+            
+            if totalMinutes < 60 {
+                cell.hoursLbl.text = "\(totalMinutes) min"
+            } else {
+                let hours = totalMinutes / 60
+                let minutes = totalMinutes % 60
+                
+                if minutes == 0 {
+                    cell.hoursLbl.text = "\(hours) hr"
+                } else {
+                    cell.hoursLbl.text = "\(hours) hr \(minutes) min"
+                }
+            }
+        } else {
+            cell.hoursLbl.text = "-"
+        }
+        
+        // Date + Weekday
+        if let components = convertDateComponents(from: attendanceData.date ?? "") {
+            cell.dateLbl.text = components.day
+            cell.dayLbl.text = components.weekday
+        } else {
+            cell.dateLbl.text = "-"
+            cell.dayLbl.text = "-"
+        }
+        
+        return cell
+    }
+    
+    func convertDateComponents(from dateString: String) -> (day: String, month: String, weekday: String)? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd-MM-yyyy"
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX") // safe
+        
+        guard let date = inputFormatter.date(from: dateString) else { return nil }
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        outputFormatter.dateFormat = "dd"
+        let day = outputFormatter.string(from: date)
+        
+        outputFormatter.dateFormat = "MMM"
+        let month = outputFormatter.string(from: date)
+        
+        outputFormatter.dateFormat = "EEE"
+        let weekday = outputFormatter.string(from: date)
+        
+        return (day, month, weekday)
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return 180
+        }
+        return UITableView.automaticDimension
+    }
+    
+    
+
+    func getStaffWiseAttendace(fromDate: String, toDate: String, staffId: String, select_staffAll: Bool) {
+        
+        APIService.shared.makeApi(
+            url: ServiceUrl.staff_attd_geometric_remove_attendance_report_date_wise,
+            parameters: [
+                "from_date": fromDate,
+                "to_date": toDate,
+//                "staff_id": staffId,
+                "is_all": select_staffAll
+            ],
+            type: ApitTypeSringFile.GET,
+            token: staffdetails?.access_token ?? "",
+            isBaseUrl: false
+        ) { [weak self] (result: Result<StaffAttendanceResponseSuc, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let success):
+                DispatchQueue.main.async {
+                    if success.status == true {
+                        self.handleAttendanceResponse(success)
+                    } else {
+                        print("API status false")
+                    }
+                }
+                
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print("Error:", error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func handleAttendanceResponse(_ response: StaffAttendanceResponseSuc) {
+        
+        responseData = response
+        
+        let df = DateFormatter()
+        df.dateFormat = "dd-MM-yyyy"
+        
+        if let allAttd = response.data?.first?.all_attd {
+            sortedDates = allAttd.keys.sorted(by: {
+                let d1 = df.date(from: $0) ?? Date()
+                let d2 = df.date(from: $1) ?? Date()
+                return d1 > d2
+            })
+        }
+        
+        if let firstDateKey = sortedDates.first,
+           let d = df.date(from: firstDateKey) {
+            
+            fromDatePicker.date = d
+            toDatePicker.date = d
+            
+            fromDateTextField.text = dateFormatter.string(from: d)
+            toDateTextField.text = dateFormatter.string(from: d)
+        }
+        
+        tabelview.reloadData()
+    }
+    
+    func getStaffListAPI() {
+        APIService.shared.makeApi(
+            url: ServiceUrl.recipient_get_staff_list,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
+        ) { (result: Result<GetStafflistSuc, Error>) in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status ?? false{
+                        self.staffDetails = successMessage.data ?? []
+                        self.getStaffWiseAttendace(fromDate: "01-01-2025", toDate: "01-03-2026", staffId: "", select_staffAll:true)
+                    }else{
+                        
+                        
+                    }
+                case .failure(let error):
+                    ""
+                }
+            }
+        }
+        
+    }
+    
+    @IBAction func staffDropDownList() {
+        var staffName = ["View All Staff"]
+        staffName += (staffDetails ?? []).compactMap {
+            guard let name = $0.name, !name.isEmpty else { return nil }
+            return name
+        }
+        dropDown.dataSource = staffName
+        dropDown.anchorView = staffListDropDownView
+       
+        dropDown.customCellConfiguration = { (index: Index, item: String, cell: DropDownCell) in
+            if index == 0 {
+                cell.optionLabel.textColor = .systemBlue
+                cell.optionLabel.font = UIFont.boldSystemFont(ofSize: 17)
+            } else {
+                cell.optionLabel.textColor = .black
+                cell.optionLabel.font = UIFont.systemFont(ofSize: 15)
+            }
+        }
+
+        dropDown.show()
+        dropDown.bottomOffset = CGPoint(x: 0, y: dropDown.anchorView!.plainView.bounds.height)
+        dropDown.direction = .bottom
+        DropDown.appearance().backgroundColor = UIColor.white
+        dropDown.show()
+        
+        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            if index == 0 {
+                is_selectAllStaff = true
+                staffId = ""
+            } else {
+                is_selectAllStaff = false
+                staffId = staffDetails?[index - 1].id ?? ""
+            }
+            stafNameLbl.text = item
+            is_selectAllStaff = item == "View All Staff"
+            getStaffWiseAttendace(fromDate: "01-01-2025", toDate: "01-03-2026", staffId: item == "View All Staff" ? "" : staffDetails?[index].id ?? "", select_staffAll:is_selectAllStaff ?? false)
+        }
+    }
+    
+}

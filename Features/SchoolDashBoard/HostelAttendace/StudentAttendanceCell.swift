@@ -3,6 +3,7 @@ import UIKit
 protocol StudentAttendanceCellDelegate: AnyObject {
     func didTapPresent(for index: Int)
     func didTapAbsent(for index: Int)
+    
 }
 
 class StudentAttendanceCell: UITableViewCell {
@@ -24,6 +25,8 @@ class StudentAttendanceCell: UITableViewCell {
     var studentIndex: Int = 0
 
     @IBAction func OutpassApproveBtnAct(_ sender: UIButton) {
+        
+        
     }
     
     @IBAction func outPassRejectBtnAct(_ sender: UIButton) {
@@ -46,10 +49,11 @@ class StudentAttendanceCell: UITableViewCell {
         OutPassRejectBtnName.layer.cornerRadius = 10
     }
 
-    func configure(name: String, id: String, parentNum: String, state: String, index: Int,reason:String,out_pass_status:String,outDateInDate:String) {
+    func configure(name: String, id: String, parentNum: String, state: String, index: Int,reason:String,out_pass_status:String,outDateInDate:String,outpass_id : String) {
         
-        if out_pass_status == ""{
+        if outpass_id == ""{
             outPassRequestFullView.isHidden = true
+           
         }else{
             outPassRequestFullView.isHidden  = false
             OutPassReasonLbl.text = reason
@@ -58,7 +62,7 @@ class StudentAttendanceCell: UITableViewCell {
                 approveAndRejectFullStack.isHidden = true
             }else if out_pass_status == "REJECTED"{
                 approveAndRejectFullStack.isHidden = true
-            }else if out_pass_status == "PENDING"{
+            }else if out_pass_status == "PENDING" || out_pass_status == "" {
                 approveAndRejectFullStack.isHidden = false
             }
         }

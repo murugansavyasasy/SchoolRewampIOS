@@ -2935,7 +2935,7 @@ struct HostelDashBoardData : Codable{
 
 struct statsDataDetails : Codable{
     let total_students : String?
-    let outpassRequests :String?
+    let outpass_requests :String?
 }
 struct HostelDashBoardFloor : Codable{
     
@@ -2974,7 +2974,6 @@ struct HostelStudentListData : Codable{
     let primary_mobile : String?
     let status : String?
     let outpass_id : String?
-    let is_outpass_approved : Bool
     let out_date : String?
     let in_date : String?
     let reason : String?
@@ -3320,3 +3319,54 @@ struct HostelDetailsData: Codable {
     let room_type_id: String?
     let room_type: String?
 }
+
+// MARK: - Root
+struct StaffAttendanceResponseSuc: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [DatasClasss]?
+}
+
+// MARK: - Data
+struct DatasClasss: Codable {
+    let overall_stat: OverallStat?
+    let all_attd: [String: AttendanceDays]?
+}
+
+// MARK: - Overall Stat
+struct OverallStat: Codable {
+    let present: Int?
+    let absent: Int?
+    let not_marked: Int?
+}
+
+// MARK: - Each Date Object
+struct AttendanceDays: Codable {
+    let stat: DayStat?
+    let attd_details: [NewStaffAttendance]?
+}
+
+// MARK: - Day Stat
+struct DayStat: Codable {
+    let present: Int?
+    let absent: Int?
+    let not_marked: Int?
+}
+
+// MARK: - Staff Attendance
+struct NewStaffAttendance: Codable {
+    let staff_id: String?
+    let name: String?
+    let date: String?
+    let designation: String?
+    let role: String?
+    let attendance_type:  [String: String]?
+    let in_time: String?
+    let out_time: String?
+    let working_hours: String?
+}
+
+// MARK: - Attendance Type
+//struct AttendanceType: Codable {
+//    let FD: String?
+//}

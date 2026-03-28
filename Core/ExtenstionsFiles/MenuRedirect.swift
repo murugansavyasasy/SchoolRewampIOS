@@ -243,7 +243,7 @@ class MenuRedirectHandler {
         
     }
     func StaffWiseAttendance(from viewController: UIViewController) {
-        let vc = LocationHistoryVc(nibName: nil, bundle: nil)
+        let vc = StaffWiseAttendaceVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

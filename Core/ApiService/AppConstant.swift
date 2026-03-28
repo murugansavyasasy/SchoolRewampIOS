@@ -52,6 +52,7 @@ struct ServiceUrl{
     static let  staff_attd_geometric_geometric_punch_history  = "staff-attd/api/geometric/geometric-punch-history"
     static let  staff_attd_geometric_geometric_staff_attendance_report  = "staff-attd/api/geometric/geometric-staff-attendance-report"
     static let  staff_attd_geometric_remove_geometric_location  = "staff-attd/api/geometric/remove-geometric-location"
+    static let  staff_attd_geometric_remove_attendance_report_date_wise  = "staff-attd/api/geometric/geometric-principal-attendance-report-date-wise"
     
     static let  staff_attd_geometric_get_staff_geometric_location  = "staff-attd/api/geometric/get-staff-geometric-location"
     static let  staff_attd_geometric_update_geometric_location  = "staff-attd/api/geometric/update-geometric-location"
@@ -211,6 +212,8 @@ struct ServiceUrl{
     static let hostel_attendance_hostel_info = "stud-attd/api/hostel-attendance/hostel-info"
     static let comm_api_leave_req_for_staff_delete = "comm/api/leave-req-for-staff/delete"
     static let comm_api_leave_req_for_staff_update = "comm/api/leave-req-for-staff/update"
+    static let hostel_attendance_hostel_info = "stud-attd/api/hostel-attendance/hostel-info" 
+    static let hostel_attendance_update_status = "stud-attd/api/hostel-attendance/update-status"
    
 }
 

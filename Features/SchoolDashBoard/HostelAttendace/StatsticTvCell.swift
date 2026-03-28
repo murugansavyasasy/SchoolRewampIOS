@@ -12,8 +12,10 @@ protocol DashboardStatsCellDelegate: AnyObject {
     func MessMenu()
 }
 class StatsticTvCell: UITableViewCell {
+    @IBOutlet weak var totalStudentCountLbl: UILabel!
     @IBOutlet weak var menuView: UIView!
     weak var delegate: DashboardStatsCellDelegate?
+    @IBOutlet weak var outpassCountLbl: UILabel!
     @IBOutlet weak var outPassView: UIView!
     @IBOutlet weak var pendingView: UIView!
     @IBOutlet weak var totalStudentView: UIView!

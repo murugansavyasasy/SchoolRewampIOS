@@ -1,5 +1,9 @@
 import UIKit
-
+protocol approvalBtnclick : AnyObject{
+    
+    func approvalClikc(index : Int )
+    func rejectClick(index : Int )
+}
 class OutpassRequestCell: UITableViewCell {
 
     @IBOutlet weak var cardView: UIView!
@@ -23,7 +27,7 @@ class OutpassRequestCell: UITableViewCell {
     @IBOutlet weak var buttonsStackView: UIStackView!
     @IBOutlet weak var approveButton: UIButton!
     @IBOutlet weak var rejectButton: UIButton!
-
+    weak var approvelAndReject : approvalBtnclick?
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
@@ -106,5 +110,13 @@ class OutpassRequestCell: UITableViewCell {
             dateStackView.isHidden = true
             buttonsStackView.isHidden = true
         }
+    }
+    
+    @IBAction func approveBtnAct(_ sender: UIButton) {
+        approvelAndReject?.approvalClikc(index: sender.tag )
+    }
+    
+    @IBAction func RejectBtnAct(_ sender: UIButton) {
+        approvelAndReject?.rejectClick(index: sender.tag )
     }
 }

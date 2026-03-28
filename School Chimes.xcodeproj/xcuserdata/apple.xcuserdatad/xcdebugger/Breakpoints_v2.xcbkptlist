@@ -254,8 +254,8 @@
             filePath = "Features/SchoolDashBoard/HostelAttendace/StudentAttendanceCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "updateButtonStates(state:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -270,8 +270,8 @@
             filePath = "Features/SchoolDashBoard/HostelAttendace/StudentAttendanceCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
             landmarkName = "updateButtonStates(state:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -279,32 +279,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "3EB543A6-D862-4E51-A745-219DC1BCFD60"
+            uuid = "C80F8906-8056-4998-B1DD-8ED567A55F79"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Features/SchoolDashBoard/HostelAttendace/MarkAttendanceViewController.swift"
+            filePath = "Features/SchoolDashBoard/StaffWiseAttendace/StaffWiseAttendaceVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "422"
-            endingLineNumber = "422"
-            landmarkName = "didTapPresent(for:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "3176496B-B83A-4BE3-9062-36AFBF94A583"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Features/SchoolDashBoard/HostelAttendace/MarkAttendanceViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "427"
-            endingLineNumber = "427"
-            landmarkName = "didTapAbsent(for:)"
+            startingLineNumber = "369"
+            endingLineNumber = "369"
+            landmarkName = "staffDropDownList()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
