@@ -37,6 +37,7 @@ class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UI
         )
     }
     
+    @IBOutlet weak var HostelNameLbl: UILabel!
     @IBOutlet weak var norecordLbl: UILabel!
     @IBOutlet weak var norecordImage: UIImageView!
     @IBOutlet weak var dimmingButton: UIButton!
@@ -51,9 +52,9 @@ class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UI
     var pendingRequests : [OutpassStudent] = []
     var approvedRequests : [OutpassStudent] = []
     var rejectedRequests : [OutpassStudent] = []
-    var hostelId : String = ""
     var accidemicyearId : String = ""
     let alert = CustomAlert()
+    var hostelData : HostelListData?
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.modalPresentationStyle = .overFullScreen
@@ -71,7 +72,7 @@ class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UI
         
         setupUI()
         setupTableView()
-        GetOutPassReport(hostelId : hostelId,academicYearId : accidemicyearId)
+        GetOutPassReport(hostelId : hostelData?.id ?? "",academicYearId : accidemicyearId)
         bottomConstraint.constant = -1000
         dimmingButton.alpha = 0
     }
@@ -90,7 +91,7 @@ class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UI
 
     private func setupUI() {
         view.backgroundColor = .clear
-
+        HostelNameLbl.text = hostelData?.name ?? ""
         bottomSheetView.layer.cornerRadius = 32
         bottomSheetView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         bottomSheetView.clipsToBounds = true
@@ -289,7 +290,7 @@ class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UI
                                 on: self
                             )
                         
-                        GetOutPassReport(hostelId : hostelId,academicYearId : accidemicyearId)
+                        GetOutPassReport(hostelId : hostelData?.id ?? "",academicYearId : accidemicyearId)
                     }else{
                         self.alert
                             .showAlert(

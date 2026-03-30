@@ -31,10 +31,10 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
     private var flatSessions: [FlatSession] = []
     private var expandedSections: Set<Int> = []
     var StaffDetails = UserDefaultFileManager.get_staff_Details()
-    var hostelId : String?
     var academicYearId : String?
     var dateString : String?
     var datas: [AttendanceHistoryData]?
+    var hostelData : HostelListData?
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.modalPresentationStyle = .overFullScreen
@@ -76,7 +76,7 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
        
         dayLbl.text = dayFormatter.string(from: dateToUse)
         let date = convertDate(dateLbl?.text ?? "")
-        GetAttendaceHistoryList(academicYear: academicYearId ?? "", date: date ?? "", hostelId: hostelId ?? "")
+        GetAttendaceHistoryList(academicYear: academicYearId ?? "", date: date ?? "", hostelId: hostelData?.id ?? "")
         
     }
     override func viewDidLoad() {
@@ -98,7 +98,7 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
         tableView.register(UINib(nibName: "AttendanceStudentCell", bundle: nil), forCellReuseIdentifier: "AttendanceStudentCell")
         tableView.register(UINib(nibName: "AttendanceSessionHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "AttendanceSessionHeader")
         setInitialButtonTitles(date:nil)
-        GetAttendaceHistoryList(academicYear: academicYearId ?? "", date: getCurrentDateString(), hostelId: hostelId ?? "")
+        GetAttendaceHistoryList(academicYear: academicYearId ?? "", date: getCurrentDateString(), hostelId:  hostelData?.id ?? "")
         
         let dateTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectDateTapped))
         dateSelectionView.isUserInteractionEnabled = true
@@ -131,7 +131,7 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
 
     private func setupUI() {
         view.backgroundColor = .clear
-      
+        subtitleLabel.text = hostelData?.name ?? ""
         selectDateDefaultLbl.setRequiredText(selectDateDefaultLbl.text ?? "")
         bottomSheetView.layer.cornerRadius = 32
         bottomSheetView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]

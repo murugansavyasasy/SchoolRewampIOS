@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OutpassRequestsViewController" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="HostelNameLbl" destination="lbl-s" id="y4k-dB-ROW"/>
                 <outlet property="bottomConstraint" destination="b-c-b" id="b-c-b1"/>
                 <outlet property="bottomSheetView" destination="v-bot" id="v-b-v"/>
                 <outlet property="closeButton" destination="btn-cls" id="cls-b"/>
@@ -55,8 +56,8 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 pending approval" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-s">
-                                    <rect key="frame" x="24" y="65.5" width="125" height="17"/>
-                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                    <rect key="frame" x="24" y="65.5" width="153.5" height="17"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                     <color key="textColor" red="0.84313725490000002" green="0.84313725490000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>

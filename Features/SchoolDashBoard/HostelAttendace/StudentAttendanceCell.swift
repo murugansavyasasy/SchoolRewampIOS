@@ -3,7 +3,8 @@ import UIKit
 protocol StudentAttendanceCellDelegate: AnyObject {
     func didTapPresent(for index: Int)
     func didTapAbsent(for index: Int)
-    
+    func outPassApproval(for index : Int)
+    func outPassReject(for index : Int)
 }
 
 class StudentAttendanceCell: UITableViewCell {
@@ -26,10 +27,12 @@ class StudentAttendanceCell: UITableViewCell {
 
     @IBAction func OutpassApproveBtnAct(_ sender: UIButton) {
         
-        
+        delegate?.outPassApproval(for: sender.tag)
     }
     
     @IBAction func outPassRejectBtnAct(_ sender: UIButton) {
+        
+        delegate?.outPassReject(for: sender.tag)
     }
     override func awakeFromNib() {
         super.awakeFromNib()

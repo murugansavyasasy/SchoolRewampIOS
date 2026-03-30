@@ -54,11 +54,10 @@
                                                     <constraint firstAttribute="width" constant="48" id="Yea-DW-ywm"/>
                                                     <constraint firstAttribute="height" constant="48" id="k66-6Z-nn4"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" image="house" catalog="system">
-                                                    <color key="baseForegroundColor" red="0.0" green="0.36083987360000003" blue="0.7919921875" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                    <color key="baseBackgroundColor" red="0.91764705882352937" green="0.94509803921568625" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                </buttonConfiguration>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" image="house" catalog="system">
+                                                    <color key="titleColor" red="0.0" green="0.36083987360000003" blue="0.7919921875" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </state>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="hI7-Va-heb">
                                                 <rect key="frame" x="60" y="0.0" width="293" height="67.666666666666671"/>
@@ -94,16 +93,16 @@
                                                         </constraints>
                                                     </view>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dhK-we-qXB">
-                                                        <rect key="frame" x="0.0" y="45.666666666666671" width="52.333333333333336" height="22"/>
+                                                        <rect key="frame" x="0.0" y="45.666666666666671" width="55" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="22" id="0w0-8J-YXa"/>
+                                                            <constraint firstAttribute="width" constant="55" id="2rf-QO-ahj"/>
                                                         </constraints>
-                                                        <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="filled" title="Male">
-                                                            <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="12"/>
-                                                            <color key="baseForegroundColor" name="MenuClr"/>
-                                                            <color key="baseBackgroundColor" red="0.0" green="0.53333333333333333" blue="1" alpha="0.44256161971830987" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </buttonConfiguration>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="Male">
+                                                            <color key="titleColor" name="MenuClr"/>
+                                                        </state>
                                                     </button>
                                                 </subviews>
                                             </stackView>
@@ -121,7 +120,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="mappin.and.ellipse.circle.fill" catalog="system"/>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MahgaLingaPuram ,Vandimedu villupuram ,605602" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ohq-fI-b7M">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MahgaLingaPuram ,Vandimedu villupuram ,605602" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ohq-fI-b7M">
                                                 <rect key="frame" x="32" y="0.0" width="321" height="33"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                                                 <color key="textColor" systemColor="systemGray2Color"/>

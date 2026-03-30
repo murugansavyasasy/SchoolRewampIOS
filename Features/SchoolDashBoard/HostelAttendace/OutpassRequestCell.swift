@@ -47,7 +47,7 @@ class OutpassRequestCell: UITableViewCell {
         returnDate: String?
     ) {
         nameLabel.text = name
-        roomLabel.text = room
+        roomLabel.text = " Room No \(room)"
         statusLabel.text = status.capitalized
 
         if let first = name.first {
@@ -56,12 +56,12 @@ class OutpassRequestCell: UITableViewCell {
 
         // Destination label mapping
         destinationLabel.text = "Reason : \(dest)"
-        if let descText = desc, !descText.isEmpty {
-            descriptionLabel.text = descText
-            descriptionLabel.isHidden = false
-        } else {
-            descriptionLabel.isHidden = true
-        }
+//        if let descText = desc, !descText.isEmpty {
+//            descriptionLabel.text = descText
+//            descriptionLabel.isHidden = false
+//        } else {
+//            descriptionLabel.isHidden = true
+//        }
 
         if status.lowercased() == "pending" {
             // Orange Theme

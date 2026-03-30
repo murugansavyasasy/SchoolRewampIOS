@@ -226,6 +226,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                     .senderLeaveRequestNavigate(from: self, PushnotiMsg_id: "")
             case Menu_id.Upload_Marks:
                 MenuRedirect.senderExamMarkNavigate(from: self)
+            case  113: MenuRedirect.HostelManagment(from: self) 
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }

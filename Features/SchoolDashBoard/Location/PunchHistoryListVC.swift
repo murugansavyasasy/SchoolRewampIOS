@@ -21,7 +21,7 @@ class PunchHistoryListVC: UIViewController, UITableViewDelegate, UITableViewData
     var user: String?
     var roll: String?
     var date: String?
-    
+    var comeFromStaffWiseAttendaceReportMenu : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -123,12 +123,23 @@ class PunchHistoryListVC: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.PunchUserDetailsTVC, for: indexPath) as! PunchUserDetailsTVC
-            cell.configureWithDetails(
-                institutionName: staffdetails?.school_name ?? "",
-                staffName: staffdetails?.name ?? "",
-                designation: staffdetails?.role ?? "",
-                date: selectedDate
-            )
+            
+            if comeFromStaffWiseAttendaceReportMenu{
+                cell.configureWithDetails(
+                    institutionName: staffdetails?.school_name ?? "",
+                    staffName: user ?? "",
+                    designation: roll ?? "",
+                    date: selectedDate
+                )
+            }else{
+                cell.configureWithDetails(
+                    institutionName: staffdetails?.school_name ?? "",
+                    staffName: staffdetails?.name ?? "",
+                    designation: staffdetails?.role ?? "",
+                    date: selectedDate
+                )
+            }
+            
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.PunchHistTableViewCell, for: indexPath) as! PunchHistTableViewCell

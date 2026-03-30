@@ -60,7 +60,7 @@ class AttendanceStudentCell: UITableViewCell {
         else {
             
             avatarView.backgroundColor = UIColor.systemRed.withAlphaComponent(0.15)
-            avatarLabel.textColor = UIColor.systemRed
+            avatarLabel.textColor = UIColor.systemOrange
             
             statusPillLabel.text = "NOT TAKEN"
             statusPillLabel.textColor = UIColor.systemOrange

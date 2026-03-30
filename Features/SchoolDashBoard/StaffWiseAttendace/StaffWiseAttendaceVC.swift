@@ -9,6 +9,9 @@ import UIKit
 
 class StaffWiseAttendaceVC: UIViewController, Datepicker {
 
+    @IBOutlet weak var noRecrodImg: UIImageView!
+    @IBOutlet weak var noRecordLbl: UILabel!
+    @IBOutlet weak var norecordStack: UIStackView!
     @IBOutlet weak var menuNameLbl: UILabel!
     @IBOutlet weak var stafNameLbl: UILabel!
     @IBOutlet weak var staffListDropDownView: UIView!
@@ -26,7 +29,7 @@ class StaffWiseAttendaceVC: UIViewController, Datepicker {
     let dateFormatter = DateFormatter()
     var dropDown  = DropDown()
     var staffDetails: [GetStaffDetails]?
-    var staffId : String?
+    var staffId : String = ""
     var is_selectAllStaff : Bool = true
     var isFromDate : Bool = true
     var from_date : Date?
@@ -35,6 +38,13 @@ class StaffWiseAttendaceVC: UIViewController, Datepicker {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        SelectFromDate()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+
+        toDateTextField.text = formatter.string(from: Date())
+        fromDateTextField.text = formatter.string(from: Date())
         let staffDropDownClick =  UITapGestureRecognizer(target: self, action: #selector(staffDropDownList))
         staffListDropDownView.addGestureRecognizer(staffDropDownClick)
 
@@ -123,6 +133,8 @@ class StaffWiseAttendaceVC: UIViewController, Datepicker {
             toDateTextField.text = finalDateString
             To_date = parsedDate
         }
+        
+        getStaffWiseAttendace(fromDate: convertDate(fromDateTextField.text ?? "") ?? "", toDate: convertDate(toDateTextField.text ?? "") ?? "", staffId: staffId == "" ? "0" : staffId, select_staffAll:is_selectAllStaff)
     }
     
     @IBAction func BackBtnAct(_ sender: UIButton) {
@@ -297,6 +309,35 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // ❌ Ignore summary cell
+        if is_selectAllStaff == true && indexPath.section == 0 {
+            return
+        }
+        // ✅ Correct section handling
+        let dateIndex = (is_selectAllStaff == true) ? indexPath.section - 1 : indexPath.section
+        let dateKey = sortedDates[dateIndex]
+        
+        let details = responseData?.data?.first?.all_attd?[dateKey]?.attd_details ?? []
+        
+        guard indexPath.row < details.count else { return }
+        
+        let attendanceData = details[indexPath.row]
+        
+        // ✅ Open next screen ONLY for LocationTableViewCell
+        let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        
+        vc.selectedDate = attendanceData.date ?? ""
+        vc.selected_staff_id = attendanceData.staff_id ?? ""
+        vc.comeFromStaffWiseAttendaceReportMenu = true
+        vc.date = attendanceData.date ?? ""
+        vc.roll = attendanceData.role ?? ""
+        vc.user = attendanceData.name
+        
+        present(vc, animated: true)
+    }
+    
     func convertDateComponents(from dateString: String) -> (day: String, month: String, weekday: String)? {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "dd-MM-yyyy"
@@ -334,7 +375,7 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
             parameters: [
                 "from_date": fromDate,
                 "to_date": toDate,
-//                "staff_id": staffId,
+                "staff_id": staffId,
                 "is_all": select_staffAll
             ],
             type: ApitTypeSringFile.GET,
@@ -346,11 +387,21 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
             
             switch result {
             case .success(let success):
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [self] in
                     if success.status == true {
+                      
+                        self.norecordStack.isHidden = true
+                        self.tabelview.isHidden = false
                         self.handleAttendanceResponse(success)
                     } else {
                         print("API status false")
+                        
+                            self.noRecordLbl.text = success.message ?? ""
+                        self.norecordStack.isHidden = false
+                         self.noRecrodImg.isHidden = false
+                        self.noRecordLbl.isHidden = false
+                        
+                        self.tabelview.isHidden = true
                     }
                 }
                 
@@ -383,8 +434,8 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
             fromDatePicker.date = d
             toDatePicker.date = d
             
-            fromDateTextField.text = dateFormatter.string(from: d)
-            toDateTextField.text = dateFormatter.string(from: d)
+//            fromDateTextField.text = dateFormatter.string(from: d)
+//            toDateTextField.text = dateFormatter.string(from: d)
         }
         
         tabelview.reloadData()
@@ -402,7 +453,7 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
                 case .success(let successMessage):
                     if successMessage.status ?? false{
                         self.staffDetails = successMessage.data ?? []
-                        self.getStaffWiseAttendace(fromDate: "01-01-2025", toDate: "01-03-2026", staffId: "", select_staffAll:true)
+                        self.getStaffWiseAttendace(fromDate: convertDate(self.fromDateTextField.text ?? "") ?? "", toDate: convertDate(self.toDateTextField.text ?? "") ?? "", staffId: "0", select_staffAll:true)
                     }else{
                         
                         
@@ -450,7 +501,7 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
             }
             stafNameLbl.text = item
             is_selectAllStaff = item == "View All Staff"
-            getStaffWiseAttendace(fromDate: "01-01-2025", toDate: "01-03-2026", staffId: item == "View All Staff" ? "" : staffDetails?[index].id ?? "", select_staffAll:is_selectAllStaff ?? false)
+            getStaffWiseAttendace(fromDate: convertDate(fromDateTextField.text ?? "") ?? "", toDate: convertDate(toDateTextField.text ?? "") ?? "", staffId: item == "View All Staff" ? "0" : staffId, select_staffAll:is_selectAllStaff)
         }
     }
     
