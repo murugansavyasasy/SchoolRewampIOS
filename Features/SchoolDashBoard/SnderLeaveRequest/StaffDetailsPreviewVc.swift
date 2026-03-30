@@ -69,9 +69,64 @@ class StaffDetailsPreviewVc: UIViewController {
         }
     }
     
-    @IBAction func gotoEmail(){
+    
+    @IBAction func gotoEmail() {
+        let email = mailIdLbl.text ?? ""
         
+        guard let mailURL = URL(string: "mailto:\(email)"),
+              let gmailURL = URL(string: "googlegmail://co?to=\(email)") else {
+            return
+        }
+        
+        let canOpenMail = UIApplication.shared.canOpenURL(mailURL)
+        let canOpenGmail = UIApplication.shared.canOpenURL(gmailURL)
+        
+        // Case 1: No apps available
+        if !canOpenMail && !canOpenGmail {
+            print("No mail apps available")
+            return
+        }
+        
+        // Case 2: Only one app → open directly (skip alert)
+        if canOpenMail && !canOpenGmail {
+            UIApplication.shared.open(mailURL)
+            return
+        }
+        
+        if canOpenGmail && !canOpenMail {
+            UIApplication.shared.open(gmailURL)
+            return
+        }
+        
+        // Case 3: Both available → show alert
+        let alert = UIAlertController(title: "Send Email",
+                                      message: "Choose an app",
+                                      preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Apple Mail", style: .default) { _ in
+            UIApplication.shared.open(mailURL)
+        })
+        
+        alert.addAction(UIAlertAction(title: "Gmail", style: .default) { _ in
+            UIApplication.shared.open(gmailURL)
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        // iPad support
+        if let popover = alert.popoverPresentationController {
+            popover.sourceView = self.view
+            popover.sourceRect = CGRect(x: self.view.bounds.midX,
+                                       y: self.view.bounds.midY,
+                                       width: 0,
+                                       height: 0)
+            popover.permittedArrowDirections = []
+        }
+        
+        present(alert, animated: true)
     }
+    
+    
     func uiUpdate(){
        
         ContactInformationFullView.layer.cornerRadius = 15
