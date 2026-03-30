@@ -1,6 +1,6 @@
 import UIKit
 
-class NewOutpassRequestVC: UIViewController,UITextViewDelegate {
+class NewOutpassRequestVC: UIViewController,UITextViewDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var reasonTextView: UITextView!
@@ -11,9 +11,9 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate {
     @IBOutlet weak var toTimeTextField: UITextField!
     @IBOutlet weak var emergencyContactTextField: UITextField!
     @IBOutlet weak var submitBtn: UIButton!
-    
     @IBOutlet weak var firstCardView: UIView!
     @IBOutlet weak var secondCardView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     // date and time views
     @IBOutlet weak var fromDateView: UIView!
@@ -22,6 +22,7 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate {
     @IBOutlet weak var toTimeView: UIView!
     @IBOutlet weak var destinationView: UIView!
     @IBOutlet weak var contactView: UIView!
+   
 
     private let fromDatePicker = UIDatePicker()
     private let toDatePicker = UIDatePicker()
@@ -30,13 +31,26 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate {
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var studentHostelInfo  : HostelDetailsData?
     let alert = CustomAlert()
+    var activeField: UIView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupPickers()
+        setDefaultDateTime()
+        setupTapGestures()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeField = textField
     }
 
     func textViewDidBeginEditing(_ textView: UITextView) {
+        activeField = textView
         if textView.text == "Enter reason..." {
             textView.text = ""
             textView.textColor = .black
@@ -49,6 +63,7 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate {
             textView.textColor = .lightGray
         }
     }
+    
     func setupUI() {
         // Corner Radii
         firstCardView.layer.cornerRadius = 16
@@ -61,8 +76,12 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate {
         fromTimeView.layer.cornerRadius = 8
         toTimeView.layer.cornerRadius = 8
         contactView.layer.cornerRadius = 8
-        
         submitBtn.layer.cornerRadius = 8
+        
+        fromDateView.layer.borderWidth = 1
+        toDateView.layer.borderWidth = 1
+        fromDateView.layer.borderColor = UIColor.gray.cgColor
+        toDateView.layer.borderColor = UIColor.gray.cgColor
         
         // UITextView inward padding
         reasonTextView.textContainerInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
@@ -72,6 +91,39 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate {
         reasonTextView.text = "Enter reason..."
         reasonTextView.textColor = .lightGray
         reasonTextView.delegate = self
+        
+        emergencyContactTextField.delegate = self
+        
+        reasonTextView.addDoneButton()
+        emergencyContactTextField.addDoneButton()
+    }
+    
+    func setupTapGestures() {
+        fromDateView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openFromDate)))
+        toDateView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openToDate)))
+        fromTimeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openFromTime)))
+        toTimeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openToTime)))
+
+        fromDateView.isUserInteractionEnabled = true
+        toDateView.isUserInteractionEnabled = true
+        fromTimeView.isUserInteractionEnabled = true
+        toTimeView.isUserInteractionEnabled = true
+    }
+    
+    @objc func openFromDate() {
+        fromDateTextField.becomeFirstResponder()
+    }
+
+    @objc func openToDate() {
+        toDateTextField.becomeFirstResponder()
+    }
+
+    @objc func openFromTime() {
+        fromTimeTextField.becomeFirstResponder()
+    }
+
+    @objc func openToTime() {
+        toTimeTextField.becomeFirstResponder()
     }
     
     @objc func backTapped() {
@@ -139,7 +191,46 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate {
     }
 
     @objc func donePicker() {
+        if fromDateTextField.isFirstResponder {
+            datePickerChanged(fromDatePicker)
+        } else if toDateTextField.isFirstResponder {
+            datePickerChanged(toDatePicker)
+        } else if fromTimeTextField.isFirstResponder {
+            datePickerChanged(fromTimePicker)
+        } else if toTimeTextField.isFirstResponder {
+            datePickerChanged(toTimePicker)
+        }
+        
         view.endEditing(true)
+    }
+    
+    func setDefaultDateTime() {
+        let now = Date()
+        
+        // +1 hour
+        let oneHourLater = Calendar.current.date(byAdding: .hour, value: 1, to: now) ?? now
+        
+        // Assign picker values
+        fromDatePicker.date = now
+        toDatePicker.date = now
+        fromTimePicker.date = now
+        toTimePicker.date = oneHourLater
+        
+        // Update UI (textfields)
+        updateTextFields()
+    }
+    
+    func updateTextFields() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM d, yyyy"
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "hh:mm a"
+        
+        fromDateTextField.text = dateFormatter.string(from: fromDatePicker.date)
+        toDateTextField.text = dateFormatter.string(from: toDatePicker.date)
+        fromTimeTextField.text = timeFormatter.string(from: fromTimePicker.date)
+        toTimeTextField.text = timeFormatter.string(from: toTimePicker.date)
     }
     
     func OutpassRequest() {
@@ -262,5 +353,25 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate {
             )
         }
         }
+    
+    @objc func keyboardWillShow(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+
+        let keyboardHeight = keyboardFrame.height
+
+        scrollView.contentInset.bottom = keyboardHeight
+        scrollView.verticalScrollIndicatorInsets.bottom = keyboardHeight
+
+        if let activeField = activeField {
+            let fieldFrame = activeField.convert(activeField.bounds, to: scrollView)
+            scrollView.scrollRectToVisible(fieldFrame, animated: true)
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: Notification) {
+        scrollView.contentInset.bottom = 0
+        scrollView.verticalScrollIndicatorInsets.bottom = 0
+    }
         
 }

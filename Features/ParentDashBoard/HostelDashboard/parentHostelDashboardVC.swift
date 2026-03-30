@@ -199,10 +199,34 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
             cell.configure(data: data.out_pass_requests ?? [])
             cell.newRequestdelegate = self
             cell.onSeeMore = {[weak self] in
+                
                 let vc = OutpassRequestsVC()
                 vc.outpassRequestList = data.out_pass_requests ?? []
+                vc.Hosteldetails = self?.datadetails
                 vc.modalPresentationStyle = .fullScreen
                 self?.present(vc, animated: true)
+            }
+            
+            cell.onViewDetails = { [weak self] data in
+                guard let self = self else { return }
+                
+                let data = GatePass(
+                    action_by: data.action_by,
+                    admission_no: datadetails?.first?.admission_no ?? "",
+                    reason: data.reason,
+                    profile: "",
+                    floor_no: datadetails?.first?.floor_no,
+                    room_no: datadetails?.first?.room_no,
+                    fromdate_todate: data.fromdate_todate,
+                    request_time: data.request_time,
+                    status: data.status
+                )
+                
+                let vc = yearAndMonthCalenderVc()
+                vc.GatepassData = data
+                vc.isGatePass = true
+                vc.modalPresentationStyle = .overCurrentContext
+                self.present(vc, animated: true)
             }
             return cell
             
@@ -313,9 +337,9 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
                         self.rows.append(.detailedAttendance)
                     }
                     
-                    if !(data.out_pass_requests?.isEmpty ?? true) {
+//                    if !(data.out_pass_requests?.isEmpty ?? true) {
                         self.rows.append(.outpassRequests)
-                    }
+                 //   }
                     
                     if !(data.hostel_info?.isEmpty ?? true){
                         self.rows.append(.hostelInfo)

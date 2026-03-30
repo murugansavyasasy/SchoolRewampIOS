@@ -3257,6 +3257,7 @@ struct OutPassRequest: Codable {
     let fromdate_todate: String?
     let request_time: String?
     let status: String?
+    let action_by: String?
 }
 
 // MARK: - Hostel Info

@@ -16,11 +16,15 @@ class yearAndMonthCalenderVc: UIViewController, UICollectionViewDelegate, UIColl
     @IBOutlet weak var monthCVHeight: NSLayoutConstraint!
     @IBOutlet weak var selectYearDefLbl: UILabel!
     @IBOutlet weak var selectMonthDefLbl: UILabel!
+    @IBOutlet weak var gatePassView: UIView!
+    @IBOutlet weak var tv: UITableView!
     
     var months: [MonthItem] = []
     var years: [String] = []
     var selectdMonth: MonthItem?
     var onDateSelected: ((MonthItem) -> Void)?
+    var isGatePass: Bool = false
+    var GatepassData: GatePass?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +51,13 @@ class yearAndMonthCalenderVc: UIViewController, UICollectionViewDelegate, UIColl
         monthCollectionView.dataSource = self
         yearCollectionView.delegate = self
         yearCollectionView.dataSource = self
+        
+        gatePassView.isHidden = !isGatePass
+        popupView.isHidden = isGatePass
+        
+        tv.register(GatePassTvcell.self)
+        tv.delegate = self
+        tv.dataSource = self
         
         monthCollectionView.register(UINib(nibName: "SessionStatusCell", bundle: nil), forCellWithReuseIdentifier: "SessionStatusCell")
         yearCollectionView.register(UINib(nibName: "SessionStatusCell", bundle: nil), forCellWithReuseIdentifier: "SessionStatusCell")
@@ -88,14 +99,25 @@ class yearAndMonthCalenderVc: UIViewController, UICollectionViewDelegate, UIColl
         }
         
         self.months = tempMonths
-        let height = ceil(Double((months.count) / 3)) * 45.0
+        let rows = ceil(Double(months.count) / 3.0)
+        let height = rows * 45.0
         monthCVHeight.constant = CGFloat(height)
         UIView.animate(withDuration: 0.25) {
             self.view.layoutIfNeeded()
         }
         
         monthCollectionView.reloadData()
+        monthCollectionView.layoutIfNeeded()
+
         yearCollectionView.reloadData()
+        yearCollectionView.layoutIfNeeded()
+
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        monthCollectionView.collectionViewLayout.invalidateLayout()
+        yearCollectionView.collectionViewLayout.invalidateLayout()
     }
     
     @IBAction func handleOutsideTap(_ sender: UITapGestureRecognizer) {
@@ -190,12 +212,30 @@ class yearAndMonthCalenderVc: UIViewController, UICollectionViewDelegate, UIColl
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if collectionView == yearCollectionView {
-            let width:CGFloat = (collectionView.frame.width/4)
+            let width:CGFloat = (collectionView.bounds.width/4)
             return CGSize(width: width, height: 45)
         }else{
-            let width:CGFloat = (collectionView.frame.width/3)
+            let width:CGFloat = (collectionView.bounds.width/3)
             return CGSize(width: width, height: 45)
         }
+    }
+}
+
+extension yearAndMonthCalenderVc: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GatePassTvcell", for: indexPath) as! GatePassTvcell
+        cell.selectionStyle = .none
+        cell.configure(with: GatepassData)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
 

@@ -23,6 +23,7 @@
                 <outlet property="fromTimeTextField" destination="tfft" id="cftt"/>
                 <outlet property="fromTimeView" destination="vft" id="cft"/>
                 <outlet property="reasonTextView" destination="tvrs" id="crs"/>
+                <outlet property="scrollView" destination="svmain" id="kTb-7T-7Kp"/>
                 <outlet property="secondCardView" destination="vc2" id="cc2"/>
                 <outlet property="submitBtn" destination="btnsb" id="csb"/>
                 <outlet property="toDateTextField" destination="tftd" id="ctdt"/>

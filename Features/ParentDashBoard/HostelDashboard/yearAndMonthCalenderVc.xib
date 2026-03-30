@@ -11,11 +11,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="yearAndMonthCalenderVc" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="closeBtn" destination="jCc-PM-eFn" id="YBb-gw-s4g"/>
+                <outlet property="gatePassView" destination="Cf5-E9-4Dv" id="tii-Lk-o8n"/>
                 <outlet property="monthCVHeight" destination="Iz6-XX-SMn" id="Bia-m3-s5d"/>
                 <outlet property="monthCollectionView" destination="nVj-ft-kMP" id="F94-sL-RDl"/>
                 <outlet property="popupView" destination="13Y-pQ-l3E" id="FWI-Mt-rni"/>
                 <outlet property="selectMonthDefLbl" destination="pF6-O9-IVa" id="zbq-gY-xzW"/>
                 <outlet property="selectYearDefLbl" destination="vUB-0U-wzz" id="a75-fg-Kha"/>
+                <outlet property="tv" destination="hTE-xz-vNS" id="MAi-0t-3dF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="yearCollectionView" destination="EM4-12-Eww" id="qGg-cK-4K1"/>
             </connections>
@@ -113,13 +115,32 @@
                         <constraint firstAttribute="trailing" secondItem="j7B-Cm-Eu1" secondAttribute="trailing" constant="16" id="vYx-5j-Ter"/>
                     </constraints>
                 </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cf5-E9-4Dv">
+                    <rect key="frame" x="20" y="168" width="353" height="566"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hTE-xz-vNS">
+                            <rect key="frame" x="0.0" y="0.0" width="353" height="566"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </tableView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="hTE-xz-vNS" secondAttribute="trailing" id="IuW-gK-Zw7"/>
+                        <constraint firstItem="hTE-xz-vNS" firstAttribute="top" secondItem="Cf5-E9-4Dv" secondAttribute="top" id="KoY-Pt-UHY"/>
+                        <constraint firstAttribute="bottom" secondItem="hTE-xz-vNS" secondAttribute="bottom" id="mTQ-Wl-NYU"/>
+                        <constraint firstItem="hTE-xz-vNS" firstAttribute="leading" secondItem="Cf5-E9-4Dv" secondAttribute="leading" id="yOE-5j-oqu"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="labelColor"/>
             <constraints>
                 <constraint firstItem="13Y-pQ-l3E" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="FtV-ra-gds"/>
+                <constraint firstItem="Cf5-E9-4Dv" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="50" id="NP7-hL-3ph"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Cf5-E9-4Dv" secondAttribute="bottom" constant="50" id="VAx-09-xu6"/>
                 <constraint firstItem="13Y-pQ-l3E" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="bKy-UW-D7Q"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Cf5-E9-4Dv" secondAttribute="trailing" constant="20" id="cVd-ls-78h"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="13Y-pQ-l3E" secondAttribute="trailing" constant="25" id="fgG-sU-yoi"/>
+                <constraint firstItem="Cf5-E9-4Dv" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="ids-08-sER"/>
             </constraints>
             <point key="canvasLocation" x="93.89312977099236" y="61.971830985915496"/>
         </view>
