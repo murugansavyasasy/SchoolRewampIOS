@@ -23,9 +23,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PWc-wJ-YBk">
                                 <rect key="frame" x="0.0" y="0.0" width="412" height="50"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="GATE PASS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g9B-ya-JMr">
-                                        <rect key="frame" x="135.66666666666666" y="15.333333333333332" width="90" height="19.333333333333332"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GATE PASS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g9B-ya-JMr">
+                                        <rect key="frame" x="10" y="5" width="392" height="40"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -33,6 +32,10 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.1647058824" green="0.3921568627" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="g9B-ya-JMr" firstAttribute="top" secondItem="PWc-wJ-YBk" secondAttribute="top" constant="5" id="533-Ll-cyG"/>
+                                    <constraint firstAttribute="trailing" secondItem="g9B-ya-JMr" secondAttribute="trailing" constant="10" id="MKe-un-qdp"/>
+                                    <constraint firstItem="g9B-ya-JMr" firstAttribute="leading" secondItem="PWc-wJ-YBk" secondAttribute="leading" constant="10" id="PYj-F3-dYk"/>
+                                    <constraint firstAttribute="bottom" secondItem="g9B-ya-JMr" secondAttribute="bottom" constant="5" id="f32-99-I45"/>
                                     <constraint firstAttribute="height" constant="50" id="iJV-RG-Yx1"/>
                                 </constraints>
                             </view>

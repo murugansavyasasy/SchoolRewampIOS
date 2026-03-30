@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="169" id="KGk-i7-Jjw" customClass="outpassRequestTVcell" customModule="School_Chimes" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="169" id="KGk-i7-Jjw" customClass="outpassRequestTVcell" customModule="School_Chimes" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="317" height="169"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -21,22 +21,22 @@
                         <rect key="frame" x="10" y="10" width="297" height="149"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="3M9-Rd-5ZF">
-                                <rect key="frame" x="5" y="5" width="287" height="139"/>
+                                <rect key="frame" x="5" y="10" width="287" height="129"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GOv-yg-uih">
-                                        <rect key="frame" x="0.0" y="0.0" width="287" height="57.666666666666664"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="287" height="28"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="March 2026 Hostel Fee" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IeT-3y-xhm">
-                                                <rect key="frame" x="0.0" y="0.0" width="197" height="57.666666666666664"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="197" height="28"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eXP-au-h7M">
-                                                <rect key="frame" x="197" y="0.0" width="90" height="57.666666666666664"/>
+                                                <rect key="frame" x="197" y="0.0" width="90" height="28"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PENDING" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kYq-CI-6Kx">
-                                                        <rect key="frame" x="8" y="8" width="74" height="41.666666666666664"/>
+                                                        <rect key="frame" x="8" y="8" width="74" height="12"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                                         <color key="textColor" systemColor="systemOrangeColor"/>
                                                         <nil key="highlightedColor"/>
@@ -54,33 +54,50 @@
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iDk-CH-z5G">
-                                        <rect key="frame" x="0.0" y="73.333333333333329" width="287" height="17"/>
+                                        <rect key="frame" x="0.0" y="38" width="287" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R4w-FB-zhH">
-                                        <rect key="frame" x="0.0" y="106" width="287" height="0.3333333333333286"/>
+                                        <rect key="frame" x="0.0" y="65" width="287" height="0.6666666666666714"/>
                                         <color key="backgroundColor" systemColor="systemGray3Color"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="0.5" id="3Or-mE-zdZ"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pKr-Hy-lnh">
-                                        <rect key="frame" x="0.0" y="122" width="287" height="17"/>
+                                        <rect key="frame" x="0.0" y="75.666666666666671" width="287" height="13.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dM4-zW-pk3">
+                                        <rect key="frame" x="0.0" y="99" width="287" height="30"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o3q-xW-cue">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dlV-iO-vIU">
+                                                <rect key="frame" x="240" y="0.0" width="47" height="30"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="View Details   "/>
+                                                <connections>
+                                                    <action selector="viewDetailsAct:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ftC-D4-2RN"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="3M9-Rd-5ZF" firstAttribute="leading" secondItem="Wr0-Zi-hQ6" secondAttribute="leading" constant="5" id="9Cv-x3-24D"/>
-                            <constraint firstItem="3M9-Rd-5ZF" firstAttribute="top" secondItem="Wr0-Zi-hQ6" secondAttribute="top" constant="5" id="Gsc-gp-kTO"/>
+                            <constraint firstItem="3M9-Rd-5ZF" firstAttribute="top" secondItem="Wr0-Zi-hQ6" secondAttribute="top" constant="10" id="Gsc-gp-kTO"/>
                             <constraint firstAttribute="trailing" secondItem="3M9-Rd-5ZF" secondAttribute="trailing" constant="5" id="Hc7-yX-AMu"/>
-                            <constraint firstAttribute="bottom" secondItem="3M9-Rd-5ZF" secondAttribute="bottom" constant="5" id="Nsp-cL-rSK"/>
+                            <constraint firstAttribute="bottom" secondItem="3M9-Rd-5ZF" secondAttribute="bottom" constant="10" id="Nsp-cL-rSK"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -99,6 +116,7 @@
                 <outlet property="reasonLbl" destination="IeT-3y-xhm" id="yA6-NO-6cs"/>
                 <outlet property="statusLbl" destination="kYq-CI-6Kx" id="Vcy-sD-eU5"/>
                 <outlet property="statusView" destination="eXP-au-h7M" id="ai0-7D-7U1"/>
+                <outlet property="viewDetailsBtn" destination="dlV-iO-vIU" id="GIs-Cu-Hwh"/>
             </connections>
             <point key="canvasLocation" x="8.3969465648854964" y="161.61971830985917"/>
         </tableViewCell>
