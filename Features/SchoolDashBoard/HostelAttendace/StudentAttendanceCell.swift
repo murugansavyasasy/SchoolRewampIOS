@@ -21,6 +21,8 @@ class StudentAttendanceCell: UITableViewCell {
     @IBOutlet weak var absentButton: UIButton!
     @IBOutlet weak var OutPassRejectBtnName: UIButton!
     @IBOutlet weak var outpassApproveBtnName: UIButton!
+    @IBOutlet weak var statusView: UIView!
+    @IBOutlet weak var statusLbl: UILabel!
     weak var delegate: StudentAttendanceCellDelegate?
     var studentIndex: Int = 0
 
@@ -47,6 +49,9 @@ class StudentAttendanceCell: UITableViewCell {
         outPassRequestFullView.layer.cornerRadius = 10
         outpassApproveBtnName.layer.cornerRadius = 10
         OutPassRejectBtnName.layer.cornerRadius = 10
+        
+        statusView.layer.cornerRadius = 12
+        statusView.layer.borderWidth = 1
     }
 
     func configure(name: String, id: String, parentNum: String, state: String, index: Int,reason:String,out_pass_status:String,outDateInDate:String,outpass_id : String) {
