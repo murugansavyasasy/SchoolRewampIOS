@@ -5,6 +5,7 @@ struct FlatSession {
     let totalSessionsInRoom: Int
     let session: AttendanceHistorySession
     let isFirstInRoom: Bool
+    var sessionIndexInRoom: Int = 0
 }
 class AttendanceHistoryViewController: UIViewController, Datepicker
 {
@@ -35,6 +36,7 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
     var dateString : String?
     var datas: [AttendanceHistoryData]?
     var hostelData : HostelListData?
+    var sessionIndexInRoom: Int?
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.modalPresentationStyle = .overFullScreen
@@ -136,7 +138,7 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
         bottomSheetView.layer.cornerRadius = 32
         bottomSheetView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         bottomSheetView.clipsToBounds = true
-
+       
         closeButton.layer.cornerRadius = 18
         closeButton.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
         closeButton.tintColor = .white
@@ -208,7 +210,7 @@ extension AttendanceHistoryViewController : UITableViewDelegate, UITableViewData
                          section: section,
                          isExpanded: isExpanded,
                          roomId: rId,
-                         totalSessionsInRoom: sCount,totalsessions : datas?.first?.sessions.count ?? 0 )
+                         totalSessionsInRoom: sCount,totalsessions : flatSession.sessionIndexInRoom )
         header.delegate = self
         
         return header
@@ -225,19 +227,25 @@ extension AttendanceHistoryViewController : UITableViewDelegate, UITableViewData
     
     // MARK: - Header Delegate
     func didTapToggleStudents(in section: Int) {
-            tableView.beginUpdates()
-            let count = flatSessions[section].session.students.count
-            let indexPaths = (0..<count).map { IndexPath(row: $0, section: section) }
-            if expandedSections.contains(section) {
-                expandedSections.remove(section)
-                tableView.deleteRows(at: indexPaths, with: .none)
-            } else {
-                expandedSections.insert(section)
-                tableView.insertRows(at: indexPaths, with: .none)
-            }
-            tableView.endUpdates()
+
+        let count = flatSessions[section].session.students.count
+        let indexPaths = (0..<count).map { IndexPath(row: $0, section: section) }
+
+        tableView.beginUpdates()
+        
+        if expandedSections.contains(section) {
+            expandedSections.remove(section)
+            tableView.deleteRows(at: indexPaths, with: .fade)
+        } else {
+            expandedSections.insert(section)
+            tableView.insertRows(at: indexPaths, with: .fade)
         }
-    
+        
+        tableView.endUpdates()
+        
+        // 🔥 Reload header separately (smooth UI)
+        tableView.reloadSections(IndexSet(integer: section), with: .none)
+    }
     func GetAttendaceHistoryList(academicYear:String,date:String,hostelId : String) {
         APIService.shared.makeApi(url: ServiceUrl.comm_api_hostel_attendance_attendance_report, parameters: ["hostel_id" : hostelId,"academic_year_id" : academicYear, "date" : date], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) {[self] (result: Result<AttendanceHistoryResponse,Error>) in
             switch result{
@@ -258,6 +266,7 @@ extension AttendanceHistoryViewController : UITableViewDelegate, UITableViewData
                     }
                     
                     self.flatSessions = flattened
+                    self.prepareFlatSessions()
                     tableView.reloadData()
                 }
             case .failure(let error):
@@ -265,6 +274,17 @@ extension AttendanceHistoryViewController : UITableViewDelegate, UITableViewData
                    
                 }
             }
+        }
+    }
+    
+    func prepareFlatSessions() {
+        var roomCounter: [String: Int] = [:]
+
+        for i in 0..<flatSessions.count {
+            let roomId = flatSessions[i].roomId
+            
+            roomCounter[roomId, default: 0] += 1
+            flatSessions[i].sessionIndexInRoom = roomCounter[roomId]!
         }
     }
 }

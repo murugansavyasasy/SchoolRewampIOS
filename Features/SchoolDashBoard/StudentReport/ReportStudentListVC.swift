@@ -492,11 +492,11 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         }
         return cell
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = StudentReportDashboardVC()
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true)
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let vc = StudentReportDashboardVC()
+//        vc.modalPresentationStyle = .fullScreen
+//        self.present(vc, animated: true)
+//    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }

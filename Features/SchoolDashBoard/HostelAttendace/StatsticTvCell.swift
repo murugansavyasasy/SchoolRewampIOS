@@ -49,7 +49,7 @@ class StatsticTvCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        [totalRoomView, totalBedView, totalStudentView, pendingView, outPassView,menuView].forEach { view in
+        [totalRoomView, totalBedView, totalStudentView, pendingView,menuView].forEach { view in
             guard let view = view else { return }
 
             // Remove old gradient layers if they exist
@@ -82,7 +82,7 @@ class StatsticTvCell: UITableViewCell {
                     UIColor(red: 0.93, green: 0.09, blue: 0.11, alpha: 1.0).cgColor,
                     UIColor(red: 0.81, green: 0.07, blue: 0.09, alpha: 1.0).cgColor,
                 ]
-            } else if view == outPassView {
+            } else if view == menuView {
                 // Indigo/purple-blue gradient
                 gradientLayer.colors = [
                     UIColor(red: 0.35, green: 0.29, blue: 0.93, alpha: 1.0).cgColor,
@@ -90,13 +90,13 @@ class StatsticTvCell: UITableViewCell {
                 ]
             }
 
-            else if view == menuView {
-                // Indigo/purple-blue gradient
-                gradientLayer.colors = [
-                    UIColor(red: 1.0, green: 0.48, blue: 0.0, alpha: 1.0).cgColor,   // #FF7A00
-                    UIColor(red: 1.0, green: 0.24, blue: 0.18, alpha: 1.0).cgColor   // #FF3D2E
-                ]
-            }
+//            else if view == outPassView {
+//                // Indigo/purple-blue gradient
+//                gradientLayer.colors = [
+//                    UIColor(red: 1.0, green: 0.48, blue: 0.0, alpha: 1.0).cgColor,   // #FF7A00
+//                    UIColor(red: 1.0, green: 0.24, blue: 0.18, alpha: 1.0).cgColor   // #FF3D2E
+//                ]
+//            }
             gradientLayer.startPoint = CGPoint(x: 0, y: 0)
             gradientLayer.endPoint = CGPoint(x: 1, y: 1)
             gradientLayer.cornerRadius = 16

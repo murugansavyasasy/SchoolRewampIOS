@@ -354,12 +354,12 @@ class MessageFromManagementViewController: UIViewController {
         tv.reloadData()
     }
     
-    // MARK: - Helper Methods
-    private func shortName(from name: String) -> String {
-        let trimmed = name.replacingOccurrences(of: " ", with: "")
-        guard let first = trimmed.first, let last = trimmed.last else { return "" }
-        return "\(first)\(last)".uppercased()
-    }
+//    // MARK: - Helper Methods
+//    private func shortName(from name: String) -> String {
+//        let trimmed = name.replacingOccurrences(of: " ", with: "")
+//        guard let first = trimmed.first, let last = trimmed.last else { return "" }
+//        return "\(first)\(last)".uppercased()
+//    }
     
     private func formattedDateStatus(from dateString: String) -> String {
         return dateFormatter.convertDate(dateString) ?? ""

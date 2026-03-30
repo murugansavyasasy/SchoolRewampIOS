@@ -44,6 +44,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     }
     
 
+    @IBOutlet weak var arrowImageView: UIImageView!
     @IBOutlet weak var sessionBtnName: UIButton!
     @IBOutlet weak var mothLbl: UILabel!
     @IBOutlet weak var sessionView: UIView!
@@ -79,6 +80,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     var hostelId : String?
     var roomId : String?
     var selectedDate : String?
+    var total_beds : Int?
     let alert = CustomAlert()
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -101,7 +103,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         updateMonthLabel()
         
   let dateTap = UITapGestureRecognizer(target: self, action: #selector(Dateclick))
-        selectDateView.addGestureRecognizer(dateTap)
+        SelectionDateFullView.addGestureRecognizer(dateTap)
   let seesionTap = UITapGestureRecognizer(target: self, action: #selector(SessionClikc))
     sessionView.addGestureRecognizer(seesionTap)
         bottomConstraint.constant = -1000
@@ -153,6 +155,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         view.backgroundColor = .clear
         selectedDate = getCurrentDateString()
         bottomSheetView.layer.cornerRadius = 32
+        arrowImageView.layer.cornerRadius = 15
         bottomSheetView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         bottomSheetView.clipsToBounds = true
 
@@ -163,7 +166,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         titleLabel.text = roomTitle
         subtitleLabel.text = roomSubtitle
         markAllButton.layer.cornerRadius = 16
-
+      
         let formatter = DateFormatter()
         formatter.dateFormat = DateOutPut.EE_MMM_dd_yyyy
         // current date string in dd-MM-yyyy
@@ -306,6 +309,8 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
                                 studentsdataDetails[i].is_select = ""
                             }
                         }
+                   
+                        subtitleLabel.text =   "\(Success.data?.count ?? 0) Students • \(total_beds ?? 0) Beds"
                         tableView.reloadData()
                         updateProgress()
                         
@@ -377,12 +382,14 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
             case .success(let Success):
                 DispatchQueue.main.async {[self] in
                     if Success.status ?? false {
-                        self.alert
-                            .showAlert(
+                        CustomAlert
+                            .showAlertWithOkAction(
                                 title: AlertstringFile.Success,
                                 message: Success.message ?? "" ,
-                                on: self
-                            )
+                                on: self) {
+                                    self.dismiss(animated: true)
+                                }
+                            
                     }else{
                         self.alert
                             .showAlert(

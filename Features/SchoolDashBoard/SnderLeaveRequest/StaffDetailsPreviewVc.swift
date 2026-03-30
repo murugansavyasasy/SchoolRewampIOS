@@ -9,6 +9,7 @@ import UIKit
 
 class StaffDetailsPreviewVc: UIViewController {
     @IBOutlet weak var LeaveHistoryFullView: UIView!
+    @IBOutlet weak var nameProfileLbl: UILabel!
     @IBOutlet weak var ContactInformationFullView: UIView!
     @IBOutlet weak var currentLeaveReqFullView: UIView!
     @IBOutlet weak var mailIdLbl: UILabel!
@@ -34,12 +35,38 @@ class StaffDetailsPreviewVc: UIViewController {
     let leave_type = ["Approved","Rejected","Waiting for approval"]
     let alert = CustomAlert()
     @IBAction func rejectBtnAct(_ sender: UIButton) {
-        Leave_Update_status(id:passedData?.id ??
-                            "", status:false )
+        alert.showAlertCancel(
+            title: AlertstringFile.Confirm_title,
+            message: "Are you sure want to reject the leave request",
+            actionLbl1:  AlertstringFile.Yes_Send,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: {
+                
+                self.Leave_Update_status(id:self.passedData?.id ??
+                                    "", status:false )
+            },
+            onNo: {
+                
+            }
+        )
+       
     }
     @IBAction func ApproveBtnName(_ sender: UIButton) {
-        Leave_Update_status(id:passedData?.id ??
-                            "", status:true )
+        
+        alert.showAlertCancel(
+            title: AlertstringFile.Confirm_title,
+            message: "Are you sure want to approve the leave request",
+            actionLbl1:  AlertstringFile.Yes_Send,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: {
+                self.Leave_Update_status(id:self.passedData?.id ?? "", status:true )
+            },
+            onNo: {
+                
+            })
+       
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +85,7 @@ class StaffDetailsPreviewVc: UIViewController {
         
         let emailClick = UITapGestureRecognizer(target: self, action: #selector(gotoEmail))
         mailIdLbl.addGestureRecognizer(emailClick)
-        
+        nameProfileLbl.text = shortName(from: passedData?.staff_name ?? "")
     }
 
     @IBAction func gotoNumberPad(){
@@ -242,6 +269,7 @@ extension StaffDetailsPreviewVc : UITableViewDataSource, UITableViewDelegate{
         cell.monthLbl.text = result.month
         cell.detailLbl.text =  (data?.no_of_days ?? "") + " Day" + ". \(data?.from_date?.convertToTargetDateFormat() ?? "")" + " , \(data?.to_date?.convertToTargetDateFormat() ?? "")"
         
+        cell.statusView.layer.cornerRadius = 10
         if data?.status == leave_type[0] {
             cell.statusView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
             cell.statusLbl.textColor = .systemGreen
@@ -254,9 +282,9 @@ extension StaffDetailsPreviewVc : UITableViewDataSource, UITableViewDelegate{
             cell.statusLbl.text = leave_type[1]
             
         } else {
-            cell.statusView.backgroundColor = .systemYellow
+            cell.statusView.backgroundColor = .systemOrange.withAlphaComponent(0.1)
            
-            cell.statusLbl.textColor = .white
+            cell.statusLbl.textColor = .systemOrange
             cell.statusLbl.text = leave_type[2]
             
         }

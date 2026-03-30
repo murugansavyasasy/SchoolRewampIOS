@@ -10,6 +10,7 @@ import UIKit
 class HostelDashBoardVc: UIViewController {
 
     
+    @IBOutlet weak var menuNameLbl: UILabel!
     @IBOutlet weak var hostelNameLbl: UILabel!
     @IBOutlet weak var currentDateLbl: UILabel!
     @IBOutlet weak var HostelDashboardDateView: UIView!
@@ -28,8 +29,9 @@ class HostelDashBoardVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         HostelDashboardDateView.layer.cornerRadius = 15
-      
-        hostelNameLbl.text = hostelData?.name ?? "" 
+       
+        menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: "")
+        hostelNameLbl.text = hostelData?.name ?? ""
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE dd MMMM"
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -207,7 +209,7 @@ extension HostelDashBoardVc : UITableViewDataSource,UITableViewDelegate{
             let vc = MarkAttendanceViewController(
                 nibName: "MarkAttendanceViewController", bundle: nil)
             vc.roomTitle = room.number ?? ""
-            vc.roomSubtitle = "\(room.students?.count ?? 0) Students • \(room.total_beds ?? 0) Beds"
+            vc.total_beds = room.total_beds ?? 0
             vc.hostelId = hostelData?.id ?? ""
             vc.roomId = room.id ?? ""
             vc.academic_year_id = academicId

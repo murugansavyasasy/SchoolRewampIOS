@@ -9,6 +9,9 @@ import UIKit
 
 class StaffWiseAttendaceVC: UIViewController, Datepicker {
 
+    @IBOutlet weak var selectstaffDefaultLbl: UILabel!
+    @IBOutlet weak var todateDefaultLbl: UILabel!
+    @IBOutlet weak var fromdateDefaultLbl: UILabel!
     @IBOutlet weak var noRecrodImg: UIImageView!
     @IBOutlet weak var noRecordLbl: UILabel!
     @IBOutlet weak var norecordStack: UIStackView!
@@ -37,6 +40,9 @@ class StaffWiseAttendaceVC: UIViewController, Datepicker {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fromdateDefaultLbl.setRequiredText(fromdateDefaultLbl.text ?? "")
+        todateDefaultLbl.setRequiredText(todateDefaultLbl.text ?? "")
+        selectstaffDefaultLbl.setRequiredText(selectstaffDefaultLbl.text ?? "")
         setupTableView()
         SelectFromDate()
         let formatter = DateFormatter()
@@ -177,6 +183,7 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
             
             let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "AttendanceHeaderView") as? AttendanceHeaderView
             header?.configure(dateString: dateKey, stat: stat)
+            header?.summaryLabel.isHidden = false
             return header
             
         } else {
@@ -185,6 +192,7 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
             
             let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "AttendanceHeaderView") as? AttendanceHeaderView
             header?.configure(dateString: dateKey, stat: stat)
+            header?.summaryLabel.isHidden = true
             return header
         }
     }
@@ -369,7 +377,7 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
     
 
     func getStaffWiseAttendace(fromDate: String, toDate: String, staffId: String, select_staffAll: Bool) {
-        
+        showActivityLoader()
         APIService.shared.makeApi(
             url: ServiceUrl.staff_attd_geometric_remove_attendance_report_date_wise,
             parameters: [
@@ -395,7 +403,7 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
                         self.handleAttendanceResponse(success)
                     } else {
                         print("API status false")
-                        
+                        self.hideActivityLoader()
                             self.noRecordLbl.text = success.message ?? ""
                         self.norecordStack.isHidden = false
                          self.noRecrodImg.isHidden = false
@@ -407,6 +415,7 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
                 
             case .failure(let error):
                 DispatchQueue.main.async {
+                    self.hideActivityLoader()
                     print("Error:", error.localizedDescription)
                 }
             }
@@ -438,6 +447,7 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
 //            toDateTextField.text = dateFormatter.string(from: d)
         }
         
+        hideActivityLoader()
         tabelview.reloadData()
     }
     
@@ -454,12 +464,12 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
                     if successMessage.status ?? false{
                         self.staffDetails = successMessage.data ?? []
                         self.getStaffWiseAttendace(fromDate: convertDate(self.fromDateTextField.text ?? "") ?? "", toDate: convertDate(self.toDateTextField.text ?? "") ?? "", staffId: "0", select_staffAll:true)
-                    }else{
-                        
-                        
                     }
                 case .failure(let error):
-                    ""
+                    
+                    DispatchQueue.main.async {
+                        
+                    }
                 }
             }
         }

@@ -35,7 +35,6 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate, approvalAndReject
     
    
     func selectId(id: String?, edit: Bool?) {
-        print("VC RECEIVED", id, edit)
         guard let id = id else { return }
 
         for (sectionIndex, month) in filteredLeaveRecords?.enumerated() ?? [].enumerated() {
@@ -460,6 +459,7 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
             guard let leaveData = filteredLeaveRecords?[indexPath.section].details?[indexPath.row] else { return cell }
             
             cell.nameLbl.text = leaveData.staff_name
+            cell.nameProfileLbl.text = shortName(from: leaveData.staff_name ?? "")
 //            cell.nameLbl.numberOfLines = 1
             cell.priorityLbl.text = leaveData.role
             let fromdate = leaveData.from_date ?? ""

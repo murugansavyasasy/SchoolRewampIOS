@@ -666,7 +666,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         MenuStringFile.selectedMenuName = menuName
         // MENU IDs that need navigateOrSchoolList check
         let needSchoolCheck: Set<Int> = [
-            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 18, 41,113
+            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 18, 41,113,112,114
         ]
         Menu_id.staffSelectedMenuId = menuId
         // All actions with explicit self

@@ -1320,3 +1320,8 @@ extension UITableView {
         return dequeueReusableCell(withIdentifier: name, for: indexPath) as? T
     }
 }
+ func shortName(from name: String) -> String {
+    let trimmed = name.replacingOccurrences(of: " ", with: "")
+    guard let first = trimmed.first, let last = trimmed.last else { return "" }
+    return "\(first)\(last)".uppercased()
+}

@@ -54,10 +54,11 @@ class StudentAttendanceCell: UITableViewCell {
         OutPassRejectBtnName.layer.cornerRadius = 10
         
         statusView.layer.cornerRadius = 12
-        statusView.layer.borderWidth = 1
     }
 
     func configure(name: String, id: String, parentNum: String, state: String, index: Int,reason:String,out_pass_status:String,outDateInDate:String,outpass_id : String) {
+        
+      
         
         if outpass_id == ""{
             outPassRequestFullView.isHidden = true
@@ -66,16 +67,24 @@ class StudentAttendanceCell: UITableViewCell {
             outPassRequestFullView.isHidden  = false
             OutPassReasonLbl.text = reason
             OutPassTimmingLbl.text = outDateInDate
+            statusLbl.text = out_pass_status
             if out_pass_status == "APPROVED"{
                 approveAndRejectFullStack.isHidden = true
+                statusView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
+                statusView.isHidden = false
+                statusLbl.textColor = .systemGreen
             }else if out_pass_status == "REJECTED"{
                 approveAndRejectFullStack.isHidden = true
+                statusView.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
+                statusLbl.textColor = .red
+                statusView.isHidden = false
             }else if out_pass_status == "PENDING" || out_pass_status == "" {
                 approveAndRejectFullStack.isHidden = false
+                statusView.isHidden = true
             }
         }
         nameLabel.text = name
-        detailsLabel.text = "Student ID: \(id) • \(parentNum)"
+        detailsLabel.text = "Student ID: \(id) •  Parent Number \(parentNum)"
 
         if let first = name.first {
             avatarLabel.text = String(first).uppercased()
