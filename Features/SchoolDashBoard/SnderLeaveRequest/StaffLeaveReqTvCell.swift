@@ -15,9 +15,10 @@ protocol approvalAndReject: AnyObject {
 }
 class StaffLeaveReqTvCell: UITableViewCell,UIPopoverPresentationControllerDelegate, SelectedId {
     func selectId(id: String?, edit: Bool?) {
-        print("CELL RECEIVED", id, edit)
+      
         EditLeave?.selectId(id:id, edit: edit)
     }
+    @IBOutlet weak var nameProfileLbl: UILabel!
     @IBOutlet weak var threeDotBtnName: UIButton!
     @IBOutlet weak var leaveTypeLbl: UILabel!
     @IBOutlet weak var viewDetailsLbl: UILabel!

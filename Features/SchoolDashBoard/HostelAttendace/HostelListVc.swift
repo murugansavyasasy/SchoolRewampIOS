@@ -59,14 +59,25 @@ class HostelListVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
             switch result{
             case .success(let Success):
                 DispatchQueue.main.async {[self] in
-                    hostelData = Success.data ?? []
-                    hostelAviabelCountLbl.text = "\(Success.data?.count ?? 0) HOSTELS AVAILABLE"
-                    tv.reloadData()
+                    
+                    if Success.status ?? false{
+                        hostelData = Success.data ?? []
+                        hostelAviabelCountLbl.text = "\(Success.data?.count ?? 0) HOSTELS AVAILABLE"
+                        tv.reloadData()
+                    }else{
+                        hostelAviabelCountLbl.isHidden = true
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: Success.message ?? "", on: self) {
+                            self.dismiss(animated: true)
+                        }
+                    }
+                   
                 }
             case .failure(let error):
                 DispatchQueue.main.async { [self] in
                    
-                    
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: error.localizedDescription, on: self) {
+                        self.dismiss(animated: true)
+                    }
                 }
             }
         }

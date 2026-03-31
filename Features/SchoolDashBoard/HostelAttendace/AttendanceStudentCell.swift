@@ -25,7 +25,7 @@ class AttendanceStudentCell: UITableViewCell {
 
     func configure(student: AttendanceHistoryStudent) {
         // Defaults to Present if empty string for green styling as per JSON ("" -> Present)
-        let isPresent = student.status.lowercased() == "present" || student.status.trimmingCharacters(in: .whitespaces).isEmpty
+       
         
         nameLabel.text = student.studentName.capitalized
         detailsLabel.text = "\(student.admissionNo)  •  Class \(student.className)-\(student.sectionName)"
@@ -37,20 +37,33 @@ class AttendanceStudentCell: UITableViewCell {
             avatarLabel.text = "?"
         }
         
-        if isPresent {
+        if student.status == "PRESENT" {
             avatarView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.15)
             avatarLabel.textColor = UIColor.systemGreen
             
-            statusPillLabel.text = "Present"
+            statusPillLabel.text = student.status
             statusPillLabel.textColor = UIColor.systemGreen
             statusPillView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.1)
             statusPillView.layer.borderColor = UIColor.systemGreen.withAlphaComponent(0.3).cgColor
-        } else {
+        }
+        
+        else if student.status == "ABSENT" {
             avatarView.backgroundColor = UIColor.systemRed.withAlphaComponent(0.15)
             avatarLabel.textColor = UIColor.systemRed
             
-            statusPillLabel.text = "Absent"
+            statusPillLabel.text = student.status
             statusPillLabel.textColor = UIColor.systemRed
+            statusPillView.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
+            statusPillView.layer.borderColor = UIColor.systemRed.withAlphaComponent(0.3).cgColor
+            
+        }
+        else {
+            
+            avatarView.backgroundColor = UIColor.systemRed.withAlphaComponent(0.15)
+            avatarLabel.textColor = UIColor.systemOrange
+            
+            statusPillLabel.text = "NOT TAKEN"
+            statusPillLabel.textColor = UIColor.systemOrange
             statusPillView.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
             statusPillView.layer.borderColor = UIColor.systemRed.withAlphaComponent(0.3).cgColor
         }

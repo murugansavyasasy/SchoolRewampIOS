@@ -9,10 +9,11 @@ import UIKit
 enum DashboardRow {
     case gatePass
     case todayAttendance
+    case feesinfo
     case detailedAttendance
     case outpassRequests
     case hostelInfo
-    case feesinfo
+   
 }
 class parentHostelDashboardVC: UIViewController {
    
@@ -198,8 +199,8 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
             let cell = tableView.dequeueReusableCell(withIdentifier: "OutpassRequestsCell", for: indexPath) as! OutpassRequestsCell
             cell.configure(data: data.out_pass_requests ?? [])
             cell.newRequestdelegate = self
+            
             cell.onSeeMore = {[weak self] in
-                
                 let vc = OutpassRequestsVC()
                 vc.outpassRequestList = data.out_pass_requests ?? []
                 vc.Hosteldetails = self?.datadetails
@@ -235,10 +236,7 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
             if let datas = data.hostel_info?.first{
                 cell.configure(with: datas)
             }
-            
             return cell
-            
-      
         }
         
         
@@ -333,6 +331,10 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
                         self.rows.append(.todayAttendance)
                     }
                     
+                    if !(data.fee_details?.isEmpty ?? true){
+                        self.rows.append(.feesinfo)
+                    }
+                    
                     if !(data.attendance_details?.first?.days?.isEmpty ?? true) {
                         self.rows.append(.detailedAttendance)
                     }
@@ -345,9 +347,7 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
                         self.rows.append(.hostelInfo)
                     }
                     
-                    if !(data.fee_details?.isEmpty ?? true){
-                        self.rows.append(.feesinfo)
-                    }
+                   
                     
                     self.tableView.dataSource = self
                     self.tableView.delegate = self

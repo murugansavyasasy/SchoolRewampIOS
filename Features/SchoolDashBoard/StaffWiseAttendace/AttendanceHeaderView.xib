@@ -46,29 +46,32 @@
                                 <constraint firstAttribute="width" constant="45" id="w-dt-bg"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28 February 2025" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fl-dt-lbl">
-                            <rect key="frame" x="77" y="15.999999999999998" width="268" height="19.333333333333329"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                            <color key="textColor" systemColor="darkTextColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Present: 1 • Absent: 6 • Not Marked: 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sm-lbl-123">
-                            <rect key="frame" x="77" y="39.333333333333336" width="268" height="14.333333333333336"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <color key="textColor" systemColor="secondaryLabelColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="SK2-kt-UfL">
+                            <rect key="frame" x="76" y="15" width="275" height="44"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="28 February 2025" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fl-dt-lbl">
+                                    <rect key="frame" x="0.0" y="0.0" width="275" height="25.666666666666668"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                    <color key="textColor" systemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Present: 1 • Absent: 6 • Not Marked: 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sm-lbl-123">
+                                    <rect key="frame" x="0.0" y="29.666666666666661" width="275" height="14.333333333333332"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                     </subviews>
                     <color key="backgroundColor" red="0.90588235294117647" green="0.96470588235294119" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
+                        <constraint firstItem="SK2-kt-UfL" firstAttribute="top" secondItem="o9h-G1-123" secondAttribute="top" constant="15" id="9fO-DH-Aip"/>
+                        <constraint firstAttribute="bottom" secondItem="SK2-kt-UfL" secondAttribute="bottom" constant="15" id="HYS-3t-T9R"/>
+                        <constraint firstAttribute="trailing" secondItem="SK2-kt-UfL" secondAttribute="trailing" constant="10" id="Jrv-86-hIH"/>
                         <constraint firstItem="dt-bg-abc" firstAttribute="centerY" secondItem="o9h-G1-123" secondAttribute="centerY" id="cy-dt-bg"/>
+                        <constraint firstItem="SK2-kt-UfL" firstAttribute="leading" secondItem="dt-bg-abc" secondAttribute="trailing" constant="15" id="kGa-LM-6Bw"/>
                         <constraint firstItem="dt-bg-abc" firstAttribute="leading" secondItem="o9h-G1-123" secondAttribute="leading" constant="16" id="ld-dt-bg"/>
-                        <constraint firstItem="fl-dt-lbl" firstAttribute="leading" secondItem="dt-bg-abc" secondAttribute="trailing" constant="16" id="ld-fl-dt"/>
-                        <constraint firstItem="sm-lbl-123" firstAttribute="leading" secondItem="dt-bg-abc" secondAttribute="trailing" constant="16" id="ld-sm-dt"/>
-                        <constraint firstItem="fl-dt-lbl" firstAttribute="top" secondItem="o9h-G1-123" secondAttribute="top" constant="16" id="tp-fl-dt"/>
-                        <constraint firstItem="sm-lbl-123" firstAttribute="top" secondItem="fl-dt-lbl" secondAttribute="bottom" constant="4" id="tp-sm-dt"/>
-                        <constraint firstAttribute="trailing" secondItem="fl-dt-lbl" secondAttribute="trailing" constant="16" id="tr-fl-dt"/>
-                        <constraint firstAttribute="trailing" secondItem="sm-lbl-123" secondAttribute="trailing" constant="16" id="tr-sm-dt"/>
                     </constraints>
                 </view>
             </subviews>

@@ -9,6 +9,7 @@ import UIKit
 
 class outpassRequestTVcell: UITableViewCell {
 
+    @IBOutlet weak var viewMoreStack: UIStackView!
     @IBOutlet weak var fullview: UIView!
     @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var statusLbl: UILabel!

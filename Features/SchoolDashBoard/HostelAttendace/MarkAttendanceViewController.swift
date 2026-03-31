@@ -11,7 +11,40 @@ struct StudentAttendanceInfo {
 class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,
                                     StudentAttendanceCellDelegate, FSCalendarDelegate, FSCalendarDataSource
 {
+    func outPassApproval(for index: Int) {
+        alert.showAlertCancel(
+            title: AlertstringFile.Confirm_title,
+            message: "Are you sure want to approval outpass?",
+            actionLbl1:  AlertstringFile.Yes_Send,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: {
+                self.updateStatus(id: self.studentsdataDetails[index].id ?? "", status: true)
+            },
+            onNo: {
+                
+            }
+        )
+    }
+    
+    func outPassReject(for index: Int) {
+        alert.showAlertCancel(
+            title: AlertstringFile.Confirm_title,
+            message: "Are you sure want to reject outpass?",
+            actionLbl1:  AlertstringFile.Yes_Send,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: {
+                self.updateStatus(id: self.studentsdataDetails[index].id ?? "", status: false)
+            },
+            onNo: {
+                
+            }
+        )
+    }
+    
 
+    @IBOutlet weak var arrowImageView: UIImageView!
     @IBOutlet weak var sessionBtnName: UIButton!
     @IBOutlet weak var mothLbl: UILabel!
     @IBOutlet weak var sessionView: UIView!
@@ -47,6 +80,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     var hostelId : String?
     var roomId : String?
     var selectedDate : String?
+    var total_beds : Int?
     let alert = CustomAlert()
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -69,7 +103,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         updateMonthLabel()
         
   let dateTap = UITapGestureRecognizer(target: self, action: #selector(Dateclick))
-        selectDateView.addGestureRecognizer(dateTap)
+        SelectionDateFullView.addGestureRecognizer(dateTap)
   let seesionTap = UITapGestureRecognizer(target: self, action: #selector(SessionClikc))
     sessionView.addGestureRecognizer(seesionTap)
         bottomConstraint.constant = -1000
@@ -121,6 +155,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         view.backgroundColor = .clear
         selectedDate = getCurrentDateString()
         bottomSheetView.layer.cornerRadius = 32
+        arrowImageView.layer.cornerRadius = 15
         bottomSheetView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         bottomSheetView.clipsToBounds = true
 
@@ -131,7 +166,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         titleLabel.text = roomTitle
         subtitleLabel.text = roomSubtitle
         markAllButton.layer.cornerRadius = 16
-
+      
         let formatter = DateFormatter()
         formatter.dateFormat = DateOutPut.EE_MMM_dd_yyyy
         // current date string in dd-MM-yyyy
@@ -164,7 +199,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
 
     private func updateProgress() {
         let markedCount = studentsdataDetails.filter {
-            !($0.is_select?.isEmpty ?? true)
+            $0.is_select == "1"
         }.count
 
         let total = studentsdataDetails.count
@@ -172,7 +207,6 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         progressLabel.text = "\(markedCount)/\(total)"
         progressView.progress = total == 0 ? 0 : Float(markedCount) / Float(total)
     }
-
 
 
     @IBAction func closeTapped(_ sender: Any) {
@@ -233,7 +267,8 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
                 state = "0"
             }
         }
-        let inandoutdate = " out date : \(student.out_date ?? "") -   in date : \(student.in_date ?? "")"
+        let inandoutdate = "out date : \(student.out_date ?? "")"
+        cell.indateLbl.text = "in date : \(student.in_date ?? "")"
         cell.configure(
             name: student.name ?? "",
             id: student.id ?? "",
@@ -247,6 +282,8 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         
         cell.absentButton.tag = indexPath.row
         cell.presentButton.tag = indexPath.row
+        cell.outpassApproveBtnName.tag = indexPath.row
+        cell.OutPassRejectBtnName.tag = indexPath.row
         cell.delegate = self
         return cell
     }
@@ -257,15 +294,44 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
             switch result{
             case .success(let Success):
                 DispatchQueue.main.async {[self] in
-                    studentsdataDetails = Success.data ?? []
-                    for i in studentsdataDetails.indices{
-                        studentsdataDetails[i].is_select = ""
+        
+                    if Success.status ?? false{
+//                        noRecordStack.isHidden = true
+                        tableView.isHidden = false
+                        studentsdataDetails = Success.data ?? []
+                        for i in studentsdataDetails.indices {
+                            let status = studentsdataDetails[i].status?.uppercased()
+                            
+                            if status == "PRESENT" {
+                                studentsdataDetails[i].is_select = "2"
+                            } else if status == "ABSENT" {
+                                studentsdataDetails[i].is_select = "1"
+                            } else {
+                                studentsdataDetails[i].is_select = ""
+                            }
+                        }
+                   
+                        subtitleLabel.text =   "\(Success.data?.count ?? 0) Students • \(total_beds ?? 0) Beds"
+                        tableView.reloadData()
+                        updateProgress()
+                        
+                    }else{
+                        
+//                        noRecordStack.isHidden = false
+//                        noRecordLbl.text = Success.message ?? ""
+//                        noRecordLbl.isHidden  = false
+//                        noRecordImage.isHidden = false
+                        tableView.isHidden = true
                     }
-                    tableView.reloadData()
+                   
                 }
             case .failure(let error):
                 DispatchQueue.main.async { [self] in
-                   
+//                    noRecordStack.isHidden = false
+//                    noRecordLbl.text = error.localizedDescription
+//                    noRecordLbl.isHidden  = false
+//                    noRecordImage.isHidden = false
+                    tableView.isHidden = true
                 }
             }
         }
@@ -317,12 +383,14 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
             case .success(let Success):
                 DispatchQueue.main.async {[self] in
                     if Success.status ?? false {
-                        self.alert
-                            .showAlert(
+                        CustomAlert
+                            .showAlertWithOkAction(
                                 title: AlertstringFile.Success,
                                 message: Success.message ?? "" ,
-                                on: self
-                            )
+                                on: self) {
+                                    self.dismiss(animated: true)
+                                }
+                            
                     }else{
                         self.alert
                             .showAlert(
@@ -332,6 +400,43 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
                             )
                     }
                     
+                }
+            case .failure(let error):
+                DispatchQueue.main.async { [self] in
+                    self.alert
+                        .showAlert(
+                            title: AlertstringFile.Oops,
+                            message: error.localizedDescription ,
+                            on: self
+                        )
+                }
+            }
+        }
+    }
+    
+    func updateStatus(id : String,status : Bool) {
+        APIService.shared.makeApi(url: ServiceUrl.hostel_attendance_update_status, parameters: ["id" : id , "is_approve" : status ], type: ApitTypeSringFile.PUT, token: StaffDetails?.access_token ?? "", isBaseUrl: true) {[self] (result: Result<CommonApiSuc,Error>) in
+            switch result{
+            case .success(let Success):
+                DispatchQueue.main.async {[self] in
+                    if Success.status ?? false{
+                        self.alert
+                            .showAlert(
+                                title: AlertstringFile.Success,
+                                message: Success.message ?? "" ,
+                                on: self
+                            )
+                        
+
+                    }else{
+                        self.alert
+                            .showAlert(
+                                title: AlertstringFile.Oops,
+                                message: Success.message ?? "" ,
+                                on: self
+                            )
+                    }
+                   
                 }
             case .failure(let error):
                 DispatchQueue.main.async { [self] in

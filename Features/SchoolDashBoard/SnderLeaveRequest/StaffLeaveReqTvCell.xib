@@ -278,7 +278,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fcx-9a-ujj">
                                         <rect key="frame" x="0.0" y="50" width="397" height="14"/>
                                         <attributedString key="attributedText">
-                                            <fragment content="ViewDetails">
+                                            <fragment content="View More Details &gt;&gt;">
                                                 <attributes>
                                                     <color key="NSColor" red="0.078857840445499067" green="0.06151038530748687" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <font key="NSFont" size="12" name="ArialRoundedMTBold"/>
@@ -330,6 +330,7 @@
                 <outlet property="leaveReasonLbl" destination="nGi-7g-BM7" id="uec-6e-XoJ"/>
                 <outlet property="leaveTypeLbl" destination="U9i-zy-UP4" id="8wn-Oc-BC4"/>
                 <outlet property="nameLbl" destination="8V4-09-AR0" id="oJg-RB-9Gi"/>
+                <outlet property="nameProfileLbl" destination="UAD-PZ-wiC" id="GBf-Vx-tf9"/>
                 <outlet property="priorityLbl" destination="KAS-h0-9Ch" id="rTb-JC-Lzd"/>
                 <outlet property="profileContainerView" destination="QsA-j2-HV6" id="yIv-ba-J6j"/>
                 <outlet property="reasonDefaultLbl" destination="Kls-Bf-THX" id="Fl6-ZT-q8b"/>

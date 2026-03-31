@@ -8,6 +8,7 @@
 import UIKit
 
 class LeaveReqDateTvCell: UITableViewCell {
+    @IBOutlet weak var fromdateAndTodateLbl: UILabel!
     @IBOutlet weak var statusLbl: UILabel!
     @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var detailLbl: UILabel!

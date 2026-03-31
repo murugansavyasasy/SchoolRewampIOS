@@ -76,7 +76,7 @@ class AttendanceSessionHeader: UITableViewHeaderFooterView {
         toggleButton.addTarget(self, action: #selector(toggleTapped), for: .touchUpInside)
     }
 
-    func configure(session: AttendanceHistorySession, section: Int, isExpanded: Bool, roomId: String?, totalSessionsInRoom: Int?) {
+    func configure(session: AttendanceHistorySession, section: Int, isExpanded: Bool, roomId: String?, totalSessionsInRoom: Int?,totalsessions : Int) {
         self.section = section
         self.isExpanded = isExpanded
         
@@ -90,13 +90,18 @@ class AttendanceSessionHeader: UITableViewHeaderFooterView {
         
         // We use `session.sessionTypeId + 1` or just `section + 1` for badge?
         // Let's use sessionTypeId + 1 to keep it accurate for the session.
-        let sessionTypeId = Int(session.sessionTypeId) ?? 0
-        badgeLabel.text = "\(sessionTypeId + 1)"
-        sessionTitleLabel.text = "\(session.sectionName.capitalized) Session"
+//        let sessionTypeId = Int(session.sessionTypeId) ?? 0
+        badgeLabel.text = "\(totalsessions )"
+        if session.sectionName == ""{
+            sessionTitleLabel.text = " "
+        }else{
+            sessionTitleLabel.text = "\(session.sectionName.capitalized)"
+        }
+     
         studentsSubtitleLabel.text = "\(session.students.count) students"
         
         // Calculate percentage natively
-        let t = Double(session.students.count) ?? 0.0
+        let t = Double(session.students.count)
         let p = Double(session.presentStudent) ?? 0.0
         if t > 0 {
             let percentage = Int((p / t) * 100)

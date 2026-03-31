@@ -10,6 +10,8 @@ import UIKit
 class HostelDashBoardVc: UIViewController {
 
     
+    @IBOutlet weak var menuNameLbl: UILabel!
+    @IBOutlet weak var hostelNameLbl: UILabel!
     @IBOutlet weak var currentDateLbl: UILabel!
     @IBOutlet weak var HostelDashboardDateView: UIView!
     @IBOutlet weak var tableView: UITableView!
@@ -27,8 +29,9 @@ class HostelDashBoardVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         HostelDashboardDateView.layer.cornerRadius = 15
-      
-        
+       
+        menuNameLbl.text = MenuStringFile.selectedMenuName
+        hostelNameLbl.text = hostelData?.name ?? ""
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE dd MMMM"
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -206,7 +209,7 @@ extension HostelDashBoardVc : UITableViewDataSource,UITableViewDelegate{
             let vc = MarkAttendanceViewController(
                 nibName: "MarkAttendanceViewController", bundle: nil)
             vc.roomTitle = room.number ?? ""
-            vc.roomSubtitle = "\(room.students?.count ?? 0) Students • \(room.total_beds ?? 0) Beds"
+            vc.total_beds = room.total_beds ?? 0
             vc.hostelId = hostelData?.id ?? ""
             vc.roomId = room.id ?? ""
             vc.academic_year_id = academicId
@@ -223,16 +226,26 @@ extension HostelDashBoardVc : UITableViewDataSource,UITableViewDelegate{
             switch result{
             case .success(let Success):
                 DispatchQueue.main.async {[self] in
-                    if let data = Success.data {
-                           self.dashBoardDataDetails = data
-                        self.stats = data.first?.stats
-                           self.floors = data.first?.floors ?? []
-                           self.tableView.reloadData()
-                       }
+                    if Success.status ?? false{
+                        if let data = Success.data {
+                               self.dashBoardDataDetails = data
+                            self.stats = data.first?.stats
+                               self.floors = data.first?.floors ?? []
+                               self.tableView.reloadData()
+                           }
+                    }else{
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: Success.message ?? "", on: self) {
+                            self.dismiss(animated: true)
+                        }
+                        
+                    }
+                    
                 }
             case .failure(let error):
                 DispatchQueue.main.async { [self] in
-                   
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: error.localizedDescription, on: self) {
+                        self.dismiss(animated: true)
+                    }
                 }
             }
         }
@@ -244,8 +257,8 @@ extension HostelDashBoardVc: AttendanceSummaryCellDelegate {
     func didTapViewHistory() {
         let vc = AttendanceHistoryViewController(
             nibName: "AttendanceHistoryViewController", bundle: nil)
-        vc.hostelId = hostelData?.id
         vc.academicYearId = academicId
+        vc.hostelData = hostelData
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: false, completion: nil)
     }
@@ -268,7 +281,7 @@ extension HostelDashBoardVc: DashboardStatsCellDelegate {
     func didTapOutpassRequests() {
         let vc = OutpassRequestsViewController(
             nibName: "OutpassRequestsViewController", bundle: nil)
-        vc.hostelId = hostelData?.id ?? ""
+        vc.hostelData = hostelData
         vc.accidemicyearId = academicId ?? ""
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: false, completion: nil)

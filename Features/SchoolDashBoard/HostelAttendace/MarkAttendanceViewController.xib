@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MarkAttendanceViewController" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="SelectionDateFullView" destination="XFq-kG-C8M" id="ip5-5f-jpb"/>
+                <outlet property="arrowImageView" destination="fGM-qS-tQW" id="4oh-a0-a38"/>
                 <outlet property="bottomConstraint" destination="lc-btm" id="out-btm"/>
                 <outlet property="bottomSheetView" destination="v-sheet" id="out-shet"/>
                 <outlet property="calanderFulView" destination="BAj-2d-5pL" id="gqL-5I-PhX"/>
@@ -82,8 +83,8 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v-prog-bg">
                                     <rect key="frame" x="24" y="94" width="366" height="50"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Progress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-p1">
-                                            <rect key="frame" x="12" y="4" width="59" height="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Absent Progress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-p1">
+                                            <rect key="frame" x="12" y="4" width="110" height="17"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                             <color key="textColor" white="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -189,7 +190,7 @@
                                                             <rect key="frame" x="0.0" y="23" width="394" height="80"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.right.to.line" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="fGM-qS-tQW">
-                                                                    <rect key="frame" x="8" y="10.5" width="40" height="35"/>
+                                                                    <rect key="frame" x="8" y="22.5" width="40" height="35"/>
                                                                     <color key="backgroundColor" name="BackGroundClr"/>
                                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
@@ -204,13 +205,14 @@
                                                                             <rect key="frame" x="0.0" y="0.0" width="224.5" height="70"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="From" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kTz-rM-J8h">
-                                                                                    <rect key="frame" x="8" y="45" width="208.5" height="17"/>
-                                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                                    <rect key="frame" x="8" y="46" width="208.5" height="16"/>
+                                                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
-                                                                                <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OP1-bd-LTd">
-                                                                                    <rect key="frame" x="8" y="8" width="208.5" height="29"/>
+                                                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OP1-bd-LTd">
+                                                                                    <rect key="frame" x="8" y="8" width="208.5" height="30"/>
+                                                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     <inset key="imageEdgeInsets" minX="5" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                     <state key="normal" title="Select  Date">
@@ -241,13 +243,13 @@
                                                                             <rect key="frame" x="241" y="0.0" width="90" height="70"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Session" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lXS-G0-LfJ">
-                                                                                    <rect key="frame" x="0.0" y="5" width="85" height="17"/>
-                                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                                    <rect key="frame" x="0.0" y="5" width="85" height="18"/>
+                                                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
-                                                                                <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kol-M7-hNN">
-                                                                                    <rect key="frame" x="0.0" y="27" width="90" height="38"/>
+                                                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kol-M7-hNN">
+                                                                                    <rect key="frame" x="0.0" y="28" width="90" height="37"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                     <inset key="imageEdgeInsets" minX="5" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -276,10 +278,10 @@
                                                             <constraints>
                                                                 <constraint firstItem="BQe-SJ-1uA" firstAttribute="leading" secondItem="fGM-qS-tQW" secondAttribute="trailing" constant="10" id="GNn-DH-Bto"/>
                                                                 <constraint firstItem="BQe-SJ-1uA" firstAttribute="top" secondItem="XFq-kG-C8M" secondAttribute="top" constant="5" id="L7e-mc-Y56"/>
+                                                                <constraint firstItem="fGM-qS-tQW" firstAttribute="centerY" secondItem="XFq-kG-C8M" secondAttribute="centerY" id="Q5Y-Wv-BV7"/>
                                                                 <constraint firstAttribute="bottom" secondItem="BQe-SJ-1uA" secondAttribute="bottom" constant="5" id="Ts7-rW-adu"/>
                                                                 <constraint firstAttribute="trailing" secondItem="BQe-SJ-1uA" secondAttribute="trailing" constant="5" id="Yu1-Md-Hgd"/>
                                                                 <constraint firstItem="fGM-qS-tQW" firstAttribute="leading" secondItem="XFq-kG-C8M" secondAttribute="leading" constant="8" id="ZC2-po-nYo"/>
-                                                                <constraint firstItem="fGM-qS-tQW" firstAttribute="top" secondItem="XFq-kG-C8M" secondAttribute="top" constant="8" id="cHZ-RO-SNw"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Qe-Hp-y4d" userLabel="Separator">
@@ -447,7 +449,7 @@
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="BackGroundClr">
-            <color red="0.94117647058823528" green="0.51764705882352946" blue="0.44705882352941179" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="PrimeryColor">
             <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -456,10 +458,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
