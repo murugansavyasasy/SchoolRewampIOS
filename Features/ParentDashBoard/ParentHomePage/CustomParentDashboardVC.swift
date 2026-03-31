@@ -214,7 +214,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                     if response.status == true, let details = response.data?.first {
                         self.menu_details = details.menus ?? []
                         self.menu_details.append(
-                            MenuDetail(id: 113, name: "Hostel Management", description: "Used to apply leave")
+                            MenuDetail(id: 113, name: "Hostel Attendance", description: "Used to apply leave")
                         )
                         self.recentMenuItems = details.frequently_used
                         self.MenuCollection.reloadData()
@@ -230,7 +230,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         self.pagecontroller.numberOfPages = details.frequently_used?.count ?? 0
                         self.filteredMenu = details.menus ?? []
                         self.filteredMenu.append(
-                            MenuDetail(id: 113, name: "Hostel Management", description: "Used to apply leave")
+                            MenuDetail(id: 202, name: "Hostel Management", description: "Used to apply leave")
                         )
                         self.recentActiveMenuCollection.reloadData()
                         self.get_MenuCount() // 🔹 after menus loaded
@@ -582,7 +582,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 39: MenuRedirect.receiverAttachment(from: self,PushNotiMsgId: messageId)
         case 40: MenuRedirect.receiverPauckt(from: self)
-        case 113: MenuRedirect.ResiverHostelManagment(from: self)
+        case 202: MenuRedirect.ResiverHostelManagment(from: self)
         default:
             let alert = UIAlertController(
                 title: nil,

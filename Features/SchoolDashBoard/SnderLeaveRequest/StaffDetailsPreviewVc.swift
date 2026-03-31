@@ -264,11 +264,11 @@ extension StaffDetailsPreviewVc : UITableViewDataSource, UITableViewDelegate{
         let data = allLeaveRecords?[indexPath.section].details?[indexPath.row]
         
         cell.leaveTypeLbl.text = data?.leave_type
-        let result = splitDateMonth(data?.from_date ?? "")
+        let result = splitDateMonth(data?.applied_on ?? "")
         cell.dateLbl.text = result.day
         cell.monthLbl.text = result.month
-        cell.detailLbl.text =  (data?.no_of_days ?? "") + " Day" + ". \(data?.from_date?.convertToTargetDateFormat() ?? "")" + " , \(data?.to_date?.convertToTargetDateFormat() ?? "")"
-        
+        cell.detailLbl.text =  (data?.no_of_days ?? "") + " Day"
+        cell.fromdateAndTodateLbl.text = " \(data?.from_date?.convertToTargetDateFormat() ?? "")" + " , \(data?.to_date?.convertToTargetDateFormat() ?? "")"
         cell.statusView.layer.cornerRadius = 10
         if data?.status == leave_type[0] {
             cell.statusView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)

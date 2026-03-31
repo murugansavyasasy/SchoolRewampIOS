@@ -8,6 +8,8 @@ protocol StudentAttendanceCellDelegate: AnyObject {
 }
 
 class StudentAttendanceCell: UITableViewCell {
+    @IBOutlet weak var parentPhnNumber: UILabel!
+    @IBOutlet weak var indateLbl: UILabel!
     @IBOutlet weak var approveAndRejectFullStack: UIStackView!
     @IBOutlet weak var OutPassTimmingLbl: UILabel!
     @IBOutlet weak var OutPassReasonLbl: UILabel!
@@ -28,12 +30,10 @@ class StudentAttendanceCell: UITableViewCell {
     var studentIndex: Int = 0
 
     @IBAction func OutpassApproveBtnAct(_ sender: UIButton) {
-        
         delegate?.outPassApproval(for: sender.tag)
     }
     
     @IBAction func outPassRejectBtnAct(_ sender: UIButton) {
-        
         delegate?.outPassReject(for: sender.tag)
     }
     override func awakeFromNib() {
@@ -58,14 +58,12 @@ class StudentAttendanceCell: UITableViewCell {
 
     func configure(name: String, id: String, parentNum: String, state: String, index: Int,reason:String,out_pass_status:String,outDateInDate:String,outpass_id : String) {
         
-      
-        
         if outpass_id == ""{
             outPassRequestFullView.isHidden = true
            
         }else{
             outPassRequestFullView.isHidden  = false
-            OutPassReasonLbl.text = reason
+            OutPassReasonLbl.text = "Reason : \(reason)"
             OutPassTimmingLbl.text = outDateInDate
             statusLbl.text = out_pass_status
             if out_pass_status == "APPROVED"{
@@ -84,12 +82,10 @@ class StudentAttendanceCell: UITableViewCell {
             }
         }
         nameLabel.text = name
-        detailsLabel.text = "Student ID: \(id) •  Parent Number \(parentNum)"
-
-        if let first = name.first {
-            avatarLabel.text = String(first).uppercased()
-        }
-
+        detailsLabel.text = "Student ID: \(id)"
+        parentPhnNumber.text =  "Parent Number\(parentNum)"
+        avatarLabel.text = shortName(from: name)
+       
         // Randomly set colors for avatar
         let colors: [UIColor] = [.systemPurple, .systemBlue, .systemIndigo, .systemOrange]
         avatarContainer.backgroundColor = colors[index % colors.count]

@@ -126,13 +126,18 @@ class PriorityVC: UIViewController {
             teacherButton.isHidden = true
         }
         
-        if staff_role == PriorityType.is_staff{
-            NextButtonView.isHidden = true
-            ProceedInstructionLbl.isHidden = true
-        }else{
-            NextButtonView.isHidden = false
-            ProceedInstructionLbl.isHidden = false
-        }
+        if staff_role == PriorityType.is_principal || staff_role == PriorityType.is_admin || staff_role == PriorityType.is_grouphead{
+             NextButtonView.isHidden = false
+             bottomView.isHidden = false
+             ProceedInstructionLbl.isHidden = false
+         }
+         else{
+          
+             
+             NextButtonView.isHidden = true
+             bottomView.isHidden = true
+             ProceedInstructionLbl.isHidden = true
+         }
         
         
         if staff_role == PriorityType.is_principal{
@@ -205,14 +210,17 @@ class PriorityVC: UIViewController {
             TeacherParentlbl.text = (CommonStringFile.LoginAs.translated()) + " " + (rollname.translated())
         }
         
-        if staff_role == PriorityType.is_staff{
-            NextButtonView.isHidden = true
-            bottomView.isHidden = true
-            ProceedInstructionLbl.isHidden = true
-        }else{
+       if staff_role == PriorityType.is_principal || staff_role == PriorityType.is_admin || staff_role == PriorityType.is_grouphead{
             NextButtonView.isHidden = false
             bottomView.isHidden = false
             ProceedInstructionLbl.isHidden = false
+        }
+        else{
+         
+            
+            NextButtonView.isHidden = true
+            bottomView.isHidden = true
+            ProceedInstructionLbl.isHidden = true
         }
         apply_gradients()
         login_astype = 1

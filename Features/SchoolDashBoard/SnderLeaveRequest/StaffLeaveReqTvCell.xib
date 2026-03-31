@@ -278,7 +278,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fcx-9a-ujj">
                                         <rect key="frame" x="0.0" y="50" width="397" height="14"/>
                                         <attributedString key="attributedText">
-                                            <fragment content="ViewDetails">
+                                            <fragment content="View More Details &gt;&gt;">
                                                 <attributes>
                                                     <color key="NSColor" red="0.078857840445499067" green="0.06151038530748687" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <font key="NSFont" size="12" name="ArialRoundedMTBold"/>

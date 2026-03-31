@@ -267,7 +267,8 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
                 state = "0"
             }
         }
-        let inandoutdate = " out date : \(student.out_date ?? "") -   in date : \(student.in_date ?? "")"
+        let inandoutdate = "out date : \(student.out_date ?? "")"
+        cell.indateLbl.text = "in date : \(student.in_date ?? "")"
         cell.configure(
             name: student.name ?? "",
             id: student.id ?? "",

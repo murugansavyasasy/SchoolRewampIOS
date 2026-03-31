@@ -30,7 +30,7 @@ class HostelDashBoardVc: UIViewController {
         super.viewDidLoad()
         HostelDashboardDateView.layer.cornerRadius = 15
        
-        menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: "")
+        menuNameLbl.text = MenuStringFile.selectedMenuName
         hostelNameLbl.text = hostelData?.name ?? ""
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE dd MMMM"
