@@ -239,7 +239,9 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         if details.is_birthday ?? false{
                             DispatchQueue.main.async {
                                 let vc = BirthDayWishVC(nibName: nil, bundle: nil)
-                                vc.modalPresentationStyle = .formSheet
+                                vc.nameLbl_text = self.childDetails?.name ?? ""
+                                vc.modalPresentationStyle = .overCurrentContext
+                                vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
                                 self.present(vc, animated: true)
                             }
                         }

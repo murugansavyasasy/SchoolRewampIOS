@@ -19,23 +19,35 @@ class BirthDayWishVC: UIViewController {
     @IBOutlet weak var parentView: UIView!
     @IBOutlet weak var childView: UIView!
     var nameLbl_text:String = ""
-    
+    var birth_day : String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.definesPresentationContext = true
         parentView.layer.cornerRadius = 10
         childView.layer.cornerRadius = 10
         profileView.layer.cornerRadius = 15
         profileImgView.layer.cornerRadius = profileImgView.frame.height/2
         profileImgView.layer.borderWidth = 7
         profileImgView.layer.borderColor = UIColor.primery.cgColor
+        nameLbl.text = nameLbl_text
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd,MMM yyyy"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+
+        let currentDate = formatter.string(from: Date())
+        dateLbl.text = currentDate
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.confeeti()
         }
-
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissVC))
+           view.addGestureRecognizer(tap)
         
     }
-
+    @objc func dismissVC() {
+        self.dismiss(animated: true)
+    }
     @IBAction func celebrateBtn(_ sender: UIButton) {
         isAnimating = true
         confeeti()
