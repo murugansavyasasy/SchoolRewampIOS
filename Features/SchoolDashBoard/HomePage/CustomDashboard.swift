@@ -264,6 +264,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                         if details.is_birthday ?? false{
                             DispatchQueue.main.async {
                                 let vc = BirthDayWishVC(nibName: nil, bundle: nil)
+                                vc.nameLbl_text = self.staffDetails?.name ?? ""
                                 vc.modalPresentationStyle = .formSheet
                                 self.present(vc, animated: true)}}
                     } else {
