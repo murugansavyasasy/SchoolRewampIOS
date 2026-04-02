@@ -213,9 +213,6 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                 case .success(let response):
                     if response.status == true, let details = response.data?.first {
                         self.menu_details = details.menus ?? []
-                        self.menu_details.append(
-                            MenuDetail(id: 113, name: "Hostel Attendance", description: "Used to apply leave")
-                        )
                         self.recentMenuItems = details.frequently_used
                         self.MenuCollection.reloadData()
                         self.refreshCount = true
@@ -229,9 +226,9 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
 //                        }
                         self.pagecontroller.numberOfPages = details.frequently_used?.count ?? 0
                         self.filteredMenu = details.menus ?? []
-                        self.filteredMenu.append(
-                            MenuDetail(id: 202, name: "Hostel Management", description: "Used to apply leave")
-                        )
+//                        self.filteredMenu.append(
+//                            MenuDetail(id: 202, name: "Hostel Management", description: "Used to apply leave")
+//                        )
                         self.recentActiveMenuCollection.reloadData()
                         self.get_MenuCount() // 🔹 after menus loaded
                         user_inputs.menuList = self.menu_details.compactMap{$0.name}

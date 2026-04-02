@@ -25,15 +25,17 @@ class studentPendingFeeTv: UITableViewCell {
         cardView.layer.shadowOffset = CGSize(width: 0, height: 4)
         cardView.layer.shadowRadius = 8
         cardView.backgroundColor = .white
+        tabelview.delegate = self
+        tabelview.dataSource = self
     }
 
     
     func config(data : [HostelFeeDetails]){
         pendingFeesList = data
-        tabelview.delegate = self
-        tabelview.dataSource = self
-        tabelview.reloadData()
-    }
+        DispatchQueue.main.async {
+            self.tabelview.reloadData()
+            self.tabelview.layoutIfNeeded()
+        }    }
 }
 extension studentPendingFeeTv : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

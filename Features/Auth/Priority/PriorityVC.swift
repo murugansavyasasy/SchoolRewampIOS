@@ -33,7 +33,7 @@ class PriorityVC: UIViewController {
     var staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     let rollname = UserDefaultFileManager.getUserDetails()?.user_details?.role_name ?? ""
     var IsAddPointApiCheck : Bool = false
-    
+    let alert = CustomAlert()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.containerViewHeightConstraint.constant = 300
@@ -360,19 +360,28 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if login_astype  == 2 {
+           
             if let data = childDetails?[indexPath.row]{
                 UserDefaultFileManager.saveChildDetails(data: data)}
-            if IsAddPointApiCheck == false{
-                let parms = ["mobile_number": UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "",
-                             "activity": "LOGIN",
-                             "user_type": login_astype == 2 ? 1 : 2,
-                             "menu_id": 0] as [String : Any]
-                paketApiCall(params:parms)
+           
+            if UserDefaultFileManager.get_child_Details()?.is_not_allow ?? false{
+                alert.showAlert(title: AlertstringFile.Oops,
+                                message: UserDefaultFileManager.get_child_Details()?.display_message ?? "",
+                                on: self)
+            }else{
+                if IsAddPointApiCheck == false{
+                    let parms = ["mobile_number": UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "",
+                                 "activity": "LOGIN",
+                                 "user_type": login_astype == 2 ? 1 : 2,
+                                 "menu_id": 0] as [String : Any]
+                    paketApiCall(params:parms)
+                }
+                let vc = TapBarVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                vc.login_astype = login_astype
+                present(vc, animated: true)
             }
-            let vc = TapBarVC(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
-            vc.login_astype = login_astype
-            present(vc, animated: true)
+            
         }else if login_astype  == 1 {
             if staff_role == PriorityType.is_staff{
                 if let data = staffDetails?[indexPath.row]{

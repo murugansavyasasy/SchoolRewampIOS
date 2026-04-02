@@ -235,26 +235,26 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                     if response.status == true, let details = response.data?.first {
                         self.menu_details = details.menus
                     
-                        self.menu_details?.append(
-                            MenuDetail(id: 203, name: "Apply Leave", description: "Used to tracking")
-                        )
-                        self.menu_details?.append(
-                            MenuDetail(id: 202, name: "Hostel Attendance", description: "Used to apply leave")
-                        )
-                        
-                        self.menu_details?.append(
-                            MenuDetail(id: 204, name: "Approve Staff Leave Request", description: "Used to apply leave")
-                        )
+//                        self.menu_details?.append(
+//                            MenuDetail(id: 203, name: "Apply Leave", description: "Used to tracking")
+//                        )
+//                        self.menu_details?.append(
+//                            MenuDetail(id: 202, name: "Hostel Attendance", description: "Used to apply leave")
+//                        )
+//                        
+//                        self.menu_details?.append(
+//                            MenuDetail(id: 204, name: "Approve Staff Leave Request", description: "Used to apply leave")
+//                        )
                         self.refreshCount = true
                         self.get_MenuCount()
                         self.recentMenuItems = details.frequently_used
                         self.filteredRecentMenu = details.frequently_used ?? []
                         
-                        if let frequent = details.frequently_used{
-//                            self.pagecontroller.isHidden = frequent.count < 1
-                        }else{
-//                            self.pagecontroller.isHidden = true
-                        }
+//                        if let frequent = details.frequently_used{
+////                            self.pagecontroller.isHidden = frequent.count < 1
+//                        }else{
+////                            self.pagecontroller.isHidden = true
+//                        }
                         self.pagecontroller.numberOfPages = details.frequently_used?.count ?? 0
                         self.filteredMenu = self.menu_details ?? []//details.menus ?? []
                         self.MenuCollection.reloadData()

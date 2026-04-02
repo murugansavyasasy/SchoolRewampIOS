@@ -28,14 +28,7 @@ class parentHostelDashboardVC: UIViewController {
     @IBOutlet weak var NoDataImage: UIImageView!
     @IBOutlet weak var nodataLbl: UILabel!
     
-//    
-//    var outpassRequestsModel = OutpassRequestsModel(
-//        requests: [
-//            OutpassRequestData(reason: "i  am sick", fromToDate: "13/10/2000 -  15/10/2000", requestTime: "04:00 AM", status: "Pending"),
-//            OutpassRequestData(reason: "i  am sick", fromToDate: "13/10/2000 -  15/10/2000", requestTime: "04:00 AM", status: "Accepted")
-//        ]
-//    )
-    
+
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var HosteldataDetails   : [HostelDashboardData] = []
     var rows: [DashboardRow] = []
@@ -53,6 +46,8 @@ class parentHostelDashboardVC: UIViewController {
         FirstLetterView.layer.cornerRadius = 8
         NoDataImage.isHidden = true
         nodataLbl.isHidden = true
+        tableView.dataSource = self
+        tableView.delegate = self
         setupYearAndMonth()
         setupTableView()
         GetHostelDetails()
@@ -346,11 +341,7 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
                     if !(data.hostel_info?.isEmpty ?? true){
                         self.rows.append(.hostelInfo)
                     }
-                    
-                   
-                    
-                    self.tableView.dataSource = self
-                    self.tableView.delegate = self
+                
                     self.tableView.reloadData()
                     
                 case .failure(let failure):

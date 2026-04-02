@@ -122,7 +122,7 @@ struct ChildDetails: Codable {
     let profile: String?
     let roll_number: String?
     let display_message: String?
-    var  access_token: String?
+    var access_token: String?
     let school_id: String?
     let address: String?
     let class_id: Int?
@@ -138,6 +138,7 @@ struct ChildDetails: Codable {
     let class_teacher: String?
     let academic_year_id: Int?
     let academic_year_name: String?
+    let is_not_allow: Bool?
 }
 
 
