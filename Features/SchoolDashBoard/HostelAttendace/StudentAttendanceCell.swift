@@ -56,7 +56,7 @@ class StudentAttendanceCell: UITableViewCell {
         statusView.layer.cornerRadius = 12
     }
 
-    func configure(name: String, id: String, parentNum: String, state: String, index: Int,reason:String,out_pass_status:String,outDateInDate:String,outpass_id : String) {
+    func configure(name: String, id: String, parentNum: String, state: String, index: Int,reason:String,out_pass_status:String,outDateInDate:String,outpass_id : String, standard: String) {
         
         if outpass_id == ""{
             outPassRequestFullView.isHidden = true
@@ -82,8 +82,8 @@ class StudentAttendanceCell: UITableViewCell {
             }
         }
         nameLabel.text = name
-        detailsLabel.text = "Student ID: \(id)"
-        parentPhnNumber.text =  "Parent Number\(parentNum)"
+        detailsLabel.text = "Class: \(standard)"
+        parentPhnNumber.text =  "Parent mobile no: \(parentNum)"
         avatarLabel.text = shortName(from: name)
        
         // Randomly set colors for avatar

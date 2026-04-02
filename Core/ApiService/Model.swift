@@ -3149,10 +3149,12 @@ struct AttendanceHistoryResponse: Codable {
 
 struct AttendanceHistoryData: Codable {
     let roomId: String
+    let roomNo: String
     let sessions: [AttendanceHistorySession]
     
     enum CodingKeys: String, CodingKey {
         case roomId = "room_id"
+        case roomNo = "room_no"
         case sessions
     }
 }

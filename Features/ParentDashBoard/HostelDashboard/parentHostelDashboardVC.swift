@@ -28,13 +28,13 @@ class parentHostelDashboardVC: UIViewController {
     @IBOutlet weak var NoDataImage: UIImageView!
     @IBOutlet weak var nodataLbl: UILabel!
     
-    
-    var outpassRequestsModel = OutpassRequestsModel(
-        requests: [
-            OutpassRequestData(reason: "i  am sick", fromToDate: "13/10/2000 -  15/10/2000", requestTime: "04:00 AM", status: "Pending"),
-            OutpassRequestData(reason: "i  am sick", fromToDate: "13/10/2000 -  15/10/2000", requestTime: "04:00 AM", status: "Accepted")
-        ]
-    )
+//    
+//    var outpassRequestsModel = OutpassRequestsModel(
+//        requests: [
+//            OutpassRequestData(reason: "i  am sick", fromToDate: "13/10/2000 -  15/10/2000", requestTime: "04:00 AM", status: "Pending"),
+//            OutpassRequestData(reason: "i  am sick", fromToDate: "13/10/2000 -  15/10/2000", requestTime: "04:00 AM", status: "Accepted")
+//        ]
+//    )
     
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var HosteldataDetails   : [HostelDashboardData] = []
@@ -65,7 +65,7 @@ class parentHostelDashboardVC: UIViewController {
         vc.selectdMonth = selectedMonth
         vc.onDateSelected = { [weak self] month in
             self?.selectedMonth = month
-            self?.DateBtn.setTitle("\(month.shortName) \(month.year)", for: .normal)
+            self?.DateBtn.setTitle("\(month.name) \(month.year)", for: .normal)
             self?.GetHostelDetails()
         }
         vc.modalPresentationStyle = .overCurrentContext
@@ -96,7 +96,7 @@ class parentHostelDashboardVC: UIViewController {
         year: year,
         isSelected: true
        )
-        DateBtn.setTitle("\(selectedMonth?.shortName ?? "") \(selectedMonth?.year ?? 0)", for: .normal)
+        DateBtn.setTitle("\(selectedMonth?.name ?? "") \(selectedMonth?.year ?? 0)", for: .normal)
     }
     
     private func setupTableView() {

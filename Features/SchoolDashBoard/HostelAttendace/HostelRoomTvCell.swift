@@ -58,17 +58,17 @@ class HostelRoomTvCell: UITableViewCell {
                 stack.isHidden = true
                 emptyStateView?.isHidden = false
             } else {
-                occupancyStackView?.isHidden = false
-                stack.isHidden = false
+                occupancyStackView?.isHidden = true
+                stack.isHidden = true
                 emptyStateView?.isHidden = true
 
-                for studentName in room.students ?? [] {
-                    let dotLabel = UILabel()
-                    dotLabel.text = "•  \(studentName)"
-                    dotLabel.font = .systemFont(ofSize: 14, weight: .regular)
-                    dotLabel.textColor = .darkGray
-                    stack.addArrangedSubview(dotLabel)
-                }
+//                for studentName in room.students ?? [] {
+//                    let dotLabel = UILabel()
+//                    dotLabel.text = "•  \(studentName)"
+//                    dotLabel.font = .systemFont(ofSize: 14, weight: .regular)
+//                    dotLabel.textColor = .darkGray
+//                    stack.addArrangedSubview(dotLabel)
+//                }
             }
         }
     }

@@ -2,6 +2,7 @@ import UIKit
 
 struct FlatSession {
     let roomId: String
+    let roomNo: String
     let totalSessionsInRoom: Int
     let session: AttendanceHistorySession
     let isFirstInRoom: Bool
@@ -204,12 +205,13 @@ extension AttendanceHistoryViewController : UITableViewDelegate, UITableViewData
         let isExpanded = expandedSections.contains(section)
         // Pass room data only if we need to show the room title (i.e. first session in a room)
         let rId = flatSession.isFirstInRoom ? flatSession.roomId : nil
+        let roomNo = flatSession.isFirstInRoom ? flatSession.roomNo : nil
         let sCount = flatSession.isFirstInRoom ? flatSession.totalSessionsInRoom : nil
         
         header.configure(session: flatSession.session,
                          section: section,
                          isExpanded: isExpanded,
-                         roomId: rId,
+                         roomId: rId, roomNo: roomNo,
                          totalSessionsInRoom: sCount,totalsessions : flatSession.sessionIndexInRoom )
         header.delegate = self
         
@@ -257,7 +259,7 @@ extension AttendanceHistoryViewController : UITableViewDelegate, UITableViewData
                     for room in Success.data {
                         for (index, session) in room.sessions.enumerated() {
                             let isFirst = (index == 0)
-                            let flat = FlatSession(roomId: String(room.roomId),
+                            let flat = FlatSession(roomId: String(room.roomId), roomNo: room.roomNo,
                                                    totalSessionsInRoom: room.sessions.count,
                                                    session: session,
                                                    isFirstInRoom: isFirst)

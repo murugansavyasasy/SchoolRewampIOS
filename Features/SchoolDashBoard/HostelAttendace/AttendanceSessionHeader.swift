@@ -76,13 +76,13 @@ class AttendanceSessionHeader: UITableViewHeaderFooterView {
         toggleButton.addTarget(self, action: #selector(toggleTapped), for: .touchUpInside)
     }
 
-    func configure(session: AttendanceHistorySession, section: Int, isExpanded: Bool, roomId: String?, totalSessionsInRoom: Int?,totalsessions : Int) {
+    func configure(session: AttendanceHistorySession, section: Int, isExpanded: Bool, roomId: String?, roomNo: String?, totalSessionsInRoom: Int?,totalsessions : Int) {
         self.section = section
         self.isExpanded = isExpanded
         
-        if let roomId = roomId, let total = totalSessionsInRoom {
+        if let roomNo = roomNo, let total = totalSessionsInRoom {
             roomHeaderContainer.isHidden = false
-            roomTitleLabel.text = "Room \(roomId)"
+            roomTitleLabel.text = "Room \(roomNo)"
             roomPillLabel.text = "\(total) Sessions"
         } else {
             roomHeaderContainer.isHidden = true

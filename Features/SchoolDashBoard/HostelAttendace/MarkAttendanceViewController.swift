@@ -277,7 +277,8 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
             index: indexPath.row,
             reason: student.reason ?? "",
             out_pass_status: student.outpasss_status ?? "",
-            outDateInDate: inandoutdate, outpass_id: student.outpass_id ?? ""
+            outDateInDate: inandoutdate, outpass_id: student.outpass_id ?? "",
+            standard: (student.class_name ?? "") + " - " + (student.section_name ?? "")
         )
         
         cell.absentButton.tag = indexPath.row

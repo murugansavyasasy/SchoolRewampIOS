@@ -22,8 +22,16 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate, UITextFieldDeleg
     @IBOutlet weak var toTimeView: UIView!
     @IBOutlet weak var destinationView: UIView!
     @IBOutlet weak var contactView: UIView!
-   
+  
+    @IBOutlet weak var reasonDefLbl: UILabel!
+    @IBOutlet weak var fromDateDefLbl: UILabel!
+    @IBOutlet weak var toDateDefLbl: UILabel!
+    @IBOutlet weak var fromTimeDefLbl: UILabel!
+    @IBOutlet weak var toTimeDefLbl: UILabel!
+    @IBOutlet weak var emergencyDefLbl: UILabel!
+    
 
+    
     private let fromDatePicker = UIDatePicker()
     private let toDatePicker = UIDatePicker()
     private let fromTimePicker = UIDatePicker()
@@ -96,6 +104,13 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate, UITextFieldDeleg
         
         reasonTextView.addDoneButton()
         emergencyContactTextField.addDoneButton()
+        
+        reasonDefLbl.setRequiredText("Reason for Outpass")
+        fromDateDefLbl.setRequiredText("From Date")
+        toDateDefLbl.setRequiredText("To Date")
+        fromTimeDefLbl.setRequiredText("From Time")
+        toTimeDefLbl.setRequiredText("To Time")
+        emergencyDefLbl.setRequiredText("Emergency Contact Number")
     }
     
     func setupTapGestures() {

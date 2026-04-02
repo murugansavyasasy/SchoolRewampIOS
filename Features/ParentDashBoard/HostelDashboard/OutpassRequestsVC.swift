@@ -86,13 +86,16 @@ class OutpassRequestsVC: UIViewController, UITableViewDataSource, UITableViewDel
         if data?.status?.lowercased() == "pending"{
             cell.statusView.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.2)
             cell.statusLbl.textColor = .systemOrange
+            cell.viewMoreStack.isHidden = true
            
         }else if data?.status?.lowercased() == "approved"{
             cell.statusView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.2)
             cell.statusLbl.textColor = .systemGreen
+            cell.viewMoreStack.isHidden = false
         }else{
             cell.statusView.backgroundColor = UIColor.systemRed.withAlphaComponent(0.2)
             cell.statusLbl.textColor = .systemRed
+            cell.viewMoreStack.isHidden = true
         }
         
         cell.onViewDetails = { [weak self]  in
