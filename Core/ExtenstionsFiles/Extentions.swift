@@ -1325,3 +1325,36 @@ extension UITableView {
     guard let first = trimmed.first, let last = trimmed.last else { return "" }
     return "\(first)\(last)".uppercased()
 }
+
+func showCustomAlertNoDismiss(message: String,from : UIViewController) {
+    
+    let bgView = UIView(frame: from.view.bounds)
+    bgView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+    
+    let alertView = UIView()
+    alertView.backgroundColor = .white
+    alertView.layer.cornerRadius = 12
+    alertView.translatesAutoresizingMaskIntoConstraints = false
+    
+    let label = UILabel()
+    label.text = message
+    label.textAlignment = .center
+    label.numberOfLines = 0
+    label.translatesAutoresizingMaskIntoConstraints = false
+    
+    alertView.addSubview(label)
+    bgView.addSubview(alertView)
+    from.view.addSubview(bgView)
+    
+    // Constraints
+    NSLayoutConstraint.activate([
+        alertView.centerYAnchor.constraint(equalTo: bgView.centerYAnchor),
+        alertView.centerXAnchor.constraint(equalTo: bgView.centerXAnchor),
+        alertView.widthAnchor.constraint(equalToConstant: 250),
+        
+        label.topAnchor.constraint(equalTo: alertView.topAnchor, constant: 20),
+        label.bottomAnchor.constraint(equalTo: alertView.bottomAnchor, constant: -20),
+        label.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: 15),
+        label.trailingAnchor.constraint(equalTo: alertView.trailingAnchor, constant: -15)
+    ])
+}

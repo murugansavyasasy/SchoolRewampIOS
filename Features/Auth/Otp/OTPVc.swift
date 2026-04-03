@@ -335,10 +335,15 @@ class OTPVc: UIViewController {
                                             UserDefaultFileManager.saveChildDetails(data: data)
                                         }
                                         
-                                        let vc = TapBarVC(nibName: nil,bundle: nil)
-                                        vc.login_astype = 2
-                                        vc.modalPresentationStyle = .fullScreen
-                                        present(vc, animated: true)
+                                        if UserDefaultFileManager.get_child_Details()?.is_not_allow ?? false{
+                                            showCustomAlertNoDismiss(message: UserDefaultFileManager.get_child_Details()?.display_message ?? "", from: self )
+                                        }else{
+                                            let vc = TapBarVC(nibName: nil,bundle: nil)
+                                            vc.login_astype = 2
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
+                                       
                                     }
                                 }
                             }

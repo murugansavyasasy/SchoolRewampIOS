@@ -669,11 +669,9 @@ class SplashVC: UIViewController, ViewAttachments, DismissDelegate {
                 switch result {
                 case .success(let response):
                     guard response.status == true, let userData = response.data?.first else {
-//                        CustomAlert.showAlertWithOkAction(title: "Alert", message: response.message ?? "Something went wrong", on: self) {
                             let vc = LoginVc(nibName: nil, bundle: nil)
                             vc.modalPresentationStyle = .fullScreen
                             self.present(vc, animated: true)
-//                        }
                         return
                     }
                     if self.versionData?.is_rate_as ?? false {
@@ -726,7 +724,12 @@ class SplashVC: UIViewController, ViewAttachments, DismissDelegate {
             presentViewController(PriorityVC.self)
         } else if let childData = data.user_details?.child_details?.first {
             UserDefaultFileManager.saveChildDetails(data: childData)
-            presentTapBarVC(loginType: 2)
+            if UserDefaultFileManager.get_child_Details()?.is_not_allow ?? false{
+                showCustomAlertNoDismiss(message: UserDefaultFileManager.get_child_Details()?.display_message ?? "", from: self )
+            }else{
+                presentTapBarVC(loginType: 2)
+            }
+            
         }
     }
     
