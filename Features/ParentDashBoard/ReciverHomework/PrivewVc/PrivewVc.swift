@@ -56,6 +56,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var targetId : String?
     var EndUrl : String?
     var isStaffAndStudent : Bool = false
+    var isStudent : Bool = false
     var standarSenction : [String] = []
     var params : [String : Any] = [:]
     let id = "id"
@@ -65,6 +66,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         super.viewDidAppear(animated)
         cv.reloadData()
         assignmentTable.rowHeight = UITableView.automaticDimension
+        assignmentTable.isHidden = isStudent
         assignmentTable.estimatedRowHeight = 80
         reloadCollectionAndUpdateHeight()
         assignmentTable.register(UINib(nibName: "SubmitedStudentTVC", bundle: nil), forCellReuseIdentifier: "SubmitedStudentTVC")
