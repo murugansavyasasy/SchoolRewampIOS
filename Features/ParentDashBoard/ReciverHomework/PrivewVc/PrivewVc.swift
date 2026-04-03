@@ -56,7 +56,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     var targetId : String?
     var EndUrl : String?
     var isStaffAndStudent : Bool = false
-    var isStudent : Bool = false
+    var isShomework: Bool = false
     var standarSenction : [String] = []
     var params : [String : Any] = [:]
     let id = "id"
@@ -66,7 +66,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         super.viewDidAppear(animated)
         cv.reloadData()
         assignmentTable.rowHeight = UITableView.automaticDimension
-        assignmentTable.isHidden = isStudent
+        assignmentTable.isHidden = !isShomework
         assignmentTable.estimatedRowHeight = 80
         reloadCollectionAndUpdateHeight()
         assignmentTable.register(UINib(nibName: "SubmitedStudentTVC", bundle: nil), forCellReuseIdentifier: "SubmitedStudentTVC")
@@ -284,9 +284,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                         on: self,
                         okAction: {
                             self.doneHomeWorkBtnName.isHidden = true
-                            //                            self.dismiss(animated: true)
                         })
-                    
                     self.isCompleted = true
                     self.doneHomeWorkBtnName.isHidden = true
                 case .failure(let error):
@@ -351,7 +349,6 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                             self.yourTargetImageView.image = UIImage(systemName: "graduationcap.fill")
                             
                         } else if res.data?.first?.type == MessageType.toStaff {
-                            
                             self.isStaffAndStudent = false
                             self.targetCvdata = res.data?.first?.name ?? []
                             self.yourTargetImageView.image = UIImage(systemName: "person.2.fill")
@@ -461,14 +458,11 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         if  collectionView == cv{
-            // Get the collection view's actual width
             let collectionViewWidth = collectionView.bounds.width
             let screenWidth = collectionViewWidth > 0 ? collectionViewWidth : UIScreen.main.bounds.width - 32
-            // Define spacing and insets (0 spacing as requested)
             let sectionInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
             let minimumInteritemSpacing: CGFloat = 0
             let itemsPerRow: CGFloat = 3
-            // Calculate available width for items
             let totalHorizontalSpacing = (itemsPerRow - 1) * minimumInteritemSpacing + sectionInsets.left + sectionInsets.right
             let availableWidth = screenWidth - totalHorizontalSpacing
             let itemWidth = floor(availableWidth / itemsPerRow)
@@ -480,11 +474,11 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             
             if isStaffAndStudent{
                 let titleString = standarSenction[indexPath.item]
-                let font = UIFont.systemFont(ofSize: 14) // Customize as needed
+                let font = UIFont.systemFont(ofSize: 14)
                 let titleWidth = titleString.size(
                     withAttributes: [NSAttributedString.Key.font: font]
                 ).width
-                return CGSize(width: titleWidth + 70, height: 40) // Add padding if needed
+                return CGSize(width: titleWidth + 70, height: 40)
             }else{
                 
                 let item = targetCvdata[indexPath.item]
@@ -520,29 +514,16 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
 }
 extension PrivewVc:UITableViewDataSource, UITableViewDelegate, SearchDelegate{
     func searchText(_ searchText: String) {
-        
-        print(searchText)
-        
         guard let list = homeworkDetails else { return }
-        
         if searchText == "All" {
-            
             filterhomeworkDetails = list
-            
         } else if searchText == "Submited" {
-            
             filterhomeworkDetails = list.filter { $0.status ?? "" == "Complete" }
-            
         } else if searchText == "Pending" {
-            
             filterhomeworkDetails = list.filter { $0.status ?? "" == "Not Complete" }
-            
-        } else if searchText.isEmpty {
-            
+        } else if searchText.isEmpty || searchText == "true"  {
             filterhomeworkDetails = list
-            
         } else {
-            
             filterhomeworkDetails = list.filter {
                 ($0.name?.localizedCaseInsensitiveContains(searchText) ?? false) ||
                 ($0.roll_no?.localizedCaseInsensitiveContains(searchText) ?? false) ||
@@ -551,15 +532,11 @@ extension PrivewVc:UITableViewDataSource, UITableViewDelegate, SearchDelegate{
         }
 
         DispatchQueue.main.async {
-            
             if self.assignmentTable.numberOfSections > 1 {
-                
                 UIView.performWithoutAnimation {
                     self.assignmentTable.reloadSections(IndexSet(integer: 1), with: .none)
                 }
-                
             } else {
-                
                 self.assignmentTable.reloadData()
             }
         }
@@ -573,26 +550,34 @@ extension PrivewVc:UITableViewDataSource, UITableViewDelegate, SearchDelegate{
         case 0 :
             return 1
         default:
-            return filterhomeworkDetails?.count ?? 0
+            let count = filterhomeworkDetails?.count ?? 0
+            return count == 0 ? 1 : count
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
         switch indexPath.section {
+            
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentsearchTVC", for: indexPath) as? AssignmentsearchTVC else {
                 return UITableViewCell()
             }
-            cell.allBtn.setTitle("All Students(\(filterhomeworkDetails?.count ?? 0))", for: .normal)
-            let submitedCount = filterhomeworkDetails?.filter {$0.status == "Completed"}
-            let notsubmitedCount = filterhomeworkDetails?.filter {$0.status == "Not Complete"}
-            cell.submitedBtn.setTitle("Submitted(\(submitedCount?.count ?? 0))", for: .normal)
-            cell.pendingBtn.setTitle("Pending(\(notsubmitedCount?.count ?? 0))", for: .normal)
+            
+            let totalCount = filterhomeworkDetails?.count ?? 0
+            let submittedCount = filterhomeworkDetails?.filter { $0.status == "Completed" }.count ?? 0
+            let pendingCount = filterhomeworkDetails?.filter { $0.status == "Not Complete" }.count ?? 0
+            
+            cell.allBtn.setTitle("All Students(\(totalCount))", for: .normal)
+            cell.submitedBtn.setTitle("Submitted(\(submittedCount))", for: .normal)
+            cell.pendingBtn.setTitle("Pending(\(pendingCount))", for: .normal)
             cell.delegate = self
+            
             return cell
 
         case 1:
-            guard !(filterhomeworkDetails?.isEmpty ?? true) else {
+            
+            if filterhomeworkDetails?.isEmpty ?? true {
                 let noDataCell = UITableViewCell(style: .default, reuseIdentifier: "NoDataCell")
                     noDataCell.selectionStyle = .none
                     noDataCell.backgroundColor = .clear
@@ -628,52 +613,55 @@ extension PrivewVc:UITableViewDataSource, UITableViewDelegate, SearchDelegate{
                         label.bottomAnchor.constraint(lessThanOrEqualTo: noDataCell.contentView.bottomAnchor, constant: -40)
                     ])
                     return noDataCell
-            }
-
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitedStudentTVC", for: indexPath) as? SubmitedStudentTVC else {
+                    }
+            guard let student = filterhomeworkDetails?[indexPath.row],
+                  let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitedStudentTVC", for: indexPath) as? SubmitedStudentTVC else {
                 return UITableViewCell()
             }
-
-            let student = filterhomeworkDetails?[indexPath.row]
-            cell.studentNameLbl.text = student?.name ?? ""
-            if let firstLetter = student?.name?.first {
+            
+            cell.studentNameLbl.text = student.name ?? ""
+            
+            if let firstLetter = student.name?.first {
                 cell.initialBtn.setTitle(String(firstLetter).uppercased(), for: .normal)
             } else {
                 cell.initialBtn.setTitle("-", for: .normal)
             }
-            cell.standerdScection?.text = "RoleNo : \(student?.roll_no ?? "")"
-            let isNotSubmitted = student?.status == "Not Complete"
+            
+            cell.standerdScection?.text = "RoleNo : \(student.roll_no ?? "")"
+            
+            let isNotSubmitted = student.status == "Not Complete"
             let statusText = isNotSubmitted ? "Pending" : "Submitted"
             let statusColor = isNotSubmitted ? UIColor.brown : UIColor.systemGreen
-
+            
             cell.statusView.backgroundColor = isNotSubmitted ? UIColor.systemGray5 : UIColor.systemGray6
             cell.statusView.layer.cornerRadius = 8
             cell.statusView.clipsToBounds = true
-
-            let fullText = NSMutableAttributedString(
+            
+            let fullText = NSAttributedString(
                 string: statusText,
                 attributes: [
                     .font: UIFont.systemFont(ofSize: 13, weight: .medium),
                     .foregroundColor: statusColor
                 ]
             )
+            
             cell.statusView.setAttributedTitle(fullText, for: .normal)
-
-            let iconSize: CGFloat = 13
-            let iconConfig = UIImage.SymbolConfiguration(pointSize: iconSize, weight: .medium)
+            
+            let iconConfig = UIImage.SymbolConfiguration(pointSize: 13, weight: .medium)
             let icon = UIImage(systemName: isNotSubmitted ? "arrowshape.down.circle" : "checkmark.circle.fill", withConfiguration: iconConfig)
-
-            let lastSubmittedOn = "13-08-2025"
-//            let date: String? = lastSubmittedOn?.isEmpty == false ? lastSubmittedOn : data?.end_date
-            let txt = (lastSubmittedOn.isEmpty == false) ? "Submitted" : "Due Date"
-
-            cell.submitDate.text = "\(txt): \(formattedDateStatus(from: "13-08-2025"))"
+            
+            let lastSubmittedOn = ""
+            let txt = lastSubmittedOn.isEmpty ? "Due Date" : "Submitted"
+            
+            cell.submitDate.text = "\(txt): \(formattedDateStatus(from: lastSubmittedOn))"
+            
             cell.statusView.setImage(icon, for: .normal)
             cell.statusView.tintColor = statusColor
             cell.statusView.imageEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
             cell.statusView.titleEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
+            
             return cell
-
+            
         default:
             return UITableViewCell()
         }
