@@ -201,6 +201,9 @@ class PriorityVC: UIViewController {
     
     
     @IBAction func teacherAct(_ sender: Any) {
+        DispatchQueue.main.async {
+            self.apply_gradients()
+        }
         
         if staff_role == PriorityType.is_principal{
             TeacherParentlbl.text = "\(CommonStringFile.LoginAs.translated()) \( "Management".translated() )"
@@ -216,13 +219,10 @@ class PriorityVC: UIViewController {
             ProceedInstructionLbl.isHidden = false
         }
         else{
-         
-            
             NextButtonView.isHidden = true
             bottomView.isHidden = true
             ProceedInstructionLbl.isHidden = true
         }
-        apply_gradients()
         login_astype = 1
         UserDefaults.standard.set(login_astype, forKey: "passvalue")
         tableview.reloadData()
@@ -230,11 +230,24 @@ class PriorityVC: UIViewController {
     
     
     @IBAction func ParentAct(_ sender: Any) {
+        DispatchQueue.main.async {
+            self.apply_gradients()
+        }
         NextButtonView.isHidden = true
         bottomView.isHidden = true
         ProceedInstructionLbl.isHidden = true
         TeacherParentlbl.text = CommonStringFile.LoginAsStudentParent.translated()
-        apply_gradients()
+        if staff_role == PriorityType.is_principal || staff_role == PriorityType.is_admin || staff_role == PriorityType.is_grouphead{
+             NextButtonView.isHidden = false
+             bottomView.isHidden = false
+             ProceedInstructionLbl.isHidden = false
+         }
+         else{
+             NextButtonView.isHidden = true
+             bottomView.isHidden = true
+             ProceedInstructionLbl.isHidden = true
+         }
+        
         login_astype = 2
         UserDefaults.standard.set(login_astype, forKey: "passvalue")
         tableview.reloadData()
