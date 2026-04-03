@@ -419,6 +419,7 @@ extension SenderHomeWorkVC: UICollectionViewDelegate,UICollectionViewDataSource,
         detailVC.selectedDate  = dateLbl.text
         detailVC.titleString  = FilterHomeWorkList?[indexPath.row].title
         detailVC.descriptionString  = FilterHomeWorkList?[indexPath.row].description
+        detailVC.isShomework = true
         detailVC.postedBy  = FilterHomeWorkList?[indexPath.row].sent_by
         detailVC.homeWorkid  = FilterHomeWorkList?[indexPath.row].id
         detailVC.dateAndTimeForVideo  = FilterHomeWorkList?[indexPath.row].created_on ?? ""
