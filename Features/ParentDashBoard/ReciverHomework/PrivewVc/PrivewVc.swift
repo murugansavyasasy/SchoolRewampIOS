@@ -66,7 +66,6 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         super.viewDidAppear(animated)
         cv.reloadData()
         assignmentTable.rowHeight = UITableView.automaticDimension
-        assignmentTable.isHidden = !isShomework
         assignmentTable.estimatedRowHeight = 80
         reloadCollectionAndUpdateHeight()
         assignmentTable.register(UINib(nibName: "SubmitedStudentTVC", bundle: nil), forCellReuseIdentifier: "SubmitedStudentTVC")
@@ -75,6 +74,10 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         assignmentTable.dataSource = self
         assignmentTable.tableFooterView = UIView()
         PrivewHomeWork()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        assignmentTable.isHidden = !isShomework
     }
     func PrivewHomeWork() {
         
@@ -619,46 +622,52 @@ extension PrivewVc:UITableViewDataSource, UITableViewDelegate, SearchDelegate{
                 return UITableViewCell()
             }
             
-            cell.studentNameLbl.text = student.name ?? ""
-            
-            if let firstLetter = student.name?.first {
-                cell.initialBtn.setTitle(String(firstLetter).uppercased(), for: .normal)
+            cell.studentNameLbl.text = student.name?.isEmpty == false ? student.name : nil
+            if let name = student.name, !name.isEmpty {
+                let firstLetter = String(name.prefix(1)).uppercased()
+                cell.initialBtn.setTitle(firstLetter, for: .normal)
+                cell.initialBtn.isHidden = false
             } else {
-                cell.initialBtn.setTitle("-", for: .normal)
+                cell.initialBtn.isHidden = true
             }
-            
-            cell.standerdScection?.text = "RoleNo : \(student.roll_no ?? "")"
-            
-            let isNotSubmitted = student.status == "Not Complete"
-            let statusText = isNotSubmitted ? "Pending" : "Submitted"
-            let statusColor = isNotSubmitted ? UIColor.brown : UIColor.systemGreen
-            
-            cell.statusView.backgroundColor = isNotSubmitted ? UIColor.systemGray5 : UIColor.systemGray6
-            cell.statusView.layer.cornerRadius = 8
-            cell.statusView.clipsToBounds = true
-            
-            let fullText = NSAttributedString(
-                string: statusText,
-                attributes: [
-                    .font: UIFont.systemFont(ofSize: 13, weight: .medium),
-                    .foregroundColor: statusColor
-                ]
-            )
-            
-            cell.statusView.setAttributedTitle(fullText, for: .normal)
-            
-            let iconConfig = UIImage.SymbolConfiguration(pointSize: 13, weight: .medium)
-            let icon = UIImage(systemName: isNotSubmitted ? "arrowshape.down.circle" : "checkmark.circle.fill", withConfiguration: iconConfig)
-            
-            let lastSubmittedOn = ""
-            let txt = lastSubmittedOn.isEmpty ? "Due Date" : "Submitted"
-            
-            cell.submitDate.text = "\(txt): \(formattedDateStatus(from: lastSubmittedOn))"
-            
-            cell.statusView.setImage(icon, for: .normal)
-            cell.statusView.tintColor = statusColor
-            cell.statusView.imageEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
-            cell.statusView.titleEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
+
+            // Roll No
+            if let roll = student.roll_no, !roll.isEmpty {
+                cell.standerdScection?.text = "RoleNo : \(roll)"
+                cell.standerdScection?.isHidden = false
+            } else {
+                cell.standerdScection?.isHidden = true
+            }
+
+            if let status = student.status, !status.isEmpty {
+                
+                let isNotSubmitted = status == "Not Complete"
+                let statusText = isNotSubmitted ? "Pending" : "Submitted"
+                let statusColor = isNotSubmitted ? UIColor.brown : UIColor.systemGreen
+                
+                cell.statusView.isHidden = false
+                cell.statusView.backgroundColor = isNotSubmitted ? UIColor.systemGray5 : UIColor.systemGray6
+                cell.statusView.layer.cornerRadius = 8
+                
+                let fullText = NSAttributedString(
+                    string: statusText,
+                    attributes: [
+                        .font: UIFont.systemFont(ofSize: 13, weight: .medium),
+                        .foregroundColor: statusColor
+                    ]
+                )
+                
+                cell.statusView.setAttributedTitle(fullText, for: .normal)
+                let iconConfig = UIImage.SymbolConfiguration(pointSize: 13, weight: .medium)
+                let icon = UIImage(systemName: isNotSubmitted ? "arrowshape.down.circle" : "checkmark.circle.fill", withConfiguration: iconConfig)
+                
+                cell.statusView.setImage(icon, for: .normal)
+                cell.statusView.tintColor = statusColor
+                
+            } else {
+                cell.statusView.isHidden = true
+            }
+            cell.submitDate.isHidden = true
             
             return cell
             
