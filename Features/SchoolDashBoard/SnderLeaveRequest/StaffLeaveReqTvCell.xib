@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -46,7 +45,7 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="WWX-HO-bdF">
-                                        <rect key="frame" x="60.000000000000007" y="14.666666666666664" width="118.66666666666669" height="92.333333333333343"/>
+                                        <rect key="frame" x="59.999999999999993" y="14.666666666666664" width="121.33333333333331" height="92.333333333333343"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SARAN RAJ SHANMUGAM" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8V4-09-AR0">
                                                 <rect key="frame" x="0.0" y="0.0" width="109.33333333333333" height="38.333333333333336"/>
@@ -75,7 +74,7 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qdr-qH-Wh6">
-                                        <rect key="frame" x="190.66666666666666" y="46" width="68.333333333333343" height="29.666666666666671"/>
+                                        <rect key="frame" x="193.33333333333334" y="46" width="68.333333333333343" height="29.666666666666671"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="phone.circle.fill" catalog="system" imagePlacement="trailing" subtitle="Call" imagePadding="2">
@@ -83,7 +82,7 @@
                                         </buttonConfiguration>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M8t-sc-WRj">
-                                        <rect key="frame" x="271" y="36" width="66.333333333333314" height="50"/>
+                                        <rect key="frame" x="273.66666666666669" y="36" width="66.333333333333314" height="50"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="URGENT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zAb-dN-JXW">
                                                 <rect key="frame" x="10.000000000000004" y="4" width="46.333333333333343" height="42"/>
@@ -92,7 +91,6 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" name="AttendenceColor"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="zAb-dN-JXW" secondAttribute="bottom" constant="4" id="Jmc-zS-fjM"/>
                                             <constraint firstItem="zAb-dN-JXW" firstAttribute="top" secondItem="M8t-sc-WRj" secondAttribute="top" constant="4" id="V0d-Nu-9eD"/>
@@ -101,12 +99,15 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldI-9z-qr0">
-                                        <rect key="frame" x="349.33333333333331" y="43.666666666666657" width="47.666666666666686" height="34.333333333333343"/>
+                                        <rect key="frame" x="352" y="52" width="45" height="18"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="45" id="7ji-D7-pdW"/>
+                                        </constraints>
                                         <color key="tintColor" red="0.47058823529999999" green="0.77647058820000003" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="ellipsis" catalog="system" imagePlacement="trailing" imagePadding="2">
-                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
-                                        </buttonConfiguration>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
+                                        <state key="normal" image="ellipsis" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration"/>
+                                        </state>
                                         <connections>
                                             <action selector="threeDotBtnName:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="caJ-op-rQY"/>
                                         </connections>
@@ -277,7 +278,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fcx-9a-ujj">
                                         <rect key="frame" x="0.0" y="50" width="397" height="14"/>
                                         <attributedString key="attributedText">
-                                            <fragment content="ViewDetails">
+                                            <fragment content="View More Details &gt;&gt;">
                                                 <attributes>
                                                     <color key="NSColor" red="0.078857840445499067" green="0.06151038530748687" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <font key="NSFont" size="12" name="ArialRoundedMTBold"/>
@@ -329,6 +330,7 @@
                 <outlet property="leaveReasonLbl" destination="nGi-7g-BM7" id="uec-6e-XoJ"/>
                 <outlet property="leaveTypeLbl" destination="U9i-zy-UP4" id="8wn-Oc-BC4"/>
                 <outlet property="nameLbl" destination="8V4-09-AR0" id="oJg-RB-9Gi"/>
+                <outlet property="nameProfileLbl" destination="UAD-PZ-wiC" id="GBf-Vx-tf9"/>
                 <outlet property="priorityLbl" destination="KAS-h0-9Ch" id="rTb-JC-Lzd"/>
                 <outlet property="profileContainerView" destination="QsA-j2-HV6" id="yIv-ba-J6j"/>
                 <outlet property="reasonDefaultLbl" destination="Kls-Bf-THX" id="Fl6-ZT-q8b"/>
@@ -343,11 +345,8 @@
     <resources>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="phone.circle.fill" catalog="system" width="128" height="123"/>
-        <namedColor name="AttendenceColor">
-            <color red="0.74099999666213989" green="0.90200001001358032" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="BackGroundClr">
-            <color red="0.94117647058823528" green="0.51764705882352946" blue="0.44705882352941179" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Red1">
             <color red="0.96100002527236938" green="0.3880000114440918" blue="0.3880000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -359,10 +358,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

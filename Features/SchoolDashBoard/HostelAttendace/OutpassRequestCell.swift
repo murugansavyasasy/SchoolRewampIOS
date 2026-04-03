@@ -1,5 +1,9 @@
 import UIKit
-
+protocol approvalBtnclick : AnyObject{
+    
+    func approvalClikc(index : Int )
+    func rejectClick(index : Int )
+}
 class OutpassRequestCell: UITableViewCell {
 
     @IBOutlet weak var cardView: UIView!
@@ -23,19 +27,27 @@ class OutpassRequestCell: UITableViewCell {
     @IBOutlet weak var buttonsStackView: UIStackView!
     @IBOutlet weak var approveButton: UIButton!
     @IBOutlet weak var rejectButton: UIButton!
-
+    weak var approvelAndReject : approvalBtnclick?
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
 
         cardView.layer.cornerRadius = 16
-        cardView.layer.borderWidth = 1
+        cardView.layer.borderWidth = 0.3
+        cardView.layer.borderColor = UIColor.systemGray6.cgColor
 
         avatarContainer.layer.cornerRadius = 24
         statusContainer.layer.cornerRadius = 12
 
         approveButton.layer.cornerRadius = 12
         rejectButton.layer.cornerRadius = 12
+        
+        cardView.backgroundColor = .white
+        cardView.layer.shadowColor = UIColor.black.cgColor
+        cardView.layer.shadowOffset = CGSize(width: 1, height: 2)
+        cardView.layer.shadowRadius = 2
+        cardView.layer.shadowOpacity = 0.2
+        cardView.layer.masksToBounds = false
     }
 
     func configure(
@@ -43,7 +55,7 @@ class OutpassRequestCell: UITableViewCell {
         returnDate: String?
     ) {
         nameLabel.text = name
-        roomLabel.text = room
+        roomLabel.text = " Room No \(room)"
         statusLabel.text = status.capitalized
 
         if let first = name.first {
@@ -52,18 +64,18 @@ class OutpassRequestCell: UITableViewCell {
 
         // Destination label mapping
         destinationLabel.text = "Reason : \(dest)"
-        if let descText = desc, !descText.isEmpty {
-            descriptionLabel.text = descText
-            descriptionLabel.isHidden = false
-        } else {
-            descriptionLabel.isHidden = true
-        }
+//        if let descText = desc, !descText.isEmpty {
+//            descriptionLabel.text = descText
+//            descriptionLabel.isHidden = false
+//        } else {
+//            descriptionLabel.isHidden = true
+//        }
 
         if status.lowercased() == "pending" {
             // Orange Theme
-            cardView.backgroundColor = UIColor(red: 1.0, green: 0.98, blue: 0.91, alpha: 1.0)
-            cardView.layer.borderColor =
-                UIColor(red: 0.98, green: 0.9, blue: 0.7, alpha: 1.0).cgColor
+//            cardView.backgroundColor = UIColor(red: 1.0, green: 0.98, blue: 0.91, alpha: 1.0)
+//            cardView.layer.borderColor =
+//                UIColor(red: 0.98, green: 0.9, blue: 0.7, alpha: 1.0).cgColor
 
             avatarContainer.backgroundColor = UIColor(red: 0.94, green: 0.51, blue: 0.0, alpha: 1.0)
             avatarLabel.textColor = .white
@@ -78,9 +90,9 @@ class OutpassRequestCell: UITableViewCell {
 
         } else if status.lowercased() == "approved" {
             // Green Theme
-            cardView.backgroundColor = UIColor(red: 0.92, green: 0.98, blue: 0.94, alpha: 1.0)
-            cardView.layer.borderColor =
-                UIColor(red: 0.8, green: 0.95, blue: 0.85, alpha: 1.0).cgColor
+//            cardView.backgroundColor = UIColor(red: 0.92, green: 0.98, blue: 0.94, alpha: 1.0)
+//            cardView.layer.borderColor =
+//                UIColor(red: 0.8, green: 0.95, blue: 0.85, alpha: 1.0).cgColor
 
             avatarContainer.backgroundColor = UIColor(red: 0.0, green: 0.75, blue: 0.4, alpha: 1.0)
             avatarLabel.textColor = .white
@@ -93,9 +105,9 @@ class OutpassRequestCell: UITableViewCell {
 
         } else if status.lowercased() == "rejected" {
             // Red Theme
-            cardView.backgroundColor = UIColor(red: 1.0, green: 0.94, blue: 0.94, alpha: 1.0)
-            cardView.layer.borderColor =
-                UIColor(red: 1.0, green: 0.85, blue: 0.85, alpha: 1.0).cgColor
+//            cardView.backgroundColor = UIColor(red: 1.0, green: 0.94, blue: 0.94, alpha: 1.0)
+//            cardView.layer.borderColor =
+//                UIColor(red: 1.0, green: 0.85, blue: 0.85, alpha: 1.0).cgColor
 
             avatarContainer.backgroundColor = UIColor(red: 0.98, green: 0.35, blue: 0.4, alpha: 1.0)
             avatarLabel.textColor = .white
@@ -106,5 +118,13 @@ class OutpassRequestCell: UITableViewCell {
             dateStackView.isHidden = true
             buttonsStackView.isHidden = true
         }
+    }
+    
+    @IBAction func approveBtnAct(_ sender: UIButton) {
+        approvelAndReject?.approvalClikc(index: sender.tag )
+    }
+    
+    @IBAction func RejectBtnAct(_ sender: UIButton) {
+        approvelAndReject?.rejectClick(index: sender.tag )
     }
 }

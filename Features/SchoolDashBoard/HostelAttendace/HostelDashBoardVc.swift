@@ -10,13 +10,15 @@ import UIKit
 class HostelDashBoardVc: UIViewController {
 
     
+    @IBOutlet weak var menuNameLbl: UILabel!
+    @IBOutlet weak var hostelNameLbl: UILabel!
+    @IBOutlet weak var currentDateLbl: UILabel!
     @IBOutlet weak var HostelDashboardDateView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var acodemicdropView: UIView!
     @IBOutlet weak var acodomicYearLbl: UILabel!
     var AcadimicYearDatas: [AcadimicYearData] = []
-    var stats: DashboardStats!
-    var rooms: [Room] = []
+    var stats: statsDataDetails?
     var dashBoardDataDetails: [HostelDashBoardData] = []
     var floors: [HostelDashBoardFloor] = []
     var StaffDetails = UserDefaultFileManager.get_staff_Details()
@@ -27,19 +29,34 @@ class HostelDashBoardVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         HostelDashboardDateView.layer.cornerRadius = 15
-        setupData()
+       
+        menuNameLbl.text = MenuStringFile.selectedMenuName
+        hostelNameLbl.text = hostelData?.name ?? ""
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE dd MMMM"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+
+        let currentDate = formatter.string(from: Date())
+      
+        currentDateLbl.text = currentDate
         setupTableView()
-        GetHostelListDashboard()
+        getacadmicYr()
+      
         acodemicdropView.layer.cornerRadius = 8
         acodemicdropView.layer.borderWidth = 1
         acodemicdropView.layer.borderColor = UIColor.white.cgColor
-        getacadmicYr()
-        
+       
+        setupData()
         let accadmicYrTap = UITapGestureRecognizer(target: self, action: #selector(selectAcodemic))
         acodemicdropView.addGestureRecognizer(accadmicYrTap)
        
     }
-
+    func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE dd MMMM"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter.string(from: date)
+    }
     func getacadmicYr() {
         showActivityLoader()
         APIService.shared.makeApi(
@@ -96,7 +113,7 @@ class HostelDashBoardVc: UIViewController {
     }
 
     private func setupData() {
-        stats = DashboardStats(totalStudents: "30", outpassRequests: "1")
+        stats = dashBoardDataDetails.first?.stats
     }
 
 
@@ -128,6 +145,8 @@ extension HostelDashBoardVc : UITableViewDataSource,UITableViewDelegate{
             let cell =
                 tableView.dequeueReusableCell(withIdentifier: "StatsticTvCell", for: indexPath)
                 as! StatsticTvCell
+            cell.totalStudentCountLbl.text = stats?.total_students
+            cell.outpassCountLbl.text = stats?.outpass_requests
             cell.selectionStyle = .none
             cell.delegate = self
             return cell
@@ -190,7 +209,7 @@ extension HostelDashBoardVc : UITableViewDataSource,UITableViewDelegate{
             let vc = MarkAttendanceViewController(
                 nibName: "MarkAttendanceViewController", bundle: nil)
             vc.roomTitle = room.number ?? ""
-            vc.roomSubtitle = "\(room.students?.count ?? 0) Students • \(room.total_beds ?? 0) Beds"
+            vc.total_beds = room.total_beds ?? 0
             vc.hostelId = hostelData?.id ?? ""
             vc.roomId = room.id ?? ""
             vc.academic_year_id = academicId
@@ -207,15 +226,26 @@ extension HostelDashBoardVc : UITableViewDataSource,UITableViewDelegate{
             switch result{
             case .success(let Success):
                 DispatchQueue.main.async {[self] in
-                    if let data = Success.data {
-                           self.dashBoardDataDetails = data
-                           self.floors = data.first?.floors ?? []
-                           self.tableView.reloadData()
-                       }
+                    if Success.status ?? false{
+                        if let data = Success.data {
+                               self.dashBoardDataDetails = data
+                            self.stats = data.first?.stats
+                               self.floors = data.first?.floors ?? []
+                               self.tableView.reloadData()
+                           }
+                    }else{
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: Success.message ?? "", on: self) {
+                            self.dismiss(animated: true)
+                        }
+                        
+                    }
+                    
                 }
             case .failure(let error):
                 DispatchQueue.main.async { [self] in
-                   
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: error.localizedDescription, on: self) {
+                        self.dismiss(animated: true)
+                    }
                 }
             }
         }
@@ -227,8 +257,8 @@ extension HostelDashBoardVc: AttendanceSummaryCellDelegate {
     func didTapViewHistory() {
         let vc = AttendanceHistoryViewController(
             nibName: "AttendanceHistoryViewController", bundle: nil)
-        vc.hostelId = hostelData?.id
         vc.academicYearId = academicId
+        vc.hostelData = hostelData
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: false, completion: nil)
     }
@@ -251,30 +281,10 @@ extension HostelDashBoardVc: DashboardStatsCellDelegate {
     func didTapOutpassRequests() {
         let vc = OutpassRequestsViewController(
             nibName: "OutpassRequestsViewController", bundle: nil)
-        vc.hostelId = hostelData?.id ?? ""
+        vc.hostelData = hostelData
         vc.accidemicyearId = academicId ?? ""
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: false, completion: nil)
         
     }
-}
-
-
-struct DashboardStats {
-//    let occupiedRooms: String
-//    let emptyRooms: String
-//    let bedsOccupied: String
-//    let availableBeds: String
-    let totalStudents: String
-//    let pendingIssues: String
-    let outpassRequests: String
-}
-
-struct Room {
-    let number: String
-    let hasAlert: Bool
-    let currentOccupancy: Int
-    let maxOccupancy: Int
-    let totalBeds: Int
-    let students: [String]
 }

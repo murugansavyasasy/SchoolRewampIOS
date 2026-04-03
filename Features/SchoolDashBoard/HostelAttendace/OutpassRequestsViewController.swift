@@ -1,16 +1,43 @@
 import UIKit
 
-struct OutpassRequest {
-    let name: String
-    let room: String
-    let destination: String
-    let description: String?
-    let outDate: String?
-    let returnDate: String?
-    let status: String  // "Pending", "Approved", "Rejected"
-}
 
-class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+
+class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, approvalBtnclick {
+    func approvalClikc(index: Int) {
+        
+        alert.showAlertCancel(
+            title: AlertstringFile.Confirm_title,
+            message: AlertstringFile.Are_you_sure_want_to_submit,
+            actionLbl1:  AlertstringFile.Yes_Send,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: {
+                self.updateStatus(id:self.pendingRequests[index].id ?? "" , status: true)
+            },
+            onNo: {
+                
+            }
+        )
+    }
+    
+    func rejectClick(index: Int) {
+        
+        alert.showAlertCancel(
+            title: AlertstringFile.Confirm_title,
+            message: AlertstringFile.Are_you_sure_want_to_submit,
+            actionLbl1:  AlertstringFile.Yes_Send,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: {
+                self.updateStatus(id:self.pendingRequests[index].id ?? "" , status: false)
+            },
+            onNo: {
+                
+            }
+        )
+    }
+    
+    @IBOutlet weak var HostelNameLbl: UILabel!
     @IBOutlet weak var norecordLbl: UILabel!
     @IBOutlet weak var norecordImage: UIImageView!
     @IBOutlet weak var dimmingButton: UIButton!
@@ -25,9 +52,9 @@ class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UI
     var pendingRequests : [OutpassStudent] = []
     var approvedRequests : [OutpassStudent] = []
     var rejectedRequests : [OutpassStudent] = []
-    var hostelId : String = ""
     var accidemicyearId : String = ""
-
+    let alert = CustomAlert()
+    var hostelData : HostelListData?
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.modalPresentationStyle = .overFullScreen
@@ -45,7 +72,7 @@ class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UI
         
         setupUI()
         setupTableView()
-        GetOutPassReport(hostelId : hostelId,academicYearId : accidemicyearId)
+        GetOutPassReport(hostelId : hostelData?.id ?? "",academicYearId : accidemicyearId)
         bottomConstraint.constant = -1000
         dimmingButton.alpha = 0
     }
@@ -64,7 +91,7 @@ class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UI
 
     private func setupUI() {
         view.backgroundColor = .clear
-
+        HostelNameLbl.text = hostelData?.name ?? ""
         bottomSheetView.layer.cornerRadius = 32
         bottomSheetView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         bottomSheetView.clipsToBounds = true
@@ -138,7 +165,9 @@ class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UI
             name: request.student_name ?? "", room: request.room_no ?? "", status: request.status ?? "",
             dest: request.reason ?? "", desc: request.reason ?? "", outDate: request.out_date ?? "",
             returnDate: request.in_date ?? "")
-
+        cell.approvelAndReject = self
+        cell.approveButton.tag = indexPath.row
+        cell.rejectButton.tag = indexPath.row
         return cell
     }
 
@@ -242,6 +271,44 @@ class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UI
             case .failure(let error):
                 DispatchQueue.main.async { [self] in
                    
+                }
+            }
+        }
+    }
+    
+    
+    func updateStatus(id : String,status : Bool) {
+        APIService.shared.makeApi(url: ServiceUrl.hostel_attendance_update_status, parameters: ["id" : id , "is_approve" : status ], type: ApitTypeSringFile.PUT, token: StaffDetails?.access_token ?? "", isBaseUrl: true) {[self] (result: Result<CommonApiSuc,Error>) in
+            switch result{
+            case .success(let Success):
+                DispatchQueue.main.async {[self] in
+                    if Success.status ?? false{
+                        self.alert
+                            .showAlert(
+                                title: AlertstringFile.Success,
+                                message: Success.message ?? "" ,
+                                on: self
+                            )
+                        
+                        GetOutPassReport(hostelId : hostelData?.id ?? "",academicYearId : accidemicyearId)
+                    }else{
+                        self.alert
+                            .showAlert(
+                                title: AlertstringFile.Oops,
+                                message: Success.message ?? "" ,
+                                on: self
+                            )
+                    }
+                   
+                }
+            case .failure(let error):
+                DispatchQueue.main.async { [self] in
+                    self.alert
+                        .showAlert(
+                            title: AlertstringFile.Oops,
+                            message: error.localizedDescription ,
+                            on: self
+                        )
                 }
             }
         }

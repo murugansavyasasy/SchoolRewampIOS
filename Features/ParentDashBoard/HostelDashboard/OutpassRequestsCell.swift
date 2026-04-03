@@ -7,8 +7,12 @@ class OutpassRequestsCell: UITableViewCell {
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var containerStackView: UIStackView!
     @IBOutlet weak var Tv: SelfSizingTableView!
+    @IBOutlet weak var seeMoreBtn: UIButton!
     var newRequestdelegate : newRequestScreen?
     var  outPassData: [OutPassRequest]?
+    var onSeeMore: (() -> Void)?
+    var onViewDetails: ((OutPassRequest) -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         cardView.layer.cornerRadius = 12
@@ -19,24 +23,32 @@ class OutpassRequestsCell: UITableViewCell {
         cardView.backgroundColor = .white
         Tv.register(outpassRequestTVcell.self)
     }
-
   
     func configure(data : [OutPassRequest]){
         outPassData = data
+        seeMoreBtn.isHidden = (outPassData?.count ?? 0) <= 3 ? true : false
         Tv.delegate = self
         Tv.dataSource = self
         Tv.reloadData()
     }
+    
     @IBAction func NewOutpassBtnName(_ sender: UIButton) {
         newRequestdelegate?.newOutpassVc()
     }
-   
+    
+    @IBAction func seeMoreBtnAct(_ sender: Any) {
+        onSeeMore?()
+    }
+    
 }
 extension OutpassRequestsCell : UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return outPassData?.count ?? 0
+        if (outPassData?.count ?? 0) > 3 {
+            return 3
+        }else{
+            return outPassData?.count ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -50,6 +62,29 @@ extension OutpassRequestsCell : UITableViewDelegate,UITableViewDataSource{
         let output = formatFromToDate(input)
         cell.outPassTimeLbl.text = output
         cell.statusLbl.text = data?.status
+        
+        if data?.status?.lowercased() == "pending"{
+            cell.statusView.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.2)
+            cell.statusLbl.textColor = .systemOrange
+            cell.viewMoreStack.isHidden = true
+           
+        }else if data?.status?.lowercased() == "approved"{
+            cell.statusView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.2)
+            cell.statusLbl.textColor = .systemGreen
+            cell.viewMoreStack.isHidden = false
+        }else{
+            cell.statusView.backgroundColor = UIColor.systemRed.withAlphaComponent(0.2)
+            cell.statusLbl.textColor = .systemRed
+            cell.viewMoreStack.isHidden = true
+        }
+        
+        cell.onViewDetails = { [weak self] in
+            guard let self = self,
+                  let selectedData = self.outPassData?[indexPath.row] else { return }
+            
+            self.onViewDetails?(selectedData)
+        }
+        
         return cell
     }
     

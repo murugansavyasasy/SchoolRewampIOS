@@ -226,6 +226,9 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
 //                        }
                         self.pagecontroller.numberOfPages = details.frequently_used?.count ?? 0
                         self.filteredMenu = details.menus ?? []
+//                        self.filteredMenu.append(
+//                            MenuDetail(id: 202, name: "Hostel Management", description: "Used to apply leave")
+//                        )
                         self.recentActiveMenuCollection.reloadData()
                         self.get_MenuCount() // 🔹 after menus loaded
                         user_inputs.menuList = self.menu_details.compactMap{$0.name}
@@ -233,7 +236,9 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         if details.is_birthday ?? false{
                             DispatchQueue.main.async {
                                 let vc = BirthDayWishVC(nibName: nil, bundle: nil)
-                                vc.modalPresentationStyle = .formSheet
+                                vc.nameLbl_text = self.childDetails?.name ?? ""
+                                vc.modalPresentationStyle = .overCurrentContext
+                                vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
                                 self.present(vc, animated: true)
                             }
                         }
@@ -563,7 +568,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         case 7:  MenuRedirect.receiverCommunicationNavigate(from: self,PushNotiMsgId: messageId)
         case 9:  MenuRedirect.receiverEvent(from: self,PushNotiMsgId: messageId)
         case 10: MenuRedirect.resiverExamMark(from: self)
-        case 12: MenuRedirect.ResiverHostelManagment(from: self)
+        case 12: MenuRedirect.receiverFeeDetails(from: self)
         case 15: MenuRedirect.receiverHomework(from: self,PushNotiMsgId: messageId)
         case 16: MenuRedirect.receiverchat(from: self)
         case 20: MenuRedirect.receiverLsrwNavigate(from: self,PushNotiMsgId: messageId)
@@ -576,7 +581,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         case 36: MenuRedirect.senderImportantInfoNavigate(from: self)
         case 39: MenuRedirect.receiverAttachment(from: self,PushNotiMsgId: messageId)
         case 40: MenuRedirect.receiverPauckt(from: self)
-        case 113: MenuRedirect.ResiverHostelManagment(from: self)
+        case 202: MenuRedirect.ResiverHostelManagment(from: self)
         default:
             let alert = UIAlertController(
                 title: nil,

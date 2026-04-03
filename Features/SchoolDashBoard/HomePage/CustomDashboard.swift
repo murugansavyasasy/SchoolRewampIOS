@@ -234,26 +234,27 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                 case .success(let response):
                     if response.status == true, let details = response.data?.first {
                         self.menu_details = details.menus
-                        self.menu_details?.append(
-                            MenuDetail(id: 112, name: "Apply Leave", description: "Used to tracking")
-                        )
-                        self.menu_details?.append(
-                            MenuDetail(id: 113, name: "Hostel Management", description: "Used to apply leave")
-                        )
-                        
-                        self.menu_details?.append(
-                            MenuDetail(id: 114, name: "Staff Leave Request", description: "Used to apply leave")
-                        )
+                    
+//                        self.menu_details?.append(
+//                            MenuDetail(id: 203, name: "Apply Leave", description: "Used to tracking")
+//                        )
+//                        self.menu_details?.append(
+//                            MenuDetail(id: 202, name: "Hostel Attendance", description: "Used to apply leave")
+//                        )
+//                        
+//                        self.menu_details?.append(
+//                            MenuDetail(id: 204, name: "Approve Staff Leave Request", description: "Used to apply leave")
+//                        )
                         self.refreshCount = true
                         self.get_MenuCount()
                         self.recentMenuItems = details.frequently_used
                         self.filteredRecentMenu = details.frequently_used ?? []
                         
-                        if let frequent = details.frequently_used{
-//                            self.pagecontroller.isHidden = frequent.count < 1
-                        }else{
-//                            self.pagecontroller.isHidden = true
-                        }
+//                        if let frequent = details.frequently_used{
+////                            self.pagecontroller.isHidden = frequent.count < 1
+//                        }else{
+////                            self.pagecontroller.isHidden = true
+//                        }
                         self.pagecontroller.numberOfPages = details.frequently_used?.count ?? 0
                         self.filteredMenu = self.menu_details ?? []//details.menus ?? []
                         self.MenuCollection.reloadData()
@@ -263,6 +264,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                         if details.is_birthday ?? false{
                             DispatchQueue.main.async {
                                 let vc = BirthDayWishVC(nibName: nil, bundle: nil)
+                                vc.nameLbl_text = self.staffDetails?.name ?? ""
                                 vc.modalPresentationStyle = .formSheet
                                 self.present(vc, animated: true)}}
                     } else {
@@ -666,7 +668,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         MenuStringFile.selectedMenuName = menuName
         // MENU IDs that need navigateOrSchoolList check
         let needSchoolCheck: Set<Int> = [
-            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 18, 41
+            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 18, 41,202,203,204
         ]
         Menu_id.staffSelectedMenuId = menuId
         // All actions with explicit self
@@ -704,9 +706,9 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             39: { self.MenuRedirect.senderAttachment(from: self) },
             40: { self.MenuRedirect.receiverPauckt(from: self) },
             41: { self.MenuRedirect.senderExamMarkNavigate(from: self) },
-            112: { self.MenuRedirect.staffApplyLeave(from: self) },
-            113: { self.MenuRedirect.HostelManagment(from: self) },
-            114: { self.MenuRedirect.StaffLeaveRequest(from: self) },
+            203: { self.MenuRedirect.staffApplyLeave(from: self) },
+            202: { self.MenuRedirect.HostelManagment(from: self) },
+            204: { self.MenuRedirect.StaffLeaveRequest(from: self) },
         ]
  
         

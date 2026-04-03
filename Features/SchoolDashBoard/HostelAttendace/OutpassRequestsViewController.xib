@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -10,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OutpassRequestsViewController" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="HostelNameLbl" destination="lbl-s" id="y4k-dB-ROW"/>
                 <outlet property="bottomConstraint" destination="b-c-b" id="b-c-b1"/>
                 <outlet property="bottomSheetView" destination="v-bot" id="v-b-v"/>
                 <outlet property="closeButton" destination="btn-cls" id="cls-b"/>
@@ -41,7 +43,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="104"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="door.right.hand.open" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="img-hdr">
-                                    <rect key="frame" x="24" y="32" width="24" height="24"/>
+                                    <rect key="frame" x="24" y="30" width="24" height="24"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="24" id="c1i"/>
@@ -49,19 +51,19 @@
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Outpass Requests" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-t">
-                                    <rect key="frame" x="56" y="27" width="250" height="33.5"/>
+                                    <rect key="frame" x="56" y="27" width="250" height="30"/>
                                     <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="28"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 pending approval" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-s">
-                                    <rect key="frame" x="24" y="65.5" width="125" height="17"/>
-                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                                    <color key="textColor" red="0.84313725490000002" green="0.84313725490000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <rect key="frame" x="24" y="62" width="153.5" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="btn-cls">
-                                    <rect key="frame" x="354" y="26" width="36" height="36"/>
+                                    <rect key="frame" x="354" y="24" width="36" height="36"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="36" id="ch2"/>
                                         <constraint firstAttribute="width" constant="36" id="cw2"/>
@@ -86,7 +88,7 @@
                                     </state>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" red="0.28235294117647058" green="0.18823529411764706" blue="0.85098039215686272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" name="ParentClr"/>
                             <constraints>
                                 <constraint firstItem="lbl-t" firstAttribute="leading" secondItem="img-hdr" secondAttribute="trailing" constant="8" id="c1"/>
                                 <constraint firstItem="lbl-s" firstAttribute="leading" secondItem="v-hdr" secondAttribute="leading" constant="24" id="c3"/>
@@ -165,6 +167,9 @@
         <image name="door.right.hand.open" catalog="system" width="108" height="128"/>
         <image name="noEvents" width="1159" height="771"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
+        <namedColor name="ParentClr">
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

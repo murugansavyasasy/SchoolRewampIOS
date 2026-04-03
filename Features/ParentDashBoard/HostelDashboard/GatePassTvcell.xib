@@ -23,9 +23,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PWc-wJ-YBk">
                                 <rect key="frame" x="0.0" y="0.0" width="412" height="50"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="GATE PASS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g9B-ya-JMr">
-                                        <rect key="frame" x="135.66666666666666" y="15.333333333333332" width="90" height="19.333333333333332"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GATE PASS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g9B-ya-JMr">
+                                        <rect key="frame" x="10" y="5" width="392" height="40"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -33,6 +32,10 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.1647058824" green="0.3921568627" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="g9B-ya-JMr" firstAttribute="top" secondItem="PWc-wJ-YBk" secondAttribute="top" constant="5" id="533-Ll-cyG"/>
+                                    <constraint firstAttribute="trailing" secondItem="g9B-ya-JMr" secondAttribute="trailing" constant="10" id="MKe-un-qdp"/>
+                                    <constraint firstItem="g9B-ya-JMr" firstAttribute="leading" secondItem="PWc-wJ-YBk" secondAttribute="leading" constant="10" id="PYj-F3-dYk"/>
+                                    <constraint firstAttribute="bottom" secondItem="g9B-ya-JMr" secondAttribute="bottom" constant="5" id="f32-99-I45"/>
                                     <constraint firstAttribute="height" constant="50" id="iJV-RG-Yx1"/>
                                 </constraints>
                             </view>
@@ -93,17 +96,11 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="74H-6j-way">
-                                                        <rect key="frame" x="6.3333333333333144" y="16.333333333333329" width="70" height="24"/>
+                                                        <rect key="frame" x="31.000000000000004" y="16.333333333333329" width="45.333333333333343" height="24"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NwR-HP-TU7">
                                                                 <rect key="frame" x="0.0" y="0.0" width="45.333333333333336" height="24"/>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                                                <color key="textColor" red="0.1176470588" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jEK-Hk-9R6">
-                                                                <rect key="frame" x="49.333333333333314" y="6.6666666666666705" width="20.666666666666671" height="15.666666666666664"/>
-                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                                 <color key="textColor" red="0.1176470588" green="0.15686274510000001" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -371,6 +368,7 @@
                 <outlet property="avatarView" destination="aXu-fQ-VxD" id="Js7-xG-v2y"/>
                 <outlet property="cardView" destination="RjK-Ai-v2z" id="HZF-ns-Eaf"/>
                 <outlet property="exitingTimeLbl" destination="NwR-HP-TU7" id="b9L-fp-UcP"/>
+                <outlet property="firstLetterLbl" destination="9Zd-Y1-QuK" id="pDO-r1-rN1"/>
                 <outlet property="floorLbl" destination="24T-YL-aZA" id="312-kv-aW3"/>
                 <outlet property="headerView" destination="PWc-wJ-YBk" id="VfW-P3-ccY"/>
                 <outlet property="purposeContainer" destination="tkJ-ch-udD" id="eJ3-2A-qeM"/>
@@ -378,6 +376,8 @@
                 <outlet property="roomNumberLbl" destination="gcR-cH-A6B" id="47u-xd-51y"/>
                 <outlet property="separatorView" destination="P7v-sE-BYI" id="aTL-hI-Tiu"/>
                 <outlet property="statusContainer" destination="nJ0-th-Ivu" id="Je4-M6-d7v"/>
+                <outlet property="statusIcon" destination="Rmc-pM-Exr" id="ds6-vb-fFO"/>
+                <outlet property="statusLbl" destination="fj2-qG-wCC" id="GBd-q7-YpY"/>
                 <outlet property="studentNameLbl" destination="mnw-nO-QbW" id="387-D2-WYf"/>
                 <outlet property="studentRollNumberLbl" destination="bvu-kk-bia" id="dWs-Oq-sYD"/>
                 <outlet property="validFromLbl" destination="MOf-Ms-68I" id="b7m-b0-IXI"/>

@@ -10,7 +10,8 @@ protocol ConfirmDelegate{
     func confirm(index:Int,status:Bool)
 }
 @available(iOS 14.0, *)
-class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate, approvalAndReject {
+class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate, approvalAndReject, SelectedId {
+    
     func StaffUpdate(index: IndexPath) {
         let studentId = filteredLeaveRecords?[index.section].details?[index.row].id
         let message = AlertstringFile.toapprovethisleaverequest
@@ -33,33 +34,53 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate, approvalAndReject
     }
     
    
- 
+    func selectId(id: String?, edit: Bool?) {
+        guard let id = id else { return }
+
+        for (sectionIndex, month) in filteredLeaveRecords?.enumerated() ?? [].enumerated() {
+            if let rowIndex = month.details?.firstIndex(where: { $0.id == id }) {
+                let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
+
+                if edit == true {
+                    self.edit(edit: indexPath, delete: nil)
+                } else {
+                    self.edit(edit: nil, delete: indexPath)
+                }
+                return
+            }
+        }
+    }
    
     
     func edit(edit: IndexPath?, delete: IndexPath?) {
-        guard let indexPath = edit,
-              let studentId = filteredLeaveRecords?[indexPath.section].details?[indexPath.row].id else { return }
         
-        if let delete = delete {
-            switch delete.row {
-            case 0: // Approve
-                let message = AlertstringFile.toapprovethisleaverequest
-                alert.showAlertCancel(title: AlertstringFile.Confirm, message: message,
-                                      actionLbl1: AlertstringFile.OK,
-                                      actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
-                    self.Leave_Update_status(id: studentId, status: true, indexPath: indexPath)
-                }, onNo: {})
+        if let editIndexPath = edit {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 
-            case 1: // Reject
-                let message = AlertstringFile.toRejectthisleaverequest
-                alert.showAlertCancel(title: AlertstringFile.Confirm, message: message,
-                                      actionLbl1: AlertstringFile.OK,
-                                      actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
-                    self.Leave_Update_status(id: studentId, status: false, indexPath: indexPath)
-                }, onNo: {})
+                let leave = self.filteredLeaveRecords?[editIndexPath.section].details?[editIndexPath.row]
+                guard let leave = leave else { return }
                 
-            default:
-                break
+                let vc = ApplyLeaveReqVC(nibName: nil, bundle: nil)
+                
+                vc.editLeaveData = editLeaves(
+                    id: leave.id,
+                    fromDate: leave.from_date ?? "",
+                    toDate: leave.to_date ?? "",
+                    reson: leave.reason ?? "",
+                    fromSession: leave.from_session ?? "",
+                    Tosession: leave.to_session ?? "",
+                    NoOfDays: leave.no_of_days ?? "",
+                    LeaveType: leave.leave_type ?? "",
+                    LeaveTypeId: Int(leave.leave_type_id?.value ?? "0") ?? 0)
+                
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }
+        }
+        
+        if let deleteIndexPath = delete {
+            if let idToDelete = filteredLeaveRecords?[deleteIndexPath.section].details?[deleteIndexPath.row].id {
+                deleteLeave(id: idToDelete, indexPath: deleteIndexPath)
             }
         }
     }
@@ -113,16 +134,19 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate, approvalAndReject
         NodataImage.isHidden = true
         leaveRequestTable.showsVerticalScrollIndicator = false
         leaveRequestTable.showsHorizontalScrollIndicator = false
-        if isStaff || isPrincipal{
-           GetStaffLeaveRequest()
-        }else{
-            GetLeaveRequestAPI()
-        }
         leaveRequestTable.register(UINib(nibName: CellConfingName.LeveHistoryTV, bundle: nil), forCellReuseIdentifier: CellConfingName.LeveHistoryTV)
         leaveRequestTable.register(UINib(nibName: "StaffLeaveReqTvCell", bundle: nil), forCellReuseIdentifier: "StaffLeaveReqTvCell")
         leaveRequestTable.delegate = self
         leaveRequestTable.dataSource = self
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if isStaff || isPrincipal{
+           GetStaffLeaveRequest()
+        }else{
+            GetLeaveRequestAPI()
+        }
     }
     
     func addUnderline(to selectedButton: UIButton, unSelectedBtn: [UIButton]) {
@@ -290,57 +314,64 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate, approvalAndReject
     
     
     func deleteLeave(id: String, indexPath: IndexPath) {
-        alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.deletemessage,
-                              actionLbl1: AlertstringFile.delete, actionLbl2: AlertstringFile.Cancel, on: self,
-        onOk: {
-            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_delete,
-                                      parameters: ["id": id],
-                                      type: ApitTypeSringFile.PUT,
-                                      token: self.StaffDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result: Result<CommonApiSuc, Error>) in
-
-                DispatchQueue.main.async {
-                    guard let self = self else { return }
-
-                    switch result {
-                    case .success(let success):
-                        if success.status == true {
-                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success,
-                                                              message: success.message ?? "", on: self) {
-
-                                // Remove from originalData
-                                if let originalSectionIndex = self.allLeaveRecords?.firstIndex(where: { $0.month == self.filteredLeaveRecords?[indexPath.section].month }),
-                                   let originalRowIndex = self.allLeaveRecords?[originalSectionIndex].details?.firstIndex(where: { $0.id == id }) {
-                                    self.allLeaveRecords?[originalSectionIndex].details?.remove(at: originalRowIndex)
-
-                                    // Remove entire section if empty
-                                    if self.allLeaveRecords?[originalSectionIndex].details?.isEmpty ?? false {
-                                        self.allLeaveRecords?.remove(at: originalSectionIndex)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.5){
+            self.alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.deletemessage,
+                                       actionLbl1: AlertstringFile.delete, actionLbl2: AlertstringFile.Cancel, on: self,
+                                       onOk: {
+                
+                APIService.shared.makeApi(
+                    url: ServiceUrl.comm_api_leave_req_for_staff_delete,
+                    parameters: ["id": id],
+                    type: ApitTypeSringFile.PUT,
+                    token: self.StaffDetails?.access_token ?? "",
+                    isBaseUrl: true
+                ) { [weak self] (result: Result<CommonApiSuc, Error>) in
+                        
+                    DispatchQueue.main.async {
+                        guard let self = self else { return }
+                        
+                        switch result {
+                        case .success(let success):
+                            if success.status == true {
+                                CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success,
+                                                                  message: success.message ?? "", on: self) {
+                                    
+                                    // Remove from originalData
+                                    if let originalSectionIndex = self.allLeaveRecords?.firstIndex(where: { $0.month == self.filteredLeaveRecords?[indexPath.section].month }),
+                                       let originalRowIndex = self.allLeaveRecords?[originalSectionIndex].details?.firstIndex(where: { $0.id == id }) {
+                                        self.allLeaveRecords?[originalSectionIndex].details?.remove(at: originalRowIndex)
+                                        
+                                        // Remove entire section if empty
+                                        if self.allLeaveRecords?[originalSectionIndex].details?.isEmpty ?? false {
+                                            self.allLeaveRecords?.remove(at: originalSectionIndex)
+                                        }
                                     }
+                                    
+                                    // Remove from filteredData
+                                    self.filteredLeaveRecords?[indexPath.section].details?.remove(at: indexPath.row)
+                                    if self.filteredLeaveRecords?[indexPath.section].details?.isEmpty ?? false {
+                                        self.filteredLeaveRecords?.remove(at: indexPath.section)
+                                    }
+                                    
+                                    //                                self.NodataLbl.text = CommonStringFile.No_data_found
+                                    //                                self.NodataLbl.isHidden = !self.filteredLeaveData.isEmpty
+                                    //                                self.NodataImage.isHidden = !self.filteredLeaveData.isEmpty
+                                    self.leaveRequestTable.reloadData()
                                 }
-
-                                // Remove from filteredData
-                                self.filteredLeaveRecords?[indexPath.section].details?.remove(at: indexPath.row)
-                                if self.filteredLeaveRecords?[indexPath.section].details?.isEmpty ?? false {
-                                    self.filteredLeaveRecords?.remove(at: indexPath.section)
-                                }
-                                
-//                                self.NodataLbl.text = CommonStringFile.No_data_found
-//                                self.NodataLbl.isHidden = !self.filteredLeaveData.isEmpty
-//                                self.NodataImage.isHidden = !self.filteredLeaveData.isEmpty
-                                self.leaveRequestTable.reloadData()
+                            } else {
+                                self.alert.showAlert(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
                             }
-                        } else {
-                            self.alert.showAlert(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                            
+                        case .failure(let error):
+                            self.alert.showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
                         }
-
-                    case .failure(let error):
-                        self.alert.showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
                     }
                 }
-            }
-        }, onNo: {
-            print("User canceled deletion")
-        })
+            }, onNo: {
+                print("User canceled deletion")
+            })
+        }
     }
     //MARK: Button actions
     @IBAction func back(_ sender: UIButton) {
@@ -428,6 +459,7 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
             guard let leaveData = filteredLeaveRecords?[indexPath.section].details?[indexPath.row] else { return cell }
             
             cell.nameLbl.text = leaveData.staff_name
+            cell.nameProfileLbl.text = shortName(from: leaveData.staff_name ?? "")
 //            cell.nameLbl.numberOfLines = 1
             cell.priorityLbl.text = leaveData.role
             let fromdate = leaveData.from_date ?? ""
@@ -452,13 +484,12 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
                 cell.viewDetailsLbl.isHidden = true
                 cell.aproveBtn.isHidden = true
                 cell.RejectBtnName.isHidden = true
-            }
-            else if isPrincipal{
+            }else if isPrincipal{
                 cell.StatusView.isHidden = true
                 cell.aproveBtn.isHidden = false
                 cell.RejectBtnName.isHidden = false
                 cell.viewDetailsLbl.isHidden = false
-                cell.threeDotBtnName.isHidden = true
+               
             }
             
             switch leaveData.status {
@@ -485,17 +516,19 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
                     cell.statusLbl.textColor = .systemOrange
                     cell.aproveBtn.isHidden = true
                     cell.RejectBtnName.isHidden = true
-                    cell.threeDotBtnName.isHidden = leaveData.status != "Waiting for approval"
+                    cell.threeDotBtnName.isHidden = false
                 } else  if isPrincipal{
                     cell.StatusView.isHidden = true
                     cell.aproveBtn.isHidden = false
                     cell.RejectBtnName.isHidden = false
+                    cell.threeDotBtnName.isHidden = true
                 }
             }
             
             cell.leaveTypeLbl.text = leaveData.leave_type
             cell.indexPath = indexPath
             cell.delegate = self
+            cell.EditLeave = self
             return cell
         }
         else{
@@ -530,15 +563,37 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
                 cell.editClickBtn.isHidden = false
             } else {
                 cell.aproveBtn.backgroundColor = .systemGreen
-                cell.aproveBtn.setTitle(leave_type[0], for: .normal)
-                cell.rejectBtn.setTitle(leave_type[1], for: .normal)
+                cell.aproveBtn.setTitle("Approve", for: .normal)
+                cell.rejectBtn.setTitle("Reject", for: .normal)
                 cell.aproveBtn.isHidden = false
                 cell.rejectBtn.isHidden = false
                 cell.editClickBtn.isHidden = true
             }
             cell.LeaveTypeLbl.text = leaveData.leave_type
-            cell.indexPath = indexPath
-            cell.delegate = self
+            
+            cell.onApprove = { [weak self] in
+                
+                guard let self = self else { return }
+                
+                let message = AlertstringFile.toapprovethisleaverequest
+                alert.showAlertCancel(title: AlertstringFile.Confirm, message: message,
+                                      actionLbl1: AlertstringFile.OK,
+                                      actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
+                    self.Leave_Update_status(id: leaveData.id ?? "", status: true, indexPath: indexPath)
+                }, onNo: {})
+            }
+            
+            cell.onReject = { [weak self] in
+                
+                guard let self = self else { return }
+                
+                let message = AlertstringFile.toRejectthisleaverequest
+                alert.showAlertCancel(title: AlertstringFile.Confirm, message: message,
+                                      actionLbl1: AlertstringFile.OK,
+                                      actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
+                    self.Leave_Update_status(id: leaveData.id ?? "", status: false, indexPath: indexPath)
+                }, onNo: {})
+            }
             
             return cell
             

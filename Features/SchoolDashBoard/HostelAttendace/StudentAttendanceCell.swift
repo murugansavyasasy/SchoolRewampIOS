@@ -3,9 +3,13 @@ import UIKit
 protocol StudentAttendanceCellDelegate: AnyObject {
     func didTapPresent(for index: Int)
     func didTapAbsent(for index: Int)
+    func outPassApproval(for index : Int)
+    func outPassReject(for index : Int)
 }
 
 class StudentAttendanceCell: UITableViewCell {
+    @IBOutlet weak var parentPhnNumber: UILabel!
+    @IBOutlet weak var indateLbl: UILabel!
     @IBOutlet weak var approveAndRejectFullStack: UIStackView!
     @IBOutlet weak var OutPassTimmingLbl: UILabel!
     @IBOutlet weak var OutPassReasonLbl: UILabel!
@@ -20,13 +24,17 @@ class StudentAttendanceCell: UITableViewCell {
     @IBOutlet weak var absentButton: UIButton!
     @IBOutlet weak var OutPassRejectBtnName: UIButton!
     @IBOutlet weak var outpassApproveBtnName: UIButton!
+    @IBOutlet weak var statusView: UIView!
+    @IBOutlet weak var statusLbl: UILabel!
     weak var delegate: StudentAttendanceCellDelegate?
     var studentIndex: Int = 0
 
     @IBAction func OutpassApproveBtnAct(_ sender: UIButton) {
+        delegate?.outPassApproval(for: sender.tag)
     }
     
     @IBAction func outPassRejectBtnAct(_ sender: UIButton) {
+        delegate?.outPassReject(for: sender.tag)
     }
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,31 +52,40 @@ class StudentAttendanceCell: UITableViewCell {
         outPassRequestFullView.layer.cornerRadius = 10
         outpassApproveBtnName.layer.cornerRadius = 10
         OutPassRejectBtnName.layer.cornerRadius = 10
+        
+        statusView.layer.cornerRadius = 12
     }
 
-    func configure(name: String, id: String, parentNum: String, state: String, index: Int,reason:String,out_pass_status:String,outDateInDate:String) {
+    func configure(name: String, id: String, parentNum: String, state: String, index: Int,reason:String,out_pass_status:String,outDateInDate:String,outpass_id : String, standard: String) {
         
-        if out_pass_status == ""{
+        if outpass_id == ""{
             outPassRequestFullView.isHidden = true
+           
         }else{
             outPassRequestFullView.isHidden  = false
-            OutPassReasonLbl.text = reason
+            OutPassReasonLbl.text = "Reason : \(reason)"
             OutPassTimmingLbl.text = outDateInDate
+            statusLbl.text = out_pass_status
             if out_pass_status == "APPROVED"{
                 approveAndRejectFullStack.isHidden = true
+                statusView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
+                statusView.isHidden = false
+                statusLbl.textColor = .systemGreen
             }else if out_pass_status == "REJECTED"{
                 approveAndRejectFullStack.isHidden = true
-            }else if out_pass_status == "PENDING"{
+                statusView.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
+                statusLbl.textColor = .red
+                statusView.isHidden = false
+            }else if out_pass_status == "PENDING" || out_pass_status == "" {
                 approveAndRejectFullStack.isHidden = false
+                statusView.isHidden = true
             }
         }
         nameLabel.text = name
-        detailsLabel.text = "Student ID: \(id) • \(parentNum)"
-
-        if let first = name.first {
-            avatarLabel.text = String(first).uppercased()
-        }
-
+        detailsLabel.text = "Class: \(standard)"
+        parentPhnNumber.text =  "Parent mobile no: \(parentNum)"
+        avatarLabel.text = shortName(from: name)
+       
         // Randomly set colors for avatar
         let colors: [UIColor] = [.systemPurple, .systemBlue, .systemIndigo, .systemOrange]
         avatarContainer.backgroundColor = colors[index % colors.count]

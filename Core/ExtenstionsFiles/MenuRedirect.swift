@@ -59,7 +59,10 @@ class MenuRedirectHandler {
         MenuImage(id: 39, name: "Attachements"),
         MenuImage(id: 40, name: "Rewards"),
         MenuImage(id: 41, name: "Exam Marks"),
-        MenuImage(id: 194, name: "Finance")
+        MenuImage(id: 194, name: "Finance"),
+        MenuImage(id: 202, name: "Hostel Attendance"),
+        MenuImage(id: 204, name: "Approve Staff Leave Request"),
+        MenuImage(id: 203, name: "Apply Leave")
     ]
     
     var receiverItems : [String] = [ MenuStringFile.Communication,ReceiverMenuItems.Homework ,ReceiverMenuItems.ExamTest,ReceiverMenuItems.ExamMarks,ReceiverMenuItems.ImagePdf,ReceiverMenuItems.Video,ReceiverMenuItems.NoticeBoard,ReceiverMenuItems.Assignment,ReceiverMenuItems.OnlineMeeting,ReceiverMenuItems.AttendanceReport,ReceiverMenuItems.EventsHolidays,ReceiverMenuItems.RequestLeave,ReceiverMenuItems.FeeDetails,ReceiverMenuItems.InteractionWithStaff,ReceiverMenuItems.QuizExam,ReceiverMenuItems.LSRW,ReceiverMenuItems.ClassTimetable,ReceiverMenuItems.CertificateRequest,ReceiverMenuItems.PTM,ReceiverMenuItems.Map]
@@ -243,7 +246,7 @@ class MenuRedirectHandler {
         
     }
     func StaffWiseAttendance(from viewController: UIViewController) {
-        let vc = LocationHistoryVc(nibName: nil, bundle: nil)
+        let vc = StaffWiseAttendaceVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

@@ -29,26 +29,45 @@ class HostelListTvCell: UITableViewCell {
     func configure(with data: HostelListData) {
            
            hostelName.text = data.name
+        HostelID.text = " # \(data.id ?? "")"
            instruteName.text = data.institute_name
            HostelLocationLbl.text = data.address
            maxCapicityLbl.text = "\(data.max_capacity ?? 0)"
-           genderBtn.setTitle(data.type, for: .normal)
+        genderBtn.setTitle(data.type?.uppercased(), for: .normal)
+        genderBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
         
-//        switch data.type?.lowercased() {
-//
-//        case "male":
-//            genderBtn.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.15)
-//            genderBtn.setTitleColor(.systemBlue, for: .normal)
-//
-//        case "female":
-//            genderBtn.backgroundColor = UIColor.systemPink.withAlphaComponent(0.15)
-//            genderBtn.setTitleColor(.systemPink, for: .normal)
-//
-//        default:
-//            genderBtn.backgroundColor = .lightGray
-//        }
-           
+        configureGenderButton(type: data.type ?? "")
+        
        }
    
- 
+    func configureGenderButton(type: String) {
+        
+        genderBtn.setTitle(type.capitalized, for: .normal)
+        genderBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
+        
+        genderBtn.layer.cornerRadius = genderBtn.frame.height / 2
+        profileBtn.layer.cornerRadius = genderBtn.frame.height / 2
+        genderBtn.clipsToBounds = true
+        
+        switch type.lowercased() {
+            
+        case "male" , "boys":
+            genderBtn.backgroundColor = UIColor(red: 0.85, green: 0.92, blue: 1.0, alpha: 1.0) // light blue
+            genderBtn.setTitleColor(UIColor(red: 0.10, green: 0.35, blue: 0.85, alpha: 1.0), for: .normal)
+            profileBtn.tintColor = (UIColor(red: 0.10, green: 0.35, blue: 0.85, alpha: 1.0)) // dark blue text
+            profileBtn.backgroundColor = UIColor(red: 0.85, green: 0.92, blue: 1.0, alpha: 1.0)
+            
+        case "female","girls":
+            genderBtn.backgroundColor = UIColor(red: 1.0, green: 0.88, blue: 0.92, alpha: 1.0) // light
+            profileBtn.backgroundColor = UIColor(red: 1.0, green: 0.88, blue: 0.92, alpha: 1.0) // light pink
+            genderBtn.setTitleColor(UIColor(red: 0.80, green: 0.20, blue: 0.45, alpha: 1.0), for: .normal) // dark pink text
+            profileBtn.tintColor = (UIColor(red: 0.80, green: 0.20, blue: 0.45, alpha: 1.0)) // dark pink text
+            
+        default:
+            genderBtn.backgroundColor = UIColor(red: 0.85, green: 0.92, blue: 1.0, alpha: 1.0) // light blue
+            genderBtn.setTitleColor(UIColor(red: 0.10, green: 0.35, blue: 0.85, alpha: 1.0), for: .normal)
+            profileBtn.tintColor = (UIColor(red: 0.10, green: 0.35, blue: 0.85, alpha: 1.0)) // dark blue text
+            profileBtn.backgroundColor = UIColor(red: 0.85, green: 0.92, blue: 1.0, alpha: 1.0)
+        }
+    }
 }

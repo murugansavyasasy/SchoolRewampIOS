@@ -463,13 +463,21 @@ class ApplyLeaveReqVC: UIViewController{
             }
         }
         
-        let param: [String:Any] = [LeaveRequestStringFile.id:editLeaveData?.id ?? "",LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:CauseTextView.text ?? "",LeaveRequestStringFile.f_session:fromSessionCode,LeaveRequestStringFile.t_session: toSessionCode,LeaveRequestStringFile.leave_type: selectedLeaveType ?? 0]
+        let param: [String:Any] = [
+            LeaveRequestStringFile.id:editLeaveData?.id ?? "",
+            LeaveRequestStringFile.leave_from: LeaveFrom,
+            LeaveRequestStringFile.leave_to:LeaveTo,
+            LeaveRequestStringFile.reason:CauseTextView.text ?? "",
+            LeaveRequestStringFile.f_session:fromSessionCode,
+            LeaveRequestStringFile.t_session: toSessionCode,
+            LeaveRequestStringFile.leave_type: selectedLeaveType ?? 0
+        ]
         
         alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_submit_leave_request, actionLbl1: AlertstringFile.Yes_Send, actionLbl2: AlertstringFile.Cancel, on: self,
                               
                               onOk: {
             
-            APIService.shared.makeApi(url: ServiceUrl.leave_req_for_staff_update_status, parameters: param, type: ApitTypeSringFile.PUT, token: self.staffDetails?.access_token ?? "", isBaseUrl: true) {[weak self] (result: Result<CommonApiSuc,Error>) in
+            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_for_staff_update, parameters: param, type: ApitTypeSringFile.PUT, token: self.staffDetails?.access_token ?? "", isBaseUrl: true) {[weak self] (result: Result<CommonApiSuc,Error>) in
                 
                 DispatchQueue.main.async { [weak self] in
                     

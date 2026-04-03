@@ -8,6 +8,8 @@
 import UIKit
 
 class LocationTableViewCell: UITableViewCell {
+    @IBOutlet weak var dateViewHeightCon: NSLayoutConstraint!
+    @IBOutlet weak var dateViewWidthCon: NSLayoutConstraint!
     @IBOutlet weak var fullView: UIView!
     @IBOutlet weak var dayLbl: UILabel!
     @IBOutlet weak var dateLbl: UILabel!

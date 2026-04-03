@@ -9,6 +9,7 @@ import UIKit
 
 class StaffDetailsPreviewVc: UIViewController {
     @IBOutlet weak var LeaveHistoryFullView: UIView!
+    @IBOutlet weak var nameProfileLbl: UILabel!
     @IBOutlet weak var ContactInformationFullView: UIView!
     @IBOutlet weak var currentLeaveReqFullView: UIView!
     @IBOutlet weak var mailIdLbl: UILabel!
@@ -34,12 +35,38 @@ class StaffDetailsPreviewVc: UIViewController {
     let leave_type = ["Approved","Rejected","Waiting for approval"]
     let alert = CustomAlert()
     @IBAction func rejectBtnAct(_ sender: UIButton) {
-        Leave_Update_status(id:passedData?.id ??
-                            "", status:false )
+        alert.showAlertCancel(
+            title: AlertstringFile.Confirm_title,
+            message: "Are you sure want to reject the leave request",
+            actionLbl1:  AlertstringFile.Yes_Send,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: {
+                
+                self.Leave_Update_status(id:self.passedData?.id ??
+                                    "", status:false )
+            },
+            onNo: {
+                
+            }
+        )
+       
     }
     @IBAction func ApproveBtnName(_ sender: UIButton) {
-        Leave_Update_status(id:passedData?.id ??
-                            "", status:true )
+        
+        alert.showAlertCancel(
+            title: AlertstringFile.Confirm_title,
+            message: "Are you sure want to approve the leave request",
+            actionLbl1:  AlertstringFile.Yes_Send,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: {
+                self.Leave_Update_status(id:self.passedData?.id ?? "", status:true )
+            },
+            onNo: {
+                
+            })
+       
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +85,7 @@ class StaffDetailsPreviewVc: UIViewController {
         
         let emailClick = UITapGestureRecognizer(target: self, action: #selector(gotoEmail))
         mailIdLbl.addGestureRecognizer(emailClick)
-        
+        nameProfileLbl.text = shortName(from: passedData?.staff_name ?? "")
     }
 
     @IBAction func gotoNumberPad(){
@@ -69,9 +96,64 @@ class StaffDetailsPreviewVc: UIViewController {
         }
     }
     
-    @IBAction func gotoEmail(){
+    
+    @IBAction func gotoEmail() {
+        let email = mailIdLbl.text ?? ""
         
+        guard let mailURL = URL(string: "mailto:\(email)"),
+              let gmailURL = URL(string: "googlegmail://co?to=\(email)") else {
+            return
+        }
+        
+        let canOpenMail = UIApplication.shared.canOpenURL(mailURL)
+        let canOpenGmail = UIApplication.shared.canOpenURL(gmailURL)
+        
+        // Case 1: No apps available
+        if !canOpenMail && !canOpenGmail {
+            print("No mail apps available")
+            return
+        }
+        
+        // Case 2: Only one app → open directly (skip alert)
+        if canOpenMail && !canOpenGmail {
+            UIApplication.shared.open(mailURL)
+            return
+        }
+        
+        if canOpenGmail && !canOpenMail {
+            UIApplication.shared.open(gmailURL)
+            return
+        }
+        
+        // Case 3: Both available → show alert
+        let alert = UIAlertController(title: "Send Email",
+                                      message: "Choose an app",
+                                      preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Apple Mail", style: .default) { _ in
+            UIApplication.shared.open(mailURL)
+        })
+        
+        alert.addAction(UIAlertAction(title: "Gmail", style: .default) { _ in
+            UIApplication.shared.open(gmailURL)
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        // iPad support
+        if let popover = alert.popoverPresentationController {
+            popover.sourceView = self.view
+            popover.sourceRect = CGRect(x: self.view.bounds.midX,
+                                       y: self.view.bounds.midY,
+                                       width: 0,
+                                       height: 0)
+            popover.permittedArrowDirections = []
+        }
+        
+        present(alert, animated: true)
     }
+    
+    
     func uiUpdate(){
        
         ContactInformationFullView.layer.cornerRadius = 15
@@ -182,11 +264,12 @@ extension StaffDetailsPreviewVc : UITableViewDataSource, UITableViewDelegate{
         let data = allLeaveRecords?[indexPath.section].details?[indexPath.row]
         
         cell.leaveTypeLbl.text = data?.leave_type
-        let result = splitDateMonth(data?.from_date ?? "")
+        let result = splitDateMonth(data?.applied_on ?? "")
         cell.dateLbl.text = result.day
         cell.monthLbl.text = result.month
-        cell.detailLbl.text =  (data?.no_of_days ?? "") + " Day" + ". \(data?.from_date?.convertToTargetDateFormat() ?? "")" + " , \(data?.to_date?.convertToTargetDateFormat() ?? "")"
-        
+        cell.detailLbl.text =  (data?.no_of_days ?? "") + " Day"
+        cell.fromdateAndTodateLbl.text = " \(data?.from_date?.convertToTargetDateFormat() ?? "")" + " , \(data?.to_date?.convertToTargetDateFormat() ?? "")"
+        cell.statusView.layer.cornerRadius = 10
         if data?.status == leave_type[0] {
             cell.statusView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
             cell.statusLbl.textColor = .systemGreen
@@ -199,9 +282,9 @@ extension StaffDetailsPreviewVc : UITableViewDataSource, UITableViewDelegate{
             cell.statusLbl.text = leave_type[1]
             
         } else {
-            cell.statusView.backgroundColor = .systemYellow
+            cell.statusView.backgroundColor = .systemOrange.withAlphaComponent(0.1)
            
-            cell.statusLbl.textColor = .white
+            cell.statusLbl.textColor = .systemOrange
             cell.statusLbl.text = leave_type[2]
             
         }

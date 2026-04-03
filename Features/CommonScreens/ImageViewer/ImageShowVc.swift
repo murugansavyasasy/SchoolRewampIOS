@@ -206,8 +206,14 @@ extension ImageShowVc: UICollectionViewDelegate, UICollectionViewDataSource, UIC
                 
             default:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageShowCVCell, for: indexPath) as! ImageShowCVCell
-                if let urlStr = item.url, let url = URL(string: urlStr) {
+//                if let urlStr = item.url, let url = URL(string: urlStr) {
+//                    cell.WebView.load(URLRequest(url: url))
+//                }
+                if let urlStr = item.url,
+                   let url = safeURL(from: urlStr) {
                     cell.WebView.load(URLRequest(url: url))
+                } else {
+                    print("Invalid URL: \(item.url ?? "")")
                 }
 //                cell.WebView.navigationDelegate = self
                 cell.imageView.isHidden = true
@@ -217,7 +223,15 @@ extension ImageShowVc: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout layout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func safeURL(from string: String) -> URL? {
+        if let url = URLComponents(string: string)?.url {
+            return url
+        }
+        let fixed = string.replacingOccurrences(of: " ", with: "%20")
+        return URL(string: fixed)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: cv.frame.width, height: cv.frame.height - 40)
     }
     

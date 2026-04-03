@@ -9,49 +9,89 @@ import UIKit
 enum DashboardRow {
     case gatePass
     case todayAttendance
+    case feesinfo
     case detailedAttendance
     case outpassRequests
     case hostelInfo
-    case feesinfo
+   
 }
 class parentHostelDashboardVC: UIViewController {
    
-    
-   
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var studentDataFullView: UIView!
-    
-   
     @IBOutlet weak var schoolNameLbl: UILabel!
     @IBOutlet weak var classNameLbl: UILabel!
     @IBOutlet weak var studentNameLbl: UILabel!
+    @IBOutlet weak var DateBtn: UIButton!
+    @IBOutlet weak var FirstLetterView: UIView!
+    @IBOutlet weak var firstLetterLbl: UILabel!
+    @IBOutlet weak var NoDataImage: UIImageView!
+    @IBOutlet weak var nodataLbl: UILabel!
     
-    
-    var outpassRequestsModel = OutpassRequestsModel(
-        requests: [
-            OutpassRequestData(reason: "i  am sick", fromToDate: "13/10/2000 -  15/10/2000", requestTime: "04:00 AM", status: "Pending"),
-            OutpassRequestData(reason: "i  am sick", fromToDate: "13/10/2000 -  15/10/2000", requestTime: "04:00 AM", status: "Accepted")
-        ]
-    )
-    
-  
-    
+
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var HosteldataDetails   : [HostelDashboardData] = []
     var rows: [DashboardRow] = []
-    var  datadetails: [HostelDetailsData]?
+    var datadetails: [HostelDetailsData]?
+    var selectedMonth: MonthItem?
+    var years:[String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(white: 0.96, alpha: 1)
         studentDataFullView.layer.cornerRadius = 10
         studentDataFullView.layer.cornerRadius = 15
+        DateBtn.layer.cornerRadius = 10
+        DateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        FirstLetterView.layer.cornerRadius = 8
+        NoDataImage.isHidden = true
+        nodataLbl.isHidden = true
+        tableView.dataSource = self
+        tableView.delegate = self
+        setupYearAndMonth()
         setupTableView()
         GetHostelDetails()
     }
-
-
+    
+    @IBAction func dateBtnAct(_ sender: Any) {
+        
+        let vc = yearAndMonthCalenderVc()
+        vc.years = years
+        vc.selectdMonth = selectedMonth
+        vc.onDateSelected = { [weak self] month in
+            self?.selectedMonth = month
+            self?.DateBtn.setTitle("\(month.name) \(month.year)", for: .normal)
+            self?.GetHostelDetails()
+        }
+        vc.modalPresentationStyle = .overCurrentContext
+        present(vc, animated: true)
+    }
+    
     @IBAction func backBtn(_ sender: Any) {
         dismiss(animated: true)
+    }
+    
+    func setupYearAndMonth(){
+        
+        let calendar = Calendar.current
+        let currentDate = Date()
+        
+        let month = calendar.component(.month, from: currentDate)
+        let year = calendar.component(.year, from: currentDate)
+        let monthName = calendar.monthSymbols
+        let shortName = calendar.shortMonthSymbols
+        
+        years = [String(year - 1), String(year)]
+        
+       selectedMonth = MonthItem(
+        id: month,
+        name: monthName[month - 1],
+        shortName: shortName[month - 1],
+        monthNumber: month,
+        year: year,
+        isSelected: true
+       )
+        DateBtn.setTitle("\(selectedMonth?.name ?? "") \(selectedMonth?.year ?? 0)", for: .normal)
     }
     
     private func setupTableView() {
@@ -130,6 +170,12 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
         case .feesinfo :
             let cell = tableView.dequeueReusableCell(withIdentifier: "studentPendingFeeTv", for: indexPath) as! studentPendingFeeTv
             cell.config(data: data.fee_details ?? [])
+            cell.onPaybuttonTapped = {[weak self] in
+                let vc = FeeDetails()
+                MenuStringFile.selectedMenuName = "Fees"
+                vc.modalPresentationStyle = .fullScreen
+                self?.present(vc, animated: true)
+            }
             return cell
             
         case .todayAttendance:
@@ -148,6 +194,36 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
             let cell = tableView.dequeueReusableCell(withIdentifier: "OutpassRequestsCell", for: indexPath) as! OutpassRequestsCell
             cell.configure(data: data.out_pass_requests ?? [])
             cell.newRequestdelegate = self
+            
+            cell.onSeeMore = {[weak self] in
+                let vc = OutpassRequestsVC()
+                vc.outpassRequestList = data.out_pass_requests ?? []
+                vc.Hosteldetails = self?.datadetails
+                vc.modalPresentationStyle = .fullScreen
+                self?.present(vc, animated: true)
+            }
+            
+            cell.onViewDetails = { [weak self] data in
+                guard let self = self else { return }
+                
+                let data = GatePass(
+                    action_by: data.action_by,
+                    admission_no: datadetails?.first?.admission_no ?? "",
+                    reason: data.reason,
+                    profile: "",
+                    floor_no: datadetails?.first?.floor_no,
+                    room_no: datadetails?.first?.room_no,
+                    fromdate_todate: data.fromdate_todate,
+                    request_time: data.request_time,
+                    status: data.status
+                )
+                
+                let vc = yearAndMonthCalenderVc()
+                vc.GatepassData = data
+                vc.isGatePass = true
+                vc.modalPresentationStyle = .overCurrentContext
+                self.present(vc, animated: true)
+            }
             return cell
             
         case .hostelInfo :
@@ -155,10 +231,7 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
             if let datas = data.hostel_info?.first{
                 cell.configure(with: datas)
             }
-            
             return cell
-            
-      
         }
         
         
@@ -172,19 +245,37 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
             case .success(let Success):
                 DispatchQueue.main.async {[self] in
                     if Success.status ?? false{
+                        
                         datadetails = Success.data ?? []
-                        GetParentDashboardDetails(hostelId: Success.data?.first?.hostel_id ?? "", yearId: "2026", monthId: "3", academicYearId: "7")
+                        firstLetterLbl.text = datadetails?.first?.student_name?
+                            .trimmingCharacters(in: .whitespacesAndNewlines)
+                            .first
+                            .map { String($0).uppercased() } ?? ""
+                        studentNameLbl.text = datadetails?.first?.student_name
+                        schoolNameLbl.text = datadetails?.first?.hostel_name
+                        let classname = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
+                        let roomNo = (datadetails?.first?.floor_name ?? "") +
+                        " - " + "Room No:" + (datadetails?.first?.room_no ?? "")
+                        classNameLbl.text = classname + " , " + roomNo
+//
+                        let year = String(selectedMonth?.year ?? 0)
+                        let month = String(selectedMonth?.monthNumber ?? 0)
+                        GetParentDashboardDetails(hostelId: Success.data?.first?.hostel_id ?? "", yearId: year, monthId: month)
                         
                     }else{
                         
-                        
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: Success.message ?? "", on: self) {
+                            self.dismiss(animated: true)
+                        }
                     }
                     
                 }
             case .failure(let error):
                 DispatchQueue.main.async { [self] in
                     
-                    
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: error.localizedDescription, on: self) {
+                        self.dismiss(animated: true)
+                    }
                    
                 }
             }
@@ -192,15 +283,14 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
     }
     
     
-    func GetParentDashboardDetails(hostelId : String,yearId : String, monthId : String, academicYearId : String) {
+    func GetParentDashboardDetails(hostelId : String,yearId : String, monthId : String) {
         
         APIService.shared.makeApi(
             url: ServiceUrl.hostel_attendance_parent_dashboard,
             parameters: [
                 "hostel_id": hostelId,
                 "year_id": yearId,
-                "month_id": monthId,
-                "academic_year_id": academicYearId
+                "month_id": monthId
             ],
             type: ApitTypeSringFile.GET,
             token: studentDetails?.access_token ?? "",
@@ -217,6 +307,9 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
                     
                     guard success.status == true,
                           let data = success.data?.first else {
+                        self.NoDataImage.isHidden = false
+                        self.nodataLbl.isHidden = false
+                        self.nodataLbl.text = success.message
                         self.rows = []
                         self.tableView.reloadData()
                         return
@@ -233,27 +326,28 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
                         self.rows.append(.todayAttendance)
                     }
                     
-                    if !(data.attendance_details?.first?.days?.isEmpty ?? true) {
-                        self.rows.append(.detailedAttendance)
-                    }
-                    
-                    if !(data.out_pass_requests?.isEmpty ?? true) {
-                        self.rows.append(.outpassRequests)
-                    }
-                    
-                    if !(data.hostel_info?.isEmpty ?? true){
-                        self.rows.append(.hostelInfo)
-                    }
-                    
                     if !(data.fee_details?.isEmpty ?? true){
                         self.rows.append(.feesinfo)
                     }
                     
-                    self.tableView.dataSource = self
-                    self.tableView.delegate = self
+                    if !(data.attendance_details?.first?.days?.isEmpty ?? true) {
+                        self.rows.append(.detailedAttendance)
+                    }
+                    
+//                    if !(data.out_pass_requests?.isEmpty ?? true) {
+                        self.rows.append(.outpassRequests)
+                 //   }
+                    
+                    if !(data.hostel_info?.isEmpty ?? true){
+                        self.rows.append(.hostelInfo)
+                    }
+                
                     self.tableView.reloadData()
                     
-                case .failure:
+                case .failure(let failure):
+                    self.NoDataImage.isHidden = false
+                    self.nodataLbl.isHidden = false
+                    self.nodataLbl.text = failure.localizedDescription
                     self.rows = []
                     self.tableView.reloadData()
                 }

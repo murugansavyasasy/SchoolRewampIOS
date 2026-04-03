@@ -2,9 +2,11 @@ import UIKit
 
 struct FlatSession {
     let roomId: String
+    let roomNo: String
     let totalSessionsInRoom: Int
     let session: AttendanceHistorySession
     let isFirstInRoom: Bool
+    var sessionIndexInRoom: Int = 0
 }
 class AttendanceHistoryViewController: UIViewController, Datepicker
 {
@@ -12,6 +14,7 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
         setInitialButtonTitles(date: date)
     }
     
+    @IBOutlet weak var selectDateDefaultLbl: UILabel!
     @IBOutlet weak var dateBtn: UIButton!
     @IBOutlet weak var DateFullView: UIView!
     @IBOutlet weak var dayLbl: UILabel!
@@ -30,10 +33,11 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
     private var flatSessions: [FlatSession] = []
     private var expandedSections: Set<Int> = []
     var StaffDetails = UserDefaultFileManager.get_staff_Details()
-    var hostelId : String?
     var academicYearId : String?
     var dateString : String?
-   
+    var datas: [AttendanceHistoryData]?
+    var hostelData : HostelListData?
+    var sessionIndexInRoom: Int?
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         self.modalPresentationStyle = .overFullScreen
@@ -75,7 +79,7 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
        
         dayLbl.text = dayFormatter.string(from: dateToUse)
         let date = convertDate(dateLbl?.text ?? "")
-        GetAttendaceHistoryList(academicYear: academicYearId ?? "", date: date ?? "", hostelId: hostelId ?? "")
+        GetAttendaceHistoryList(academicYear: academicYearId ?? "", date: date ?? "", hostelId: hostelData?.id ?? "")
         
     }
     override func viewDidLoad() {
@@ -97,7 +101,7 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
         tableView.register(UINib(nibName: "AttendanceStudentCell", bundle: nil), forCellReuseIdentifier: "AttendanceStudentCell")
         tableView.register(UINib(nibName: "AttendanceSessionHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "AttendanceSessionHeader")
         setInitialButtonTitles(date:nil)
-        GetAttendaceHistoryList(academicYear: academicYearId ?? "", date: getCurrentDateString(), hostelId: hostelId ?? "")
+        GetAttendaceHistoryList(academicYear: academicYearId ?? "", date: getCurrentDateString(), hostelId:  hostelData?.id ?? "")
         
         let dateTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectDateTapped))
         dateSelectionView.isUserInteractionEnabled = true
@@ -130,11 +134,12 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
 
     private func setupUI() {
         view.backgroundColor = .clear
-
+        subtitleLabel.text = hostelData?.name ?? ""
+        selectDateDefaultLbl.setRequiredText(selectDateDefaultLbl.text ?? "")
         bottomSheetView.layer.cornerRadius = 32
         bottomSheetView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         bottomSheetView.clipsToBounds = true
-
+       
         closeButton.layer.cornerRadius = 18
         closeButton.backgroundColor = UIColor(white: 1.0, alpha: 0.2)
         closeButton.tintColor = .white
@@ -200,13 +205,14 @@ extension AttendanceHistoryViewController : UITableViewDelegate, UITableViewData
         let isExpanded = expandedSections.contains(section)
         // Pass room data only if we need to show the room title (i.e. first session in a room)
         let rId = flatSession.isFirstInRoom ? flatSession.roomId : nil
+        let roomNo = flatSession.isFirstInRoom ? flatSession.roomNo : nil
         let sCount = flatSession.isFirstInRoom ? flatSession.totalSessionsInRoom : nil
         
         header.configure(session: flatSession.session,
                          section: section,
                          isExpanded: isExpanded,
-                         roomId: rId,
-                         totalSessionsInRoom: sCount)
+                         roomId: rId, roomNo: roomNo,
+                         totalSessionsInRoom: sCount,totalsessions : flatSession.sessionIndexInRoom )
         header.delegate = self
         
         return header
@@ -223,19 +229,25 @@ extension AttendanceHistoryViewController : UITableViewDelegate, UITableViewData
     
     // MARK: - Header Delegate
     func didTapToggleStudents(in section: Int) {
-            tableView.beginUpdates()
-            let count = flatSessions[section].session.students.count
-            let indexPaths = (0..<count).map { IndexPath(row: $0, section: section) }
-            if expandedSections.contains(section) {
-                expandedSections.remove(section)
-                tableView.deleteRows(at: indexPaths, with: .none)
-            } else {
-                expandedSections.insert(section)
-                tableView.insertRows(at: indexPaths, with: .none)
-            }
-            tableView.endUpdates()
+
+        let count = flatSessions[section].session.students.count
+        let indexPaths = (0..<count).map { IndexPath(row: $0, section: section) }
+
+        tableView.beginUpdates()
+        
+        if expandedSections.contains(section) {
+            expandedSections.remove(section)
+            tableView.deleteRows(at: indexPaths, with: .fade)
+        } else {
+            expandedSections.insert(section)
+            tableView.insertRows(at: indexPaths, with: .fade)
         }
-    
+        
+        tableView.endUpdates()
+        
+        // 🔥 Reload header separately (smooth UI)
+        tableView.reloadSections(IndexSet(integer: section), with: .none)
+    }
     func GetAttendaceHistoryList(academicYear:String,date:String,hostelId : String) {
         APIService.shared.makeApi(url: ServiceUrl.comm_api_hostel_attendance_attendance_report, parameters: ["hostel_id" : hostelId,"academic_year_id" : academicYear, "date" : date], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "", isBaseUrl: false) {[self] (result: Result<AttendanceHistoryResponse,Error>) in
             switch result{
@@ -243,11 +255,11 @@ extension AttendanceHistoryViewController : UITableViewDelegate, UITableViewData
                 DispatchQueue.main.async {[self] in
                     // Flatten the nested Room -> Session architecture
                     var flattened: [FlatSession] = []
-                    
+                    datas = Success.data
                     for room in Success.data {
                         for (index, session) in room.sessions.enumerated() {
                             let isFirst = (index == 0)
-                            let flat = FlatSession(roomId: String(room.roomId),
+                            let flat = FlatSession(roomId: String(room.roomId), roomNo: room.roomNo,
                                                    totalSessionsInRoom: room.sessions.count,
                                                    session: session,
                                                    isFirstInRoom: isFirst)
@@ -256,6 +268,7 @@ extension AttendanceHistoryViewController : UITableViewDelegate, UITableViewData
                     }
                     
                     self.flatSessions = flattened
+                    self.prepareFlatSessions()
                     tableView.reloadData()
                 }
             case .failure(let error):
@@ -263,6 +276,17 @@ extension AttendanceHistoryViewController : UITableViewDelegate, UITableViewData
                    
                 }
             }
+        }
+    }
+    
+    func prepareFlatSessions() {
+        var roomCounter: [String: Int] = [:]
+
+        for i in 0..<flatSessions.count {
+            let roomId = flatSessions[i].roomId
+            
+            roomCounter[roomId, default: 0] += 1
+            flatSessions[i].sessionIndexInRoom = roomCounter[roomId]!
         }
     }
 }

@@ -122,7 +122,7 @@ struct ChildDetails: Codable {
     let profile: String?
     let roll_number: String?
     let display_message: String?
-    var  access_token: String?
+    var access_token: String?
     let school_id: String?
     let address: String?
     let class_id: Int?
@@ -138,6 +138,7 @@ struct ChildDetails: Codable {
     let class_teacher: String?
     let academic_year_id: Int?
     let academic_year_name: String?
+    let is_not_allow: Bool?
 }
 
 
@@ -936,12 +937,34 @@ struct LeaveInfo: Codable {
     var leave_type: String?
     var from_date: String?
     var to_date: String?
-    var leave_type_id: String?
+    var leave_type_id: FlexibleString?
     var status_id: String?
     var role: String?
     var mobile_no: String?
     var email: String?
     var address: String?
+}
+
+struct FlexibleString: Codable {
+    let value: String?
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+
+        if let str = try? container.decode(String.self) {
+            value = str
+        } else if let int = try? container.decode(Int.self) {
+            value = String(int)
+        } else {
+            value = nil
+        }
+    }
+
+    // Optional: for encoding back
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(value)
+    }
 }
 
 //MARK: ASSIGNMENT MY SUBMISION
@@ -2935,7 +2958,7 @@ struct HostelDashBoardData : Codable{
 
 struct statsDataDetails : Codable{
     let total_students : String?
-    let outpassRequests :String?
+    let outpass_requests :String?
 }
 struct HostelDashBoardFloor : Codable{
     
@@ -2974,7 +2997,6 @@ struct HostelStudentListData : Codable{
     let primary_mobile : String?
     let status : String?
     let outpass_id : String?
-    let is_outpass_approved : Bool
     let out_date : String?
     let in_date : String?
     let reason : String?
@@ -3128,10 +3150,12 @@ struct AttendanceHistoryResponse: Codable {
 
 struct AttendanceHistoryData: Codable {
     let roomId: String
+    let roomNo: String
     let sessions: [AttendanceHistorySession]
     
     enum CodingKeys: String, CodingKey {
         case roomId = "room_id"
+        case roomNo = "room_no"
         case sessions
     }
 }
@@ -3236,6 +3260,7 @@ struct OutPassRequest: Codable {
     let fromdate_todate: String?
     let request_time: String?
     let status: String?
+    let action_by: String?
 }
 
 // MARK: - Hostel Info
@@ -3320,3 +3345,54 @@ struct HostelDetailsData: Codable {
     let room_type_id: String?
     let room_type: String?
 }
+
+// MARK: - Root
+struct StaffAttendanceResponseSuc: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [DatasClasss]?
+}
+
+// MARK: - Data
+struct DatasClasss: Codable {
+    let overall_stat: OverallStat?
+    let all_attd: [String: AttendanceDays]?
+}
+
+// MARK: - Overall Stat
+struct OverallStat: Codable {
+    let present: Int?
+    let absent: Int?
+    let not_marked: Int?
+}
+
+// MARK: - Each Date Object
+struct AttendanceDays: Codable {
+    let stat: DayStat?
+    let attd_details: [NewStaffAttendance]?
+}
+
+// MARK: - Day Stat
+struct DayStat: Codable {
+    let present: Int?
+    let absent: Int?
+    let not_marked: Int?
+}
+
+// MARK: - Staff Attendance
+struct NewStaffAttendance: Codable {
+    let staff_id: String?
+    let name: String?
+    let date: String?
+    let designation: String?
+    let role: String?
+    let attendance_type:  [String: String]?
+    let in_time: String?
+    let out_time: String?
+    let working_hours: String?
+}
+
+// MARK: - Attendance Type
+//struct AttendanceType: Codable {
+//    let FD: String?
+//}

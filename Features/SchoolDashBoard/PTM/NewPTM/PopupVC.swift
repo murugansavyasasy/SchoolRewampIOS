@@ -107,10 +107,12 @@ class PopupVC: UIViewController {
         dismiss(animated: true)
     }
     @IBAction func deleteBtn(_ sender: UIButton) {
+        print("DELETE CLICKED")
         delegate?.selectId(id: selectedId ?? "", edit: false)
         dismiss(animated: true)
     }
     @IBAction func editBtn(_ sender: UIButton) {
+        print("EDIT CLICKED")
         delegate?.selectId(id: selectedId ?? "", edit: true)
         dismiss(animated: true)
     }

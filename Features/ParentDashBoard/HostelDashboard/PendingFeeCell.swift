@@ -23,6 +23,8 @@ class PendingFeeCell: UITableViewCell {
     @IBOutlet weak var payButtonView: UIView!
     @IBOutlet weak var payButtonLabel: UILabel!
     
+    var onPayButtonTapped: (() -> Void)?
+    
     // MARK: - Lifecycle
     
     override func awakeFromNib() {
@@ -62,6 +64,8 @@ class PendingFeeCell: UITableViewCell {
         // Pay Button styling
         payButtonView.layer.cornerRadius = 8
         payButtonView.backgroundColor = UIColor(red: 41/255, green: 98/255, blue: 255/255, alpha: 1.0)
+        payButtonView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(PayButtonTapped)))
+        payButtonView.isUserInteractionEnabled = true
     }
 
     // MARK: - Configuration
@@ -93,10 +97,12 @@ class PendingFeeCell: UITableViewCell {
             totalAmountLabel.text = formatCurrency(Double(total))
             paidAmountLabel.text = formatCurrency(Double(paid))
             pendingAmountLabel.text = formatCurrency(Double(pending))
-            payButtonLabel.text = "Pay \(formatCurrency(Double(pending))) Now"
+            payButtonLabel.text = "Pay Now \(formatCurrency(Double(pending)))"
             
             // --- 4. Payment PENDING Badge Styling ---
             statusLabel.text = sts.uppercased()
+            
+            payButtonView.isHidden = sts.uppercased() == "PAID"
             
             if sts.uppercased() == "PENDING" {
                 statusContainer.backgroundColor = UIColor(red: 255/255, green: 243/255, blue: 224/255, alpha: 1.0) // Light orange
@@ -144,5 +150,9 @@ class PendingFeeCell: UITableViewCell {
             return formattedValue
         }
         return "₹\(amount)"
+    }
+    
+    @IBAction func PayButtonTapped(_ sender: Any) {
+        onPayButtonTapped?()
     }
 }

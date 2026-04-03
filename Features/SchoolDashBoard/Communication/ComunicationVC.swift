@@ -304,7 +304,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         user_inputs.duration = voiceRecordedDuration ?? forWardVoiceDuraction ?? 0
         user_inputs.is_schedule = isScheduleSelected
         user_inputs.is_emergency = isEmergencyVoice ?? false
-        user_inputs.file_name = "sss-" + today_date + "." + (URL(string: AudioPlayUrl ?? "")?.pathExtension ?? ".m4a")
+        user_inputs.file_name = "commuinication_" + today_date + "." + (URL(string: AudioPlayUrl ?? "")?.pathExtension ?? ".m4a")
         // If emergency or not scheduling, send immediately
         if emengencyCall.isOn || !isScheduleSelected {
             user_inputs.schedule_date = [today_date]
