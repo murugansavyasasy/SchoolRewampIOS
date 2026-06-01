@@ -6,15 +6,39 @@
 	<dict>
 		<key>ImageNotificationService.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>Models.xcscheme_^#shared#^_</key>
+		<key>MapLibreTest (Playground).xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>8</integer>
+			<integer>12</integer>
 		</dict>
-		<key>School Chimes copy.xcscheme_^#shared#^_</key>
+		<key>Models.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+		<key>PlaygroundChart (Playground).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
+		<key>Promises (Playground).xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
+		<key>SRI KALAIVANI VIDHAYALA.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
+		<key>SRI SUDHA DHONE.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>9</integer>
@@ -26,41 +50,48 @@
 		</dict>
 		<key>School ChimesTests.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
-		<key>School ChimesUITests.xcscheme_^#shared#^_</key>
+		<key>School ChimesUITests.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
-			<integer>41</integer>
+			<integer>8</integer>
 		</dict>
 		<key>SchoolChimes.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>36</integer>
 		</dict>
-		<key>VAGGISVARI.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>7</integer>
-		</dict>
 		<key>VsSchoolChimes 1.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
 		<key>VsSchoolChimes 2.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
 		<key>VsSchoolChimes.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
 		<key>VsSchoolChimesTests.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
@@ -72,7 +103,47 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>1827CFD02F8F73AD00B33B20</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1827D36E2F8F751E00B33B20</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1827DA942F8F7AC100B33B20</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1827DE352F8F7DC700B33B20</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1827E1E52F8F9A2600B33B20</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1827E58A2F90C12000B33B20</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1868A3B22FAC762E00831144</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>189E99612CE35F6C00FE98A5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8441886D2CC8E18B006483C3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -83,6 +154,16 @@
 			<true/>
 		</dict>
 		<key>84A5BE532C19719A00E32496</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>84A5BE5D2C19719A00E32496</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FA81664C2F3318D100ADA8F3</key>
 		<dict>
 			<key>primary</key>
 			<true/>

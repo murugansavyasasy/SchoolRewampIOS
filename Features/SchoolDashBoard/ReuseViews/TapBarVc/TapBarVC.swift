@@ -223,9 +223,11 @@ class TapBarVC: UIViewController, UITabBarDelegate, BaktoHome, ProfileSwitchDele
             settingsVC.hideBack = true
             settingsVC.passVale = login_astype ?? 0
         } else if let profileVC = topVC as? CustomParentDashboardVC, login_astype == 2 {
+            profileVC.loginAsType = login_astype
             profileVC.delegate = self
         } else if let dashboardVC = topVC as? CustomDashboard {
             dashboardVC.delegate = self
+            dashboardVC.loginAsType = login_astype
         } else if let holidayVC = topVC as? HolidayVC {
             holidayVC.passValue = login_astype ?? 0
         } else if let schoolVC = topVC as? UpdateProfileVC {

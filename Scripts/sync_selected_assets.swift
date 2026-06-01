@@ -13,7 +13,9 @@ let selected = [
     "splashLight2",
     "school 2",
     "school_chimes 2",
-    "MenuClr"
+    "MenuClr",
+    "ParentClr",
+    "AttendenceColor"
 ]
 
 // BASE assets (SOURCE)

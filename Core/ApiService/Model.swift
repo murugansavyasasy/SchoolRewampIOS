@@ -342,6 +342,12 @@ struct CommonApiSuc: Codable {
     let data: [String]?
 }
 
+struct SecondCommonApiSuc: Codable {
+    let status: Bool?
+    let message: String?
+//    let data: [String]?
+}
+
 // MARK: - Get Voice History
 struct VoiceResponse: Codable {
     let status: Bool?
@@ -3392,7 +3398,57 @@ struct NewStaffAttendance: Codable {
     let working_hours: String?
 }
 
-// MARK: - Attendance Type
-//struct AttendanceType: Codable {
-//    let FD: String?
-//}
+struct transactionDataSuc : Codable{
+    
+    let status : Bool?
+    let message : String?
+    let data : [transactionData]?
+}
+
+struct transactionData : Codable{
+ 
+    let id: String?
+    let student_id: String?
+    let total_amount: String?
+    let order_status: String?
+    let order_id: String?
+    let created_on: String?
+    let order_status_update_on: String?
+    
+}
+
+struct student_routDataDetails: Codable{
+    let status : Bool?
+    let message : String?
+    let data : [student_routData]?
+    
+}
+
+struct student_routData : Codable{
+    let student_id: String?
+    let student_name: String?
+    let admission_no: String?
+    let route_id: String?
+    let route_name: String?
+    let stop_id: String?
+    let stop_name: String?
+    let vehicle_id: String?
+    let vehicle_no: String?
+    let tentative_pickup_time: String?
+    let tentative_drop_time: String?
+}
+
+
+
+struct livebusDetails : Codable{
+    let status : Bool?
+    let message : String?
+    let data : [livebusData]?
+}
+
+struct livebusData : Codable{
+    let thing_id: String?
+    let tracking_url: String?
+}
+
+

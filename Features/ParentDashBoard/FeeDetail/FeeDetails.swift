@@ -8,7 +8,13 @@
 import UIKit
 import WebKit
 
-class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate {
+class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate, refrech {
+    func refreshClick(index: Int) {
+        Refresh(id: transData[index].id ?? "")
+    }
+    
+    @IBOutlet weak var transLabel: UILabel!
+    @IBOutlet weak var transBtnName: UIButton!
     @IBOutlet weak var createBtn: UIButton!
     @IBOutlet weak var reportsBtn: UIButton!
     @IBOutlet weak var LoadingView: UIView!
@@ -33,7 +39,32 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate {
     var isWebViewLoaded = false
     var receipt_url: [String] = []
     var popupWebViews: [WKWebView]  = []
+    var transData: [transactionData] = [
+
+//        transactionData(
+//            id: "71967",
+//            student_id: "52265468",
+//            total_amount: "₹2",
+//            order_status: "FAILED",
+//            order_status_log: [:],
+//            order_id: "Invoicemnx6xb4p",
+//            created_on: "13-04-2026 06:20 PM",
+//            order_status_update_on: "13-04-2026 06:20 PM"
+//        ),
+//
+//        transactionData(
+//            id: "71968",
+//            student_id: "52265468",
+//            total_amount: "₹800",
+//            order_status: "PAID",
+//            order_status_log: [:],
+//            order_id: "Invoicemnx6t1cp",
+//            created_on: "13-04-2026 06:17 PM",
+//            order_status_update_on: "13-04-2026 06:17 PM"
+//        )
+    ]
     var alert = CustomAlert()
+    var isreceptSelect : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self
@@ -44,6 +75,8 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate {
             UINib(nibName: CellConfingName.FeedetailTVC, bundle: nil),
             forCellReuseIdentifier: CellConfingName.FeedetailTVC
         )
+        let nib = UINib(nibName: "PaymentHistoryCell", bundle: nil)
+        feeDetailTableView.register(nib, forCellReuseIdentifier: "PaymentHistoryCell")
         feeDetailTableView.delegate = self
         feeDetailTableView.dataSource = self
         menuNameLbl.text = MenuStringFile.selectedMenuName
@@ -115,6 +148,7 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate {
                }
            }
  
+   
     @IBAction func backBtn(_ sender: UIButton) {
         if !handleBack(){
             dismiss(animated: true)
@@ -131,36 +165,47 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate {
         let selectedIndex = sender.tag
         updateTabUI(for: selectedIndex)
         DispatchQueue.main.async { [self] in
-            UIView.transition(with: self.view, duration: 0.3, options: .transitionCrossDissolve, animations: { [self] in
-                   switch selectedIndex {
-                   case 0:
-                       self.refreshBtn.isHidden = false
-                       self.webOuterView.isHidden = false
-                       self.tableOuterView.isHidden = true
-                   case 1:
-                       self.refreshBtn.isHidden = true
-                       self.webOuterView.isHidden = true
-                       self.tableOuterView.isHidden = false
-                       LoadingView.isHidden = true
-                       ActivityIndicator.stopAnimating()
-                       Get_Fee_Invoice_Api()
-                   default:
-                       break
-                   }
-               })
+            switch selectedIndex {
+            case 0:
+                isreceptSelect = false
+                self.refreshBtn.isHidden = false
+                self.webOuterView.isHidden = false
+                self.tableOuterView.isHidden = true
+            case 1:
+                isreceptSelect = true
+                self.refreshBtn.isHidden = true
+                self.webOuterView.isHidden = true
+                self.tableOuterView.isHidden = false
+                LoadingView.isHidden = true
+                ActivityIndicator.stopAnimating()
+                Get_Fee_Invoice_Api()
+            case 2:
+                isreceptSelect = false
+                self.refreshBtn.isHidden = true
+                self.webOuterView.isHidden = true
+                self.tableOuterView.isHidden = false
+                LoadingView.isHidden = true
+                ActivityIndicator.stopAnimating()
+                //                       feeDetailTableView.reloadData()
+                Get_transDetails()
+            default:
+                break
+            }
            }
     }
     func updateTabUI(for index: Int) {
-        UIView.animate(withDuration: 0.25) {
-            self.createLbl.backgroundColor = index == 0 ? UIColor.parentClr : .clear
-            self.reportsLb.backgroundColor = index == 0 ? .clear : UIColor.parentClr
-            self.reportsBtn.tintColor = index == 0 ? .black : UIColor.parentClr
-            self.createBtn.tintColor = index == 1 ? .black : UIColor.parentClr
-        }
+
+        createLbl.backgroundColor = index == 0 ? UIColor.parentClr : .clear
+        reportsLb.backgroundColor = index == 1 ? UIColor.parentClr : .clear
+        transLabel.backgroundColor = index == 2 ? UIColor.parentClr : .clear
+
+        createBtn.tintColor = .black
+        reportsBtn.tintColor = .black
+        transBtnName.tintColor = .black
     }
     
     func Get_Fee_Invoice_Api(){
-        
+        showActivityLoader()
         APIService.shared.makeApi(url: ServiceUrl.fee_api_fee_details_student_invoice, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "", isBaseUrl: false) {[weak self] (result: Result<InvoiceDetailsResponse,Error>) in
             guard let self = self else {return}
             DispatchQueue.main.async {
@@ -176,6 +221,32 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate {
                     self.NoDataLbl.isHidden = false
                     self.NoDataLbl.text = failure.localizedDescription
                     print("Error:", failure.localizedDescription)
+                }
+            }
+        }
+        
+       hideActivityLoader()
+    }
+    
+    func Get_transDetails(){
+        
+        APIService.shared.makeApi(url: ServiceUrl.online_payment_details_for_student, parameters: ["country_id" : UserDefaultFileManager.getCountryDetails()?.id ?? ""], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "", isBaseUrl: false) {[weak self] (result: Result<transactionDataSuc,Error>) in
+            guard let self = self else {return}
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let success):
+                    self.transData = success.data ?? []
+                    self.NodataImage.isHidden = success.status ?? true
+                    self.NoDataLbl.isHidden = success.status ?? true
+                    self.NoDataLbl.text = success.message ?? ""
+                    self.feeDetailTableView.reloadData()
+                        self.hideActivityLoader()
+                case .failure(let failure):
+                    self.NodataImage.isHidden = false
+                    self.NoDataLbl.isHidden = false
+                    self.NoDataLbl.text = failure.localizedDescription
+                    print("Error:", failure.localizedDescription)
+                    self.hideActivityLoader()
                 }
             }
         }
@@ -200,25 +271,63 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate {
             }
         }
     }
+    
+    func Refresh(id: String){
+        self.showActivityLoader()
+        APIService.shared.makeApi(url: ServiceUrl.update_unreceived_for_student, parameters: ["id": id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "", isBaseUrl: true) {[weak self] (result: Result<SecondCommonApiSuc,Error>) in
+            guard let self = self else {return}
+            DispatchQueue.main.async { [self] in
+                switch result {
+                case .success(let success):
+                    if success.status == true{
+                        self.Get_transDetails()
+                    }else{
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                        self.hideActivityLoader()
+                    }
+                    
+                case .failure(let failure):
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+                    self.hideActivityLoader()
+                }
+            }
+        }
+    }
 }
 
 extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return feeDetailsList.count
+        if isreceptSelect{
+            return feeDetailsList.count
+        }else{
+            return transData.count
+        }
+       
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = feeDetailTableView.dequeueReusableCell(withIdentifier: CellConfingName.FeedetailTVC, for: indexPath) as! FeedetailTVC
-        let feeDetail = feeDetailsList[indexPath.row]
-        cell.invoceNo.text = "Receipt No: \(feeDetail.invoice_no ?? "")"
-        let result = extractDateAndTime(from: feeDetail.invoice_date ?? "")
-        cell.invoceDate.text = "\(result.date ?? "") \(result.time ?? "")"
-        cell.timeLbl.text = result.time
-        cell.invoceAmount.text = "Paid Amount: \(feeDetail.invoice_amount ?? "")"
-        let iconImage = UIImage(named: "pdf (1)")
-        cell.document.image = iconImage
-        return cell
+        if isreceptSelect{
+            let cell = feeDetailTableView.dequeueReusableCell(withIdentifier: CellConfingName.FeedetailTVC, for: indexPath) as! FeedetailTVC
+            let feeDetail = feeDetailsList[indexPath.row]
+            cell.invoceNo.text = "Receipt No: \(feeDetail.invoice_no ?? "")"
+            let result = extractDateAndTime(from: feeDetail.invoice_date ?? "")
+            cell.invoceDate.text = "\(result.date ?? "") \(result.time ?? "")"
+            cell.timeLbl.text = result.time
+            cell.invoceAmount.text = "Paid Amount: \(feeDetail.invoice_amount ?? "")"
+            let iconImage = UIImage(named: "pdf (1)")
+            cell.document.image = iconImage
+            return cell
+        }else{
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PaymentHistoryCell", for: indexPath) as! PaymentHistoryCell
+            cell.configure(with: transData[indexPath.row])
+            cell.refreshBtnName.tag = indexPath.row
+            cell.refreshbtn = self
+            return cell
+        }
+       
+       
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -226,8 +335,10 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let id = feeDetailsList[indexPath.row].id ?? ""
-        Get_Invoice_Receipt_Api(invoiceId: id)
+        if isreceptSelect{
+            let id = feeDetailsList[indexPath.row].id ?? ""
+            Get_Invoice_Receipt_Api(invoiceId: id)
+        }
     }
     
     func privewVc(url:String){

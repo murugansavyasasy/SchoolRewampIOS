@@ -68,12 +68,6 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         assignmentTable.rowHeight = UITableView.automaticDimension
         assignmentTable.estimatedRowHeight = 80
         reloadCollectionAndUpdateHeight()
-        assignmentTable.register(UINib(nibName: "SubmitedStudentTVC", bundle: nil), forCellReuseIdentifier: "SubmitedStudentTVC")
-        assignmentTable.register(UINib(nibName: "AssignmentsearchTVC", bundle: nil), forCellReuseIdentifier: "AssignmentsearchTVC")
-        assignmentTable.delegate = self
-        assignmentTable.dataSource = self
-        assignmentTable.tableFooterView = UIView()
-        PrivewHomeWork()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -185,6 +179,16 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
                 }
            
         }
+        
+        if isShomework{
+        assignmentTable.register(UINib(nibName: "SubmitedStudentTVC", bundle: nil), forCellReuseIdentifier: "SubmitedStudentTVC")
+        assignmentTable.register(UINib(nibName: "AssignmentsearchTVC", bundle: nil), forCellReuseIdentifier: "AssignmentsearchTVC")
+        assignmentTable.delegate = self
+        assignmentTable.dataSource = self
+        assignmentTable.tableFooterView = UIView()
+            PrivewHomeWork()
+        }
+        
     }
     
     private func setupUI() {
@@ -521,7 +525,7 @@ extension PrivewVc:UITableViewDataSource, UITableViewDelegate, SearchDelegate{
         if searchText == "All" {
             filterhomeworkDetails = list
         } else if searchText == "Submited" {
-            filterhomeworkDetails = list.filter { $0.status ?? "" == "Complete" }
+            filterhomeworkDetails = list.filter { $0.status ?? "" == "Completed" }
         } else if searchText == "Pending" {
             filterhomeworkDetails = list.filter { $0.status ?? "" == "Not Complete" }
         } else if searchText.isEmpty || searchText == "true"  {

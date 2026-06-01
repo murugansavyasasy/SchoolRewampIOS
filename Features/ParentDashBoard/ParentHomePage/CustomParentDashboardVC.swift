@@ -80,6 +80,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     var menuId : String?
     var tourKey = "parentDashboard"
     var tourImg = ["receiver_msg1","receiver_file2","receiver_task- projects3","receiver_attendance - leave req4"]
+    var loginAsType : Int?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -219,16 +220,11 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         self.recentActiveMenuCollection.isHidden = (details.frequently_used?.isEmpty ?? true)
                         self.filteredRecentMenu = details.frequently_used ?? []
                         
-//                        if let frequent = details.frequently_used{
-////                            self.pagecontroller.isHidden = frequent.count < 1
-//                        }else{
-////                            self.pagecontroller.isHidden = true
-//                        }
                         self.pagecontroller.numberOfPages = details.frequently_used?.count ?? 0
                         self.filteredMenu = details.menus ?? []
-//                        self.filteredMenu.append(
-//                            MenuDetail(id: 202, name: "Hostel Management", description: "Used to apply leave")
-//                        )
+                        self.filteredMenu.append(
+                            MenuDetail(id: 205, name: "Live Bus Tracking", description: "Used to apply leave")
+                        )
                         self.recentActiveMenuCollection.reloadData()
                         self.get_MenuCount() // 🔹 after menus loaded
                         user_inputs.menuList = self.menu_details.compactMap{$0.name}
@@ -582,6 +578,14 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         case 39: MenuRedirect.receiverAttachment(from: self,PushNotiMsgId: messageId)
         case 40: MenuRedirect.receiverPauckt(from: self)
         case 202: MenuRedirect.ResiverHostelManagment(from: self)
+        case 203: MenuRedirect.busTacking(from: self)
+        case 205:
+            if comeFormNotification {
+                showActivityLoader()
+                MenuRedirect.notifiactionBusRedrect(from:self)
+            }else{
+                MenuRedirect.buslist(from: self, loginasType: loginAsType ?? 0, is_ownbustraking: true)
+            }
         default:
             let alert = UIAlertController(
                 title: nil,

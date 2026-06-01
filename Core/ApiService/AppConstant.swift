@@ -20,8 +20,8 @@ struct ServiceUrl{
     static let global_global_variables   = "app/api/global/global-variables"
     static let auth_device_token         = "app/api/auth/device-token"
     static let app_api_auth_logout       = "app/api/auth/logout"
-    static let  get_dashboard_details    = "dashboard/api/dashboard/menus"
-    static let  dashboard_api_dashboard_menu_counts    = "dashboard/api/dashboard/menu-counts"
+    static let get_dashboard_details    = "dashboard/api/dashboard/menus"
+    static let dashboard_api_dashboard_menu_counts    = "dashboard/api/dashboard/menu-counts"
     static let recipient_get_group_list   = "comm/api/recipient/get-group-list"
     static let recipient_get_standards    = "comm/api/recipient/get-standards"
     static let recipient_get_student_list = "comm/api/recipient/get-student-list"
@@ -40,9 +40,9 @@ struct ServiceUrl{
     static let comm_communication_list  = "comm/api/communication/list"
     static let comm_communication_list_archive  = "comm/api/communication/list-archive"
     static let comm_communication_read_status_update  = "comm/api/communication/read-status-update"
-    static let  comm_communication_read_status_update_archive  = "comm/api/communication/read-status-update-archive"
+    static let comm_communication_read_status_update_archive  = "comm/api/communication/read-status-update-archive"
     static let  comm_attachment_send_attachment  = "comm/api/attachment/send-attachment"
-    static let  comm_communication_attachment_list  = "comm/api/attachment/list" 
+    static let  comm_communication_attachment_list  = "comm/api/attachment/list"
     static let  comm_api_attachment_report  = "comm/api/attachment/report"
     static let  comm_communication_attachment_list_archive  = "comm/api/attachment/list-archive"
     static let  staff_attd_geometric_entry_using_app  = "staff-attd/api/geometric/entry-using-app"
@@ -53,7 +53,6 @@ struct ServiceUrl{
     static let  staff_attd_geometric_geometric_staff_attendance_report  = "staff-attd/api/geometric/geometric-staff-attendance-report"
     static let  staff_attd_geometric_remove_geometric_location  = "staff-attd/api/geometric/remove-geometric-location"
     static let  staff_attd_geometric_remove_attendance_report_date_wise  = "staff-attd/api/geometric/geometric-principal-attendance-report-date-wise"
-    
     static let  staff_attd_geometric_get_staff_geometric_location  = "staff-attd/api/geometric/get-staff-geometric-location"
     static let  staff_attd_geometric_update_geometric_location  = "staff-attd/api/geometric/update-geometric-location"
     static let api_notice_board_send_notice = "admin/api/notice-board/send-notice"
@@ -66,7 +65,6 @@ struct ServiceUrl{
     static let event_target_details = "admin/api/school-event/target-details"
     static let attendance_student_attendance_report = "stud-attd/api/attendance/student-attendance-report"
     static let api_school_event_send_event = "admin/api/school-event/send-event"
-    
     static let api_fee_report_daily_collection = "fee/api/fee-report/daily-collection"
     static let api_fee_report_detailed_pending_report = "fee/api/fee-report/detailed-pending-report"
     static let api_fee_report_detailed_class_wise_pending_report = "fee/api/fee-report/detailed-class-wise-pending-report"
@@ -92,17 +90,17 @@ struct ServiceUrl{
     static let comm_api_leave_req_for_staff_apply = "comm/api/leave-req-for-staff/apply"
     static let comm_api_leave_req_list = "comm/api/leave-req/list"
     static let comm_api_leave_req_list_staff = "comm/api//leave-req-for-staff/list"
-    static let comm_api_leave_req_update_status = "comm/api/leave-req/update-status" 
+    static let comm_api_leave_req_update_status = "comm/api/leave-req/update-status"
     static let comm_api_leave_req_update_status_Staff = "comm/api/leave-req-for-staff/update-status"
     static let comm_api_assignment_report = "comm/api/assignment/report"
     static let comm_api_assignment_submissions_list = "comm/api/assignment/submissions-list"
-    static let  comm_api_assignment_list = "comm/api/assignment/list"
-    static let   comm_api_homework_update = "comm/api/homework/update"
-    static let   comm_api_attachment_update = "comm/api/attachment/update"
-    static let   comm_api_homework_delete = "comm/api/homework/delete"
-    static let   comm_api_attachment_delete = "comm/api/attachment/delete"
-    static let   attachment_target_details = "comm/api/attachment/target-details"
-    static let   comm_api_assignment_list_archive = "comm/api/assignment/list-archive"
+    static let comm_api_assignment_list = "comm/api/assignment/list"
+    static let comm_api_homework_update = "comm/api/homework/update"
+    static let comm_api_attachment_update = "comm/api/attachment/update"
+    static let comm_api_homework_delete = "comm/api/homework/delete"
+    static let comm_api_attachment_delete = "comm/api/attachment/delete"
+    static let attachment_target_details = "comm/api/attachment/target-details"
+    static let comm_api_assignment_list_archive = "comm/api/assignment/list-archive"
     static let comm_api_my_submissions = "comm/api/assignment/my-submissions"
     static let lms_api_lesson_plan_staff_report = "lms/api/lesson-plan/staff-report"
     static let lms_api_lesson_plan_view = "lms/api/lesson-plan/view"
@@ -118,7 +116,6 @@ struct ServiceUrl{
     static let get_category_list = "get_category_list"
     static let my_coupons = "my_coupons"
     static let get_Points = "get-Points"
-    //
     static let comm_api_msg_from_management_get_messages_staff = "comm/api/msg-from-management/get-messages-staff"
     static let comm_api_msg_from_management_get_messages_staff_archive = "comm/api/msg-from-management/get-messages-staff-archive"
     static let interaction_staff_details_for_chat = "comm/api/interaction/staff-details-for-chat"
@@ -140,7 +137,7 @@ struct ServiceUrl{
     static let lms_api_lsrw_skill_list = "lms/api/lsrw/skill-list"
     static let lms_api_lsrw_submit_skill = "lms/api/lsrw/submit-skill"
     static let lms_api_lsrw_create_skill = "lms/api/lsrw/create-skill"
-    static let comm_api_leave_req_leave_categories = "comm/api/leave-req/leave-categories"  
+    static let comm_api_leave_req_leave_categories = "comm/api/leave-req/leave-categories"
     static let comm_api_leave_req_for_staff_leave_categories = "comm/api/leave-req-for-staff/leave-categories"
     static let stud_attd_api_attendance_student_stats = "stud-attd/api/attendance/student-stats"
     static let ptm_api_ptm_schedule_slot_details_for_staff = "ptm/api/ptm-schedule/slot-details-for-staff"
@@ -203,17 +200,23 @@ struct ServiceUrl{
     static let hostel_attendance_room_details = "stud-attd/api/hostel-attendance/room-details"
     static let hostel_attendance_students_for_hostel_attd = "stud-attd/api/hostel-attendance/students-for-hostel-attd"
     static let hostel_attendance_mark_attendance = "stud-attd/api/hostel-attendance/mark-attendance"
- static let hostel_attendance_session_types = "stud-attd/api/hostel-attendance/session-types" 
-    static let hostel_attendance_outpass_report = "stud-attd/api/hostel-attendance/outpass-report" 
+    static let hostel_attendance_session_types = "stud-attd/api/hostel-attendance/session-types"
+    static let hostel_attendance_outpass_report = "stud-attd/api/hostel-attendance/outpass-report"
     static let hostel_attendance_apply_outpass = "stud-attd/api/hostel-attendance/apply-outpass"
     static let comm_api_hostel_attendance_attendance_report = "stud-attd/api/hostel-attendance/attendance-report"
-    static let comm_api_homework_submissions_list = "comm/api/homework/submissions-list" 
+    static let comm_api_homework_submissions_list = "comm/api/homework/submissions-list"
     static let hostel_attendance_parent_dashboard = "stud-attd/api/hostel-attendance/parent-dashboard"
     static let hostel_attendance_hostel_info = "stud-attd/api/hostel-attendance/hostel-info"
     static let comm_api_leave_req_for_staff_delete = "comm/api/leave-req-for-staff/delete"
     static let comm_api_leave_req_for_staff_update = "comm/api/leave-req-for-staff/update"
-    static let hostel_attendance_update_status = "stud-attd/api/hostel-attendance/update-status"
-   
+    static let hostel_attendance_update_status = "stud-attd/api/hostel-attendance/update-status" 
+    
+    static let online_payment_details_for_student = "dashboard/api/reconcile/online-payment-details-for-student"
+    static let update_unreceived_for_student = "dashboard/api/reconcile/update-unreceived-payment-status-for-student"
+    static let get_student_route_list = "transport/api/get-student-route-list"
+    static let get_vehicle_live_tracking_details = "transport/api/get-vehicle-live-tracking-details"
+    
+
 }
 
 struct localData{
@@ -271,6 +274,7 @@ struct Menu_id{
     static let leaveReq = 18
     static let Upload_Marks = 41
 }
+
 struct TargetTypes{
     static let school = 1
     static let standard = 2
@@ -280,6 +284,7 @@ struct TargetTypes{
     static let staff = 6
     
 }
+
 struct PriorityType{
     static let is_grouphead  = "p1"
     static let is_principal  = "p2"
@@ -288,6 +293,7 @@ struct PriorityType{
     static let is_non_teaching_staff = "p5"
     
 }
+
 struct recipeint_tabBarName{
     static let Standard = "Standards"
     static let Group = "Groups"

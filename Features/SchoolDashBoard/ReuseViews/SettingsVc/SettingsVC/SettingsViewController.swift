@@ -278,6 +278,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
                 vc.url = UserDefaultFileManager.get_globalSelection()?.privacy_policy
             }else{
                 vc.url = (UserDefaultFileManager.get_globalSelection()?.wl_privacy ?? "") + School_id_param
+           
             }
             present(vc, animated: true)
         case menuname.aboutApp.translated():

@@ -7,6 +7,7 @@ let scripts = "\(root)/Scripts"
 let steps = [
     "generate_flavours.swift",
     "generate_xcconfigs.swift",
+    "generate_flavour_strings.swift",
     "sync_selected_assets.swift"
 ]
 

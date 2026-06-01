@@ -25,6 +25,7 @@ struct NotificationData {
 
 class NotificationCallVC: UIViewController {
     
+    @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var answerStack: UIStackView!
     @IBOutlet weak var declineStack: UIStackView!
     // MARK: - IBOutlets
@@ -60,7 +61,7 @@ class NotificationCallVC: UIViewController {
     var itemDurations: [AVPlayerItem: Double] = [:]
     var queueItems: [AVPlayerItem] = []
     var userInfo = [AnyHashable : Any]()
-    var duration = "0"
+    var duration : Int?
     // Cache for downloaded audio to reduce I/O
     private static var audioCache: NSCache<NSString, NSData> = {
         let cache = NSCache<NSString, NSData>()
@@ -89,6 +90,7 @@ class NotificationCallVC: UIViewController {
         stopLocalRingtone()
         setupModernUI()
         setupCallerInfo()
+        setDefaultSpeakerOff()
         cutCallBtn.isHidden = true
         speakerBtn.isHidden = true
         cutCallBtn.layer.cornerRadius = cutCallBtn.frame.width / 2
@@ -108,12 +110,7 @@ class NotificationCallVC: UIViewController {
         setupVolumeObserver()
         setupPowerButtonObserver()
         
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(queueDidFinish),
-//            name: .AVPlayerItemDidPlayToEndTime,
-//            object: nil
-//        )
+
         
         if let ei1 = userInfo["ei1"] as? String {
             noti.ei1 = ei1
@@ -351,8 +348,7 @@ class NotificationCallVC: UIViewController {
         case .ringing:
             break // Initial state
         case .connecting:
-            nameLbl.text = "School Chimes"
-            durationLbl.text = "Connecting..."
+           ""
         case .active:
             setupAudioPlayer()
         case .ended:
@@ -392,16 +388,61 @@ class NotificationCallVC: UIViewController {
         cutCallBtn.layer.shadowOffset = CGSize(width: 0, height: 4)
         cutCallBtn.layer.shadowRadius = 12
         
+        speakerBtn.isSelected = false
+
         speakerBtn.backgroundColor = UIColor.white.withAlphaComponent(0.15)
         speakerBtn.tintColor = .white
         speakerBtn.layer.cornerRadius = speakerBtn.frame.width / 2
         speakerBtn.layer.borderWidth = 1
         speakerBtn.layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
+
+        speakerBtn.addTarget(self, action: #selector(toggleSpeaker), for: .touchUpInside)
         
         cutCallBtn.addTarget(self, action: #selector(cutCallAction), for: .touchUpInside)
-        speakerBtn.addTarget(self, action: #selector(toggleSpeaker), for: .touchUpInside)
+      
     }
     
+    @objc private func toggleSpeaker() {
+        speakerBtn.isSelected.toggle()
+        
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.speakerBtn.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        }) { _ in
+            UIView.animate(withDuration: 0.2) {
+                self.speakerBtn.transform = .identity
+                self.speakerBtn.backgroundColor = self.speakerBtn.isSelected
+                ? UIColor.blue.withAlphaComponent(0.3)
+                : UIColor.white.withAlphaComponent(0.15)
+            }
+        }
+
+        do {
+            let session = AVAudioSession.sharedInstance()
+            
+            if speakerBtn.isSelected {
+                try session.overrideOutputAudioPort(.speaker) // 🔊 speaker
+                self.audioQueuePlayer?.volume = 1.0            // 🔥 high volume
+            } else {
+                try session.overrideOutputAudioPort(.none)    // 🔇 earpiece
+                self.audioQueuePlayer?.volume = 0.5            // 🔥 medium volume
+            }
+            
+        } catch {
+            print("⚠️ Failed to toggle speaker: \(error.localizedDescription)")
+        }
+    }
+    
+    func setDefaultSpeakerOff() {
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.overrideOutputAudioPort(.none) // 👈 OFF
+        } catch {
+            print("⚠️ Default speaker off failed")
+        }
+    }
     
     @IBAction func DeclineBtnAct() {
         
@@ -415,14 +456,27 @@ class NotificationCallVC: UIViewController {
     }
     
     private func setupCallerInfo() {
-        nameLbl.text = "School Chimes"
-        nameLbl.font = UIFont.systemFont(ofSize: 32, weight: .bold)
+        var schoolName  = ""
+        var meberNamelbl = ""
+        
+        if let caller = userInfo["call_title"] as? String {
+            titleLbl.text = caller
+        }
+
+        if let schoolNames = userInfo["school_name"] as? String {
+            schoolName = schoolNames
+        }
+    
+        if let memberName = userInfo["member_name"] as? String {
+            meberNamelbl = memberName
+        }
+        
+        
+        nameLbl.text = "Calling - \(meberNamelbl)\n\(schoolName)"
+        nameLbl.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         nameLbl.textColor = .white
         nameLbl.textAlignment = .center
-        nameLbl.numberOfLines = 1
-        nameLbl.adjustsFontSizeToFitWidth = true
-        nameLbl.minimumScaleFactor = 0.7
-        
+       
         durationLbl.text = "Incoming Call"
         durationLbl.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         durationLbl.numberOfLines = 0
@@ -464,7 +518,6 @@ class NotificationCallVC: UIViewController {
         bounceAnimation.duration = 2.0
         bounceAnimation.repeatCount = .infinity
         bounceAnimation.isRemovedOnCompletion = false
-//        draggableButton.layer.add(bounceAnimation, forKey: "buttonBounce")
         
         let scaleAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
         scaleAnimation.values = [1.0, 1.05, 1.0, 1.05, 1.0]
@@ -473,7 +526,7 @@ class NotificationCallVC: UIViewController {
         scaleAnimation.duration = 2.0
         scaleAnimation.repeatCount = .infinity
         scaleAnimation.isRemovedOnCompletion = false
-//        draggableButton.layer.add(scaleAnimation, forKey: "buttonScale")
+        
     }
     
     // MARK: - Synchronized Arrow Animation
@@ -514,106 +567,6 @@ class NotificationCallVC: UIViewController {
         }
     }
     
-    // MARK: - Slide to Answer Label Animation
-//    private func setupSlideToAnswerAnimation() {
-//        slideLabel.text = "slide to answer or decline"
-//        slideLabel.textAlignment = .center
-//        slideLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-//        slideLabel.textColor = UIColor.white.withAlphaComponent(0.9)
-//        
-//        let gradient = CAGradientLayer()
-//        gradient.frame = slideLabel.bounds
-//        gradient.colors = [
-//            UIColor.clear.cgColor,
-//            UIColor.white.cgColor,
-//            UIColor.clear.cgColor
-//        ]
-//        gradient.locations = [0.0, 0.5, 1.0]
-//        gradient.startPoint = CGPoint(x: 0, y: 0.5)
-//        gradient.endPoint = CGPoint(x: 1, y: 0.5)
-//        
-//        let animation = CABasicAnimation(keyPath: "locations")
-//        animation.fromValue = [-0.5, 0.0, 0.5]
-//        animation.toValue = [0.5, 1.0, 1.5]
-//        animation.duration = 2.5
-//        animation.repeatCount = .infinity
-//        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-//        
-//        gradient.add(animation, forKey: "slideAnimation")
-//        slideLabel.layer.mask = gradient
-//        gradientLayer = gradient
-//    }
-//    
-    // MARK: - Swipe Gesture
-//    private func addSwipeGesture() {
-//        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
-//        draggableButton.addGestureRecognizer(panGesture)
-//    }
-    
-//    @objc private func handlePan(_ gesture: UIPanGestureRecognizer) {
-//        let translation = gesture.translation(in: swipeView)
-//        let buttonSize = draggableButton.frame.width
-//        let maxSwipe = (swipeView.frame.width - buttonSize) / 2 - 15
-//        
-//        switch gesture.state {
-//        case .began:
-//            isDragging = true
-//            draggableButton.layer.removeAnimation(forKey: "buttonBounce")
-//            draggableButton.layer.removeAnimation(forKey: "buttonScale")
-//            
-//            UIView.animate(withDuration: 0.2) {
-//                self.draggableButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-//                self.rightIndicationStack.alpha = 0
-//                self.leftIndicationStack.alpha = 0
-//            }
-//            
-//        case .changed:
-//            let newX = originalCenter.x + translation.x
-//            let minX = buttonSize / 2 + 15
-//            let maxX = swipeView.frame.width - buttonSize / 2 - 15
-//            draggableButton.center.x = max(minX, min(maxX, newX))
-//            
-//            let offset = draggableButton.center.x - originalCenter.x
-//            let progress = min(abs(offset) / maxSwipe, 1.0)
-//            
-//            if offset > 0 {
-//                let greenColor = UIColor.systemGreen.withAlphaComponent(0.3 * progress)
-//                swipeView.backgroundColor = greenColor
-//                swipeView.layer.borderColor = UIColor.systemGreen.withAlphaComponent(0.5 * progress).cgColor
-//                answerCallImg.alpha = 1.0
-//                declineCallImg.alpha = max(0.3, 1.0 - (0.7 * progress))
-//            } else if offset < 0 {
-//                let redColor = UIColor.systemRed.withAlphaComponent(0.3 * progress)
-//                swipeView.backgroundColor = redColor
-//                swipeView.layer.borderColor = UIColor.systemRed.withAlphaComponent(0.5 * progress).cgColor
-//                declineCallImg.alpha = 1.0
-//                answerCallImg.alpha = max(0.3, 1.0 - (0.7 * progress))
-//            } else {
-//                resetSwipeViewColors()
-//            }
-//            
-//        case .ended, .cancelled:
-//            isDragging = false
-//            let velocity = gesture.velocity(in: swipeView).x
-//            let offset = draggableButton.center.x - originalCenter.x
-//            
-//            UIView.animate(withDuration: 0.2) {
-//                self.draggableButton.transform = .identity
-//            }
-//            
-//            if offset > maxSwipe * 0.65 || velocity > 600 {
-//                answerCallAction()
-//            } else if offset < -maxSwipe * 0.65 || velocity < -600 {
-//                declineCallAction()
-//            } else {
-//                resetSwipeView()
-//            }
-//            
-//        default:
-//            break
-//        }
-//    }
-    
     private func resetSwipeViewColors() {
         swipeView.backgroundColor = UIColor.white.withAlphaComponent(0.08)
         swipeView.layer.borderColor = UIColor.white.withAlphaComponent(0.15).cgColor
@@ -622,7 +575,6 @@ class NotificationCallVC: UIViewController {
     
     private func resetSwipeView() {
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseOut) {
-//            self.draggableButton.center = self.originalCenter
             self.resetSwipeViewColors()
             self.rightIndicationStack.alpha = 1.0
             self.leftIndicationStack.alpha = 1.0
@@ -712,33 +664,7 @@ class NotificationCallVC: UIViewController {
         }
     }
     
-    @objc private func toggleSpeaker() {
-        speakerBtn.isSelected.toggle()
-        let generator = UIImpactFeedbackGenerator(style: .light)
-        generator.impactOccurred()
-        
-        UIView.animate(withDuration: 0.2) {
-            self.speakerBtn.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-        } completion: { _ in
-            UIView.animate(withDuration: 0.2) {
-                self.speakerBtn.transform = .identity
-                self.speakerBtn.backgroundColor = self.speakerBtn.isSelected ?
-                UIColor.white.withAlphaComponent(0.3) :
-                UIColor.white.withAlphaComponent(0.15)
-            }
-        }
-        
-        do {
-            let session = AVAudioSession.sharedInstance()
-            if speakerBtn.isSelected {
-                try session.overrideOutputAudioPort(.speaker)
-            } else {
-                try session.overrideOutputAudioPort(.none)
-            }
-        } catch {
-            print("⚠️ Failed to toggle speaker: \(error.localizedDescription)")
-        }
-    }
+  
     
     private func dismissCallScreen() {
 
@@ -856,7 +782,7 @@ class NotificationCallVC: UIViewController {
             let total = self.totalQueueDuration
 
             self.durationLbl.text = String(
-                format: "Connected\n\n%02d:%02d / %02d:%02d",
+                format: "%02d:%02d / %02d:%02d",
                 Int(totalPlayed)/60, Int(totalPlayed)%60,
                 Int(total)/60, Int(total)%60
             )
@@ -961,6 +887,13 @@ extension NotificationCallVC: AVAudioPlayerDelegate {
     }
 
     func Update_NotificationStatus(){
+        if let text = durationLbl.text {
+            let result = convertToSeconds(text)
+            duration = result.played
+            if durationLbl.text == "Call ended"{
+                duration = result.total
+            }
+        }
         
         let param : [String:Any] = [
             "ei1": noti.ei1,
@@ -970,7 +903,7 @@ extension NotificationCallVC: AVAudioPlayerDelegate {
             "ei5" : noti.ei5,
             "receiver_id" : noti.receiver_id,
             "circular_id" : noti.circular_id,
-            "duration" : Int(duration) ?? 0,
+            "duration" : duration ?? 0,
             "start_time" : startTime,
             "end_time" : getCurrentDateTimeString(),
             "retry_count" : noti.retrycount,
@@ -999,12 +932,44 @@ extension NotificationCallVC: AVAudioPlayerDelegate {
         }
     }
 
+    func convertToSeconds(_ timeString: String) -> (played: Int, total: Int) {
+        
+        let parts = timeString.components(separatedBy: " / ")
+        
+        func timeToSec(_ time: String) -> Int {
+            let comp = time.split(separator: ":").map { Int($0) ?? 0 }
+            if comp.count == 2 {
+                return comp[0] * 60 + comp[1]
+            }
+            return 0
+        }
+        
+        if parts.count == 2 {
+            let playedSec = timeToSec(parts[0])
+            let totalSec = timeToSec(parts[1])
+            return (playedSec, totalSec)
+        }
+        
+        return (0, 0)
+    }
     func getCurrentDateTimeString() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         formatter.locale = Locale(identifier: "en_US_POSIX")
 
         return formatter.string(from: Date())
+    }
+    
+    func timeStringToSeconds(_ time: String) -> Int {
+        let components = time.split(separator: ":").map { Int($0) ?? 0 }
+        
+        if components.count == 2 {
+            let minutes = components[0]
+            let seconds = components[1]
+            return (minutes * 60) + seconds
+        }
+        
+        return 0
     }
 }
 

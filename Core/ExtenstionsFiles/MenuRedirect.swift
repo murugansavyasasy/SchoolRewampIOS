@@ -62,7 +62,8 @@ class MenuRedirectHandler {
         MenuImage(id: 194, name: "Finance"),
         MenuImage(id: 202, name: "Hostel Attendance"),
         MenuImage(id: 204, name: "Approve Staff Leave Request"),
-        MenuImage(id: 203, name: "Apply Leave")
+        MenuImage(id: 203, name: "Apply Leave"),
+        MenuImage(id: 205, name: "Live Bus Tracking")
     ]
     
     var receiverItems : [String] = [ MenuStringFile.Communication,ReceiverMenuItems.Homework ,ReceiverMenuItems.ExamTest,ReceiverMenuItems.ExamMarks,ReceiverMenuItems.ImagePdf,ReceiverMenuItems.Video,ReceiverMenuItems.NoticeBoard,ReceiverMenuItems.Assignment,ReceiverMenuItems.OnlineMeeting,ReceiverMenuItems.AttendanceReport,ReceiverMenuItems.EventsHolidays,ReceiverMenuItems.RequestLeave,ReceiverMenuItems.FeeDetails,ReceiverMenuItems.InteractionWithStaff,ReceiverMenuItems.QuizExam,ReceiverMenuItems.LSRW,ReceiverMenuItems.ClassTimetable,ReceiverMenuItems.CertificateRequest,ReceiverMenuItems.PTM,ReceiverMenuItems.Map]
@@ -72,6 +73,7 @@ class MenuRedirectHandler {
     //MARK: COMMONPAGE FOR MULTIPLE SCHOOL LIST PAGE
     func SchoolListVc(from viewController: UIViewController) {
         let vc = SchoolListVC(nibName: nil, bundle: nil)
+        vc.login_astype = 1
         vc.come_fromLogin = true
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
@@ -414,8 +416,33 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewContorller.present(vc, animated: true)
     }
+    
+    func busTacking(from viewContorller: UIViewController){
+        let vc = BusTrakingVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewContorller.present(vc, animated: true)
+    }
+    
+    func Whereismybus(from viewContorller: UIViewController){
+        let vc = whereismybusVc(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewContorller.present(vc, animated: true)
+    }
+    
+    func buslist(from viewContorller: UIViewController,loginasType :Int,is_ownbustraking:Bool){
+        let vc = busListVC(nibName: nil, bundle: nil)
+        vc.loginasType = loginasType
+        vc.is_wonBustracking = is_ownbustraking
+        vc.modalPresentationStyle = .fullScreen
+        viewContorller.present(vc, animated: true)
+    }
    
     
+    func notifiactionBusRedrect(from viewContorller: UIViewController){
+        let vc = whereismybusVc(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewContorller.present(vc, animated: true)
+    }
 }
 
 struct MenuImage{

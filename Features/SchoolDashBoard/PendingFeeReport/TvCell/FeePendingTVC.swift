@@ -43,13 +43,8 @@ class FeePendingTVC: UITableViewCell, UITableViewDataSource, UITableViewDelegate
         isConfigured = true
 
         feeTableTable.reloadData()
-//        feeTableTable.layoutIfNeeded()
         tableHeight.constant = feeTableTable.contentSize.height
-//
-//        if let parentTableView = self.superview as? UITableView {
-//            parentTableView.beginUpdates()
-//            parentTableView.endUpdates()
-//        }
+
     }
 
     // MARK: - TableView Setup

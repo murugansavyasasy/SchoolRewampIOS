@@ -154,7 +154,7 @@ class PriorityVC: UIViewController {
     
     func apply_gradients() {
         // Always apply gradient for NextButtonView
-        gradientcolours(button: NextButtonView, colours: [UIColor.blue.cgColor, UIColor.systemTeal.cgColor])
+        gradientcolours(button: NextButtonView, colours: [UIColor.primery.cgColor, UIColor.systemTeal.cgColor])
         
         // Check visibility of teacher and parent buttons
         let teacherVisible = !teacherButton.isHidden
@@ -175,9 +175,8 @@ class PriorityVC: UIViewController {
         // Apply gradient based on login_astype
         if teacherVisible {
             if login_astype == 1 {
-                let hexColors = ["#1E3A8A", "#3B82F6"]
-                let cgColors = hexColors.map { UIColor(hex: $0.replacingOccurrences(of: "#", with: "")).cgColor }
-                gradientcolours(button: teacherButton, colours: cgColors)
+               
+                gradientcolours(button: teacherButton, colours: [UIColor.primery.cgColor, UIColor.systemTeal.cgColor])
                 teacherButton.setTitleColor(.white, for: .normal)
             } else {
                 gradientcolours(button: teacherButton, colours: [UIColor.clear.cgColor, UIColor.clear.cgColor])
@@ -188,9 +187,8 @@ class PriorityVC: UIViewController {
         if parentVisible {
             if login_astype == 2 {
                 // Convert hex strings to CGColor
-                let hexColors = ["#1E3A8A", "#3B82F6"]
-                let cgColors = hexColors.map { UIColor(hex: $0.replacingOccurrences(of: "#", with: "")).cgColor }
-                gradientcolours(button: ParentButton, colours: cgColors)
+                
+                gradientcolours(button: ParentButton, colours: [UIColor.primery.cgColor, UIColor.systemTeal.cgColor])
                 ParentButton.setTitleColor(.white, for: .normal)
             } else {
                 gradientcolours(button: ParentButton, colours: [UIColor.clear.cgColor, UIColor.clear.cgColor])

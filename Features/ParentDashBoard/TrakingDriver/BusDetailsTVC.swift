@@ -11,6 +11,8 @@ protocol RecentMoveDelegate{
 }
 
 class BusDetailsTVC: UITableViewCell {
+    @IBOutlet weak var busdetailsFullView: UIView!
+    @IBOutlet weak var busspeedFullView: UIView!
     @IBOutlet weak var busIconButton: UIButton!
     @IBOutlet weak var recentBtn: UIButton!
     @IBOutlet weak var busNumberLabel: UILabel!
@@ -21,23 +23,22 @@ class BusDetailsTVC: UITableViewCell {
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var speedLabel: UILabel!
     @IBOutlet weak var nextStopLabel: UILabel!
-    
-    @IBOutlet weak var callDriverButton: UIButton!
-    @IBOutlet weak var shareLocationButton: UIButton!
+   
     var delegate:RecentMoveDelegate?
     var callDriverAction: (() -> Void)?
         var shareLocationAction: (() -> Void)?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        callDriverButton.layer.cornerRadius = 12
-        shareLocationButton.layer.cornerRadius = 12
-        shareLocationButton.layer.borderWidth = 2
-        shareLocationButton.layer.borderColor = UIColor.systemGray5.cgColor
+      
         recentBtn.layer.cornerRadius = recentBtn.frame.width/2
         busIconButton.layer.cornerRadius = 12
         busStatusLabel.layer.cornerRadius = 11
         busStatusLabel.layer.masksToBounds = true
+//        busdetailsFullView.layer.cornerRadius = 15
+//        busdetailsFullView.layer.borderWidth = 0.5
+//        busdetailsFullView.layer.borderColor = UIColor.systemGray5.cgColor
+//        busspeedFullView.layer.cornerRadius = 15
     }
     func configure(busNumber: String,
                    route: String,

@@ -1,9 +1,0 @@
-// ======================================
-// AUTO-GENERATED — DO NOT EDIT
-// Source: Scripts/flavours.json
-// ======================================
-
-FLAVOUR_ID = VAGGISVARI
-PRODUCT_BUNDLE_IDENTIFIER = com.vaggisvari.connect
-APP_DISPLAY_NAME = VAGGISVARI VIDYALAYA
-//GOOGLE_REVERSED_CLIENT_ID = com.googleusercontent.apps.937637023219-j78t1v4c76o3hhbe6no7odtpo4rbm42t

@@ -60,6 +60,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
     var comeFormNotification : Bool = false
     var tourKey = "staffDashboard"
     var tourImg = ["sender_msg1","sender_file2"]
+    var loginAsType : Int?
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -162,9 +163,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         } else {
             searchBar.text = ""
             filteredMenu = menu_details ?? []
-//            filteredRecentMenu = recentMenuItems ?? []
             MenuCollection.reloadData()
-//            recentActiveMenuCollection.reloadData()
             searchBar.resignFirstResponder()
         }
     }
@@ -236,25 +235,13 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                         self.menu_details = details.menus
                     
 //                        self.menu_details?.append(
-//                            MenuDetail(id: 203, name: "Apply Leave", description: "Used to tracking")
-//                        )
-//                        self.menu_details?.append(
-//                            MenuDetail(id: 202, name: "Hostel Attendance", description: "Used to apply leave")
-//                        )
-//                        
-//                        self.menu_details?.append(
-//                            MenuDetail(id: 204, name: "Approve Staff Leave Request", description: "Used to apply leave")
+//                            MenuDetail(id: 205, name: "Live Bus Tracking", description: "Used to apply leave")
 //                        )
                         self.refreshCount = true
                         self.get_MenuCount()
                         self.recentMenuItems = details.frequently_used
                         self.filteredRecentMenu = details.frequently_used ?? []
                         
-//                        if let frequent = details.frequently_used{
-////                            self.pagecontroller.isHidden = frequent.count < 1
-//                        }else{
-////                            self.pagecontroller.isHidden = true
-//                        }
                         self.pagecontroller.numberOfPages = details.frequently_used?.count ?? 0
                         self.filteredMenu = self.menu_details ?? []//details.menus ?? []
                         self.MenuCollection.reloadData()
@@ -490,7 +477,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             ]
         )
 
-        welcomeLabel.attributedText = attributedString
+        welcomeLabel.attributedText = attributedString  
         welcomeLabel.numberOfLines = 0
 
         nameLabel.text = name
@@ -553,7 +540,6 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                     .medium(),
                     .large()
                 ]
-                //                context.maximumDetentValue * 0.3
                 sheet.prefersGrabberVisible = true
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = false
                 sheet.largestUndimmedDetentIdentifier = .large
@@ -668,7 +654,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         MenuStringFile.selectedMenuName = menuName
         // MENU IDs that need navigateOrSchoolList check
         let needSchoolCheck: Set<Int> = [
-            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 18, 41,202,203,204
+            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 18, 41,202,203,204,205
         ]
         Menu_id.staffSelectedMenuId = menuId
         // All actions with explicit self
@@ -709,6 +695,8 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             203: { self.MenuRedirect.staffApplyLeave(from: self) },
             202: { self.MenuRedirect.HostelManagment(from: self) },
             204: { self.MenuRedirect.StaffLeaveRequest(from: self) },
+            205: { self.MenuRedirect.buslist(from: self, loginasType: self.loginAsType ?? 0, is_ownbustraking: false) }
+            
         ]
  
         
@@ -909,9 +897,7 @@ extension CustomDashboard: UISearchBarDelegate {
 
         guard !text.isEmpty else {
             filteredMenu = menu_details ?? []
-//            filteredRecentMenu = recentMenuItems ?? []
             MenuCollection.reloadData()
-//            recentActiveMenuCollection.reloadData()
             return
         }
 
@@ -919,14 +905,9 @@ extension CustomDashboard: UISearchBarDelegate {
             ($0.name?.localizedCaseInsensitiveContains(text) ?? false) ||
             ($0.description?.localizedCaseInsensitiveContains(text) ?? false)
         } ?? []
-
-//        filteredRecentMenu = recentMenuItems?.filter {
-//            ($0.name?.localizedCaseInsensitiveContains(text) ?? false) ||
-//            ($0.description?.localizedCaseInsensitiveContains(text) ?? false)
-//        } ?? []
-
+        
         MenuCollection.reloadData()
-//        recentActiveMenuCollection.reloadData()
+
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

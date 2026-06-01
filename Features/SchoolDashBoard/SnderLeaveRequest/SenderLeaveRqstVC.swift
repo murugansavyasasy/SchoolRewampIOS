@@ -3,7 +3,6 @@
 //  VsSchoolChimes
 //
 //  Created by admin on 24/12/24.
-//
 
 import UIKit
 protocol ConfirmDelegate{
@@ -354,9 +353,6 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate, approvalAndReject
                                         self.filteredLeaveRecords?.remove(at: indexPath.section)
                                     }
                                     
-                                    //                                self.NodataLbl.text = CommonStringFile.No_data_found
-                                    //                                self.NodataLbl.isHidden = !self.filteredLeaveData.isEmpty
-                                    //                                self.NodataImage.isHidden = !self.filteredLeaveData.isEmpty
                                     self.leaveRequestTable.reloadData()
                                 }
                             } else {
