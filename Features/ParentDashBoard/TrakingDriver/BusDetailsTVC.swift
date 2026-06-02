@@ -26,7 +26,8 @@ class BusDetailsTVC: UITableViewCell {
    
     var delegate:RecentMoveDelegate?
     var callDriverAction: (() -> Void)?
-        var shareLocationAction: (() -> Void)?
+    var shareLocationAction: (() -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -40,6 +41,7 @@ class BusDetailsTVC: UITableViewCell {
 //        busdetailsFullView.layer.borderColor = UIColor.systemGray5.cgColor
 //        busspeedFullView.layer.cornerRadius = 15
     }
+    
     func configure(busNumber: String,
                    route: String,
                    eta: String,
