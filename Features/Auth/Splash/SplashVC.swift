@@ -681,7 +681,7 @@ class SplashVC: UIViewController, ViewAttachments, DismissDelegate {
                             let vc = OTPVc(nibName: nil, bundle: nil)
                             vc.validateMobileData = response.data ?? []
                             vc.mobile_number = mobile_num
-                            vc.pageType = screenType.isLoginPage
+                            vc.pageType = screenType.isSplash
                             vc.modalPresentationStyle = .fullScreen
                             self.present(vc, animated: true)
                         }else{

@@ -414,51 +414,7 @@ class OTPVc: UIViewController {
             }
     }
     
-    
-    func validate_user() {
-        guard let credentials = UserDefaultFileManager.getLoginCredentials() else { return }
-        let secureID = SecureIDManager.getSecureID()
-        
-        let parameters: [String: Any] = [
-            mobileNumber.mobile_number: credentials.mobile_number,
-            mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
-            mobileNumber.secure_id: secureID,
-            mobileNumber.password: credentials.pwd
-        ]
-        
-        APIService.shared
-            .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
-                     , type: ApitTypeSringFile.POST, token: "", isBaseUrl: true) { [self] (
-                        result: Result<UserValidationResponseSuc,
-                        Error>
-                     ) in
-                switch result {
-                case .success(let response):
-                    if response.status == true {
-                        DispatchQueue.main.async {
-                            print("User validated successfully")
-                        }
-                    } else {
-                        DispatchQueue.main.async {
-                            AlertModal.showAlert(
-                                title: AlertstringFile.Oops,
-                                message: response.message ?? "Something went wrong.",
-                                on: self
-                            )
-                        }
-                    }
-                    
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        AlertModal.showAlert(
-                            title: "Error",
-                            message: error.localizedDescription,
-                            on: self
-                        )
-                    }
-                }
-            }
-    }
+ 
 }
 
 @available(iOS 14.0, *)
