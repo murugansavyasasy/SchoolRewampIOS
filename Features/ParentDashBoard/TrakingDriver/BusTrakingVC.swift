@@ -30,7 +30,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     
     @IBOutlet weak var mapView: MLNMapView!
     var stops: [BusStop] = [
-        BusStop(id: "1", name: "Vullupuram (Stop 1)", time: "09:00",
+        BusStop(id: "1", name: "Villupuram (Stop 1)", time: "09:00",
                 latitude: 13.0418, longitude: 80.2341,
                 isCompleted: false, isCurrent: true),
         
@@ -74,13 +74,14 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     
     var busIndex = 0
     var timer: Timer?
-    var busSpeed: CFTimeInterval = 0.8
-    var currentZoomLevel: Double = 16
+    var busSpeed: CFTimeInterval = 10.0
+    var currentZoomLevel: Double = 1
     var userHasZoomed = false
     var isRecenterActive = true
     var isUserGesture = false
     var currentStopIndex = 0
     let stopReachThreshold: Double = 0.05
+    private var lastUIUpdate = Date()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +98,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     
     
     func setupMap() {
-    
+        
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mapView.styleURL = URL(
             string:
@@ -123,7 +124,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         
         let coord = CLLocationCoordinate2D(latitude: lat, longitude: lon)
         
-        mapView.setCenter(coord, zoomLevel: 15, animated: false)
+        mapView.setCenter(coord, zoomLevel: 13, animated: false)
     }
     
     func addBlueDotAnimation(to view: UIView) {
@@ -293,7 +294,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         guard !path.isEmpty else { return }
         
         let urlString = "https://router.project-osrm.org/route/v1/driving/\(path)?overview=full&geometries=geojson"
-//        let urlString = "http://192.168.1.5:5001/route/v1/driving/\(path)?overview=full&geometries=geojson"
+        //        let urlString = "http://192.168.1.5:5001/route/v1/driving/\(path)?overview=full&geometries=geojson"
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
@@ -356,7 +357,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     
     
     func startBus() {
-        timer = Timer.scheduledTimer(withTimeInterval: 0.8, repeats: true) { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
             self.moveBus()
         }
     }
@@ -412,8 +413,8 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         if !userHasZoomed && isRecenterActive {
             let camera = MLNMapCamera(
                 lookingAtCenter: next,
-                altitude: mapView.camera.altitude,
-                pitch: mapView.camera.pitch,
+                altitude: altitudeForZoomLevel(13),
+                pitch: 45,
                 heading: heading
             )
             mapView.setCamera(camera, animated: false)
@@ -563,6 +564,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
 }
 
 extension BusTrakingVC: UIAdaptivePresentationControllerDelegate {
+    
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
         guard let sheet = presentationController.presentedViewController.sheetPresentationController else { return }
         sheet.animateChanges {
@@ -614,7 +616,15 @@ extension BusTrakingVC: UIAdaptivePresentationControllerDelegate {
         )
         
         DispatchQueue.main.async { [weak self] in
+            
             guard let self = self else { return }
+            
+            guard Date().timeIntervalSince(lastUIUpdate) > 3 else {
+                return
+            }
+            
+            lastUIUpdate = Date()
+            
             self.detailsVC?.updateStops(self.stops)
             self.detailsVC?.updateLiveData(liveData)
         }
@@ -762,7 +772,7 @@ extension BusStop {
     }
 }
 struct BusStop: Codable {
-
+    
     let id: String
     let name: String
     let time: String
@@ -771,7 +781,7 @@ struct BusStop: Codable {
     var isCompleted: Bool
     var isCurrent: Bool
     var status: StopStatus {
-
+        
         if isCompleted {
             return .completed
         } else if isCurrent {
@@ -785,13 +795,13 @@ struct BusStop: Codable {
 // MARK: - Stop Status
 
 enum StopStatus {
-
+    
     case completed
     case current
     case upcoming
-
+    
     var displayName: String {
-
+        
         switch self {
         case .completed: return "Completed"
         case .current: return "Current"
@@ -803,7 +813,7 @@ enum StopStatus {
 // MARK: - Bus Model
 
 struct Bus: Codable {
-
+    
     let id: String
     let busNumber: String
     let route: String
@@ -813,7 +823,7 @@ struct Bus: Codable {
     let driverName: String
     let driverPhone: String
     let stops: [BusStop]
-
+    
     var formattedSpeed: String {
         "\(Int(currentSpeed)) km/h"
     }

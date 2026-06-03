@@ -39,6 +39,8 @@ class BusDetailsVC: UIViewController, RecentMoveDelegate {
     var speed = "-- km/h"
     var nextStop = "--"
     
+    weak var liveCell: BusDetailsTVC?
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -72,38 +74,63 @@ class BusDetailsVC: UIViewController, RecentMoveDelegate {
     // MARK: - LIVE BUS UPDATE ENTRY POINT
     
     func updateLiveData(_ data: BusLiveData) {
-        
+
         speed = String(format: "%.0f km/h", data.speed)
         eta = "\(data.etaMinutes) mins"
         distance = String(format: "%.2f km", data.distanceKm)
         nextStop = data.nextStop
+
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            if self.routeProgressTableView.numberOfSections > 0 {
-                self.routeProgressTableView.reloadSections(
-                    IndexSet(integer: 0),
+
+            self.liveCell?.etaLabel.text = self.eta
+            self.liveCell?.distanceLabel.text = self.distance
+            self.liveCell?.speedLabel.text = self.speed
+            self.liveCell?.nextStopLabel.text = self.nextStopName()
+        }
+    }
+    
+    private var previousStops: [BusStop] = []
+
+    func updateStops(_ stops: [BusStop]) {
+
+        let oldStops = previousStops
+        previousStops = stops
+        busStops = stops
+
+        DispatchQueue.main.async { [weak self] in
+
+            guard let self = self else { return }
+
+            if oldStops.isEmpty {
+
+                self.routeProgressTableView.reloadData()
+                return
+            }
+
+            var changedRows: [IndexPath] = []
+
+            for index in 0..<min(oldStops.count, stops.count) {
+
+                if oldStops[index].isCompleted != stops[index].isCompleted ||
+                    oldStops[index].isCurrent != stops[index].isCurrent {
+
+                    changedRows.append(
+                        IndexPath(row: index, section: 1)
+                    )
+                }
+            }
+
+            if !changedRows.isEmpty {
+
+                self.routeProgressTableView.reloadRows(
+                    at: changedRows,
                     with: .none
                 )
             }
         }
     }
     
-    func updateStops(_ stops: [BusStop]) {
-        
-        self.busStops = stops
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            if !self.busStops.isEmpty && self.routeProgressTableView.numberOfSections > 1 {
-                self.routeProgressTableView.reloadSections(
-                    IndexSet(integer: 1),
-                    with: .none
-                )
-            } else {
-                // First time loading
-                self.routeProgressTableView.reloadData()
-            }
-        }
-    }
     private func nextStopName() -> String {
         if let currentStop = busStops.first(where: { $0.isCurrent }) {
             return currentStop.name
@@ -163,6 +190,8 @@ extension BusDetailsVC: UITableViewDataSource {
                 withIdentifier: "BusDetailsTVC",
                 for: indexPath
             ) as! BusDetailsTVC
+            
+            liveCell = cell
             
             cell.busNumberLabel.text = busNumber
             cell.busRouteLabel.text = busRoute
