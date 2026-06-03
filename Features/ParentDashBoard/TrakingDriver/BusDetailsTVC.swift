@@ -36,10 +36,10 @@ class BusDetailsTVC: UITableViewCell {
         busIconButton.layer.cornerRadius = 12
         busStatusLabel.layer.cornerRadius = 11
         busStatusLabel.layer.masksToBounds = true
-//        busdetailsFullView.layer.cornerRadius = 15
-//        busdetailsFullView.layer.borderWidth = 0.5
-//        busdetailsFullView.layer.borderColor = UIColor.systemGray5.cgColor
-//        busspeedFullView.layer.cornerRadius = 15
+        busdetailsFullView.layer.cornerRadius = 15
+        busdetailsFullView.layer.borderWidth = 0.5
+        busdetailsFullView.layer.borderColor = UIColor.systemGray5.cgColor
+        busspeedFullView.layer.cornerRadius = 15
     }
     
     func configure(busNumber: String,
