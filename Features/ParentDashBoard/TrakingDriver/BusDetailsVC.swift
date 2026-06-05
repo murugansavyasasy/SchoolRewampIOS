@@ -20,20 +20,17 @@ class BusDetailsVC: UIViewController, RecentMoveDelegate {
         delegate?.recentMove(recent)
     }
     
-    
     // MARK: - Outlets
-    
     @IBOutlet weak var routeProgressTableView: UITableView!
     @IBOutlet weak var callDriverButton: UIButton!
     @IBOutlet weak var shareLocationButton: UIButton!
-    // MARK: - Properties
     
+    // MARK: - Properties
     var busStops: [BusStop] = []
     var currentLocation: CLLocation?
     var delegate:RecentMoveDelegate?
     var busNumber: String = "Bus #42"
     var busRoute: String = "Villupuram to  ulundurpet"
-    
     var eta = "-- mins"
     var distance = "-- km"
     var speed = "-- km/h"
@@ -42,7 +39,6 @@ class BusDetailsVC: UIViewController, RecentMoveDelegate {
     weak var liveCell: BusDetailsTVC?
     
     // MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         callDriverButton.layer.cornerRadius = 12
@@ -53,7 +49,6 @@ class BusDetailsVC: UIViewController, RecentMoveDelegate {
     }
     
     // MARK: - Setup
-    
     private func setupTableView() {
         
         routeProgressTableView.delegate = self
@@ -66,13 +61,13 @@ class BusDetailsVC: UIViewController, RecentMoveDelegate {
             forCellReuseIdentifier: "BusDetailsTVC"
         )
         
-        routeProgressTableView.register(UINib(nibName: "BusStopTableViewCell", bundle: nil),
-                                        forCellReuseIdentifier: BusStopTableViewCell.identifier
+        routeProgressTableView.register(
+            UINib(nibName: "BusStopTableViewCell", bundle: nil),
+            forCellReuseIdentifier: BusStopTableViewCell.identifier
         )
     }
     
     // MARK: - LIVE BUS UPDATE ENTRY POINT
-    
     func updateLiveData(_ data: BusLiveData) {
 
         speed = String(format: "%.0f km/h", data.speed)
@@ -83,6 +78,7 @@ class BusDetailsVC: UIViewController, RecentMoveDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
 
+            self.liveCell?.busspeedFullView.isHidden = data.etaMinutes == 0 || data.distanceKm == 0.0
             self.liveCell?.etaLabel.text = self.eta
             self.liveCell?.distanceLabel.text = self.distance
             self.liveCell?.speedLabel.text = self.speed
@@ -133,15 +129,16 @@ class BusDetailsVC: UIViewController, RecentMoveDelegate {
     
     private func nextStopName() -> String {
         if let currentStop = busStops.first(where: { $0.isCurrent }) {
-            return currentStop.name
+            return currentStop.stop_name
         }
         
         if let nextStop = busStops.first(where: { !$0.isCompleted && !$0.isCurrent }) {
-            return nextStop.name
+            return nextStop.stop_name
         }
         
         return nextStop
     }
+    
     func callDriver() {
         
         let phone = "9876543210"
@@ -259,9 +256,9 @@ extension BusDetailsVC: UITableViewDelegate {
         }
         
         let alert = UIAlertController(
-            title: stop.name,
+            title: stop.stop_name,
             message: """
-            Arrival: \(stop.time)
+            Arrival: \(stop.stop_time)
             Status: \(statusText)
             """,
             preferredStyle: .alert
