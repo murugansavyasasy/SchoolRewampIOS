@@ -3452,3 +3452,45 @@ struct livebusData : Codable{
 }
 
 
+struct StudentRouteDetailsResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [StudentRouteData]?
+}
+
+struct StudentRouteData: Codable {
+    let student_id: String?
+    let student_name: String?
+    let admission_no: String?
+    let route_id: String?
+    let route_name: String?
+    let stop_id: String?
+    let stop_name: String?
+    let latitude: String?
+    let longitude: String?
+    let landmark: String?
+    let vehicle_id: String?
+    let vehicle_no: String?
+    let tentative_pickup_time: String?
+    let tentative_drop_time: String?
+    let stopping_points: [StoppingPoint]?
+}
+
+struct StoppingPoint: Codable {
+    let vehicle_id: String?
+    let route_name: String?
+    let journey_type: String?
+    let start_time: String?
+    let end_time: String?
+    let working_days: [String]?
+    let stops: [Stops]?
+}
+
+struct Stops: Codable {
+    let stop_id: String?
+    let stop_name: String?
+    let stop_time: String?
+    let latitude: String?
+    let longitude: String?
+    let landmark: String?
+}

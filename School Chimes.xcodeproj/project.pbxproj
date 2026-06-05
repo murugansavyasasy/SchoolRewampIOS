@@ -1905,6 +1905,21 @@
 		187CF5C02D13F009001422CE /* WeekDaysNameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CF5BD2D13F009001422CE /* WeekDaysNameCollectionViewCell.swift */; };
 		187CF5E52D1539CD001422CE /* CertificateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187CF5E42D1539CD001422CE /* CertificateTableViewCell.xib */; };
 		187CF5E62D1539CD001422CE /* CertificateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CF5E32D1539CD001422CE /* CertificateTableViewCell.swift */; };
+		1880E9E72FD14BB30025EB96 /* RouteHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1880E9E62FD14BB30025EB96 /* RouteHeaderCell.xib */; };
+		1880E9E82FD14BB30025EB96 /* RouteHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880E9E52FD14BB30025EB96 /* RouteHeaderCell.swift */; };
+		1880E9E92FD14BB30025EB96 /* RouteHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1880E9E62FD14BB30025EB96 /* RouteHeaderCell.xib */; };
+		1880E9EA2FD14BB30025EB96 /* RouteHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880E9E52FD14BB30025EB96 /* RouteHeaderCell.swift */; };
+		1880E9EB2FD14BB30025EB96 /* RouteHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1880E9E62FD14BB30025EB96 /* RouteHeaderCell.xib */; };
+		1880E9EC2FD14BB30025EB96 /* RouteHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880E9E52FD14BB30025EB96 /* RouteHeaderCell.swift */; };
+		1880E9EF2FD14BF40025EB96 /* StopTimelineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1880E9EE2FD14BF40025EB96 /* StopTimelineCell.xib */; };
+		1880E9F02FD14BF40025EB96 /* StopTimelineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880E9ED2FD14BF40025EB96 /* StopTimelineCell.swift */; };
+		1880E9F12FD14BF40025EB96 /* StopTimelineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1880E9EE2FD14BF40025EB96 /* StopTimelineCell.xib */; };
+		1880E9F22FD14BF40025EB96 /* StopTimelineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880E9ED2FD14BF40025EB96 /* StopTimelineCell.swift */; };
+		1880E9F32FD14BF40025EB96 /* StopTimelineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1880E9EE2FD14BF40025EB96 /* StopTimelineCell.xib */; };
+		1880E9F42FD14BF40025EB96 /* StopTimelineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880E9ED2FD14BF40025EB96 /* StopTimelineCell.swift */; };
+		1880E9F62FD14C2C0025EB96 /* DynamicHeightTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880E9F52FD14C2C0025EB96 /* DynamicHeightTableView.swift */; };
+		1880E9F72FD14C2C0025EB96 /* DynamicHeightTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880E9F52FD14C2C0025EB96 /* DynamicHeightTableView.swift */; };
+		1880E9F82FD14C2C0025EB96 /* DynamicHeightTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1880E9F52FD14C2C0025EB96 /* DynamicHeightTableView.swift */; };
 		188272162F63C5F8000E0901 /* LeaveReqDateTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188272122F63C5F8000E0901 /* LeaveReqDateTvCell.swift */; };
 		188272172F63C5F8000E0901 /* LeaveReqDateTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188272132F63C5F8000E0901 /* LeaveReqDateTvCell.xib */; };
 		188272342F680F18000E0901 /* HostelListTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188272302F680F18000E0901 /* HostelListTvCell.swift */; };
@@ -2856,6 +2871,11 @@
 		187CF5BE2D13F009001422CE /* WeekDaysNameCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeekDaysNameCollectionViewCell.xib; sourceTree = "<group>"; };
 		187CF5E32D1539CD001422CE /* CertificateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateTableViewCell.swift; sourceTree = "<group>"; };
 		187CF5E42D1539CD001422CE /* CertificateTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CertificateTableViewCell.xib; sourceTree = "<group>"; };
+		1880E9E52FD14BB30025EB96 /* RouteHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteHeaderCell.swift; sourceTree = "<group>"; };
+		1880E9E62FD14BB30025EB96 /* RouteHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RouteHeaderCell.xib; sourceTree = "<group>"; };
+		1880E9ED2FD14BF40025EB96 /* StopTimelineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopTimelineCell.swift; sourceTree = "<group>"; };
+		1880E9EE2FD14BF40025EB96 /* StopTimelineCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StopTimelineCell.xib; sourceTree = "<group>"; };
+		1880E9F52FD14C2C0025EB96 /* DynamicHeightTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightTableView.swift; sourceTree = "<group>"; };
 		188272122F63C5F8000E0901 /* LeaveReqDateTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveReqDateTvCell.swift; sourceTree = "<group>"; };
 		188272132F63C5F8000E0901 /* LeaveReqDateTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeaveReqDateTvCell.xib; sourceTree = "<group>"; };
 		188272302F680F18000E0901 /* HostelListTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostelListTvCell.swift; sourceTree = "<group>"; };
@@ -3901,10 +3921,15 @@
 		183E69C72FADB0580092D411 /* WhereIsBus */ = {
 			isa = PBXGroup;
 			children = (
+				1880E9F52FD14C2C0025EB96 /* DynamicHeightTableView.swift */,
+				1880E9ED2FD14BF40025EB96 /* StopTimelineCell.swift */,
+				1880E9EE2FD14BF40025EB96 /* StopTimelineCell.xib */,
 				1861DCDF2FAF1C3D005BAA5E /* BusRouteCell.swift */,
 				1861DCE02FAF1C3D005BAA5E /* BusRouteCell.xib */,
 				183E69C82FADB0840092D411 /* whereismybusVc.swift */,
 				183E69C92FADB0840092D411 /* whereismybusVc.xib */,
+				1880E9E52FD14BB30025EB96 /* RouteHeaderCell.swift */,
+				1880E9E62FD14BB30025EB96 /* RouteHeaderCell.xib */,
 				183E69D02FADED040092D411 /* busListVC.swift */,
 				183E69D12FADED040092D411 /* busListVC.xib */,
 				183E69D82FADED2C0092D411 /* BusListTvCell.swift */,
@@ -6316,6 +6341,7 @@
 				1827E77E2F90C12000B33B20 /* UpdateProfileVC.xib in Resources */,
 				1827E77F2F90C12000B33B20 /* VoiceMessageVc.xib in Resources */,
 				1827E7802F90C12000B33B20 /* VoicePreviewTvCell.xib in Resources */,
+				1880E9EF2FD14BF40025EB96 /* StopTimelineCell.xib in Resources */,
 				1827E7812F90C12000B33B20 /* CommonPagenationVc.xib in Resources */,
 				1827E7822F90C12000B33B20 /* ScheduleCallVC.xib in Resources */,
 				1827E7832F90C12000B33B20 /* EmergencyVoiceRecordCel.xib in Resources */,
@@ -6581,6 +6607,7 @@
 				1827E8842F90C12000B33B20 /* CustomMenuCVC.xib in Resources */,
 				1827E8852F90C12000B33B20 /* VideoPreviewVc.xib in Resources */,
 				1827E8862F90C12000B33B20 /* AnimatView.xib in Resources */,
+				1880E9E92FD14BB30025EB96 /* RouteHeaderCell.xib in Resources */,
 				1827E8872F90C12000B33B20 /* done.json in Resources */,
 				1827E8882F90C12000B33B20 /* Mic.gif in Resources */,
 				1827E8892F90C12000B33B20 /* SettingsTableViewCell.xib in Resources */,
@@ -6740,6 +6767,7 @@
 				1868A5A92FAC762E00831144 /* UpdateProfileVC.xib in Resources */,
 				1868A5AA2FAC762E00831144 /* VoiceMessageVc.xib in Resources */,
 				1868A5AB2FAC762E00831144 /* VoicePreviewTvCell.xib in Resources */,
+				1880E9F32FD14BF40025EB96 /* StopTimelineCell.xib in Resources */,
 				1868A5AC2FAC762E00831144 /* CommonPagenationVc.xib in Resources */,
 				1868A5AD2FAC762E00831144 /* ScheduleCallVC.xib in Resources */,
 				1868A5AE2FAC762E00831144 /* EmergencyVoiceRecordCel.xib in Resources */,
@@ -7005,6 +7033,7 @@
 				1868A6AF2FAC762E00831144 /* CustomMenuCVC.xib in Resources */,
 				1868A6B02FAC762E00831144 /* VideoPreviewVc.xib in Resources */,
 				1868A6B12FAC762E00831144 /* AnimatView.xib in Resources */,
+				1880E9EB2FD14BB30025EB96 /* RouteHeaderCell.xib in Resources */,
 				1868A6B22FAC762E00831144 /* done.json in Resources */,
 				1868A6B32FAC762E00831144 /* Mic.gif in Resources */,
 				1868A6B42FAC762E00831144 /* SettingsTableViewCell.xib in Resources */,
@@ -7378,6 +7407,7 @@
 				FABA6E8A2ED5D2F700278807 /* ExamImgUploadVC.xib in Resources */,
 				185CC0C02F73F404002640CE /* studentPendingFeeTv.xib in Resources */,
 				84235A122E1E2819002F2E1D /* AddAttachmentTVC.xib in Resources */,
+				1880E9E72FD14BB30025EB96 /* RouteHeaderCell.xib in Resources */,
 				FA0EDF132E4A1752008EC30D /* NewPtmVC.xib in Resources */,
 				842ACE1E2F56A05500954404 /* TeacherRemarkTVC.xib in Resources */,
 				846E7FAC2E2785CC00BC954B /* AudioPlayerTVC.xib in Resources */,
@@ -7568,6 +7598,7 @@
 				84EF9D1E2E7A7B3600F57838 /* SwitchRollVC.xib in Resources */,
 				846CF73E2E2F5A98000361CE /* OngoingCVC.xib in Resources */,
 				8480A4132E31F4CB009A7DED /* NoticeCVC.xib in Resources */,
+				1880E9F12FD14BF40025EB96 /* StopTimelineCell.xib in Resources */,
 				8489D9EB2DFBF07700D7226A /* FeePendingTVC.xib in Resources */,
 				8442A8FD2CDC83860006068E /* RatingTableViewCell.xib in Resources */,
 				8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */,
@@ -7874,6 +7905,7 @@
 				1827E62D2F90C12000B33B20 /* CustomTabVC.swift in Sources */,
 				1827E62E2F90C12000B33B20 /* HostelInformationTvcell.swift in Sources */,
 				1827E62F2F90C12000B33B20 /* BottomView.swift in Sources */,
+				1880E9F02FD14BF40025EB96 /* StopTimelineCell.swift in Sources */,
 				1827E6302F90C12000B33B20 /* CaterogyCvCell.swift in Sources */,
 				1827E6312F90C12000B33B20 /* HomePaucktVC.swift in Sources */,
 				1827E6322F90C12000B33B20 /* CoupenDetailTVC.swift in Sources */,
@@ -8009,6 +8041,7 @@
 				1827E6B42F90C12000B33B20 /* MsgVoiceCvCell.swift in Sources */,
 				1827E6B52F90C12000B33B20 /* PendingFeeReportViewController.swift in Sources */,
 				1827E6B62F90C12000B33B20 /* LeveCreateVC.swift in Sources */,
+				1880E9EA2FD14BB30025EB96 /* RouteHeaderCell.swift in Sources */,
 				1827E6B72F90C12000B33B20 /* LeveHistoryVC.swift in Sources */,
 				1827E6B82F90C12000B33B20 /* LeveHistoryTV.swift in Sources */,
 				1827E6B92F90C12000B33B20 /* NewPtmVC.swift in Sources */,
@@ -8126,6 +8159,7 @@
 				1827E7272F90C12000B33B20 /* ClassicFireworkController.swift in Sources */,
 				1827E7282F90C12000B33B20 /* parentPTMcell.swift in Sources */,
 				1827E7292F90C12000B33B20 /* OngoingCVC.swift in Sources */,
+				1880E9F62FD14C2C0025EB96 /* DynamicHeightTableView.swift in Sources */,
 				1827E72A2F90C12000B33B20 /* ViewLessonVC.swift in Sources */,
 				1827E72B2F90C12000B33B20 /* HistoryTC.swift in Sources */,
 				1861DCE32FAF1C3D005BAA5E /* BusRouteCell.swift in Sources */,
@@ -8341,6 +8375,7 @@
 				1868A4572FAC762E00831144 /* CustomTabVC.swift in Sources */,
 				1868A4582FAC762E00831144 /* HostelInformationTvcell.swift in Sources */,
 				1868A4592FAC762E00831144 /* BottomView.swift in Sources */,
+				1880E9F42FD14BF40025EB96 /* StopTimelineCell.swift in Sources */,
 				1868A45A2FAC762E00831144 /* CaterogyCvCell.swift in Sources */,
 				1868A45B2FAC762E00831144 /* HomePaucktVC.swift in Sources */,
 				1868A45C2FAC762E00831144 /* CoupenDetailTVC.swift in Sources */,
@@ -8476,6 +8511,7 @@
 				1868A4DE2FAC762E00831144 /* MsgVoiceCvCell.swift in Sources */,
 				1868A4DF2FAC762E00831144 /* PendingFeeReportViewController.swift in Sources */,
 				1868A4E02FAC762E00831144 /* LeveCreateVC.swift in Sources */,
+				1880E9EC2FD14BB30025EB96 /* RouteHeaderCell.swift in Sources */,
 				1868A4E12FAC762E00831144 /* LeveHistoryVC.swift in Sources */,
 				1868A4E22FAC762E00831144 /* LeveHistoryTV.swift in Sources */,
 				1868A4E32FAC762E00831144 /* NewPtmVC.swift in Sources */,
@@ -8593,6 +8629,7 @@
 				1868A5512FAC762E00831144 /* ClassicFireworkController.swift in Sources */,
 				1868A5522FAC762E00831144 /* parentPTMcell.swift in Sources */,
 				1868A5532FAC762E00831144 /* OngoingCVC.swift in Sources */,
+				1880E9F82FD14C2C0025EB96 /* DynamicHeightTableView.swift in Sources */,
 				1868A5542FAC762E00831144 /* ViewLessonVC.swift in Sources */,
 				1868A5552FAC762E00831144 /* HistoryTC.swift in Sources */,
 				1861DCE62FAF1C3D005BAA5E /* BusRouteCell.swift in Sources */,
@@ -8815,6 +8852,7 @@
 				84127AD32E03C8F00092159D /* CustomTabVC.swift in Sources */,
 				18074D412F6AB78400CC9244 /* HostelInformationTvcell.swift in Sources */,
 				84127AD52E03C8F00092159D /* BottomView.swift in Sources */,
+				1880E9F22FD14BF40025EB96 /* StopTimelineCell.swift in Sources */,
 				84127AD82E03C8F00092159D /* CaterogyCvCell.swift in Sources */,
 				84127AD92E03C8F00092159D /* HomePaucktVC.swift in Sources */,
 				84127ADC2E03C8F00092159D /* CoupenDetailTVC.swift in Sources */,
@@ -8950,6 +8988,7 @@
 				84C3A1F72E66EF4B002E7506 /* MsgVoiceCvCell.swift in Sources */,
 				18926D2A2D04140B002BBB97 /* PendingFeeReportViewController.swift in Sources */,
 				84079FF32D15A7B000D6DF04 /* LeveCreateVC.swift in Sources */,
+				1880E9E82FD14BB30025EB96 /* RouteHeaderCell.swift in Sources */,
 				84079FF42D15A7B000D6DF04 /* LeveHistoryVC.swift in Sources */,
 				84079FF52D15A7B000D6DF04 /* LeveHistoryTV.swift in Sources */,
 				FA0EDF142E4A1752008EC30D /* NewPtmVC.swift in Sources */,
@@ -9067,6 +9106,7 @@
 				84C82A0F2D086A490024A46A /* ClassicFireworkController.swift in Sources */,
 				188870562EEAEB0F008B71FF /* parentPTMcell.swift in Sources */,
 				846CF73F2E2F5A98000361CE /* OngoingCVC.swift in Sources */,
+				1880E9F72FD14C2C0025EB96 /* DynamicHeightTableView.swift in Sources */,
 				FAF43B602E02811E00F28A16 /* ViewLessonVC.swift in Sources */,
 				849970D02CF8752400800B07 /* HistoryTC.swift in Sources */,
 				1861DCE22FAF1C3D005BAA5E /* BusRouteCell.swift in Sources */,
