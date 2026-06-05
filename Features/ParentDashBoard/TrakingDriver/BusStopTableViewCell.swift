@@ -32,8 +32,8 @@ class BusStopTableViewCell: UITableViewCell {
     // MARK: - Configure
 
     func configure(with stop: BusStop, isLast: Bool) {
-        stopNameLabel.text = stop.name
-        stopTimeLabel.text = stop.time
+        stopNameLabel.text = stop.stop_name
+        stopTimeLabel.text = stop.stop_time
         connectingLineView.isHidden = isLast
 
         if stop.isCompleted {

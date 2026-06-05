@@ -3451,6 +3451,11 @@ struct livebusData : Codable{
     let tracking_url: String?
 }
 
+struct GeoLocationResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [GeoLocationData]?
+}
 
 struct StudentRouteDetailsResponse: Codable {
     let status: Bool?
@@ -3493,4 +3498,14 @@ struct Stops: Codable {
     let latitude: String?
     let longitude: String?
     let landmark: String?
+struct GeoLocationData: Codable {
+    let id: String?
+    let deviceId: String?
+    let vehicleId: String?
+    let latitude: String?
+    let longitude: String?
+    let speed: String?
+    let altitudeLevel: String?
+    let vehicleDirection: String?
+    let gpsTime: String?
 }
