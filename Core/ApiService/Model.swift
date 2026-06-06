@@ -108,6 +108,7 @@ struct StaffDetails: Codable {
     let school_address: String?
     let access_token: String?
     var isSelected: Bool?
+    let gps_type  : String?
 }
 
 struct ChildDetails: Codable {
@@ -139,6 +140,7 @@ struct ChildDetails: Codable {
     let academic_year_id: Int?
     let academic_year_name: String?
     let is_not_allow: Bool?
+    let gps_type  : String?
 }
 
 
@@ -3456,7 +3458,6 @@ struct GeoLocationResponse: Codable {
     let message: String?
     let data: [GeoLocationData]?
 }
-
 struct GeoLocationData: Codable {
     let id: String?
     let deviceId: String?
@@ -3468,3 +3469,53 @@ struct GeoLocationData: Codable {
     let vehicleDirection: String?
     let gpsTime: String?
 }
+
+
+
+
+struct StudentRouteDetailsResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [StudentRouteData]?
+}
+
+struct StudentRouteData: Codable {
+    let student_id: String?
+    let student_name: String?
+    let admission_no: String?
+    let route_id: String?
+    let route_name: String?
+    let stop_id: String?
+    let stop_name: String?
+    let latitude: String?
+    let longitude: String?
+    let landmark: String?
+    let vehicle_id: String?
+    let vehicle_no: String?
+    let tentative_pickup_time: String?
+    let tentative_drop_time: String?
+    var stopping_points: [StoppingPoint]?
+}
+
+struct StoppingPoint: Codable {
+    let vehicle_id: String?
+    let route_name: String?
+    let journey_type: String?
+    let start_time: String?
+    let end_time: String?
+    let working_days: [String]?
+    var stops: [Stops]?
+}
+
+struct Stops: Codable {
+    var  stop_id: String?
+    var stop_name: String?
+    var  stop_time: String?
+    var latitude: String?
+    var  longitude: String?
+    var  landmark: String?
+    var isCompleted : Bool?
+    var isCurrent : Bool?
+    
+}
+

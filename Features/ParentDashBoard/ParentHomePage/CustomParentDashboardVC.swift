@@ -584,7 +584,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                 showActivityLoader()
                 MenuRedirect.notifiactionBusRedrect(from:self)
             }else{
-                MenuRedirect.buslist(from: self, loginasType: loginAsType ?? 0, is_ownbustraking: true)
+                MenuRedirect.buslist(from: self, loginasType: loginAsType ?? 0, is_ownbustraking: childDetails?.gps_type == "dhundhoo" ? false : true)
             }
         default:
             let alert = UIAlertController(

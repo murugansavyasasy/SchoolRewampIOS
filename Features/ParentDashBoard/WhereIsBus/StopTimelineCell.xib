@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6-12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StopTimelineCell" rowHeight="120" id="KGk-i7-Jjw" customClass="StopTimelineCell" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="topLineView">
+                        <rect key="frame" x="32" y="0.0" width="3" height="16"/>
+                        <color key="backgroundColor" red="0.66666666669999997" green="0.82352941180000006" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="3" id="cns-topLine-w"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bottomLineView">
+                        <rect key="frame" x="32" y="52" width="3" height="68"/>
+                        <color key="backgroundColor" red="0.66666666669999997" green="0.82352941180000006" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="3" id="cns-bottomLine-w"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stepperCircle">
+                        <rect key="frame" x="16" y="16" width="36" height="36"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="numberLabel">
+                                <rect key="frame" x="14" y="9" width="8" height="18"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1764705882" green="0.50980392159999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="36" id="cns-stepper-w"/>
+                            <constraint firstAttribute="height" constant="36" id="cns-stepper-h"/>
+                            <constraint firstItem="numberLabel" firstAttribute="centerX" secondItem="stepperCircle" secondAttribute="centerX" id="cns-num-cx"/>
+                            <constraint firstItem="numberLabel" firstAttribute="centerY" secondItem="stepperCircle" secondAttribute="centerY" id="cns-num-cy"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="infoCardView">
+                        <rect key="frame" x="66" y="8" width="293" height="104"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cardStack">
+                                <rect key="frame" x="16" y="16" width="261" height="72"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="titleRow">
+                                        <rect key="frame" x="0.0" y="0.0" width="261" height="22"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nilgiri Campus" textAlignment="natural" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="stopNameLabel">
+                                                <rect key="frame" x="0.0" y="0.0" width="183" height="17"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                <color key="textColor" red="0.058823529409999999" green="0.098039215690000001" blue="0.1764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="badgeContainer">
+                                                <rect key="frame" x="191" y="0.0" width="70" height="22"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Stop" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="badgeLabel">
+                                                        <rect key="frame" x="8" y="4" width="54" height="14"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.18039215689999999" green="0.68627450980000004" blue="0.38823529410000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="22" id="cns-badge-h"/>
+                                                    <constraint firstItem="badgeLabel" firstAttribute="leading" secondItem="badgeContainer" secondAttribute="leading" constant="8" id="cns-badge-ld"/>
+                                                    <constraint firstItem="badgeLabel" firstAttribute="trailing" secondItem="badgeContainer" secondAttribute="trailing" constant="-8" id="cns-badge-tr"/>
+                                                    <constraint firstItem="badgeLabel" firstAttribute="centerY" secondItem="badgeContainer" secondAttribute="centerY" id="cns-badge-cy"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="timeRow">
+                                        <rect key="frame" x="0.0" y="30" width="261" height="17"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clock" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="timeIconImageView">
+                                                <rect key="frame" x="0.0" y="0.0" width="14" height="17"/>
+                                                <color key="tintColor" red="0.1764705882" green="0.50980392159999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="14" id="cns-timeIcon-w"/>
+                                                    <constraint firstAttribute="height" constant="14" id="cns-timeIcon-h"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="07:35 am" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="timeLabel">
+                                                <rect key="frame" x="20" y="0.0" width="241" height="17"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                                <color key="textColor" red="0.3921568627" green="0.43137254899999999" blue="0.50980392159999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="landmarkRow">
+                                        <rect key="frame" x="0.0" y="55" width="261" height="17"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="flag" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="landmarkIconImageView">
+                                                <rect key="frame" x="0.0" y="0.0" width="14" height="17"/>
+                                                <color key="tintColor" red="0.58823529409999997" green="0.62745098040000002" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="14" id="cns-landIcon-w"/>
+                                                    <constraint firstAttribute="height" constant="14" id="cns-landIcon-h"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prashanthi Homes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="landmarkLabel">
+                                                <rect key="frame" x="20" y="0.0" width="241" height="17"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                                <color key="textColor" red="0.3921568627" green="0.43137254899999999" blue="0.50980392159999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="cardStack" firstAttribute="leading" secondItem="infoCardView" secondAttribute="leading" constant="16" id="cns-cardStack-ld"/>
+                            <constraint firstItem="cardStack" firstAttribute="trailing" secondItem="infoCardView" secondAttribute="trailing" constant="-16" id="cns-cardStack-tr"/>
+                            <constraint firstItem="cardStack" firstAttribute="top" secondItem="infoCardView" secondAttribute="top" constant="16" id="cns-cardStack-tp"/>
+                            <constraint firstItem="cardStack" firstAttribute="bottom" secondItem="infoCardView" secondAttribute="bottom" constant="-16" id="cns-cardStack-bt"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="stepperCircle" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="cns-circle-ld"/>
+                    <constraint firstItem="stepperCircle" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="cns-circle-tp"/>
+                    <constraint firstItem="topLineView" firstAttribute="centerX" secondItem="stepperCircle" secondAttribute="centerX" id="cns-topLine-cx"/>
+                    <constraint firstItem="topLineView" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="cns-topLine-tp"/>
+                    <constraint firstItem="topLineView" firstAttribute="bottom" secondItem="stepperCircle" secondAttribute="top" id="cns-topLine-bt"/>
+                    <constraint firstItem="bottomLineView" firstAttribute="centerX" secondItem="stepperCircle" secondAttribute="centerX" id="cns-bottomLine-cx"/>
+                    <constraint firstItem="bottomLineView" firstAttribute="top" secondItem="stepperCircle" secondAttribute="bottom" id="cns-bottomLine-tp"/>
+                    <constraint firstItem="bottomLineView" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottom" id="cns-bottomLine-bt"/>
+                    <constraint firstItem="infoCardView" firstAttribute="leading" secondItem="stepperCircle" secondAttribute="trailing" constant="14" id="cns-info-ld"/>
+                    <constraint firstItem="infoCardView" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailing" constant="-16" id="cns-info-tr"/>
+                    <constraint firstItem="infoCardView" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="cns-info-tp"/>
+                    <constraint firstItem="infoCardView" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottom" constant="-8" id="cns-info-bt"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="badgeContainer" destination="badgeContainer" id="out-badgeC"/>
+                <outlet property="badgeLabel" destination="badgeLabel" id="out-badgeL"/>
+                <outlet property="bottomLineView" destination="bottomLineView" id="out-bottomL"/>
+                <outlet property="infoCardView" destination="infoCardView" id="out-infoC"/>
+                <outlet property="landmarkIconImageView" destination="landmarkIconImageView" id="out-landmarkI"/>
+                <outlet property="landmarkLabel" destination="landmarkLabel" id="out-landmarkL"/>
+                <outlet property="numberLabel" destination="numberLabel" id="out-numberL"/>
+                <outlet property="stepperCircle" destination="stepperCircle" id="out-circle"/>
+                <outlet property="stopNameLabel" destination="stopNameLabel" id="out-stopN"/>
+                <outlet property="timeIconImageView" destination="timeIconImageView" id="out-timeI"/>
+                <outlet property="timeLabel" destination="timeLabel" id="out-timeL"/>
+                <outlet property="topLineView" destination="topLineView" id="out-topL"/>
+            </connections>
+            <point key="canvasLocation" x="-32" y="10"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="clock" catalog="system" width="128" height="123"/>
+        <image name="flag" catalog="system" width="128" height="121"/>
+    </resources>
+</document>

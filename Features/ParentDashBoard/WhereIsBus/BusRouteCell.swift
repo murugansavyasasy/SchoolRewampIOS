@@ -72,7 +72,7 @@ class BusRouteCell: UITableViewCell {
         delegte?.livetrakingBtnAction(index: sender.tag)
     }
     
-    func configure(with route: student_routData) {
+    func configure(with route: StudentRouteData) {
         titleLabel.text = route.route_name
         routeNumberLabel.text = route.route_id
         rightBadgeLabel.text = route.vehicle_no
@@ -108,3 +108,4 @@ class BusRouteCell: UITableViewCell {
         trackButton.backgroundColor = UIColor(red: 45/255, green: 120/255, blue: 255/255, alpha: 1.0)
     }
 }
+

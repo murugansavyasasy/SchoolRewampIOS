@@ -26,7 +26,7 @@ class BusDetailsVC: UIViewController, RecentMoveDelegate {
     @IBOutlet weak var shareLocationButton: UIButton!
     
     // MARK: - Properties
-    var busStops: [BusStop] = []
+    var busStops: [Stops] = []
     var currentLocation: CLLocation?
     var delegate:RecentMoveDelegate?
     var busNumber: String = "Bus #42"
@@ -35,7 +35,8 @@ class BusDetailsVC: UIViewController, RecentMoveDelegate {
     var distance = "-- km"
     var speed = "-- km/h"
     var nextStop = "--"
-    
+    var fromStop = ""
+    var toStop = ""
     weak var liveCell: BusDetailsTVC?
     
     // MARK: - Lifecycle
@@ -86,9 +87,9 @@ class BusDetailsVC: UIViewController, RecentMoveDelegate {
         }
     }
     
-    private var previousStops: [BusStop] = []
+    private var previousStops: [Stops] = []
 
-    func updateStops(_ stops: [BusStop]) {
+    func updateStops(_ stops: [Stops]) {
 
         let oldStops = previousStops
         previousStops = stops
@@ -128,12 +129,12 @@ class BusDetailsVC: UIViewController, RecentMoveDelegate {
     }
     
     private func nextStopName() -> String {
-        if let currentStop = busStops.first(where: { $0.isCurrent }) {
-            return currentStop.stop_name
+        if let currentStop = busStops.first(where: { $0.isCurrent ?? false }) {
+            return currentStop.stop_name ?? ""
         }
         
-        if let nextStop = busStops.first(where: { !$0.isCompleted && !$0.isCurrent }) {
-            return nextStop.stop_name
+        if let nextStop = busStops.first(where: { !($0.isCompleted ?? false) && !($0.isCurrent ?? false) }) {
+            return nextStop.stop_name ?? ""
         }
         
         return nextStop
@@ -197,6 +198,8 @@ extension BusDetailsVC: UITableViewDataSource {
             cell.distanceLabel.text = distance
             cell.speedLabel.text = speed
             cell.nextStopLabel.text = nextStopName()
+            cell.fromStopLbl.text = fromStop
+            cell.toStoplbl.text = toStop
             cell.delegate = self
             cell.callDriverAction = { [weak self] in
                 self?.callDriver()
@@ -216,7 +219,6 @@ extension BusDetailsVC: UITableViewDataSource {
         
         let stop = busStops[indexPath.row]
         let isLast = indexPath.row == busStops.count - 1
-        
         cell.configure(with: stop, isLast: isLast)
         
         return cell
@@ -249,9 +251,9 @@ extension BusDetailsVC: UITableViewDelegate {
         
         let stop = busStops[indexPath.row]
         var statusText = "Upcoming"
-        if stop.isCompleted {
+        if stop.isCompleted ?? false {
             statusText = "Completed"
-        } else if stop.isCurrent {
+        } else if stop.isCurrent ?? false{
             statusText = "Current Stop"
         }
         

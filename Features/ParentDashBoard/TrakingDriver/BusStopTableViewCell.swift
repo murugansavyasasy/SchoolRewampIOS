@@ -31,12 +31,12 @@ class BusStopTableViewCell: UITableViewCell {
 
     // MARK: - Configure
 
-    func configure(with stop: BusStop, isLast: Bool) {
+    func configure(with stop: Stops, isLast: Bool) {
         stopNameLabel.text = stop.stop_name
         stopTimeLabel.text = stop.stop_time
         connectingLineView.isHidden = isLast
 
-        if stop.isCompleted {
+        if stop.isCompleted ?? false {
             statusIndicatorView.backgroundColor = .systemGreen
             statusIconLabel.text = "✓"
             statusIconLabel.textColor = .white
@@ -44,7 +44,7 @@ class BusStopTableViewCell: UITableViewCell {
             stopTimeLabel.textColor = .systemGray
             connectingLineView.backgroundColor = .systemGreen
 
-        } else if stop.isCurrent {
+        } else if stop.isCurrent ?? false{
             statusIndicatorView.backgroundColor = .systemOrange
             statusIconLabel.text = "●"
             statusIconLabel.textColor = .white

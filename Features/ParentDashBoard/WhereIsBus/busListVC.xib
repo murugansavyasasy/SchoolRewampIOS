@@ -89,10 +89,10 @@
                     <constraints>
                         <constraint firstItem="f2U-X8-C0q" firstAttribute="top" secondItem="VZJ-P1-U7F" secondAttribute="top" constant="10" id="432-O7-DlP"/>
                         <constraint firstItem="f2U-X8-C0q" firstAttribute="leading" secondItem="VZJ-P1-U7F" secondAttribute="leading" constant="10" id="DSF-X1-F5O"/>
+                        <constraint firstItem="0hy-jZ-oqv" firstAttribute="top" secondItem="f2U-X8-C0q" secondAttribute="bottom" id="F3W-N2-gRH"/>
                         <constraint firstItem="0hy-jZ-oqv" firstAttribute="leading" secondItem="VZJ-P1-U7F" secondAttribute="leading" id="Y6Z-jR-Bra"/>
                         <constraint firstAttribute="bottom" secondItem="0hy-jZ-oqv" secondAttribute="bottom" id="ddI-k1-ygm"/>
                         <constraint firstAttribute="trailing" secondItem="f2U-X8-C0q" secondAttribute="trailing" constant="10" id="ksR-k3-kzi"/>
-                        <constraint firstItem="0hy-jZ-oqv" firstAttribute="top" secondItem="f2U-X8-C0q" secondAttribute="bottom" id="nzJ-8i-YnU"/>
                         <constraint firstAttribute="trailing" secondItem="0hy-jZ-oqv" secondAttribute="trailing" id="qw8-d5-lou"/>
                     </constraints>
                 </view>
@@ -109,16 +109,16 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="VZJ-P1-U7F" secondAttribute="bottom" id="pvY-52-VmM"/>
                 <constraint firstItem="p0P-7Z-4Lf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ted-kM-5wC"/>
             </constraints>
-            <point key="canvasLocation" x="139" y="154"/>
+            <point key="canvasLocation" x="138.1679389312977" y="153.52112676056339"/>
         </view>
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <namedColor name="BackGroundClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
