@@ -108,6 +108,7 @@ struct StaffDetails: Codable {
     let school_address: String?
     let access_token: String?
     var isSelected: Bool?
+    let gps_type  : String?
 }
 
 struct ChildDetails: Codable {
@@ -139,6 +140,7 @@ struct ChildDetails: Codable {
     let academic_year_id: Int?
     let academic_year_name: String?
     let is_not_allow: Bool?
+    let gps_type  : String?
 }
 
 
@@ -3456,6 +3458,20 @@ struct GeoLocationResponse: Codable {
     let message: String?
     let data: [GeoLocationData]?
 }
+struct GeoLocationData: Codable {
+    let id: String?
+    let deviceId: String?
+    let vehicleId: String?
+    let latitude: String?
+    let longitude: String?
+    let speed: String?
+    let altitudeLevel: String?
+    let vehicleDirection: String?
+    let gpsTime: String?
+}
+
+
+
 
 struct StudentRouteDetailsResponse: Codable {
     let status: Bool?
@@ -3478,7 +3494,7 @@ struct StudentRouteData: Codable {
     let vehicle_no: String?
     let tentative_pickup_time: String?
     let tentative_drop_time: String?
-    let stopping_points: [StoppingPoint]?
+    var stopping_points: [StoppingPoint]?
 }
 
 struct StoppingPoint: Codable {
@@ -3488,24 +3504,18 @@ struct StoppingPoint: Codable {
     let start_time: String?
     let end_time: String?
     let working_days: [String]?
-    let stops: [Stops]?
+    var stops: [Stops]?
 }
 
 struct Stops: Codable {
-    let stop_id: String?
-    let stop_name: String?
-    let stop_time: String?
-    let latitude: String?
-    let longitude: String?
-    let landmark: String?
-struct GeoLocationData: Codable {
-    let id: String?
-    let deviceId: String?
-    let vehicleId: String?
-    let latitude: String?
-    let longitude: String?
-    let speed: String?
-    let altitudeLevel: String?
-    let vehicleDirection: String?
-    let gpsTime: String?
+    var  stop_id: String?
+    var stop_name: String?
+    var  stop_time: String?
+    var latitude: String?
+    var  longitude: String?
+    var  landmark: String?
+    var isCompleted : Bool?
+    var isCurrent : Bool?
+    
 }
+

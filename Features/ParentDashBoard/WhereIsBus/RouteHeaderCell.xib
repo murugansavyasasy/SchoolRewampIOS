@@ -485,7 +485,6 @@
                                                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </buttonConfiguration>
                                                                 <connections>
-                                                                    <action selector="findMyBusButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="TUH-Kt-0A9"/>
                                                                     <action selector="findmypickbusAct:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="vyo-J3-bOx"/>
                                                                 </connections>
                                                             </button>
@@ -501,7 +500,6 @@
                                                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </buttonConfiguration>
                                                                 <connections>
-                                                                    <action selector="findMyBusButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="mFH-hB-Nqx"/>
                                                                     <action selector="findmydropbusAct:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Nch-nZ-NKS"/>
                                                                 </connections>
                                                             </button>

@@ -222,9 +222,9 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         
                         self.pagecontroller.numberOfPages = details.frequently_used?.count ?? 0
                         self.filteredMenu = details.menus ?? []
-                        self.filteredMenu.append(
-                            MenuDetail(id: 205, name: "Live Bus Tracking", description: "Used to apply leave")
-                        )
+//                        self.filteredMenu.append(
+//                            MenuDetail(id: 205, name: "Live Bus Tracking", description: "Used to apply leave")
+//                        )
                         self.recentActiveMenuCollection.reloadData()
                         self.get_MenuCount() // 🔹 after menus loaded
                         user_inputs.menuList = self.menu_details.compactMap{$0.name}
@@ -584,7 +584,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                 showActivityLoader()
                 MenuRedirect.notifiactionBusRedrect(from:self)
             }else{
-                MenuRedirect.buslist(from: self, loginasType: loginAsType ?? 0, is_ownbustraking: true)
+                MenuRedirect.buslist(from: self, loginasType: loginAsType ?? 0, is_ownbustraking: childDetails?.gps_type == "dhundhoo" ? false : true)
             }
         default:
             let alert = UIAlertController(

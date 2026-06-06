@@ -17,88 +17,88 @@ class busListVC: UIViewController {
     var is_wonBustracking : Bool = false
   
     // Parsed Data Store
-    private var routeData: [StudentRouteData] = [StudentRouteData(
-        student_id: "10001",
-        student_name: "Arun Kumar",
-        admission_no: "SKV-001",
-        route_id: "101",
-        route_name: "Route A",
-        stop_id: "5001",
-        stop_name: "Anna Nagar Bus Stop",
-        latitude: "13.0878",
-        longitude: "80.2101",
-        landmark: "Near Anna Arch",
-        vehicle_id: "2001",
-        vehicle_no: "TN01AB1234",
-        tentative_pickup_time: "07:45 am",
-        tentative_drop_time: "04:45 pm",
-        stopping_points: [
-            StoppingPoint(
-                vehicle_id: "2001",
-                route_name: "Route A",
-                journey_type: "PICKING",
-                start_time: "07:30 am",
-                end_time: "08:00 am",
-                working_days: [
-                    "MONDAY",
-                    "TUESDAY",
-                    "WEDNESDAY",
-                    "THURSDAY",
-                    "FRIDAY"
-                ],
-                stops: [
-                    Stops(
-                        stop_id: "5000",
-                        stop_name: "School Campus",
-                        stop_time: "07:30 am",
-                        latitude: "13.0827",
-                        longitude: "80.2707",
-                        landmark: "Main Gate"
-                    ),
-                    Stops(
-                        stop_id: "5001",
-                        stop_name: "Anna Nagar Bus Stop",
-                        stop_time: "07:45 am",
-                        latitude: "13.0878",
-                        longitude: "80.2101",
-                        landmark: "Near Anna Arch"
-                    )
-                ]
-            ),
-            StoppingPoint(
-                vehicle_id: "2001",
-                route_name: "Route A",
-                journey_type: "DROPPING",
-                start_time: "04:30 pm",
-                end_time: "05:00 pm",
-                working_days: [
-                    "MONDAY",
-                    "TUESDAY",
-                    "WEDNESDAY",
-                    "THURSDAY",
-                    "FRIDAY"
-                ],
-                stops: [
-                    Stops(
-                        stop_id: "5000",
-                        stop_name: "School Campus",
-                        stop_time: "04:30 pm",
-                        latitude: "13.0827",
-                        longitude: "80.2707",
-                        landmark: "Main Gate"
-                    ),
-                    Stops(
-                        stop_id: "5001",
-                        stop_name: "Anna Nagar Bus Stop",
-                        stop_time: "04:45 pm",
-                        latitude: "13.0878",
-                        longitude: "80.2101",
-                        landmark: "Near Anna Arch"
-                    )
-                ]
-            )
-        ]
-    )]
+//    private var routeData: [StudentRouteData] = [StudentRouteData(
+//        student_id: "10001",
+//        student_name: "Arun Kumar",
+//        admission_no: "SKV-001",
+//        route_id: "101",
+//        route_name: "Route A",
+//        stop_id: "5001",
+//        stop_name: "Anna Nagar Bus Stop",
+//        latitude: "13.0878",
+//        longitude: "80.2101",
+//        landmark: "Near Anna Arch",
+//        vehicle_id: "2001",
+//        vehicle_no: "TN01AB1234",
+//        tentative_pickup_time: "07:45 am",
+//        tentative_drop_time: "04:45 pm",
+//        stopping_points: [
+//            StoppingPoint(
+//                vehicle_id: "2001",
+//                route_name: "Route A",
+//                journey_type: "PICKING",
+//                start_time: "07:30 am",
+//                end_time: "08:00 am",
+//                working_days: [
+//                    "MONDAY",
+//                    "TUESDAY",
+//                    "WEDNESDAY",
+//                    "THURSDAY",
+//                    "FRIDAY"
+//                ],
+//                stops: [
+//                    Stops(
+//                        stop_id: "5000",
+//                        stop_name: "School Campus",
+//                        stop_time: "07:30 am",
+//                        latitude: "13.0827",
+//                        longitude: "80.2707",
+//                        landmark: "Main Gate"
+//                    ),
+//                    Stops(
+//                        stop_id: "5001",
+//                        stop_name: "Anna Nagar Bus Stop",
+//                        stop_time: "07:45 am",
+//                        latitude: "13.0878",
+//                        longitude: "80.2101",
+//                        landmark: "Near Anna Arch"
+//                    )
+//                ]
+//            ),
+//            StoppingPoint(
+//                vehicle_id: "2001",
+//                route_name: "Route A",
+//                journey_type: "DROPPING",
+//                start_time: "04:30 pm",
+//                end_time: "05:00 pm",
+//                working_days: [
+//                    "MONDAY",
+//                    "TUESDAY",
+//                    "WEDNESDAY",
+//                    "THURSDAY",
+//                    "FRIDAY"
+//                ],
+//                stops: [
+//                    Stops(
+//                        stop_id: "5000",
+//                        stop_name: "School Campus",
+//                        stop_time: "04:30 pm",
+//                        latitude: "13.0827",
+//                        longitude: "80.2707",
+//                        landmark: "Main Gate"
+//                    ),
+//                    Stops(
+//                        stop_id: "5001",
+//                        stop_name: "Anna Nagar Bus Stop",
+//                        stop_time: "04:45 pm",
+//                        latitude: "13.0878",
+//                        longitude: "80.2101",
+//                        landmark: "Near Anna Arch"
+//                    )
+//                ]
+//            )
+//        ]
+//    )]
     
     private var routeDataList: [StudentRouteData] = []
     
@@ -201,16 +201,15 @@ class busListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        parseAPIPayload()
         setupTableView()
-        tv.reloadData()
+
         let name = studentDetails?.name ?? ""
         let standard = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
         studentname.configureAsBackTitle(firstLine: name, secondLine: standard)
         
    
         
-//        GetBusRoutDetails()
+        GetBusRoutDetails()
        
     }
 
@@ -236,7 +235,7 @@ class busListVC: UIViewController {
         
         do {
             let response = try JSONDecoder().decode(StudentRouteDetailsResponse.self, from: data)
-            self.routeDataList = response.data ?? []
+           
         } catch {
             print("Error parsing student route details JSON: \(error)")
         }
@@ -253,14 +252,14 @@ class busListVC: UIViewController {
             case .success(let Success):
                 DispatchQueue.main.async {[self] in
                     if Success.status ?? false{
-                        routeData = Success.data ?? []
+                        self.routeDataList = Success.data ?? []
+                 
                         tv.reloadData()
                     }else{
-                        tv.reloadData()
-                       
-//                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: Success.message ?? "", on: self) {
-//                            self.dismiss(animated: true)
-//                        }
+                    
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: Success.message ?? "", on: self) {
+                            self.dismiss(animated: true)
+                        }
                     }
                     
                 }
@@ -275,8 +274,7 @@ class busListVC: UIViewController {
             }
         }
     }
-    
-    
+
 }
 
 
@@ -284,23 +282,48 @@ class busListVC: UIViewController {
 extension busListVC: UITableViewDataSource, UITableViewDelegate {
     
     private func findMyBus() {
-        let vc = BusTrakingVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-    }
-    
-    private func dropfunction(){
         let vc = whereismybusVc(nibName: nil, bundle: nil)
         vc.loginasType = loginasType
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
+        
     }
     
-    private func pickfunction(){
-        let vc = whereismybusVc(nibName: nil, bundle: nil)
-        vc.loginasType = loginasType
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+    private func dropfunction(index : Int){
+        guard let stoppingPoint = routeDataList[index].stopping_points?.last else {
+            return
+        }
+        
+        if stoppingPoint.journey_type == "DROPPING" {
+
+            let vc = BusTrakingVC(nibName: nil, bundle: nil)
+            vc.stops = stoppingPoint.stops ?? []
+            vc.vehicleId =  routeDataList[index].vehicle_no
+            vc.routeId = routeDataList[index].route_id
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+
+        }else{
+            
+        }
+    }
+    
+    private func pickfunction(index:Int){
+        guard let stoppingPoint = routeDataList[index].stopping_points?.first else {
+               return
+           }
+
+           if stoppingPoint.journey_type == "PICKING" {
+
+               let vc = BusTrakingVC(nibName: nil, bundle: nil)
+               vc.stops = stoppingPoint.stops ?? []
+               vc.vehicleId = routeDataList[index].vehicle_no
+               vc.routeId = routeDataList[index].route_id
+               vc.modalPresentationStyle = .fullScreen
+               present(vc, animated: true)
+
+           }
+       
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -378,13 +401,13 @@ extension busListVC: UITableViewDataSource, UITableViewDelegate {
             guard let self = self else { return }
             self.findMyBus()
         }
-        cell.onFindPickupMyBus = { [weak self] in
+        cell.onFindPickupMyBus = { [weak self] index in
             guard let self = self else { return }
-            self.pickfunction()
+            self.pickfunction(index: index)
         }
-        cell.onFindDropMyBus = { [weak self] in
+        cell.onFindDropMyBus = { [weak self] index in
             guard let self = self else { return }
-            self.dropfunction()
+            self.dropfunction(index: index)
         }
         
         cell.onSizeChanged = { [weak tableView] in

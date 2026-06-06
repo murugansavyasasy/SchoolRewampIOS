@@ -52,8 +52,8 @@ class RouteHeaderCell: UITableViewCell, UITableViewDataSource, UITableViewDelega
     var onTogglePickup: (() -> Void)?
     var onToggleDrop: (() -> Void)?
     var onFindMyBus: (() -> Void)?
-    var onFindPickupMyBus: (() -> Void)?
-    var onFindDropMyBus: (() -> Void)?
+    var onFindPickupMyBus: ((Int) -> Void)?
+    var onFindDropMyBus: ((Int) -> Void)?
     var onSizeChanged: (() -> Void)?
     private var pickupStops: [Stops] = []
     private var dropStops: [Stops] = []
@@ -119,10 +119,10 @@ class RouteHeaderCell: UITableViewCell, UITableViewDataSource, UITableViewDelega
     }
     
     @IBAction func findmydropbusAct(_ sender: UIButton) {
-        onFindDropMyBus?()
+        onFindDropMyBus?(sender.tag)
     }
     @IBAction func findmypickbusAct(_ sender: UIButton) {
-        onFindPickupMyBus?()
+        onFindPickupMyBus?(sender.tag)
     }
     private func setupNestedTableView(_ tableView: DynamicHeightTableView) {
         tableView.delegate = self

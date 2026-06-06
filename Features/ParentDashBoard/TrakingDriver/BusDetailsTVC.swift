@@ -11,6 +11,9 @@ protocol RecentMoveDelegate{
 }
 
 class BusDetailsTVC: UITableViewCell {
+    
+    @IBOutlet weak var toStoplbl: UILabel!
+    @IBOutlet weak var fromStopLbl: UILabel!
     @IBOutlet weak var busdetailsFullView: UIView!
     @IBOutlet weak var busspeedFullView: UIView!
     @IBOutlet weak var busIconButton: UIButton!
@@ -47,7 +50,7 @@ class BusDetailsTVC: UITableViewCell {
                    eta: String,
                    distance: String,
                    speed: String,
-                   nextStop: String) {
+                   nextStop: String,fromstop:String,tostop:String) {
 
         busNumberLabel.text = busNumber
         busRouteLabel.text = route
@@ -55,6 +58,8 @@ class BusDetailsTVC: UITableViewCell {
         distanceLabel.text = distance
         speedLabel.text = speed
         nextStopLabel.text = nextStop
+        fromStopLbl.text = fromstop
+        toStoplbl.text = tostop
     }
     @IBAction func callDriver(_ sender: UIButton) {
         callDriverAction?()

@@ -22,32 +22,12 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     
     @IBOutlet weak var mapView: MLNMapView!
     
-    var stops: [BusStop] = [
-        BusStop(stop_id: "1", stop_name: "Villupuram (Stop 1)", stop_time: "09:00",
-                latitude: 13.0418, longitude: 80.2341,
-                landmark: ""),
-        
-        BusStop(stop_id: "2", stop_name: "Villupuram J.N (Stop 2)", stop_time: "09:05",
-                latitude: 13.0350, longitude: 80.2360,
-                landmark: ""),
-        
-        BusStop(stop_id: "3", stop_name: "Ulundurpet J.N (Stop 3)", stop_time: "09:10",
-                latitude: 13.0280, longitude: 80.2300,
-                landmark: ""),
-        
-        BusStop(stop_id: "4", stop_name: "Ulundurpet Bus Stand (Stop 4)", stop_time: "09:15",
-                latitude: 13.0109, longitude: 80.2120,
-                landmark: ""),
-        
-        BusStop(stop_id: "5", stop_name: "Ulundurpet (Stop 5)", stop_time: "09:20",
-                latitude: 12.9941, longitude: 80.1709,
-                landmark: "")
-    ]
+    var stops: [Stops] = []
     
     
     var stopCoordinates: [CLLocationCoordinate2D] {
         stops.compactMap {
-            guard let lat = $0.latitude, let lon = $0.longitude else { return nil }
+            guard let lat = Double($0.latitude ?? ""), let lon = Double($0.longitude ?? "") else { return nil }
             return CLLocationCoordinate2D(latitude: lat, longitude: lon)
         }
     }
@@ -77,8 +57,8 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     var deviceId: String?
     var vehicleId: String?
     var routeId: String?
-    var destinationLatitude: String = "18.66769"
-    var destinationLongitude: String = "78.11122"
+    var destinationLatitude: String = ""
+    var destinationLongitude: String = ""
     var isFetchingLocation = false
     var hasShownApiError = false
     var hasReachedDestination = false
@@ -88,6 +68,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("stopsssss",stops)
         if !stops.isEmpty {
             stops[0].isCurrent = true
         }
@@ -97,7 +78,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         showUserPin()
         fetchRoadRoute()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.async{
             self.presentBottomSheet()
         }
         
@@ -120,11 +101,11 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         guard !isFetchingLocation else { return }
         
         isFetchingLocation = true
-        
+        let secureID = SecureIDManager.getSecureID()
         let parameter: [String: Any] = [
-            "device_id": deviceId ?? "869604084190312",
-            "vehicle_id": vehicleId ?? "MA1HB2KWHT3A10680",
-            "route_id": routeId ?? "748945"
+            "device_id": secureID,
+            "vehicle_id": vehicleId ?? "",
+            "route_id": routeId ?? ""
         ]
         
         APIService.shared.makeApi(
@@ -229,6 +210,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
                             etaMinutes: etaMinutes,
                             distanceKm: distanceKm
                         )
+                        
                     }else{
                         
                         let liveData = BusLiveData(
@@ -342,7 +324,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         updateStopStatusFromRoute()
 
         // ✅ Once destination is reached, permanently mark it
-        if !hasReachedDestination && distanceKm > 0 && distanceKm < 0.10 {
+        if !hasReachedDestination && distanceKm > 0 && distanceKm < 0.20 {
             hasReachedDestination = true
         }
 
@@ -351,25 +333,33 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
             if timer != nil {
                 timer?.invalidate()
                 timer = nil
-                showTripCompletePopup()
+                
+                if let detailsVC = detailsVC,
+                   detailsVC.presentingViewController != nil {
+                    detailsVC.dismiss(animated: true){ [weak self] in
+                        self?.showTripCompletePopup()
+                    }
+                }else{
+                    showTripCompletePopup()
+                }
             }
 
-            if let detailsVC = detailsVC, detailsVC.isViewLoaded {
-                detailsVC.updateStops(stops)
-                let liveData = BusLiveData(
-                    speed: 0,
-                    etaMinutes: 0,
-                    distanceKm: 0,
-                    nextStop: "Destination Reached",
-                    currentStopIndex: currentStopIndex
-                )
-                detailsVC.updateLiveData(liveData)
-            }
+//            if let detailsVC = detailsVC, detailsVC.isViewLoaded {
+//                detailsVC.updateStops(stops)
+//                let liveData = BusLiveData(
+//                    speed: 0,
+//                    etaMinutes: 0,
+//                    distanceKm: 0,
+//                    nextStop: "Destination Reached",
+//                    currentStopIndex: currentStopIndex
+//                )
+//                detailsVC.updateLiveData(liveData)
+//            }
             return
         }
 
         let speed = 40.0
-        let nextStopName = stops[currentStopIndex].stop_name
+        let nextStopName = stops[currentStopIndex].stop_name ?? ""
 
         let liveData = BusLiveData(
             speed: speed,
@@ -521,7 +511,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mapView.styleURL = URL(
             string:
-                "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+                "https://tiles.openfreemap.org/styles/bright"
         )
         
         mapView.delegate = self
@@ -539,8 +529,8 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
                  didFinishLoading style: MLNStyle) {
         
         guard let firstStop = stops.first,
-              let lat = firstStop.latitude,
-              let lon = firstStop.longitude else { return }
+              let lat = Double(firstStop.latitude ?? "0.0"),
+              let lon = Double(firstStop.longitude ?? "0.0") else { return }
         
         mapView.setCenter(
             CLLocationCoordinate2D(latitude: lat, longitude: lon),
@@ -665,6 +655,8 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     func presentBottomSheet() {
         let vc = BusDetailsVC()
         detailsVC = vc
+        vc.fromStop = stops.first?.stop_name ?? ""
+        vc.toStop = stops.last?.stop_name ?? ""
         vc.delegate = self
         if let sheet = vc.sheetPresentationController {
             if #available(iOS 16.0, *) {
@@ -923,16 +915,17 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     }
     
     @objc func dismissTripComplete() {
-        for subview in view.subviews {
-            if subview.tag == 999 || subview.backgroundColor == .systemBackground {
-                UIView.animate(withDuration: 0.3, animations: {
-                    subview.alpha = 0
-                    subview.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-                }) { _ in
-                    subview.removeFromSuperview()
-                }
-            }
-        }
+//        for subview in view.subviews {
+//            if subview.tag == 999 || subview.backgroundColor == .systemBackground {
+//                UIView.animate(withDuration: 0.3, animations: {
+//                    subview.alpha = 0
+//                    subview.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+//                }) { _ in
+//                    subview.removeFromSuperview()
+//                }
+//            }
+//        }
+        dismiss(animated: true)
     }
 }
 
@@ -1086,22 +1079,12 @@ extension BusTrakingVC: UIAdaptivePresentationControllerDelegate {
 }
 
 
-struct BusStop: Codable {
-    let stop_id: String
-    let stop_name: String
-    let stop_time: String
-    let latitude: Double?
-    let longitude: Double?
-    var landmark: String
-    var isCompleted: Bool = false
-    var isCurrent: Bool = false
-}
 
-extension BusStop {
+extension Stops {
     var coordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2D(
-            latitude: latitude ?? 0,
-            longitude: longitude ?? 0
+            latitude: Double(latitude ?? "") ?? 0,
+            longitude:  Double(longitude ?? "" ) ?? 0
         )
     }
 }
