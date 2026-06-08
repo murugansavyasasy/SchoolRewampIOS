@@ -711,8 +711,11 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         
         guard !path.isEmpty else { return }
         
-        let urlString = "https://router.project-osrm.org/route/v1/driving/\(path)?overview=full&geometries=geojson"
-        //        let urlString = "http://192.168.1.5:5001/route/v1/driving/\(path)?overview=full&geometries=geojson"
+//        let urlString = "https://router.project-osrm.org/route/v1/driving/\(path)?overview=full&geometries=geojson"
+        
+        let urlString = "  http://192.168.6.87:5000/route/v1/driving/\(path)?overview=false"
+        
+    
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
