@@ -10,7 +10,6 @@ import CoreLocation
 
 class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     
-    
     func recentMove(_ recent: Bool) {
         guard recent else { return }
         
@@ -23,8 +22,6 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     @IBOutlet weak var mapView: MLNMapView!
     
     var stops: [Stops] = []
-    
-    
     var stopCoordinates: [CLLocationCoordinate2D] {
         stops.compactMap {
             guard let lat = Double($0.latitude ?? ""), let lon = Double($0.longitude ?? "") else { return nil }
@@ -44,14 +41,13 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     var remainingLayer: MLNLineStyleLayer?
     var routeLayersSetup = false
     var shouldStartBusAfterStyleLoad = false
-    
+
     var busIndex = 0
     var timer: Timer?
     var userHasZoomed = false
     var isRecenterActive = true
     var currentStopIndex = 0
     var stopRouteIndices: [Int] = []
-    
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var latestGeoLocation: GeoLocationData?
     var deviceId: String?
@@ -64,6 +60,8 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     var hasReachedDestination = false
     var maxBusIndexReached = 0
     var isBusOnRoute = false
+    private var hasShownBottomSheet = false
+    var lastLiveData: BusLiveData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,10 +75,6 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         addStopPins()
         showUserPin()
         fetchRoadRoute()
-        
-        DispatchQueue.main.async{
-            self.presentBottomSheet()
-        }
         
     }
     
@@ -97,17 +91,17 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     
     
     func getLatestGeoLocation() {
-        
+
         guard !isFetchingLocation else { return }
         
         isFetchingLocation = true
         let secureID = SecureIDManager.getSecureID()
         let parameter: [String: Any] = [
-            "device_id": secureID,
+            "device_id": "ea973ebc50a1f536",//secureID,
             "vehicle_id": vehicleId ?? "",
             "route_id": routeId ?? ""
         ]
-        
+
         APIService.shared.makeApi(
             url: ServiceUrl.get_latest_geo_location,
             parameters: parameter,
@@ -115,179 +109,131 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
             token: studentDetails?.access_token ?? "",
             isBaseUrl: true
         ) { [weak self] (result: Result<GeoLocationResponse, Error>) in
-            
+
             guard let self = self else { return }
-            
+
             DispatchQueue.main.async {
-                
+
                 self.isFetchingLocation = false
-                
+
                 switch result {
-                    
+
                 case .success(let response):
-                    
-                    if response.status == true{
-                        
+
+                    if response.status == true {
+
                         guard let latest = response.data?.first else {
-                            
-                            let liveData = BusLiveData(
-                                speed: 0,
-                                etaMinutes: 0,
-                                distanceKm: 0,
-                                nextStop: "Location Unavailable",
-                                currentStopIndex: self.currentStopIndex
-                            )
-                            
-                            if let detailsVC = self.detailsVC, detailsVC.isViewLoaded {
-                                detailsVC.updateStops(self.stops)
-                                detailsVC.updateLiveData(liveData)
-                            }
-                            
+                            self.sendUnavailableData()
                             return
                         }
-                        
+
                         self.latestGeoLocation = latest
-                        
+
                         guard
                             let latString = latest.latitude,
                             let lonString = latest.longitude,
                             let latitude = Double(latString),
                             let longitude = Double(lonString)
                         else {
-                            
-                            let liveData = BusLiveData(
-                                speed: 0,
-                                etaMinutes: 0,
-                                distanceKm: 0,
-                                nextStop: "Location Unavailable",
-                                currentStopIndex: self.currentStopIndex
-                            )
-                            
-                            if let detailsVC = self.detailsVC, detailsVC.isViewLoaded {
-                                detailsVC.updateStops(self.stops)
-                                detailsVC.updateLiveData(liveData)
-                            }
+                            self.sendUnavailableData()
                             return
                         }
-                        
+
                         let currentCoord = CLLocationCoordinate2D(
                             latitude: latitude,
                             longitude: longitude
                         )
-                        
+
+
                         guard
-                            let destinationLatitude = Double(self.destinationLatitude),
-                            let destinationLongitude = Double(self.destinationLongitude)
+                            let destLat = Double(self.destinationLatitude),
+                            let destLon = Double(self.destinationLongitude)
                         else {
-                            
-                            self.updateBusLocation(
-                                currentCoord,
-                                etaMinutes: 0,
-                                distanceKm: 0
-                            )
-                            
+                            self.updateBusLocation(currentCoord, etaMinutes: 0, distanceKm: 0)
                             return
                         }
-                        
+
                         let destinationCoord = CLLocationCoordinate2D(
-                            latitude: destinationLatitude,
-                            longitude: destinationLongitude
+                            latitude: destLat,
+                            longitude: destLon
                         )
-                        
-                        let distanceKm = self.distanceBetween(
-                            currentCoord,
-                            destinationCoord
-                        )
-                        
+
+                        let distanceKm = self.distanceBetween(currentCoord, destinationCoord)
                         let speed = 40.0
-                        
-                        let etaMinutes = distanceKm > 0
-                        ? Int((distanceKm / speed) * 60)
-                        : 0
-                        
+                        let etaMinutes = distanceKm > 0 ? Int((distanceKm / speed) * 60) : 0
+
                         self.updateBusLocation(
                             currentCoord,
                             etaMinutes: etaMinutes,
                             distanceKm: distanceKm
                         )
-                        
-                    }else{
-                        
-                        let liveData = BusLiveData(
-                            speed: 0,
-                            etaMinutes: 0,
-                            distanceKm: 0,
-                            nextStop: "Location Unavailable",
-                            currentStopIndex: self.currentStopIndex
-                        )
-                        
-                        if let detailsVC = self.detailsVC, detailsVC.isViewLoaded {
-                            detailsVC.updateStops(self.stops)
-                            detailsVC.updateLiveData(liveData)
-                        }
-                        
+
+                    } else {
+
+                        // ✅ API status false — show alert, dismiss page
                         guard !self.hasShownApiError else { return }
-                        
                         self.hasShownApiError = true
                         self.timer?.invalidate()
                         self.timer = nil
-                        
+
                         let alert = UIAlertController(
                             title: "Unable to Track Bus",
                             message: response.message ?? "Unable to fetch bus location.",
                             preferredStyle: .alert
                         )
-                        
                         alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-                            
-                            self.presentedViewController?.dismiss(animated: true) {
-                                self.dismiss(animated: true)
-                            }
+                            self.detailsVC?.dismiss(animated: false)
+                            self.dismiss(animated: true)
                         })
-                        
-                        self.detailsVC?.present(alert, animated: true)
+                        self.present(alert, animated: true)
                     }
-                    
+
                 case .failure(let error):
-                    
+
+                    // ✅ API failure — show alert, dismiss page
                     print("❌ Location API Error:", error.localizedDescription)
-                    
-                    let liveData = BusLiveData(
-                        speed: 0,
-                        etaMinutes: 0,
-                        distanceKm: 0,
-                        nextStop: "Location Unavailable",
-                        currentStopIndex: self.currentStopIndex
-                    )
-                    
-                    if let detailsVC = self.detailsVC, detailsVC.isViewLoaded {
-                        detailsVC.updateStops(self.stops)
-                        detailsVC.updateLiveData(liveData)
-                    }
-                    
+
                     guard !self.hasShownApiError else { return }
-                    
                     self.hasShownApiError = true
                     self.timer?.invalidate()
                     self.timer = nil
-                    
+
                     let alert = UIAlertController(
                         title: "Unable to Track Bus",
                         message: error.localizedDescription,
                         preferredStyle: .alert
                     )
-                    
                     alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-                        
-                        self.presentedViewController?.dismiss(animated: true) {
-                            self.dismiss(animated: true)
-                        }
+                        self.detailsVC?.dismiss(animated: false)
+                        self.dismiss(animated: true)
                     })
-                    
-                    self.detailsVC?.present(alert, animated: true)
+                    self.present(alert, animated: true)
                 }
             }
         }
+    }
+    
+    private func sendUnavailableData() {
+        let liveData = BusLiveData(
+            speed: 0,
+            etaMinutes: 0,
+            distanceKm: 0,
+            nextStop: "Location Unavailable",
+            currentStopIndex: currentStopIndex
+        )
+        if let detailsVC = detailsVC, detailsVC.isViewLoaded {
+            detailsVC.updateStops(stops)
+            detailsVC.updateLiveData(liveData)
+        }
+    }
+    
+    func presentBottomSheetIfNeeded() {
+        guard !hasShownBottomSheet else { return }
+        guard !hasReachedDestination else { return }
+        guard currentStopIndex < stops.count else { return }
+        
+        hasShownBottomSheet = true
+        presentBottomSheet()
     }
     
     func calculateStopRouteIndices() {
@@ -323,7 +269,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
 
         updateStopStatusFromRoute()
 
-        // ✅ Once destination is reached, permanently mark it
+        // ✅ Update destination flag first
         if !hasReachedDestination && distanceKm > 0 && distanceKm < 0.20 {
             hasReachedDestination = true
         }
@@ -333,30 +279,25 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
             if timer != nil {
                 timer?.invalidate()
                 timer = nil
-                
-                if let detailsVC = detailsVC,
+
+                if hasShownBottomSheet,
+                   let detailsVC = detailsVC,
                    detailsVC.presentingViewController != nil {
-                    detailsVC.dismiss(animated: true){ [weak self] in
+                    // ✅ Dismiss bottom sheet first, then show popup
+                    detailsVC.dismiss(animated: true) { [weak self] in
                         self?.showTripCompletePopup()
                     }
-                }else{
+                } else {
+                    // ✅ No bottom sheet shown — show popup directly
                     showTripCompletePopup()
                 }
             }
-
-//            if let detailsVC = detailsVC, detailsVC.isViewLoaded {
-//                detailsVC.updateStops(stops)
-//                let liveData = BusLiveData(
-//                    speed: 0,
-//                    etaMinutes: 0,
-//                    distanceKm: 0,
-//                    nextStop: "Destination Reached",
-//                    currentStopIndex: currentStopIndex
-//                )
-//                detailsVC.updateLiveData(liveData)
-//            }
             return
         }
+
+        // ✅ Only reaches here if trip is NOT complete
+        // So bottom sheet will only show if trip is active
+        presentBottomSheetIfNeeded()
 
         let speed = 40.0
         let nextStopName = stops[currentStopIndex].stop_name ?? ""
@@ -368,6 +309,8 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
             nextStop: nextStopName,
             currentStopIndex: currentStopIndex
         )
+        
+        lastLiveData = liveData
 
         if let detailsVC = detailsVC, detailsVC.isViewLoaded {
             detailsVC.updateStops(stops)
@@ -658,6 +601,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         vc.fromStop = stops.first?.stop_name ?? ""
         vc.toStop = stops.last?.stop_name ?? ""
         vc.delegate = self
+
         if let sheet = vc.sheetPresentationController {
             if #available(iOS 16.0, *) {
                 sheet.detents = [
@@ -665,17 +609,23 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
                     .medium(),
                     .large()
                 ]
-            } else {
-                // Fallback on earlier versions
             }
             sheet.selectedDetentIdentifier = .medium
             sheet.prefersGrabberVisible = true
             sheet.largestUndimmedDetentIdentifier = .large
         }
-        
+
         vc.isModalInPresentation = true
         vc.presentationController?.delegate = self
-        present(vc, animated: true)
+
+        // ✅ Push data once sheet is fully presented
+        present(vc, animated: true) { [weak self] in
+            guard let self = self else { return }
+            vc.updateStops(self.stops)
+            if let liveData = self.lastLiveData {
+                vc.updateLiveData(liveData)
+            }
+        }
     }
     
     // MARK: — Stop Pins
@@ -849,7 +799,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
             x: (view.bounds.width - width) / 2,
             y: (view.bounds.height - height) / 2,
             width: width,
-            height: height
+            height: height - 50
         ))
         
         container.backgroundColor = .systemBackground
@@ -859,6 +809,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         container.layer.shadowOffset = CGSize(width: 0, height: 10)
         container.layer.shadowRadius = 20
         container.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+        container.tag = 1998
         
         let iconSize: CGFloat = 80
         let iconView = UIView(frame: CGRect(
@@ -894,15 +845,15 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         messageLabel.numberOfLines = 2
         container.addSubview(messageLabel)
         
-        let statsLabel = UILabel(frame: CGRect(x: 20, y: 260, width: width - 40, height: 30))
-        let distance = String(format: "%.1f", Double(roadCoords.count) * 0.01)
-        statsLabel.text = "📍 Distance: ~\(distance) km"
-        statsLabel.font = UIFont.systemFont(ofSize: 14)
-        statsLabel.textAlignment = .center
-        statsLabel.textColor = .secondaryLabel
-        container.addSubview(statsLabel)
+//        let statsLabel = UILabel(frame: CGRect(x: 20, y: 260, width: width - 40, height: 30))
+//        let distance = String(format: "%.1f", Double(roadCoords.count) * 0.01)
+//        statsLabel.text = "📍 Distance: ~\(distance) km"
+//        statsLabel.font = UIFont.systemFont(ofSize: 14)
+//        statsLabel.textAlignment = .center
+//        statsLabel.textColor = .secondaryLabel
+//        container.addSubview(statsLabel)
         
-        let doneButton = UIButton(frame: CGRect(x: 30, y: 310, width: width - 60, height: 50))
+        let doneButton = UIButton(frame: CGRect(x: 30, y: 280, width: width - 60, height: 50))
         doneButton.setTitle("Done", for: .normal)
         doneButton.setTitleColor(.white, for: .normal)
         doneButton.backgroundColor = .systemBlue
@@ -915,17 +866,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     }
     
     @objc func dismissTripComplete() {
-//        for subview in view.subviews {
-//            if subview.tag == 999 || subview.backgroundColor == .systemBackground {
-//                UIView.animate(withDuration: 0.3, animations: {
-//                    subview.alpha = 0
-//                    subview.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-//                }) { _ in
-//                    subview.removeFromSuperview()
-//                }
-//            }
-//        }
-        dismiss(animated: true)
+        presentingViewController?.dismiss(animated: true)
     }
 }
 
