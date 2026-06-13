@@ -225,7 +225,7 @@ class ViewLessonVC: UIViewController, SelectedId {
             url: ServiceUrl.lms_api_lesson_plan_get_data_for_add,
             parameters: param,
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? "", isBaseUrl: false
+            token: staffDetails?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<LessonEditResponse, Error>) in
             
             DispatchQueue.main.async { [weak self] in

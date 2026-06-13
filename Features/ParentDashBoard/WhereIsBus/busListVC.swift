@@ -15,188 +15,12 @@ class busListVC: UIViewController {
     var StaffDetails = UserDefaultFileManager.get_staff_Details()
     var loginasType : Int?
     var is_wonBustracking : Bool = false
-  
-    // Parsed Data Store
-//    private var routeData: [StudentRouteData] = [StudentRouteData(
-//        student_id: "10001",
-//        student_name: "Arun Kumar",
-//        admission_no: "SKV-001",
-//        route_id: "101",
-//        route_name: "Route A",
-//        stop_id: "5001",
-//        stop_name: "Anna Nagar Bus Stop",
-//        latitude: "13.0878",
-//        longitude: "80.2101",
-//        landmark: "Near Anna Arch",
-//        vehicle_id: "2001",
-//        vehicle_no: "TN01AB1234",
-//        tentative_pickup_time: "07:45 am",
-//        tentative_drop_time: "04:45 pm",
-//        stopping_points: [
-//            StoppingPoint(
-//                vehicle_id: "2001",
-//                route_name: "Route A",
-//                journey_type: "PICKING",
-//                start_time: "07:30 am",
-//                end_time: "08:00 am",
-//                working_days: [
-//                    "MONDAY",
-//                    "TUESDAY",
-//                    "WEDNESDAY",
-//                    "THURSDAY",
-//                    "FRIDAY"
-//                ],
-//                stops: [
-//                    Stops(
-//                        stop_id: "5000",
-//                        stop_name: "School Campus",
-//                        stop_time: "07:30 am",
-//                        latitude: "13.0827",
-//                        longitude: "80.2707",
-//                        landmark: "Main Gate"
-//                    ),
-//                    Stops(
-//                        stop_id: "5001",
-//                        stop_name: "Anna Nagar Bus Stop",
-//                        stop_time: "07:45 am",
-//                        latitude: "13.0878",
-//                        longitude: "80.2101",
-//                        landmark: "Near Anna Arch"
-//                    )
-//                ]
-//            ),
-//            StoppingPoint(
-//                vehicle_id: "2001",
-//                route_name: "Route A",
-//                journey_type: "DROPPING",
-//                start_time: "04:30 pm",
-//                end_time: "05:00 pm",
-//                working_days: [
-//                    "MONDAY",
-//                    "TUESDAY",
-//                    "WEDNESDAY",
-//                    "THURSDAY",
-//                    "FRIDAY"
-//                ],
-//                stops: [
-//                    Stops(
-//                        stop_id: "5000",
-//                        stop_name: "School Campus",
-//                        stop_time: "04:30 pm",
-//                        latitude: "13.0827",
-//                        longitude: "80.2707",
-//                        landmark: "Main Gate"
-//                    ),
-//                    Stops(
-//                        stop_id: "5001",
-//                        stop_name: "Anna Nagar Bus Stop",
-//                        stop_time: "04:45 pm",
-//                        latitude: "13.0878",
-//                        longitude: "80.2101",
-//                        landmark: "Near Anna Arch"
-//                    )
-//                ]
-//            )
-//        ]
-//    )]
     
     private var routeDataList: [StudentRouteData] = []
-    
-    // Track expand/collapse state per student row (default: pickup expanded, drop collapsed)
     private var pickupExpansionStates: [Int: Bool] = [:]
     private var dropExpansionStates: [Int: Bool] = [:]
-    private let mockJSONPayload = """
-    {
-      "status": true,
-      "message": "Successfully got the student route details.",
-      "data": [
-        {
-          "student_id": "60159782",
-          "student_name": "Test 1",
-          "admission_no": "SS-582",
-          "route_id": "2802",
-          "route_name": "E12",
-          "stop_id": "19514",
-          "stop_name": "Vinayak Nagar- Ramdev Super Market",
-          "latitude": "18.66769",
-          "longitude": "78.11122",
-          "landmark": "Bombay Bakery",
-          "vehicle_id": "2484",
-          "vehicle_no": "TS16UA9430",
-          "tentative_pickup_time": "07:40 am",
-          "tentative_drop_time": "06:50 pm",
-          "stopping_points": [
-            {
-              "vehicle_id": "2484",
-              "route_name": "E12",
-              "journey_type": "PICKING",
-              "start_time": "07:35 am",
-              "end_time": "07:45 am",
-              "working_days": [
-                "MONDAY",
-                "TUESDAY",
-                "WEDNESDAY",
-                "THURSDAY",
-                "FRIDAY",
-                "SATURDAY"
-              ],
-              "stops": [
-                {
-                  "stop_id": "19485",
-                  "stop_name": "Nilgiri Campus",
-                  "stop_time": "07:35 am",
-                  "latitude": "18.67125",
-                  "longitude": "78.11256",
-                  "landmark": "Prashanthi Homes"
-                },
-                {
-                  "stop_id": "19514",
-                  "stop_name": "Vinayak Nagar- Ramdev Super Market",
-                  "stop_time": "07:40 am",
-                  "latitude": "18.66769",
-                  "longitude": "78.11122",
-                  "landmark": "Bombay Bakery"
-                }
-              ]
-            },
-            {
-              "vehicle_id": "2484",
-              "route_name": "E12",
-              "journey_type": "DROPPING",
-              "start_time": "06:45 pm",
-              "end_time": "06:55 pm",
-              "working_days": [
-                "MONDAY",
-                "TUESDAY",
-                "WEDNESDAY",
-                "THURSDAY",
-                "FRIDAY",
-                "SATURDAY"
-              ],
-              "stops": [
-                {
-                  "stop_id": "19513",
-                  "stop_name": "Bharath Gas Godown- Vinayak Nagar",
-                  "stop_time": "06:45 pm",
-                  "latitude": "18.67715",
-                  "longitude": "78.10865",
-                  "landmark": "Bombay Bakery"
-                },
-                {
-                  "stop_id": "19514",
-                  "stop_name": "Vinayak Nagar- Ramdev Super Market",
-                  "stop_time": "06:50 pm",
-                  "latitude": "18.66769",
-                  "longitude": "78.11122",
-                  "landmark": "Bombay Bakery"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-    """
+   var myLates = ""
+    var myLongs = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -206,8 +30,6 @@ class busListVC: UIViewController {
         let name = studentDetails?.name ?? ""
         let standard = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
         studentname.configureAsBackTitle(firstLine: name, secondLine: standard)
-        
-   
         
         GetBusRoutDetails()
        
@@ -227,19 +49,7 @@ class busListVC: UIViewController {
         tv.register(UINib(nibName: "RouteHeaderCell", bundle: nil), forCellReuseIdentifier: "RouteHeaderCell")
     }
     
-    private func parseAPIPayload() {
-        guard let data = mockJSONPayload.data(using: .utf8) else {
-            print("Failed to convert mock JSON string to data")
-            return
-        }
-        
-        do {
-            let response = try JSONDecoder().decode(StudentRouteDetailsResponse.self, from: data)
-           
-        } catch {
-            print("Error parsing student route details JSON: \(error)")
-        }
-    }
+
     @IBAction func backbtnAct(_ sender: UIButton) {
         dismiss(animated: true)
     }
@@ -253,7 +63,12 @@ class busListVC: UIViewController {
                 DispatchQueue.main.async {[self] in
                     if Success.status ?? false{
                         self.routeDataList = Success.data ?? []
-                 
+                        if let route = routeDataList.first,
+                           let location = getLatLong(for: route) {
+
+                            myLates = location.lat ?? ""
+                            myLongs = location.long ?? ""
+                        }
                         tv.reloadData()
                     }else{
                     
@@ -275,6 +90,18 @@ class busListVC: UIViewController {
         }
     }
 
+    func getLatLong(for route: StudentRouteData) -> (lat: String?, long: String?)? {
+        
+        for stoppingPoint in route.stopping_points ?? [] {
+            if let stop = stoppingPoint.stops?.first(where: {
+                $0.stop_id == route.stop_id
+            }) {
+                return (stop.latitude, stop.longitude)
+            }
+        }
+        
+        return nil
+    }
 }
 
 
@@ -289,22 +116,24 @@ extension busListVC: UITableViewDataSource, UITableViewDelegate {
         
     }
     
-    private func dropfunction(index : Int){
+    private func dropfunction(index : Int,myLate : String,myLong : String){
         guard let stoppingPoint = routeDataList[index].stopping_points?.last else {
             return
         }
         
         if stoppingPoint.journey_type == "DROPPING" {
-
             let vc = BusTrakingVC(nibName: nil, bundle: nil)
+            vc.isPickingRoute = false
+            vc.busnumber = routeDataList[index].vehicle_reg_no ?? ""
+            vc.destinationLatitude = myLate
+            vc.destinationLongitude = myLong
             vc.stops = stoppingPoint.stops ?? []
-            vc.vehicleId =  routeDataList[index].vehicle_no
+            vc.maproutUrl = routeDataList[index].map_url_schoolchimes ?? ""
+            vc.vehicleId =  routeDataList[index].vehicle_reg_no ?? ""
             vc.routeId = routeDataList[index].route_id
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
 
-        }else{
-            
         }
     }
     
@@ -314,11 +143,13 @@ extension busListVC: UITableViewDataSource, UITableViewDelegate {
            }
 
            if stoppingPoint.journey_type == "PICKING" {
-
                let vc = BusTrakingVC(nibName: nil, bundle: nil)
+               vc.isPickingRoute = true
+               vc.busnumber = routeDataList[index].vehicle_reg_no ?? ""
                vc.stops = stoppingPoint.stops ?? []
-               vc.vehicleId = routeDataList[index].vehicle_no
+               vc.vehicleId = routeDataList[index].vehicle_reg_no ?? ""
                vc.routeId = routeDataList[index].route_id
+               vc.maproutUrl = routeDataList[index].map_url_schoolchimes ?? ""
                vc.modalPresentationStyle = .fullScreen
                present(vc, animated: true)
 
@@ -391,10 +222,14 @@ extension busListVC: UITableViewDataSource, UITableViewDelegate {
             cell.findMypickBusBtnname.isHidden = false
             cell.findMyDropBusBtnName.isHidden = false
             cell.findMyBusButton.isHidden = true
+            cell.pickupHeaderContainer.isHidden = false
+            cell.dropHeaderContainer.isHidden = false
         }else{
             cell.findMypickBusBtnname.isHidden = true
             cell.findMyDropBusBtnName.isHidden = true
             cell.findMyBusButton.isHidden = false
+            cell.pickupHeaderContainer.isHidden = true
+            cell.dropHeaderContainer.isHidden = true
         }
         
         cell.onFindMyBus = { [weak self] in
@@ -407,7 +242,7 @@ extension busListVC: UITableViewDataSource, UITableViewDelegate {
         }
         cell.onFindDropMyBus = { [weak self] index in
             guard let self = self else { return }
-            self.dropfunction(index: index)
+            self.dropfunction(index: index,myLate: myLates,myLong: myLongs)
         }
         
         cell.onSizeChanged = { [weak tableView] in

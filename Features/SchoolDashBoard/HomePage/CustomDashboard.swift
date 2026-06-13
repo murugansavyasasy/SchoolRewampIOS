@@ -695,7 +695,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             203: { self.MenuRedirect.staffApplyLeave(from: self) },
             202: { self.MenuRedirect.HostelManagment(from: self) },
             204: { self.MenuRedirect.StaffLeaveRequest(from: self) },
-            205: { self.MenuRedirect.buslist(from: self, loginasType: self.loginAsType ?? 0, is_ownbustraking: false) }
+            205: { self.MenuRedirect.buslist(from: self, loginasType: self.loginAsType ?? 0, is_ownbustraking: self.staffDetails?.gps_type == "dhundhoo" ? false : true) }
             
         ]
  

@@ -37,9 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
                     application.registerForRemoteNotifications()
                 }
             }
-//            }else{
-//                self.checkNotificationPermission()
-//            }
         }
         NotificationCenter.default.addObserver(
             self,

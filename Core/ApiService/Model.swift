@@ -3481,6 +3481,7 @@ struct StudentRouteDetailsResponse: Codable {
 
 struct StudentRouteData: Codable {
     let student_id: String?
+    let map_url_schoolchimes: String?
     let student_name: String?
     let admission_no: String?
     let route_id: String?
@@ -3492,6 +3493,7 @@ struct StudentRouteData: Codable {
     let landmark: String?
     let vehicle_id: String?
     let vehicle_no: String?
+    let vehicle_reg_no: String?
     let tentative_pickup_time: String?
     let tentative_drop_time: String?
     var stopping_points: [StoppingPoint]?
