@@ -17,15 +17,15 @@
       
       
       {
-          "id": "SRIKALAIVANIVIDHAYALA",
-          "targetName": "Sri Kalaivani Vidhayala",
+          "id": "SRIKALAIVANIVIDHYALAYA",
+          "targetName": "Sri Kalaivani Vidhyalaya",
           "bundleId": "com.Kalaivani.schools",
-          "displayName": "SRI KALAIVANI VIDHAYALA",
+          "displayName": "SRI KALAIVANI VIDHYALAYA",
           "strings": {
-              "WELCOME_STRING": "WELCOME TO SRI KALAIVANI VIDHAYALA",
+              "WELCOME_STRING": "WELCOME TO SRI KALAIVANI VIDHYALAYA",
               "TERMS_URL": "https://www.schoolchimes.com/vs_web/wl_terms_of_use/?id=6748",
-              "REPORT_BUG_STRING": "Dear SRI KALAIVANI VIDHAYALA Team",
-              "Empowering": "Dear SRI KALAIVANI VIDHAYALA Team",
+              "REPORT_BUG_STRING": "Dear SRI KALAIVANI VIDHYALAYA Team",
+              "Empowering": "Dear SRI KALAIVANI VIDHYALAYA Team",
               "School_Id" : "6748",
               "APP_STORE_ID" : "6768877824"
           }
