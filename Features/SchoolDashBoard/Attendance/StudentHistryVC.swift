@@ -517,8 +517,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         APIService.shared
             .makeApi(url: ServiceUrl.comm_text_message_send_text, parameters:[
                 
-                send_textmessageStringFile.description : user_inputs.title,
-                send_textmessageStringFile.message : user_inputs.description,
+                send_textmessageStringFile.description : user_inputs.description,
+                send_textmessageStringFile.message : user_inputs.title,
                 send_textmessageStringFile.target_code: selected_student,
                 send_textmessageStringFile.target_type: target_type ?? 0,
                 send_textmessageStringFile.academic_year_id: selectedAcadimicYearId ?? 0
