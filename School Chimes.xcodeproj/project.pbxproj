@@ -3687,9 +3687,9 @@
 		1868A7562FAC797000831144 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				SRIKALAIVANIVIDHAYALA/Assets.xcassets,
-				"SRIKALAIVANIVIDHAYALA/GoogleService-Info.plist",
-				SRIKALAIVANIVIDHAYALA/Localizable.strings,
+				SRIKALAIVANIVIDHYALAYA/Assets.xcassets,
+				"SRIKALAIVANIVIDHYALAYA/GoogleService-Info.plist",
+				SRIKALAIVANIVIDHYALAYA/Localizable.strings,
 			);
 			target = 1868A3B22FAC762E00831144 /* SRI KALAIVANI VIDHAYALA */;
 		};
@@ -9338,7 +9338,7 @@
 		1868A7442FAC762E00831144 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = FA81631A2F3314B000ADA8F3 /* Flavours */;
-			baseConfigurationReferenceRelativePath = SRIKALAIVANIVIDHAYALA/SRIKALAIVANIVIDHAYALA.xcconfig;
+			baseConfigurationReferenceRelativePath = SRIKALAIVANIVIDHYALAYA/SRIKALAIVANIVIDHYALAYA.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -9384,7 +9384,7 @@
 		1868A7452FAC762E00831144 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = FA81631A2F3314B000ADA8F3 /* Flavours */;
-			baseConfigurationReferenceRelativePath = SRIKALAIVANIVIDHAYALA/SRIKALAIVANIVIDHAYALA.xcconfig;
+			baseConfigurationReferenceRelativePath = SRIKALAIVANIVIDHYALAYA/SRIKALAIVANIVIDHYALAYA.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
