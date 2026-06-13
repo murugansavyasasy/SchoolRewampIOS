@@ -29,8 +29,8 @@ class BusDetailsVC: UIViewController, RecentMoveDelegate {
     var busStops: [Stops] = []
     var currentLocation: CLLocation?
     var delegate:RecentMoveDelegate?
-    var busNumber: String = "Bus #42"
-    var busRoute: String = "Villupuram to  ulundurpet"
+    var busNumber: String = ""
+    var busRoute: String = ""
     var eta = "-- mins"
     var distance = "-- km"
     var speed = "-- km/h"
@@ -79,7 +79,7 @@ class BusDetailsVC: UIViewController, RecentMoveDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
 
-            self.liveCell?.busspeedFullView.isHidden = data.etaMinutes == 0 || data.distanceKm == 0.0
+//            self.liveCell?.busspeedFullView.isHidden = data.etaMinutes == 0 || data.distanceKm == 0.0
             self.liveCell?.etaLabel.text = self.eta
             self.liveCell?.distanceLabel.text = self.distance
             self.liveCell?.speedLabel.text = self.speed

@@ -578,14 +578,9 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         case 39: MenuRedirect.receiverAttachment(from: self,PushNotiMsgId: messageId)
         case 40: MenuRedirect.receiverPauckt(from: self)
         case 202: MenuRedirect.ResiverHostelManagment(from: self)
-        case 203: MenuRedirect.busTacking(from: self)
         case 205:
-            if comeFormNotification {
-                showActivityLoader()
-                MenuRedirect.notifiactionBusRedrect(from:self)
-            }else{
                 MenuRedirect.buslist(from: self, loginasType: loginAsType ?? 0, is_ownbustraking: childDetails?.gps_type == "dhundhoo" ? false : true)
-            }
+            
         default:
             let alert = UIAlertController(
                 title: nil,

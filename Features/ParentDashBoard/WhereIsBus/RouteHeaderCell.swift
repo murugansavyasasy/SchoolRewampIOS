@@ -58,7 +58,8 @@ class RouteHeaderCell: UITableViewCell, UITableViewDataSource, UITableViewDelega
     private var pickupStops: [Stops] = []
     private var dropStops: [Stops] = []
     private var userStopId: String = ""
-    
+    var myLat : String?
+    var myLong : String?
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
@@ -161,7 +162,7 @@ class RouteHeaderCell: UITableViewCell, UITableViewDataSource, UITableViewDelega
         stopSubtitleLabel.text = data.stop_name
         pickupTimeLabel.text = data.tentative_pickup_time
         dropTimeLabel.text = data.tentative_drop_time
-        busNumberValueLabel.text = data.vehicle_no
+        busNumberValueLabel.text = data.vehicle_reg_no
         
         // 2. Pickup Accordion Layout
         pickupHeaderChevron.image = UIImage(systemName: isPickupExpanded ? "chevron.up" : "chevron.down")
@@ -264,6 +265,14 @@ class RouteHeaderCell: UITableViewCell, UITableViewDataSource, UITableViewDelega
         } else if tableView == dropStopsTableView {
             let stop = dropStops[indexPath.row]
             let isYourStop = (stop.stop_id == userStopId)
+            if isYourStop {
+                  let latitude = stop.latitude
+                  let longitude = stop.longitude
+                  myLat = latitude
+                  myLong = longitude
+                  print("Your Stop Lat: \(latitude ?? "")")
+                  print("Your Stop Long: \(longitude ?? "")")
+              }
             cell.configure(
                 number: "\(indexPath.row + 1)",
                 stopName: stop.stop_name ?? "",

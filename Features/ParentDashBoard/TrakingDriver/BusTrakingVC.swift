@@ -60,9 +60,11 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     var hasReachedDestination = false
     var maxBusIndexReached = 0
     var isBusOnRoute = false
+    var isPickingRoute = false
+    var busnumber : String = ""
     private var hasShownBottomSheet = false
     var lastLiveData: BusLiveData?
-    
+    var maproutUrl : String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -97,7 +99,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         isFetchingLocation = true
         let secureID = SecureIDManager.getSecureID()
         let parameter: [String: Any] = [
-            "device_id": "ea973ebc50a1f536",//secureID,
+            "device_id": secureID,
             "vehicle_id": vehicleId ?? "",
             "route_id": routeId ?? ""
         ]
@@ -107,7 +109,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
             parameters: parameter,
             type: ApitTypeSringFile.GET,
             token: studentDetails?.access_token ?? "",
-            isBaseUrl: true
+            isBaseUrl: false
         ) { [weak self] (result: Result<GeoLocationResponse, Error>) in
 
             guard let self = self else { return }
@@ -148,6 +150,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
                         guard
                             let destLat = Double(self.destinationLatitude),
                             let destLon = Double(self.destinationLongitude)
+                                
                         else {
                             self.updateBusLocation(currentCoord, etaMinutes: 0, distanceKm: 0)
                             return
@@ -270,8 +273,27 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         updateStopStatusFromRoute()
 
         // ✅ Update destination flag first
-        if !hasReachedDestination && distanceKm > 0 && distanceKm < 0.20 {
+        if !hasReachedDestination && distanceKm >= 0 && distanceKm < 0.20 {
             hasReachedDestination = true
+            if !isPickingRoute {
+                    if timer != nil {
+                        timer?.invalidate()
+                        timer = nil
+
+                        if hasShownBottomSheet,
+                           let detailsVC = detailsVC,
+                           detailsVC.presentingViewController != nil {
+                            // ✅ Dismiss bottom sheet first, then show popup
+                            detailsVC.dismiss(animated: true) { [weak self] in
+                                self?.showTripCompletePopup()
+                            }
+                        } else {
+                            // ✅ No bottom sheet shown — show popup directly
+                            showTripCompletePopup()
+                        }
+                    }
+                    return
+            }
         }
 
         guard currentStopIndex < stops.count && !hasReachedDestination else {
@@ -456,7 +478,6 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
             string:
                 "https://tiles.openfreemap.org/styles/bright"
         )
-        
         mapView.delegate = self
         mapView.automaticallyAdjustsContentInset = false
         mapView.gestureRecognizers?.forEach { recognizer in
@@ -600,6 +621,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         detailsVC = vc
         vc.fromStop = stops.first?.stop_name ?? ""
         vc.toStop = stops.last?.stop_name ?? ""
+        vc.busNumber = busnumber
         vc.delegate = self
 
         if let sheet = vc.sheetPresentationController {
@@ -627,20 +649,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
             }
         }
     }
-    
-    // MARK: — Stop Pins
-    
-    //    func addStopPins() {
-    //        for (i, coord) in stopCoordinates.enumerated() {
-    //            let pin = MLNPointAnnotation()
-    //            pin.coordinate = coord
-    //            pin.title = stops[i].name
-    //            mapView.addAnnotation(pin)
-    //        }
-    //        print("📍 Added \(stopCoordinates.count) stop pins")
-    //    }
-    
-    // MARK: — Demo User
+
     
     func showUserPin() {
         userAnnotation.coordinate = CLLocationCoordinate2D(latitude: 13.0300, longitude: 80.2250)
@@ -661,8 +670,11 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         
         guard !path.isEmpty else { return }
         
-        let urlString = "https://router.project-osrm.org/route/v1/driving/\(path)?overview=full&geometries=geojson"
-        //        let urlString = "http://192.168.1.5:5001/route/v1/driving/\(path)?overview=full&geometries=geojson"
+//        let urlString = "https://router.project-osrm.org/route/v1/driving/\(path)?overview=full&geometries=geojson"
+        
+        let urlString = "\(maproutUrl)\(path)?overview=full&geometries=geojson"
+        
+    
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
@@ -837,21 +849,14 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         titleLabel.textColor = .label
         container.addSubview(titleLabel)
         
-        let messageLabel = UILabel(frame: CGRect(x: 20, y: 190, width: width - 40, height: 60))
-        messageLabel.text = "Successfully completed \(stops.count) stops\nThank you for traveling with us!"
+        let messageLabel = UILabel(frame: CGRect(x: 20, y: 190, width: width - 40, height: 80))
+        messageLabel.text = "Successfully completed. Thank you for traveling with us! This trip has been completed, and no further tracking updates are available"
         messageLabel.font = UIFont.systemFont(ofSize: 16)
         messageLabel.textAlignment = .center
         messageLabel.textColor = .secondaryLabel
-        messageLabel.numberOfLines = 2
+        messageLabel.numberOfLines = 0
         container.addSubview(messageLabel)
         
-//        let statsLabel = UILabel(frame: CGRect(x: 20, y: 260, width: width - 40, height: 30))
-//        let distance = String(format: "%.1f", Double(roadCoords.count) * 0.01)
-//        statsLabel.text = "📍 Distance: ~\(distance) km"
-//        statsLabel.font = UIFont.systemFont(ofSize: 14)
-//        statsLabel.textAlignment = .center
-//        statsLabel.textColor = .secondaryLabel
-//        container.addSubview(statsLabel)
         
         let doneButton = UIButton(frame: CGRect(x: 30, y: 280, width: width - 60, height: 50))
         doneButton.setTitle("Done", for: .normal)

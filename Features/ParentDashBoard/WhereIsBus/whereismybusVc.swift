@@ -18,7 +18,7 @@ class whereismybusVc: UIViewController {
     var loginasType : Int?
     override func viewDidLoad() {
         super.viewDidLoad()
-        LocationPermissionManager.shared.checkLocationPermission()
+//        LocationPermissionManager.shared.checkLocationPermission()
         showActivityLoader()
         GetBusDetails()
     }
@@ -28,14 +28,14 @@ class whereismybusVc: UIViewController {
     }
     
     func loadWebPage() {
-
-        if let url = URL(string: liveBusdataDetails?.first?.tracking_url ?? "") {
-
-               let request = URLRequest(url: url)
-               webview.load(request)
-           }
-        
-        hideActivityLoader()
+        DispatchQueue.main.async { [weak self] in
+            guard let self  = self else { return }
+            if let url = URL(string: liveBusdataDetails?.first?.tracking_url ?? "") {
+                let request = URLRequest(url: url)
+                webview.load(request)
+            }
+            hideActivityLoader()
+        }
        }
 
     
@@ -84,37 +84,7 @@ class LocationPermissionManager: NSObject, ObservableObject, CLLocationManagerDe
         locationManager.delegate = self
     }
     
-    // MARK: - Check Permission
-    func checkLocationPermission() {
-        
-        // Device location service enabled ah check
-        if !CLLocationManager.locationServicesEnabled() {
-            print("Location Services Disabled")
-            return
-        }
-        
-        let status = locationManager.authorizationStatus
-        
-        switch status {
-            
-        case .notDetermined:
-            // Default Apple permission popup open agum
-            locationManager.requestWhenInUseAuthorization()
-            
-        case .authorizedWhenInUse, .authorizedAlways:
-            isLocationEnabled = true
-            print("Location Permission Granted")
-            
-        case .denied, .restricted:
-            isLocationEnabled = false
-            
-            // User already denied na settings open panna sollum
-            openAppSettings()
-            
-        @unknown default:
-            break
-        }
-    }
+    
     
     // MARK: - Permission Change Callback
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {

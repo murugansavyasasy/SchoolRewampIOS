@@ -229,7 +229,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             case  202: MenuRedirect.HostelManagment(from: self)
             case  203: MenuRedirect.staffApplyLeave(from: self)
             case  204: MenuRedirect.StaffLeaveRequest(from: self)
-            case  205:  MenuRedirect.buslist(from: self, loginasType: login_astype ?? 0, is_ownbustraking: false) 
+            case  205:  MenuRedirect.buslist(from: self, loginasType: login_astype ?? 0, is_ownbustraking: self.school_details?[indexPath.row].gps_type == "dhundhoo" ? false : true)
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }
