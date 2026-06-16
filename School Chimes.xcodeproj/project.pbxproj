@@ -21,9 +21,7 @@
 		1827E5A62F90C12000B33B20 /* PendingFeeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185CC0B72F73F2D3002640CE /* PendingFeeCell.swift */; };
 		1827E5A72F90C12000B33B20 /* QuizCompletedVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84174DF12E70061C00AC7092 /* QuizCompletedVc.swift */; };
 		1827E5A82F90C12000B33B20 /* RecorderTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84235A0C2E1E27F4002F2E1D /* RecorderTVC.swift */; };
-		1827E5A92F90C12000B33B20 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D722E2D14270D0060E222 /* SubscriptionView.swift */; };
 		1827E5AA2F90C12000B33B20 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848FFA332F63E99400B47088 /* SectionHeaderView.swift */; };
-		1827E5AB2F90C12000B33B20 /* SubscriptionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D722B2D14270D0060E222 /* SubscriptionTVCell.swift */; };
 		1827E5AC2F90C12000B33B20 /* ExamsListTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB5EB12D1133AA00AD0C87 /* ExamsListTVCell.swift */; };
 		1827E5AD2F90C12000B33B20 /* NewPlayQuizVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ADF9562EF2AD96007C3374 /* NewPlayQuizVC.swift */; };
 		1827E5AE2F90C12000B33B20 /* MenuRedirect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */; };
@@ -723,8 +721,6 @@
 		1827E8672F90C12000B33B20 /* LeveCreateVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84079FED2D15A7B000D6DF04 /* LeveCreateVC.xib */; };
 		1827E8682F90C12000B33B20 /* ReportStudentTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FBAB72D0BEDBF007C0B51 /* ReportStudentTVC.xib */; };
 		1827E8692F90C12000B33B20 /* ReportStudentListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FBAB52D0BEDBF007C0B51 /* ReportStudentListVC.xib */; };
-		1827E86A2F90C12000B33B20 /* SubscriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849D722F2D14270D0060E222 /* SubscriptionView.xib */; };
-		1827E86B2F90C12000B33B20 /* SubscriptionTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849D722C2D14270D0060E222 /* SubscriptionTVCell.xib */; };
 		1827E86C2F90C12000B33B20 /* outpasssRequestTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18074D372F6AA9B600CC9244 /* outpasssRequestTvcell.xib */; };
 		1827E86D2F90C12000B33B20 /* InteractionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E795E02D2FF684000B36BC /* InteractionVC.xib */; };
 		1827E86E2F90C12000B33B20 /* MesstimeTabelVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1841DF3D2F594B3000B88801 /* MesstimeTabelVC.xib */; };
@@ -940,12 +936,6 @@
 		183E69D52FADED040092D411 /* busListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183E69D02FADED040092D411 /* busListVC.swift */; };
 		183E69D62FADED040092D411 /* busListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183E69D02FADED040092D411 /* busListVC.swift */; };
 		183E69D72FADED040092D411 /* busListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183E69D12FADED040092D411 /* busListVC.xib */; };
-		183E69DA2FADED2C0092D411 /* BusListTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183E69D92FADED2C0092D411 /* BusListTvCell.xib */; };
-		183E69DB2FADED2C0092D411 /* BusListTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183E69D82FADED2C0092D411 /* BusListTvCell.swift */; };
-		183E69DC2FADED2C0092D411 /* BusListTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183E69D82FADED2C0092D411 /* BusListTvCell.swift */; };
-		183E69DD2FADED2C0092D411 /* BusListTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183E69D92FADED2C0092D411 /* BusListTvCell.xib */; };
-		183E69DE2FADED2C0092D411 /* BusListTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183E69D92FADED2C0092D411 /* BusListTvCell.xib */; };
-		183E69DF2FADED2C0092D411 /* BusListTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183E69D82FADED2C0092D411 /* BusListTvCell.swift */; };
 		1841DE6F2F56E86400B88801 /* ApplyLeaveReqVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1841DE6C2F56E86400B88801 /* ApplyLeaveReqVC.xib */; };
 		1841DE702F56E86400B88801 /* ApplyLeaveReqVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1841DE6B2F56E86400B88801 /* ApplyLeaveReqVC.swift */; };
 		1841DE932F56F8B700B88801 /* HostelDashBoardVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1841DE8E2F56F8B700B88801 /* HostelDashBoardVc.swift */; };
@@ -1002,9 +992,7 @@
 		1868A3D02FAC762E00831144 /* PendingFeeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185CC0B72F73F2D3002640CE /* PendingFeeCell.swift */; };
 		1868A3D12FAC762E00831144 /* QuizCompletedVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84174DF12E70061C00AC7092 /* QuizCompletedVc.swift */; };
 		1868A3D22FAC762E00831144 /* RecorderTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84235A0C2E1E27F4002F2E1D /* RecorderTVC.swift */; };
-		1868A3D32FAC762E00831144 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D722E2D14270D0060E222 /* SubscriptionView.swift */; };
 		1868A3D42FAC762E00831144 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848FFA332F63E99400B47088 /* SectionHeaderView.swift */; };
-		1868A3D52FAC762E00831144 /* SubscriptionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D722B2D14270D0060E222 /* SubscriptionTVCell.swift */; };
 		1868A3D62FAC762E00831144 /* ExamsListTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB5EB12D1133AA00AD0C87 /* ExamsListTVCell.swift */; };
 		1868A3D72FAC762E00831144 /* NewPlayQuizVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ADF9562EF2AD96007C3374 /* NewPlayQuizVC.swift */; };
 		1868A3D82FAC762E00831144 /* MenuRedirect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */; };
@@ -1705,8 +1693,6 @@
 		1868A6922FAC762E00831144 /* LeveCreateVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84079FED2D15A7B000D6DF04 /* LeveCreateVC.xib */; };
 		1868A6932FAC762E00831144 /* ReportStudentTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FBAB72D0BEDBF007C0B51 /* ReportStudentTVC.xib */; };
 		1868A6942FAC762E00831144 /* ReportStudentListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FBAB52D0BEDBF007C0B51 /* ReportStudentListVC.xib */; };
-		1868A6952FAC762E00831144 /* SubscriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849D722F2D14270D0060E222 /* SubscriptionView.xib */; };
-		1868A6962FAC762E00831144 /* SubscriptionTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849D722C2D14270D0060E222 /* SubscriptionTVCell.xib */; };
 		1868A6972FAC762E00831144 /* outpasssRequestTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18074D372F6AA9B600CC9244 /* outpasssRequestTvcell.xib */; };
 		1868A6982FAC762E00831144 /* InteractionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E795E02D2FF684000B36BC /* InteractionVC.xib */; };
 		1868A6992FAC762E00831144 /* MesstimeTabelVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1841DF3D2F594B3000B88801 /* MesstimeTabelVC.xib */; };
@@ -2351,10 +2337,6 @@
 		849AD0552D1A858D002DEC07 /* SenderAssignmentTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849AD0412D1A858D002DEC07 /* SenderAssignmentTextViewController.xib */; };
 		849B9A9D2E43605600F43C4D /* AssignmentDateCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849B9A9C2E43605600F43C4D /* AssignmentDateCVC.xib */; };
 		849B9A9E2E43605600F43C4D /* AssignmentDateCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B9A9B2E43605600F43C4D /* AssignmentDateCVC.swift */; };
-		849D72312D14270D0060E222 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D722E2D14270D0060E222 /* SubscriptionView.swift */; };
-		849D72322D14270D0060E222 /* SubscriptionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D722B2D14270D0060E222 /* SubscriptionTVCell.swift */; };
-		849D72332D14270D0060E222 /* SubscriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849D722F2D14270D0060E222 /* SubscriptionView.xib */; };
-		849D72342D14270D0060E222 /* SubscriptionTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849D722C2D14270D0060E222 /* SubscriptionTVCell.xib */; };
 		849D72362D14272C0060E222 /* NetworkMoniter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D72352D14272C0060E222 /* NetworkMoniter.swift */; };
 		849E572F2C1FF65F006119DA /* right-arrow.json in Resources */ = {isa = PBXBuildFile; fileRef = 849E572E2C1FF65F006119DA /* right-arrow.json */; };
 		849E57372C1FF6BD006119DA /* RobotoSlab-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849E57312C1FF6BD006119DA /* RobotoSlab-Bold.ttf */; };
@@ -2800,8 +2782,6 @@
 		183E69C92FADB0840092D411 /* whereismybusVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = whereismybusVc.xib; sourceTree = "<group>"; };
 		183E69D02FADED040092D411 /* busListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = busListVC.swift; sourceTree = "<group>"; };
 		183E69D12FADED040092D411 /* busListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = busListVC.xib; sourceTree = "<group>"; };
-		183E69D82FADED2C0092D411 /* BusListTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusListTvCell.swift; sourceTree = "<group>"; };
-		183E69D92FADED2C0092D411 /* BusListTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BusListTvCell.xib; sourceTree = "<group>"; };
 		1841DE6B2F56E86400B88801 /* ApplyLeaveReqVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyLeaveReqVC.swift; sourceTree = "<group>"; };
 		1841DE6C2F56E86400B88801 /* ApplyLeaveReqVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ApplyLeaveReqVC.xib; sourceTree = "<group>"; };
 		1841DE8E2F56F8B700B88801 /* HostelDashBoardVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostelDashBoardVc.swift; sourceTree = "<group>"; };
@@ -3309,10 +3289,6 @@
 		849AD0412D1A858D002DEC07 /* SenderAssignmentTextViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderAssignmentTextViewController.xib; sourceTree = "<group>"; };
 		849B9A9B2E43605600F43C4D /* AssignmentDateCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentDateCVC.swift; sourceTree = "<group>"; };
 		849B9A9C2E43605600F43C4D /* AssignmentDateCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentDateCVC.xib; sourceTree = "<group>"; };
-		849D722B2D14270D0060E222 /* SubscriptionTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTVCell.swift; sourceTree = "<group>"; };
-		849D722C2D14270D0060E222 /* SubscriptionTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubscriptionTVCell.xib; sourceTree = "<group>"; };
-		849D722E2D14270D0060E222 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
-		849D722F2D14270D0060E222 /* SubscriptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubscriptionView.xib; sourceTree = "<group>"; };
 		849D72352D14272C0060E222 /* NetworkMoniter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMoniter.swift; sourceTree = "<group>"; };
 		849E572E2C1FF65F006119DA /* right-arrow.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "right-arrow.json"; sourceTree = "<group>"; };
 		849E57312C1FF6BD006119DA /* RobotoSlab-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoSlab-Bold.ttf"; sourceTree = "<group>"; };
@@ -3932,8 +3908,6 @@
 				1880E9E62FD14BB30025EB96 /* RouteHeaderCell.xib */,
 				183E69D02FADED040092D411 /* busListVC.swift */,
 				183E69D12FADED040092D411 /* busListVC.xib */,
-				183E69D82FADED2C0092D411 /* BusListTvCell.swift */,
-				183E69D92FADED2C0092D411 /* BusListTvCell.xib */,
 			);
 			path = WhereIsBus;
 			sourceTree = "<group>";
@@ -5154,25 +5128,6 @@
 			path = Assignment;
 			sourceTree = "<group>";
 		};
-		849D722D2D14270D0060E222 /* Tvcell */ = {
-			isa = PBXGroup;
-			children = (
-				849D722B2D14270D0060E222 /* SubscriptionTVCell.swift */,
-				849D722C2D14270D0060E222 /* SubscriptionTVCell.xib */,
-			);
-			path = Tvcell;
-			sourceTree = "<group>";
-		};
-		849D72302D14270D0060E222 /* SubscriptionVC */ = {
-			isa = PBXGroup;
-			children = (
-				849D722D2D14270D0060E222 /* Tvcell */,
-				849D722E2D14270D0060E222 /* SubscriptionView.swift */,
-				849D722F2D14270D0060E222 /* SubscriptionView.xib */,
-			);
-			path = SubscriptionVC;
-			sourceTree = "<group>";
-		};
 		849E57162C1FF2E9006119DA /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -5610,7 +5565,6 @@
 				FA43D0B72F322CE30046B966 /* SchoolList */,
 				84E70DCE2D49F5F700E916D1 /* DatePicker */,
 				8497570C2D2BA575006A27FD /* SelectRecipient */,
-				849D72302D14270D0060E222 /* SubscriptionVC */,
 				FA43D0BE2F322CFA0046B966 /* BirthdayVc */,
 				FA43D0CA2F322CFE0046B966 /* ImageViewer */,
 			);
@@ -6578,8 +6532,6 @@
 				1827E8672F90C12000B33B20 /* LeveCreateVC.xib in Resources */,
 				1827E8682F90C12000B33B20 /* ReportStudentTVC.xib in Resources */,
 				1827E8692F90C12000B33B20 /* ReportStudentListVC.xib in Resources */,
-				1827E86A2F90C12000B33B20 /* SubscriptionView.xib in Resources */,
-				1827E86B2F90C12000B33B20 /* SubscriptionTVCell.xib in Resources */,
 				1827E86C2F90C12000B33B20 /* outpasssRequestTvcell.xib in Resources */,
 				1827E86D2F90C12000B33B20 /* InteractionVC.xib in Resources */,
 				1827E86E2F90C12000B33B20 /* MesstimeTabelVC.xib in Resources */,
@@ -6716,7 +6668,6 @@
 				1827E8F02F90C12000B33B20 /* OverallSummaryCell.xib in Resources */,
 				1827E8F12F90C12000B33B20 /* IntractwithStudentVc.xib in Resources */,
 				1827E8F22F90C12000B33B20 /* ActivateCoupenTVC.xib in Resources */,
-				183E69DE2FADED2C0092D411 /* BusListTvCell.xib in Resources */,
 				1827E8F32F90C12000B33B20 /* QuizCompletedVc.xib in Resources */,
 				1827E8F42F90C12000B33B20 /* CoupenDetailTVC.xib in Resources */,
 				1827E8F52F90C12000B33B20 /* TodaysAttendaceTvcell.xib in Resources */,
@@ -7004,8 +6955,6 @@
 				1868A6922FAC762E00831144 /* LeveCreateVC.xib in Resources */,
 				1868A6932FAC762E00831144 /* ReportStudentTVC.xib in Resources */,
 				1868A6942FAC762E00831144 /* ReportStudentListVC.xib in Resources */,
-				1868A6952FAC762E00831144 /* SubscriptionView.xib in Resources */,
-				1868A6962FAC762E00831144 /* SubscriptionTVCell.xib in Resources */,
 				1868A6972FAC762E00831144 /* outpasssRequestTvcell.xib in Resources */,
 				1868A6982FAC762E00831144 /* InteractionVC.xib in Resources */,
 				1868A6992FAC762E00831144 /* MesstimeTabelVC.xib in Resources */,
@@ -7142,7 +7091,6 @@
 				1868A71B2FAC762E00831144 /* OverallSummaryCell.xib in Resources */,
 				1868A71C2FAC762E00831144 /* IntractwithStudentVc.xib in Resources */,
 				1868A71D2FAC762E00831144 /* ActivateCoupenTVC.xib in Resources */,
-				183E69DD2FADED2C0092D411 /* BusListTvCell.xib in Resources */,
 				1868A71E2FAC762E00831144 /* QuizCompletedVc.xib in Resources */,
 				1868A71F2FAC762E00831144 /* CoupenDetailTVC.xib in Resources */,
 				1868A7202FAC762E00831144 /* TodaysAttendaceTvcell.xib in Resources */,
@@ -7316,7 +7264,6 @@
 				848BEEE32CFF093100581A55 /* PreviewImageVC.xib in Resources */,
 				84EFFAF42CCFB68A00C11C26 /* ImageCvCell.xib in Resources */,
 				8466E83E2D6ED0CB004F4EFC /* PopupVC.xib in Resources */,
-				183E69DA2FADED2C0092D411 /* BusListTvCell.xib in Resources */,
 				FAD4D7302E606449007A3FC0 /* PtmParentVC.xib in Resources */,
 				84BCE9182E9E5270002C8068 /* GenderDistriTvcel.xib in Resources */,
 				843739032E3CDE690063E84D /* CustomParentDashboardVC.xib in Resources */,
@@ -7437,8 +7384,6 @@
 				84079FFA2D15A7B000D6DF04 /* LeveCreateVC.xib in Resources */,
 				842FBABB2D0BEDBF007C0B51 /* ReportStudentTVC.xib in Resources */,
 				842FBABC2D0BEDBF007C0B51 /* ReportStudentListVC.xib in Resources */,
-				849D72332D14270D0060E222 /* SubscriptionView.xib in Resources */,
-				849D72342D14270D0060E222 /* SubscriptionTVCell.xib in Resources */,
 				18074D3A2F6AA9B600CC9244 /* outpasssRequestTvcell.xib in Resources */,
 				84E795E22D2FF684000B36BC /* InteractionVC.xib in Resources */,
 				1841DF412F594B3000B88801 /* MesstimeTabelVC.xib in Resources */,
@@ -7768,9 +7713,7 @@
 				1827E5A62F90C12000B33B20 /* PendingFeeCell.swift in Sources */,
 				1827E5A72F90C12000B33B20 /* QuizCompletedVc.swift in Sources */,
 				1827E5A82F90C12000B33B20 /* RecorderTVC.swift in Sources */,
-				1827E5A92F90C12000B33B20 /* SubscriptionView.swift in Sources */,
 				1827E5AA2F90C12000B33B20 /* SectionHeaderView.swift in Sources */,
-				1827E5AB2F90C12000B33B20 /* SubscriptionTVCell.swift in Sources */,
 				1827E5AC2F90C12000B33B20 /* ExamsListTVCell.swift in Sources */,
 				1827E5AD2F90C12000B33B20 /* NewPlayQuizVC.swift in Sources */,
 				1827E5AE2F90C12000B33B20 /* MenuRedirect.swift in Sources */,
@@ -8143,7 +8086,6 @@
 				183E69D52FADED040092D411 /* busListVC.swift in Sources */,
 				1827E7192F90C12000B33B20 /* FountainFireworkAnimator.swift in Sources */,
 				1827E71A2F90C12000B33B20 /* AppTourVC.swift in Sources */,
-				183E69DF2FADED2C0092D411 /* BusListTvCell.swift in Sources */,
 				1827E71B2F90C12000B33B20 /* ExamActivitySelectionVC.swift in Sources */,
 				1827E71C2F90C12000B33B20 /* NewShimmerView.swift in Sources */,
 				1827E71D2F90C12000B33B20 /* PtmParentVC.swift in Sources */,
@@ -8238,9 +8180,7 @@
 				1868A3D02FAC762E00831144 /* PendingFeeCell.swift in Sources */,
 				1868A3D12FAC762E00831144 /* QuizCompletedVc.swift in Sources */,
 				1868A3D22FAC762E00831144 /* RecorderTVC.swift in Sources */,
-				1868A3D32FAC762E00831144 /* SubscriptionView.swift in Sources */,
 				1868A3D42FAC762E00831144 /* SectionHeaderView.swift in Sources */,
-				1868A3D52FAC762E00831144 /* SubscriptionTVCell.swift in Sources */,
 				1868A3D62FAC762E00831144 /* ExamsListTVCell.swift in Sources */,
 				1868A3D72FAC762E00831144 /* NewPlayQuizVC.swift in Sources */,
 				1868A3D82FAC762E00831144 /* MenuRedirect.swift in Sources */,
@@ -8613,7 +8553,6 @@
 				183E69D62FADED040092D411 /* busListVC.swift in Sources */,
 				1868A5432FAC762E00831144 /* FountainFireworkAnimator.swift in Sources */,
 				1868A5442FAC762E00831144 /* AppTourVC.swift in Sources */,
-				183E69DC2FADED2C0092D411 /* BusListTvCell.swift in Sources */,
 				1868A5452FAC762E00831144 /* ExamActivitySelectionVC.swift in Sources */,
 				1868A5462FAC762E00831144 /* NewShimmerView.swift in Sources */,
 				1868A5472FAC762E00831144 /* PtmParentVC.swift in Sources */,
@@ -8715,9 +8654,7 @@
 				185CC0BA2F73F2D3002640CE /* PendingFeeCell.swift in Sources */,
 				84174DF42E70061C00AC7092 /* QuizCompletedVc.swift in Sources */,
 				84235A0F2E1E27F4002F2E1D /* RecorderTVC.swift in Sources */,
-				849D72312D14270D0060E222 /* SubscriptionView.swift in Sources */,
 				848FFA362F63E99400B47088 /* SectionHeaderView.swift in Sources */,
-				849D72322D14270D0060E222 /* SubscriptionTVCell.swift in Sources */,
 				84BB5EB42D1133AA00AD0C87 /* ExamsListTVCell.swift in Sources */,
 				84ADF9592EF2AD96007C3374 /* NewPlayQuizVC.swift in Sources */,
 				8489D86F2D09563F008D9CE9 /* MenuRedirect.swift in Sources */,
@@ -9090,7 +9027,6 @@
 				183E69D32FADED040092D411 /* busListVC.swift in Sources */,
 				84C82A0A2D086A490024A46A /* FountainFireworkAnimator.swift in Sources */,
 				84D1D7092F21064800638962 /* AppTourVC.swift in Sources */,
-				183E69DB2FADED2C0092D411 /* BusListTvCell.swift in Sources */,
 				FAFB40BA2ED6D9F800783142 /* ExamActivitySelectionVC.swift in Sources */,
 				FA43D0A42F322CD50046B966 /* NewShimmerView.swift in Sources */,
 				FAD4D72F2E606449007A3FC0 /* PtmParentVC.swift in Sources */,

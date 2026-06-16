@@ -1,9 +1,4 @@
-//
-//  Model.swift
-//  rghs
-//
-//  Created by admin on 17/01/25.
-//
+
 
 import Foundation
 
