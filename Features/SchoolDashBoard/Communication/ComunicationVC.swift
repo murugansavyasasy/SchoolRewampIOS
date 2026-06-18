@@ -457,6 +457,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         //MARK: Translate
         fromDateLbl.text = CommonStringFile.FromTime.translated()
         ScheduleLbl.text = CommonStringFile.Schedule.translated()
+        TextMsgTittle.placeholder = CommonStringFile.EnterTextHere.translated()
         ToDateLbl.text = CommonStringFile.ToTime.translated()
         EnableCallLbl.text = CommonStringFile.Emergencyvoicemessages.translated()
         clickVoiceLbl.text = CommonStringFile.VoiceMessage.translated()
@@ -648,8 +649,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         addfile.layer.cornerRadius = 4
         dateSelectedViewHeight.constant = 0
         doneBtn.layer.cornerRadius = 8
-        
-        let title = CommonStringFile.Select_from_history
+        sendbtn.setTitle(CommonStringFile.NEXT.translated(), for: .normal)
+        voiceTitleeTxt.placeholder = "Enter voice title".translated()
+        let title = CommonStringFile.Select_from_history.translated()
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
@@ -662,13 +664,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         let note = "Note:(Only .m4a, .mp3, .wav files are allowed)"
 
         let attributedString = NSMutableAttributedString(
-            string: Btntitle,
+            string: Btntitle.translated(),
             attributes: [
                 .font: UIFont.systemFont(ofSize: 16, weight: .semibold)
             ])
 
         let noteAttr = NSAttributedString(
-            string: note,
+            string: note.translated(),
             attributes: [
                 .font: UIFont.systemFont(ofSize: 12),
                 .foregroundColor: UIColor.red1.withAlphaComponent(0.6)
@@ -1265,7 +1267,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
     }
     
     @IBAction func voiceview(_ sender: Any) {
-        let title = CommonStringFile.Select_from_history
+        let title = CommonStringFile.Select_from_history.translated()
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
@@ -1303,7 +1305,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         }
     }
     @IBAction func textviewshow(_ sender: Any) {
-        let title = CommonStringFile.Select_from_history
+        let title = CommonStringFile.Select_from_history.translated()
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
@@ -1328,7 +1330,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         }
         DateSelection.reloadData()
         selectedDates.removeAll()
-        let title = CommonStringFile.Select_from_history
+        let title = CommonStringFile.Select_from_history.translated()
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
@@ -1639,15 +1641,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tittlemessage.text == CommonStringFile.TextMessage.translated(){
             let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
-//            cell.descriptContent
-//                .setupExpandable(
-//                    text: TextHistory?[indexPath.row].content ?? ""
-//                )
-//            cell.descriptContent.onExpandableTap = {
-//                cell.descriptContent.isExpanded.toggle()
-//                tableView.beginUpdates()
-//                tableView.endUpdates()
-//            }
+
             cell.descriptiontext = TextHistory?[indexPath.row].content ?? ""
             
             cell.descriptContent.delegate = self
@@ -1663,6 +1657,11 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
                 cell.configureShimmer()
             }
+            
+            if TextHistory?[indexPath.row].date == ""{
+                cell.DateLabel.text = ""
+            }else{
+                
             if let sentOn = TextHistory?[indexPath.row].date,
                let date = DateFormatterHelper.shared.parseDate(from: sentOn) {
                 let dateString = DateFormatterHelper.shared.formatDateToDayMonthYear(date: date) // "11 Apr 2025"
@@ -1676,7 +1675,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
                 }
                 cell.DateLabel.attributedText = attributedText
             }
-           // cell.descriptContent.enableLinkDetection()
+        }
             return cell
             
         }else{
@@ -2113,7 +2112,7 @@ extension ComunicationVC:SelectedTextDelegate, ForwordDelegate, selectedAudio, A
         if emengencyCall.isOn && (VoiceHistory?[selectedIndex ?? 0].duration ?? 0) >=  30{
             let alert = UIAlertController(
                 title: "Oops!",
-                message: "Your Emergency call is ON. You can't forward Above 30 mins voice message",
+                message: "Your Emergency call is ON. You can't forward Above 30 mins voice message".translated(),
                 preferredStyle: .alert
             )
             alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))

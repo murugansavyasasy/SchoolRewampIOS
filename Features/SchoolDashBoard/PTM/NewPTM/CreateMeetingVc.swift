@@ -319,6 +319,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         onlineBtn.setTitle(PTMString.virtual.translated(), for: .normal)
         CheckSlotBtn.setTitle(PTMString.checkSlotAvailability.translated(), for: .normal)
         calendarDoneBtn.setTitle(AlertstringFile.Done.translated(), for: .normal)
+        purposeTextfield.placeholder = PTMString.purposeOfMeeting.translated()
     }
 
     

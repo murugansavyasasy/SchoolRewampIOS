@@ -91,10 +91,10 @@ class SenderAssignmentTextViewController: UIViewController,
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        backBtn.semanticContentAttribute = language == "ar" ? .forceRightToLeft : .forceLeftToRight
-        backBtn.contentHorizontalAlignment = language == "ar" ? .right : .left
-        backBtn.imageView?.applyRTLFlip(language == "ar")
+//        let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+//        backBtn.semanticContentAttribute = language == "ar" ? .forceRightToLeft : .forceLeftToRight
+//        backBtn.contentHorizontalAlignment = language == "ar" ? .right : .left
+//        backBtn.imageView?.applyRTLFlip(language == "ar")
         backBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName,
                                       secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         StyleAndTranslater()

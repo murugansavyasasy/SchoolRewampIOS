@@ -12,6 +12,7 @@
 "WELCOME BACK !" = "ยินดีต้อนรับกลับมา!";
 "SchoolCommunityMessage" = "เชื่อมต่อกับชุมชนโรงเรียนของคุณ\nการอัปเดต การสื่อสาร และชีวิตในโรงเรียนของคุณ — ทั้งหมดอยู่ในที่เดียว";
 "Forgot Password ?" = "ลืมรหัสผ่านหรือไม่?";
+"Select from history" = "เลือกจากประวัติ";
 //Mark: PasswordScreen
 
 "Create Password" = "สร้างรหัสผ่าน";
@@ -25,7 +26,8 @@
 "Reset password" = "รีเซ็ตรหัสผ่าน";
 
 // MARK: Common String files
-
+"NEXT" = "ถัดไป";
+"TO STANDARD OR SECTION" = "ถึงระดับชั้นหรือห้องเรียน";
 "Search" = "ค้นหา";
 "Location Name" = "ชื่อสถานที่";
 "Distance" = "ระยะทาง";
@@ -263,7 +265,7 @@
 "sendFeedback" = "ส่งข้อเสนอแนะ";
 "logout" = "ออกจากระบบ";
 "faceID" = "Face ID / Touch ID";
-
+"Switch Login" = "สลับการเข้าสู่ระบบ";
 "accountSecurity" = "บัญชีและความปลอดภัย";
 "preference" = "การตั้งค่า";
 "supportInfo" = "การสนับสนุนและข้อมูล";
@@ -494,7 +496,12 @@
 "text" = "ข้อความ";
 "voice" = "เสียง";
 "Schedule a Call" = "นัดหมายการโทร";
-
+"Choose pre recorded file" = "เลือกไฟล์ที่บันทึกไว้ล่วงหน้า";
+"Select from history" = "เลือกจากประวัติ";
+"Note : (only m4a,wav,mp3 files are allowed)" = "หมายเหตุ: (อนุญาตเฉพาะไฟล์ m4a, wav และ mp3 เท่านั้น)";
+"Enter voice title" = "ป้อนชื่อไฟล์เสียง";
+"Your Emergency call is ON. You can't forward Above 30 mins voice message" = "เปิดใช้งานการโทรฉุกเฉินแล้ว คุณไม่สามารถส่งต่อข้อความเสียงที่มีความยาวเกิน 30 นาทีได้";
+"Enter Text Here" = "ป้อนข้อความที่นี่";
 //MARK: ScheduleExam
 "scheduleExam" = "กำหนดการสอบ";
 "Reasons" = "เหตุผล";
@@ -564,9 +571,18 @@
 "Cause should not be empty." = "เหตุผลต้องไม่เว้นว่าง";
 "Please select a From Date." = "กรุณาเลือกวันที่เริ่มต้น";
 "Please select a To Date." = "กรุณาเลือกวันที่สิ้นสุด";
-
+"All" = "ทั้งหมด";
+"Approved" = "อนุมัติแล้ว";
+"Rejected" = "ถูกปฏิเสธ";
+"Waiting" = "รอการอนุมัติ";
+"Approve" = "อนุมัติ";
+"Reject" = "ปฏิเสธ";
+"Select Date" = "เลือกวันที่";
+"No of Days - " = "จำนวนวัน - ";
+"Apply for %d Days Leave" = "ขอลางานเป็นเวลา %d วัน";
 //MARK: PTM
 "PTM" = "การประชุมผู้ปกครอง-ครู";
+"There are no meetings planned for you today" = "ไม่มีการประชุมที่กำหนดไว้สำหรับคุณในวันนี้";
 "Schedule Meeting" = "กำหนดการประชุม";
 "Your Meetings" = "การประชุมของคุณ";
 "Book Slot" = "จองช่วงเวลา";

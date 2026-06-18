@@ -25,7 +25,8 @@
 "Reset password" = "கடவுச்சொல்லை மீட்டமைக்கவும்";
 
 // MARK: Common String files
-
+"NEXT" = "அடுத்து";
+"TO STANDARD OR SECTION" = "வகுப்பு அல்லது பிரிவிற்கு";
 "Search" = "தேடல்";
 "Location Name" = "இடத்தின் பெயர்";
 "Distance" = "தூரம்";
@@ -263,7 +264,7 @@
 "sendFeedback" = "கருத்தை அனுப்பவும்";
 "logout" = "வெளியேறு";
 "faceID" = "Face ID / Touch ID";
-
+"Switch Login" = "உள்நுழைவை மாற்று";
 "accountSecurity" = "கணக்கு மற்றும் பாதுகாப்பு";
 "preference" = "விருப்பத்தைத் தேர்ந்தெடுக்கவும்";
 "supportInfo" = "ஆதரவு & தகவல்";
@@ -504,7 +505,12 @@
 "text" = "உரை";
 "voice" = "குரல்";
 "Schedule a Call" = "ஒரு அழைப்பை திட்டமிடுங்கள்";
-
+"Select from history" = "வரலாற்றிலிருந்து தேர்ந்தெடுக்கவும்";
+"Choose pre recorded file" = "முன்பே பதிவுசெய்யப்பட்ட கோப்பைத் தேர்ந்தெடுக்கவும்";
+"Note : (only m4a,wav,mp3 files are allowed)" = "குறிப்பு: (m4a, wav, mp3 கோப்புகள் மட்டுமே அனுமதிக்கப்படுகின்றன)";
+"Enter voice title" = "குரல் பதிவின் தலைப்பை உள்ளிடவும்";
+"Your Emergency call is ON. You can't forward Above 30 mins voice message" = "அவசர அழைப்பு இயக்கப்பட்டுள்ளது. 30 நிமிடங்களுக்கு மேற்பட்ட குரல் செய்திகளை அனுப்ப முடியாது.";
+"Enter Text Here" = "உரையை இங்கே உள்ளிடவும்";
 //MARK: ScheduleExam
 "scheduleExam" = "தேர்வு அட்டவணை அமைக்கவும்";
 "Reasons" = "காரணங்கள்";
@@ -577,6 +583,7 @@
 
 //MARK: PTM
 "PTM" = "பெற்றோர்-ஆசிரியர் கூட்டம்";
+"There are no meetings planned for you today" = "இன்று உங்களுக்காக எந்தக் கூட்டமும் திட்டமிடப்படவில்லை";
 "Schedule Meeting" = "கூட்டத்தை திட்டமிடு";
 "Your Meetings" = "உங்கள் கூட்டங்கள்";
 "Book Slot" = "ஸ்லாட் பதிவு செய்க";
@@ -641,8 +648,15 @@
 "Please select at least one slot to continue" = "தொடர குறைந்தது ஒரு ஸ்லாட்டையாவது தேர்வு செய்யவும்";
 "Are you sure you want to book selected slots?" = "தேர்வு செய்யப்பட்ட ஸ்லாட்களை பதிவு செய்ய விரும்புகிறீர்களா?";
 "Please enter reason for cancelation" = "ரத்து செய்வதற்கான காரணத்தை உள்ளிடவும்";
-
-
+"All" = "அனைத்தும்";
+"Approved" = "அங்கீகரிக்கப்பட்டது";
+"Rejected" = "நிராகரிக்கப்பட்டது";
+"Waiting" = "காத்திருக்கிறது";
+"Approve" = "அங்கீகரி";
+"Reject" = "நிராகரி";
+"Select Date" = "தேதியைத் தேர்ந்தெடுக்கவும்";
+"No of Days - " = "நாட்களின் எண்ணிக்கை - ";
+"Apply for %d Days Leave" = "%d நாட்கள் விடுப்பிற்கு விண்ணப்பிக்கவும்";
 //MARK: Quiz Page
 "No of question" = "கேள்விகளின் எண்ணிக்கை";
 "Check the box to continue next level" = "அடுத்த நிலைக்கு செல்ல பெட்டியை தேர்ந்தெடுக்கவும்";

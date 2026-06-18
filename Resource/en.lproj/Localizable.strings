@@ -6,24 +6,24 @@
 */
 //MARK: Login
 
-"Password" = "Password";
-"Mobile Number" = "Mobile Number";
-"Login" = "Login";
-"WELCOME BACK !" = "WELCOME BACK !";
-"SchoolCommunityMessage" = "Stay connected with your school community.\nYour updates, communication, and school life—all in one place.";
-"Forgot Password ?" = "Forgot Password ?";
+"Password" = "كلمة المرور";
+"Mobile Number" = "رقم الجوال";
+"Login" = "تسجيل الدخول";
+"WELCOME BACK !" = "مرحباً بعودتك!";
+"SchoolCommunityMessage" = "ابقَ على تواصل مع مجتمع مدرستك.\nجميع التحديثات والتواصل والحياة المدرسية في مكان واحد.";
+"Forgot Password ?" = "هل نسيت كلمة المرور؟";
 
-//Mark: PasswordScreen
+//MARK: PasswordScreen
 
-"Create Password" = "Create Password";
-"Confirm password" = "Confirm Password";
-"Enter the old password" = "Enter the old password";
-"Your password has been securely store and encrypted for protection. For security reason, it cannot be displayed in plain text." = "Your password has been securely stored and encrypted for protection. For security reasons, it cannot be displayed in plain text.";
-"Enter the new password" = "Enter the new password";
-"Create the new password" = "Create the new password";
-"Re-enter the new password" = "Re-enter the new password";
-"Change password" = "Change password";
-"Reset password" = "Reset password";
+"Create Password" = "إنشاء كلمة مرور";
+"Confirm password" = "تأكيد كلمة المرور";
+"Enter the old password" = "أدخل كلمة المرور القديمة";
+"Your password has been securely store and encrypted for protection. For security reason, it cannot be displayed in plain text." = "تم حفظ كلمة المرور الخاصة بك وتشفيرها بأمان للحماية. ولأسباب أمنية، لا يمكن عرضها كنص عادي.";
+"Enter the new password" = "أدخل كلمة المرور الجديدة";
+"Create the new password" = "أنشئ كلمة المرور الجديدة";
+"Re-enter the new password" = "أعد إدخال كلمة المرور الجديدة";
+"Change password" = "تغيير كلمة المرور";
+"Reset password" = "إعادة تعيين كلمة المرور";
 
 // MARK: Common String files
 "Search" = "Search";

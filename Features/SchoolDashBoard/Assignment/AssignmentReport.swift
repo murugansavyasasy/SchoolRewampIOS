@@ -196,7 +196,7 @@ class AssignmentReport: UIViewController, SelectedId {
         textField.layer.cornerRadius = 8
         textField.layer.masksToBounds = true
         textField.addDoneButton()
-        let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+//        let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         backLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         applyShadowAndCornerRadius(to: academicView)
         academicView.layer.borderColor = UIColor.lightGray.cgColor

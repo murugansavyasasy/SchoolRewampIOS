@@ -95,29 +95,13 @@ class NewPtmVC: UIViewController, Datepicker {
         
         meetingsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         bookedSlotsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        
-        //addUnderline(to: allBtn, unSelectedBtn: [upcomingBtn,completedBtn,canceledBtn])
-        
-       
+
             addUnderline(to: meetingsBtn, unSelectedBtn: [bookedSlotsBtn])
-        
-       
-        
-//        cv.register(UINib(nibName: CellConfingName.PtmCV, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PtmCV)
-//        cv.delegate = self
-//        cv.dataSource = self
         
         tv.register(UINib(nibName: CellConfingName.MeetingDetailTV, bundle: nil), forCellReuseIdentifier: CellConfingName.MeetingDetailTV)
         tv.register(UINib(nibName: CellConfingName.SlotListTV, bundle: nil), forCellReuseIdentifier: CellConfingName.SlotListTV)
         tv.delegate = self
         tv.dataSource = self
-        
-//        if let layout = cv.collectionViewLayout as? UICollectionViewFlowLayout {
-//                    layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-//                    layout.minimumInteritemSpacing = 8
-//                    layout.minimumLineSpacing = 8
-//                    layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-//                }
         
       
     }
@@ -186,13 +170,9 @@ class NewPtmVC: UIViewController, Datepicker {
                             let events = completedGroups.compactMap { $0.details }.flatMap { $0 }
                             self.sections.append(SectionData(title: PTMString.completedMeetings.translated(), type: .meetings, events: events))
                         }
-                       
-//                        let message = String(format:PTMString.meetingsToday,slotData.today?.count ?? 0)
-//                        self.MeetingCountLbl.text = message
-                        //"You have " + String(slotData.today?.count ?? 0) + " Meetings Today"
-                        
+
                         self.tv.reloadData()
-                       // self.cv.reloadData() // if you’re also showing in collection view
+
                     }else {
                         self.nodataLbl.text = success.message
                         self.noDataImage.isHidden = false
@@ -539,10 +519,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
         return sections[section].events.count
     }
     
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return sections[section].title
-//    }
-//    
+   
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let headerView = UIView()
@@ -569,7 +546,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
         case .meetings:
             
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.MeetingDetailTV, for: indexPath) as! MeetingDetailTV
-            //cell.cellView.backgroundColor = .white//colours[indexPath.row % colours.count]
+
             let event = sections[indexPath.section].events[indexPath.row] as? SlotEventDetail
         
             cell.MeetingNameLbl.text = event?.event_name
@@ -604,7 +581,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
 
             // MARK: - Basic Info
             cell.TimeLbl.text = "\(slot?.from_time ?? "") - \(slot?.to_time ?? "") (\(slot?.meeting_duration ?? 0) \(PTMString.minutes.translated()))"
-            cell.DurationLbl.text = slot?.date?.convertToTargetDateFormat()//"\(PTMString.duration.translated()) - \(slot?.meeting_duration ?? 0) \(PTMString.minutes.translated())"
+            cell.DurationLbl.text = slot?.date?.convertToTargetDateFormat()
             cell.bookedByNameLbl.text = slot?.student_name
             cell.fatherNameLbl.text = slot?.father_name
             cell.motherNameLbl.text = slot?.mother_name

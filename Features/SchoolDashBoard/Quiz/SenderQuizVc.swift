@@ -47,6 +47,7 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         noOfQuestionDefaultLbl.setRequiredText(noOfQuestionDefaultLbl.text ?? "")
         titleDefaultLbl.setRequiredText(MenuStringFile.Title)
         descrptionDefaultLbl.setRequiredText(MenuStringFile.description)
+      
         nextBtn.layer.cornerRadius = 10
         discriptionsTextFild.layer.cornerRadius = 10
         checkBox.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(checkboxAct)))
@@ -60,7 +61,7 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             discriptionsTextFild.text = edit.description
             numberOfQuestionText.text = String(edit.noOfQuestions ?? 0)
             checkBoxImage.image = UIImage(systemName: (edit.levelFlag ?? false) ? "checkmark.circle.fill" : "circle")
-            nextBtn.setTitle("Update", for: .normal)
+            nextBtn.setTitle("Update".translated(), for: .normal)
             placeholderLabel.isHidden = !discriptionsTextFild.text.isEmpty
             noOfQuestionDefaultLbl.alpha = 0.5
             numberOfQuestionText.textColor = .lightGray
@@ -77,7 +78,7 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
                 checkBoxImage.image = UIImage(systemName: "circle")
                 isReset = false
             }
-            nextBtn.setTitle("NEXT", for: .normal)
+            nextBtn.setTitle("NEXT".translated(), for: .normal)
             placeholderLabel.isHidden = !discriptionsTextFild.text.isEmpty
             checkBox.isUserInteractionEnabled = true
             numberOfQuestionText.isUserInteractionEnabled = true
