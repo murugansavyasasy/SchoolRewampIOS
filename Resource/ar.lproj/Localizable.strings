@@ -5,111 +5,341 @@
   Created by admin on 08/11/24.
   
 */
-"welcome_message" = "مرحبًا";
-"change_language" = "تغيير اللغة";
-"Home" = "الرئيسية";
-"Help" = "مساعدة";
-"Settings" = "الإعدادات";
-"Profile" = "الملف الشخصي";
-"ChooseYourRole" = "اختر دورك";
-"LoginAsTeacherOrParent" = "تسجيل الدخول كمعلم أو ولي أمر";
-"Principal" = "المدير";
-"Parent" = "ولي الأمر";
+// MARK: Common String files
+"NEXT" = "التالي";
+"TO STANDARD OR SECTION" = "إلى الصف أو الشعبة";
+"Search" = "بحث";
+"Location Name" = "اسم الموقع";
+"Distance" = "المسافة";
+"Get Location" = "الحصول على الموقع";
+"You can only select up to 2 video files." = "يمكنك تحديد ما يصل إلى ملفي فيديو فقط.";
+"Cancel" = "إلغاء";
+"Camera" = "الكاميرا";
 "Proceed" = "متابعة";
-"exam_test" = "اختبار الامتحان";
-"exam_marks" = "علامات الامتحان";
-"attendance" = "الحضور";
-"receiver_assignment" = "استلام الواجب";
-"online_meeting" = "اجتماع عبر الإنترنت";
-"attendance_report" = "تقرير الحضور";
+"Document" = "مستند";
+"Video" = "فيديو";
+"Photos" = "الصور";
+"VIDEO" = "فيديو";
+"M4A" = "M4A";
+"See less" = "عرض أقل";
+"See more" = "عرض المزيد";
+"selected Text" = "النص المحدد";
+"Roll No ASC" = "رقم السجل تصاعدياً";
+"Roll No DSC" = "رقم السجل تنازلياً";
+"Admission No DSC" = "رقم القبول تنازلياً";
+"Admission No ASC" = "رقم القبول تصاعدياً";
+"Name A-Z" = "الاسم أ-ي";
+"Name Z-A" = "الاسم ي-أ";
+"Present" = "حاضر";
+"Absent" = "غائب";
+"Get All Student" = "عرض جميع الطلاب";
+"Standard & Section" = "الصف والشعبة";
+"Standard" = "الصف";
+"Logout" = "تسجيل الخروج";
+"Select from history" = "اختر من السجل";
+"Roll No" = "رقم السجل";
+"Name" = "الاسم";
+"Status" = "الحالة";
+"Section" = "الشعبة";
+"Academic Year" = "السنة الدراسية";
+"Filter" = "تصفية";
+"Upload Attachment" = "رفع مرفق";
+"Upload Image/Document" = "رفع صورة/مستند";
+"Upload Image/Document (Optional)" = "رفع صورة/مستند (اختياري)";
+"Description" = "الوصف";
+"Starts on" = "يبدأ في";
+"Groups" = "المجموعات";
+"Section or student" = "الشعبة أو الطالب";
+"Standard or section" = "الصف أو الشعبة";
+"From Time" = "من الوقت";
+"Schedule date" = "تاريخ الجدولة";
+"Do not dial beyond" = "لا تتصل بعد";
+"Emergency call   ℹ️ " = "مكالمة طارئة ℹ️";
+"Instant Call" = "مكالمة فورية";
+"Text Message" = "رسالة نصية";
+"Schedule Call" = "جدولة مكالمة";
+"Enter Text Here" = "أدخل النص هنا";
+"Enter Reason" = "أدخل السبب";
+"Back to compose" = "العودة إلى الإنشاء";
+"Venue" = "المكان";
+"Add Photos" = "إضافة صور";
+"Event Details" = "تفاصيل الحدث";
+"Event Title" = "عنوان الحدث";
+"(Optional)" = "(اختياري)";
+"Add Photos1" = "إضافة صور";
+"egChennai" = "مثال: تشيناي";
+"egYogaEvent" = "مثال: فعالية اليوغا";
+"completed" = "مكتمل";
+"pending" = "قيد الانتظار";
+"Enter bugs" = "أدخل تفاصيل الخطأ";
+"Profile" = "الملف الشخصي";
+"About Student" = "حول الطالب";
+"About Staff" = "حول الموظف";
+"Contact details" = "بيانات الاتصال";
+"Register number" = "رقم التسجيل";
+"Family Details" = "تفاصيل الأسرة";
+"Father name" = "اسم الأب";
+"Father occupation" = "مهنة الأب";
+"Mother name" = "اسم الأم";
+"Mother occupation" = "مهنة الأم";
+"Secondary Phone no" = "رقم الهاتف الثانوي";
+"Contact Support" = "الاتصال بالدعم";
+"Terms and Conditions" = "الشروط والأحكام";
+"schedule Exam" = "جدولة اختبار";
+"From" = "من";
+"To" = "إلى";
+"Days" = "الأيام";
+"Day" = "اليوم";
+"Create Leave Request" = "إنشاء طلب إجازة";
+"LeaveRequestInfo" = "معلومات طلب الإجازة";
+"Student/Parent" = "طالب/ولي أمر";
+"LoginAsStudentParent" = "تسجيل الدخول كطالب/ولي أمر";
+"ClickProceedToContinue" = "اضغط متابعة للاستمرار";
+"or Student/Parent" = "أو طالب/ولي أمر";
+"Principal" = "المدير";
+"Login As Teacher Or Parent" = "تسجيل الدخول كمعلم أو ولي أمر";
+"Login As" = "تسجيل الدخول كـ";
+"Management" = "الإدارة";
+"Choose Your Role" = "اختر دورك";
+"Proceed" = "متابعة";
+"Create Event" = "إنشاء حدث";
+"Title" = "العنوان";
+"Submission Date" = "تاريخ التسليم";
+"Select Catagorie" = "اختر الفئة";
+"Add Pdf (Optional?)" = "إضافة PDF (اختياري)";
+"Add attachment (Optional)" = "إضافة مرفق (اختياري)";
+"Recording Time (Optional?)" = "مدة التسجيل (اختياري)";
+"Add attachment" = "إضافة مرفق";
+"Recording Time" = "مدة التسجيل";
+"Add Pdf" = "إضافة PDF";
+"Add Documents" = "إضافة مستندات";
+"Add Video" = "إضافة فيديو";
+"Tap SEND to share this message with everyone in the school." = "اضغط إرسال لمشاركة هذه الرسالة مع جميع أفراد المدرسة.";
+"The academic year configuration for your school are incorrect. Please contact School Chimes at support@savyasasy.com" = "إعدادات السنة الدراسية غير صحيحة. يرجى التواصل مع School Chimes عبر support@savyasasy.com";
+"support@savyasasy.com" = "support@savyasasy.com";
+"jpg" = "JPG";
+"IMAGE" = "صورة";
+"path" = "المسار";
+"url" = "الرابط";
+"type" = "النوع";
+"pdf" = "PDF";
+"audio" = "صوت";
+"No Data Found!" = "لا توجد بيانات!";
+"Notice Active Period" = "فترة نشاط الإشعار";
+"All" = "الكل";
+"NEXT" = "التالي";
+"Edit" = "تعديل";
+"Welcome" = "مرحباً";
+"Change Language" = "تغيير اللغة";
+"Home" = "الرئيسية";
+"Help" = "المساعدة";
+"Settings" = "الإعدادات";
+"Choose your role" = "اختر دورك";
+"Login as a teacher or parent" = "تسجيل الدخول كمعلم أو ولي أمر";
+"Parent" = "ولي الأمر";
+"exam_test" = "اختبار";
+"Exam Marks" = "درجات الاختبار";
+"Attendance" = "الحضور";
+"Receiver Assignment" = "استلام الواجب";
+"Online Meeting" = "اجتماع عبر الإنترنت";
+"Attendance Report" = "تقرير الحضور";
+"Category" = "الفئة";
+"Choose Recipients" = "اختر المستلمين";
+"TO STANDARD OR SECTION" = "إلى الصف أو الشعبة";
+"Switch Role" = "تبديل الدور";
+"DashBoard" = "لوحة التحكم";
+"View Profile" = "عرض الملف الشخصي";
+"Chapters Completed" = "الفصول المكتملة";
+"Show old Messages" = "عرض الرسائل القديمة";
+"--From date--" = "--من تاريخ--";
+"--To date--" = "--إلى تاريخ--";
+"Select Date" = "اختر التاريخ";
+
+// MARK: Days
+"Sunday" = "الأحد";
+"Monday" = "الاثنين";
+"Tuesday" = "الثلاثاء";
+"Wednesday" = "الأربعاء";
+"Thursday" = "الخميس";
+"Friday" = "الجمعة";
+"Saturday" = "السبت";
+
+"Sun" = "أحد";
+"Mon" = "اثن";
+"Tue" = "ثلا";
+"Wed" = "أرب";
+"Thu" = "خمي";
+"Fri" = "جمع";
+"Sat" = "سبت";
+
+"Su" = "ح";
+"Mo" = "ن";
+"Tu" = "ث";
+"We" = "ر";
+"Th" = "خ";
+"Fr" = "ج";
+"Sa" = "س";
+
+// MARK: Months
+"January" = "يناير";
+"February" = "فبراير";
+"March" = "مارس";
+"April" = "أبريل";
+"May" = "مايو";
+"June" = "يونيو";
+"July" = "يوليو";
+"August" = "أغسطس";
+"September" = "سبتمبر";
+"October" = "أكتوبر";
+"November" = "نوفمبر";
+"December" = "ديسمبر";
+
+"Jan" = "ينا";
+"Feb" = "فبر";
+"Mar" = "مار";
+"Apr" = "أبر";
+"May_" = "ماي";
+"Jun" = "يون";
+"Jul" = "يول";
+"Aug" = "أغس";
+"Sep" = "سبت";
+"Oct" = "أكت";
+"Nov" = "نوف";
+"Dec" = "ديس";
+
+// MARK: LSRW Page
+"Listening" = "الاستماع";
+"Speaking" = "التحدث";
+"Reading" = "القراءة";
+"Writing" = "الكتابة";
+"Completed Tasks" = "المهام المكتملة";
+"Active Tasks" = "المهام النشطة";
+"Dashboard Overview" = "نظرة عامة على لوحة التحكم";
+"New Task" = "مهمة جديدة";
+"My Submission" = "تسليماتي";
+"All" = "الكل";
+"Completed" = "مكتمل";
+"Pending" = "قيد الانتظار";
+"START" = "ابدأ";
 
 // MARK: Settings page
-"Notifications" = "الإشعارات";
-"FAQ" = "الأسئلة الشائعة";
-"Contact Us" = "اتصل بنا";
-"Terms and Conditions" = "الشروط والأحكام";
-"Change App Language" = "تغيير لغة التطبيق";
-"Feedback" = "التقييم";
-"Report a bug" = "الإبلاغ عن خطأ";
-"Send Feedback" = "إرسال التقييم";
-"Logout" = "تسجيل الخروج";
-"GENERAL" = "عام";
-"Rate Us" = "قيمنا";
-"Contact Support" = "اتصل بالدعم";
+"general" = "عام";
+"notifications" = "الإشعارات";
+"faq" = "الأسئلة الشائعة";
+"contactUs" = "اتصل بنا";
+"termsAndConditions" = "الشروط والأحكام";
+"changeAppLanguage" = "تغيير لغة التطبيق";
+"feedback" = "قيّمنا";
+"reportABug" = "الإبلاغ عن خطأ";
+"sendFeedback" = "إرسال الملاحظات";
+"logout" = "تسجيل الخروج";
+"faceID" = "بصمة الوجه / بصمة الإصبع";
+"Switch Login" = "تبديل تسجيل الدخول";
+"accountSecurity" = "الحساب والأمان";
+"preference" = "التفضيلات";
+"supportInfo" = "الدعم والمعلومات";
+"feedbackSection" = "الملاحظات";
 
+"changePassword" = "تغيير كلمة المرور";
+"privacyPolicy" = "سياسة الخصوصية";
+"aboutApp" = "حول التطبيق";
+"howToUse" = "كيفية الاستخدام؟";
+"Exciting features" = "ميزات رائعة";
+"appVersion" = "إصدار التطبيق";
+"Settings" = "الإعدادات";
 // MARK: Dashboard
-"discussion" = "المناقشة";
+"discussion" = "مناقشة";
 "SmallIcon" = "أيقونة صغيرة";
 "drawing-compass" = "بوصلة الرسم";
 "knowledge" = "المعرفة";
-"pencil" = "قلم رصاص";
-"scale" = "مسطرة";
-"schoolss" = "مدرسة";
+"pencil" = "قلم";
+"scale" = "مقياس";
+"schoolss" = "مدارس";
 "university" = "جامعة";
 "support" = "الدعم";
+"SmallIcon" = "أيقونة صغيرة";
 "Video" = "فيديو";
 
 "Communication" = "التواصل";
 "Image/Pdf" = "صورة / PDF";
 "Video Upload" = "رفع فيديو";
 "Circulars" = "التعاميم";
-"Homework" = "الواجب المنزلي";
-"Schedule Exam/Test" = "جدولة امتحان / اختبار";
+"Homework" = "الواجبات المنزلية";
+"Schedule Exam/Test" = "جدولة اختبار";
 "Notice Board" = "لوحة الإعلانات";
 "Attendance marking" = "تسجيل الحضور";
-"Messages from management" = "رسائل من الإدارة";
+"Messages from management" = "رسائل الإدارة";
 "Leave Requests" = "طلبات الإجازة";
-"Assignment" = "التكليفات";
+"Assignment" = "الواجبات";
 "Interaction with student" = "التفاعل مع الطالب";
 "Online Meeting" = "اجتماع عبر الإنترنت";
 "Lesson Plan" = "خطة الدرس";
-"PTM" = "اجتماع أولياء الأمور والمعلمين";
+"PTM" = "اجتماع أولياء الأمور";
 "Mark your attendance" = "سجل حضورك";
 "Absentees Report" = "تقرير الغياب";
-"School Strength" = "عدد طلاب المدرسة";
-"Daily Collection" = "المجموع اليومي";
+"School Strength" = "إحصائيات المدرسة";
+"Daily Collection" = "التحصيل اليومي";
 "Student Report" = "تقرير الطالب";
-"Fee Pending Report" = "تقرير الرسوم المعلقة";
+"Fee Pending Report" = "تقرير الرسوم المستحقة";
 "Staff Wise Attendance Report" = "تقرير حضور الموظفين";
 
-// MARK: profile page
-"Family Details" = "تفاصيل العائلة";
+"Events/Holidays" = "الفعاليات والعطلات";
+"Request Leave" = "طلب إجازة";
+"Fee Details" = "تفاصيل الرسوم";
+"Images" = "الصور";
+"Interaction with Staff" = "التفاعل مع الموظفين";
+"Quiz Exam" = "اختبار قصير";
+"LSRW" = "الاستماع والتحدث والقراءة والكتابة";
+"Class Timetable" = "الجدول الدراسي";
+"Certificate Request" = "طلب شهادة";
+
+// MARK: Profile Page
+"Family Details" = "تفاصيل الأسرة";
 "Fathername" = "اسم الأب";
 "Mothername" = "اسم الأم";
 "Father occupation" = "مهنة الأب";
 "Mother occupation" = "مهنة الأم";
 "Secondary Phone no" = "رقم الهاتف الثانوي";
-"About Student" = "عن الطالب";
 "Profile" = "الملف الشخصي";
+"About Student" = "حول الطالب";
 "Register number" = "رقم التسجيل";
 "Standard" = "الصف";
-"Section" = "القسم";
-"Contact details" = "تفاصيل الاتصال";
+"Section" = "الشعبة";
+"Contact details" = "بيانات الاتصال";
 
-// MARK: piechart
-"School Strength" = "إجمالي عدد الطلاب";
-"Total Strength" = "الإجمالي";
-"Staff's count" = "عدد الموظفين";
-"Boy's count" = "عدد الأولاد";
-"Girl's count" = "عدد الفتيات";
-
-// MARK: Logout page
-"Are you sure you want to logout?" = "هل أنت متأكد أنك تريد تسجيل الخروج؟";
 "Cancel" = "إلغاء";
-
-"Select" = "اختر";
-"Choose an option" = "اختر خيارًا";
+"Select" = "اختيار";
+"Choose an option" = "اختر خياراً";
 
 // MARK: Image Sender Side
-"Upload Image/Pdf" = "تحميل صورة / PDF";
+"Upload Image/Pdf" = "رفع صورة / PDF";
 "Description" = "الوصف";
 "Camera" = "الكاميرا";
 "Gallery" = "المعرض";
-"Pdf" = "ملف PDF";
+"Pdf" = "PDF";
 "Upload Attachment" = "رفع مرفق";
-"Camera Not Available" = "الكاميرا غير متوفرة";
-"This device has no camera." = "هذا الجهاز لا يحتوي على كاميرا";
+"Camera Not Available" = "الكاميرا غير متاحة";
+"This device has no camera." = "هذا الجهاز لا يحتوي على كاميرا.";
+
+// MARK: Pie Chart
 "OK" = "موافق";
+"Rate Us" = "قيّمنا";
+
+"School Strength" = "إحصائيات المدرسة";
+"Total Strength" = "إجمالي العدد";
+"Staff's count" = "عدد الموظفين";
+"Boy's count" = "عدد الطلاب الذكور";
+"Girl's count" = "عدد الطالبات";
+
+// MARK: Logout Page
+"Are you sure you want to logout?" = "هل أنت متأكد أنك تريد تسجيل الخروج؟";
+"Logout" = "تسجيل الخروج";
+"English" = "الإنجليزية";
+
+// MARK: Common Staff Side
+"Groups" = "المجموعات";
+"Standard or section" = "الصف أو الشعبة";
+"Section or student" = "الشعبة أو الطالب";
 
 // MARK: Video Sender Side
 "Enter Video Title" = "أدخل عنوان الفيديو";
@@ -118,76 +348,408 @@
 "Change Video" = "تغيير الفيديو";
 "Upload Video" = "رفع الفيديو";
 "Send" = "إرسال";
+"Click To Choose Video From File" = "اضغط لاختيار فيديو من الملفات";
 
 // MARK: Home Work Sender Side
 "Home Work" = "الواجب المنزلي";
 "Content" = "المحتوى";
-"Home Work Reports" = "تقارير الواجب المنزلي";
-"Compose Home work Message" = "إنشاء رسالة الواجب المنزلي";
+"Home Work Reports" = "تقارير الواجبات";
+"Compose Home work Message" = "إنشاء رسالة واجب منزلي";
 
-// MARK: Feedback page
-"How satisfied are you with the School Chimes?" = "ما مدى رضاك عن School Chimes؟";
-"Maybe later" = "ربما لاحقًا";
-"Any other suggestions? (optional)" = "هل لديك أي اقتراحات أخرى؟ (اختياري)";
-"SUBMIT" = "إرسال";
-"Thank You" = "شكرًا لك";
-"We appreciate your feedback! Your rating helps us improve." = "نحن نقدر ملاحظاتك! يساعدنا تقييمك على التحسن.";
-"Back to Home <<" = "العودة إلى الصفحة الرئيسية <<";
-
-// MARK: Report bugs page
-"Select Module*" = "حدد الوحدة*";
-"Enter Bugs *" = "أدخل الأخطاء *";
-"Upload Attachment" = "تحميل مرفق";
-
-// MARK: NoticeBoard
 "NoticeBoard" = "لوحة الإعلانات";
 "Search" = "بحث";
-"Compose NoticeBoard" = "إنشاء لوحة إعلانات";
+"Compose NoticeBoard" = "إنشاء إعلان";
 "From" = "من";
 "To" = "إلى";
 "Submit" = "إرسال";
 
-// MARK: Sender Side Assignment
-"Select the type in which you want to create the assignment" = "حدد النوع الذي تريد إنشاء المهمة به";
+// MARK: Assignment
+"Select the type in which you want to create the assignment" = "اختر نوع الواجب الذي تريد إنشاؤه";
 "CREATE" = "إنشاء";
 "VIEW" = "عرض";
 "Assignment" = "الواجب";
 "Compose Assignment" = "إنشاء واجب";
-"Submission Date" = "تاريخ التقديم";
+"Submission Date" = "تاريخ التسليم";
 "Category" = "الفئة";
 "Click here to choose Image" = "اضغط هنا لاختيار صورة";
-"Subject" = "الموضوع";
-"Submission Due" = "موعد التقديم";
-"Submission Count" = "عدد التقديمات";
-"Total Count" = "الإجمالي";
+"Subject" = "المادة";
+"Submission Due" = "موعد التسليم";
+"Submission Count" = "عدد التسليمات";
+"Total Count" = "العدد الإجمالي";
 "Forward" = "إعادة توجيه";
 "Delete" = "حذف";
-"Submission" = "تقديم";
+"Submission" = "التسليم";
+"Total" = "الإجمالي";
+"View" = "عرض";
+"My Submission" = "تسليماتي";
+"Assignment Progress" = "تقدم الواجب";
 
-// MARK: Sender side Events
+// MARK: Attendance
 "Name" = "الاسم";
-"RollNo" = "رقم التسجيل";
+"Roll No" = "رقم السجل";
 "Status" = "الحالة";
-"LeaveRequests" = "طلبات الإجازة";
-"Present" = "حاضر";
+"Roll No DESC" = "رقم السجل تنازلياً";
+"Roll No ASC" = "رقم السجل تصاعدياً";
+"Name ASC" = "الاسم تصاعدياً";
+"Name DESC" = "الاسم تنازلياً";
 "Absent" = "غائب";
+"Present" = "حاضر";
 "Filter" = "تصفية";
+"Roll Number Ascending" = "رقم السجل تصاعدياً";
+"Roll Number Descending" = "رقم السجل تنازلياً";
+"Name Ascending" = "الاسم تصاعدياً";
+"Name Descending" = "الاسم تنازلياً";
+"Get All Students" = "عرض جميع الطلاب";
+"Completed" = "مكتمل";
+"Pending" = "قيد الانتظار";
 
-// MARK: Event
-"Circulars" = "التعاميم";
-"EventTitle" = "عنوان الحدث";
-"EventDetails" = "تفاصيل الحدث";
-"Venue" = "المكان";
-"CreateEvent" = "إنشاء حدث";
+// MARK: Events
+"Enter place" = "أدخل المكان";
+"Enter Title" = "أدخل العنوان";
+"Enter your Text here..." = "أدخل النص هنا...";
+"Add Photos (Optional?)" = "إضافة صور (اختياري)";
+"Add Pdf (Optional?)" = "إضافة PDF (اختياري)";
+"Venue" = "الموقع";
+"History" = "السجل";
+"Create" = "إنشاء";
+"(Optional?)" = "(اختياري)";
+"Event Title" = "عنوان الفعالية";
+"Event Details" = "تفاصيل الفعالية";
+"reate Event" = "إنشاء فعالية";
+"eg. Yoga event" = "مثال: فعالية يوغا";
+"eg. Chennai" = "مثال: تشيناي";
+"Ongoing Events" = "الفعاليات الجارية";
+"Event Categories" = "فئات الفعاليات";
+"Upcoming Events" = "الفعاليات القادمة";
+"Completed Events" = "الفعاليات المكتملة";
+"Your Attachment's" = "مرفقاتك";
 
-// MARK: Communication
-"BackToTextMessage" = "العودة إلى الرسالة النصية";
-"BackToVoiceMessage" = "العودة إلى الرسالة الصوتية";
+
+//MARK: Communication
+"Back to Text Message" = "العودة إلى الرسالة النصية";
+"Back to Voice Message" = "العودة إلى الرسالة الصوتية";
+"Selected Text" = "النص المحدد";
+"Invalid Selection" = "اختيار غير صالح";
+"You can only select dates within the currently displayed month." = "يمكنك اختيار التواريخ ضمن الشهر المعروض فقط.";
+"Text" = "نص";
+"Voice" = "صوت";
 "Schedule a Call" = "جدولة مكالمة";
+"Select from history" = "اختر من السجل";
+"Choose pre recorded file" = "اختر ملفاً مسجلاً مسبقاً";
+"Note : (only m4a,wav,mp3 files are allowed)" = "ملاحظة: (يُسمح فقط بملفات m4a و wav و mp3)";
+"Enter voice title" = "أدخل عنوان التسجيل الصوتي";
+"Your Emergency call is ON. You can't forward Above 30 mins voice message" = "تم تفعيل المكالمات الطارئة. لا يمكنك إعادة توجيه رسائل صوتية تزيد مدتها عن 30 دقيقة.";
+"Enter Text Here" = "أدخل النص هنا";
 
-// MARK: ScheduleExam
-"scheduleExam" = "جدولة الامتحان";
-"Day" = "يوم";
-"Days" = "أيام";
-"CreateLeaveRequest" = "إنشاء طلب إجازة";
-"LeaveRequestInfo" = "معلومات طلب الإجازة";
+//MARK: ScheduleExam
+"Schedule Exam" = "جدولة اختبار";
+"Reasons" = "الأسباب";
+"Days" = "الأيام";
+"Day" = "اليوم";
+"Create Leave Request" = "إنشاء طلب إجازة";
+"Leave Request Info" = "معلومات طلب الإجازة";
+
+//MARK: Lessonplan
+"All Classes" = "جميع الفصول";
+"My Classes" = "فصولي";
+"Edit Lesson Plan" = "تعديل خطة الدرس";
+"items completed" = "عناصر مكتملة";
+"All" = "الكل";
+"Yet to Start" = "لم يبدأ بعد";
+"In Progress" = "قيد التنفيذ";
+"Completed" = "مكتمل";
+"Edit" = "تعديل";
+
+//MARK: Exam Mark
+"View Marks" = "عرض الدرجات";
+"View Progress" = "عرض التقدم";
+"Overall Grade" = "التقدير العام";
+"Subject & Marks" = "المادة والدرجات";
+"Other Activities" = "أنشطة أخرى";
+"Exam Timetable" = "جدول الاختبارات";
+"Exam Marks" = "درجات الاختبارات";
+
+//MARK: Receiver Attendance
+"Attendance" = "الحضور";
+"This week status" = "حالة هذا الأسبوع";
+"Leave Taken" = "الإجازات المأخوذة";
+"Ongoing Days" = "الأيام الجارية";
+"Ask Leave" = "طلب إجازة";
+"Leave Requests" = "طلبات الإجازة";
+"Attendance Report" = "تقرير الحضور";
+"Holidays" = "العطلات";
+"New Leave" = "إجازة جديدة";
+"Type" = "النوع";
+"Cause" = "السبب";
+"Session" = "الفترة";
+"Select From Date" = "اختر تاريخ البداية";
+"Select To Date" = "اختر تاريخ النهاية";
+"First Half" = "النصف الأول";
+"Second Half" = "النصف الثاني";
+"Select Leave Type" = "اختر نوع الإجازة";
+"Enter Reason" = "أدخل السبب";
+"Apply Leave" = "تقديم طلب الإجازة";
+"Approved" = "تمت الموافقة";
+"Rejected" = "مرفوض";
+"Waiting" = "قيد الانتظار";
+"Awaiting" = "بانتظار الموافقة";
+"Generate Outpass" = "إنشاء تصريح خروج";
+"Absent" = "غائب";
+"No Holidays for" = "لا توجد عطلات لـ";
+"Holidays for" = "العطلات لـ";
+"Leave History" = "سجل الإجازات";
+"Not Taken" = "غير مستخدمة";
+"Holiday" = "عطلة";
+"Day Application" = "طلب يوم إجازة";
+"Done" = "تم";
+"Edit Leave Request" = "تعديل طلب الإجازة";
+"Update for" = "تحديث لـ";
+"Days Leave" = "أيام الإجازة";
+"Please select a Leave Type." = "يرجى اختيار نوع الإجازة.";
+"Cause should not be empty." = "لا يمكن أن يكون السبب فارغاً.";
+"Please select a From Date." = "يرجى اختيار تاريخ البداية.";
+"Please select a To Date." = "يرجى اختيار تاريخ النهاية.";
+
+//MARK: PTM
+"There are no meetings planned for you today" = "لا توجد اجتماعات مجدولة لك اليوم";
+
+"PTM" = "اجتماع أولياء الأمور";
+"Schedule Meeting" = "جدولة اجتماع";
+"Your Meetings" = "اجتماعاتك";
+"Book Slot" = "حجز موعد";
+"All Subjects" = "جميع المواد";
+"Completed Meetings" = "الاجتماعات المكتملة";
+"Upcoming Meetings" = "الاجتماعات القادمة";
+"Today Meetings" = "اجتماعات اليوم";
+"Date" = "التاريخ";
+"Time" = "الوقت";
+"Call" = "اتصال";
+"Cancel" = "إلغاء";
+"With" = "مع";
+"You have %d Meetings Today" = "لديك %d اجتماع اليوم";
+"Minutes" = "دقائق";
+"Virtual" = "افتراضي";
+"Duration" = "المدة";
+"Create Meeting" = "إنشاء اجتماع";
+"Purpose of Meeting" = "الغرض من الاجتماع";
+"Select Meeting Mode" = "اختر نوع الاجتماع";
+"In person" = "حضوري";
+"Phone call" = "مكالمة هاتفية";
+"Paste meeting Link" = "ألصق رابط الاجتماع";
+"Select Your Classes" = "اختر فصولك";
+"Choose academic year :" = "اختر السنة الدراسية:";
+"Select Date & Time" = "اختر التاريخ والوقت";
+"Select Dates" = "اختر التواريخ";
+"Start with" = "يبدأ من";
+"End with" = "ينتهي عند";
+"Duration & Break" = "المدة والاستراحة";
+"Need Break between slots?" = "هل تحتاج إلى استراحة بين المواعيد؟";
+"Break After" = "استراحة بعد";
+"Slot" = "موعد";
+"Break Duration" = "مدة الاستراحة";
+"Check Slot Availability" = "التحقق من توفر الموعد";
+"%d Minutes" = "%d دقيقة";
+"Custom" = "مخصص";
+"%d Min" = "%d د";
+"Select Slot Duration" = "اختر مدة الموعد";
+"Meetings" = "الاجتماعات";
+"Booked Slots" = "المواعيد المحجوزة";
+"Today Slots" = "مواعيد اليوم";
+"Upcoming Slots" = "المواعيد القادمة";
+"Completed Slots" = "المواعيد المكتملة";
+"Completed" = "مكتمل";
+"Cancelled" = "ملغى";
+"Expired" = "منتهي";
+"Slot Expired" = "انتهت صلاحية الموعد";
+"Slot Cancelled" = "تم إلغاء الموعد";
+"Booked by:" = "تم الحجز بواسطة:";
+"Father Name:" = "اسم الأب:";
+"Mother Name:" = "اسم الأم:";
+"Mode" = "الوضع";
+"Classes" = "الفصول";
+"Booked" = "محجوز";
+"Slot Duration" = "مدة الموعد";
+"Available" = "متاح";
+"Waiting for Booking" = "بانتظار الحجز";
+"No Slot Booked yet" = "لم يتم حجز أي موعد بعد";
+"Book PTM Slots" = "حجز مواعيد اجتماع أولياء الأمور";
+"Join" = "انضم";
+"Please select at least one slot to continue" = "يرجى اختيار موعد واحد على الأقل للمتابعة";
+"Are you sure you want to book selected slots?" = "هل أنت متأكد من حجز المواعيد المحددة؟";
+"Please enter reason for cancelation" = "يرجى إدخال سبب الإلغاء";
+"All" = "الكل";
+"Approved" = "تمت الموافقة";
+"Rejected" = "مرفوض";
+"Waiting" = "قيد الانتظار";
+"Approve" = "موافقة";
+"Reject" = "رفض";
+"Select Date" = "اختر التاريخ";
+"No of Days - " = "عدد الأيام - ";
+"Apply for %d Days Leave" = "التقدم بطلب إجازة لمدة %d يوم";
+//MARK: Quiz Page
+"No of question" = "عدد الأسئلة";
+"Check the box to continue next level" = "حدد المربع للانتقال إلى المستوى التالي";
+"Question" = "السؤال";
+"Chapter" = "الفصل";
+"Option A" = "الخيار أ";
+"Option B" = "الخيار ب";
+"Option C" = "الخيار ج";
+"Option D" = "الخيار د";
+"Correct Ans" = "الإجابة الصحيحة";
+"Mark" = "الدرجة";
+"Choose" = "اختر";
+"Add Question" = "إضافة سؤال";
+"Student Submissions" = "إجابات الطلاب";
+"Upcoming" = "القادم";
+"Max marks" = "الدرجة القصوى";
+"Subject" = "المادة";
+"Level" = "المستوى";
+"Created date" = "تاريخ الإنشاء";
+"posted by" = "تم النشر بواسطة";
+"Posted On" = "تاريخ النشر";
+"Play Now" = "ابدأ الآن";
+"Reports" = "التقارير";
+"Enter Option A" = "أدخل الخيار أ";
+"Enter Option B" = "أدخل الخيار ب";
+"Enter Option C" = "أدخل الخيار ج";
+"Enter Option D" = "أدخل الخيار د";
+"Enter Question here" = "أدخل السؤال هنا";
+"Drop Your Mark here" = "أدخل الدرجة هنا";
+"Send Quiz" = "إرسال الاختبار";
+"Select correct answer" = "اختر الإجابة الصحيحة";
+"Import from Question Bank" = "استيراد من بنك الأسئلة";
+"Question Limit: " = "حد الأسئلة: ";
+"Missing Information" = "معلومات ناقصة";
+"Enter" = "إدخال";
+"Submission Report" = "تقرير التسليم";
+"Posted By:" = "تم النشر بواسطة:";
+"Sent at " = "أُرسل في ";
+"Level " = "المستوى ";
+"Enter Chapter here" = "أدخل اسم الفصل هنا";
+"Pick From Question Bank" = "اختر من بنك الأسئلة";
+"Select All" = "تحديد الكل";
+"Import Question" = "استيراد الأسئلة";
+//MARK: FeePending
+"CATEGORY_WISE" = "حسب الفئة";
+"CLASS_WISE" = "حسب الصف";
+"TOTAL_PENDING" = "إجمالي المستحقات";
+"PAYMENT_HISTORY" = "سجل المدفوعات";
+
+//MARK: DailyCollection
+"CATEGORY" = "الفئة";
+"CLASS" = "الصف";
+"MODE" = "الطريقة";
+"FROM_DATE" = "من تاريخ";
+"TO_DATE" = "إلى تاريخ";
+"TOTAL_COLLECTION" = "إجمالي التحصيل";
+
+//MARK: PunchAttendance
+"Today's Report" = "تقرير اليوم";
+"Select staff" = "اختر الموظف";
+"Historical Data" = "البيانات السابقة";
+
+"Enable Location" = "تفعيل الموقع";
+"Add Location" = "إضافة موقع";
+"To enhance your experience and provide accurate location-based features, please enable GPS." = "لتحسين تجربتك وتوفير ميزات تعتمد على الموقع بدقة، يرجى تفعيل خدمة GPS.";
+"Allow location access to mark your attendance !" = "اسمح بالوصول إلى الموقع لتسجيل حضورك!";
+
+"Punch In" = "تسجيل الحضور";
+"Reports" = "التقارير";
+"Tap to view location history" = "اضغط لعرض سجل المواقع";
+"Drop your distance" = "أدخل المسافة";
+"Pin your location name" = "حدد اسم الموقع";
+"Location Name" = "اسم الموقع";
+"Get Location" = "الحصول على الموقع";
+"Distance" = "المسافة";
+
+"Important Notes" = "ملاحظات هامة";
+
+"Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked." = "اضغط على زر تسجيل الحضور لتسجيل حضورك اليوم. ستظهر رسالة تأكيد عند تسجيل الحضور بنجاح.";
+
+"Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting." = "إعدادات الموقع الدقيقة ضرورية لضمان تسجيل الحضور فقط عند وجود المستخدم داخل النطاق المحدد للمؤسسة. يرجى التحقق من الموقع قبل الإرسال.";
+
+"Once saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality." = "بعد الحفظ، سيتم استخدام هذا الموقع للتحقق من قرب المستخدمين عند تسجيل الحضور. تأكد من صحة الموقع لأنه يؤثر مباشرة على عملية الحضور.";
+
+"Note: You are outside the institute's boundary. You will not be able to mark your attendance.\n\nPlease try again when you are within the designated area." = "ملاحظة: أنت خارج حدود المؤسسة. لن تتمكن من تسجيل الحضور.\n\nيرجى المحاولة مرة أخرى عندما تكون داخل المنطقة المحددة.";
+
+"Meter(s)" = "متر";
+"Allow location acess to mark your attendance !" = "اسمح بالوصول إلى الموقع لتسجيل حضورك!";
+
+//MARK: SchoolStrength
+"Girls" = "البنات";
+"Total Students" = "إجمالي الطلاب";
+"Standard" = "الصف";
+"Boys" = "الأولاد";
+"STANDARD SECTION OVER VIEW" = "نظرة عامة على الصفوف والشعب";
+"SCHOOL STRENGTH VISUALIZATION" = "إحصائيات المدرسة";
+"SUMMARY STATICS" = "ملخص الإحصائيات";
+
+"Staffs" = "الموظفون";
+"Students" = "الطلاب";
+"Male" = "ذكور";
+"Female" = "إناث";
+"View Details" = "عرض التفاصيل";
+
+//MARK: Certificate
+"Request Certificate" = "طلب شهادة";
+"Select Certificate" = "اختر الشهادة";
+"Not Urgent" = "غير عاجل";
+"Urgent" = "عاجل";
+"Reason" = "السبب";
+"Certificate History" = "سجل الشهادات";
+"Select Urgency Level" = "اختر مستوى الأولوية";
+"Enter your reason here..." = "أدخل السبب هنا...";
+"any_other_suggestions" = "أي اقتراحات أخرى؟ (اختياري)";
+"rate_experience" = "كيف تقيم تجربتك؟";
+
+//MARK: Exam Mark Upload
+"Continue to Manual Entry?" = "المتابعة إلى الإدخال اليدوي؟";
+"You'll enter student marks manually in the next step. You can add and edit all mark data directly without AI processing." = "ستقوم بإدخال درجات الطلاب يدوياً في الخطوة التالية. يمكنك إضافة وتعديل جميع البيانات مباشرة دون استخدام الذكاء الاصطناعي.";
+"Yes, Continue Manually" = "نعم، المتابعة يدوياً";
+"Upload Mark Sheet" = "رفع كشف الدرجات";
+"Upload an image for AI processing or skip to map manually" = "ارفع صورة لمعالجتها بالذكاء الاصطناعي أو تخطَّ للإدخال اليدوي";
+"AI-Powerd Upload" = "رفع بالذكاء الاصطناعي";
+"Upload image for automatic detection" = "ارفع صورة للتعرف التلقائي";
+"AI will automatically detect:" = "سيقوم الذكاء الاصطناعي بالتعرف تلقائياً على:";
+"Student names and roll numbers," = "أسماء الطلاب وأرقامهم،";
+"Subject columns and marks," = "أعمدة المواد والدرجات،";
+"Table structure and layout," = "هيكل الجدول وتنسيقه،";
+"Click to upload" = "اضغط للرفع";
+"PNG, JPG up to 10MB" = "PNG, JPG حتى 10 ميجابايت";
+"Continue with Upload" = "المتابعة بالرفع";
+"Manual Entry" = "إدخال يدوي";
+"Skip upload and enter marks manually" = "تخطي الرفع وإدخال الدرجات يدوياً";
+"Select Your Class" = "اختر صفك";
+"Choose a class to start processing marks" = "اختر صفاً لبدء معالجة الدرجات";
+"Activities :" = "الأنشطة:";
+"Select an Exam to continue" = "اختر اختباراً للمتابعة";
+"Continue to Upload" = "المتابعة للرفع";
+"Please select an exam to continue" = "يرجى اختيار اختبار للمتابعة";
+"💡 Tip: You don't need to fill all activities now. Unmapped activities can be filled later." = "💡 نصيحة: لا تحتاج إلى تعبئة جميع الأنشطة الآن، يمكن إكمال الأنشطة غير المعينة لاحقاً.";
+"Continue to Review" = "المتابعة للمراجعة";
+"Not started" = "لم يبدأ";
+"Click the radio button next to each activity to select a column from your uploaded image." = "اضغط على زر الاختيار بجانب كل نشاط لتحديد العمود من الصورة المرفوعة.";
+"Choose the activities where you would like to enter marks manually." = "اختر الأنشطة التي ترغب في إدخال درجاتها يدوياً.";
+"Please select at least one activity to continue." = "يرجى اختيار نشاط واحد على الأقل للمتابعة.";
+"%d of %d activities selected" = "تم اختيار %d من أصل %d نشاط";
+"Continue to Entry" = "المتابعة للإدخال";
+"Please Map atleast one activity to continue" = "يرجى ربط نشاط واحد على الأقل للمتابعة";
+"Please select atleast one activity to continue" = "يرجى اختيار نشاط واحد على الأقل للمتابعة";
+"All %d activities mapped" = "تم ربط جميع الأنشطة (%d)";
+"%d of %d activities mapped" = "تم ربط %d من أصل %d نشاط";
+
+//MARK: Chat
+"No Blocked Students" = "لا يوجد طلاب محظورون";
+"No messages yet" = "لا توجد رسائل حتى الآن";
+"Reason: " = "السبب: ";
+"Unblock" = "إلغاء الحظر";
+
+//MARK: Report Bug
+"Type content" = "اكتب المحتوى";
+"Please select a module and enter bug details." = "يرجى اختيار وحدة وإدخال تفاصيل الخطأ.";
+"Please select a module." = "يرجى اختيار وحدة.";
+"Please enter bug details." = "يرجى إدخال تفاصيل الخطأ.";
+"Send Email" = "إرسال بريد إلكتروني";
+"Choose mail app" = "اختر تطبيق البريد";
+"Apple Mail" = "بريد Apple";
+"Gmail" = "Gmail";

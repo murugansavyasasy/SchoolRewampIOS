@@ -559,8 +559,8 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
                 cell.editClickBtn.isHidden = false
             } else {
                 cell.aproveBtn.backgroundColor = .systemGreen
-                cell.aproveBtn.setTitle("Approve", for: .normal)
-                cell.rejectBtn.setTitle("Reject", for: .normal)
+                cell.aproveBtn.setTitle("Approve".translated(), for: .normal)
+                cell.rejectBtn.setTitle("Reject".translated(), for: .normal)
                 cell.aproveBtn.isHidden = false
                 cell.rejectBtn.isHidden = false
                 cell.editClickBtn.isHidden = true

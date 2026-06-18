@@ -25,10 +25,10 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
     override func viewDidLoad() {
         super.viewDidLoad()
         toolbarTitle.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft : .forceLeftToRight
-        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right : .left
-        BackBtn.imageView?.applyRTLFlip(Language == "ar")
+//        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+//        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft : .forceLeftToRight
+//        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right : .left
+//        BackBtn.imageView?.applyRTLFlip(Language == "ar")
         setupPageViewController()
         loadPages([page1, page2])
         if let firstPage = pages.first {
@@ -87,7 +87,7 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
                 senderVC.isReset = true
             }
         }else if index == 1{
-            createBtn.setTitle("Create", for: .normal)
+            createBtn.setTitle("Create".translated(), for: .normal)
         }
         let direction: UIPageViewController.NavigationDirection = index > currentIndex ? .forward : .reverse
         pageViewController.setViewControllers([pages[index]], direction: direction, animated: true, completion: nil)
@@ -112,7 +112,7 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
     }
     
     func didSelectQuizForEdit(quiz: EditQuiz) {
-        createBtn.setTitle("Edit", for: .normal)
+        createBtn.setTitle("Edit".translated(), for: .normal)
         updateTabUI(for: 0)
         if let senderVC = pages.first as? SenderQuizVc {
             senderVC.editQuiz = quiz

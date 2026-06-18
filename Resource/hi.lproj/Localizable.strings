@@ -37,7 +37,7 @@
 "sendFeedback" = "प्रतिपुष्टि भेजें";
 "logout" = "लॉगआउट";
 "faceID" = "Face ID / Touch ID";
-
+"Switch Login" = "लॉगिन बदलें";
 "accountSecurity" = "खाता और सुरक्षा";
 "preference" = "प्राथमिकता";
 "supportInfo" = "सहायता और जानकारी";
@@ -52,6 +52,8 @@
 "Settings" = "सेटिंग्स";
 
 // MARK: Common String files
+"NEXT" = "अगला";
+"TO STANDARD OR SECTION" = "कक्षा या अनुभाग के लिए";
 "Search" = "खोज";
 "Location Name" = "स्थान का नाम";
 "Distance" = "दूरी";
@@ -488,7 +490,12 @@
 "text" = "पाठ";
 "voice" = "आवाज़";
 "Schedule a Call" = "कॉल शेड्यूल करें";
-
+"Select from history" = "इतिहास से चुनें";
+"Choose pre recorded file" = "पूर्व-रिकॉर्ड की गई फ़ाइल चुनें";
+"Note : (only m4a,wav,mp3 files are allowed)" = "नोट: (केवल m4a, wav, mp3 फ़ाइलों की अनुमति है)";
+"Enter voice title" = "वॉइस शीर्षक दर्ज करें";
+"Your Emergency call is ON. You can't forward Above 30 mins voice message" = "आपकी आपातकालीन कॉल सुविधा चालू है। आप 30 मिनट से अधिक लंबी वॉइस संदेशों को अग्रेषित नहीं कर सकते।";
+"Enter Text Here" = "यहाँ पाठ दर्ज करें";
 //MARK: ScheduleExam
 "scheduleExam" = "परीक्षा निर्धारित करें";
 //"Reasons" = "कारण"
@@ -557,9 +564,18 @@
 "Cause should not be empty." = "कारण खाली नहीं होना चाहिए।";
 "Please select a From Date." = "कृपया आरंभ तिथि चुनें।";
 "Please select a To Date." = "कृपया समाप्ति तिथि चुनें।";
-
+"All" = "सभी";
+"Approved" = "स्वीकृत";
+"Rejected" = "अस्वीकृत";
+"Waiting" = "प्रतीक्षारत";
+"Approve" = "स्वीकृत करें";
+"Reject" = "अस्वीकार करें";
+"Select Date" = "तिथि चुनें";
+"No of Days - " = "दिनों की संख्या - ";
+"Apply for %d Days Leave" = "%d दिनों की छुट्टी के लिए आवेदन करें";
 //MARK: PTM
 "PTM" = "अभिभावक-शिक्षक बैठक";
+"There are no meetings planned for you today" = "आज आपके लिए कोई बैठक निर्धारित नहीं है";
 "Schedule Meeting" = "बैठक निर्धारित करें";
 "Your Meetings" = "आपकी बैठकें";
 "Book Slot" = "स्लॉट बुक करें";

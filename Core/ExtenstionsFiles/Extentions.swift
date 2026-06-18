@@ -24,7 +24,8 @@ let YOUR_VIMEO_TOKEN = "8d74d8bf6b5742d39971cc7d3ffbb51a"
 extension UIImageView {
     func applyRTLFlip(_ isRTL: Bool) {
         if isRTL {
-            self.transform = CGAffineTransform(scaleX: -1, y: 1)
+//            self.transform = CGAffineTransform(scaleX: -1, y: 1)
+            self.transform = CGAffineTransform.identity
         } else {
             self.transform = CGAffineTransform.identity
         }
@@ -44,13 +45,13 @@ extension UIButton {
     }
     private func isAppRTL() -> Bool {
         let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        return language == "ar"
+        return language == "ars"
     }
 }
 extension UIView {
     func applyRightTxt() {
         let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let isRTL = (language == "ar")
+        let isRTL = (language == "ars")
         
         if let textView = self as? UITextView {
             textView.textAlignment = isRTL ? .right : .left
@@ -71,7 +72,7 @@ extension UIView {
         guard let textView = self as? UITextView else { return }
         
         let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let isRTL = (language == "ar")
+        let isRTL = (language == "ars")
         
         textView.textAlignment = isRTL ? .right : .left
         

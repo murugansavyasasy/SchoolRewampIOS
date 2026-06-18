@@ -104,7 +104,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         imageSelection()
         menuTitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         menuTitleLbl.text = MenuStringFile.selectedMenuName
-        chooseRecipientsBtn.setTitle(CommonStringFile.NEXT, for: .normal)
+        chooseRecipientsBtn.setTitle(CommonStringFile.NEXT.translated(), for: .normal)
         if let id = editId,id != ""{
             menuTitleLbl.text = MenuStringFile.Update_Existing + MenuStringFile.selectedMenuName
             setSelectedHomeWork(
@@ -131,7 +131,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         contentTextView.textColor = content != "" ? .black:.lightGray
         assignTitleTxtFld.text = title
         self.editId = editId
-        chooseRecipientsBtn.setTitle(CommonStringFile.UPDATE, for: .normal)
+        chooseRecipientsBtn.setTitle(CommonStringFile.UPDATE.translated(), for: .normal)
         let imageItems: [AttachmentItem] = imageUrls.map { file in
             let type = file.type?.lowercased() ?? ""
             return AttachmentItem(
@@ -176,6 +176,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         letterscountLbl.setFont(style: .body, size: FontSize.BodySize)
         TitleLettersCount.setFont(style: .body, size: FontSize.BodySize)
         AssignmenttypeLbl.setFont(style: .title, size: FontSize.TitleSize)
+        assignTitleTxtFld.placeholder = CommonStringFile.Title.translated()
     }
     
     @IBAction func viewHistory(_ sender: UIButton) {

@@ -229,8 +229,8 @@ class ApplyLeaveReqVC: UIViewController{
         SessionDefLbl.text = AttendanceString.session.translated()
         ToSessionDefLbl.text = AttendanceString.session.translated()
         
-        FromDateBtn.setTitle("Select Date", for: .normal)
-        ToDateBtn.setTitle("Select Date", for: .normal)
+        FromDateBtn.setTitle("Select Date".translated(), for: .normal)
+        ToDateBtn.setTitle("Select Date".translated(), for: .normal)
         FromSessionBtn.setTitle(AttendanceString.firstHalf, for: .normal)
         ToSessionBtn.setTitle(AttendanceString.secondHalf, for: .normal)
         
@@ -555,7 +555,7 @@ class ApplyLeaveReqVC: UIViewController{
         if let days = calendar.dateComponents([.day], from: startDate, to: endDate).day {
             let totalDays = days + 1  // Include the end date
             //dayCount.text = "No of Days - " + " \(totalDays) Day" + (totalDays > 1 ? "s" : "")
-            dayCount.text = "No of Days - " + " \(totalDays)"
+            dayCount.text = "No of Days - ".translated() + " \(totalDays)"
         } else {
             dayCount.text = "Error calculating"
         }
@@ -628,7 +628,7 @@ class ApplyLeaveReqVC: UIViewController{
         if let leave = editLeaveData {
             ApplyLeaveBtn.setTitle("Update for \(formattedDays) Days Leave", for: .normal)
         } else {
-            ApplyLeaveBtn.setTitle("Apply for \(formattedDays) Days Leave", for: .normal)
+            ApplyLeaveBtn.setTitle("Apply for \(formattedDays) Days Leave".translated(), for: .normal)
         }
     }
     

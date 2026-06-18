@@ -166,7 +166,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         DetailsTxtview.layer.borderWidth = 1
         DetailsTxtview.layer.borderColor = UIColor.lightGray.cgColor
         RecipientBtn.layer.cornerRadius = 10
-        DetailsTxtview.text = CommonStringFile.Description
+        DetailsTxtview.text = CommonStringFile.Description.translated()
         DetailsTxtview.textColor = .lightGray
         customdate.dateFormat = DateOutPut.EEEE_d
         RecipientBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -177,6 +177,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         titleCountLbl.setFont(style: .body, size: FontSize.BodySize)
         uploadattachmentLbl.setFont(style: .title, size: FontSize.TitleSize)
         setAttributedText(for: uploadattachmentLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
+        TitleTxtfield.placeholder  = CommonStringFile.Title.translated()
     }
     
     func imageSelection(){

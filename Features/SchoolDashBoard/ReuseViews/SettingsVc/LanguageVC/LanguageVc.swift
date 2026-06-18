@@ -20,11 +20,11 @@ class LanguageVc: UIViewController {
     @IBOutlet weak var baseview: UIView!
     
     var Items = [
-        //language(language: "Tamil", languageCode: "ta-IN", selected: false, DisplayName: "தமிழ்",ButtonText: "உறுதிப்படுத்தவும்"),
-        language(language: "English", languageCode: "en", selected: false, DisplayName: "English",ButtonText: "Confirm")
-//        language(language: "Hindi", languageCode: "hi", selected: false, DisplayName: "हिंदी",ButtonText: "पुष्टि करें"),
-//        language(language: "Thai", languageCode: "th", selected: false, DisplayName: "ไทย",ButtonText: "ยืนยัน"),
-//        language(language: "Arabic", languageCode: "ar", selected: false, DisplayName: "العربية",ButtonText: "تأكيد")
+        language(language: "Tamil", languageCode: "ta-IN", selected: false, DisplayName: "தமிழ்",ButtonText: "உறுதிப்படுத்தவும்"),
+        language(language: "English", languageCode: "en", selected: false, DisplayName: "English",ButtonText: "Confirm"),
+        language(language: "Hindi", languageCode: "hi", selected: false, DisplayName: "हिंदी",ButtonText: "पुष्टि करें"),
+        language(language: "Thai", languageCode: "th", selected: false, DisplayName: "ไทย",ButtonText: "ยืนยัน"),
+        language(language: "Arabic", languageCode: "ar", selected: false, DisplayName: "العربية",ButtonText: "تأكيد")
     ]
     
     var index:Int?
