@@ -1689,10 +1689,11 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     self.alert
                         .showAlert(
                             title: AlertstringFile.Oops,
-                            message: error.localizedDescription ?? "",
+                            message: error.localizedDescription,
                             on: self)
                 }
             }
+                
             }
     }
     

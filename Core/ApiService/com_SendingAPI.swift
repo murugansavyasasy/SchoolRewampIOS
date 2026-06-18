@@ -1,12 +1,6 @@
-////
-////  common_apiCall.swift
-////  School Chimes
-////
+
 ////  Created by SARANRAJ SHANMUGAM on 05/06/25.
-////
-//
-//import Foundation
-//
+
 
 import UIKit
 class  commonApi_forSending {

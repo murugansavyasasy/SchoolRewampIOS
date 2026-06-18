@@ -111,26 +111,7 @@ class APIService: NSObject, URLSessionDelegate {
         let userInfo: [String: Any] = [NSLocalizedDescriptionKey: description]
         return NSError(domain: "\(statusCode)", code: statusCode, userInfo: userInfo)
     }
-    
-    // MARK: - PUT
-//    func putApi<T: Codable>(
-//        url: String,
-//        parameters: [String: Any],
-//        token: String,
-//        completionHandler: @escaping (Result<T, Error>) -> Void
-//    ) {
-//        makeApi(url: url, parameters: parameters, type: "PUT", token: token, completionHandler: completionHandler)
-//    }
-//    
-//    // MARK: - DELETE
-//    func deleteApi<T: Codable>(
-//        url: String,
-//        token: String,
-//        completionHandler: @escaping (Result<T, Error>) -> Void
-//    ) {
-//        makeApi(url: url, parameters: nil, type: "DELETE", token: token, completionHandler: completionHandler)
-//    }
-    
+
     // MARK: - PTM Api
     func PtmApi<T: Codable>(
         url: String,
