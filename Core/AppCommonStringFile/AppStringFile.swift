@@ -70,7 +70,7 @@ struct MenuStringFile{
     static let All_Schools = "All Schools"
     static let There_are_no_attachments_posted_yet = "There are no attachments posted yet."
     static let No_Attachment_Found = "No Attachment Found"
-    static let posted_on  = "Posted On - "
+    static let posted_on  = "Posted On"
     static let Something_went_wrong  = "Something went wrong"
     static let Roll_No   = "Roll No : "
     static let ADMIS_No  = "ADMIS No: "

@@ -88,7 +88,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
         searchBar.searchTextField.backgroundColor = .systemGray5
         searchBar.layer.cornerRadius = 8
         searchBar.searchTextField.layer.masksToBounds = true
-        searchBar.placeholder =  CommonStringFile.Search
+        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
         tv.delegate = self
         tv.dataSource = self
@@ -298,7 +298,7 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
                 with: filteredAttachments?[indexPath.row].file_path ?? [],
                 title: filteredAttachments?[indexPath.row].title ?? "",
                 description: filteredAttachments?[indexPath.row].description ?? "",
-                date: MenuStringFile.posted_on + displayText,
+                date: MenuStringFile.posted_on + " - " + displayText,
                 sendBy:MenuStringFile.Posted_By + (filteredAttachments?[indexPath.row].sent_by ?? ""),
                 isunread: filteredAttachments?[indexPath.row].is_unread ?? false, dateAndTimeForVideo:  filteredAttachments?[indexPath.row].date ?? "",
                 parentTableView: tv
