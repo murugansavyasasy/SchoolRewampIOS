@@ -40,7 +40,7 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
         TitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         
         searchBar.isHidden = true
-        searchBar.placeholder = CommonStringFile.Search
+        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
         searchBar.backgroundImage = UIImage()

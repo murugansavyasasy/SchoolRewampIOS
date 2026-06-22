@@ -37,11 +37,11 @@ class absentPrivewVC: UIViewController, call {
             tableview.reloadData()
             if Filtered_StudentList?.isEmpty == true{
                 if Filter_Value == "A"{
-                    noAbsLbl.text = "No Absent Students"
+                    noAbsLbl.text = AttendanceString.No_Absent_Students.translated()
                 }else if Filter_Value == "P~"{
-                    noAbsLbl.text = "No Late Students"
+                    noAbsLbl.text = AttendanceString.No_Late_Students.translated()
                 }else{
-                    noAbsLbl.text = "No OD Students"
+                    noAbsLbl.text = AttendanceString.No_Od_Students.translated()
                 }
                 noAbsImage.isHidden = false
                 noAbsLbl.isHidden = false
@@ -86,6 +86,8 @@ class absentPrivewVC: UIViewController, call {
         tableview.reloadData()
         markBtnName.setTitleFont(style: .body, size: FontSize.BodySize)
         cancelBtnName.setTitleFont(style: .body, size: FontSize.BodySize)
+        cancelBtnName.setTitle(CommonStringFile.Cancel.translated(), for: .normal)
+        markBtnName.setTitle(AlertstringFile.Confirm.translated(), for: .normal)
     }
     
     func addUnderline(to selectedButton: UIButton, unSelectedBtn: [UIButton]) {
@@ -128,11 +130,11 @@ class absentPrivewVC: UIViewController, call {
         }
         if Filtered_StudentList?.isEmpty == true{
             if Filter_Value == "A"{
-                noAbsLbl.text = "No Absent Students"
+                noAbsLbl.text = AttendanceString.No_Absent_Students.translated()
             }else if Filter_Value == "P~"{
-                noAbsLbl.text = "No Late Students"
+                noAbsLbl.text = AttendanceString.No_Late_Students.translated()
             }else{
-                noAbsLbl.text = "No OD Students"
+                noAbsLbl.text = AttendanceString.No_Od_Students.translated()
             }
             DispatchQueue.main.async {
                 self.noAbsImage.isHidden = false
@@ -182,9 +184,9 @@ class absentPrivewVC: UIViewController, call {
         let LateCount = statuses.filter { $0 == "Late" }.count
         let absentCount = statuses.filter { $0 == "ABSENT" }.count
         let odCount = statuses.filter { $0 == "OD" }.count
-        let absentTitle = "\("Absent") (\(String(absentCount)))"
-        let OdTitle = "\("OD") (\(String(odCount)))"
-        let LateTitle = "\("Late") (\(String(LateCount)))"
+        let absentTitle = "\("Absent".translated()) (\(String(absentCount)))"
+        let OdTitle = "\("OD".translated()) (\(String(odCount)))"
+        let LateTitle = "\("Late".translated()) (\(String(LateCount)))"
         AbsentBtn.setTitle(absentTitle, for: .normal)
         LateBtn.setTitle(LateTitle, for: .normal)
         ODBtn.setTitle(OdTitle, for: .normal)
@@ -243,11 +245,11 @@ extension absentPrivewVC:UITableViewDelegate,UITableViewDataSource{
         cell.delegate  = self
         cell.nameLbl.text = data?.name
         cell.classLbl.isHidden = data?.roll_no ==  "" ? true : false
-        cell.classLbl.text = MenuStringFile.Roll_No + (data?.roll_no ?? "")
-        cell.StatusBtn.setTitle(MenuStringFile.Remove, for: .normal)
+        cell.classLbl.text = MenuStringFile.Roll_No.translated() + (data?.roll_no ?? "")
+        cell.StatusBtn.setTitle(MenuStringFile.Remove.translated(), for: .normal)
         cell.StatusBtn.backgroundColor = .red1
         cell.addmissionLbl.isHidden = data?.admission_no ==  "" ? true : false
-        cell.addmissionLbl.text =  MenuStringFile.admission_no + (data?.admission_no ?? "")
+        cell.addmissionLbl.text =  MenuStringFile.admission_no.translated() + (data?.admission_no ?? "")
         return cell
     }
     

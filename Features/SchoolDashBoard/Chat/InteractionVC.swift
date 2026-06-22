@@ -39,7 +39,7 @@ class InteractionVC: UIViewController {
         tv.dataSource = self
         searchBar.isHidden = true
         searchBar.searchTextField.addDoneButton()
-        searchBar.placeholder = CommonStringFile.Search
+        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.backgroundImage = UIImage()
         searchBar.delegate = self
         getStaff()

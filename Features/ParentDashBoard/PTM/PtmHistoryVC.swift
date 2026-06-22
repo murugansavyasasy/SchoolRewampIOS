@@ -39,7 +39,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         NoDataImage.isHidden = true
         NoDataLbl.isHidden = true
         searchBar.isHidden = true
-        searchBar.placeholder = CommonStringFile.Search
+        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
         searchBar.backgroundImage = UIImage()

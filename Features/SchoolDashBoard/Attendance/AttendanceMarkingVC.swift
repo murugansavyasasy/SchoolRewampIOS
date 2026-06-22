@@ -106,7 +106,7 @@ class AttendanceMarkingVC: UIViewController, UISearchBarDelegate, markeAsAbsent,
         OdDefLbl.setFont(style: .body, size: FontSize.BodySize)
         noDataLbl.setFont(style: .body, size: 20)
         
-        filterBtn.setTitle(CommonStringFile.NameASC, for: .normal)
+        filterBtn.setTitle(CommonStringFile.NameASC.translated(), for: .normal)
         filterBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         confirmBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
         
@@ -141,6 +141,11 @@ class AttendanceMarkingVC: UIViewController, UISearchBarDelegate, markeAsAbsent,
         nameLbl.text = CommonStringFile.Name.translated()
         statusLbl.text = CommonStringFile.Status.translated()
         searchBar.placeholder = CommonStringFile.Search.translated()
+        PresentDefLbl.text = CommonStringFile.Present.translated()
+        AbsentDefLbl.text = CommonStringFile.Absent.translated()
+        OdDefLbl.text = AttendanceString.on_duty.translated()
+        confirmBtn.setTitle(AttendanceString.confirm_submit_attendance.translated(), for: .normal)
+        selectAllBtn.setTitle(AttendanceString.Mark_all_as_absent.translated(), for: .normal)
     }
     
     func Get_student_List_Api(){
@@ -166,9 +171,9 @@ class AttendanceMarkingVC: UIViewController, UISearchBarDelegate, markeAsAbsent,
                     if success.status == true {
                         
                         if success.data?.first?.is_edit == true{
-                            self.confirmBtn.setTitle("Confirm & Edit Attendance".translated(), for: .normal)
+                            self.confirmBtn.setTitle(AttendanceString.confirm_edit_attendance.translated(), for: .normal)
                         }else{
-                            self.confirmBtn.setTitle("Confirm & Submit Attendance".translated(), for: .normal)
+                            self.confirmBtn.setTitle(AttendanceString.confirm_submit_attendance.translated(), for: .normal)
                         }
                         
                         self.student_List = success.data?.first?.attd_details
@@ -428,17 +433,17 @@ class AttendanceMarkingVC: UIViewController, UISearchBarDelegate, markeAsAbsent,
             }
         }
         switch selectedSort {
-        case CommonStringFile.RollNoASC:
+        case CommonStringFile.RollNoASC.translated():
             result.sort { ($0.roll_no ?? "").lowercased() < ($1.roll_no ?? "").lowercased() }
-        case CommonStringFile.RollNoDESC:
+        case CommonStringFile.RollNoDESC.translated():
             result.sort { ($0.roll_no ?? "").lowercased() > ($1.roll_no ?? "").lowercased() }
-        case CommonStringFile.NameASC:
+        case CommonStringFile.NameASC.translated():
             result.sort { ($0.name ?? "").lowercased() < ($1.name ?? "").lowercased() }
-        case CommonStringFile.NameDESC:
+        case CommonStringFile.NameDESC.translated():
             result.sort { ($0.name ?? "").lowercased() > ($1.name ?? "").lowercased() }
-        case CommonStringFile.AdmissionNoASC:
+        case CommonStringFile.AdmissionNoASC.translated():
             result.sort { ($0.admission_no ?? "").lowercased() < ($1.admission_no ?? "").lowercased() }
-        case CommonStringFile.AdmissionNoDESC:
+        case CommonStringFile.AdmissionNoDESC.translated():
             result.sort { ($0.admission_no ?? "").lowercased() > ($1.admission_no ?? "").lowercased() }
         default:
             break
@@ -467,7 +472,7 @@ class AttendanceMarkingVC: UIViewController, UISearchBarDelegate, markeAsAbsent,
     }
     
     @IBAction func fliter(_ sender: UIButton) {
-        dropDown.dataSource = [CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.RollNoDESC.translated(),CommonStringFile.AdmissionNoASC,CommonStringFile.AdmissionNoDESC]
+        dropDown.dataSource = [CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.RollNoDESC.translated(),CommonStringFile.AdmissionNoASC.translated(),CommonStringFile.AdmissionNoDESC.translated()]
         dropDown.anchorView = filterBtn
         dropDown.bottomOffset = CGPoint(x: 0, y: (filterBtn.bounds.height))
         dropDown.direction = .bottom
@@ -543,8 +548,8 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
         
         guard let student_data = Filtered_stuent_Listt?[indexPath.row] else {return cell}
         cell.nameLbl.text = student_data.name
-        cell.admissionlbl.text = MenuStringFile.ADMIS_No + (student_data.admission_no ?? "")
-        cell.rollNoLbl.text = MenuStringFile.Roll_No + (student_data.roll_no ?? "")
+        cell.admissionlbl.text = MenuStringFile.ADMIS_No.translated() + (student_data.admission_no ?? "")
+        cell.rollNoLbl.text = MenuStringFile.Roll_No.translated() + (student_data.roll_no ?? "")
         cell.rollNoLbl.isHidden = student_data.roll_no?.isEmpty ?? false
         
         let value = attendanceValue(for: student_data)

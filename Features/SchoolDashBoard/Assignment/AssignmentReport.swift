@@ -186,7 +186,7 @@ class AssignmentReport: UIViewController, SelectedId {
         reportTable.register(UINib(nibName: "AssignmentTVC", bundle: nil), forCellReuseIdentifier: "AssignmentTVC")
         reportTable.delegate = self
         reportTable.dataSource = self
-        searchBar.placeholder = "Search"
+        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
         searchBar.backgroundImage = UIImage()
         searchBar.barTintColor = .clear

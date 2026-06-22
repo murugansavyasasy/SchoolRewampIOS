@@ -72,7 +72,7 @@
 "From Time" = "இருந்து நேரம்";
 "Schedule date" = "அட்டவணை தேதி";
 "Do not dial beyond" = "இதற்கு அப்பால் அழைக்க வேண்டாம்";
-"Emergency call   ℹ️ " = "அவசர அழைப்பு   ℹ️";
+" Emergency call   ℹ️ " = " அவசர அழைப்பு   ℹ️";
 "Instant Call" = "உடனடி அழைப்பு";
 "Text Message" = "உரைச் செய்தி";
 "Schedule Call" = "அட்டவணை அழைப்பு";
@@ -500,8 +500,8 @@
 "BackToTextMessage" = "உரைச் செய்திக்கு திரும்பு";
 "BackToVoiceMessage" = "குரல் செய்திக்கு திரும்பு";
 "selectedText" = "தேர்ந்தெடுக்கப்பட்ட உரை";
-"invalidSelection" = "தவறான தேர்வு";
-"selectDatesWithinMonth" = "நடப்பு மாதத்தில் காட்சிப்படுத்தப்படும் தேதிகளுக்குள் மட்டுமே நீங்கள் தேதிகளை தேர்வு செய்யலாம்.";
+"invalid Selection" = "தவறான தேர்வு";
+"select Dates Within Month" = "நடப்பு மாதத்தில் காட்சிப்படுத்தப்படும் தேதிகளுக்குள் மட்டுமே நீங்கள் தேதிகளை தேர்வு செய்யலாம்.";
 "text" = "உரை";
 "voice" = "குரல்";
 "Schedule a Call" = "ஒரு அழைப்பை திட்டமிடுங்கள்";
@@ -511,6 +511,9 @@
 "Enter voice title" = "குரல் பதிவின் தலைப்பை உள்ளிடவும்";
 "Your Emergency call is ON. You can't forward Above 30 mins voice message" = "அவசர அழைப்பு இயக்கப்பட்டுள்ளது. 30 நிமிடங்களுக்கு மேற்பட்ட குரல் செய்திகளை அனுப்ப முடியாது.";
 "Enter Text Here" = "உரையை இங்கே உள்ளிடவும்";
+"On enabling , this call will be dialed on priority . You can record upto 30 secs only" = "இதை இயக்கினால், இந்த அழைப்பு முன்னுரிமையுடன் மேற்கொள்ளப்படும். நீங்கள் அதிகபட்சம் 30 விநாடிகள் மட்டுமே பதிவு செய்ய முடியும்";
+"Choose pre recorded file\n" = "முன்பே பதிவுசெய்யப்பட்ட கோப்பை தேர்ந்தெடுக்கவும்\n";
+"Note:(Only .m4a, .mp3, .wav files are allowed)" = "குறிப்பு: (.m4a, .mp3, .wav கோப்புகள் மட்டுமே அனுமதிக்கப்படுகின்றன)";
 //MARK: ScheduleExam
 "scheduleExam" = "தேர்வு அட்டவணை அமைக்கவும்";
 "Reasons" = "காரணங்கள்";
@@ -828,6 +831,18 @@
 "No messages yet" = "இதுவரை எந்த செய்தியும் இல்லை";
 "Reason: " = "காரணம்: ";
 "Unblock" = "தடையை நீக்கு";
+"Block Student" = "மாணவரை தடை செய்";
+"Reason for Blocking" = "தடை செய்வதற்கான காரணம்";
+"Enter reason" = "காரணத்தை உள்ளிடவும்";
+"Block" = "தடை செய்";
+"Answer" = "பதில்";
+"Update answer" = "பதிலை புதுப்பிக்கவும்";
+"Public reply" = "பொது பதில்";
+"Private reply" = "தனிப்பட்ட பதில்";
+"Reply" = "பதில்";
+"Reply All" = "அனைவருக்கும் பதில்";
+"Blocked Students List" = "தடை செய்யப்பட்ட மாணவர்கள் பட்டியல்";
+"Blocked on" = "தடை செய்யப்பட்ட தேதி";
 
 //MARK: Report Bug
 "Type content" = "உள்ளடக்கத்தை உள்ளிடவும்";
@@ -841,6 +856,36 @@
 
 //MARK: COMMON ALERT FILE
 
+"Mark Attendance" = "வருகையை பதிவு செய்";
+"Attendance Options" = "வருகை விருப்பங்கள்";
+"Attendance Type" = "வருகை வகை";
+"Full Day" = "முழு நாள்";
+"Half Day" = "அரை நாள்";
+"AN" = "முற்பகல்";
+"FN" = "பிற்பகல்";
+"Quick Status" = "விரைவு நிலை";
+"Present Rate :" = "வருகை விகிதம் :";
+"Absent Rate :" = "இல்லாதோர் விகிதம் :";
+"OD Rate :" = "OD விகிதம் :";
+"Late Count :" = "தாமத எண்ணிக்கை :";
+"Students Attendance Reports" = "மாணவர் வருகை அறிக்கைகள்";
+"Roll No : " = "வரிசை எண் : ";
+"ADMIS No: " = "சேர்க்கை எண்: ";
+"admission no : " = "சேர்க்கை எண் : ";
+"ForeNoon" = "முற்பகல்";
+"AfterNoon" = "பிற்பகல்";
+"Present" = "வருகை";
+"Absent" = "வரவில்லை";
+"On Duty" = "பணியில்";
+"Present/Late" = "வருகை / தாமதம்";
+"Not Taken" = "எடுக்கப்படவில்லை";
+"Late" = "தாமதம்";
+"Confirm & Submit Attendance" = "வருகையை உறுதிப்படுத்தி சமர்ப்பிக்கவும்";
+"Mark all as absent" = "அனைவரையும் வரவில்லை என குறிக்கவும்";
+"📢Note: The following students are marked as ABSENT. 📞 Their parents will receive an automatic call. Please double-check before confirming attendace" = "📢குறிப்பு: கீழ்க்கண்ட மாணவர்கள் வரவில்லை என குறிக்கப்பட்டுள்ளனர். 📞 அவர்களின் பெற்றோருக்கு தானியங்கி அழைப்பு அனுப்பப்படும். வருகையை உறுதிப்படுத்தும் முன் தயவுசெய்து மீண்டும் சரிபார்க்கவும்.";
+"No Absent Students" = "வராத மாணவர்கள் இல்லை";
+"No OD Students" = "OD மாணவர்கள் இல்லை";
+"No Late Students" = "தாமதமாக வந்த மாணவர்கள் இல்லை";
 "Confirm Action" = "செயலை உறுதிப்படுத்தவும்";
 "Are you sure want to submit ?" = "நீங்கள் சமர்ப்பிக்க விரும்புகிறீர்களா?";
 "Are you sure you want to approve this leave request?" = "இந்த விடுப்பு கோரிக்கையை அங்கீகரிக்க விரும்புகிறீர்களா?";
@@ -874,6 +919,9 @@
 "Select sheduled date" = "திட்டமிடப்பட்ட தேதியைத் தேர்ந்தெடுக்கவும்";
 "Warning" = "எச்சரிக்கை";
 "Confirm" = "உறுதிப்படுத்து";
+"Remove" = "நீக்கு";
+"OD" = "பணியில்";
+"Confirm & Edit Attendance" = "வருகையை உறுதிப்படுத்தி திருத்தவும்";
 "NOTE : This message is addressed to students in" = "குறிப்பு : இந்த செய்தி மாணவர்களுக்கு அனுப்பப்படுகிறது";
 " this does not match the current academic year " = "இது தற்போதைய கல்வியாண்டுடன் பொருந்தவில்லை";
 "Do you want to proceed?" = "தொடர விரும்புகிறீர்களா?";

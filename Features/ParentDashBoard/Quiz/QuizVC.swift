@@ -48,7 +48,7 @@ class QuizVC: UIViewController, UISearchBarDelegate {
         IncorrectAnswerLbl.isHidden = true
         CorrectAnswerLbl.isHidden = true
         searchBar.isHidden = true
-        searchBar.placeholder = CommonStringFile.Search
+        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.searchTextField.addDoneButton()
         searchBar.backgroundImage = UIImage()
         searchBar.delegate = self

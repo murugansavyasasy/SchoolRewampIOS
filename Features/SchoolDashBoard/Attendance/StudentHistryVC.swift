@@ -71,7 +71,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         search.searchTextField.backgroundColor = .systemGray5
         search.layer.cornerRadius = 8
         search.searchTextField.layer.masksToBounds = true
-        search.placeholder =  CommonStringFile.Search
+        search.placeholder = CommonStringFile.Search.translated()
         TopView.layer.cornerRadius = 20
         TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         SearchStack.isHidden = true

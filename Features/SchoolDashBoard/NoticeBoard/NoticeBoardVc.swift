@@ -203,7 +203,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         searchBar.searchTextField.backgroundColor = .white
         searchBar.layer.cornerRadius = 8
         searchBar.searchTextField.layer.masksToBounds = true
-        searchBar.placeholder = "Search"
+        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
     }
     
