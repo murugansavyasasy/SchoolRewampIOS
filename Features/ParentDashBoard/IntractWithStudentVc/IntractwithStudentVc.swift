@@ -42,7 +42,7 @@ class IntractwithStudentVc: UIViewController {
         searchBar.isHidden = true
         searchBar.searchTextField.addDoneButton()
         searchBar.backgroundImage = UIImage()
-        searchBar.placeholder = CommonStringFile.Search
+        searchBar.placeholder = CommonStringFile.Search.translated()
         imgView.isHidden = true
         noDataFoundLbl.isHidden = true
         let nib = UINib(nibName: CellConfingName.interactTvcell, bundle: nil)

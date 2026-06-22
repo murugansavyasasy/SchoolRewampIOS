@@ -13,16 +13,16 @@ class LoginVc: UIViewController {
     
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var BottomView: UIView!
-    @IBOutlet weak var PasswordLabel: UILabel!
-    @IBOutlet weak var MobilenumLabel: UILabel!
+    @IBOutlet weak var PasswordLabel: LocalizationLabel!
+    @IBOutlet weak var MobilenumLabel: LocalizationLabel!
     @IBOutlet weak var forgetLbl: UILabel!
     @IBOutlet weak var passTextFld: UITextField!
     @IBOutlet weak var MobilTextFld: UITextField!
-    @IBOutlet weak var loginBtnNm: UIButton!
+    @IBOutlet weak var loginBtnNm: LocalizationButton!
     @IBOutlet weak var eyeImage: UIImageView!
     @IBOutlet weak var BannerImgview: UIImageView!
-    @IBOutlet weak var WelcomeLbl: UILabel!
-    @IBOutlet weak var DescriptionLbl: UILabel!
+    @IBOutlet weak var WelcomeLbl: LocalizationLabel!
+    @IBOutlet weak var DescriptionLbl: LocalizationLabel!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var PasswordBaseview: UIView!
     

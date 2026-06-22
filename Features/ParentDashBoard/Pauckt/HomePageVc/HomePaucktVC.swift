@@ -38,7 +38,7 @@ class HomePaucktVC: UIViewController
         
         BackBtn.setTitle(MenuStringFile.selectedMenuName, for: .normal)
         
-        searchBar.placeholder = "Search"
+        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
         
         // Remove the default background of UISearchBar

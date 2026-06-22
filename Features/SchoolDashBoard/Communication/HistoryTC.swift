@@ -55,6 +55,7 @@ class HistoryTC: UITableViewCell {
         contentlbl.setFont(style: .title, size: FontSize.TitleSize)
         totaltime.setFont(style: .body, size: FontSize.BodySize)
         emergencyMessageBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        sendbtn.setTitle(AlertstringFile.Select.translated(), for: .normal)
         emergencyMessageBtn.isHidden = true
         playerView.isHidden = true
         totaltime.isHidden = true

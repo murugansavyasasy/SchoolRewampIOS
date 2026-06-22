@@ -39,7 +39,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
         searchBar.searchTextField.backgroundColor = .systemGray5
         searchBar.layer.cornerRadius = 8
         searchBar.searchTextField.layer.masksToBounds = true
-        searchBar.placeholder = "Search"
+        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
         aiIndimationLbl.isHidden = aiRecords.isEmpty

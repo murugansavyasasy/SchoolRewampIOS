@@ -72,7 +72,7 @@
 "From Time" = "From Time";
 "Schedule date" = "Schedule Date";
 "Do not dial beyond" = "Do not dial beyond";
-"Emergency call   ℹ️ " = "Emergency Call   ℹ️ ";
+" Emergency call   ℹ️ " = " Emergency Call   ℹ️ ";
 "Instant Call" = "Instant Call";
 "Text Message" = "Text Message";
 "Schedule Call" = "Schedule Call";
@@ -468,7 +468,9 @@
 "Upcoming Events" = "Upcoming Events";
 "Completed Events" = "Completed Events";
 "Your Attachment's" = "Your Attachments";
-
+"On enabling , this call will be dialed on priority . You can record upto 30 secs only" = "On enabling, this call will be dialed on priority. You can record up to 30 seconds only";
+"Choose pre recorded file\n" = "Choose pre-recorded file\n";
+"Note:(Only .m4a, .mp3, .wav files are allowed)" = "Note: (Only .m4a, .mp3, .wav files are allowed)";
 
 //MARK: Comunication
 "Back to Text Message" = "Back to Text Message";
@@ -777,6 +779,18 @@
 "No messages yet" = "No messages yet";
 "Reason: " = "Reason: ";
 "Unblock" = "Unblock";
+"Block Student" = "Block Student";
+"Reason for Blocking" = "Reason for Blocking";
+"Enter reason" = "Enter reason";
+"Block" = "Block";
+"Answer" = "Answer";
+"Update answer" = "Update answer";
+"Public reply" = "Public reply";
+"Private reply" = "Private reply";
+"Reply" = "Reply";
+"Reply All" = "Reply All";
+"Blocked Students List" = "Blocked Students List";
+"Blocked on" = "Blocked on";
 
 //MARK: Report Bug
 "Type content" = "Type content";
@@ -787,6 +801,41 @@
 "Choose mail app" = "Choose mail app";
 "Apple Mail" = "Apple Mail";
 "Gmail" = "Gmail";
+
+"Mark Attendance" = "Mark Attendance";
+"Attendance Options" = "Attendance Options";
+"Attendance Type" = "Attendance Type";
+"Full Day" = "Full Day";
+"Half Day" = "Half Day";
+"AN" = "AN";
+"FN" = "FN";
+"Quick Status" = "Quick Status";
+"Present Rate :" = "Present Rate :";
+"Absent Rate :" = "Absent Rate :";
+"OD Rate :" = "OD Rate :";
+"Late Count :" = "Late Count :";
+"Students Attendance Reports" = "Students Attendance Reports";
+"Roll No : " = "Roll No : ";
+"ADMIS No: " = "ADMIS No: ";
+"admission no : " = "admission no : ";
+"ForeNoon" = "ForeNoon";
+"AfterNoon" = "AfterNoon";
+"Present" = "Present";
+"Absent" = "Absent";
+"On Duty" = "On Duty";
+"Present/Late" = "Present/Late";
+"Not Taken" = "Not Taken";
+"Late" = "Late";
+"Confirm & Submit Attendance" = "Confirm & Submit Attendance";
+"Mark all as absent" = "Mark all as absent";
+"📢Note: The following students are marked as ABSENT. 📞 Their parents will receive an automatic call. Please double-check before confirming attendace" = "📢Note: The following students are marked as ABSENT. 📞 Their parents will receive an automatic call. Please double-check before confirming attendance";
+"No Absent Students" = "No Absent Students";
+"No OD Students" = "No OD Students";
+"No Late Students" = "No Late Students";
+"Confirm" = "Confirm";
+"Remove" = "Remove";
+"OD" = "OD";
+"Confirm & Edit Attendance" = "Confirm & Edit Attendance";
 
 
 //MARK: Flavour strings

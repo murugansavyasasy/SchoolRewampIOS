@@ -73,7 +73,7 @@
 "From Time" = "จากเวลา";
 "Schedule date" = "วันที่กำหนด";
 "Do not dial beyond" = "อย่าโทรเกินจากนี้";
-"Emergency call   ℹ️ " = "โทรฉุกเฉิน   ℹ️";
+" Emergency call   ℹ️ " = " โทรฉุกเฉิน   ℹ️";
 "Instant Call" = "โทรทันที";
 "Text Message" = "ข้อความ";
 "Schedule Call" = "กำหนดการโทร";
@@ -491,8 +491,8 @@
 "BackToTextMessage" = "กลับไปที่ข้อความตัวอักษร";
 "BackToVoiceMessage" = "กลับไปที่ข้อความเสียง";
 "selectedText" = "ข้อความที่เลือก";
-"invalidSelection" = "การเลือกไม่ถูกต้อง";
-"selectDatesWithinMonth" = "คุณสามารถเลือกวันที่ภายในเดือนที่แสดงอยู่ในปัจจุบันเท่านั้น";
+"invalid Selection" = "การเลือกไม่ถูกต้อง";
+"select Dates Within Month" = "คุณสามารถเลือกวันที่ภายในเดือนที่แสดงอยู่ในปัจจุบันเท่านั้น";
 "text" = "ข้อความ";
 "voice" = "เสียง";
 "Schedule a Call" = "นัดหมายการโทร";
@@ -502,6 +502,9 @@
 "Enter voice title" = "ป้อนชื่อไฟล์เสียง";
 "Your Emergency call is ON. You can't forward Above 30 mins voice message" = "เปิดใช้งานการโทรฉุกเฉินแล้ว คุณไม่สามารถส่งต่อข้อความเสียงที่มีความยาวเกิน 30 นาทีได้";
 "Enter Text Here" = "ป้อนข้อความที่นี่";
+"On enabling , this call will be dialed on priority . You can record upto 30 secs only" = "เมื่อเปิดใช้งาน สายนี้จะถูกโทรออกเป็นลำดับความสำคัญ คุณสามารถบันทึกเสียงได้สูงสุด 30 วินาทีเท่านั้น";
+"Choose pre recorded file\n" = "เลือกไฟล์ที่บันทึกไว้ล่วงหน้า\n";
+"Note:(Only .m4a, .mp3, .wav files are allowed)" = "หมายเหตุ: อนุญาตเฉพาะไฟล์ .m4a, .mp3 และ .wav เท่านั้น";
 //MARK: ScheduleExam
 "scheduleExam" = "กำหนดการสอบ";
 "Reasons" = "เหตุผล";
@@ -810,6 +813,18 @@
 "No messages yet" = "ยังไม่มีข้อความ";
 "Reason: " = "เหตุผล: ";
 "Unblock" = "ปลดบล็อก";
+"Block Student" = "บล็อกนักเรียน";
+"Reason for Blocking" = "เหตุผลในการบล็อก";
+"Enter reason" = "กรอกเหตุผล";
+"Block" = "บล็อก";
+"Answer" = "คำตอบ";
+"Update answer" = "อัปเดตคำตอบ";
+"Public reply" = "คำตอบสาธารณะ";
+"Private reply" = "คำตอบส่วนตัว";
+"Reply" = "ตอบกลับ";
+"Reply All" = "ตอบกลับทั้งหมด";
+"Blocked Students List" = "รายชื่อนักเรียนที่ถูกบล็อก";
+"Blocked on" = "บล็อกเมื่อ";
 
 //MARK: Report Bug
 "Type content" = "พิมพ์เนื้อหา";
@@ -820,3 +835,39 @@
 "Choose mail app" = "เลือกแอปอีเมล";
 "Apple Mail" = "Apple Mail";
 "Gmail" = "Gmail";
+
+
+"Mark Attendance" = "บันทึกการเข้างาน";
+"Attendance Options" = "ตัวเลือกการเข้างาน";
+"Attendance Type" = "ประเภทการเข้างาน";
+"Full Day" = "เต็มวัน";
+"Half Day" = "ครึ่งวัน";
+"AN" = "ช่วงเช้า";
+"FN" = "ช่วงบ่าย";
+"Quick Status" = "สถานะด่วน";
+"Present Rate :" = "อัตราการมาเรียน :";
+"Absent Rate :" = "อัตราการขาดเรียน :";
+"OD Rate :" = "อัตรา OD :";
+"Late Count :" = "จำนวนมาสาย :";
+"Students Attendance Reports" = "รายงานการเข้าเรียนของนักเรียน";
+"Roll No : " = "เลขที่ : ";
+"ADMIS No: " = "เลขที่รับเข้า: ";
+"admission no : " = "เลขที่รับเข้า : ";
+"ForeNoon" = "ช่วงเช้า";
+"AfterNoon" = "ช่วงบ่าย";
+"Present" = "มาเรียน";
+"Absent" = "ขาดเรียน";
+"On Duty" = "ปฏิบัติหน้าที่";
+"Present/Late" = "มาเรียน / มาสาย";
+"Not Taken" = "ยังไม่ได้บันทึก";
+"Late" = "มาสาย";
+"Confirm & Submit Attendance" = "ยืนยันและส่งข้อมูลการเข้าเรียน";
+"Mark all as absent" = "ทำเครื่องหมายว่าขาดเรียนทั้งหมด";
+"📢Note: The following students are marked as ABSENT. 📞 Their parents will receive an automatic call. Please double-check before confirming attendace" = "📢หมายเหตุ: นักเรียนต่อไปนี้ถูกทำเครื่องหมายว่าขาดเรียน 📞 ผู้ปกครองจะได้รับสายโทรศัพท์อัตโนมัติ กรุณาตรวจสอบอีกครั้งก่อนยืนยันการเข้าเรียน";
+"No Absent Students" = "ไม่มีนักเรียนที่ขาดเรียน";
+"No OD Students" = "ไม่มีนักเรียน OD";
+"No Late Students" = "ไม่มีนักเรียนมาสาย";
+"Confirm" = "ยืนยัน";
+"Remove" = "ลบ";
+"OD" = "ปฏิบัติหน้าที่";
+"Confirm & Edit Attendance" = "ยืนยันและแก้ไขข้อมูลการเข้าเรียน";

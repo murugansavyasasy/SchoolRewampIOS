@@ -11,7 +11,7 @@ class EmergencyInfoPopoverVCViewController: UIViewController {
 
     private let descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "On enabling , this call will be dialed on priority . You can record upto 30 secs only"
+        label.text = "On enabling , this call will be dialed on priority . You can record upto 30 secs only".translated()
         label.textColor = .darkGray
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 0

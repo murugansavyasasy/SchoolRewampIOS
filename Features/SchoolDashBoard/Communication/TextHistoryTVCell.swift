@@ -62,6 +62,7 @@ class TextHistoryTVCell: UITableViewCell {
         descriptContent.font = UIFont(name: "Poppins-Medium", size: 16) ?? UIFont.systemFont(ofSize: 16)
         PostedByLbl.setFont(style: .body, size: FontSize.BodySize)
         PostedByLbl.isHidden = true
+        sendBtn.setTitle(AlertstringFile.Select.translated(), for: .normal)
         sendBtn.isHidden = true
        // setupTapGesture()
     }

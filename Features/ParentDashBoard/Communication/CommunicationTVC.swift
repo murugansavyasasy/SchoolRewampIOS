@@ -93,6 +93,7 @@ class CommunicationTVC: UITableViewCell {
         tittleLbl.setFont(style: .title, size: FontSize.TitleSize)
         PostedByLbl.setFont(style: .body, size: FontSize.BodySize)
         PostedByLbl.isHidden = true
+        selectBtnName.setTitle(AlertstringFile.Select.translated(), for: .normal)
     }
     
     @IBAction func selectBtnAct(_ sender: UIButton) {

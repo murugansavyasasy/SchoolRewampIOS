@@ -54,7 +54,7 @@
 "From Time" = "من الوقت";
 "Schedule date" = "تاريخ الجدولة";
 "Do not dial beyond" = "لا تتصل بعد";
-"Emergency call   ℹ️ " = "مكالمة طارئة ℹ️";
+" Emergency call   ℹ️ " = "مكالمة طارئة  ℹ️ ";
 "Instant Call" = "مكالمة فورية";
 "Text Message" = "رسالة نصية";
 "Schedule Call" = "جدولة مكالمة";
@@ -440,6 +440,9 @@
 "Enter voice title" = "أدخل عنوان التسجيل الصوتي";
 "Your Emergency call is ON. You can't forward Above 30 mins voice message" = "تم تفعيل المكالمات الطارئة. لا يمكنك إعادة توجيه رسائل صوتية تزيد مدتها عن 30 دقيقة.";
 "Enter Text Here" = "أدخل النص هنا";
+"On enabling , this call will be dialed on priority . You can record upto 30 secs only" = "عند التفعيل، سيتم إجراء هذه المكالمة بأولوية. يمكنك التسجيل لمدة تصل إلى 30 ثانية فقط";
+"Choose pre recorded file\n" = "اختر ملفًا مسجلاً مسبقًا\n";
+"Note:(Only .m4a, .mp3, .wav files are allowed)" = "ملاحظة: يُسمح فقط بملفات .m4a و .mp3 و .wav";
 
 //MARK: ScheduleExam
 "Schedule Exam" = "جدولة اختبار";
@@ -743,6 +746,18 @@
 "No messages yet" = "لا توجد رسائل حتى الآن";
 "Reason: " = "السبب: ";
 "Unblock" = "إلغاء الحظر";
+"Block Student" = "حظر الطالب";
+"Reason for Blocking" = "سبب الحظر";
+"Enter reason" = "أدخل السبب";
+"Block" = "حظر";
+"Answer" = "الإجابة";
+"Update answer" = "تحديث الإجابة";
+"Public reply" = "رد عام";
+"Private reply" = "رد خاص";
+"Reply" = "رد";
+"Reply All" = "الرد على الجميع";
+"Blocked Students List" = "قائمة الطلاب المحظورين";
+"Blocked on" = "تاريخ الحظر";
 
 //MARK: Report Bug
 "Type content" = "اكتب المحتوى";
@@ -753,3 +768,38 @@
 "Choose mail app" = "اختر تطبيق البريد";
 "Apple Mail" = "بريد Apple";
 "Gmail" = "Gmail";
+
+"Mark Attendance" = "تسجيل الحضور";
+"Attendance Options" = "خيارات الحضور";
+"Attendance Type" = "نوع الحضور";
+"Full Day" = "يوم كامل";
+"Half Day" = "نصف يوم";
+"AN" = "صباحاً";
+"FN" = "مساءً";
+"Quick Status" = "الحالة السريعة";
+"Present Rate :" = "معدل الحضور :";
+"Absent Rate :" = "معدل الغياب :";
+"OD Rate :" = "معدل OD :";
+"Late Count :" = "عدد المتأخرين :";
+"Students Attendance Reports" = "تقارير حضور الطلاب";
+"Roll No : " = "رقم السجل : ";
+"ADMIS No: " = "رقم القبول: ";
+"admission no : " = "رقم القبول : ";
+"ForeNoon" = "الفترة الصباحية";
+"AfterNoon" = "الفترة المسائية";
+"Present" = "حاضر";
+"Absent" = "غائب";
+"On Duty" = "في مهمة";
+"Present/Late" = "حاضر / متأخر";
+"Not Taken" = "لم يتم التسجيل";
+"Late" = "متأخر";
+"Confirm & Submit Attendance" = "تأكيد وإرسال الحضور";
+"Mark all as absent" = "تحديد الجميع كغائبين";
+"📢Note: The following students are marked as ABSENT. 📞 Their parents will receive an automatic call. Please double-check before confirming attendace" = "📢ملاحظة: تم تحديد الطلاب التاليين كغائبين. 📞 سيتلقى أولياء أمورهم مكالمة تلقائية. يرجى التحقق مرة أخرى قبل تأكيد الحضور.";
+"No Absent Students" = "لا يوجد طلاب غائبون";
+"No OD Students" = "لا يوجد طلاب في مهمة";
+"No Late Students" = "لا يوجد طلاب متأخرون";
+"Confirm" = "تأكيد";
+"Remove" = "إزالة";
+"OD" = "في مهمة";
+"Confirm & Edit Attendance" = "تأكيد وتعديل الحضور";

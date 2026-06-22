@@ -296,7 +296,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         }
         let today_date = getCurrentDateString()
         guard AudioPlayUrl != "",AudioPlayUrl != nil, let voiceTitle = voiceTitleeTxt.text, !voiceTitle.isEmpty else {
-            alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
+            alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required.translated(), on: self)
             return
         }
         user_inputs.voice_link = AudioPlayUrl!
@@ -650,6 +650,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         dateSelectedViewHeight.constant = 0
         doneBtn.layer.cornerRadius = 8
         sendbtn.setTitle(CommonStringFile.NEXT.translated(), for: .normal)
+        TxtMsgSendBtn.setTitle(CommonStringFile.NEXT.translated(), for: .normal)
         voiceTitleeTxt.placeholder = "Enter voice title".translated()
         let title = CommonStringFile.Select_from_history.translated()
         let attributedTitle = NSAttributedString(string: title, attributes: [
@@ -1781,11 +1782,11 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             
             calendar.deselect(date)
             let alert = UIAlertController(
-                title: AlertstringFile.invalidSelection,
-                message: AlertstringFile.selectDatesWithinMonth,
+                title: AlertstringFile.invalidSelection.translated(),
+                message: AlertstringFile.selectDatesWithinMonth.translated(),
                 preferredStyle: .alert
             )
-            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))
+            alert.addAction(UIAlertAction(title: AlertstringFile.OK.translated(), style: .default))
             self.present(alert, animated: true, completion: nil)
             return
         }
@@ -1801,7 +1802,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
                 message: AlertstringFile.Already_Reach_Your_Limit,
                 preferredStyle: .alert
             )
-            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))
+            alert.addAction(UIAlertAction(title: AlertstringFile.OK.translated(), style: .default))
             self.present(alert, animated: true, completion: nil)
         }
         

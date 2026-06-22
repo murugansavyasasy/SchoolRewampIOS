@@ -22,7 +22,7 @@ class ReedimHistoryVc: UIViewController {
         super.viewDidLoad()
         cv.backgroundColor = .clear
         cv.backgroundView = backgroundView
-        Searchbar.placeholder = "Search"
+        Searchbar.placeholder = CommonStringFile.Search.translated()
         Searchbar.delegate = self
         Searchbar.backgroundImage = UIImage()
         Searchbar.barTintColor = .clear

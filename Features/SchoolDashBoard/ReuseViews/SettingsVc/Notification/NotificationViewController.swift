@@ -64,7 +64,7 @@ class NotificationViewController: UIViewController {
         searchBar.searchTextField.backgroundColor = .systemGray5
         searchBar.layer.cornerRadius = 8
         searchBar.searchTextField.layer.masksToBounds = true
-        searchBar.placeholder = "Search"
+        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
         tableview.delegate = self

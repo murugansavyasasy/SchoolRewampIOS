@@ -66,7 +66,7 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
         searchBar.searchTextField.layer.cornerRadius = 8
         searchBar.layer.cornerRadius = 8
         searchBar.searchTextField.layer.masksToBounds = true
-        searchBar.placeholder = "Search"
+        searchBar.placeholder = CommonStringFile.Search.translated()
     }
     
     private func setupLoader() {

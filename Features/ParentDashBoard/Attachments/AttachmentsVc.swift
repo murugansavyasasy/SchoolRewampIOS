@@ -60,7 +60,7 @@ class AttachmentsVc: UIViewController, Datepicker {
         searchStack.isHidden = true
         searchBar.searchTextField.addDoneButton()
         searchBar.delegate = self
-        searchBar.placeholder = CommonStringFile.Search
+        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.backgroundImage = UIImage()
         noDataImage.isHidden = true
         noDataLabel.isHidden = true

@@ -59,7 +59,7 @@ class QuizSubmissionVc: UIViewController, UISearchBarDelegate,call {
         NoDataImage.isHidden = true
         NoDataLbl.isHidden = true
         searchBar.isHidden = true
-        searchBar.placeholder = CommonStringFile.Search
+        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.searchTextField.addDoneButton()
         searchBar.backgroundImage = UIImage()
         searchBar.delegate = self

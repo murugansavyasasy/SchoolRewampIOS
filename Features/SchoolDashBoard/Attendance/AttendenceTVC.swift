@@ -69,6 +69,8 @@ class AttendenceTVC: UITableViewCell, Attendence {
         phnBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         absentLbl.text = CommonStringFile.Absent.translated()
         presentLbl.text = CommonStringFile.Present.translated()
+        onDutyDefLbl.text = AttendanceString.on_duty.translated()
+        OnLateBtn.setTitle(AttendanceString.late.translated(), for: .normal)
         presentLbl.textColor = Colornames.AprovedClr
         absentLbl.textColor = .red
         customSwitchContainer.addSubview(custSwitch)

@@ -75,8 +75,9 @@ class MarkAttendenceVC: UIViewController {
     @IBOutlet weak var noStandardsLbl: UILabel!
     @IBOutlet weak var classSectionStack: UIStackView!
     @IBOutlet weak var AttendanceOptionStack: UIStackView!
-    
-    
+    @IBOutlet weak var attendanceTypeDefLbl: UILabel!
+    @IBOutlet weak var sessionDefLbl: UILabel!
+    @IBOutlet weak var fn_an_segmentController: UISegmentedControl!
     let formatter = DateFormatter()
     let customdate = DateFormatter()
     let standardDropdown = DropDown()
@@ -116,7 +117,9 @@ class MarkAttendenceVC: UIViewController {
         AttendaceSectionStac.isHidden = true
         updateMonthLabel()
         UIupdate()
+        Translate()
         get_Academic_year()
+        SearchBar.placeholder = CommonStringFile.Search.translated()
         SearchBar.searchTextField.addDoneButton()
         backBtnName.applyBackButton()
         addUnderline(to: MarkAttendanceBtn, unselectedButton: ReportsBtn)
@@ -179,7 +182,7 @@ class MarkAttendenceVC: UIViewController {
             sender.tintColor = .label
         }else{
             SearchBar.isHidden = true
-            sender.setImage(ImageName.missing_file, for: .normal)
+            sender.setImage(ImageName.magnifyingglass, for: .normal)
             sender.tintColor = .black
             noSearchDataLbl.isHidden = true
             searchImage.isHidden = true
@@ -247,6 +250,22 @@ class MarkAttendenceVC: UIViewController {
         calendar.appearance.titleSelectionColor = .white
         fulldayAction()
     }
+    
+    func Translate(){
+        MarkAttendanceBtn.setTitle(AttendanceString.mark_attendance.translated(), for: .normal)
+        MarkAbsentiesBtn.setTitle(AttendanceString.mark_attendance.translated(), for: .normal)
+        ReportsBtn.setTitle(AttendanceString.reports.translated(), for: .normal)
+        FulldayBtn.setTitle(AttendanceString.full_day.translated(), for: .normal)
+        HalfDayBtn.setTitle(AttendanceString.half_day.translated(), for: .normal)
+        QuickStatus.setTitle(AttendanceString.quick_status.translated(), for: .normal)
+        fn_an_segmentController.setTitle(AttendanceString.fn.translated(), forSegmentAt: 0)
+        fn_an_segmentController.setTitle(AttendanceString.an.translated(), forSegmentAt: 1)
+        attendancedefault.text = AttendanceString.attendance_options.translated()
+        attendanceTypeDefLbl.text = AttendanceString.attendance_type.translated()
+        sessionDefLbl.text = AttendanceString.session.translated()
+        
+    }
+    
     // MARK: - Date Selection
     func dateSelect(_ date: String?) {
         let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
@@ -316,13 +335,13 @@ class MarkAttendenceVC: UIViewController {
     @IBAction func InfoBtnAct(_ sender: UIButton) {
         let popoverVC = PopoverViewVC(nibName: nil, bundle: nil)
         popoverVC.configureButtons(with: [
-            ("FN", "ForeNoon", .blue),
-            ("AN", "AfterNoon", .blue),
-            ("P",  "Present", .systemGreen),
-            ("A",  "Absent", .systemRed),
-            ("OD", "On Duty", .systemBlue),
-            ("Pᴸᴬ", "Present/Late", .systemGreen),
-            ("-",  "Not Taken", .systemGray)
+            ("FN", "ForeNoon".translated(), .blue),
+            ("AN", "AfterNoon".translated(), .blue),
+            ("P",  "Present".translated(), .systemGreen),
+            ("A",  "Absent".translated(), .systemRed),
+            ("OD", "On Duty".translated(), .systemBlue),
+            ("Pᴸᴬ", "Present/Late".translated(), .systemGreen),
+            ("-",  "Not Taken".translated(), .systemGray)
         ], type: .badge)
         showPopover(from: sender, contentVC: popoverVC)
     }
@@ -822,12 +841,12 @@ extension MarkAttendenceVC : UITableViewDelegate,UITableViewDataSource {
         let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.ReportAttCell, for: indexPath) as! ReportAttCell
         cell.selectionStyle = .none
         cell.StudentLbl.text = FilteredReport?[indexPath.row].student_name
-        cell.admissionLbl.text = MenuStringFile.admission_no + (
+        cell.admissionLbl.text = MenuStringFile.admission_no.translated() + (
             FilteredReport?[indexPath.row].admission_no ?? "")
         cell.rollNumberLbl.isHidden =  (
             (FilteredReport?[indexPath.row].roll_no) == ""
         ) ? true : false
-        cell.rollNumberLbl.text = MenuStringFile.Roll_No + (FilteredReport?[indexPath.row].roll_no ?? "")
+        cell.rollNumberLbl.text = MenuStringFile.Roll_No.translated() + (FilteredReport?[indexPath.row].roll_no ?? "")
         if let attStatus = FilteredReport?[indexPath.row].att_status {
             let parts = attStatus.components(separatedBy: "/")
             // Expecting formats like "P/A", "OD/OD", "P~/P", etc.

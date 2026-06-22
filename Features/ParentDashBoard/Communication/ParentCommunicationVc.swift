@@ -115,7 +115,7 @@ class ParentCommunicationVc: UIViewController, AudioPlaybackDelegate1, Datepicke
         StyleAndTranslate()
         SearchBar.delegate = self
         SearchBar.searchTextField.addDoneButton()
-        SearchBar.placeholder = CommonStringFile.Search
+        SearchBar.placeholder = CommonStringFile.Search.translated()
         SearchBar.backgroundImage = UIImage()
         TitleLbl.configureAsBackTitle(firstLine: "\(studentDetails?.name ?? "")", secondLine:"\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         menuNameLbl.text = MenuStringFile.selectedMenuName

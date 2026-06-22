@@ -86,7 +86,7 @@ class MessageFromManagementViewController: UIViewController {
     private func setupSearchBar() {
         SearchBar.isHidden = true
         SearchBar.searchTextField.addDoneButton()
-        SearchBar.placeholder = CommonStringFile.Search
+        SearchBar.placeholder = CommonStringFile.Search.translated()
         SearchBar.backgroundImage = UIImage()
         SearchBar.delegate = self
     }

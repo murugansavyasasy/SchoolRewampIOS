@@ -226,7 +226,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
         searchbar.isHidden = true
         searchbar.delegate = self
         searchbar.searchTextField.addDoneButton()
-        searchbar.placeholder = CommonStringFile.Search
+        searchbar.placeholder = CommonStringFile.Search.translated()
         searchbar.backgroundImage = UIImage()
         topView.layer.cornerRadius = 30
         topView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
