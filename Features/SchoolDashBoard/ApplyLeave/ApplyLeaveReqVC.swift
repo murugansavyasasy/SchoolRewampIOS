@@ -78,7 +78,7 @@ class ApplyLeaveReqVC: UIViewController{
     var editLeaveData:editLeaves?
     let dropDown = DropDown()
     let dropDown2 = DropDown()
-    let options = [AttendanceString.firstHalf, AttendanceString.secondHalf]
+    let options = [AttendanceString.firstHalf.translated(), AttendanceString.secondHalf.translated()]
     var leaveTypes : [LeaveType] = []
     var selectedLeaveType : Int?
     
@@ -593,14 +593,14 @@ class ApplyLeaveReqVC: UIViewController{
         
         // ❌ Validation 1: from date > to date
         if fromDate > toDate {
-            showError("To date should be greater than from date")
+            showError("To date should be greater than from date".translated())
             return
         }
         
         // ❌ Validation 2: same date but invalid session order
         if Calendar.current.isDate(fromDate, inSameDayAs: toDate) {
             if isSecondHalf(session: fromSession) && isFirstHalf(session: toSession) {
-                showError("From session cannot be after To session on the same day.")
+                showError("From session cannot be after To session on the same day.".translated())
                 return
             }
         }
@@ -634,11 +634,11 @@ class ApplyLeaveReqVC: UIViewController{
     
     
     func showError(_ message: String) {
-        let fullMessage = "* \(message)"
+        let fullMessage = "* \(message.translated())"
         errorLbl.text = fullMessage
         errorLbl.textColor = .systemRed
         errorLbl.isHidden = false
-        ApplyLeaveBtn.setTitle("Apply Leave", for: .normal)
+        ApplyLeaveBtn.setTitle("Apply Leave".translated(), for: .normal)
     }
     
     
@@ -674,11 +674,11 @@ class ApplyLeaveReqVC: UIViewController{
     }
     
     func isFirstHalf(session: String) -> Bool {
-        return session.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) == "first half"
+        return session.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) == "first half".translated()
     }
     
     func isSecondHalf(session: String) -> Bool {
-        return session.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) == "second half"
+        return session.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) == "second half".translated()
     }
 }
 

@@ -13,23 +13,23 @@ class CustomAlert{
     
     func showAlert(title: String, message: String, on viewController: UIViewController) {
         
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        let alert = UIAlertController(title: title.translated(), message: message.translated(), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK".translated(), style: .default, handler: nil))
         viewController.present(alert, animated: true, completion: nil)
         
     }
     
     func showAlertCancel(title: String, message: String, actionLbl1: String, actionLbl2: String, on viewController: UIViewController, onOk: @escaping () -> Void, onNo: @escaping () -> Void) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: title.translated(), message: message.translated(), preferredStyle: .alert)
         
         // OK button
-        let okAction = UIAlertAction(title: actionLbl1, style: .default) { _ in
+        let okAction = UIAlertAction(title: actionLbl1.translated(), style: .default) { _ in
             onOk()
         }
         alert.addAction(okAction)
         
         // No button
-        let noAction = UIAlertAction(title: actionLbl2, style: .cancel) { _ in
+        let noAction = UIAlertAction(title: actionLbl2.translated(), style: .cancel) { _ in
             onNo()
         }
         alert.addAction(noAction)
@@ -40,9 +40,9 @@ class CustomAlert{
     
     
     static func showAlertWithOkAction(title: String, message: String, on viewController: UIViewController, okAction: (() -> Void)? = nil) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: title.translated(), message: message.translated(), preferredStyle: .alert)
         
-        let okButton = UIAlertAction(title: "OK", style: .default) { _ in
+        let okButton = UIAlertAction(title: "OK".translated(), style: .default) { _ in
             okAction?() // Executes the closure if provided
         }
         
