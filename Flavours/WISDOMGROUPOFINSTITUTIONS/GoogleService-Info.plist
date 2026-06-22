@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>937637023219-j5qu4ghioc872k0lss8bd1c38kimogtm.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.937637023219-j5qu4ghioc872k0lss8bd1c38kimogtm</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDj8hLnT0gCZYFYjbQAzfrP61b6KD3UZw4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>937637023219</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.wisdom.schools</string>
+	<key>PROJECT_ID</key>
+	<string>school-chimes-new</string>
+	<key>STORAGE_BUCKET</key>
+	<string>school-chimes-new.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:937637023219:ios:ec969eb416b4216e26d686</string>
+</dict>
+</plist>
