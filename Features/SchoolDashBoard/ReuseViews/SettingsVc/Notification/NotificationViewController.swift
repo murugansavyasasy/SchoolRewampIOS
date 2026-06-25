@@ -97,7 +97,7 @@ class NotificationViewController: UIViewController {
             
             self.noDataImg.isHidden = false
             self.noDataLbl.isHidden = false
-            self.noDataLbl.text = "No notifications found"
+            self.noDataLbl.text = "No notifications found".translated()
             self.searchView.isHidden = true
             self.searchBtn.isHidden = true
             self.searchBar.isHidden = true
@@ -143,6 +143,7 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "NotiTvheader") as? NotiTvheader else {
             return nil
         }
+        header.clearAllBtn.setTitle("Clear All".translated(), for: .normal)
         header.clearAllBtn.isHidden = section != 0
         header.clearAllBtn.addTarget(self, action: #selector(clearBtnTapped), for: .touchUpInside)
         let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == name }
@@ -153,11 +154,11 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
     @objc func clearBtnTapped() {
         guard !tvheadernotidata.isEmpty else { return }
         
-        let alert = UIAlertController(title: "Clear All Notifications",
-                                      message: "Are you sure you want to delete all notifications?",
+        let alert = UIAlertController(title: "Clear All Notifications".translated(),
+                                      message: "Are you sure you want to delete all notifications?".translated(),
                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Clear", style: .destructive, handler: { _ in
+        alert.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel))
+        alert.addAction(UIAlertAction(title: "Clear".translated(), style: .destructive, handler: { _ in
             self.clearAllNotifications()
         }))
         self.present(alert, animated: true)
@@ -223,13 +224,13 @@ extension NotificationViewController: UITableViewDelegate, UITableViewDataSource
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] _, _, completionHandler in
             guard let self = self else { return }
             
-            let alert = UIAlertController(title: "Delete Notification",
-                                          message: "Are you sure you want to delete this notification?",
+            let alert = UIAlertController(title: "Delete Notification".translated(),
+                                          message: "Are you sure you want to delete this notification?".translated(),
                                           preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            alert.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel) { _ in
                 completionHandler(false)
             })
-            alert.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
+            alert.addAction(UIAlertAction(title: "Delete".translated(), style: .destructive) { _ in
                 self.handleDelete(at: indexPath)
                 completionHandler(true)
             })
@@ -378,7 +379,7 @@ extension NotificationViewController: UISearchBarDelegate {
             tvheadernotidata = allNotifications
             noDataImg.isHidden = !tvheadernotidata.isEmpty
             noDataLbl.isHidden = !tvheadernotidata.isEmpty
-            noDataLbl.text = "Search Data not Found"
+            noDataLbl.text = "Search Data not Found".translated()
             tableview.reloadData()
             return
         }
@@ -396,7 +397,7 @@ extension NotificationViewController: UISearchBarDelegate {
         
         noDataImg.isHidden = !tvheadernotidata.isEmpty
         noDataLbl.isHidden = !tvheadernotidata.isEmpty
-        noDataLbl.text = "Search Data not Found"
+        noDataLbl.text = "Search Data not Found".translated()
         tableview.reloadData()
     }
     

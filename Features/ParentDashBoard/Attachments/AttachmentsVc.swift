@@ -91,6 +91,12 @@ class AttachmentsVc: UIViewController, Datepicker {
         UnreadBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         AllBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
+        AllBtn.setTitle(CommonStringFile.all.translated(), for: .normal)
+        UnreadBtn.setTitle("Unread".translated(), for: .normal)
+        ReadBtn.setTitle("Read".translated(), for: .normal)
+        fromDateLbl.text = "--From date--".translated()
+        toDateLbl.text = "--To date--".translated()
+        
         applyShadowAndCornerRadius(to: fromDateView, cornerRadius: 6)
         applyShadowAndCornerRadius(to: toDateView, cornerRadius: 6)
         toDateLbl.setFont(style: .title, size: FontSize.BodySize)
@@ -123,8 +129,8 @@ class AttachmentsVc: UIViewController, Datepicker {
             selectedReadStatus = .all
             fromDate = nil
             toDate = nil
-            fromDateLbl.text = "--From date--"
-            toDateLbl.text = "--To date--"
+            fromDateLbl.text = "--From date--".translated()
+            toDateLbl.text = "--To date--".translated()
             fromDateLbl.textColor = .darkGray
             toDateLbl.textColor = .darkGray
             filteredAttachments = attachmentData
@@ -399,8 +405,8 @@ class AttachmentsVc: UIViewController, Datepicker {
         
         fromDate = nil
         toDate = nil
-        fromDateLbl.text = "--From date--"
-        toDateLbl.text = "--To date--"
+        fromDateLbl.text = "--From date--".translated()
+        toDateLbl.text = "--To date--".translated()
         fromDateLbl.textColor = .darkGray
         toDateLbl.textColor = .darkGray
         applyFilters()
@@ -425,8 +431,8 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
                 with: filteredAttachments?[indexPath.row].file_path ?? [],
                 title: filteredAttachments?[indexPath.row].title ?? "",
                 description: filteredAttachments?[indexPath.row].description ?? "",
-                date: MenuStringFile.posted_on + " - " + displayText,
-                sendBy:  MenuStringFile.Posted_By + (filteredAttachments?[indexPath.row].sent_by ?? ""),
+                date: MenuStringFile.posted_on.translated() + " - " + displayText,
+                sendBy:  MenuStringFile.Posted_By.translated() + " - " + (filteredAttachments?[indexPath.row].sent_by ?? ""),
                 isunread: filteredAttachments?[indexPath.row].is_unread ?? false, dateAndTimeForVideo:   filteredAttachments?[indexPath.row].date ?? "",
                 parentTableView: tv
             )

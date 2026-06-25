@@ -75,11 +75,11 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
         StudentNameLbl.configureAsBackTitle(firstLine: name, secondLine: standard)
         
-        scheduleMeetingBtn.setTitle(PTMString.scheduleMeeting, for: .normal)
-        yourMeetingBtn.setTitle(PTMString.yourMeetings, for: .normal)
-        BookSlotBtn.setTitle(PTMString.bookSlot, for: .normal)
+        scheduleMeetingBtn.setTitle(PTMString.scheduleMeeting.translated(), for: .normal)
+        yourMeetingBtn.setTitle(PTMString.yourMeetings.translated(), for: .normal)
+        BookSlotBtn.setTitle(PTMString.bookSlot.translated(), for: .normal)
         
-        subjectLbl.text = PTMString.allSubjects
+        subjectLbl.text = PTMString.allSubjects.translated()
         
         scheduleMeetingBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
         yourMeetingBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
@@ -141,14 +141,14 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     // MARK: - DropDown
     private func setupDropDown() {
         dropDown.anchorView = subjectsView
-        dropDown.dataSource = [PTMString.allSubjects] + subjectList.compactMap { $0.name }
+        dropDown.dataSource = [PTMString.allSubjects.translated()] + subjectList.compactMap { $0.name }
         
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
             subjectLbl.text = item
             
             switch item {
-            case PTMString.allSubjects:
+            case PTMString.allSubjects.translated():
                 self.subjectId = "0"; self.classteacherId = "0"; self.isManagement = false
             case "Management":
                 self.subjectId = "0"; self.classteacherId = "0"; self.isManagement = true

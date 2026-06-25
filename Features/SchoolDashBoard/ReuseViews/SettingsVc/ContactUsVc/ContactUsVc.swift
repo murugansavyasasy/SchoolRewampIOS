@@ -14,7 +14,7 @@ class ContactUsVc: UIViewController {
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var tableviewHeight: NSLayoutConstraint!
     
-    var content = ["Our 24*7 Customer Service.","Write us at."]
+    var content = ["Our 24*7 Customer Service.".translated(),"Write us at.".translated()]
     var contact = [UserDefaultFileManager.get_globalSelection()?.support_contact,UserDefaultFileManager.get_globalSelection()?.support_email]
     
     var icon: [UIImage] = [.phone, .mail]
@@ -25,9 +25,9 @@ class ContactUsVc: UIViewController {
         
         BackBtn.setTitle(MenuTapbar.shared.Contact_Us, for: .normal)
         let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-        BackBtn.imageView?.applyRTLFlip(Language == "ar")
+//        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
+//        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
+//        BackBtn.imageView?.applyRTLFlip(Language == "ar")
         
         BackBtn.setTitleFont(style: .primary, size:FontSize.HeaderSize)
         
@@ -114,8 +114,8 @@ extension ContactUsVc : UITableViewDataSource,UITableViewDelegate{
     private func showPhoneActionSheet(numbers: [String]) {
         
         let alert = UIAlertController(
-            title: "Call",
-            message: "Choose a phone number",
+            title: "Call".translated(),
+            message: "Choose a phone number".translated(),
             preferredStyle: .actionSheet
         )
         
@@ -129,15 +129,15 @@ extension ContactUsVc : UITableViewDataSource,UITableViewDelegate{
             })
         }
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel))
         presentActionSheet(alert)
     }
     
     private func showEmailActionSheet(emails: [String]) {
         
         let alert = UIAlertController(
-            title: "Email",
-            message: "Choose an email address",
+            title: "Email".translated(),
+            message: "Choose an email address".translated(),
             preferredStyle: .actionSheet
         )
         
@@ -155,7 +155,7 @@ extension ContactUsVc : UITableViewDataSource,UITableViewDelegate{
             })
         }
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel))
         presentActionSheet(alert)
     }
     

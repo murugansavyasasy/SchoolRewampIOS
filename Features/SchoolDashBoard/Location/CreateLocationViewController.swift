@@ -81,9 +81,9 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         distaceDefaultLbl.setRequiredText(CommonStringFile.Distance)
         getLocationDefaultLbl.setRequiredText(CommonStringFile.Get_Location)
         getLocationBtn.setAttributedTitle(nil, for: .normal)
-        getLocationBtn.setTitle(MenuStringFile.Taptoviewlocationhistory, for: .normal)
+        getLocationBtn.setTitle(MenuStringFile.Taptoviewlocationhistory.translated(), for: .normal)
         saveBtn.setAttributedTitle(nil, for: .normal)
-        saveBtn.setTitle(AlertstringFile.Submit, for: .normal)
+        saveBtn.setTitle(AlertstringFile.Submit.translated(), for: .normal)
     }
     
     

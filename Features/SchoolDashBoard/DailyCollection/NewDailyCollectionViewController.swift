@@ -85,7 +85,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
             firstLine: MenuStringFile.selectedMenuName,
             secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
         )
-        let items = ["CATEGORY".translated(), "CLASS".translated(), "MODE".translated()]
+        let items = ["CATEGORY".translated(), "Class".translated(), "MODE".translated()]
         segmentName.removeAllSegments()
 
         for (index, item) in items.enumerated() {

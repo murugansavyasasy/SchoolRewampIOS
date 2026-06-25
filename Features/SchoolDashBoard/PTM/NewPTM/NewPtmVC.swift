@@ -71,7 +71,7 @@ class NewPtmVC: UIViewController, Datepicker {
         
         menuNameLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: staffDetails?.school_name ?? "")
         
-        selectDateBtn.setTitle(CommonStringFile.all, for: .normal)
+        selectDateBtn.setTitle(CommonStringFile.all.translated(), for: .normal)
         selectDateBtn.semanticContentAttribute = .forceRightToLeft
         selectDateBtn.layer.cornerRadius = 10
         selectDateBtn.layer.borderWidth = 1
@@ -553,7 +553,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
             cell.dateBtn.setTitle(event?.date?.convertToTargetDateFormat(), for: .normal)
             let time = (event?.start_time ?? "") + " - " + (event?.end_time ?? "")
             cell.timeBtn.setTitle(time, for: .normal)
-            cell.modeLbl.text = "Mode - " + (event?.event_mode ?? "")
+            cell.modeLbl.text = "Mode".translated() + " - " + (event?.event_mode ?? "")
             if event?.profiles?.count == 0 {
                 cell.imageStack.isHidden = true
                 cell.joinBtn.isHidden = false
@@ -625,7 +625,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
 
                 cell.StatusBtn.backgroundColor = .systemGray5
                 cell.StatusBtn.setImage(UIImage(systemName: "exclamationmark.circle"), for: .normal)
-                cell.StatusBtn.setTitle("Expired", for: .normal)
+                cell.StatusBtn.setTitle(PTMString.Expired.translated(), for: .normal)
                 cell.StatusBtn.tintColor = .black
                 cell.StatusBtn.setTitleColor(.black, for: .normal)
 
@@ -633,14 +633,14 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
 
                 cell.WaitingLbl.isHidden = false
                 cell.WaitingLbl.textColor = .black
-                cell.WaitingLbl.text = "Slot Expired"
+                cell.WaitingLbl.text = PTMString.Slot_Expired.translated()
 
             }
             else if slot?.is_cancelled_by_staff == true {
 
                 cell.StatusBtn.backgroundColor = .systemRed.withAlphaComponent(0.1)
                 cell.StatusBtn.setImage(UIImage(systemName: "x.circle"), for: .normal)
-                cell.StatusBtn.setTitle("Cancelled", for: .normal)
+                cell.StatusBtn.setTitle(PTMString.Cancelled.translated(), for: .normal)
                 cell.StatusBtn.tintColor = .red
                 cell.StatusBtn.setTitleColor(.red, for: .normal)
 
@@ -648,7 +648,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
 
                 cell.WaitingLbl.isHidden = false
                 cell.WaitingLbl.textColor = .systemRed
-                cell.WaitingLbl.text = "Slot Cancelled"
+                cell.WaitingLbl.text = PTMString.Slot_Cancelled.translated()
 
             }
             else if slot?.is_booked == true {
@@ -656,7 +656,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
                 cell.StatusBtn.backgroundColor = .green.withAlphaComponent(0.1)
                 cell.StatusBtn.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
 
-                let title = MeetingStatus == PTMString.completedMeetings.translated() ? "Completed" : "Booked"
+                let title = MeetingStatus == PTMString.completedMeetings.translated() ? PTMString.Completed.translated() : PTMString.Booked.translated()
                 cell.StatusBtn.setTitle(title, for: .normal)
 
                 cell.StatusBtn.tintColor = .aproved
@@ -670,7 +670,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
 
                 cell.StatusBtn.backgroundColor = .systemBlue.withAlphaComponent(0.075)
                 cell.StatusBtn.setImage(UIImage(systemName: "exclamationmark.circle"), for: .normal)
-                cell.StatusBtn.setTitle("Available", for: .normal)
+                cell.StatusBtn.setTitle(PTMString.Available.translated(), for: .normal)
                 cell.StatusBtn.tintColor = .systemBlue
                 cell.StatusBtn.setTitleColor(.black, for: .normal)
 
@@ -678,7 +678,7 @@ extension NewPtmVC: UITableViewDelegate,UITableViewDataSource{
 
                 cell.WaitingLbl.isHidden = false
                 cell.WaitingLbl.textColor = .systemBlue
-                cell.WaitingLbl.text = "Waiting for Booking"
+                cell.WaitingLbl.text = PTMString.Waiting_for_Booking.translated()
             }
             
             

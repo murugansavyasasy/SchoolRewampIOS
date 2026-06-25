@@ -5,6 +5,19 @@
   Created by admin on 08/11/24.
   
 */
+
+//MARK: Change Password
+"New password" = "New password";
+"Enter the old password" = "Enter the old password";
+"Enter the New password" = "Enter the New password";
+"Create the new password" = "Create the new password";
+"Confirm the new  password" = "Confirm the new password";
+"Change password" = "Change password";
+"Reset password" = "Reset password";
+"Create New Password" = "Create New Password";
+"Confirm New Password" = "Confirm New Password";
+"Create" = "Create";
+
 // MARK: Common String files
 "NEXT" = "Next";
 "TO STANDARD OR SECTION" = "To Standard or Section";
@@ -99,7 +112,7 @@
 "or Student/Parent" = "or Student/Parent";
 "Principal" = "Principal";
 "Login As Teacher Or Parent" = "Login As Teacher Or Parent";
-"Login As" = "Login As";
+"Login as" = "Login as";
 "Management" = "Management";
 "Choose Your Role" = "Choose Your Role";
 "Proceed" = "Proceed";
@@ -566,8 +579,8 @@
 "Slot Expired" = "Slot Expired";
 "Slot Cancelled" = "Slot Cancelled";
 "Booked by:" = "Booked by:";
-"Father Name:" = "Father's Name:";
-"Mother Name:" = "Mother's Name:";
+"Father Name" = "Father's Name";
+"Mother Name" = "Mother's Name";
 "Mode" = "Mode";
 "Classes" = "Classes";
 "Booked" = "Booked";
@@ -618,7 +631,7 @@
 "Subject" = "Subject";
 "Level" = "Level";
 "Created date" = "Created date";
-"posted by" = "Posted by";
+"Posted by" = "Posted by";
 "Posted On" = "Posted On";
 "Play Now" = "Play Now";
 "Reports" = "Reports";
@@ -651,7 +664,7 @@
 
 //MARK: DailyCollection
 "CATEGORY" = "Category";
-"CLASS" = "Class";
+"Class" = "Class";
 "MODE" = "Mode";
 "FROM_DATE" = "From Date";
 "TO_DATE" = "To Date";
@@ -704,7 +717,7 @@
 "Certificate History" = "Certificate History";
 "Select Urgency Level" = "Select Urgency Level";
 "Enter your reason here..." = "Enter your reason here...";
-"any_other_suggestions" = "Any other suggestions? (Optional)";
+"Any other suggestions" = "Any other suggestions? (Optional)";
 "rate_experience" = "How would you rate your experience?";
 
 //MARK: Exam Mark Upload
@@ -760,6 +773,10 @@
 "Reply All" = "Reply All";
 "Blocked Students List" = "Blocked Students List";
 "Blocked on" = "Blocked on";
+"Replying To " = "Replying To ";
+"Type your message here..." = "Type your message here...";
+"Asked by ~ " = "Asked by ~ ";
+"You have been blocked by the staff" = "You have been blocked by the staff";
 
 //MARK: Report Bug
 "Type content" = "Type content";
@@ -804,6 +821,9 @@
 "Confirmation" = "Confirmation";
 "Select sheduled date" = "Select scheduled date";
 "Warning" = "Warning";
+
+
+
 "Mark Attendance" = "Mark Attendance";
 "Attendance Options" = "Attendance Options";
 "Attendance Type" = "Attendance Type";
@@ -919,7 +939,149 @@
 "Remove" = "Remove";
 "OD" = "OD";
 "Confirm & Edit Attendance" = "Confirm & Edit Attendance";
-
+"EMERGENCY MESSAGE" = "EMERGENCY MESSAGE";
+"All Schools" = "All Schools";
+"Download" = "Download";
+"No Absentees Report from this date" = "No Absentees Report from this date";
+"Total Absent: " = "Total Absent: ";
+"Absentees : " = "Absentees : ";
+"Outpass Requests" = "Outpass Requests";
+"👨🏻‍🎓 Absent students list" = "👨🏻‍🎓 Absent students list";
+"Roll No ↑" = "Roll No ↑";
+"Roll No ↓" = "Roll No ↓";
+"Admission No ↓" = "Admission No ↓";
+"Admission No ↑" = "Admission No ↑";
+"Others" = "Others";
+"All students" = "All students";
+"Class & Section" = "Class & Section";
+"Admission No" = "Admission No";
+"SMS" = "SMS";
+"Mail" = "Mail";
+"Gender" = "Gender";
+"Date Of Birth" = "Date Of Birth";
+"Class Teacher" = "Class Teacher";
+"Punch" = "Punch";
+"My Attendance" = "My Attendance";
+"Update" = "Update";
+"Please update your details" = "Please update your details";
+"Enter your location name" = "Enter your location name";
+"Enter your distance" = "Enter your distance";
+"location" = "Location";
+"distance" = "Distance";
+"Your locations" = "Your Locations";
+"Location or distance field is empty" = "Location or distance field is empty";
+"Are you sure want to delete this loacation ?" = "Are you sure you want to delete this location?";
+"FD: Full Day" = "FD: Full Day";
+"FH: First Half ( morning session)" = "FH: First Half (morning session)";
+"SH: Second Half (afternoon session)" = "SH: Second Half (afternoon session)";
+"CHECK-IN" = "CHECK-IN";
+"CHECK-OUT" = "CHECK-OUT";
+"HOURS" = "HOURS";
+"Not yet in" = "Not yet in";
+"min" = "min";
+"from last year" = "from last year";
+"No change from last year" = "No change from last year";
+"Not specified" = "Not specified";
+"Staff" = "Staff";
+"Unspecified" = "Unspecified";
+"NOT MARKED" = "NOT MARKED";
+"TOTAL ABSENT" = "TOTAL ABSENT";
+"TOTAL PRESENT" = "TOTAL PRESENT";
+"Overall Summary" = "Overall Summary";
+"From Date" = "From Date";
+"To Date" = "To Date";
+"Select Staff" = "Select Staff";
+"View All Staff" = "View All Staff";
+"Not Marked" = "Not Marked";
+"REASON FOR LEAVE" = "REASON FOR LEAVE";
+"TYPE" = "TYPE";
+"DAYS" = "DAYS";
+"END" = "END";
+"LEAVE HISTORY" = "LEAVE HISTORY";
+"CONTACT INFORMATION" = "CONTACT INFORMATION";
+"Phone" = "Phone";
+"Email" = "Email";
+"Address" = "Address";
+"View More Details >>" = "View More Details >>";
+"VOICE" = "VOICE";
+"TEXT" = "TEXT";
+"Read" = "Read";
+"Unread" = "Unread";
+"Meeting Slots" = "Meeting Slots";
+"No notifications found" = "No notifications found";
+"Clear All Notifications" = "Clear All Notifications";
+"Are you sure you want to delete all notifications?" = "Are you sure you want to delete all notifications?";
+"Clear" = "Clear";
+"Delete Notification" = "Delete Notification";
+"Are you sure you want to delete this notification?" = "Are you sure you want to delete this notification?";
+"Search Data not Found" = "Search Data not Found";
+"Clear All" = "Clear All";
+"Our 24*7 Customer Service." = "Our 24*7 Customer Service.";
+"Write us at." = "Write us at.";
+"Select Module" = "Select Module";
+"Remarks" = "Remarks";
+"Type content" = "Type content";
+"ℹ️To help us understand the issue better and investigate it more effectively, kindly attach a relevant screenshot or screen recording when sending the email. This will allow our team to identify the problem faster and provide a more accurate solution." = "ℹ️To help us understand the issue better and investigate it more effectively, kindly attach a relevant screenshot or screen recording when sending the email. This will allow our team to identify the problem faster and provide a more accurate solution.";
+"Send Mail" = "Send Mail";
+"Choose a phone number" = "Choose a phone number";
+"Choose an email address" = "Choose an email address";
+"Missing Information" = "Missing Information";
+"Please select a module and enter bug details." = "Please select a module and enter bug details.";
+"Missing Module" = "Missing Module";
+"Please select a module." = "Please select a module.";
+"Missing Details" = "Missing Details";
+"Please enter bug details." = "Please enter bug details.";
+"Send Email" = "Send Email";
+"Choose mail app" = "Choose mail app";
+"Apple Mail" = "Apple Mail";
+"Gmail" = "Gmail";
+"Apple Mail Not Available" = "Apple Mail Not Available";
+"Please configure Apple Mail or choose Gmail." = "Please configure Apple Mail or choose Gmail.";
+"Select the menu" = "Select the menu";
+"WELCOME BACK !" = "WELCOME BACK !";
+"Stay connected with your school community.\nGet updates, communicate, and experience school life—all in one place." = "Stay connected with your school community.\nGet updates, communicate, and experience school life—all in one place.";
+"Mobile Number" = "Mobile Number";
+"Password" = "Password";
+"Forgot Password ?" = "Forgot Password ?";
+"Login" = "Login";
+"Your Verification code has been sent to your registered mobile number" = "Your Verification code has been sent to your registered mobile number";
+"Didn't receive a Verification code?" = "Didn't receive a Verification code?";
+"Resend" = "Resend";
+"Call Us ?" = "Call Us ?";
+"Enable Auto-Fill" = "Enable Auto-Fill";
+"To automatically fill your OTP, please enable Auto-Fill in Settings:\n\nSettings → Passwords & Accounts → AutoFill Passwords" = "To automatically fill your OTP, please enable Auto-Fill in Settings:\n\nSettings → Passwords & Accounts → AutoFill Passwords";
+"Open Settings" = "Open Settings";
+"Teaching Staff" = "Teaching Staff";
+"We appreciate your feedback! Your rating helps us improve." = "We appreciate your feedback! Your rating helps us improve.";
+"Thank You" = "Thank You";
+"No holidays in" = "No holidays in";
+"Outpass" = "Outpass";
+"Applied On" = "Applied On";
+"No of Day(s)" = "No of Day(s)";
+"Approved by" = "Approved by";
+"Please enter the purpose of the meeting" = "Please enter the purpose of the meeting";
+"Please enter the meeting link" = "Please enter the meeting link";
+"Online" = "Online";
+"Please select the start time" = "Please select the start time";
+"Please select the end time" = "Please select the end time";
+"Reopen" = "Reopen";
+"Please select at least one class" = "Please select at least one class";
+"Please select the dates for the meeting" = "Please select the dates for the meeting";
+"Please select or enter a valid duration for the meeting" = "Please select or enter a valid duration for the meeting";
+"Invalid Time" = "Invalid Time";
+"Start time cannot be in the past for today" = "Start time cannot be in the past for today";
+"No available sots Found in the selected date and time" = "No available slots found for the selected date and time";
+"Are you sure want to Reopen this slot?" = "Are you sure you want to reopen this slot?";
+"Are you sure want to Cancel this slot?" = "Are you sure you want to cancel this slot?";
+"Open Above Slots" = "Open Above Slots";
+"There is no available slots" = "There are no available slots";
+"Select Meeting Slot" = "Select Meeting Slot";
+"Not Available" = "Not Available";
+"Selected" = "Selected";
+"Time Conflict" = "Time Conflict";
+"Cancel Meeting" = "Cancel Meeting";
+"Reason for Cancelation" = "Reason for Cancellation";
+"Paste the meeting link here" = "Paste the meeting link here";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

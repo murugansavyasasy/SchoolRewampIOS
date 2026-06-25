@@ -113,6 +113,17 @@ class ReportStudentTVC: UITableViewCell {
         CallBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         EmailNewBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
+        admissionTitle.text = "Admission No".translated()
+        genderTitle.text = "Gender".translated()
+        dobTitleLbl.text = "Date Of Birth".translated()
+        fatherTitle.text = "Father name".translated()
+        teacherName.text = "Class Teacher".translated()
+        rollNoLbl.text = "Roll No".translated()
+        
+        CallBtn.setTitle("Call".translated(), for: .normal)
+        SmsNewBtn.setTitle("SMS".translated(), for: .normal)
+        EmailNewBtn.setTitle("Mail".translated(), for: .normal)
+        
         mobleNo.isHidden = true
         smsBtn.isHidden = true
         emailBtn.isHidden = true

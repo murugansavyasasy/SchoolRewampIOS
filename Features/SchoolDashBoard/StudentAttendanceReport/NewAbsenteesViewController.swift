@@ -54,11 +54,11 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
     }()
     var absentStudentData: [AbsentisReportStudent] = []
     var selectedDate: String?
-    var Class  = "Class : "
-    var Section = "Section : "
-    var Absent   = "Absent : "
-    var Absentees   = "Absentees : "
-    var Total_students   = "Total students : "
+    var Class  = "Class".translated() + " : "
+    var Section = "Section".translated() + " : "
+    var Absent   = "Absent".translated() + " : "
+    var Absentees   = "Absentees : ".translated()
+    var Total_students   = "Total Students".translated() + " : "
     var month: String = ""
     var year: String = ""
     override func viewDidLoad() {
@@ -70,7 +70,7 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         
         totalAbsentBtn.layer.cornerRadius = totalAbsentBtn.frame.height / 2
         totalAbsentBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        
+        studentLbl.text = MenuStringFile.Absent_students_list.translated()
         updateMonthLabel()
         dateLbl.isHidden = true
         cvIcon.isHidden = true
@@ -149,7 +149,7 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
                         self.Tv.isHidden = !hasEventToday
                         self.fullview.isHidden = true
                         self.noRecordView.isHidden = false
-                        self.noRecordLbl.text = MenuStringFile.No_Absentees_Report_from_this_date
+                        self.noRecordLbl.text = MenuStringFile.No_Absentees_Report_from_this_date.translated()
                         self.studentLbl.isHidden = true
                     }else{
                         self.studentLbl.isHidden = false
@@ -201,7 +201,9 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         self.noRecordView.isHidden = true
     }
     func setAbsentButtonTitle(totalAbsent: String) {
-        let titleText = "Total Absent: \(totalAbsent)"
+        
+        let total = "Total Absent: ".translated()
+        let titleText = "\(total) \(totalAbsent)"
 
         let attributedString = NSMutableAttributedString(
             string: titleText,
@@ -371,7 +373,7 @@ extension NewAbsenteesViewController: UITableViewDelegate, UITableViewDataSource
         cell.nameLbl.text = data.student_name
         cell.classLbl.text = data.roll_no
         cell.addmissionLbl.isHidden = data.admission_no ==  "" ? true : false
-        cell.addmissionLbl.text =  MenuStringFile.admission_no + (data.admission_no ?? "")
+        cell.addmissionLbl.text =  MenuStringFile.admission_no.translated() + (data.admission_no ?? "")
         if data.photo_path == nil || data.photo_path == "" {
             cell.profileImage.tintColor = .error
             if data.gender == "male"{
@@ -465,7 +467,7 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
         } else {
             fullview.isHidden = true
             noRecordView.isHidden = false
-            noRecordLbl.text = MenuStringFile.No_Absentees_Report_from_this_date
+            noRecordLbl.text = MenuStringFile.No_Absentees_Report_from_this_date.translated()
             return false
         }
     }
@@ -478,7 +480,7 @@ extension NewAbsenteesViewController: FSCalendarDataSource, FSCalendarDelegate, 
         Tv.isHidden = false
         fullview.backgroundColor = .white
         studentLbl.isHidden = false
-        studentLbl.text = MenuStringFile.Absent_students_list
+        studentLbl.text = MenuStringFile.Absent_students_list.translated()
         let filterFormatter = DateFormatter()
         filterFormatter.dateFormat = DateInputs.dd_MM_yyyy
         let showFormatter = DateFormatter()

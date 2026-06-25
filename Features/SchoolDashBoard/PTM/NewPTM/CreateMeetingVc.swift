@@ -319,7 +319,9 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         onlineBtn.setTitle(PTMString.virtual.translated(), for: .normal)
         CheckSlotBtn.setTitle(PTMString.checkSlotAvailability.translated(), for: .normal)
         calendarDoneBtn.setTitle(AlertstringFile.Done.translated(), for: .normal)
+        calendarcancelBtn.setTitle(AlertstringFile.Cancel.translated(), for: .normal)
         purposeTextfield.placeholder = PTMString.purposeOfMeeting.translated()
+        meetingLinkTextfield.placeholder = PTMString.purposeOfMeeting.translated()
     }
 
     
@@ -511,7 +513,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         
         // Done button
         let doneButton = UIButton(type: .system)
-        doneButton.setTitle("Done", for: .normal)
+        doneButton.setTitle("Done".translated(), for: .normal)
         doneButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
         doneButton.setTitleColor(.white, for: .normal)
         doneButton.backgroundColor = UIColor.parentClr
@@ -739,8 +741,8 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         // 1. Purpose validation
         guard !purpose.isEmpty else {
             CustomAlert.showAlertWithOkAction(
-                title: "Missing Information",
-                message: "Please enter the purpose of the meeting",
+                title: "Missing Information".translated(),
+                message: "Please enter the purpose of the meeting".translated(),
                 on: self
             )
             return false
@@ -761,8 +763,8 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         if meetingMode == "Online" {
             guard !meetingLink.isEmpty else {
                 CustomAlert.showAlertWithOkAction(
-                    title: "Missing Information",
-                    message: "Please enter the meeting link",
+                    title: "Missing Information".translated(),
+                    message: "Please enter the meeting link".translated(),
                     on: self
                 )
                 return false
@@ -770,19 +772,19 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         }
         
         // 3. Time validation
-        if fromTime == "Start with" {
+        if fromTime == "Start with".translated() {
             CustomAlert.showAlertWithOkAction(
-                title: "Missing Information",
-                message: "Please select the start time",
+                title: "Missing Information".translated(),
+                message: "Please select the start time".translated(),
                 on: self
             )
             return false
         }
         
-        if toTime == "End with" {
+        if toTime == "End with".translated() {
             CustomAlert.showAlertWithOkAction(
-                title: "Missing Information",
-                message: "Please select the end time",
+                title: "Missing Information".translated(),
+                message: "Please select the end time".translated(),
                 on: self
             )
             return false
@@ -791,8 +793,8 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         // 4. Classes validation
         guard !selectedClasses.isEmpty else {
             CustomAlert.showAlertWithOkAction(
-                title: "Missing Information",
-                message: "Please select at least one class",
+                title: "Missing Information".translated(),
+                message: "Please select at least one class".translated(),
                 on: self
             )
             return false
@@ -801,8 +803,8 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
         // 5. Dates validation
         guard !SelectedDates.isEmpty else {
             CustomAlert.showAlertWithOkAction(
-                title: "Missing Information",
-                message: "Please select the dates for the meeting",
+                title: "Missing Information".translated(),
+                message: "Please select the dates for the meeting".translated(),
                 on: self
             )
             return false
@@ -826,8 +828,8 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
             
             guard let duration = finalValue, duration > 0 else {
                 CustomAlert.showAlertWithOkAction(
-                    title: "Missing Information",
-                    message: "Please select or enter a valid duration for the meeting",
+                    title: "Missing Information".translated(),
+                    message: "Please select or enter a valid duration for the meeting".translated(),
                     on: self
                 )
                 return false
@@ -856,8 +858,8 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
                                                     of: Date()) {
                     if Date() > fromDateTime {
                         CustomAlert.showAlertWithOkAction(
-                            title: "Invalid Time",
-                            message: "Start time cannot be in the past for today",
+                            title: "Invalid Time".translated(),
+                            message: "Start time cannot be in the past for today".translated(),
                             on: self
                         )
                         return false
@@ -1072,7 +1074,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
                     
                     if validatedData.first?.slots?.isEmpty == true {
                         
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: "No available sots Found in the selected date and time", on: self)
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: "No available sots Found in the selected date and time".translated(), on: self)
                         
                     }else{
                         bottomSheetVC.slotData = validatedData
@@ -1080,7 +1082,7 @@ class CreateMeetingVc: UIViewController, Datepicker, FSCalendarDelegate, FSCalen
                     }
                     
                 case .failure(let failure):
-                    CustomAlert.showAlertWithOkAction(title: "Error", message: "Something went Wrong", on: self)
+                    CustomAlert.showAlertWithOkAction(title: "Error".translated(), message: "Something went Wrong".translated(), on: self)
                     print("Error: ",failure.localizedDescription)
                 }
             }

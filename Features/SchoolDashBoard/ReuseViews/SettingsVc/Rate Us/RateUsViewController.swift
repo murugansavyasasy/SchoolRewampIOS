@@ -28,6 +28,7 @@ class RateUsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         submitBtn.layer.cornerRadius = submitBtn.frame.height / 2
+        submitBtn.setTitle("Submit".translated(), for: .normal)
 
         submitBtn.layer.shadowColor = UIColor.black.cgColor
         submitBtn.layer.shadowOpacity = 0.4

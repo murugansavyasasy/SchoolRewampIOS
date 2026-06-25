@@ -45,7 +45,17 @@ class LeaveHistoryTV: UITableViewCell {
         
         DeleteBtn.setTitle(AlertstringFile.delete.translated(), for: .normal)
         EditBtn.setTitle(CommonStringFile.edit.translated(), for: .normal)
-        GetOutpassBtn.setTitle(AttendanceString.generateOutpass.translated(), for: .normal)
+       // GetOutpassBtn.setTitle(AttendanceString.generateOutpass.translated(), for: .normal)
+        let attributedTitle = NSAttributedString(
+            string: AttendanceString.generateOutpass.translated(),
+            attributes: [
+                .font: GetOutpassBtn.titleLabel?.font ?? UIFont.systemFont(ofSize: 16),
+                .foregroundColor: GetOutpassBtn.tintColor ?? .systemBlue,
+                .underlineStyle: NSUnderlineStyle.single.rawValue
+            ]
+        )
+
+        GetOutpassBtn.setAttributedTitle(attributedTitle, for: .normal)
         OptionsBtn.transform = CGAffineTransform(rotationAngle: .pi/2)
         popupView.setShadow()
         popupView.isHidden = true

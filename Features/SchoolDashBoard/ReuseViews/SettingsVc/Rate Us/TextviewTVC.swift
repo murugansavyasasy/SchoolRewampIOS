@@ -26,5 +26,7 @@ class TextviewTVC: UITableViewCell {
                           secondString: CommonStringFile.Optional.translated(),
                           color1: .black,
                           color2: .lightGray)
+        
+        tittleLbl.text = CommonStringFile.any_other_suggestions.translated()
     }
 }

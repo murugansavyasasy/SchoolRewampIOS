@@ -28,14 +28,14 @@ class SchoolStrengthVC: UIViewController {
     var totalStudents : String?
     var totalStaffs : String?
     var previousData : Previous?
-    let Total = "Total"
-    let Students = "Students"
-    let Staff = "Staff"
-    let Standard = "Standard "
-    let Boys = "Boys"
-    let Girls = "Girls"
-    let NotSpecified = "Not specified"
-    let TotalStudents = "Total Students"
+    let Total = "Total".translated()
+    let Students = "Students".translated()
+    let Staff = "Staff".translated()
+    let Standard = "Standard".translated()
+    let Boys = "Boys".translated()
+    let Girls = "Girls".translated()
+    let NotSpecified = "Not specified".translated()
+    let TotalStudents = "Total Students".translated()
     override func viewDidLoad() {
         super.viewDidLoad()
         UIupdate()
@@ -242,7 +242,7 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
             }
             cell.configure(standard.sections)
             cell.updateProgress(boys: standard.boys_count ?? "0", girls: standard.girls_count ?? "0", others: standard.other_count ?? "")
-            cell.standardLbl.text = Standard.translated() + (standard.name ?? "")
+            cell.standardLbl.text = Standard.translated() + " " + (standard.name ?? "")
             cell.boysCountLbl.text = "\(Boys.translated()): \(standard.boys_count ?? "")"
             cell.girlsCountLbl.text = "\(Girls.translated()): \(standard.girls_count ?? "")"
             cell.othersCountLbl.text = "\(NotSpecified.translated()): \(standard.other_count ?? "")"

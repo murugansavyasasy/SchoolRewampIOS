@@ -267,7 +267,7 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
         cell.MaxmarkLbl.text = String(filteredExams[indexPath.row].max_mark ?? 0)
         cell.NoOfQuestionLbl.text = String(filteredExams[indexPath.row].no_of_questions ?? 0)
         cell.createdDateLbl.text = MenuStringFile.CreateOn + formattedDateStatus(from: filteredExams[indexPath.row].created_on ?? "", isTimeNeeded: true)
-        cell.PostByLbl.text = MenuStringFile.Posted_By + (
+        cell.PostByLbl.text = MenuStringFile.Posted_By + " - " + (
             filteredExams[indexPath.row].sent_by ?? ""
         )
         let imgae = stausType == "1" ? UIImage(systemName: "play.fill") : UIImage(systemName: "arrowshape.right.fill")

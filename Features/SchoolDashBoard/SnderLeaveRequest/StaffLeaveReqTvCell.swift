@@ -71,6 +71,8 @@ class StaffLeaveReqTvCell: UITableViewCell,UIPopoverPresentationControllerDelega
         fullView.layer.borderColor = UIColor.lightGray.cgColor
 //        StatusView.backgroundColor = UIColor(red: 1.0, green: 0.85, blue: 0.85, alpha: 1.0) // Light Blue
         StatusView.layer.cornerRadius = 10
+        
+        reasonDefaultLbl.text = "REASON FOR LEAVE".translated()
     }
     
     @IBAction func threeDotBtnName(_ sender: UIButton) {

@@ -43,6 +43,7 @@ class StaffWiseAttendaceVC: UIViewController, Datepicker {
         fromdateDefaultLbl.setRequiredText(fromdateDefaultLbl.text ?? "")
         todateDefaultLbl.setRequiredText(todateDefaultLbl.text ?? "")
         selectstaffDefaultLbl.setRequiredText(selectstaffDefaultLbl.text ?? "")
+        stafNameLbl.text = "View All Staff".translated()
         setupTableView()
         SelectFromDate()
         let formatter = DateFormatter()
@@ -477,7 +478,7 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
     }
     
     @IBAction func staffDropDownList() {
-        var staffName = ["View All Staff"]
+        var staffName = ["View All Staff".translated()]
         staffName += (staffDetails ?? []).compactMap {
             guard let name = $0.name, !name.isEmpty else { return nil }
             return name
@@ -510,8 +511,8 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
                 staffId = staffDetails?[index - 1].id ?? ""
             }
             stafNameLbl.text = item
-            is_selectAllStaff = item == "View All Staff"
-            getStaffWiseAttendace(fromDate: convertDate(fromDateTextField.text ?? "") ?? "", toDate: convertDate(toDateTextField.text ?? "") ?? "", staffId: item == "View All Staff" ? "0" : staffId, select_staffAll:is_selectAllStaff)
+            is_selectAllStaff = item == "View All Staff".translated()
+            getStaffWiseAttendace(fromDate: convertDate(fromDateTextField.text ?? "") ?? "", toDate: convertDate(toDateTextField.text ?? "") ?? "", staffId: item == "View All Staff".translated() ? "0" : staffId, select_staffAll:is_selectAllStaff)
         }
     }
     

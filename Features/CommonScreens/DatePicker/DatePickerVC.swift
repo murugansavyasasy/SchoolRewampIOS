@@ -17,6 +17,9 @@ class DatePickerVC: UIViewController {
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var datepicker: UIDatePicker!
+    
+    @IBOutlet weak var cancelBtn: UIButton!
+    @IBOutlet weak var doneBtn: UIButton!
     var delegate : Datepicker?
     var date : String?
     var dateSelection = 1
@@ -24,6 +27,9 @@ class DatePickerVC: UIViewController {
     var maximumDate: Date?
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        cancelBtn.setTitle("Cancel".translated(), for: .normal)
+        doneBtn.setTitle("Done".translated(), for: .normal)
         
         let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
         let normalizedCode = normalizedLocaleIdentifier(for: savedCode)

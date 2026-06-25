@@ -33,8 +33,10 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var chatDataDetails : [StaffChatMessage]?
     var selectedMessage: StaffChatMessage?
-    var Privatereply = "Private reply"
-    var Publicreply = "Public reply"
+    var Privatereply = CommonStringFile.PrivateReply.translated()
+    var Publicreply = CommonStringFile.PublicReply.translated()
+    var placeholderLabel : UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let subject = staffMembersData?.subject_name ?? ""
@@ -71,17 +73,36 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
         PopupContainerview.isHidden = true
         PopupContainerview.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         reasonTextfield.addDoneButton()
+        reasonTextfield.placeholder = CommonStringFile.EnterReason.translated()
+        replyBtn.setTitle(CommonStringFile.Reply.translated(), for: .normal)
+        replyAllBtn.setTitle(CommonStringFile.ReplyAll.translated(), for: .normal)
+        BlockBtn.setTitle(CommonStringFile.BlockStudent.translated(), for: .normal)
+        BlockStudentDefLbl.text = CommonStringFile.BlockStudent.translated()
+        reasonDefLbl.text = CommonStringFile.ReasonForBlocking.translated()
         BlockStudentDefLbl.setFont(style: .title, size: FontSize.TitleSize)
         reasonDefLbl.setFont(style: .body, size: FontSize.TitleSize)
         BlockBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         BlockBtn.layer.cornerRadius = 8
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
+        setupPlaceholder()
+        MessgeTextview.text = ""
         MessgeTextview.delegate = self
         getChat()
     }
     
+    func setupPlaceholder() {
+        placeholderLabel = UILabel()
+        placeholderLabel.text = TexviewStringFile.Enter_Chat_Description.translated()
+        placeholderLabel.font = MessgeTextview.font
+        placeholderLabel.textColor = .lightGray
+        placeholderLabel.sizeToFit()
+        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        MessgeTextview.applyRightTxt()
+        MessgeTextview.applyRightTxt(with: placeholderLabel)
+        MessgeTextview.addSubview(placeholderLabel)
+        placeholderLabel.isHidden = !MessgeTextview.text.isEmpty // Hide if text exists
+    }
     
     override func viewDidLayoutSubviews() {
         PopupView.layer.cornerRadius = 10
@@ -289,24 +310,19 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
     
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if MessgeTextview.text == TexviewStringFile.Enter_Chat_Description {
-            MessgeTextview.text = ""
-            MessgeTextview.textColor = .black
-        }
-        
+        placeholderLabel.isHidden = !textView.text.isEmpty
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text == "" {
-            MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
-            MessgeTextview.textColor = .lightGray
-        }
+        placeholderLabel.isHidden = !textView.text.isEmpty
     }
     
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty
+    }
     
     func resetTextView() {
-        MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
-        MessgeTextview.textColor = .lightGray
+        MessgeTextview.text = ""
         MessgeTextview.resignFirstResponder()
     }
 }
@@ -354,7 +370,7 @@ extension chatWithStudentVc: UITableViewDelegate,UITableViewDataSource,ChatTable
             replyAllBtn.isHidden = false
             if let message = chatDataDetails?.first(where: { $0.id == id }) {
                 selectedMessage = message
-                studetnNameLbl.text = CommonStringFile.ReplyingTo + (message.student_name ?? "")
+                studetnNameLbl.text = CommonStringFile.ReplyingTo.translated() + (message.student_name ?? "")
                 questionLbl.text = message.question
             }
             MessgeTextview.becomeFirstResponder()

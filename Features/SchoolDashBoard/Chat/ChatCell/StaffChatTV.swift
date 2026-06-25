@@ -58,8 +58,8 @@ class StaffChatTV: UITableViewCell, SelectedId, UIPopoverPresentationControllerD
         popoverContentVC.delegate = self
         popoverContentVC.ptm = false
         popoverContentVC.Chat = true
-        popoverContentVC.reply_Btn_title = is_change_answer ?? false ? "Update answer" : "Answer"
-        popoverContentVC.Block_Btn_title = is_blocked ?? false ? "Unblock" : "Block"
+        popoverContentVC.reply_Btn_title = is_change_answer ?? false ? CommonStringFile.UpdateAnswer.translated() : CommonStringFile.Answer.translated()
+        popoverContentVC.Block_Btn_title = is_blocked ?? false ? CommonStringFile.Unblock.translated() : CommonStringFile.Block.translated()
         let width = is_change_answer ?? false ? 180 : 120
         popoverContentVC.preferredContentSize = CGSize(width: width, height: 60)
         popoverContentVC.modalPresentationStyle = .popover

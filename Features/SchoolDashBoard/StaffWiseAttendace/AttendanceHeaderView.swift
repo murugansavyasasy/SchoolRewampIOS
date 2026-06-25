@@ -44,6 +44,11 @@ class AttendanceHeaderView: UITableViewHeaderFooterView {
         let present = stat?.present ?? 0
         let absent = stat?.absent ?? 0
         let notMarked = stat?.not_marked ?? 0
-        summaryLabel.text = "Present: \(present) • Absent: \(absent) • Not Marked: \(notMarked)"
+        
+        let presentText = "Present".translated()
+        let absentText = "Absent".translated()
+        let notmarkedText = "Not Marked".translated()
+        
+        summaryLabel.text = "\(presentText): \(present) • \(absentText): \(absent) • \(notmarkedText): \(notMarked)"
     }
 }

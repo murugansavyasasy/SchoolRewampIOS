@@ -30,11 +30,11 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
     var sections: [SectionList]?
     var boycount : String?
     var girlscount : String?
-    let Section = "Section "
-    let Boys  = "Boys : "
-    let Girls  = "Girls : "
-    let Unspecified  = "Unspecified : "
-    let TotalStudents  = "Total Students"
+    let Section = "Section".translated()
+    let Boys  = "Boys".translated()
+    let Girls  = "Girls".translated()
+    let Unspecified  = "Unspecified".translated()
+    let TotalStudents  = "Total Students".translated()
     
     
     override func awakeFromNib() {
@@ -86,23 +86,23 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
             return UICollectionViewCell()
         }
         cell.layer.cornerRadius = 10
-        cell.standardName.text = Section + (section.name ?? "")
+        cell.standardName.text = Section + " " + (section.name ?? "")
         cell.standardName.setFont(style: .body, size: FontSize.TitleSize)
         // Boys
         setTwoPartAttributedText(label: cell.boysCountLbl,
-                                 firstText: Boys,
+                                 firstText: Boys + " : ",
                                  firstColor: .darkGray,
                                  secondText: "\(section.boys_count ?? "")",
                                  secondColor: .black)
         // Girls
         setTwoPartAttributedText(label: cell.girlsCountLbl,
-                                 firstText: Girls,
+                                 firstText: Girls + " : ",
                                  firstColor: .darkGray,
                                  secondText: "\(section.girls_count ?? "")",
                                  secondColor: .black)
         // Others
         setTwoPartAttributedText(label: cell.otersCountLbl,
-                                 firstText: Unspecified,
+                                 firstText: Unspecified + " : ",
                                  firstColor: .darkGray,
                                  secondText: "\(section.others_count ?? "0")",
                                  secondColor: .black)

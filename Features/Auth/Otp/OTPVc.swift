@@ -21,7 +21,7 @@ class OTPVc: UIViewController {
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var ResendLbl: UILabel!
     @IBOutlet weak var DidnotReciveOtpLbl: UILabel!
-    @IBOutlet weak var callUsLbl: UILabel!
+    @IBOutlet weak var callUsLbl: LocalizationLabel!
     
     var countdownTimer: Timer?
     var remainingTime = 30
@@ -34,6 +34,8 @@ class OTPVc: UIViewController {
     var pageType : Int?
     var otpContent:String?
     var didnotReciveMessage: String?
+    let Didnt_receive_the_verification_code = "Didn't receive a Verification code?".translated()
+    let resendText = "Resend".translated()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -184,15 +186,16 @@ class OTPVc: UIViewController {
     }
     
     func updateLabelWithTime() {
-        let text = "Didn’t receive the verification code? 00:\(String(format: "%02d", remainingTime))"
+       
+        let text = "\(Didnt_receive_the_verification_code) 00:\(String(format: "%02d", remainingTime))"
         let attributedText = NSMutableAttributedString(string: text)
         ResendLbl.attributedText = attributedText
     }
     
     func showResend() {
-        let text = "Didn’t receive the verification code? Resend"
+        let text = "\(Didnt_receive_the_verification_code) \(resendText)"
         let attributed = NSMutableAttributedString(string: text)
-        let resendRange = (text as NSString).range(of: "Resend")
+        let resendRange = (text as NSString).range(of: resendText)
         attributed.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: resendRange)
         attributed.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: resendRange)
         
@@ -204,7 +207,7 @@ class OTPVc: UIViewController {
     @objc func labelTapped(_ gesture: UITapGestureRecognizer) {
         guard let label = gesture.view as? UILabel,
               let text = label.attributedText?.string else { return }
-        let resendRange = (text as NSString).range(of: "Resend")
+        let resendRange = (text as NSString).range(of: resendText)
         if resendRange.location == NSNotFound { return }
         let tapLocation = gesture.location(in: label)
         let textStorage = NSTextStorage(attributedString: label.attributedText!)
@@ -517,18 +520,18 @@ extension OTPVc : UITextFieldDelegate{
     }
     func showAutoFillAlert() {
         let alert = UIAlertController(
-            title: "Enable Auto-Fill",
-            message: "To automatically fill your OTP, please enable Auto-Fill in Settings:\n\nSettings → Passwords & Accounts → AutoFill Passwords",
+            title: "Enable Auto-Fill".translated(),
+            message: "To automatically fill your OTP, please enable Auto-Fill in Settings:\n\nSettings → Passwords & Accounts → AutoFill Passwords".translated(),
             preferredStyle: .alert
         )
         
-        alert.addAction(UIAlertAction(title: "Open Settings", style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "Open Settings".translated(), style: .default, handler: { _ in
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
         }))
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil))
         
         DispatchQueue.main.async {
             UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)

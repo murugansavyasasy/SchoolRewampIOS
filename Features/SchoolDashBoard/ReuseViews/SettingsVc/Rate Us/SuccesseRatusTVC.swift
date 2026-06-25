@@ -21,6 +21,10 @@ class SuccesseRatusTVC: UITableViewCell {
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 3.3) {
 //            self.imgView.image = nil
 //        }
+        
+        ThankyouLbl.text = "Thank You".translated()
+        AppreciateLbl.text = "We appreciate your feedback! Your rating helps us improve.".translated()
+        
         DispatchQueue.main.async { [self] in
             animationView = LottieAnimationView(name: "done") // json name
             animationView.frame = imgView.bounds
