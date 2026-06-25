@@ -186,7 +186,7 @@
 "url" = "URL";
 "type" = "प्रकार";
 "pdf" = "PDF";
-"audio" = "ऑडियो";
+"Audio" = "ऑडियो";
 "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked." = "दिन की उपस्थिति दर्ज करने के लिए Punch बटन टैप करें। आपकी उपस्थिति सफलतापूर्वक दर्ज होने के बाद एक पुष्टिकरण संदेश दिखाई देगा।";
 "Note: You are outside the institute's boundary. You will not be able to mark your attendance.\n\nPlease try again when you are within the designated area." = "नोट: आप संस्थान की सीमा के बाहर हैं। आप अपनी उपस्थिति दर्ज नहीं कर पाएँगे।\n\nकृपया निर्दिष्ट क्षेत्र के भीतर आने पर पुन: प्रयास करें।";
 "Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting." = "उपस्थिति केवल तभी दर्ज होगी जब उपयोगकर्ता संस्थान के निर्दिष्ट क्षेत्र में होंगे—इसलिए सटीक स्थान सेटिंग्स महत्वपूर्ण हैं। कृपया जमा करने से पहले स्थान पुनः जांचें।";
@@ -296,6 +296,13 @@
 "Pending" = "लंबित";
 "My Submission" = "मेरा प्रस्तुतिकरण";
 "START" = "शुरू करें";
+"Due Date" = "अंतिम तिथि";
+"Task Details" = "कार्य विवरण";
+"Submitted Students" = "जमा करने वाले छात्र";
+"Submitted" = "जमा";
+"Almost Complete!" = "लगभग पूरा हो गया!";
+"🖼 Files" = "🖼 फ़ाइलें";
+"Add Description" = "विवरण जोड़ें";
 
 // MARK: Dashboard
 "discussion" = "चर्चा";
@@ -308,7 +315,7 @@
 "university" = "विश्वविद्यालय";
 "support" = "समर्थन";
 "Video" = "वीडियो";
-
+"Recording" = "रिकॉर्डिंग";
 "Communication" = "संचार";
 "Image/Pdf" = "छवि/पीडीएफ";
 "Video Upload" = "वीडियो अपलोड";

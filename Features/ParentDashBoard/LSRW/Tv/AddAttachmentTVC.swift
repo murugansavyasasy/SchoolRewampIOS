@@ -41,8 +41,9 @@ class AddAttachmentTVC: UITableViewCell,
         super.awakeFromNib()
         descriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         addAttachmentLbl.setFont(style: .body, size: FontSize.BodySize)
-        descriptionLbl.setRequiredText(CommonStringFile.addDescription)
-        addAttachmentLbl.setRequiredText("   \(CommonStringFile.Add_attachment)")
+        descriptionLbl.setRequiredText(CommonStringFile.addDescription.translated())
+        addAttachmentLbl.setRequiredText("   \(CommonStringFile.Add_attachment.translated())")
+        descriptionTXT.placeholder = "Description".translated()
         setupCollectionView()
     }
     
@@ -135,7 +136,7 @@ class AddAttachmentTVC: UITableViewCell,
     }
     
     // MARK: - Stop All Audio
-   func stopAllAudioPlayback() {
+    func stopAllAudioPlayback() {
         guard let collectionView = addAttachmentView.imageCollectionview else { return }
         
         for cell in collectionView.visibleCells {
@@ -262,7 +263,7 @@ class AddAttachmentTVC: UITableViewCell,
                 cell.TrashIcon.isHidden = false
                 cell.TrashIcon.isUserInteractionEnabled = true
             }
-
+            
             cell.audioDelegate = self
             cell.delegate = self
             cell.cellIndex = indexPath.item - 1
@@ -298,7 +299,7 @@ class AddAttachmentTVC: UITableViewCell,
     // MARK: - Delete Delegate
     func deleteImage(index: Int) {
         guard index < attachments.count else { return }
-
+        
         // Stop playback if audio cell is visible
         if let collectionView = addAttachmentView.imageCollectionview {
             let indexPath = IndexPath(item: index + 1, section: 0) // +1 for add button
@@ -306,42 +307,42 @@ class AddAttachmentTVC: UITableViewCell,
                 audioCell.stopPlayback()
             }
         }
-
+        
         // Delete local audio file
         if let urlStr = attachments[index].imageURL {
             deleteAudioFile(urlString: urlStr)
             removeTempRecording(urlString: urlStr)
         }
-
+        
         attachments.remove(at: index)
         reloadAttachments()
     }
-
+    
     func removeTempRecording(urlString: String) {
         var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
-
+        
         if let idx = list.firstIndex(of: urlString) {
             list.remove(at: idx)
             UserDefaults.standard.set(list, forKey: tempKey)
         }
     }
-
+    
     private func deleteAudioFile(urlString: String) {
         let fileURL: URL
-
+        
         if urlString.hasPrefix("file://") {
             let path = urlString.replacingOccurrences(of: "file://", with: "")
             fileURL = URL(fileURLWithPath: path)
-
+            
         } else if urlString.hasPrefix("/") {
             // plain local path
             fileURL = URL(fileURLWithPath: urlString)
-
+            
         } else if let url = URL(string: urlString),
                   let scheme = url.scheme,
                   scheme == "http" || scheme == "https" {
             return
-
+            
         } else {
             return
         }
@@ -353,8 +354,8 @@ class AddAttachmentTVC: UITableViewCell,
             }
         }
     }
-
-
+    
+    
     // MARK: - Selection
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -444,7 +445,7 @@ class AddAttachmentTVC: UITableViewCell,
             ("Document".translated(), { [weak self] in self?.handlePDFSelection() }),
             ("Recording".translated(), { self.delegate?.backtohome(type: "Recording") }),
             ("Audio".translated(), { [weak self] in self?.audio() }),
-            ("Video", { [weak self] in self?.VideoPick() })
+            ("Video".translated(), { [weak self] in self?.VideoPick() })
         ]
         
         options.forEach { title, handler in
@@ -473,7 +474,7 @@ class AddAttachmentTVC: UITableViewCell,
         let limit = max(0, maxAttachments - attachments.count)
         guard limit > 0 else {
             let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: vc)
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit.translated(), on: vc)
             return
         }
         PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: limit), from: vc)
@@ -483,7 +484,7 @@ class AddAttachmentTVC: UITableViewCell,
         guard let vc = getCurrentViewController() else { return }
         guard attachments.count < maxAttachments else {
             let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: vc)
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit.translated(), on: vc)
             return
         }
         PhotoPickerManager.shared.presentPicker(ofType: .camera, from: vc)
@@ -497,7 +498,7 @@ class AddAttachmentTVC: UITableViewCell,
         let remaining = max(0, maxAttachments - attachments.count)
         guard remaining > 0 else {
             let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: vc)
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit.translated(), on: vc)
             return
         }
         PhotoPickerManager.shared.limiSelection = remaining
@@ -510,9 +511,9 @@ class AddAttachmentTVC: UITableViewCell,
     }
     func documentPicker(_ controller: UIDocumentPickerViewController,
                         didPickDocumentsAt urls: [URL]) {
-
+        
         guard let fileURL = urls.first else { return }
-
+        
         // Allow external file access
         guard fileURL.startAccessingSecurityScopedResource() else {
             return
@@ -523,10 +524,10 @@ class AddAttachmentTVC: UITableViewCell,
             imageURL: fileURL.path,
             fileType: CommonStringFile.audio
         ))
-
+        
         reloadAttachments()
     }
-
+    
     // MARK: - Current VC
     func getCurrentViewController() -> UIViewController? {
         UIApplication.shared.connectedScenes

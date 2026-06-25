@@ -152,7 +152,7 @@
 "url" = "இணைப்பு";
 "type" = "வகை";
 "pdf" = "PDF";
-"audio" = "ஒலி";
+"Audio" = "ஒலி";
 "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked." = "இன்றைய வருகையை பதிவு செய்ய 'Punch' பொத்தானை தட்டவும். உங்கள் வருகை வெற்றிகரமாக பதிவு செய்யப்பட்டதும் உறுதிப்படுத்தல் செய்தி தோன்றும்.";
 "Note: You are outside the institute's boundary. You will not be able to mark your attendance.\n\nPlease try again when you are within the designated area." = "குறிப்பு: நீங்கள் கல்வி நிறுவனத்தின் எல்லைக்கு வெளியே உள்ளீர்கள். நீங்கள் வருகையை பதிவு செய்ய முடியாது.\n\nகுறிப்பிட்ட பகுதியுக்குள் வந்த பிறகு மீண்டும் முயற்சிக்கவும்.";
 "Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting." = "பயனர்கள் கல்வி நிறுவனத்தின் குறிப்பிடப்பட்ட பகுதியில் இருக்கும்போது மட்டுமே வருகை பதிவு செய்யப்படும் என்பதற்காக துல்லியமான இட அமைப்புகள் அவசியம். சமர்ப்பிக்கும் முன் இடத்தை மறுபடியும் சரிபார்க்கவும்.";
@@ -259,9 +259,14 @@
 "All" = "அனைத்தும்";
 "Completed" = "முடிந்தது";
 "Pending" = "நிலுவையில்";
-
-
-
+"Due Date" = "கடைசி தேதி";
+"Task Details" = "பணி விவரங்கள்";
+"Submitted Students" = "சமர்ப்பித்த மாணவர்கள்";
+"Submitted" = "சமர்ப்பிக்கப்பட்டது";
+"🖼 Files" = "🖼 கோப்புகள்";
+"Almost Complete!" = "கிட்டத்தட்ட முடிந்தது!";
+"Add Description" = "விளக்கத்தைச் சேர்க்கவும்";
+"Recording" = "பதிவு";
 // MARK: Settings page
 "general" = "பொது";
 "notifications" = "அறிவிப்புகள்";

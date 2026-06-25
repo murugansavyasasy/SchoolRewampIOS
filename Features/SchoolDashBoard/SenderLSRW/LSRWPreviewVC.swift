@@ -114,7 +114,7 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             }
             cell.standerdScection?.text = "\(student.standard ?? "") - \(student.section ?? "")"
             let isNotSubmitted = student.submit_status == "NOTSUBMITTED"
-            let statusText = isNotSubmitted ? "Pending" : "Submitted"
+            let statusText = isNotSubmitted ? "Pending".translated() : "Submitted".translated()
             let statusColor = isNotSubmitted ? UIColor.brown : UIColor.systemGreen
             cell.statusView.backgroundColor = isNotSubmitted ? UIColor.systemGray5 : UIColor.systemGray6
             cell.statusView.layer.cornerRadius = 8
@@ -142,10 +142,10 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             
             if let submittedOn = lastSubmittedOn, !submittedOn.isEmpty {
                 date = submittedOn
-                txt = "Submitted"
+                txt = "Submitted".translated()
             } else {
                 date = "\(report?.created_on ?? "")"
-                txt = "Due Date"
+                txt = "Due Date".translated()
             }
             
             cell.submitDate.text = "\(txt): \(ConvertDateStringSmart(date ?? "",toFormat: "dd MMM yyyy h.mm a"))"
@@ -164,9 +164,9 @@ class LSRWPreviewVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
-            return "Task Details:"
+            return "\("Task Details".translated()):"
         case 1:
-            return "Submitted Students"
+            return "Submitted Students".translated()
         default:
             return nil
         }

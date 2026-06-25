@@ -128,7 +128,7 @@ class ViewLessonVC: UIViewController, SelectedId {
                     }else {
                         self.ViewLessonData = []
                         self.FilterCV.isHidden = true
-                        self.NoDataLbl.text = success.message
+                        self.NoDataLbl.text = success.message.translated()
                         self.NoDataImg.isHidden = false
                         self.NoDataLbl.isHidden = false
                         self.searchBtnName.isHidden = !success.status
@@ -194,20 +194,20 @@ class ViewLessonVC: UIViewController, SelectedId {
                     guard let self = self else{return}
                     switch result{
                     case .success(let success):
-                        let title = success.status == true ? AlertstringFile.Success : AlertstringFile.Failed
+                        let title = success.status == true ? AlertstringFile.Success.translated() : AlertstringFile.Failed.translated()
                         if success.status == true {
-                            CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self, okAction: {
+                            CustomAlert.showAlertWithOkAction(title: title.translated(), message: success.message?.translated() ?? "", on: self, okAction: {
                                 self.ViewLessonData?.removeAll{$0.particular_id == particularID}
                                 self.FilteredData?.removeAll{$0.particular_id == particularID}
                                 self.searchData?.removeAll{$0.particular_id == particularID}
                                 self.TableView.reloadData()
                             })
                         }else {
-                            CustomAlert().showAlert(title: title, message: success.message ?? "", on: self)
+                            CustomAlert().showAlert(title: title.translated(), message: success.message?.translated() ?? "", on: self)
                         }
                         
                     case .failure(let error):
-                        CustomAlert().showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
+                        CustomAlert().showAlert(title: AlertstringFile.Failed.translated(), message: error.localizedDescription.translated(), on: self)
                     }
                 }
             }

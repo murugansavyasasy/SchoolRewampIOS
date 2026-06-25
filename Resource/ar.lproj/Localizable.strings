@@ -136,7 +136,7 @@
 "url" = "الرابط";
 "type" = "النوع";
 "pdf" = "PDF";
-"audio" = "صوت";
+"Audio" = "صوت";
 "No Data Found!" = "لا توجد بيانات!";
 "Notice Active Period" = "فترة نشاط الإشعار";
 "All" = "الكل";
@@ -234,7 +234,14 @@
 "Completed" = "مكتمل";
 "Pending" = "قيد الانتظار";
 "START" = "ابدأ";
-
+"Due Date" = "تاريخ الاستحقاق";
+"Task Details" = "تفاصيل المهمة";
+"Submitted Students" = "الطلاب الذين قاموا بالتسليم";
+"Submitted" = "تم التسليم";
+"🖼 Files" = "🖼 الملفات";  
+"Almost Complete!" = "اكتمل تقريبًا!";
+"Add Description" = "إضافة وصف";
+"Recording" = "التسجيل";
 // MARK: Settings page
 "general" = "عام";
 "notifications" = "الإشعارات";

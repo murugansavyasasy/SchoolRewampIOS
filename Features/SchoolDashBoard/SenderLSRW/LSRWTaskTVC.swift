@@ -140,7 +140,9 @@ class LSRWTaskTVC: UITableViewCell, SelectedId, UIPopoverPresentationControllerD
         personAttachment.bounds = CGRect(x: 0, y: -2, width: 16, height: 16)
         
         let submittedAttrString = NSMutableAttributedString(attachment: personAttachment)
-        submittedAttrString.append(NSAttributedString(string: " \(task.submitted_average ?? "") submitted"))
+        let submittedAverage = task.submitted_average ?? ""
+        let text = "\(submittedAverage) \("Submitted".translated())"
+        submittedAttrString.append(NSAttributedString(string: text))
         submitedCountLbl.attributedText = submittedAttrString
         submitedCountLbl.textColor = .secondaryLabel
         if let type = task.activity_type{
