@@ -38,11 +38,11 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         CancelBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         UpdateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         if isCreate{
-            UpdateBtn.setTitle(MenuStringFile.Create, for: .normal)
-            BackBtn.configureAsBackButton(firstLine: LessonplanStringFile.createLessonPlan, secondLine: staffDetails?.school_name ?? "")
+            UpdateBtn.setTitle(MenuStringFile.Create.translated(), for: .normal)
+            BackBtn.configureAsBackButton(firstLine: LessonplanStringFile.createLessonPlan.translated(), secondLine: staffDetails?.school_name ?? "")
         }else{
-            UpdateBtn.setTitle(MenuStringFile.Update, for: .normal)
-            BackBtn.configureAsBackButton(firstLine: LessonplanStringFile.editLessonPlan, secondLine: staffDetails?.school_name ?? "")
+            UpdateBtn.setTitle(MenuStringFile.Update.translated(), for: .normal)
+            BackBtn.configureAsBackButton(firstLine: LessonplanStringFile.editLessonPlan.translated(), secondLine: staffDetails?.school_name ?? "")
         }
         Tableview.showsVerticalScrollIndicator = false
         Tableview.showsHorizontalScrollIndicator = false
@@ -167,15 +167,15 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                                               LessonPlanAPIKeys.menuId: Menu_id.staffSelectedMenuId]
                                 paketApiCall(params:parms)
                             }
-                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: Success.message ?? "", on: self, okAction: {
+                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success.translated(), message: Success.message?.translated() ?? "", on: self, okAction: {
                                 self.dismiss(animated: true)
                             })
                         }else {
-                            self.alert.showAlert(title: AlertstringFile.Failed, message:Success.message ?? "", on: self)
+                            self.alert.showAlert(title: AlertstringFile.Failed.translated(), message:Success.message?.translated() ?? "", on: self)
                         }
                         
                     case .failure(let error):
-                        self.alert.showAlert(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
+                        self.alert.showAlert(title: AlertstringFile.Failed.translated(), message: error.localizedDescription.translated(), on: self)
                     }
                 }
             }
@@ -208,7 +208,7 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     @IBAction func UpdateAct(_ sender: Any) {
-        alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_update_Lesson, actionLbl1: AlertstringFile.OK, actionLbl2: AlertstringFile.Cancel, on: self, onOk: {
+        alert.showAlertCancel(title: AlertstringFile.Confirm.translated(), message: AlertstringFile.Are_you_sure_you_want_to_update_Lesson.translated(), actionLbl1: AlertstringFile.OK.translated(), actionLbl2: AlertstringFile.Cancel.translated(), on: self, onOk: {
             self.LessonPlan_Update_Api()
         }, onNo: {
             

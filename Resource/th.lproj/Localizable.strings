@@ -151,7 +151,7 @@
 "url" = "URL";
 "type" = "ประเภท";
 "pdf" = "PDF";
-"audio" = "เสียง";
+"Audio" = "เสียง";
 "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked." = "แตะปุ่ม Punch เพื่อบันทึกการเข้าร่วมของคุณในวันนี้ ข้อความยืนยันจะปรากฏเมื่อการเข้าร่วมของคุณถูกบันทึกเรียบร้อยแล้ว";
 "Note: You are outside the institute's boundary. You will not be able to mark your attendance.\n\nPlease try again when you are within the designated area." = "หมายเหตุ: คุณอยู่นอกเขตของสถาบัน คุณจะไม่สามารถบันทึกการเข้าร่วมได้\n\nกรุณาลองอีกครั้งเมื่อคุณอยู่ภายในพื้นที่ที่กำหนด";
 "Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting." = "การตั้งค่าตำแหน่งที่แม่นยำมีความสำคัญเพื่อให้การเข้าร่วมถูกบันทึกเฉพาะเมื่อผู้ใช้ อยู่ภายในพื้นที่ที่กำหนดของสถาบัน กรุณาตรวจสอบตำแหน่งอีกครั้งก่อนส่ง";
@@ -260,9 +260,14 @@
 "All" = "ทั้งหมด";
 "Completed" = "เสร็จสมบูรณ์";
 "Pending" = "รอดำเนินการ";
-
-
-
+"Due Date" = "วันครบกำหนด";
+"Task Details" = "รายละเอียดงาน";
+"Submitted Students" = "นักเรียนที่ส่งแล้ว";
+"Submitted" = "ส่งแล้ว";
+"🖼 Files" = "🖼 ไฟล์";
+"Almost Complete!" = "เกือบเสร็จสมบูรณ์แล้ว!";
+"Add Description" = "เพิ่มคำอธิบาย";
+"Recording" = "การบันทึก";
 // MARK: settings page
 "general" = "ทั่วไป";
 "notifications" = "การแจ้งเตือน";

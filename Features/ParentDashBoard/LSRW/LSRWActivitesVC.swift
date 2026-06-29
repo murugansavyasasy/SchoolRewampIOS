@@ -304,24 +304,24 @@ extension LSRWActivitesVC: UITableViewDataSource, UITableViewDelegate {
         let isAttachmentEmpty = attachments.isEmpty
         let isDescriptionEmpty = (descriptionString ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         if isAttachmentEmpty && isDescriptionEmpty {
-            alert.showAlert(title: "", message: "Please add attachment and description", on: self)
+            alert.showAlert(title: "", message: "Please add attachment and description".translated(), on: self)
             return
         }
         
         if isAttachmentEmpty {
-            alert.showAlert(title: "", message: "Please add attachment", on: self)
+            alert.showAlert(title: "", message: "Please add attachment".translated(), on: self)
             return
         }
         
         if isDescriptionEmpty {
-            alert.showAlert(title: "", message: "Please enter description", on: self)
+            alert.showAlert(title: "", message: "Please enter description".translated(), on: self)
             return
         }
         alert.showAlertCancel(
-            title: "Confirm Submission",
-            message: "Are you sure you want to submit this task?",
-            actionLbl1: "Submit",
-            actionLbl2: "Cancel",
+            title: "Confirm Submission".translated(),
+            message: "Are you sure you want to submit this task?".translated(),
+            actionLbl1: "Submit".translated(),
+            actionLbl2: "Cancel".translated(),
             on: self
         ) {
            
@@ -622,7 +622,7 @@ class SubmitFooterCell: UITableViewCell {
     
     let submitButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Submit", for: .normal)
+        button.setTitle("Submit".translated(), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .backGroundClr
         button.layer.cornerRadius = 10
