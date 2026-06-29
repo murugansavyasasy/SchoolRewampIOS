@@ -320,6 +320,7 @@ enum DotStatus {
 extension Date {
     func getMonthName() -> String {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "MMM yyyy"
         return formatter.string(from: self)
     }

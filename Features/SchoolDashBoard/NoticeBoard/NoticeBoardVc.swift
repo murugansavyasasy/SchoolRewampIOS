@@ -237,6 +237,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     
     private func getCurrentDateString() -> String {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: Date())
     }

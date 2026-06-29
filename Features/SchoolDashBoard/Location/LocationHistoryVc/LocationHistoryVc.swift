@@ -86,6 +86,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     
     func setupInitialData() {
         let currentDate = Date()
+        dateFormatter.locale = LocaleManager.shared.apiLocale
         dateFormatter.dateFormat = "yyyy-MM-dd"
         display_date = dateFormatter.string(from: currentDate)
         
@@ -393,10 +394,9 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     
     // MARK: - Helper Methods
     func getMonthNames(for selectedYear: String) -> [String] {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let localeID = normalizedLocaleIdentifier(for: savedCode)
+        
         let monthFormatter = DateFormatter()
-        monthFormatter.locale = Locale(identifier: localeID)
+        monthFormatter.locale = LocaleManager.shared.displayLocale
         monthFormatter.dateFormat = "MMMM"
 
         let currentYear = Calendar.current.component(.year, from: Date())

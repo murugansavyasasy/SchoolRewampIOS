@@ -21,18 +21,22 @@ class AttendanceHeaderView: UITableViewHeaderFooterView {
 
     func configure(dateString: String, stat: DayStat?) {
         let df = DateFormatter()
+        df.locale = LocaleManager.shared.apiLocale
         df.dateFormat = "dd-MM-yyyy"
         
         if let d = df.date(from: dateString) {
             let dayFormat = DateFormatter()
+            dayFormat.locale = LocaleManager.shared.apiLocale
             dayFormat.dateFormat = "dd"
             dayLabel.text = dayFormat.string(from: d)
             
             let wkFormat = DateFormatter()
+            wkFormat.locale = LocaleManager.shared.apiLocale
             wkFormat.dateFormat = "E"
             dayOfWeekLabel.text = wkFormat.string(from: d)
             
             let fullFormat = DateFormatter()
+            fullFormat.locale = LocaleManager.shared.apiLocale
             fullFormat.dateFormat = "dd MMMM yyyy"
             fullDateLabel.text = fullFormat.string(from: d)
         } else {

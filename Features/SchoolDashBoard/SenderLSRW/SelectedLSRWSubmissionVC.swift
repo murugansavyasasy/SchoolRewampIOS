@@ -46,6 +46,7 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
         
         let date = Date()
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = LocaleManager.shared.displayLocale
         dateFormatter.dateFormat = "MMMM"
         monthId = Calendar.current.component(.month, from: date)
         monthLbl.text = dateFormatter.string(from: date)
@@ -221,6 +222,7 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
 
     func weekOfMonth(from dateString: String, format: String = "dd-MM-yyyy") -> Int? {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.displayLocale
         formatter.dateFormat = format
         formatter.timeZone = .current
         

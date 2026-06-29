@@ -31,7 +31,6 @@ class LocationViewController: UIViewController {
     let dropDown = DropDown()
     var selectedDictionary = NSDictionary()
     var monthNames: [String] = []
-    let dateFormatter = DateFormatter()
     var device = UIDevice.current.name
     var punch_type = 1
     var secureId  = ""

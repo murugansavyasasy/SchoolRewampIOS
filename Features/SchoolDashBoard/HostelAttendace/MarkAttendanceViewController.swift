@@ -168,6 +168,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         markAllButton.layer.cornerRadius = 16
       
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = DateOutPut.EE_MMM_dd_yyyy
         // current date string in dd-MM-yyyy
         let currentDateString = formatter.string(from: Date())
@@ -175,6 +176,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         calanderFulView.layer.cornerRadius = 10
         calendar.delegate = self
         calendar.dataSource = self
+        calendar.locale = LocaleManager.shared.apiLocale
         calendar.appearance.headerTitleColor = .systemBlue
         calendar.appearance.weekdayTextColor = .darkGray
         calendar.appearance.selectionColor = .primery
@@ -454,8 +456,10 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         let filterFormatter = DateFormatter()
+        filterFormatter.locale = LocaleManager.shared.apiLocale
         filterFormatter.dateFormat = DateInputs.dd_MM_yyyy
         let showFormatter = DateFormatter()
+        showFormatter.locale = LocaleManager.shared.apiLocale
         showFormatter.dateFormat = DateOutPut.EE_MMM_dd_yyyy
         let selectedDateForFilter = filterFormatter.string(from: date)
         let selectedDateForLabel = showFormatter.string(from: date)
@@ -508,6 +512,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         if Calendar.current.isDate(newDate, equalTo: today, toGranularity: .month) {
             calendar.select(today)
             let showFormatter = DateFormatter()
+                showFormatter.locale = LocaleManager.shared.apiLocale
                 showFormatter.dateFormat = DateOutPut.EE_MMM_dd_yyyy
             let selectedDateForLabel = showFormatter.string(from: today)
             dateLbl.text = selectedDateForLabel
@@ -519,12 +524,14 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     
     func updateMonthLabel() {
         let formatter = DateFormatter()
-        formatter.dateFormat = DateInputs.MMMM_yyyy 
+        formatter.locale = LocaleManager.shared.apiLocale
+        formatter.dateFormat = DateInputs.MMMM_yyyy
         mothLbl.text = formatter.string(from: calendar.currentPage)
         let date = calendar.currentPage
         guard let text = mothLbl.text else { return }
         // DateFormatter to read "MMMM yyyy"
         let formatter2 = DateFormatter()
+        formatter2.locale = LocaleManager.shared.apiLocale
         formatter2.dateFormat = "MMMM yyyy"
         formatter2.locale = Locale(identifier: "en_US_POSIX")
 

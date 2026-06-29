@@ -610,6 +610,7 @@ extension UIView {
 
 extension DateFormatter {
     func convertDate(_ dateString: String, fromFormat: String = "dd-MM-yyyy", toFormat: String = "dd MMM yyyy") -> String? {
+        self.locale = LocaleManager.shared.apiLocale
         self.dateFormat = fromFormat
         
         if let date = self.date(from: dateString) {
@@ -660,10 +661,9 @@ func getFileIconName(for fileURL: URL) -> String {
 
 extension String {
     func convertToTargetDateFormat(inputFormat: String? = nil) -> String? {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let localeID = normalizedLocaleIdentifier(for: savedCode)
+       
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: localeID)
+        dateFormatter.locale = LocaleManager.shared.displayLocale
         
         let possibleFormats = [
             "yyyy-MM-dd",
@@ -702,6 +702,7 @@ extension String {
 }
 func parseDate(from dateString: String, format: String = "dd-MM-yyyy") -> Date? {
     let formatter = DateFormatter()
+    formatter.locale = LocaleManager.shared.apiLocale
     formatter.dateFormat = format
     formatter.timeZone = .current
     return formatter.date(from: dateString)
@@ -718,6 +719,7 @@ func getDateRangeLabel(from fromDate: Date, to toDate: Date) -> String {
     // Ensure range ends today
     guard toDay == todayDay else {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateStyle = .medium
         return "\(formatter.string(from: fromDate)) - \(formatter.string(from: toDate))"
     }
@@ -743,8 +745,6 @@ func getDateRangeLabel(from fromDate: Date, to toDate: Date) -> String {
 }
 
 func convertDate(_ dateString: String, toFormat: String = "dd-MM-yyyy") -> String? {
-    let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-    let localeID = normalizedLocaleIdentifier(for: savedCode)
     
     let possibleFormats = [
         "yyyy-MM-dd",
@@ -759,14 +759,14 @@ func convertDate(_ dateString: String, toFormat: String = "dd-MM-yyyy") -> Strin
     ]
     
     let dateFormatter = DateFormatter()
-    dateFormatter.locale = Locale(identifier: localeID)
+    dateFormatter.locale = LocaleManager.shared.displayLocale
     
     for format in possibleFormats {
         dateFormatter.dateFormat = format
         if let date = dateFormatter.date(from: dateString) {
             
             // Output locale based on selected language
-            dateFormatter.locale = Locale(identifier: localeID)
+            dateFormatter.locale = LocaleManager.shared.displayLocale
             dateFormatter.dateFormat = toFormat
             return dateFormatter.string(from: date)
         }
@@ -851,18 +851,21 @@ class DateFormatterHelper {
     
     private let inputFormatter: DateFormatter = {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "dd-MM-yyyy hh:mm a"
         return formatter
     }()
     
     private let outputDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "dd MMM yyyy"
         return formatter
     }()
     
     private let outputTimeFormatter: DateFormatter = {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "hh:mm a"
         return formatter
     }()
@@ -881,6 +884,7 @@ class DateFormatterHelper {
 }
 func isDueDatePassed(dueDate: String) -> Bool {
     let dateFormatter = DateFormatter()
+    dateFormatter.locale = LocaleManager.shared.apiLocale
     dateFormatter.dateFormat = "dd-MM-yyyy"
     guard let dueDateObject = dateFormatter.date(from: dueDate) else {
         print("Invalid date format")
@@ -1358,4 +1362,26 @@ func showCustomAlertNoDismiss(message: String,from : UIViewController) {
         label.leadingAnchor.constraint(equalTo: alertView.leadingAnchor, constant: 15),
         label.trailingAnchor.constraint(equalTo: alertView.trailingAnchor, constant: -15)
     ])
+}
+
+
+final class LocaleManager {
+
+    static let shared = LocaleManager()
+
+    private init() {}
+
+    var languageCode: String {
+        UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+    }
+
+    /// Locale used throughout the UI.
+    var displayLocale: Locale {
+        Locale(identifier: normalizedLocaleIdentifier(for: "en_US_POSIX"))
+    }
+
+    /// Locale used for API date parsing/formatting.
+    var apiLocale: Locale {
+        Locale(identifier: "en_US_POSIX")
+    }
 }

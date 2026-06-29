@@ -6,9 +6,8 @@ import UIKit
 class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, Datepicker {
     
     func date(date: String) {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
-        let locale = Locale(identifier: normalizedCode)
+        
+        let locale = LocaleManager.shared.displayLocale
         
         let inputFormatter = DateFormatter()
         inputFormatter.locale = locale
@@ -96,11 +95,9 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         applyShadowAndCornerRadius(to: TodateView, cornerRadius: 6)
         Backbtn.applyBackButton()
         norecordLbl.isHidden = true
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
         
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: normalizedCode)
+        dateFormatter.locale = LocaleManager.shared.displayLocale
         dateFormatter.dateFormat = "dd MMM yyyy"
         let formattedDate = dateFormatter.string(from: Date())
         

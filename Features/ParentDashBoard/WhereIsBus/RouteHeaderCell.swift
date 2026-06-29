@@ -211,6 +211,7 @@ class RouteHeaderCell: UITableViewCell, UITableViewDataSource, UITableViewDelega
             button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 11)
             
             let formatter = DateFormatter()
+            formatter.locale = LocaleManager.shared.apiLocale
             formatter.dateFormat = "EEEE"
 
             let currentDay = formatter.string(from: Date()).uppercased()

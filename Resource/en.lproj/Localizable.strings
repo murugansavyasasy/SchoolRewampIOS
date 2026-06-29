@@ -1070,7 +1070,7 @@
 "Please select or enter a valid duration for the meeting" = "Please select or enter a valid duration for the meeting";
 "Invalid Time" = "Invalid Time";
 "Start time cannot be in the past for today" = "Start time cannot be in the past for today";
-"No available sots Found in the selected date and time" = "No available slots found for the selected date and time";
+"No available slots Found in the selected date and time" = "No available slots found for the selected date and time";
 "Are you sure want to Reopen this slot?" = "Are you sure you want to reopen this slot?";
 "Are you sure want to Cancel this slot?" = "Are you sure you want to cancel this slot?";
 "Open Above Slots" = "Open Above Slots";

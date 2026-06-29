@@ -18,9 +18,8 @@ import AVKit
 class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge, Datepicker, UIPopoverPresentationControllerDelegate {
     
     func date(date: String) {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-            let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
-            let locale = Locale(identifier: normalizedCode)
+        
+            let locale = LocaleManager.shared.displayLocale
 
             let dateFormatter = DateFormatter()
             dateFormatter.locale = locale  // <-- MUST SET THIS
@@ -263,9 +262,8 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     
     // MARK: - Setting Current Date as Initial Date
     func setInitialDate(_ fromDate: String?, _ toDate: String?) {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let localeID = normalizedLocaleIdentifier(for: savedCode)
-        let locale = Locale(identifier: localeID)
+        
+        let locale = LocaleManager.shared.displayLocale
         let dateFormatter = DateFormatter()
         dateFormatter.locale = locale
         dateFormatter.dateFormat = "dd-MM-yyyy"
@@ -341,6 +339,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         dateSelection = true
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.minimumDate = Date()
+        dateFormatter.locale = LocaleManager.shared.apiLocale
         dateFormatter.dateFormat = DateFormatString.StandardFormat
         vc.dateSelection = 2
         vc.date = fromDateLbl.text
@@ -355,6 +354,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         
         dateSelection = false
         let vc = DatePickerVC(nibName: nil, bundle: nil)
+        dateFormatter.locale = LocaleManager.shared.apiLocale
         dateFormatter.dateFormat = DateFormatString.StandardFormat
         
         // Set minimum to fromDate

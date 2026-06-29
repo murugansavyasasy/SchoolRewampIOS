@@ -163,6 +163,8 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate, UITextFieldDeleg
         if #available(iOS 14.0, *) {
             picker.preferredDatePickerStyle = mode == .date ? .inline : .wheels
         }
+        
+        picker.locale = LocaleManager.shared.apiLocale
 
         textField.inputView = picker
 
@@ -179,6 +181,7 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate, UITextFieldDeleg
     @objc func datePickerChanged(_ sender: UIDatePicker) {
         let formatter = DateFormatter()
         if sender == fromDatePicker {
+            formatter.locale = LocaleManager.shared.apiLocale
             formatter.dateFormat = "MMMM d, yyyy"
             fromDateTextField.text = formatter.string(from: sender.date)
             
@@ -237,9 +240,11 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate, UITextFieldDeleg
     
     func updateTextFields() {
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = LocaleManager.shared.apiLocale
         dateFormatter.dateFormat = "MMMM d, yyyy"
         
         let timeFormatter = DateFormatter()
+        timeFormatter.locale = LocaleManager.shared.apiLocale
         timeFormatter.dateFormat = "hh:mm a"
         
         fromDateTextField.text = dateFormatter.string(from: fromDatePicker.date)

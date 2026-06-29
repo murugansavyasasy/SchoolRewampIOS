@@ -69,8 +69,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     let photoPickManager = PhotoPickerManager.shared
     let AlertMessage = AlertstringFile()
     var isKeyboardVisible = false
-    let dateFormatter = DateFormatter()
-    let timeFormatter = DateFormatter()
     var initialHeight : CGFloat = 60
     var maxHeight : CGFloat = 300
     var attachments: [AttachmentItem] = []
@@ -317,9 +315,8 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     }
     
     func setInitialButtonTitles(date dateString: String?, inputFormat: String = "dd MMM yyyy") {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let localeID = normalizedLocaleIdentifier(for: savedCode)
-        let locale = Locale(identifier: localeID)
+        
+        let locale = LocaleManager.shared.displayLocale
         let parser = DateFormatter()
         parser.locale = Locale(identifier: "en_US_POSIX")
         parser.dateFormat = inputFormat
@@ -391,6 +388,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     func setupTimePicker() {
         timePicker = UIDatePicker()
         timePicker.datePickerMode = .time
+        timePicker.locale = LocaleManager.shared.apiLocale
        
         timePicker.preferredDatePickerStyle = .wheels
         timePicker.backgroundColor = .white
@@ -409,6 +407,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     
     @objc func selectedTime() {
         let timeFormatter = DateFormatter()
+        timeFormatter.locale = LocaleManager.shared.apiLocale
         timeFormatter.timeStyle = .short
         let selectedTime = timePicker.date
         let formattedTime = timeFormatter.string(from: selectedTime)
@@ -442,6 +441,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         guard let selectedDateText = dateLbl.text else { return }
         
         let df = DateFormatter()
+        df.locale = LocaleManager.shared.apiLocale
         df.dateFormat = "dd MMM yyyy"
         
         guard let selectedDate = df.date(from: selectedDateText) else { return }

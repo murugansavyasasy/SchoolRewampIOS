@@ -47,7 +47,6 @@ class ReciverAttendanceReportVC: UIViewController {
     
     var childDetails = UserDefaultFileManager.get_child_Details()
     var attendanceReportData : [StudentAttendance]?
-    let dateFormatter = DateFormatter()
     var studentStats: [StudentStatistics]?
     var pushNotiMsg_id : String?
     override func viewDidLoad() {
@@ -125,15 +124,13 @@ class ReciverAttendanceReportVC: UIViewController {
         let today = Date()
         
         DateLbl.attributedText = getDayWithSuffix(from: today)
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let localeID = normalizedLocaleIdentifier(for: savedCode)
         
         let dayFormatter = DateFormatter()
-        dayFormatter.locale = Locale(identifier: localeID)
+        dayFormatter.locale = LocaleManager.shared.displayLocale
         dayFormatter.dateFormat = "EEEE"
         let dayName = dayFormatter.string(from: today)
         let monthFormatter = DateFormatter()
-        monthFormatter.locale = Locale(identifier: localeID)
+        monthFormatter.locale = LocaleManager.shared.displayLocale
         monthFormatter.dateFormat = "LLLL yyyy"
         let monthYear = monthFormatter.string(from: today)
         let fullText = "\(dayName)\n\(monthYear)"

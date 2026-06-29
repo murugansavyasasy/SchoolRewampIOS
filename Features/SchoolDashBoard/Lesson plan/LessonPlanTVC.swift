@@ -106,6 +106,7 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
     /// Convert Date into desired output format
     func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "dd MMM yyyy"  // 👈 unga required format
         return formatter.string(from: date)
     }

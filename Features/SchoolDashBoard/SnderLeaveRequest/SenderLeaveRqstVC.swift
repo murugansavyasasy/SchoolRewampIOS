@@ -279,6 +279,7 @@ class SenderLeaveRqstVC: UIViewController, EditDeleteDelegate, approvalAndReject
                         let newStatus = status ? self.leave_type[0] : self.leave_type[1]
                         // Format current date for updated_on
                         let formatter = DateFormatter()
+                        formatter.locale = LocaleManager.shared.apiLocale
                         formatter.dateFormat = DateInputs.ddMMMyyyyhhmma
                         let formattedDate = formatter.string(from: Date())
                         // ✅ Update SearchLeavetData
@@ -598,11 +599,13 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
     func formatDate(_ dateString: String) -> String {
         
         let inputFormatter = DateFormatter()
+        inputFormatter.locale = LocaleManager.shared.apiLocale
         inputFormatter.dateFormat = "dd-MM-yyyy"
         
         if let date = inputFormatter.date(from: dateString) {
             
             let outputFormatter = DateFormatter()
+            outputFormatter.locale = LocaleManager.shared.apiLocale
             outputFormatter.dateFormat = "MMM dd"
             
             return outputFormatter.string(from: date)
@@ -637,11 +640,10 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
     
     
     func daysBetweenLabel(start: String, end: String) -> String {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let localeID = normalizedLocaleIdentifier(for: savedCode)
+        
         let formatter = DateFormatter()
         formatter.dateFormat = DateInputs.dd_MM_yyyy
-        formatter.locale = Locale(identifier: localeID)
+        formatter.locale = LocaleManager.shared.displayLocale
         guard let fromDate = formatter.date(from: start),
               let toDate = formatter.date(from: end) else {
             return "Invalid date"

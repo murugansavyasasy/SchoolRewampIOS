@@ -21,7 +21,6 @@ class LessonEditTV: UITableViewCell, Datepicker {
     @IBOutlet weak var DropdownLbl: UILabel!
     
     let dropDown = DropDown()
-    var datePicker: UIDatePicker?
     var currentFieldType: String = ""
     weak var tableView: UITableView?
     var fieldID: String = ""

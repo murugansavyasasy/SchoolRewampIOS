@@ -116,13 +116,14 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     // MARK: - Date Generation
     private func generateDates() {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "dd-MM-yyyy"
         EventDate = formatter.string(from: Date())
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let localeID = normalizedLocaleIdentifier(for: savedCode)
         let monthFormatter = DateFormatter(); monthFormatter.dateFormat = "MMM"
-        monthFormatter.locale = Locale(identifier: localeID)
-        let dayFormatter = DateFormatter(); dayFormatter.dateFormat = "dd"
+        monthFormatter.locale = LocaleManager.shared.displayLocale
+        let dayFormatter = DateFormatter()
+        dayFormatter.locale = LocaleManager.shared.apiLocale
+        dayFormatter.dateFormat = "dd"
         let today = Calendar.current.startOfDay(for: Date())
         
         for i in 0..<60 {
@@ -293,6 +294,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     
                     // Map counts into dateComponents
                     let formatter = DateFormatter(); formatter.dateFormat = "dd-MM-yyyy"
+                    formatter.locale = LocaleManager.shared.apiLocale
                     for i in 0..<self.dateComponents.count {
                         let compDate = self.dateComponents[i].date
                         let compDateStr = formatter.string(from: compDate)
@@ -577,6 +579,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         selectedIndex = indexPath
         let selectedDate = dateComponents[indexPath.item].date
         let formatter = DateFormatter(); formatter.dateFormat = "dd-MM-yyyy"
+        formatter.locale = LocaleManager.shared.apiLocale
         EventDate = formatter.string(from: selectedDate)
         getSlotsApi()
         BookSlotBtn.isHidden = true

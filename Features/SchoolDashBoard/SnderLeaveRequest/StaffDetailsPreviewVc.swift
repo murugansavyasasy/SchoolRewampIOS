@@ -233,11 +233,13 @@ class StaffDetailsPreviewVc: UIViewController {
     func formatDate(_ dateString: String) -> String {
         
         let inputFormatter = DateFormatter()
+        inputFormatter.locale = LocaleManager.shared.apiLocale
         inputFormatter.dateFormat = "dd-MM-yyyy"
         
         if let date = inputFormatter.date(from: dateString) {
             
             let outputFormatter = DateFormatter()
+            outputFormatter.locale = LocaleManager.shared.apiLocale
             outputFormatter.dateFormat = "MMM dd"
             
             return outputFormatter.string(from: date)

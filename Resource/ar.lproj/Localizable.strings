@@ -1074,7 +1074,7 @@
 "Please select or enter a valid duration for the meeting" = "يرجى اختيار أو إدخال مدة صحيحة للاجتماع";
 "Invalid Time" = "وقت غير صالح";
 "Start time cannot be in the past for today" = "لا يمكن أن يكون وقت البدء لليوم في وقتٍ مضى";
-"No available sots Found in the selected date and time" = "لا توجد مواعيد متاحة في التاريخ والوقت المحددين";
+"No available slots Found in the selected date and time" = "لا توجد مواعيد متاحة في التاريخ والوقت المحددين";
 "Are you sure want to Reopen this slot?" = "هل أنت متأكد من إعادة فتح هذا الموعد؟";
 "Are you sure want to Cancel this slot?" = "هل أنت متأكد من إلغاء هذا الموعد؟";
 "Open Above Slots" = "فتح المواعيد أعلاه";
@@ -1086,3 +1086,10 @@
 "Cancel Meeting" = "إلغاء الاجتماع";
 "Reason for Cancelation" = "سبب الإلغاء";
 "Paste the meeting link here" = "ألصق رابط الاجتماع هنا";
+
+
+//MARK: Flavour strings
+"WELCOME_STRING" = "Welcome to School Chimes";
+"REPORT_BUG_STRING" = "Dear School Chimes Team";
+"TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
+"APP_STORE_ID" = "6758079127";

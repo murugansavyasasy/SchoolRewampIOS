@@ -29,7 +29,6 @@ class StaffWiseAttendaceVC: UIViewController, Datepicker {
     let fromDatePicker = UIDatePicker()
     let toDatePicker = UIDatePicker()
     var staffdetails = UserDefaultFileManager.get_staff_Details()
-    let dateFormatter = DateFormatter()
     var dropDown  = DropDown()
     var staffDetails: [GetStaffDetails]?
     var staffId : String = ""
@@ -114,16 +113,13 @@ class StaffWiseAttendaceVC: UIViewController, Datepicker {
     }
     
     func date(date: String) {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
-        let locale = Locale(identifier: normalizedCode)
         
         let inputFormatter = DateFormatter()
-        inputFormatter.locale = locale
+        inputFormatter.locale = LocaleManager.shared.displayLocale
         inputFormatter.dateFormat = "dd MMM yyyy" // correct format
         
         let outputFormatter = DateFormatter()
-        outputFormatter.locale = locale
+        outputFormatter.locale = LocaleManager.shared.displayLocale
         outputFormatter.dateFormat = "dd MMM yyyy"
         
         guard let parsedDate = inputFormatter.date(from: date) else {
@@ -428,6 +424,7 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
         responseData = response
         
         let df = DateFormatter()
+        df.locale = LocaleManager.shared.apiLocale
         df.dateFormat = "dd-MM-yyyy"
         
         if let allAttd = response.data?.first?.all_attd {
@@ -443,9 +440,6 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
             
             fromDatePicker.date = d
             toDatePicker.date = d
-            
-//            fromDateTextField.text = dateFormatter.string(from: d)
-//            toDateTextField.text = dateFormatter.string(from: d)
         }
         
         hideActivityLoader()

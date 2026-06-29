@@ -76,6 +76,7 @@ class SchedulePopupVC: UIViewController,UITextViewDelegate {
         setupdatePicker()
         if examSchedul?.date == ""{
             let dateFormatter = DateFormatter()
+            dateFormatter.locale = LocaleManager.shared.apiLocale
             dateFormatter.dateFormat = "d MMM yyyy"
             let selectedDate = Date()
             let formattedDate = dateFormatter.string(from: selectedDate)
@@ -206,6 +207,7 @@ class SchedulePopupVC: UIViewController,UITextViewDelegate {
     }
     @objc func doneButtonTapped() {
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = LocaleManager.shared.apiLocale
         dateFormatter.dateFormat = "d MMM yyyy"
         let selectedDate = datePicker.date
         let formattedDate = dateFormatter.string(from: selectedDate)

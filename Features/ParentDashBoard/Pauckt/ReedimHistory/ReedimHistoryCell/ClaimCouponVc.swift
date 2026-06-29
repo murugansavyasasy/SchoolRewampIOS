@@ -83,12 +83,14 @@ class ClaimCouponVc: UIViewController {
         let inputDateString = couponDetails?.expiryDate ?? ""
         // Create a date formatter to parse the input date string
         let inputDateFormatter = DateFormatter()
+        inputDateFormatter.locale = LocaleManager.shared.apiLocale
         inputDateFormatter.dateFormat = "yyyy-MM-dd"
 
         // Convert the string to a Date object
         if let date = inputDateFormatter.date(from: inputDateString) {
          
             let outputDateFormatter = DateFormatter()
+            outputDateFormatter.locale = LocaleManager.shared.apiLocale
             outputDateFormatter.dateFormat = "dd MMMM yyyy" // "date month year" format
             
             let outputDateString = outputDateFormatter.string(from: date)

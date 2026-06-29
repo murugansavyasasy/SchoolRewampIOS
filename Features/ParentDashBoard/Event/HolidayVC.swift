@@ -215,9 +215,8 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }.sorted { ($0.date ?? "") < ($1.date ?? "") }
         formatter.dateFormat = "MMMM yyyy"
         
-        if let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language){
-            formatter.locale = Locale(identifier: language)
-        }
+            formatter.locale = LocaleManager.shared.displayLocale
+        
         
         noHolidayLbl.text = "\("No holidays in".translated()) \(formatter.string(from: currentDate))"
         noHolidayLbl.isHidden = !filteredHolidays.isEmpty
@@ -415,6 +414,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 extension String {
     var dateFromISO8601: Date? {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.date(from: self)
     }
@@ -423,6 +423,7 @@ extension String {
 extension DateFormatter {
     static let yyyyMMdd: DateFormatter = {
         let f = DateFormatter()
+        f.locale = LocaleManager.shared.apiLocale
         f.dateFormat = "yyyy-MM-dd"
         return f
     }()

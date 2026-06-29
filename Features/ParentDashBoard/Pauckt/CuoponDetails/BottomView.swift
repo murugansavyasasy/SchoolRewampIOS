@@ -386,6 +386,7 @@ class BottomView: UIViewController, AddCoupen{
                     if let dateString = firstCoupon.expiry_date {
                         let inputFormatter = DateFormatter()
                         inputFormatter.dateFormat = "yyyy-MM-dd"
+                        inputFormatter.locale = LocaleManager.shared.apiLocale
                         
                         if let date = inputFormatter.date(from: dateString) {
                             let day = Calendar.current.component(.day, from: date)
@@ -399,6 +400,7 @@ class BottomView: UIViewController, AddCoupen{
                             
                             let monthFormatter = DateFormatter()
                             monthFormatter.dateFormat = "MMMM"
+                            monthFormatter.locale = LocaleManager.shared.apiLocale
                             let month = monthFormatter.string(from: date)
                             
                             self.ActiveEpiryDateLbl.text = "Expires on \(day)\(daySuffix) \(month)"

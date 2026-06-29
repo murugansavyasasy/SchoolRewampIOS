@@ -180,6 +180,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         historytable.dataSource = self
         DateSelection.delegate = self
         DateSelection.dataSource = self
+        DateSelection.locale = LocaleManager.shared.apiLocale
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow(_:)),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -290,6 +291,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         ScheduleSelectedDate.removeAll()
         for i in 0..<selectedDates.count {
             let dateFormatter = DateFormatter()
+            dateFormatter.locale = LocaleManager.shared.apiLocale
             dateFormatter.dateStyle = .medium
             let formattedDate = dateFormatter.string(from: selectedDates[i])
             ScheduleSelectedDate.append(formattedDate)
@@ -437,6 +439,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
     }
     func combineDateAndTime(date: Date, timeString: String) -> Date? {
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = LocaleManager.shared.apiLocale
         dateFormatter.dateFormat = "h:mm a" // match your button format (e.g. "2:30 PM")
         if let timeDate = dateFormatter.date(from: timeString) {
             let calendar = Calendar.current
@@ -695,6 +698,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
     
     private func setInitialButtonTitles() {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.timeStyle = .short
         
         let initialFromTime = Date()
@@ -852,6 +856,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         addfile.isHidden = true
         btnplay.setImage(ImageName.playbutton, for: .normal)
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.timeStyle = .short
         messageSendTime.text = "\(formatter.string(from: Date()))"
         getAudioDuration(from: selectedFileURL) { seconds, formatted in
@@ -1073,6 +1078,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
                 voiceRecordedDuration = totalSeconds
             }
             let formatter = DateFormatter()
+            formatter.locale = LocaleManager.shared.apiLocale
             formatter.timeStyle = .short
             messageSendTime.text = "\(formatter.string(from: Date()))"
             playerheight.constant = voiceTiming.text == "00:00" ? 0:60
@@ -1176,6 +1182,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         guard let activeButton = activeButton else { return }
         
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.timeStyle = .short
         
         if activeButton == fromTime {
@@ -1750,6 +1757,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     
     func setupTimePicker() {
         timePicker = UIDatePicker()
+        timePicker.locale = LocaleManager.shared.apiLocale
         timePicker.datePickerMode = .time
         if #available(iOS 13.4, *) {
             timePicker.preferredDatePickerStyle = .wheels
@@ -1852,6 +1860,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     func printCurrentMonth() {
         let currentPage = DateSelection.currentPage
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = LocaleManager.shared.apiLocale
         dateFormatter.dateFormat = "MMMM yyyy" // Format as Month Year (e.g., "November 2024")
         let formattedMonth = dateFormatter.string(from: currentPage)
         monthLbl.text = formattedMonth.translated()
@@ -1873,6 +1882,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         
         let selectedDate = selectedDates[indexPath.item]
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = LocaleManager.shared.apiLocale
         dateFormatter.dateStyle = .medium // You can change this style to your preference
         let formattedDate = dateFormatter.string(from: selectedDate)
         cell.dateLbl.text = formattedDate
@@ -1896,14 +1906,13 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     }
     
     func convertDateStrings(dates: [String]) -> [String] {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let localeID = normalizedLocaleIdentifier(for: savedCode)
         
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "dd MMM yyyy"
-        inputFormatter.locale = Locale(identifier: localeID)
+        inputFormatter.locale = LocaleManager.shared.displayLocale
         
         let outputFormatter = DateFormatter()
+        outputFormatter.locale = LocaleManager.shared.apiLocale
         outputFormatter.dateFormat = "dd-MM-yyyy"
         
         return dates.compactMap { dateString in

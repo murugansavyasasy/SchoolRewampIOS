@@ -20,11 +20,6 @@ class FAQViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Setup back button direction & style
-        let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-//        BackBtn.semanticContentAttribute = language == "ar" ? .forceRightToLeft : .forceLeftToRight
-//        BackBtn.contentHorizontalAlignment = language == "ar" ? .right : .left
-//        BackBtn.imageView?.applyRTLFlip(language == "ar")
         BackBtn.setTitle(MenuTapbar.shared.FAQ, for: .normal)
         BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         

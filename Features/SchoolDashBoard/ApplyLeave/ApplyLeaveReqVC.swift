@@ -110,11 +110,15 @@ class ApplyLeaveReqVC: UIViewController{
             toDatePicker.minimumDate = pastMonthDate  // 👈 Minimum selectable date
         }
         
+        FromDatePicker.locale = LocaleManager.shared.apiLocale
+        toDatePicker.locale = LocaleManager.shared.apiLocale
+        
         setupPlaceholder()
         
         if let leave = editLeaveData{
             
             dateFormatter.dateFormat = "dd MMM yyyy"
+            dateFormatter.locale = LocaleManager.shared.displayLocale
             placeholderLabel.isHidden = !leave.reson.isEmpty
             LeaveTypeBtn.setTitle(leave.LeaveType, for: .normal)
             FromDateBtn.setTitle(leave.fromDate.convertToTargetDateFormat(), for: .normal)
@@ -261,6 +265,7 @@ class ApplyLeaveReqVC: UIViewController{
     @IBAction func ToDateDoneBtn(_ sender: Any) {
         
         dateFormatter.dateFormat = "dd MMM yyyy"
+        dateFormatter.locale = LocaleManager.shared.displayLocale
         // NewToDateLbl.text = dateFormatter.string(from: toDatePicker.date)
         toDate = toDatePicker.date
         let formattedDate = dateFormatter.string(from: toDate!)
@@ -274,6 +279,7 @@ class ApplyLeaveReqVC: UIViewController{
         
         fromDate = FromDatePicker.date
         dateFormatter.dateFormat = "dd MMM yyyy"
+        dateFormatter.locale = LocaleManager.shared.displayLocale
         let formattedDate = dateFormatter.string(from: fromDate!)
         FromDateBtn.setTitle(formattedDate, for: .normal)
         FromDatePickerView.isHidden = true
@@ -804,6 +810,7 @@ extension ApplyLeaveReqVC: FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     
     func updateLabels() {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.displayLocale
         formatter.dateFormat = "dd MMM yyyy"
         
         if let from = fromDate {

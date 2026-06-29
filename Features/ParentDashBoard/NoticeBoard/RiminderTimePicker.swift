@@ -27,6 +27,7 @@ class RiminderTimePicker: UIViewController {
         
         datePicker.datePickerMode = .dateAndTime
         datePicker.minimumDate = Date()
+        datePicker.locale = LocaleManager.shared.apiLocale
         
         // Set maximum date if provided
         if let maxDateStr = maximumDate {
@@ -51,6 +52,7 @@ class RiminderTimePicker: UIViewController {
     
     @IBAction func selectTime(_ sender: UIButton) {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "dd-MM-yyyy hh:mm a"
         let selectedDate = formatter.string(from: datePicker.date)
         delegate?.timepicker(dateTime: selectedDate)

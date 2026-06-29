@@ -159,6 +159,14 @@ class SplashVC: UIViewController, ViewAttachments, DismissDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        let appDirection = UIView.userInterfaceLayoutDirection(for: view.semanticContentAttribute)
+        print("App direction:", appDirection == .leftToRight ? "LTR" : "RTL")
+
+        print("Effective:",
+              view.effectiveUserInterfaceLayoutDirection == .leftToRight ? "LTR" : "RTL")
+        print(Locale.current.identifier)
+        print(Bundle.main.preferredLocalizations)
+        print(UserDefaults.standard.array(forKey: "AppleLanguages") ?? [])
         startSplashAnimation()
     }
     

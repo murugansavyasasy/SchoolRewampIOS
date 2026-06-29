@@ -63,5 +63,7 @@
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>
+    <key>UIApplicationSupportsRightToLeft</key>
+    <false/>
 </dict>
 </plist>

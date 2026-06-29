@@ -1148,7 +1148,7 @@
 "Please select or enter a valid duration for the meeting" = "சந்திப்பிற்கான சரியான கால அளவைத் தேர்ந்தெடுக்கவும் அல்லது உள்ளிடவும்";
 "Invalid Time" = "தவறான நேரம்";
 "Start time cannot be in the past for today" = "இன்றைய தொடக்க நேரம் கடந்த நேரமாக இருக்கக்கூடாது";
-"No available sots Found in the selected date and time" = "தேர்ந்தெடுக்கப்பட்ட தேதி மற்றும் நேரத்தில் காலியிடங்கள் இல்லை";
+"No available slots Found in the selected date and time" = "தேர்ந்தெடுக்கப்பட்ட தேதி மற்றும் நேரத்தில் காலியிடங்கள் இல்லை";
 "Are you sure want to Reopen this slot?" = "இந்த நேர இடத்தை மீண்டும் திறக்க விரும்புகிறீர்களா?";
 "Are you sure want to Cancel this slot?" = "இந்த நேர இடத்தை ரத்து செய்ய விரும்புகிறீர்களா?";
 "Open Above Slots" = "மேலே உள்ள நேர இடங்களைத் திற";
@@ -1160,3 +1160,10 @@
 "Cancel Meeting" = "சந்திப்பை ரத்து செய்";
 "Reason for Cancelation" = "ரத்து செய்வதற்கான காரணம்";
 "Paste the meeting link here" = "சந்திப்பு இணைப்பை இங்கே ஒட்டவும்";
+
+
+//MARK: Flavour strings
+"WELCOME_STRING" = "Welcome to School Chimes";
+"REPORT_BUG_STRING" = "Dear School Chimes Team";
+"TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
+"APP_STORE_ID" = "6758079127";

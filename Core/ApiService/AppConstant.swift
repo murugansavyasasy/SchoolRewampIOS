@@ -408,20 +408,20 @@ func isValidIndianMobileNumber(_ mobileNumber: String) -> Bool {
 
 func getCurrentDateString(format: String = "dd-MM-yyyy") -> String {
     let dateFormatter = DateFormatter()
+    dateFormatter.locale = LocaleManager.shared.apiLocale
     dateFormatter.dateFormat = format
     return dateFormatter.string(from: Date())
 }
 
 func AwsCurrentDateString(format: String = "dd-MM-yyyy") -> String {
     let dateFormatter = DateFormatter()
+    dateFormatter.locale = LocaleManager.shared.apiLocale
     dateFormatter.dateFormat = format
     return dateFormatter.string(from: Date())
 }
 
 func ConvertDateStringSmart(_ date: String?, toFormat: String = "dd-MM-yyyy") -> String {
     guard let date = date else { return "" }
-    let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-    let localeID = normalizedLocaleIdentifier(for: savedCode)
     
     // All possible input formats
     let possibleFormats = [
@@ -444,11 +444,11 @@ func ConvertDateStringSmart(_ date: String?, toFormat: String = "dd-MM-yyyy") ->
         "EEE, dd MMM yyyy"
     ]
     let outputFormatter = DateFormatter()
-    outputFormatter.locale = Locale(identifier: localeID)
+    outputFormatter.locale = LocaleManager.shared.displayLocale
     outputFormatter.dateFormat = toFormat
     for format in possibleFormats {
         let inputFormatter = DateFormatter()
-        inputFormatter.locale = Locale(identifier: localeID)
+        inputFormatter.locale = LocaleManager.shared.displayLocale
         inputFormatter.dateFormat = format
         
         if let dateObj = inputFormatter.date(from: date) {
@@ -474,6 +474,7 @@ class DateFormatterHelpers {
         
         let outputFormatter = DateFormatter()
         outputFormatter.dateFormat = "dd-MM-yyyy"
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
         
         return outputFormatter.string(from: date)
     }
@@ -499,7 +500,7 @@ func applyShadowAndCornerRadius(to view: UIView, cornerRadius: CGFloat = 10, sha
 func formattedDateStatus(from selectedDateString: String, isTimeNeeded: Bool = false) -> String {
     
     let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-    let localeID = normalizedLocaleIdentifier(for: savedCode)
+    
     let todayText: String
     let yesterdayText: String
     
@@ -556,11 +557,11 @@ func formattedDateStatus(from selectedDateString: String, isTimeNeeded: Bool = f
     
     // Output formatters
     let timeFormatter = DateFormatter()
-    timeFormatter.locale = Locale(identifier: localeID)
+    timeFormatter.locale = LocaleManager.shared.displayLocale
     timeFormatter.dateFormat = "h:mm a"
     
     let dateFormatter = DateFormatter()
-    dateFormatter.locale = Locale(identifier: localeID)
+    dateFormatter.locale = LocaleManager.shared.displayLocale
     dateFormatter.dateFormat = "dd MMM yyyy"
     
     if calendar.isDate(date, inSameDayAs: today) {

@@ -18,6 +18,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate, Datepicker {
             DateBtn.setTitle(date, for: .normal)
             
             let dateformatter = DateFormatter()
+            dateformatter.locale = LocaleManager.shared.apiLocale
             dateformatter.dateFormat = "dd MMM yy"
             let Date = dateformatter.date(from: date)
             dateformatter.dateFormat = "EEE d"
