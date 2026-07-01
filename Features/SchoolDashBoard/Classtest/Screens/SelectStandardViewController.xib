@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectStandardViewController" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="stdRootView" id="stdRootOutlet"/>
+                <outlet property="collectionView" destination="collectionView" id="stdCollOutlet"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="stdRootView">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="collectionView">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" id="flowLayout"/>
+                </collectionView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="stdSafeArea"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="collectionView" firstAttribute="leading" secondItem="stdRootView" secondAttribute="leading" id="cvl"/>
+                <constraint firstItem="collectionView" firstAttribute="trailing" secondItem="stdRootView" secondAttribute="trailing" id="cvr"/>
+                <constraint firstItem="collectionView" firstAttribute="top" secondItem="stdRootView" secondAttribute="top" id="cvt"/>
+                <constraint firstItem="collectionView" firstAttribute="bottom" secondItem="stdRootView" secondAttribute="bottom" id="cvb"/>
+            </constraints>
+            <point key="canvasLocation" x="35.877862595419849" y="19.718309859154932"/>
+        </view>
+    </objects>
+</document>

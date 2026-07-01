@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ParentClassTestVc" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+            <connections>
+                <outlet property="tableView" destination="ShZ-ZS-vGD" id="pAR-r4-o0p"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pCu-aG-pb8" customClass="BottomRoundedView" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="183"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="i9e-5w-xOD">
+                            <rect key="frame" x="10" y="128" width="373" height="35"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tBF-Bv-xOx">
+                                    <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="PeK-uz-iQU"/>
+                                        <constraint firstAttribute="width" constant="35" id="VTr-VM-sy5"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="imageEdgeInsets" minX="6" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="chevron.left" catalog="system">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="Backbtn:" destination="-1" eventType="touchUpInside" id="EIg-kG-U34"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SaranRaj" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x8G-vt-AS6">
+                                    <rect key="frame" x="35" y="7.333333333333341" width="303" height="20.333333333333329"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nxj-Hn-5EE">
+                                    <rect key="frame" x="338" y="0.0" width="35" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="R7a-Wb-1PM"/>
+                                        <constraint firstAttribute="width" constant="35" id="uyp-AO-43g"/>
+                                    </constraints>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="magnifyingglass" catalog="system">
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="semibold"/>
+                                    </state>
+                                </button>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" name="BackGroundClr"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="i9e-5w-xOD" secondAttribute="trailing" constant="10" id="9al-EJ-UgE"/>
+                        <constraint firstItem="i9e-5w-xOD" firstAttribute="leading" secondItem="pCu-aG-pb8" secondAttribute="leading" constant="10" id="FhT-bm-fbP"/>
+                        <constraint firstAttribute="bottom" secondItem="i9e-5w-xOD" secondAttribute="bottom" constant="20" id="hWj-Ve-TFV"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ffq-IF-A1N">
+                    <rect key="frame" x="0.0" y="183" width="393" height="601"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ShZ-ZS-vGD">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="601"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="ShZ-ZS-vGD" secondAttribute="trailing" id="FMX-l3-AFm"/>
+                        <constraint firstAttribute="bottom" secondItem="ShZ-ZS-vGD" secondAttribute="bottom" id="fa2-9n-He5"/>
+                        <constraint firstItem="ShZ-ZS-vGD" firstAttribute="top" secondItem="ffq-IF-A1N" secondAttribute="top" id="gOX-gS-Abx"/>
+                        <constraint firstItem="ShZ-ZS-vGD" firstAttribute="leading" secondItem="ffq-IF-A1N" secondAttribute="leading" id="rCE-pF-xUo"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ffq-IF-A1N" secondAttribute="trailing" id="0fe-8o-dkE"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ffq-IF-A1N" secondAttribute="bottom" id="6fw-BB-nch"/>
+                <constraint firstItem="ffq-IF-A1N" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="MzU-NN-oSg"/>
+                <constraint firstItem="ffq-IF-A1N" firstAttribute="top" secondItem="pCu-aG-pb8" secondAttribute="bottom" id="SI2-xL-sXR"/>
+                <constraint firstItem="i9e-5w-xOD" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="WrS-Xq-Lrt"/>
+                <constraint firstItem="pCu-aG-pb8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="sWf-i9-LIa"/>
+                <constraint firstItem="pCu-aG-pb8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="uBG-98-ecW"/>
+                <constraint firstItem="pCu-aG-pb8" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="uCg-40-cnB"/>
+            </constraints>
+            <point key="canvasLocation" x="-161" y="135"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <namedColor name="BackGroundClr">
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

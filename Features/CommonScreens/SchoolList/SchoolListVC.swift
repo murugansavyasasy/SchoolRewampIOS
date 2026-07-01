@@ -230,6 +230,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             case  203: MenuRedirect.staffApplyLeave(from: self)
             case  204: MenuRedirect.StaffLeaveRequest(from: self)
             case  205:  MenuRedirect.buslist(from: self, loginasType: login_astype ?? 0, is_ownbustraking: self.school_details?[indexPath.row].gps_type == "dhundhoo" ? false : true)
+                
+            case 206 :  MenuRedirect.createClasstestVc(from: self)
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }
