@@ -9,43 +9,86 @@ import UIKit
 
 class ExamReportsTVC: UITableViewCell {
 
-    @IBOutlet weak var classSectionStack: UIStackView!
     @IBOutlet weak var tittleLbl: UILabel!
     @IBOutlet weak var sendbyLbl: UILabel!
     @IBOutlet weak var iconBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
-    @IBOutlet weak var innerView: UIView!
+    @IBOutlet weak var classSectionStack: UIStackView!
     @IBOutlet weak var arrowBtn: UIButton!
+
     private let classChip = PaddingLabel()
-    private let sectionChip = PaddingLabel()
     private let dateChip = PaddingLabel()
-    private let timeChip = PaddingLabel()
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
+        selectionStyle = .none
+        backgroundColor = .clear
+
+        outerView.layer.cornerRadius = 22
+        outerView.backgroundColor = .white
+
+        outerView.layer.shadowColor = UIColor.black.cgColor
+        outerView.layer.shadowOpacity = 0.06
+        outerView.layer.shadowRadius = 12
+        outerView.layer.shadowOffset = CGSize(width: 0, height: 6)
+
+        setupChips()
+
+        iconBtn.layer.cornerRadius = 22
+        arrowBtn.layer.cornerRadius = 16
     }
-    func configure(with item: ExamListItem) {
-        tittleLbl.text = item.title
-        sendbyLbl.text = "Sent by \(item.sentBy)"
 
-        classChip.text = "📖 \(item.classText)"
-        sectionChip.text = "Sec \(item.sectionText)"
-        dateChip.text = "🕐 \(item.dateText)"
-        timeChip.text = item.timeText
+    private func setupChips() {
 
-        iconBtn.backgroundColor = item.iconTint
-        arrowBtn.backgroundColor = item.iconTint
-        iconBtn.setImage(UIImage(systemName: "doc.text.fill"), for: .normal)
-        iconBtn.tintColor = .white
-        arrowBtn.setImage(UIImage(systemName: "chevron.right"), for: .normal)
-        arrowBtn.tintColor = .white
+        classChip.backgroundColor = UIColor.systemIndigo.withAlphaComponent(0.1)
+        classChip.textColor = UIColor.systemIndigo
 
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            [self.classChip, self.sectionChip, self.dateChip, self.timeChip].forEach {
-                $0.layer.cornerRadius = $0.bounds.height / 2
-            }
+        dateChip.backgroundColor = UIColor.systemGray6
+        dateChip.textColor = UIColor.darkGray
+
+        [(classChip), (dateChip)].forEach { (label: PaddingLabel) in
+            label.font = .systemFont(ofSize: 12, weight: .semibold)
+            label.clipsToBounds = true
+            label.layer.cornerRadius = 14
+
+            classSectionStack.addArrangedSubview(label)
         }
+    }
+
+    func configure(
+        sectionName: String,
+        dateText: String,
+        session: String,
+        status: String,
+        iconTint: UIColor
+    ) {
+
+        tittleLbl.text = sectionName
+        sendbyLbl.text = status
+
+        classChip.text = "📚 \(sectionName)"
+
+        dateChip.text =
+        "🕐 \(dateText) • \(session)"
+
+        iconBtn.backgroundColor = iconTint
+        arrowBtn.backgroundColor =
+        iconTint.withAlphaComponent(0.15)
+
+        iconBtn.setImage(
+            UIImage(systemName: "doc.text.fill"),
+            for: .normal
+        )
+
+        iconBtn.tintColor = .white
+
+        arrowBtn.setImage(
+            UIImage(systemName: "chevron.right"),
+            for: .normal
+        )
+
+        arrowBtn.tintColor = iconTint
     }
 }
 class PaddingLabel: UILabel {
@@ -62,37 +105,4 @@ class PaddingLabel: UILabel {
             height: size.height + insets.top + insets.bottom
         )
     }
-}
-struct ExamReportResponse: Codable {
-    let status: Bool?
-    let message: String?
-    let data: [ExamReportItem]?
-}
-
-struct ExamReportItem: Codable {
-    let classTestId: String?
-    let examName: String?
-    let standardName: String?
-    let sectionName: String?
-    let sentBy: String?
-    let sentOn: String?     // "24-06-2026 05:46 PM"
-
-    enum CodingKeys: String, CodingKey {
-        case classTestId = "class_test_id"
-        case examName = "exam_name"
-        case standardName = "standard_name"
-        case sectionName = "section_name"
-        case sentBy = "sent_by"
-        case sentOn = "sent_on"
-    }
-}
-struct ExamListItem {
-    let id: String
-    let title: String
-    let classText: String
-    let sectionText: String
-    let dateText: String     // "24 Jun"
-    let timeText: String     // "05:46 PM"
-    let sentBy: String
-    let iconTint: UIColor
 }

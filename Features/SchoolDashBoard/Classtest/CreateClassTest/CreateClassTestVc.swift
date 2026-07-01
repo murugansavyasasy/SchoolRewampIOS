@@ -368,7 +368,7 @@ class CreateClassTestVc: UIViewController {
     
     @IBAction func viewHistoryAct(_ sender: Any) {
         
-        let vc = ExamRecordsVC()
+        let vc = ExamReportsVC()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
