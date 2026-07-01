@@ -83,8 +83,10 @@ extension QuizCompletedVc: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "QuestionTVC",
                                                      for: indexPath) as! QuestionTVC
             cell.qstLbl.text = question.question
-            cell.qstCountLbl.text = "Question \(indexPath.section + 1)"
-            cell.markLbl.text = "Mark / \(question.mark ?? 0)"
+            let questionString = "Question".translated()
+            let MarkString = "Mark".translated()
+            cell.qstCountLbl.text = "\(questionString) \(indexPath.section + 1)"
+            cell.markLbl.text = "\(MarkString) / \(question.mark ?? 0)"
 
             if let files = question.file_path, !files.isEmpty {
                 cell.conficList(filePath: files)
@@ -178,7 +180,7 @@ extension QuizCompletedVc: UITableViewDelegate, UITableViewDataSource {
 
         cell.subjectQuiz.text = subjet_name
         cell.completedAtLbl.text =
-            "Completed at: " + formattedDateStatus(from: completed_date, isTimeNeeded: true)
+        "Completed at: ".translated() + formattedDateStatus(from: completed_date, isTimeNeeded: true)
         cell.wishesLbl.text = message
 
         let parts = correct_ans.split(separator: "/")
@@ -191,9 +193,9 @@ extension QuizCompletedVc: UITableViewDelegate, UITableViewDataSource {
             cell.setProgress(to: 0)
         }
 
-        cell.crtBtn.setTitle("Correct Ans " + correct_ans, for: .normal)
-        cell.wrongBtn.setTitle("Wrong Ans " + worng_ans, for: .normal)
-        cell.notAnsBtn.setTitle("Not Ans " + not_ans, for: .normal)
+        cell.crtBtn.setTitle("Correct Ans ".translated() + correct_ans, for: .normal)
+        cell.wrongBtn.setTitle("Wrong Ans ".translated() + worng_ans, for: .normal)
+        cell.notAnsBtn.setTitle("Not Ans ".translated() + not_ans, for: .normal)
 
         return cell.contentView
     }

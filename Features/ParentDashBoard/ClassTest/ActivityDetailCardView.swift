@@ -52,26 +52,26 @@ class ActivityDetailCardView: UIView {
         minMarksContainerView.backgroundColor = UIColor(red: 255/255, green: 235/255, blue: 238/255, alpha: 1.0)
     }
     
-    func configure(with activity: Activity) {
+    func configure(with activity: TestsActivity) {
         activityNameLabel.text = activity.activityName
         dateLabel.text = activity.examDate
         syllabusLabel.text = activity.syllabus
         
         // Format marks
-        if let maxDouble = Double(activity.maxMark) {
+        if let maxDouble = Double(activity.maxMark ?? "") {
             maxMarksLabel.text = String(format: "%.0f", maxDouble)
         } else {
             maxMarksLabel.text = activity.maxMark
         }
         
-        if let minDouble = Double(activity.minMark) {
+        if let minDouble = Double(activity.minMark ?? "") {
             minMarksLabel.text = String(format: "%.0f", minDouble)
         } else {
             minMarksLabel.text = activity.minMark
         }
         
         // Format session pill
-        let isFN = activity.session.uppercased() == "FN"
+        let isFN = activity.session?.uppercased() == "FN"
         sessionPillLabel.text = isFN ? "Forenoon" : "Afternoon"
         sessionPillView.layer.cornerRadius = 10
         
