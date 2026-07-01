@@ -8,7 +8,7 @@ public final class CreateTestViewModel {
             onStepChanged?(currentStep)
         }
     }
-    
+    var studentRecords: [StudentMark] = []
     public private(set) var standards: [TestStandard] = []
     public private(set) var sectionSubjects: [TestSectionSubjects] = []
     public private(set) var examConfigurations: [SubjectExamConfig] = []
@@ -19,7 +19,6 @@ public final class CreateTestViewModel {
     }
     public var selectedStandard: TestStandard? {
         didSet {
-            // Reset selected sections and subjects when standard changes
             selectedSections.removeAll()
             selectedSubjects.removeAll()
             examConfigurations.removeAll()
@@ -31,7 +30,7 @@ public final class CreateTestViewModel {
         didSet {
             let selectedSectionString = selectedSections.sorted().joined(separator: ",")
             print(selectedSectionString) // "1,2"
-    
+            
             selectedSubjects.removeAll()
             examConfigurations.removeAll()
             onSelectionChanged?()
@@ -42,7 +41,7 @@ public final class CreateTestViewModel {
     public var onDataLoaded: (() -> Void)?
     public var onStepChanged: ((Int) -> Void)?
     public var onSelectionChanged: (() -> Void)?
-public var exameName = ""
+    public var exameName = ""
     // MARK: - Initializer
     public init() {}
     
@@ -63,13 +62,13 @@ public var exameName = ""
                     }
                 }else{
                     DispatchQueue.main.async { [self] in
-                       
+                        
                     }
                 }
             case .failure(let error):
                 DispatchQueue.main.async { [self] in
                     print(error.localizedDescription)
-                   
+                    
                 }
                 
             }
@@ -92,20 +91,20 @@ public var exameName = ""
                     }
                 }else{
                     DispatchQueue.main.async { [self] in
-                       
+                        
                     }
                 }
             case .failure(let error):
                 DispatchQueue.main.async { [self] in
                     print(error.localizedDescription)
-                   
+                    
                 }
                 
             }
         }
     }
     
-  
+    
     public func selectStandard(_ standard: TestStandard) {
         self.selectedStandard = standard
     }
@@ -183,7 +182,7 @@ public var exameName = ""
     }
     
     public func removeTest(at testIndex: Int, from subjectId: String, sectionId: String) {
-         guard let idx = examConfigurations.firstIndex(where: { $0.subjectId == subjectId && $0.sectionId == sectionId }) else { return }
+        guard let idx = examConfigurations.firstIndex(where: { $0.subjectId == subjectId && $0.sectionId == sectionId }) else { return }
         guard examConfigurations[idx].tests.count > testIndex else { return }
         examConfigurations[idx].tests.remove(at: testIndex)
         onSelectionChanged?()
@@ -331,5 +330,235 @@ public var exameName = ""
         
         let finalSections = activeSections.isEmpty ? sectionSubjects : activeSections
         return finalSections.reduce(0) { $0 + $1.subjects.count }
+    }
+    
+    
+    func getMarkDetails(
+        class_test_id: String? = "3",
+        section_id: String? = "91746",
+        completion: @escaping (Result<[StudentMark], Error>) -> Void
+    ) {
+        let params: [String: String] = [
+            "class_test_id": class_test_id ?? "",
+            "section_id": section_id ?? ""
+        ]
+        
+        APIService.shared.makeApi(
+            url: ServiceUrl.exam_test_mark_details,
+            parameters: params,
+            type: ApitTypeSringFile.GET,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
+            isBaseUrl: true
+        ) { [weak self] (result: Result<TestMarkDetailsResponse<TestMarkData>, Error>) in
+            
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let response):
+                guard let testData = response.data?.first else {
+                    completion(.failure(NSError(
+                        domain: "",
+                        code: -1,
+                        userInfo: [NSLocalizedDescriptionKey: "No data found"]
+                    )))
+                    return
+                }
+                
+                let converted = self.mapTestMarkDataToStudentRecords(testData)
+                self.studentRecords = converted
+                completion(.success(converted))
+                
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    // Mapping function (same as before)
+    func mapTestMarkDataToStudentRecords(_ testData: TestMarkData) -> [StudentMark] {
+        var studentOrder: [String] = []
+        var studentInfoMap: [String: TestMarkStudent] = [:]
+        
+        for subject in testData.subjects {
+            for activity in subject.activities {
+                for student in activity.students {
+                    if studentInfoMap[student.studentId] == nil {
+                        studentInfoMap[student.studentId] = student
+                        studentOrder.append(student.studentId)
+                    }
+                }
+            }
+        }
+        
+        var result: [StudentMark] = []
+        
+        for studentId in studentOrder {
+            guard let baseInfo = studentInfoMap[studentId] else { continue }
+            
+            var subjectMarksArray: [SubjectMarks] = []
+            
+            for subject in testData.subjects {
+                var activityMarksArray: [ActivityMark] = []
+                
+                for activity in subject.activities {
+                    guard let entry = activity.students.first(where: { $0.studentId == studentId }) else {
+                        continue
+                    }
+                    
+                    activityMarksArray.append(
+                        ActivityMark(
+                            id: activity.classTestSubjectId,
+                            name: activity.activityName,
+                            mark: entry.mark,
+                            max_mark: String(Int(Double(activity.maxMark) ?? 0)),
+                            is_edit: true,
+                            selected_name: activity.activityName,
+                            change_mark: nil,
+                            isReview: false,
+                            reason: entry.remarks.isEmpty ? nil : entry.remarks
+                        )
+                    )
+                }
+                
+                guard !activityMarksArray.isEmpty else { continue }
+                
+                subjectMarksArray.append(
+                    SubjectMarks(
+                        subject_id: subject.subjectId,
+                        subject_name: subject.subjectName,
+                        activities: activityMarksArray
+                    )
+                )
+            }
+            
+            result.append(
+                StudentMark(
+                    student_id: baseInfo.studentId,
+                    student_name: baseInfo.studentName,
+                    roll_no: baseInfo.rollNo,
+                    admission_no: baseInfo.admissionNo,
+                    gender: nil,
+                    marks: subjectMarksArray
+                )
+            )
+        }
+        do {
+                let encoder = JSONEncoder()
+                encoder.outputFormatting = [
+                    .prettyPrinted,
+                    .sortedKeys
+                ]
+
+                let jsonData = try encoder.encode(result)
+
+                if let jsonString = String(
+                    data: jsonData,
+                    encoding: .utf8
+                ) {
+                    print(jsonString)
+                }
+
+            } catch {
+                print(error)
+            }
+        return result
+    }
+    func createSaveRequest(
+        studentRecords: [StudentMark],
+        completion: @escaping (Result<Send_AttachmentResponse, Error>) -> Void
+    ){
+
+        var subjectsDict: [String: [String: Any]] = [:]
+
+        for student in studentRecords {
+
+            guard let studentId = student.student_id else {
+                continue
+            }
+
+            for subject in student.marks ?? [] {
+
+                guard let subjectId = subject.subject_id else {
+                    continue
+                }
+
+                var subjectData =
+                subjectsDict[subjectId] ?? [
+                    "subject_id": subjectId,
+                    "activities": [[String: Any]]()
+                ]
+
+                var activities =
+                subjectData["activities"]
+                    as? [[String: Any]] ?? []
+
+                // use original model object here
+                for activity in subject.activities ?? [] {
+
+                    guard let activityId = activity.id else {
+                        continue
+                    }
+
+                    let studentData: [String: Any] = [
+                        "student_id": studentId,
+                        "attendance": "P",
+                        "mark": activity.mark ?? "",
+                        "remarks": activity.reason ?? ""
+                    ]
+
+                    if let index = activities.firstIndex(
+                        where: {
+                            ($0["class_test_subject_id"] as? String)
+                            == activityId
+                        }
+                    ) {
+
+                        var existing = activities[index]
+
+                        var students =
+                        existing["students"]
+                            as? [[String: Any]] ?? []
+
+                        students.append(studentData)
+
+                        existing["students"] = students
+                        activities[index] = existing
+
+                    } else {
+
+                        activities.append([
+                            "class_test_subject_id": activityId,
+                            "students": [studentData]
+                        ])
+                    }
+                }
+
+                subjectData["activities"] = activities
+                subjectsDict[subjectId] = subjectData
+            }
+        }
+            
+            APIService.shared.makeApi(
+                url: ServiceUrl.exam_api_exam_test_upload_marks,
+                parameters: [
+                    "class_test_id": "3",
+                    "section_id": "91746",
+                    "subjects": Array(subjectsDict.values)
+                ],
+                type: ApitTypeSringFile.POST,
+                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
+                isBaseUrl: true
+            ) { [weak self] (result: Result<Send_AttachmentResponse, Error>) in
+                
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let response):
+                    completion(.success(response))
+                    
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
     }
 }

@@ -229,6 +229,7 @@ class MarksCell: UICollectionViewCell {
             )
             return
         }
+        
         if let markValue = Int(mark),
            !mark.isEmpty,
            markValue > maxMark {

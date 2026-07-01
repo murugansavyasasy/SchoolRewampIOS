@@ -144,4 +144,74 @@ public struct ExamRequestItem: Codable {
     }
 }
 
+struct TestMarkDetailsResponse<T: Codable>: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [T]?
+}
 
+struct TestMarkData: Codable {
+    let classTestId: String
+    let sectionId: String
+    let subjects: [TestMarkSubject]
+
+    enum CodingKeys: String, CodingKey {
+        case classTestId = "class_test_id"
+        case sectionId = "section_id"
+        case subjects
+    }
+}
+
+struct TestMarkSubject: Codable {
+    let subjectId: String
+    let subjectName: String
+    let activities: [TestMarkActivity]
+
+    enum CodingKeys: String, CodingKey {
+        case subjectId = "subject_id"
+        case subjectName = "subject_name"
+        case activities
+    }
+}
+
+struct TestMarkActivity: Codable {
+    let classTestSubjectId: String
+    let activityName: String
+    let examDate: String
+    let session: String
+    let maxMark: String
+    let minMark: String
+    let syllabus: String
+    let students: [TestMarkStudent]
+
+    enum CodingKeys: String, CodingKey {
+        case classTestSubjectId = "class_test_subject_id"
+        case activityName = "activity_name"
+        case examDate = "exam_date"
+        case session
+        case maxMark = "max_mark"
+        case minMark = "min_mark"
+        case syllabus
+        case students
+    }
+}
+
+struct TestMarkStudent: Codable {
+    let studentId: String
+    let admissionNo: String
+    let rollNo: String
+    let studentName: String
+    let attendance: String
+    let mark: String
+    let remarks: String
+
+    enum CodingKeys: String, CodingKey {
+        case studentId = "student_id"
+        case admissionNo = "admission_no"
+        case rollNo = "roll_no"
+        case studentName = "student_name"
+        case attendance
+        case mark
+        case remarks
+    }
+}

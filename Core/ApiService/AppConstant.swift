@@ -218,6 +218,8 @@ struct ServiceUrl{
     static let get_latest_geo_location = "transport/api/get-latest-geo-location" 
     static let exam_section_wise_subjects = "exam/api/exam-test/section-wise-subjects"
     static let exam_create_class_test = "exam/api/exam-test/create-class-test"
+    static let exam_test_mark_details = "exam/api/exam-test/mark-details"
+    static let exam_api_exam_test_upload_marks = "exam/api/exam-test/upload-marks"
  
 
 }
