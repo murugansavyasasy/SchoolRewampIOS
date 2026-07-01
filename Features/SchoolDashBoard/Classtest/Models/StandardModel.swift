@@ -144,4 +144,40 @@ public struct ExamRequestItem: Codable {
     }
 }
 
+struct StaffClassTestResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [StaffClassTest]?
+}
+
+struct StaffClassTest: Codable {
+    var class_test_id: String?
+    var exam_name: String?
+    var sent_by: String?
+    var sent_on: String?
+    var sections: [StaffSection]?
+}
+
+struct StaffSection: Codable {
+    var section_id: String?
+    var section_name: String?
+    var subjects: [StaffSubject]?
+}
+
+struct StaffSubject: Codable {
+    var subject_id: String?
+    var subject_name: String?
+    var activities: [StaffActivity]?
+}
+
+struct StaffActivity: Codable {
+    var class_test_subject_id: String?
+    var exam_date: String?
+    var status: String?
+    var session: String?
+    var activity_name: String?
+    var max_mark: String?
+    var min_mark: String?
+    var syllabus: String?
+}
 

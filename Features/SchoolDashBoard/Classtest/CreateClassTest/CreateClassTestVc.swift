@@ -48,6 +48,7 @@ class CreateClassTestVc: UIViewController {
     @IBOutlet public weak var line2To3: UIView!
     @IBOutlet public weak var line3To4: UIView!
     @IBOutlet public weak var line4To5: UIView!
+    @IBOutlet weak var viewHistoryBtn: UIButton!
     
     private let acidamicdrops = DropDown()
     private var accadimYr: [String] = []
@@ -364,4 +365,12 @@ class CreateClassTestVc: UIViewController {
     @IBAction public func continueButtonTapped(_ sender: UIButton) {
         _ = viewModel.nextStep()
     }
+    
+    @IBAction func viewHistoryAct(_ sender: Any) {
+        
+        let vc = ExamRecordsVC()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
 }
