@@ -52,7 +52,7 @@ class ActivityDetailCardView: UIView {
         minMarksContainerView.backgroundColor = UIColor(red: 255/255, green: 235/255, blue: 238/255, alpha: 1.0)
     }
     
-    func configure(with activity: Activity) {
+    func configure(with activity: TestsActivity) {
         activityNameLabel.text = activity.activityName
         dateLabel.text = activity.examDate
         syllabusLabel.text = activity.syllabus
