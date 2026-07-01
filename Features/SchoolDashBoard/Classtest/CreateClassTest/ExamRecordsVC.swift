@@ -47,7 +47,7 @@ class ExamRecordsVC: UIViewController {
                     }
                     
                 case .failure(let failure):
-                    
+                    print("")
                 }
             }
         }

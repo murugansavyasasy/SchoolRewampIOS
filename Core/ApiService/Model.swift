@@ -3521,16 +3521,16 @@ struct Stops: Codable {
 
 
 struct ClassTestResponse: Codable {
-    let status: Bool
-    let message: String
-    let data: [ClassTest]
+    let status: Bool?
+    let message: String?
+    let data: [ClassTest]?
 }
 
 struct ClassTest: Codable {
-    let classTestId: String
-    let examName: String
+    let classTestId: String?
+    let examName: String?
     let subjects: [TestsSubject]
-    
+
     enum CodingKeys: String, CodingKey {
         case classTestId = "class_test_id"
         case examName = "exam_name"
@@ -3539,10 +3539,10 @@ struct ClassTest: Codable {
 }
 
 struct TestsSubject: Codable {
-    let subjectId: String
-    let subjectName: String
+    let subjectId: String?
+    let subjectName: String?
     let activities: [TestsActivity]
-    
+
     enum CodingKeys: String, CodingKey {
         case subjectId = "subject_id"
         case subjectName = "subject_name"
@@ -3551,24 +3551,93 @@ struct TestsSubject: Codable {
 }
 
 struct TestsActivity: Codable {
-    let classTestSubjectId: String
-    let examDate: String
-    let session: String
-    let activityName: String
-    let maxMark: String
-    let minMark: String
-    let syllabus: String
+    let classTestSubjectId: String?
+    let examDate: String?
+    let session: String?
+    let activityName: String?
+    let maxMark: String?
+    let minMark: String?
+    let syllabus: String?
+    let status: String?
+    let isMarkUploaded: Bool?
     let attendance: String?
     let mark: String?
     let remarks: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case classTestSubjectId = "class_test_subject_id"
         case examDate = "exam_date"
-        case session, syllabus
+        case session
         case activityName = "activity_name"
         case maxMark = "max_mark"
         case minMark = "min_mark"
-        case attendance, mark, remarks
+        case syllabus
+        case status
+        case isMarkUploaded = "is_mark_uploaded"
+        case attendance
+        case mark
+        case remarks
+    }
+}
+
+struct ClassTestMarksResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [ClassTestMarks]?
+}
+
+struct ClassTestMarks: Codable {
+    let classTestId: String?
+    let examName: String?
+    let overAllStudentMarks: String?
+    let overAllMarks: String?
+    let overAllPersentage: String?
+    let subjects: [MarksSubject]
+
+    enum CodingKeys: String, CodingKey {
+        case classTestId = "class_test_id"
+        case examName = "exam_name"
+        case overAllStudentMarks = "over_all_student_marks"
+        case overAllMarks = "over_all_Marks"
+        case overAllPersentage = "over_all_persentage"
+        case subjects
+    }
+}
+
+struct MarksSubject: Codable {
+    let subjectId: String?
+    let subjectName: String?
+    let activities: [MarksActivity]
+
+    enum CodingKeys: String, CodingKey {
+        case subjectId = "subject_id"
+        case subjectName = "subject_name"
+        case activities
+    }
+}
+
+struct MarksActivity: Codable {
+    let classTestSubjectId: String?
+    let examDate: String?
+    let session: String?
+    let activityName: String?
+    let maxMark: String?
+    let minMark: String?
+    let syllabus: String?
+    let attendance: String?
+    let mark: String?
+    let remarks: String?
+
+    enum CodingKeys: String, CodingKey {
+        case classTestSubjectId = "class_test_subject_id"
+        case examDate = "exam_date"
+        case session
+        case activityName = "activity_name"
+        case maxMark = "max_mark"
+        case minMark = "min_mark"
+        case syllabus
+        case attendance
+        case mark
+        case remarks
     }
 }

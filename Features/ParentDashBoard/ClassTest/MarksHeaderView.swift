@@ -39,7 +39,7 @@ class MarksHeaderView: UIView {
         statsCardView.layer.borderColor = UIColor(red: 234/255, green: 240/255, blue: 246/255, alpha: 1.0).cgColor
     }
     
-    func configure(with exam: ClassTest) {
+    func configure(with exam: ClassTestMarks) {
         examTitleLabel.text = exam.examName
         
         // Calculate counts
@@ -60,7 +60,7 @@ class MarksHeaderView: UIView {
                         totalScored += mark
                     }
                 }
-                if let max = Double(activity.maxMark) {
+                if let max = Double(activity.maxMark ?? "") {
                     totalMax += max
                 }
             }

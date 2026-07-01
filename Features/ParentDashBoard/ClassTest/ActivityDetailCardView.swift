@@ -58,20 +58,20 @@ class ActivityDetailCardView: UIView {
         syllabusLabel.text = activity.syllabus
         
         // Format marks
-        if let maxDouble = Double(activity.maxMark) {
+        if let maxDouble = Double(activity.maxMark ?? "") {
             maxMarksLabel.text = String(format: "%.0f", maxDouble)
         } else {
             maxMarksLabel.text = activity.maxMark
         }
         
-        if let minDouble = Double(activity.minMark) {
+        if let minDouble = Double(activity.minMark ?? "") {
             minMarksLabel.text = String(format: "%.0f", minDouble)
         } else {
             minMarksLabel.text = activity.minMark
         }
         
         // Format session pill
-        let isFN = activity.session.uppercased() == "FN"
+        let isFN = activity.session?.uppercased() == "FN"
         sessionPillLabel.text = isFN ? "Forenoon" : "Afternoon"
         sessionPillView.layer.cornerRadius = 10
         

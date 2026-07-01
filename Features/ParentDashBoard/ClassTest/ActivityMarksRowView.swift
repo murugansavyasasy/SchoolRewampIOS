@@ -33,14 +33,14 @@ class ActivityMarksRowView: UIView {
         checkmarkImageView.tintColor = UIColor(red: 16/255, green: 185/255, blue: 129/255, alpha: 1.0)
     }
     
-    func configure(with activity: TestsActivity, index: Int) {
+    func configure(with activity: MarksActivity, index: Int) {
         indexLabel.text = "\(index)"
         activityNameLabel.text = activity.activityName
         dateLabel.text = activity.examDate
         syllabusLabel.text = activity.syllabus
         
         // Format max mark
-        if let maxDouble = Double(activity.maxMark) {
+        if let maxDouble = Double(activity.maxMark ?? "") {
             maxMarkLabel.text = String(format: "%.0f", maxDouble)
         } else {
             maxMarkLabel.text = activity.maxMark
@@ -55,7 +55,7 @@ class ActivityMarksRowView: UIView {
                 scoredMarkLabel.textColor = UIColor(red: 20/255, green: 25/255, blue: 40/255, alpha: 1.0)
                 
                 // Compare mark and min_mark
-                let minMarkDouble = Double(activity.minMark) ?? 0.0
+                let minMarkDouble = Double(activity.minMark ?? "") ?? 0.0
                 if markDouble >= minMarkDouble {
                     // Green tick
                     checkmarkImageView.image = UIImage(systemName: "checkmark.circle.fill")
@@ -84,7 +84,7 @@ class ActivityMarksRowView: UIView {
         }
         
         // Session format
-        let isFN = activity.session.uppercased() == "FN"
+        let isFN = activity.session?.uppercased() == "FN"
         sessionPillLabel.text = isFN ? "Forenoon" : "Afternoon"
         
         if isFN {

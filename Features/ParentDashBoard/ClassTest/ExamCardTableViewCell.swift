@@ -113,7 +113,7 @@ class ExamCardTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
         examSubtitleLabel.text = "\(subjectStr)  ·  \(testStr)"
         
         // 2. Refresh Subject Badges collection view
-        self.subjectNames = exam.subjects.map { $0.subjectName }
+        self.subjectNames = exam.subjects.map { $0.subjectName ?? "" }
         subjectsCollectionView.reloadData()
         
         // 3. Configure collapsed states
@@ -133,11 +133,11 @@ class ExamCardTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
         if isExpanded {
             for subject in exam.subjects {
                 let subjectView = SubjectRowView.loadFromNib()
-                let subjectExpanded = stateTracker.isSubjectExpanded(examId: exam.classTestId, subjectId: subject.subjectId)
+                let subjectExpanded = stateTracker.isSubjectExpanded(examId: exam.classTestId ?? "", subjectId: subject.subjectId ?? "")
                 
                 subjectView.configure(with: subject, isExpanded: subjectExpanded) { [weak self] in
                     guard let self = self else { return }
-                    stateTracker.toggleSubject(examId: exam.classTestId, subjectId: subject.subjectId)
+                    stateTracker.toggleSubject(examId: exam.classTestId ?? "", subjectId: subject.subjectId ?? "")
                     self.onSubjectToggle?()
                 }
                 detailsStackView.addArrangedSubview(subjectView)

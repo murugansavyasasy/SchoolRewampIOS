@@ -14,17 +14,50 @@ class MarksDetailsViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    var classTest: ClassTest?
+    var classTest: ClassTestMarks?
+    var classTestId: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         setupNavigationBar()
+        get_class_tests_Api()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         resizeHeaderView()
+    }
+    
+    func get_class_tests_Api() {
+        
+        let params: [String: Any] = [
+            "class_test_id": classTestId ?? 0
+        ]
+        
+        APIService.shared.makeApi(
+            url: ServiceUrl.exam_view_marks_for_student,
+            parameters: params,
+            type: ApitTypeSringFile.GET,
+            token:  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGlsZF9pZCI6IjYwMTUyNDAyIiwic2Nob29sX2lkIjoiNzA1MCIsImNsYXNzX2lkIjozMjg4OCwic2VjdGlvbl9pZCI6OTE3NDYsImlhdCI6MTc4MjkwMTkyMH0.MiE0ODRAwDyySsjqD8zcSLAAmJ8pT6tIFQpJTGRLo7M",
+            isBaseUrl: true
+        ) {[weak self] (result:Result<ClassTestMarksResponse, Error>) in
+            
+            DispatchQueue.main.async {[weak self] in
+                
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let success):
+                    
+                    self.classTest = success.data?.first
+                    tableView.reloadData()
+                case .failure(let failure):
+                    print("")
+                }
+            }
+            
+        }
     }
     
     private func setupNavigationBar() {
@@ -98,4 +131,6 @@ class MarksDetailsViewController: UIViewController, UITableViewDataSource, UITab
         cell.configure(with: subject)
         return cell
     }
+    
+    
 }

@@ -11,22 +11,24 @@ class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDel
 
     @IBOutlet weak var tableView: UITableView!
     
+    let studentDetails = UserDefaultFileManager.get_staff_Details()
     private var classTests: [ClassTest] = []
     private let stateTracker = ClassTestsStateTracker()
     private var totalExams = 0
     private var totalSubjects = 0
     private var totalActivities = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
         setupTableView()
-        loadMockData()
+        get_class_tests_Api()
     }
 
 
     @IBAction func Backbtn(_ sender: UIButton) {
         
-        
+        dismiss(animated: true)
     }
     
     
@@ -47,7 +49,31 @@ class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDel
         
     }
 
-
+    func get_class_tests_Api() {
+        
+        APIService.shared.makeApi(
+            url: ServiceUrl.exam_class_test_details_for_student,
+            type: ApitTypeSringFile.GET,
+            token:  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGlsZF9pZCI6IjYwMTUyNDAyIiwic2Nob29sX2lkIjoiNzA1MCIsImNsYXNzX2lkIjozMjg4OCwic2VjdGlvbl9pZCI6OTE3NDYsImlhdCI6MTc4MjkwMTkyMH0.MiE0ODRAwDyySsjqD8zcSLAAmJ8pT6tIFQpJTGRLo7M",
+            isBaseUrl: true
+        ) {[weak self] (result:Result<ClassTestResponse, Error>) in
+            
+            DispatchQueue.main.async {[weak self] in
+                
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let success):
+                    
+                    self.classTests = success.data ?? []
+                    tableView.reloadData()
+                case .failure(let failure):
+                    print("")
+                }
+            }
+            
+        }
+    }
 
 //    private func loadMockData() {
 //        let jsonString = """
@@ -272,8 +298,8 @@ class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDel
         
         do {
             let response = try JSONDecoder().decode(ClassTestResponse.self, from: data)
-            if response.status {
-                self.classTests = response.data
+            if response.status == true {
+                self.classTests = response.data ?? []
                 calculateStats()
             }
         } catch {
@@ -302,17 +328,17 @@ class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDel
 
     private func configureCell(_ cell: ExamCardTableViewCell, at indexPath: IndexPath) {
         let exam = classTests[indexPath.row]
-        let isExpanded = stateTracker.isExamExpanded(exam.classTestId)
+        let isExpanded = stateTracker.isExamExpanded(exam.classTestId ?? "")
         
         cell.configure(with: exam, isExpanded: isExpanded, stateTracker: stateTracker, onToggle: { [weak self] in
             guard let self = self else { return }
-            self.stateTracker.toggleExam(exam.classTestId)
+            self.stateTracker.toggleExam(exam.classTestId ?? "")
             
             // Auto-expand all child subjects if the exam is expanded
-            if self.stateTracker.isExamExpanded(exam.classTestId) {
+            if self.stateTracker.isExamExpanded(exam.classTestId ?? "") {
                 for subject in exam.subjects {
-                    if !self.stateTracker.isSubjectExpanded(examId: exam.classTestId, subjectId: subject.subjectId) {
-                        self.stateTracker.toggleSubject(examId: exam.classTestId, subjectId: subject.subjectId)
+                    if !self.stateTracker.isSubjectExpanded(examId: exam.classTestId ?? "", subjectId: subject.subjectId ?? "") {
+                        self.stateTracker.toggleSubject(examId: exam.classTestId ?? "", subjectId: subject.subjectId ?? "")
                     }
                 }
             }
@@ -338,7 +364,7 @@ class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDel
         cell.onViewMarks = { [weak self] in
             guard let self = self else { return }
             let marksVC = MarksDetailsViewController(nibName: "MarksDetailsViewController", bundle: nil)
-            marksVC.classTest = exam
+            marksVC.classTestId = Int(exam.classTestId ?? "0")
             
             if let nav = self.navigationController {
                 nav.pushViewController(marksVC, animated: true)
@@ -355,13 +381,13 @@ class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDel
         tableView.deselectRow(at: indexPath, animated: true)
         
         let exam = classTests[indexPath.row]
-        stateTracker.toggleExam(exam.classTestId)
+        stateTracker.toggleExam(exam.classTestId ?? "")
         
         // Auto-expand all child subjects if the exam is expanded
-        if stateTracker.isExamExpanded(exam.classTestId) {
+        if stateTracker.isExamExpanded(exam.classTestId ?? "") {
             for subject in exam.subjects {
-                if !stateTracker.isSubjectExpanded(examId: exam.classTestId, subjectId: subject.subjectId) {
-                    stateTracker.toggleSubject(examId: exam.classTestId, subjectId: subject.subjectId)
+                if !stateTracker.isSubjectExpanded(examId: exam.classTestId ?? "", subjectId: subject.subjectId ?? "") {
+                    stateTracker.toggleSubject(examId: exam.classTestId ?? "", subjectId: subject.subjectId ?? "")
                 }
             }
         }

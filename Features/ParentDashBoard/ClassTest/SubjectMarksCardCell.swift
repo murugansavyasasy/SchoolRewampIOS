@@ -42,20 +42,20 @@ class SubjectMarksCardCell: UITableViewCell {
         subjectDotView.backgroundColor = UIColor(red: 74/255, green: 85/255, blue: 246/255, alpha: 1.0)
     }
     
-    func configure(with subject: TestsSubject) {
-        subjectNameLabel.text = subject.subjectName.uppercased()
+    func configure(with subject: MarksSubject) {
+        subjectNameLabel.text = subject.subjectName?.uppercased()
         
         // Calculate totals
         var totalScored: Double = 0
         var totalMax: Double = 0
         
-        for activity in subject.activities {
+        for activity in subject.activities ?? [] {
             if activity.attendance?.uppercased() == "P" {
                 if let markStr = activity.mark, let mark = Double(markStr) {
                     totalScored += mark
                 }
             }
-            if let max = Double(activity.maxMark) {
+            if let max = Double(activity.maxMark ?? "") {
                 totalMax += max
             }
         }
