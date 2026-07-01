@@ -443,6 +443,18 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewContorller.present(vc, animated: true)
     }
+    
+    func createClasstestVc(from viewContorller: UIViewController){
+        let vc = CreateClassTestVc(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewContorller.present(vc, animated: true)
+    }
+    
+    func resiverClassTestVc(from viewContorller: UIViewController){
+        let vc = ParentClassTestVc(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewContorller.present(vc, animated: true)
+    }
 }
 
 struct MenuImage{

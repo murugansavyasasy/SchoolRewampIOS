@@ -215,8 +215,10 @@ struct ServiceUrl{
     static let update_unreceived_for_student = "dashboard/api/reconcile/update-unreceived-payment-status-for-student"
     static let get_student_route_list = "transport/api/get-student-route-list"
     static let get_vehicle_live_tracking_details = "transport/api/get-vehicle-live-tracking-details"
-    static let get_latest_geo_location = "transport/api/get-latest-geo-location"
-    
+    static let get_latest_geo_location = "transport/api/get-latest-geo-location" 
+    static let exam_section_wise_subjects = "exam/api/exam-test/section-wise-subjects"
+    static let exam_create_class_test = "exam/api/exam-test/create-class-test"
+ 
 
 }
 

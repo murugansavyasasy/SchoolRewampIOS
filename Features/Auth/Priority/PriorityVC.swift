@@ -133,7 +133,6 @@ class PriorityVC: UIViewController {
          }
          else{
           
-             
              NextButtonView.isHidden = true
              bottomView.isHidden = true
              ProceedInstructionLbl.isHidden = true
@@ -234,17 +233,10 @@ class PriorityVC: UIViewController {
         NextButtonView.isHidden = true
         bottomView.isHidden = true
         ProceedInstructionLbl.isHidden = true
+        bottomView.isHidden = true
+        ProceedInstructionLbl.isHidden = true
         TeacherParentlbl.text = CommonStringFile.LoginAsStudentParent.translated()
-        if staff_role == PriorityType.is_principal || staff_role == PriorityType.is_admin || staff_role == PriorityType.is_grouphead{
-             NextButtonView.isHidden = false
-             bottomView.isHidden = false
-             ProceedInstructionLbl.isHidden = false
-         }
-         else{
-             NextButtonView.isHidden = true
-             bottomView.isHidden = true
-             ProceedInstructionLbl.isHidden = true
-         }
+       
         
         login_astype = 2
         UserDefaults.standard.set(login_astype, forKey: "passvalue")

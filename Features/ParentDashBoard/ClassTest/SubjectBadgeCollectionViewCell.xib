@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6-12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SubjectBadgeCollectionViewCell" id="gTV-IL-0wX" customClass="SubjectBadgeCollectionViewCell" customModule="parentScreenVc" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="80" height="28"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="80" height="28"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MATHS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblBadge">
+                        <rect key="frame" x="8" y="4" width="64" height="20"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="lblBadge" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="c1"/>
+                <constraint firstAttribute="trailing" secondItem="lblBadge" secondAttribute="trailing" constant="8" id="c2"/>
+                <constraint firstItem="lblBadge" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="4" id="c3"/>
+                <constraint firstAttribute="bottom" secondItem="lblBadge" secondAttribute="bottom" constant="4" id="c4"/>
+            </constraints>
+            <size key="customSize" width="80" height="28"/>
+            <connections>
+                <outlet property="badgeLabel" destination="lblBadge" id="out-badge"/>
+            </connections>
+            <point key="canvasLocation" x="-6" y="-12"/>
+        </collectionViewCell>
+    </objects>
+</document>
