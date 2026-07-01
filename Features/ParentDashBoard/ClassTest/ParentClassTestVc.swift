@@ -8,24 +8,41 @@
 import UIKit
 
 class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
-    @IBOutlet weak var tableView: UITableView!
     
-    let studentDetails = UserDefaultFileManager.get_staff_Details()
+    @IBOutlet weak var studentNameLbl: UILabel!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBtn: UIButton!
+    @IBOutlet weak var searchbar: UISearchBar!
+    @IBOutlet weak var nodataImg: UIImageView!
+    @IBOutlet weak var nodataLbl: UILabel!
+    
+    let studentDetails = UserDefaultFileManager.get_child_Details()
     private var classTests: [ClassTest] = []
+    private var filteredClassTests: [ClassTest] = []
     private let stateTracker = ClassTestsStateTracker()
-    private var totalExams = 0
-    private var totalSubjects = 0
-    private var totalActivities = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
+        let name = studentDetails?.name ?? ""
+        let stanard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
+        studentNameLbl.configureAsBackTitle(firstLine: name, secondLine: stanard)
+        
+        nodataImg.isHidden = true
+        nodataLbl.isHidden = true
+        
+        searchBtn.isHidden = true
+        searchbar.isHidden = true
+        searchbar.delegate = self
+        searchbar.searchTextField.addDoneButton()
+        searchbar.placeholder = CommonStringFile.Search.translated()
+        searchbar.backgroundImage = UIImage()
+        
         setupTableView()
         get_class_tests_Api()
     }
-
-
+    
+    
     @IBAction func Backbtn(_ sender: UIButton) {
         
         dismiss(animated: true)
@@ -48,7 +65,7 @@ class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDel
         tableView.estimatedRowHeight = 180
         
     }
-
+    
     func get_class_tests_Api() {
         
         APIService.shared.makeApi(
@@ -66,258 +83,53 @@ class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDel
                 case .success(let success):
                     
                     self.classTests = success.data ?? []
-                    tableView.reloadData()
+                    self.filteredClassTests = self.classTests
+                    nodataImg.isHidden = !(success.data?.isEmpty == true)
+                    nodataLbl.isHidden = !(success.data?.isEmpty == true)
+                    searchBtn.isHidden = (success.data?.isEmpty == true)
+                    nodataLbl.text = success.message
+                    self.tableView.reloadData()
+                    
                 case .failure(let failure):
-                    print("")
+                    self.classTests = []
+                    self.filteredClassTests = self.classTests
+                    nodataImg.isHidden = false
+                    nodataLbl.isHidden = false
+                    searchBtn.isHidden = true
+                    nodataLbl.text = failure.localizedDescription
+                    self.tableView.reloadData()
                 }
             }
             
         }
     }
-
-//    private func loadMockData() {
-//        let jsonString = """
-//        {
-//          "status": true,
-//          "message": "Class test details loaded",
-//          "data": [
-//            {
-//              "class_test_id": "1",
-//              "exam_name": "Unit Test 1",
-//              "subjects": [
-//                {
-//                  "subject_id": "113624",
-//                  "subject_name": "MATHS",
-//                  "activities": [
-//                    {
-//                      "class_test_subject_id": "1",
-//                      "exam_date": "25-06-2026",
-//                      "session": "AN",
-//                      "activity_name": "Formula Test",
-//                      "max_mark": "50.00",
-//                      "min_mark": "18.00",
-//                      "syllabus": "Lesson 1 to Lesson 2"
-//                    },
-//                    {
-//                      "class_test_subject_id": "2",
-//                      "exam_date": "25-06-2026",
-//                      "session": "FN",
-//                      "activity_name": "Diagram Test",
-//                      "max_mark": "50.00",
-//                      "min_mark": "18.00",
-//                      "syllabus": "Lesson 3 to Lesson 5"
-//                    }
-//                  ]
-//                }
-//              ]
-//            },
-//            {
-//              "class_test_id": "2",
-//              "exam_name": "Unit Test 2",
-//              "subjects": [
-//                {
-//                  "subject_id": "113624",
-//                  "subject_name": "MATHS",
-//                  "activities": [
-//                    {
-//                      "class_test_subject_id": "1",
-//                      "exam_date": "25-06-2026",
-//                      "session": "AN",
-//                      "activity_name": "Formula Test",
-//                      "max_mark": "50.00",
-//                      "min_mark": "18.00",
-//                      "syllabus": "Lesson 1 to Lesson 2"
-//                    },
-//                    {
-//                      "class_test_subject_id": "2",
-//                      "exam_date": "25-06-2026",
-//                      "session": "FN",
-//                      "activity_name": "Diagram Test",
-//                      "max_mark": "50.00",
-//                      "min_mark": "18.00",
-//                      "syllabus": "Lesson 3 to Lesson 5"
-//                    }
-//                  ]
-//                },
-//                {
-//                  "subject_id": "113623",
-//                  "subject_name": "TAMIL",
-//                  "activities": [
-//                    {
-//                      "class_test_subject_id": "1",
-//                      "exam_date": "25-06-2026",
-//                      "session": "AN",
-//                      "activity_name": "Formula Test",
-//                      "max_mark": "50.00",
-//                      "min_mark": "18.00",
-//                      "syllabus": "Lesson 1 to Lesson 2"
-//                    },
-//                    {
-//                      "class_test_subject_id": "2",
-//                      "exam_date": "25-06-2026",
-//                      "session": "FN",
-//                      "activity_name": "Diagram Test",
-//                      "max_mark": "50.00",
-//                      "min_mark": "18.00",
-//                      "syllabus": "Lesson 3 to Lesson 5"
-//                    }
-//                  ]
-//                },
-//                {
-//                  "subject_id": "113626",
-//                  "subject_name": "ENGLISH",
-//                  "activities": [
-//                    {
-//                      "class_test_subject_id": "2",
-//                      "exam_date": "25-06-2026",
-//                      "session": "FN",
-//                      "activity_name": "Diagram Test",
-//                      "max_mark": "50.00",
-//                      "min_mark": "18.00",
-//                      "syllabus": "Lesson 3 to Lesson 5"
-//                    }
-//                  ]
-//                }
-//              ]
-//            }
-//          ]
-//        }
-//        """
     
-    private func loadMockData() {
-        let jsonString = """
-        {
-            "status": true,
-            "message": "Class test details loaded",
-            "data": [
-                {
-                    "class_test_id": "3",
-                    "exam_name": "Unit Test 1",
-                    "over_all_student_marks" : "",
-                    "over_all_Marks" : "",
-                    "over_all_persentage" : "",
-                    "subjects": [
-                        {
-                            "subject_id": "113624",
-                            "subject_name": "MATHS",
-                            "activities": [
-                                {
-                                    "class_test_subject_id": "3",
-                                    "exam_date": "29-06-2026",
-                                    "session": "FN",
-                                    "activity_name": "Formula Test",
-                                    "max_mark": "50.00",
-                                    "min_mark": "18.00",
-                                    "syllabus": "Lesson 1 to Lesson 2",
-                                    "attendance": "P",
-                                    "mark": "59",
-                                    "remarks": ""
-                                },
-                                {
-                                    "class_test_subject_id": "4",
-                                    "exam_date": "30-06-2026",
-                                    "session": "FN",
-                                    "activity_name": "Algebra Test",
-                                    "max_mark": "50.00",
-                                    "min_mark": "18.00",
-                                    "syllabus": "Lesson 3 to Lesson 5",
-                                    "attendance": "P",
-                                    "mark": "61",
-                                    "remarks": ""
-                                }
-                            ]
-                        },
-                        {
-                            "subject_id": "113625",
-                            "subject_name": "SCIENCE",
-                            "activities": [
-                                {
-                                    "class_test_subject_id": "3",
-                                    "exam_date": "29-06-2026",
-                                    "session": "FN",
-                                    "activity_name": "Formula Test",
-                                    "max_mark": "50.00",
-                                    "min_mark": "18.00",
-                                    "syllabus": "Lesson 1 to Lesson 2",
-                                    "attendance": "P",
-                                    "mark": "59",
-                                    "remarks": ""
-                                },
-                                {
-                                    "class_test_subject_id": "4",
-                                    "exam_date": "30-06-2026",
-                                    "session": "FN",
-                                    "activity_name": "Algebra Test",
-                                    "max_mark": "50.00",
-                                    "min_mark": "18.00",
-                                    "syllabus": "Lesson 3 to Lesson 5",
-                                    "attendance": "P",
-                                    "mark": "61",
-                                    "remarks": ""
-                                }
-                            ]
-                        },
-                        {
-                            "subject_id": "113626",
-                            "subject_name": "TAMIL",
-                            "activities": [
-                                {
-                                    "class_test_subject_id": "3",
-                                    "exam_date": "29-06-2026",
-                                    "session": "FN",
-                                    "activity_name": "Formula Test",
-                                    "max_mark": "50.00",
-                                    "min_mark": "18.00",
-                                    "syllabus": "Lesson 1 to Lesson 2",
-                                    "attendance": "P",
-                                    "mark": "59",
-                                    "remarks": ""
-                                },
-                                {
-                                    "class_test_subject_id": "4",
-                                    "exam_date": "30-06-2026",
-                                    "session": "FN",
-                                    "activity_name": "Algebra Test",
-                                    "max_mark": "50.00",
-                                    "min_mark": "18.00",
-                                    "syllabus": "Lesson 3 to Lesson 5",
-                                    "attendance": "P",
-                                    "mark": "61",
-                                    "remarks": ""
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-        """
+    @IBAction func searchBtnAct(_ sender: UIButton) {
         
+        sender.isSelected.toggle()
         
-        guard let data = jsonString.data(using: .utf8) else { return }
-        
-        do {
-            let response = try JSONDecoder().decode(ClassTestResponse.self, from: data)
-            if response.status == true {
-                self.classTests = response.data ?? []
-                calculateStats()
-            }
-        } catch {
-            print("Failed to decode JSON: \(error)")
+        if sender.isSelected{
+            searchbar.isHidden = false
+            searchbar.becomeFirstResponder()
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+        }else{
+            searchbar.isHidden = true
+            view.endEditing(true)
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            searchbar.searchTextField.text = ""
+            searchbar.text = ""
+            filteredClassTests = classTests
+            nodataImg.isHidden = true
+            nodataLbl.isHidden = true
+            tableView.reloadData()
         }
     }
     
-    
-    private func calculateStats() {
-        tableView.reloadData()
-    }
-
     // MARK: - UITableViewDataSource
-
     @objc func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return classTests.count
+        return filteredClassTests.count
     }
-
+    
     @objc(tableView:cellForRowAtIndexPath:) func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ExamCardTableViewCell", for: indexPath) as? ExamCardTableViewCell else {
             return UITableViewCell()
@@ -325,9 +137,9 @@ class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDel
         configureCell(cell, at: indexPath)
         return cell
     }
-
+    
     private func configureCell(_ cell: ExamCardTableViewCell, at indexPath: IndexPath) {
-        let exam = classTests[indexPath.row]
+        let exam = filteredClassTests[indexPath.row]
         let isExpanded = stateTracker.isExamExpanded(exam.classTestId ?? "")
         
         cell.configure(with: exam, isExpanded: isExpanded, stateTracker: stateTracker, onToggle: { [weak self] in
@@ -374,13 +186,13 @@ class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDel
             }
         }
     }
-
+    
     // MARK: - UITableViewDelegate
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let exam = classTests[indexPath.row]
+        let exam = filteredClassTests[indexPath.row]
         stateTracker.toggleExam(exam.classTestId ?? "")
         
         // Auto-expand all child subjects if the exam is expanded
@@ -399,9 +211,57 @@ class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDel
         }
     }
     
+}
+
+extension ParentClassTestVc : UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+
+        let text = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard !text.isEmpty else {
+            
+            filteredClassTests = classTests
+            tableView.reloadData()
+            return
+        }
+
+
+        filteredClassTests = classTests.filter { exam in
+
+            // Search exam name
+            if exam.examName?.localizedCaseInsensitiveContains(text) == true {
+                return true
+            }
+
+            // Search subjects
+            if exam.subjects.contains(where: {
+                $0.subjectName?.localizedCaseInsensitiveContains(text) == true
+            }) {
+                return true
+            }
+
+            // Search activities
+            if exam.subjects.contains(where: { subject in
+                subject.activities.contains(where: {
+                    $0.activityName?.localizedCaseInsensitiveContains(text) == true
+                })
+            }) {
+                return true
+            }
+
+            return false
+        }
+
+        nodataImg.isHidden = !filteredClassTests.isEmpty
+        nodataLbl.isHidden = !filteredClassTests.isEmpty
+        nodataLbl.text = "No result found"
+        tableView.reloadData()
     }
 
-    
+}
+
+
 extension UIView {
     static func loadFromNib() -> Self {
         let bundle = Bundle(for: self)

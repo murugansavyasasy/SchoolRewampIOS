@@ -50,10 +50,19 @@ class MarksDetailsViewController: UIViewController, UITableViewDataSource, UITab
                 switch result {
                 case .success(let success):
                     
-                    self.classTest = success.data?.first
-                    tableView.reloadData()
+                    if success.status == true {
+                        self.classTest = success.data?.first
+                        tableView.reloadData()
+                    }else{
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
+                            self.dismiss(animated: true)
+                        }
+                    }
+                    
                 case .failure(let failure):
-                    print("")
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {
+                        self.dismiss(animated: true)
+                    }
                 }
             }
             

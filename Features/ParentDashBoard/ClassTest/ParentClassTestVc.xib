@@ -12,6 +12,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ParentClassTestVc" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
             <connections>
+                <outlet property="nodataImg" destination="Hcx-Mn-Ala" id="C9U-rl-CsD"/>
+                <outlet property="nodataLbl" destination="toR-QD-Avl" id="8wL-Ci-oHz"/>
+                <outlet property="searchBtn" destination="nxj-Hn-5EE" id="Qwl-fS-dVv"/>
+                <outlet property="searchbar" destination="V3D-Wq-UnO" id="jeB-K1-Pa7"/>
+                <outlet property="studentNameLbl" destination="x8G-vt-AS6" id="Nnx-S2-GGW"/>
                 <outlet property="tableView" destination="ShZ-ZS-vGD" id="pAR-r4-o0p"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -22,13 +27,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pCu-aG-pb8" customClass="BottomRoundedView" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="183"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="198"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="i9e-5w-xOD">
-                            <rect key="frame" x="10" y="128" width="373" height="35"/>
+                            <rect key="frame" x="10" y="128" width="373" height="50"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tBF-Bv-xOx">
-                                    <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                    <rect key="frame" x="0.0" y="7.6666666666666572" width="35" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="35" id="PeK-uz-iQU"/>
                                         <constraint firstAttribute="width" constant="35" id="VTr-VM-sy5"/>
@@ -46,13 +51,13 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SaranRaj" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x8G-vt-AS6">
-                                    <rect key="frame" x="35" y="7.333333333333341" width="303" height="20.333333333333329"/>
+                                    <rect key="frame" x="35" y="14.999999999999998" width="303" height="20.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nxj-Hn-5EE">
-                                    <rect key="frame" x="338" y="0.0" width="35" height="35"/>
+                                    <rect key="frame" x="338" y="7.6666666666666572" width="35" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="35" id="R7a-Wb-1PM"/>
                                         <constraint firstAttribute="width" constant="35" id="uyp-AO-43g"/>
@@ -62,6 +67,9 @@
                                     <state key="normal" image="magnifyingglass" catalog="system">
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="semibold"/>
                                     </state>
+                                    <connections>
+                                        <action selector="searchBtnAct:" destination="-1" eventType="touchUpInside" id="nrd-Qt-j8S"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </stackView>
@@ -74,19 +82,49 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ffq-IF-A1N">
-                    <rect key="frame" x="0.0" y="183" width="393" height="601"/>
+                    <rect key="frame" x="0.0" y="198" width="393" height="586"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ShZ-ZS-vGD">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="601"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        </tableView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="3mI-a6-zc8">
+                            <rect key="frame" x="0.0" y="10" width="393" height="576"/>
+                            <subviews>
+                                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="V3D-Wq-UnO">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="64"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="mZ7-eU-b5F"/>
+                                    </connections>
+                                </searchBar>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ShZ-ZS-vGD">
+                                    <rect key="frame" x="0.0" y="79" width="393" height="497"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                </tableView>
+                            </subviews>
+                        </stackView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="examTimeTable" translatesAutoresizingMaskIntoConstraints="NO" id="Hcx-Mn-Ala">
+                            <rect key="frame" x="30" y="193" width="333" height="200"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="200" id="ifu-ZC-q3S"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="toR-QD-Avl">
+                            <rect key="frame" x="30" y="408" width="333" height="20.333333333333314"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="ShZ-ZS-vGD" secondAttribute="trailing" id="FMX-l3-AFm"/>
-                        <constraint firstAttribute="bottom" secondItem="ShZ-ZS-vGD" secondAttribute="bottom" id="fa2-9n-He5"/>
-                        <constraint firstItem="ShZ-ZS-vGD" firstAttribute="top" secondItem="ffq-IF-A1N" secondAttribute="top" id="gOX-gS-Abx"/>
-                        <constraint firstItem="ShZ-ZS-vGD" firstAttribute="leading" secondItem="ffq-IF-A1N" secondAttribute="leading" id="rCE-pF-xUo"/>
+                        <constraint firstItem="3mI-a6-zc8" firstAttribute="top" secondItem="ffq-IF-A1N" secondAttribute="top" constant="10" id="41N-nA-glm"/>
+                        <constraint firstAttribute="trailing" secondItem="toR-QD-Avl" secondAttribute="trailing" constant="30" id="7z2-mZ-rIM"/>
+                        <constraint firstItem="toR-QD-Avl" firstAttribute="top" secondItem="Hcx-Mn-Ala" secondAttribute="bottom" constant="15" id="BrG-Ix-0vz"/>
+                        <constraint firstAttribute="trailing" secondItem="3mI-a6-zc8" secondAttribute="trailing" id="Muq-d6-RoO"/>
+                        <constraint firstItem="toR-QD-Avl" firstAttribute="leading" secondItem="ffq-IF-A1N" secondAttribute="leading" constant="30" id="Tt6-bi-ucI"/>
+                        <constraint firstItem="Hcx-Mn-Ala" firstAttribute="centerY" secondItem="ffq-IF-A1N" secondAttribute="centerY" id="dhq-iQ-ryk"/>
+                        <constraint firstAttribute="trailing" secondItem="Hcx-Mn-Ala" secondAttribute="trailing" constant="30" id="gxA-ha-WsZ"/>
+                        <constraint firstItem="Hcx-Mn-Ala" firstAttribute="leading" secondItem="ffq-IF-A1N" secondAttribute="leading" constant="30" id="oC8-hc-xbP"/>
+                        <constraint firstItem="3mI-a6-zc8" firstAttribute="leading" secondItem="ffq-IF-A1N" secondAttribute="leading" id="sbR-W0-JVM"/>
+                        <constraint firstAttribute="bottom" secondItem="3mI-a6-zc8" secondAttribute="bottom" id="zNB-j4-piW"/>
                     </constraints>
                 </view>
             </subviews>
@@ -107,6 +145,7 @@
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="examTimeTable" width="1500" height="1500"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <namedColor name="BackGroundClr">
             <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
