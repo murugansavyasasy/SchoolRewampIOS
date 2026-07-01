@@ -27,11 +27,23 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     private var popoverWidth: CGFloat = 393
     private var popoverHeight: CGFloat = 400
     var isUpdatingPopover = false
+    var uploadTest = false
+    var viewModel = CreateTestViewModel() 
     var selectedFilters: [(type: String, sortValue: String)] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-        titleLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
-        Get_Marks(parameters: payload ?? [:])
+        titleLbl.configureAsBackTitle(
+            firstLine: MenuStringFile.selectedMenuName,
+            secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
+        )
+        
+        if uploadTest {
+            allStudents = studentRecords
+            setupColumnsFromGetMarksResponse()
+        } else {
+            Get_Marks(parameters: payload ?? [:])
+        }
+        
         setupHeaderCollectionView()
         setupTableView()
         setupKeyboardObservers()
@@ -259,7 +271,6 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
             }
         }
         
-        // STEP 3: Reload UI
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.view.layoutIfNeeded()
@@ -389,79 +400,132 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     }
     
     @IBAction func saveAllMarks(_ sender: UIButton) {
-        var uploadDetails: [[String: Any]] = []
-        var invalidMarkCount = 0
         
-        for student in studentRecords {
-            let rollNo = student.roll_no ?? ""
-            var studentMarks: [[String: Any]] = []
+        if uploadTest{
+                CustomAlert().showAlertCancel(
+                    title: AlertstringFile.Confirm,
+                    message: AlertstringFile.uploadMark,
+                    actionLbl1: AlertstringFile.save,
+                    actionLbl2: AlertstringFile.Cancel,
+                    on: self,
+                    onOk: {
+
+                        print("OK button clicked")
+
+                        self.showActivityLoader()
+
+                        self.viewModel.createSaveRequest(
+                            studentRecords: self.studentRecords
+                        ) { [weak self] result in
+
+                            print("createSaveRequest called")
+
+                            guard let self = self else { return }
+
+                            DispatchQueue.main.async {
+                                self.hideActivityLoader()
+
+                                switch result {
+
+                                case .success(let response):
+                                    CustomAlert.showAlertWithOkAction(
+                                        title: response.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
+                                        message: response.message,
+                                        on: self
+                                    ) {
+                                        self.dismiss(animated: true)
+                                    }
+
+                                case .failure(let error):
+                                    CustomAlert.showAlertWithOkAction(
+                                        title: AlertstringFile.Alert_title,
+                                        message: "Failed to upload marks. Please try again.",
+                                        on: self
+                                    ) { }
+                                }
+                            }
+                        }
+                    },
+                    onNo: {
+                        print("Cancelled")
+                    }
+                )
+        }else{
             
-            for subject in student.marks ?? [] {
-                let subjectId = subject.subject_id ?? ""
-                var activitiesArray: [[String: Any]] = []
+            var uploadDetails: [[String: Any]] = []
+            var invalidMarkCount = 0
+            
+            for student in studentRecords {
+                let rollNo = student.roll_no ?? ""
+                var studentMarks: [[String: Any]] = []
                 
-                for activity in subject.activities ?? [] {
-                    let activityId = activity.id ?? ""
-                    let key = "\(subjectId)_\(activityId)"
-                    let editedMark = editedMarks[rollNo]?[key]
+                for subject in student.marks ?? [] {
+                    let subjectId = subject.subject_id ?? ""
+                    var activitiesArray: [[String: Any]] = []
                     
-                    let finalMarkStr = editedMark ?? activity.mark ?? ""
-                    let maxMarkStr   = activity.max_mark ?? ""
-                    
-                    let finalMark = Double(finalMarkStr) ?? 0
-                    let maxMark   = Double(maxMarkStr) ?? 0
-                    
-                    if finalMark > maxMark {
-                        invalidMarkCount += 1
+                    for activity in subject.activities ?? [] {
+                        let activityId = activity.id ?? ""
+                        let key = "\(subjectId)_\(activityId)"
+                        let editedMark = editedMarks[rollNo]?[key]
+                        
+                        let finalMarkStr = editedMark ?? activity.mark ?? ""
+                        let maxMarkStr   = activity.max_mark ?? ""
+                        
+                        let finalMark = Double(finalMarkStr) ?? 0
+                        let maxMark   = Double(maxMarkStr) ?? 0
+                        
+                        if finalMark > maxMark {
+                            invalidMarkCount += 1
+                        }
+                        
+                        activitiesArray.append([
+                            "id": activityId,
+                            "name": activity.name ?? "",
+                            "mark": finalMarkStr,
+                            "max_mark": maxMarkStr
+                        ])
                     }
                     
-                    activitiesArray.append([
-                        "id": activityId,
-                        "name": activity.name ?? "",
-                        "mark": finalMarkStr,
-                        "max_mark": maxMarkStr
+                    studentMarks.append([
+                        "subject_id": subjectId,
+                        "subject_name": subject.subject_name ?? "",
+                        "activities": activitiesArray
                     ])
                 }
                 
-                studentMarks.append([
-                    "subject_id": subjectId,
-                    "subject_name": subject.subject_name ?? "",
-                    "activities": activitiesArray
+                uploadDetails.append([
+                    "student_id": student.student_id ?? "",
+                    "student_name": student.student_name ?? "",
+                    "roll_no": rollNo,
+                    "admission_no": student.admission_no ?? "",
+                    "marks": studentMarks
                 ])
             }
             
-            uploadDetails.append([
-                "student_id": student.student_id ?? "",
-                "student_name": student.student_name ?? "",
-                "roll_no": rollNo,
-                "admission_no": student.admission_no ?? "",
-                "marks": studentMarks
-            ])
-        }
-        
-        if invalidMarkCount > 0 {
-            CustomAlert().showAlert(
-                title: "Invalid Marks",
-                message: "\(invalidMarkCount) marks are greater than Max Mark. Please correct them before saving.",
-                on: self
+            if invalidMarkCount > 0 {
+                CustomAlert().showAlert(
+                    title: "Invalid Marks",
+                    message: "\(invalidMarkCount) marks are greater than Max Mark. Please correct them before saving.",
+                    on: self
+                )
+                return
+            }
+            
+            let finalPayload: [String: Any] = [
+                "exam_section_id": examId ?? "",
+                "upload_details": uploadDetails
+            ]
+            
+            CustomAlert().showAlertCancel(
+                title: AlertstringFile.Confirm,
+                message: AlertstringFile.uploadMark,
+                actionLbl1: AlertstringFile.save,
+                actionLbl2: AlertstringFile.Cancel,
+                on: self,
+                onOk: { self.sendMarksToAPI(with: finalPayload) },
+                onNo: { print("User canceled upload") }
             )
-            return
         }
-        
-        let finalPayload: [String: Any] = [
-            "exam_section_id": examId ?? "",
-            "upload_details": uploadDetails
-        ]
-        
-        CustomAlert().showAlertCancel(
-            title: AlertstringFile.Confirm,
-            message: AlertstringFile.uploadMark,
-            actionLbl1: AlertstringFile.save,
-            actionLbl2: AlertstringFile.Cancel,
-            on: self,
-            onOk: { self.sendMarksToAPI(with: finalPayload) },
-            onNo: { print("User canceled upload") }
-        )
     }
     
     func sendMarksToAPI(with parameters: [String: Any]) {
@@ -1093,6 +1157,7 @@ extension EnterMarkVC {
             return students
         }
     }
+    
 }
 
 // MARK: - Update FilterPopoverDelegate in EnterMarkVC
@@ -1151,6 +1216,7 @@ struct ActivityMark: Codable {
     var isReview: Bool?
     var reason: String?
 }
+
 
 extension String {
     func width(usingFont font: UIFont) -> CGFloat {
