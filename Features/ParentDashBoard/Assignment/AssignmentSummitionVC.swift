@@ -332,6 +332,7 @@ extension String {
         
         // Date part
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = LocaleManager.shared.apiLocale
         dateFormatter.dateFormat = "dd MMM"
         let dateString = dateFormatter.string(from: date)
         
@@ -387,6 +388,7 @@ extension String {
         
         // Date part
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = LocaleManager.shared.apiLocale
         dateFormatter.dateFormat = "dd MMM"
         let dateString = dateFormatter.string(from: date)
         

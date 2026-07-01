@@ -48,7 +48,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
 
     let photoPickManager = PhotoPickerManager.shared
     let Img = ImageName()
-    let formatter = DateFormatter()
     var image = "image/pdf"
     var delegate : HistorySelectDelegate?
     let customdate = DateFormatter()
@@ -168,6 +167,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         RecipientBtn.layer.cornerRadius = 10
         DetailsTxtview.text = CommonStringFile.Description.translated()
         DetailsTxtview.textColor = .lightGray
+        customdate.locale = LocaleManager.shared.apiLocale
         customdate.dateFormat = DateOutPut.EEEE_d
         RecipientBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         //MARK: Label Font Style

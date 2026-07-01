@@ -23,6 +23,16 @@
 "Re-enter the new password" = "புதிய கடவுச்சொல்லை மீண்டும் உள்ளிடவும்";
 "Change password" = "கடவுச்சொல்லை மாற்றவும்";
 "Reset password" = "கடவுச்சொல்லை மீட்டமைக்கவும்";
+"New password" = "புதிய கடவுச்சொல்";
+"Enter the old password" = "பழைய கடவுச்சொல்லை உள்ளிடவும்";
+"Enter the New password" = "புதிய கடவுச்சொல்லை உள்ளிடவும்";
+"Create the new password" = "புதிய கடவுச்சொல்லை உருவாக்கவும்";
+"Confirm the new  password" = "புதிய கடவுச்சொல்லை உறுதிப்படுத்தவும்";
+"Change password" = "கடவுச்சொல்லை மாற்றவும்";
+"Reset password" = "கடவுச்சொல்லை மீட்டமைக்கவும்";
+"Create New Password" = "புதிய கடவுச்சொல்லை உருவாக்கவும்";
+"Confirm New Password" = "புதிய கடவுச்சொல்லை உறுதிப்படுத்தவும்";
+"Create" = "உருவாக்கு";
 
 // MARK: Common String files
 "NEXT" = "அடுத்து";
@@ -116,7 +126,7 @@
 "LoginAsStudentParent" = "மாணவர்/பெற்றோர் என உள்நுழைக";
 "Principal" = "முதல்வர்";
 "Login As Teacher Or Parent" = "ஆசிரியர் அல்லது பெற்றோர் என உள்நுழைக";
-"Login As" = "உள்நுழைவு வகை";
+"Login as" = "உள்நுழைவு வகை";
 "Choose Your Role" = "உங்கள் பங்கைத் தேர்வுசெய்க";
 "Proceed" = "தொடர்க";
 "Create Event" = "நிகழ்வை உருவாக்கு";
@@ -142,7 +152,7 @@
 "url" = "இணைப்பு";
 "type" = "வகை";
 "pdf" = "PDF";
-"audio" = "ஒலி";
+"Audio" = "ஒலி";
 "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked." = "இன்றைய வருகையை பதிவு செய்ய 'Punch' பொத்தானை தட்டவும். உங்கள் வருகை வெற்றிகரமாக பதிவு செய்யப்பட்டதும் உறுதிப்படுத்தல் செய்தி தோன்றும்.";
 "Note: You are outside the institute's boundary. You will not be able to mark your attendance.\n\nPlease try again when you are within the designated area." = "குறிப்பு: நீங்கள் கல்வி நிறுவனத்தின் எல்லைக்கு வெளியே உள்ளீர்கள். நீங்கள் வருகையை பதிவு செய்ய முடியாது.\n\nகுறிப்பிட்ட பகுதியுக்குள் வந்த பிறகு மீண்டும் முயற்சிக்கவும்.";
 "Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting." = "பயனர்கள் கல்வி நிறுவனத்தின் குறிப்பிடப்பட்ட பகுதியில் இருக்கும்போது மட்டுமே வருகை பதிவு செய்யப்படும் என்பதற்காக துல்லியமான இட அமைப்புகள் அவசியம். சமர்ப்பிக்கும் முன் இடத்தை மறுபடியும் சரிபார்க்கவும்.";
@@ -249,9 +259,14 @@
 "All" = "அனைத்தும்";
 "Completed" = "முடிந்தது";
 "Pending" = "நிலுவையில்";
-
-
-
+"Due Date" = "கடைசி தேதி";
+"Task Details" = "பணி விவரங்கள்";
+"Submitted Students" = "சமர்ப்பித்த மாணவர்கள்";
+"Submitted" = "சமர்ப்பிக்கப்பட்டது";
+"🖼 Files" = "🖼 கோப்புகள்";
+"Almost Complete!" = "கிட்டத்தட்ட முடிந்தது!";
+"Add Description" = "விளக்கத்தைச் சேர்க்கவும்";
+"Recording" = "பதிவு";
 // MARK: Settings page
 "general" = "பொது";
 "notifications" = "அறிவிப்புகள்";
@@ -636,8 +651,8 @@
 "Slot Expired" = "ஸ்லாட் காலாவதியானது";
 "Slot Cancelled" = "ஸ்லாட் ரத்துசெய்யப்பட்டது";
 "Booked by:" = "பதிவு செய்தவர்:";
-"Father Name:" = "தந்தை பெயர்:";
-"Mother Name:" = "தாய் பெயர்:";
+"Father Name" = "தந்தை பெயர்";
+"Mother Name" = "தாய் பெயர்";
 "Mode" = "முறை";
 "Classes" = "வகுப்புகள்";
 "Booked" = "பதிவு செய்யப்பட்டது";
@@ -688,7 +703,7 @@
 "Subject" = "பாடம்";
 "Level" = "நிலை";
 "Created date" = "உருவாக்கிய தேதி";
-"posted by" = "பதிவிட்டவர்";
+"Posted by" = "பதிவிட்டவர்";
 "Posted On" = "பதியப்பட்டது";
 "Play Now" = "இப்போது விளையாடு";
 "Reports" = "அறிக்கைகள்";
@@ -723,7 +738,7 @@
 
 //MARK: DailyCollection
 "CATEGORY" = "வகை";
-"CLASS" = "வகுப்பு";
+"Class" = "வகுப்பு";
 "MODE" = "முறை";
 "FROM_DATE" = " தொடக்க தேதி";
 "TO_DATE" = " முடிவு தேதி";
@@ -787,7 +802,7 @@
 "Certificate History" = "சான்றிதழ் வரலாறு";
 "Select Urgency Level" = "அவசர நிலையை தேர்வு செய்யவும்";
 "Enter your reason here..." = "உங்கள் காரணத்தை இங்கே உள்ளிடவும்...";
-"any_other_suggestions" = "வேறு எந்த பரிந்துரைகள்? (விருப்பத்திற்கேற்ப)";
+"Any other suggestions" = "வேறு எந்த பரிந்துரைகள்? (விருப்பத்திற்கேற்ப)";
 "rate_experience" = "உங்கள் அனுபவத்தை எப்படி மதிப்பிடுவீர்கள்?";
 
 //MARK: Exam mark Upload
@@ -843,6 +858,10 @@
 "Reply All" = "அனைவருக்கும் பதில்";
 "Blocked Students List" = "தடை செய்யப்பட்ட மாணவர்கள் பட்டியல்";
 "Blocked on" = "தடை செய்யப்பட்ட தேதி";
+"Replying To " = "பதிலளிப்பது ";
+"Type your message here..." = "உங்கள் செய்தியை இங்கே தட்டச்சு செய்யவும்...";
+"Asked by ~ " = "கேட்டவர் ~ ";
+"You have been blocked by the staff" = "நீங்கள் பணியாளர்களால் தடுக்கப்பட்டுள்ளீர்கள்";
 
 //MARK: Report Bug
 "Type content" = "உள்ளடக்கத்தை உள்ளிடவும்";
@@ -1003,3 +1022,153 @@
 "Invalid time" = "தவறான நேரம்";
 "Choose an action for this message" = "இந்த செய்திக்கான செயலைத் தேர்ந்தெடுக்கவும்";
 "Are you sure want to create this PTM meeting?" = "இந்த PTM கூட்டத்தை உருவாக்க விரும்புகிறீர்களா?";
+"EMERGENCY MESSAGE" = "அவசரச் செய்தி";
+"All Schools" = "அனைத்து பள்ளிகளும்";
+"Download" = "பதிவிறக்கு";
+"No Absentees Report from this date" = "இந்த தேதியிலிருந்து வராதோர் அறிக்கை இல்லை";
+"Total Absent: " = "மொத்த வராதோர்: ";
+"Absentees : " = "வராதோர் : ";
+"Outpass Requests" = "வெளிச்செல்ல அனுமதி கோரிக்கைகள்";
+"👨🏻‍🎓 Absent students list" = "👨🏻‍🎓 வராத மாணவர்கள் பட்டியல்";
+"Roll No ↑" = "வரிசை எண் ↑";
+"Roll No ↓" = "வரிசை எண் ↓";
+"Admission No ↓" = "சேர்க்கை எண் ↓";
+"Admission No ↑" = "சேர்க்கை எண் ↑";
+"Others" = "மற்றவை";
+"All students" = "அனைத்து மாணவர்களும்";
+"Class & Section" = "வகுப்பு & பிரிவு";
+"Admission No" = "சேர்க்கை எண்";
+"SMS" = "குறுஞ்செய்தி";
+"Mail" = "மின்னஞ்சல்";
+"Gender" = "பாலினம்";
+"Date Of Birth" = "பிறந்த தேதி";
+"Class Teacher" = "வகுப்பு ஆசிரியர்";
+"Punch" = "வருகை பதிவு";
+"My Attendance" = "என் வருகை";
+"Update" = "புதுப்பிக்கவும்";
+"Please update your details" = "தயவுசெய்து உங்கள் விவரங்களை புதுப்பிக்கவும்";
+"Enter your location name" = "உங்கள் இருப்பிடத்தின் பெயரை உள்ளிடவும்";
+"Enter your distance" = "உங்கள் தூரத்தை உள்ளிடவும்";
+"location" = "இருப்பிடம்";
+"distance" = "தூரம்";
+"Your locations" = "உங்கள் இருப்பிடங்கள்";
+"Location or distance field is empty" = "இருப்பிடம் அல்லது தூரப் புலம் காலியாக உள்ளது";
+"Are you sure want to delete this loacation ?" = "இந்த இருப்பிடத்தை நீக்க விரும்புகிறீர்களா?";
+"FD: Full Day" = "FD: முழு நாள்";
+"FH: First Half ( morning session)" = "FH: முதல் பாதி (காலை அமர்வு)";
+"SH: Second Half (afternoon session)" = "SH: இரண்டாம் பாதி (மதிய அமர்வு)";
+"CHECK-IN" = "உள்நுழைவு";
+"CHECK-OUT" = "வெளியேறு";
+"HOURS" = "மணிநேரங்கள்";
+"Not yet in" = "இன்னும் வரவில்லை";
+"min" = "நிமி";
+"from last year" = "கடந்த ஆண்டுடன் ஒப்பிடுகையில்";
+"No change from last year" = "கடந்த ஆண்டிலிருந்து எந்த மாற்றமும் இல்லை";
+"Not specified" = "குறிப்பிடப்படவில்லை";
+"Staff" = "பணியாளர்கள்";
+"Unspecified" = "குறிப்பிடப்படாதது";
+"NOT MARKED" = "குறிக்கப்படவில்லை";
+"TOTAL ABSENT" = "மொத்த வராதோர்";
+"TOTAL PRESENT" = "மொத்த வருகை";
+"Overall Summary" = "ஒட்டுமொத்த சுருக்கம்";
+"From Date" = "தொடக்க தேதி";
+"To Date" = "முடிவு தேதி";
+"Select Staff" = "பணியாளரைத் தேர்ந்தெடுக்கவும்";
+"View All Staff" = "அனைத்து பணியாளர்களையும் காண்க";
+"Not Marked" = "குறிக்கப்படவில்லை";
+"REASON FOR LEAVE" = "விடுப்பிற்கான காரணம்";
+"TYPE" = "வகை";
+"DAYS" = "நாட்கள்";
+"END" = "முடிவு";
+"LEAVE HISTORY" = "விடுப்பு வரலாறு";
+"CONTACT INFORMATION" = "தொடர்பு தகவல்";
+"Phone" = "தொலைபேசி";
+"Email" = "மின்னஞ்சல்";
+"Address" = "முகவரி";
+"View More Details >>" = "மேலும் விவரங்களைக் காண >>";
+"VOICE" = "குரல்";
+"TEXT" = "உரை";
+"Read" = "படிக்கப்பட்டது";
+"Unread" = "படிக்கப்படாதது";
+"Meeting Slots" = "சந்திப்பு நேர இடங்கள்";
+"No notifications found" = "அறிவிப்புகள் எதுவும் இல்லை";
+"Clear All Notifications" = "அனைத்து அறிவிப்புகளையும் நீக்கு";
+"Are you sure you want to delete all notifications?" = "அனைத்து அறிவிப்புகளையும் நீக்க விரும்புகிறீர்களா?";
+"Clear" = "நீக்கு";
+"Delete Notification" = "அறிவிப்பை நீக்கு";
+"Are you sure you want to delete this notification?" = "இந்த அறிவிப்பை நீக்க விரும்புகிறீர்களா?";
+"Search Data not Found" = "தேடல் தரவு கிடைக்கவில்லை";
+"Clear All" = "அனைத்தையும் நீக்கு";
+"Our 24*7 Customer Service." = "எங்களின் 24*7 வாடிக்கையாளர் சேவை.";
+"Write us at." = "எங்களுக்கு எழுதுங்கள்.";
+"Select Module" = "தொகுதியைத் தேர்ந்தெடுக்கவும்";
+"Remarks" = "கருத்துகள்";
+"Type content" = "உள்ளடக்கத்தை தட்டச்சு செய்யவும்";
+"ℹ️To help us understand the issue better and investigate it more effectively, kindly attach a relevant screenshot or screen recording when sending the email. This will allow our team to identify the problem faster and provide a more accurate solution." = "ℹ️பிரச்சினையை நாங்கள் சிறப்பாகப் புரிந்துகொண்டு விரைவாக ஆய்வு செய்ய உதவ, மின்னஞ்சல் அனுப்பும்போது தொடர்புடைய ஸ்கிரீன்ஷாட் அல்லது திரைப் பதிவு ஒன்றை இணைக்கவும். இதன் மூலம் எங்கள் குழு பிரச்சினையை விரைவாகக் கண்டறிந்து துல்லியமான தீர்வை வழங்க முடியும்.";
+"Send Mail" = "மின்னஞ்சல் அனுப்பு";
+"Choose a phone number" = "ஒரு தொலைபேசி எண்ணைத் தேர்ந்தெடுக்கவும்";
+"Choose an email address" = "ஒரு மின்னஞ்சல் முகவரியைத் தேர்ந்தெடுக்கவும்";
+"Missing Information" = "தகவல் இல்லை";
+"Please select a module and enter bug details." = "தயவுசெய்து ஒரு தொகுதியைத் தேர்ந்தெடுத்து பிழை விவரங்களை உள்ளிடவும்.";
+"Missing Module" = "தொகுதி தேர்வு செய்யப்படவில்லை";
+"Please select a module." = "தயவுசெய்து ஒரு தொகுதியைத் தேர்ந்தெடுக்கவும்.";
+"Missing Details" = "விவரங்கள் இல்லை";
+"Please enter bug details." = "தயவுசெய்து பிழை விவரங்களை உள்ளிடவும்.";
+"Send Email" = "மின்னஞ்சல் அனுப்பு";
+"Choose mail app" = "மின்னஞ்சல் செயலியைத் தேர்ந்தெடுக்கவும்";
+"Apple Mail" = "ஆப்பிள் மெயில்";
+"Gmail" = "ஜிமெயில்";
+"Apple Mail Not Available" = "ஆப்பிள் மெயில் கிடைக்கவில்லை";
+"Please configure Apple Mail or choose Gmail." = "தயவுசெய்து ஆப்பிள் மெயிலை அமைக்கவும் அல்லது ஜிமெயிலைத் தேர்ந்தெடுக்கவும்.";
+"Select the menu" = "மெனுவைத் தேர்ந்தெடுக்கவும்";
+"WELCOME BACK !" = "மீண்டும் வரவேற்கிறோம்!";
+"Stay connected with your school community.\nGet updates, communicate, and experience school life—all in one place." = "உங்கள் பள்ளி சமூகத்துடன் தொடர்ந்து இணைந்திருங்கள்.\nபுதுப்பிப்புகளைப் பெறுங்கள், தொடர்பில் இருங்கள் மற்றும் பள்ளி வாழ்க்கையை ஒரே இடத்தில் அனுபவியுங்கள்.";
+"Mobile Number" = "மொபைல் எண்";
+"Password" = "கடவுச்சொல்";
+"Forgot Password ?" = "கடவுச்சொல்லை மறந்துவிட்டீர்களா?";
+"Login" = "உள்நுழையவும்";
+"Your Verification code has been sent to your registered mobile number" = "உங்கள் பதிவு செய்யப்பட்ட மொபைல் எண்ணிற்கு சரிபார்ப்பு குறியீடு அனுப்பப்பட்டுள்ளது";
+"Didn't receive a Verification code?" = "சரிபார்ப்பு குறியீடு கிடைக்கவில்லையா?";
+"Resend" = "மீண்டும் அனுப்பு";
+"Call Us ?" = "எங்களை அழைக்கவும்";
+"Enable Auto-Fill" = "தானியங்கி நிரப்பலை இயக்கு";
+"To automatically fill your OTP, please enable Auto-Fill in Settings:\n\nSettings → Passwords & Accounts → AutoFill Passwords" = "உங்கள் OTP-ஐ தானாக நிரப்ப, அமைப்புகளில் தானியங்கி நிரப்பலை இயக்கவும்:\n\nஅமைப்புகள் → கடவுச்சொற்கள் & கணக்குகள் → தானியங்கி கடவுச்சொல் நிரப்பல்";
+"Open Settings" = "அமைப்புகளைத் திற";
+"Teaching Staff" = "கற்பித்தல் பணியாளர்கள்";
+"We appreciate your feedback! Your rating helps us improve." = "உங்கள் கருத்துகளை மதிக்கிறோம்! உங்கள் மதிப்பீடு எங்களை மேம்படுத்த உதவுகிறது.";
+"Thank You" = "நன்றி";
+"No holidays in" = "விடுமுறைகள் இல்லை";
+"Outpass" = "வெளிச்செல்ல அனுமதி";
+"Applied On" = "விண்ணப்பித்த தேதி";
+"No of Day(s)" = "நாட்களின் எண்ணிக்கை";
+"Approved by" = "அங்கீகரித்தவர்";
+"Please enter the purpose of the meeting" = "சந்திப்பின் நோக்கத்தை உள்ளிடவும்";
+"Please enter the meeting link" = "சந்திப்பு இணைப்பை உள்ளிடவும்";
+"Online" = "ஆன்லைன்";
+"Please select the start time" = "தொடக்க நேரத்தைத் தேர்ந்தெடுக்கவும்";
+"Please select the end time" = "முடிவு நேரத்தைத் தேர்ந்தெடுக்கவும்";
+"Reopen" = "மீண்டும் திற";
+"Please select at least one class" = "குறைந்தது ஒரு வகுப்பையாவது தேர்ந்தெடுக்கவும்";
+"Please select the dates for the meeting" = "சந்திப்பிற்கான தேதிகளைத் தேர்ந்தெடுக்கவும்";
+"Please select or enter a valid duration for the meeting" = "சந்திப்பிற்கான சரியான கால அளவைத் தேர்ந்தெடுக்கவும் அல்லது உள்ளிடவும்";
+"Invalid Time" = "தவறான நேரம்";
+"Start time cannot be in the past for today" = "இன்றைய தொடக்க நேரம் கடந்த நேரமாக இருக்கக்கூடாது";
+"No available slots Found in the selected date and time" = "தேர்ந்தெடுக்கப்பட்ட தேதி மற்றும் நேரத்தில் காலியிடங்கள் இல்லை";
+"Are you sure want to Reopen this slot?" = "இந்த நேர இடத்தை மீண்டும் திறக்க விரும்புகிறீர்களா?";
+"Are you sure want to Cancel this slot?" = "இந்த நேர இடத்தை ரத்து செய்ய விரும்புகிறீர்களா?";
+"Open Above Slots" = "மேலே உள்ள நேர இடங்களைத் திற";
+"There is no available slots" = "காலியிடங்கள் எதுவும் இல்லை";
+"Select Meeting Slot" = "சந்திப்பு நேர இடத்தைத் தேர்ந்தெடுக்கவும்";
+"Not Available" = "கிடைக்கவில்லை";
+"Selected" = "தேர்ந்தெடுக்கப்பட்டது";
+"Time Conflict" = "நேர முரண்பாடு";
+"Cancel Meeting" = "சந்திப்பை ரத்து செய்";
+"Reason for Cancelation" = "ரத்து செய்வதற்கான காரணம்";
+"Paste the meeting link here" = "சந்திப்பு இணைப்பை இங்கே ஒட்டவும்";
+
+
+//MARK: Flavour strings
+"WELCOME_STRING" = "Welcome to School Chimes";
+"REPORT_BUG_STRING" = "Dear School Chimes Team";
+"TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
+"APP_STORE_ID" = "6758079127";

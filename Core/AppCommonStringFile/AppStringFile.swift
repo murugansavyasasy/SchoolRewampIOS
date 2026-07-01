@@ -60,7 +60,7 @@ struct MenuStringFile{
     static let enterOptionD = "Enter Option D"
     static let enterQuestionHere = "Enter Question here"
     static let Sent_at = "Sent at "
-    static let Posted_By = "Posted By - "
+    static let Posted_By = "Posted by"
     static let Level = "Level "
     static let Submitted = "Submitted"
     static let Pending = "Pending"
@@ -80,13 +80,12 @@ struct MenuStringFile{
     static let No_home_work_found   = "No home work found"
     static let See_Archived_Messages  = "See Archived Messages"
     static let  No_Absentees_Report_from_this_date   = "No Absentees Report from this date"
-    static let  Absent_students_list   = "👨🏻‍🎓 Absent  students list"
+    static let  Absent_students_list   = "👨🏻‍🎓 Absent students list"
     static let  Pin_your_location_name   = "Pin your location name"
     static let  Drop_your_distance   = "Drop your distance"
     static let  Invalid_time_selection   = "Invalid time selection."
     static let  You_cannot_select_a_past_time_for_today_date   = "You cannot select a past time for today's date."
     static let  End_time_must_be_greater_than_start_time   = "End time must be greater than start time."
-    static let  Blocked_on   = "Blocked on: "
     static let  ChaptersCompleted   = "Chapters Completed"
     static let  Create   = "Create"
     static let  CreateOn   = "Created On "
@@ -419,7 +418,7 @@ struct CommonStringFile {
     static let SelectCatagorie = "Select Catagorie"
     static let AddPdfoptional = "Add Pdf (Optional?)"
     static let Add_attachment_optional = "Add attachment (Optional)"
-    static let any_other_suggestions = "any_other_suggestions"
+    static let any_other_suggestions = "Any other suggestions"
     static let Recording_Time = "Recording Time (Optional?)"
     static let Add_attachment = "Add attachment"
     static let RTime = "Recording Time"
@@ -457,6 +456,18 @@ struct CommonStringFile {
     static let To_date_placeholder = "--To date--"
     static let Select_Date = "Select Date"
     static let Base_bundle_id = "com.isss.schoolchimes"
+    static let BlockStudent = "Block Student"
+    static let ReasonForBlocking = "Reason for Blocking"
+    static let Block = "Block"
+    static let Answer = "Answer"
+    static let UpdateAnswer = "Update answer"
+    static let PublicReply = "Public reply"
+    static let PrivateReply = "Private reply"
+    static let Reply = "Reply"
+    static let ReplyAll = "Reply All"
+    static let BlockedStudentsList = "Blocked Students List"
+    static let BlockedOn = "Blocked on"
+    static let You_have_been_blocked_by_the_staff = "You have been blocked by the staff"
 }
 
 
@@ -698,8 +709,8 @@ struct PTMString {
     static let Slot_Expired = "Slot Expired";
     static let Slot_Cancelled = "Slot Cancelled";
     static let Booked_by = "Booked by:";
-    static let Father_Name = "Father Name:";
-    static let Mother_Name = "Mother Name:";
+    static let Father_Name = "Father Name";
+    static let Mother_Name = "Mother Name";
     static let Mode = "Mode";
     static let Classes = "Classes";
     static let Slot_Duration = "Slot Duration";

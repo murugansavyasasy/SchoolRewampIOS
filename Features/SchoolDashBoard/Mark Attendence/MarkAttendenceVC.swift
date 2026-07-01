@@ -78,8 +78,7 @@ class MarkAttendenceVC: UIViewController {
     @IBOutlet weak var attendanceTypeDefLbl: UILabel!
     @IBOutlet weak var sessionDefLbl: UILabel!
     @IBOutlet weak var fn_an_segmentController: UISegmentedControl!
-    let formatter = DateFormatter()
-    let customdate = DateFormatter()
+ 
     let standardDropdown = DropDown()
     let SectionDropdown = DropDown()
     let AcademicDropdown = DropDown()
@@ -103,12 +102,14 @@ class MarkAttendenceVC: UIViewController {
         BottomView.layer.cornerRadius = 8
         notTakenView.layer.cornerRadius = 8
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = DateInputs.dd_MM_yyyy
         let currentDateString = formatter.string(from: Date())
         selectedDate = currentDateString
         dateDayLbl.text = currentDateString
         if let date = formatter.date(from: selectedDate) {
             let showFormatter = DateFormatter()
+            showFormatter.locale = LocaleManager.shared.apiLocale
             showFormatter.dateFormat = DateOutPut.EE_MMM_dd_yyyy
             let formattedDate = showFormatter.string(from: date)
             print(formattedDate)  // Example: Mon Sep 22, 2025
@@ -248,6 +249,7 @@ class MarkAttendenceVC: UIViewController {
         calendar.appearance.titleTodayColor = UIColor.primery  // set text color for today
         calendar.appearance.selectionColor = UIColor.primery
         calendar.appearance.titleSelectionColor = .white
+        calendar.locale = LocaleManager.shared.apiLocale
         fulldayAction()
     }
     
@@ -268,17 +270,16 @@ class MarkAttendenceVC: UIViewController {
     
     // MARK: - Date Selection
     func dateSelect(_ date: String?) {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let localeID = normalizedLocaleIdentifier(for: savedCode)
+
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = DateInputs.dd_MMM_yy
-        inputFormatter.locale = Locale(identifier: localeID)
+        inputFormatter.locale = LocaleManager.shared.displayLocale
         let outputFormatter = DateFormatter()
         outputFormatter.dateFormat = DateInputs.dd_MMM_yyyy
-        outputFormatter.locale = Locale(identifier: localeID)
+        outputFormatter.locale = LocaleManager.shared.displayLocale
         let dayFormatter = DateFormatter()
         dayFormatter.dateFormat = DateOutPut.EEEE // Full weekday name (e.g., Monday, Sunday)
-        dayFormatter.locale = Locale(identifier: localeID)
+        dayFormatter.locale = LocaleManager.shared.displayLocale
         var selectedDate = Date()
         if let dateStr = date, !dateStr.isEmpty {
             selectedDate = inputFormatter.date(from: dateStr) ?? Date()
@@ -943,8 +944,10 @@ extension MarkAttendenceVC: UISearchBarDelegate {
 extension MarkAttendenceVC: FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         let filterFormatter = DateFormatter()
+        filterFormatter.locale = LocaleManager.shared.displayLocale
         filterFormatter.dateFormat = DateInputs.dd_MM_yyyy
         let showFormatter = DateFormatter()
+        showFormatter.locale = LocaleManager.shared.apiLocale
         showFormatter.dateFormat = DateOutPut.EE_MMM_dd_yyyy
         let selectedDateForFilter = filterFormatter.string(from: date)
         let selectedDateForLabel = showFormatter.string(from: date)
@@ -982,6 +985,7 @@ extension MarkAttendenceVC: FSCalendarDataSource, FSCalendarDelegate, FSCalendar
     }
     func updateMonthLabel() {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = DateInputs.MMMM_yyyy   // Example: "September 2025"
         mnthLbl.text = formatter.string(from: calendar.currentPage)
     }

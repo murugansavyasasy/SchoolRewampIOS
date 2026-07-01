@@ -65,7 +65,7 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
         // MARK: - Role-based Setup
         
             switch item.name {
-            case "Staff":
+            case "Staff".translated():
                 configureCell(cell, icon: "teachers", tint: .aproved,
                               progressTint: .maleClr, trackTint: .femaleClr,
                               present: item.Total, previous: item.previousYear,girls: item.Girl,boys: item.boys, message: item.message)
@@ -80,7 +80,7 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
                 cell.progress.segment1Color = UIColor(hex: "#3D82ED")
                 cell.progress.segment2Color = UIColor(hex: "#FF93C0")
                
-            case "Students":
+            case "Students".translated():
                 configureCell(cell, icon: "person.2.fill", tint: .link.withAlphaComponent(0.5),
                               progressTint: .maleClr, trackTint: .femaleClr,
                               present: item.Total, previous: item.previousYear,girls: item.Girl,boys: item.boys,message: item.message)
@@ -95,7 +95,7 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
                 cell.progress.segment1Color = UIColor(hex: "#3D82ED")
                 cell.progress.segment2Color = UIColor(hex: "#FF93C0")
                
-            case "Total":
+            case "Total".translated():
                 configureCell(cell, icon: "School Needs", tint: .button,
                               progressTint: .aproved.withAlphaComponent(0.7),
                               trackTint: .primery.withAlphaComponent(0.7),
@@ -142,19 +142,21 @@ extension SummerizeTvCel : UICollectionViewDataSource, UICollectionViewDelegateF
             cell.arrowImage.isHidden = false
             if present > previous {
                 let diff = present - previous
-                cell.lastYearLbl.text = " +\(diff) from last year"
+                let lastYear = "from last year".translated()
+                cell.lastYearLbl.text = " +\(diff) \(lastYear)"
                 cell.lastYearLbl.textColor = .aproved
                 cell.arrowImage.image = UIImage(systemName: "arrow.up.circle.fill")
                 cell.arrowImage.tintColor = .aproved
             } else if present == previous {
-                cell.lastYearLbl.text = " No change from last year"
+                cell.lastYearLbl.text = "No change from last year".translated()
                 cell.lastYearLbl.textColor = .systemGray
 //                cell.arrowImage.image = UIImage(named: "slachImg")
                 cell.arrowImage.isHidden = true
                 cell.arrowImage.tintColor = .black
             } else {
                 let diff = previous - present
-                cell.lastYearLbl.text = " -\(diff) from last year"
+                let lastYear = "from last year".translated()
+                cell.lastYearLbl.text = " -\(diff) \(lastYear)"
                 cell.lastYearLbl.textColor = .red1
                 cell.arrowImage.image = UIImage(systemName: "arrow.down.circle.fill")
                 cell.arrowImage.tintColor = .red1

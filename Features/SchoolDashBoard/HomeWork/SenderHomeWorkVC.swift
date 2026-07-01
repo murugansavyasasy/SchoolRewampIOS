@@ -62,8 +62,6 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
     let standardDropdown = DropDown()
     let SectionDropdown = DropDown()
     let acidamicdrops = DropDown()
-    let formatter = DateFormatter()
-    let customdate = DateFormatter()
     var homeWorkList: [Homework]?
     var FilterHomeWorkList: [Homework]?
     var AcadimicYearDatas: [AcadimicYearData] = []
@@ -226,16 +224,15 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
     
     // MARK: - Date Selection
     func dateSelect(_ date: String?) {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let localeID = normalizedLocaleIdentifier(for: savedCode)
+        
         let outputFormatter = DateFormatter()
         outputFormatter.dateFormat = DateInputs.dd_MMM_yyyy
-        outputFormatter.locale = Locale(identifier: localeID)
+        outputFormatter.locale = LocaleManager.shared.displayLocale
         var selectedDate = Date()
         if let dateStr = date, !dateStr.isEmpty {
             let inputFormatter = DateFormatter()
             inputFormatter.dateFormat = DateInputs.dd_MMM_yy
-            inputFormatter.locale = Locale(identifier: localeID)
+            inputFormatter.locale = LocaleManager.shared.displayLocale
             selectedDate = inputFormatter.date(from: dateStr) ?? Date()
         }
         let comparison = Calendar.current.compare(selectedDate, to: Date(), toGranularity: .day)
@@ -243,6 +240,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
             todayLbl.text = Today
         } else if comparison == .orderedAscending {
             let dayFormatter = DateFormatter()
+            dayFormatter.locale = LocaleManager.shared.displayLocale
             dayFormatter.dateFormat = DateOutPut.EEEE // Full day name: Monday, Tuesday...
             todayLbl.text = dayFormatter.string(from: selectedDate)
         } else {

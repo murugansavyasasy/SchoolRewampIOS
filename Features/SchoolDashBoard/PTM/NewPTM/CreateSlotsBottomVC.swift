@@ -22,6 +22,7 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
         view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         
         createMeetingBtn.layer.cornerRadius = 10
+        createMeetingBtn.setTitle("Open Above Slots".translated(), for: .normal)
         
         tableView.register(UINib(nibName: "CreatedSlotsTv", bundle: nil), forCellReuseIdentifier: "CreatedSlotsTv")
         tableView.delegate = self
@@ -83,7 +84,7 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
         }
 
         if param.isEmpty{
-            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: "There is no available slots", on: self)
+            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: "There is no available slots".translated(), on: self)
         }else {
             
             APIService.shared.PtmApi(url: ServiceUrl.ptm_api_ptm_schedule_create_slots, parameters: param, token: staffDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result:Result<CommonApiSuc,Error>) in
@@ -102,14 +103,14 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
                                               "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
                                 self.paketApiCall(params:parms)
                             }
-                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success, message: success.message ?? "", on: self,okAction: {
+                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success.translated(), message: success.message ?? "", on: self,okAction: {
                                 self.presentingViewController?.presentingViewController?.dismiss(animated: true)
                             })
                         }else {
-                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: success.message ?? "", on: self)
                         }
                     case .failure(let failure):
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: failure.localizedDescription, on: self)
                     }
                 }
                 
@@ -141,7 +142,7 @@ class CreateSlotsBottomVC: UIViewController, UITableViewDataSource, UITableViewD
     
     
     @IBAction func createMeetingBtnAct(_ sender: Any) {
-        CustomAlert().showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_want_to_create_this_PTM_meeting, actionLbl1: AlertstringFile.Yes, actionLbl2: AlertstringFile.No, on: self) {
+        CustomAlert().showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_want_to_create_this_PTM_meeting.translated(), actionLbl1: AlertstringFile.Yes.translated(), actionLbl2: AlertstringFile.No.translated(), on: self) {
             self.Create_meeting_api()
         } onNo: {
             

@@ -17,29 +17,48 @@ class DatePickerVC: UIViewController {
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var datepicker: UIDatePicker!
+    @IBOutlet weak var cancelBtn: UIButton!
+    @IBOutlet weak var doneBtn: UIButton!
+    
     var delegate : Datepicker?
     var date : String?
     var dateSelection = 1
     var minimumDate: Date?
     var maximumDate: Date?
+    
+    private lazy var formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.displayLocale
+        return formatter
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
-        let locale = Locale(identifier: normalizedCode)
-        datepicker.tintColor = UIColor.primery
-        datepicker.locale = locale
+        configureUi()
+        configurePicker()
+        updateFormattedDate()
+        datepicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
+    }
+    
+    private func configureUi(){
         
-        if let date = minimumDate {
-            datepicker.minimumDate = date
-        }
+        cancelBtn.setTitle("Cancel".translated(), for: .normal)
+        doneBtn.setTitle("Done".translated(), for: .normal)
         
-        if let date = maximumDate {
-            datepicker.maximumDate = date
-        }
         bgView.layer.cornerRadius = 10
         outerView.layer.cornerRadius = 10
+        
+        datepicker.tintColor = UIColor.primery
+    }
+    
+    private func configurePicker(){
+        
+        datepicker.locale = LocaleManager.shared.displayLocale
+        
+        datepicker.minimumDate = minimumDate
+        datepicker.maximumDate = maximumDate
+        
         if dateSelection == 2 {
             datepicker.datePickerMode = .date
             datepicker.preferredDatePickerStyle = .inline
@@ -47,14 +66,14 @@ class DatePickerVC: UIViewController {
             datepicker.datePickerMode = .time
             datepicker.preferredDatePickerStyle = .wheels
         }
+        
         if let inputDate = dateConvert(date ?? "") {
             datepicker.date = inputDate
         } else {
             datepicker.date = Date()
         }
-        updateFormattedDate()
-        datepicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
     }
+    
     func dateConvert(_ dateString: String) -> Date? {
         let formats = [
             "EEE d MMM yyyy",
@@ -66,12 +85,6 @@ class DatePickerVC: UIViewController {
             "hh:mm a"
         ]
         
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
-        let locale = Locale(identifier: normalizedCode)
-    
-        let formatter = DateFormatter()
-        formatter.locale = locale
         for format in formats {
             formatter.dateFormat = format
             if let date = formatter.date(from: dateString) {
@@ -86,12 +99,6 @@ class DatePickerVC: UIViewController {
     }
     
     func updateFormattedDate() {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
-        let locale = Locale(identifier: normalizedCode)
-        
-        let formatter = DateFormatter()
-        formatter.locale = locale
         
         if dateSelection == 2 {
             formatter.dateFormat = "dd MMM yyy"

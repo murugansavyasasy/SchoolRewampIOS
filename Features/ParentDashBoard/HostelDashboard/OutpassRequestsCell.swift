@@ -94,9 +94,11 @@ extension OutpassRequestsCell : UITableViewDelegate,UITableViewDataSource{
         guard parts.count == 2 else { return input }
         
         let inputFormatter = DateFormatter()
+        inputFormatter.locale = LocaleManager.shared.apiLocale
         inputFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
         
         let outputFormatter = DateFormatter()
+        outputFormatter.locale = LocaleManager.shared.apiLocale
         outputFormatter.dateFormat = "MMM dd, yyyy hh:mm a"
         
         let fromDate = inputFormatter.date(from: parts[0])

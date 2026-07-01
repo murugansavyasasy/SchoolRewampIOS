@@ -198,8 +198,8 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         discreption.isScrollEnabled = false
         discreption.textContainerInset = .zero
         discreption.textContainer.lineFragmentPadding = 0
-        dateLbl.text =  MenuStringFile.posted_on + "\(displayText)"
-        postedByLbl.text = MenuStringFile.Posted_By + "\(postedBy ?? "")"
+        dateLbl.text =  MenuStringFile.posted_on.translated() + "\(displayText)"
+        postedByLbl.text = MenuStringFile.Posted_By.translated() + " - " + "\(postedBy ?? "")"
         
         if is_unreadStatus ?? false{
             ReadStatusUpdateArchive(

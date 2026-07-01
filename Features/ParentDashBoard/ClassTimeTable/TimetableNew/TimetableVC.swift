@@ -38,6 +38,7 @@ class TimetableVC: UIViewController {
         
         // Format today’s date
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "EEE, dd MMM yy"
         TodayDateLbl.text = formatter.string(from: Date())
         

@@ -36,6 +36,7 @@ class IntractwithStudentVc: UIViewController {
         popupView.layer.cornerRadius = 10
         backBtn.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,
                                       secondLine: StaffDetails?.school_name ?? "")
+        blockListDefLbl.text = CommonStringFile.BlockedStudentsList.translated()
         blockStudentBtnName.isHidden = true
         searchBtn.isHidden = true
         searchBar.delegate = self
@@ -323,7 +324,7 @@ extension IntractwithStudentVc:UITableViewDelegate,UITableViewDataSource{
             cell.standerdScection.text = (student?.class_name ?? "") + " - " + (student?.section_name ?? "")
             cell.reasonLbl.text = CommonStringFile.Reason.translated() + (student?.reason ?? "")
             cell.reasonLbl.isHidden = false
-            cell.submitDate.text = MenuStringFile.Blocked_on + (student?.blocked_on ?? "")
+            cell.submitDate.text = CommonStringFile.BlockedOn.translated() + ": " + (student?.blocked_on ?? "")
             cell.statusView.layer.cornerRadius = 10
             cell.statusView.backgroundColor = .backGroundClr
             cell.statusView.tintColor = .backGroundClr

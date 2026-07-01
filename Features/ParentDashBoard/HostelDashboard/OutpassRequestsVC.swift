@@ -137,9 +137,11 @@ class OutpassRequestsVC: UIViewController, UITableViewDataSource, UITableViewDel
         
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "dd-MM-yyyy hh:mm a"
+        inputFormatter.locale = LocaleManager.shared.apiLocale
         
         let outputFormatter = DateFormatter()
         outputFormatter.dateFormat = "MMM dd, yyyy hh:mm a"
+        outputFormatter.locale = LocaleManager.shared.apiLocale
         
         let fromDate = inputFormatter.date(from: parts[0])
         let toDate = inputFormatter.date(from: parts[1])

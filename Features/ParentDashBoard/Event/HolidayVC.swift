@@ -30,7 +30,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     private var holidayColors: [String: UIColor] = [:]
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var staffDetails = UserDefaultFileManager.get_child_Details()
-    private let weekdays = ["Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    private let weekdays = ["Sun".translated(),"Mon".translated(), "Tue".translated(), "Wed".translated(), "Thu".translated(), "Fri".translated(), "Sat".translated()]
     let formatter = DateFormatter()
     var passValue = 0
     
@@ -214,7 +214,11 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             return holidayDate >= startOfMonth && holidayDate < endOfMonth
         }.sorted { ($0.date ?? "") < ($1.date ?? "") }
         formatter.dateFormat = "MMMM yyyy"
-        noHolidayLbl.text = "\("No holidays in") \(formatter.string(from: currentDate))"
+        
+            formatter.locale = LocaleManager.shared.displayLocale
+        
+        
+        noHolidayLbl.text = "\("No holidays in".translated()) \(formatter.string(from: currentDate))"
         noHolidayLbl.isHidden = !filteredHolidays.isEmpty
         noLeaveImage.isHidden = !filteredHolidays.isEmpty
         leaveListTable.reloadData()
@@ -305,7 +309,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         if indexPath.row < 7 {
             let day = weekdays[indexPath.row]
             cell.dateLbl.text = day
-            cell.dateLbl.textColor = day == "Sun" ? .red : .black
+            cell.dateLbl.textColor = day == "Sun".translated() ? .red : .black
             cell.dateLbl.font = .boldSystemFont(ofSize: 12)
             cell.outerView.backgroundColor = .clear
             return cell
@@ -393,7 +397,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setFont(style: .title, size: FontSize.TitleSize)
         label.textColor = .darkGray
-        label.text = "\(AttendanceString.holidaysFor) \(formatter.string(from: currentDate))"
+        label.text = "\(AttendanceString.holidaysFor.translated()) \(formatter.string(from: currentDate))"
         headerView.addSubview(label)
         
         NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 15),label.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 5),label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 5)])
@@ -410,6 +414,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 extension String {
     var dateFromISO8601: Date? {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.date(from: self)
     }
@@ -418,6 +423,7 @@ extension String {
 extension DateFormatter {
     static let yyyyMMdd: DateFormatter = {
         let f = DateFormatter()
+        f.locale = LocaleManager.shared.apiLocale
         f.dateFormat = "yyyy-MM-dd"
         return f
     }()

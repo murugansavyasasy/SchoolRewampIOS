@@ -51,9 +51,7 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
     }
 
     func setInitialButtonTitles(date dateString: String?, inputFormat: String = "dd MMM yyyy") {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let localeID = normalizedLocaleIdentifier(for: savedCode)
-        let locale = Locale(identifier: localeID)
+        
         let parser = DateFormatter()
         parser.locale = Locale(identifier: "en_US_POSIX")
         parser.dateFormat = inputFormat
@@ -65,15 +63,15 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
             dateToUse = Date()
         }
         let displayDateFormatter = DateFormatter()
-        displayDateFormatter.locale = locale
+        displayDateFormatter.locale = LocaleManager.shared.displayLocale
         displayDateFormatter.dateFormat = "dd MMM yyyy"
         
         let displayTimeFormatter = DateFormatter()
-        displayTimeFormatter.locale = locale
+        displayTimeFormatter.locale = LocaleManager.shared.displayLocale
         displayTimeFormatter.timeStyle = .short
         
         let dayFormatter = DateFormatter()
-        dayFormatter.locale = locale
+        dayFormatter.locale = LocaleManager.shared.displayLocale
         dayFormatter.dateFormat = "EEEE"
         dateLbl.text = displayDateFormatter.string(from: dateToUse)
        

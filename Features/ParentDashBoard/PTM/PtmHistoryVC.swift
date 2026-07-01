@@ -52,6 +52,11 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         reasonDefLbl.setFont(style: .body, size: FontSize.TitleSize)
         continueBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
+        reasonDefLbl.text = "Reason for Cancelation".translated()
+        cancelMeetingDefLbl.text = "Cancel Meeting".translated()
+        reasonTextfield.placeholder = CommonStringFile.EnterReason.translated()
+        continueBtn.setTitle("Cancel Meeting".translated(), for: .normal)
+        
         reasonTextfield.addDoneButton()
         
         continueBtn.layer.cornerRadius = 8
@@ -103,15 +108,15 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                     }
                     
                     if let today = data.today, !today.isEmpty {
-                        self.AllSections?.append(SlotSection(title: PTMString.todayMeetings, slots: today))
+                        self.AllSections?.append(SlotSection(title: PTMString.todayMeetings.translated(), slots: today))
                     }
                     
                     if let upcoming = data.upcoming, !upcoming.isEmpty {
-                        self.AllSections?.append(SlotSection(title: PTMString.upcomingMeetings, slots: upcoming))
+                        self.AllSections?.append(SlotSection(title: PTMString.upcomingMeetings.translated(), slots: upcoming))
                     }
                     
                     if let completed = data.completed, !completed.isEmpty {
-                        self.AllSections?.append(SlotSection(title: PTMString.completedMeetings, slots: completed))
+                        self.AllSections?.append(SlotSection(title: PTMString.completedMeetings.translated(), slots: completed))
                     }
                     
                     self.FilteredSection = self.AllSections
@@ -121,7 +126,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                     self.tv.reloadData()
                     
                 case .failure(let failure):
-                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) {
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: failure.localizedDescription, on: self) {
                         self.NoDataLbl.isHidden = false
                         self.NoDataImage.isHidden = false
                         self.NoDataLbl.text = failure.localizedDescription
@@ -152,11 +157,11 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                         self.removeCancelledSlotFromUI(slotId: self.cancelId ?? "")
                         self.hidePopup()
                     }else{
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: success.message ?? "", on: self)
                     }
                     
                 case .failure(let failure):
-                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: failure.localizedDescription, on: self)
                 }
             }
         }
@@ -291,7 +296,7 @@ class PtmHistoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         }
         
         if slot?.is_cancelled_by_staff == true{
-            cell.statusBtn.setTitle("Cancelled", for: .normal)
+            cell.statusBtn.setTitle("Cancelled".translated(), for: .normal)
             cell.statusBtn.backgroundColor = .systemRed.withAlphaComponent(0.7)
             cell.statusBtn.setTitleColor(.white, for: .normal)
             cell.cancelStackTop.constant = 0

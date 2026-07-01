@@ -79,7 +79,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
 //                .first?
 //                .school_name
             token = staffToken
-            schoolName.text = "All"
+            schoolName.text = CommonStringFile.all.translated()
             
         }
         if checkMutipleSchool() {
@@ -89,7 +89,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
             schoolDropDown.setShadow(cornerRadius: 4)
             schoolDropDown.isHidden = false
             schoolList = school_details?.compactMap { $0.school_name }
-            schoolList?.insert("All", at: 0)
+            schoolList?.insert(CommonStringFile.all.translated(), at: 0)
             self.dropDown.dataSource = self.schoolList ?? []
         } else {
             let schoolName = UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
@@ -127,8 +127,8 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             schoolName.text = item
             
-            if item == "All"{
-                filterUsingSchoolId("All")
+            if item == CommonStringFile.all.translated(){
+                filterUsingSchoolId(CommonStringFile.all.translated())
             }else{
                 if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
                     token = selectedSchool.access_token
@@ -143,7 +143,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     }
     
     func filterUsingSchoolId(_ schoolId: String) {
-        if schoolId == "All" {
+        if schoolId == CommonStringFile.all.translated() {
             searchData = allNotices
             filterData = allNotices
         } else {
@@ -237,6 +237,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     
     private func getCurrentDateString() -> String {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: Date())
     }

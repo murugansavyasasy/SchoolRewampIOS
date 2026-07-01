@@ -91,16 +91,16 @@ class ParentCommunicationVc: UIViewController, AudioPlaybackDelegate1, Datepicke
     var displayedMessages: [CommunicationReciverData] = []
     var dropDown = DropDown()
     let dateFormatter = DateFormatter()
-    let Filters = ["All","VOICE","TEXT"/*,"Read","Unread"*/]
+    let Filters = ["All".translated(),"VOICE".translated(),"TEXT".translated()/*,"Read","Unread"*/]
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
     var clickedMessageId : String?
     var playIndex: Int?
 //    var lastPlaybackTime: CMTime?
 //    var lastMessageId: String?
     private let threshold = 120
-    private let viewText = "View"
-    private let seeMoreText = "See more"
-    private let seeLessText = "See less"
+    private let viewText = "View".translated()
+    private let seeMoreText = "See more".translated()
+    private let seeLessText = "See less".translated()
     var isFromDate = false
     var selectedReadStatus: ReadStatus = .all
     var selectedMessageType: CommunicationMessageType = .all
@@ -119,6 +119,8 @@ class ParentCommunicationVc: UIViewController, AudioPlaybackDelegate1, Datepicke
         SearchBar.backgroundImage = UIImage()
         TitleLbl.configureAsBackTitle(firstLine: "\(studentDetails?.name ?? "")", secondLine:"\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         menuNameLbl.text = MenuStringFile.selectedMenuName
+        fromDateLbl.text = "--From date--".translated()
+        toDateLbl.text = "--To date--".translated()
         backBtn.applyBackButton()
         RegisterCell()
         getCommunicationList()
@@ -166,6 +168,10 @@ class ParentCommunicationVc: UIViewController, AudioPlaybackDelegate1, Datepicke
         ReadBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         UnreadBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         AllBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        AllBtn.setTitle(CommonStringFile.all.translated(), for: .normal)
+        UnreadBtn.setTitle("Unread".translated(), for: .normal)
+        ReadBtn.setTitle("Read".translated(), for: .normal)
         
         NodataLbl.isHidden = true
         NodataImage.isHidden = true
@@ -395,8 +401,8 @@ class ParentCommunicationVc: UIViewController, AudioPlaybackDelegate1, Datepicke
         
         fromDate = nil
         toDate = nil
-        fromDateLbl.text = "--From date--"
-        toDateLbl.text = "--To date--"
+        fromDateLbl.text = "--From date--".translated()
+        toDateLbl.text = "--To date--".translated()
         fromDateLbl.textColor = .darkGray
         toDateLbl.textColor = .darkGray
         applyFilters()
@@ -629,8 +635,8 @@ class ParentCommunicationVc: UIViewController, AudioPlaybackDelegate1, Datepicke
             selectedMessageType = .all
             fromDate = nil
             toDate = nil
-            fromDateLbl.text = "--From date--"
-            toDateLbl.text = "--To date--"
+            fromDateLbl.text = "--From date--".translated()
+            toDateLbl.text = "--To date--".translated()
             fromDateLbl.textColor = .darkGray
             toDateLbl.textColor = .darkGray
             SearchBar.resignFirstResponder()
@@ -677,7 +683,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.NewImageView.isHidden = true
             cell.descriptContent.tag = indexPath.row
             cell.PostedByLbl.isHidden = false
-            cell.PostedByLbl.text = "Posted By - \(message.sent_by ?? "")"
+            cell.PostedByLbl.text = "\(MenuStringFile.Posted_By.translated()) - \(message.sent_by ?? "")"
             cell.MessageTitle.text = message.title
             let formattedDateString = dateFormatter.convertDate(message.date ?? "") ?? ""
             cell.DateLabel.setStyledDateTime(dateString: formattedDateString, timeString: message.time)
@@ -707,7 +713,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.dateLbl.setStyledDateTime(dateString: formattedDateString, timeString: message.time)
             cell.waveView.durationLabel.isHidden = true
             cell.PostedByLbl.isHidden = false
-            cell.PostedByLbl.text = "Posted By - \(voiceData.sent_by ?? "")"
+            cell.PostedByLbl.text = "\(MenuStringFile.Posted_By.translated()) - \(voiceData.sent_by ?? "")"
             cell.titleLbl.text = voiceData.title
             let duration = voiceData.duration ?? 0
             let formattedDuration = formatDuration(duration)
@@ -941,17 +947,17 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             if isLong {
                 displayText = String(fullDescription.prefix(threshold))
             }
-            actionText = "View"
+            actionText = "View".translated()
             actionURL = "app://view"
         } else {
             if isLong {
                 if expanded {
                     displayText = fullDescription
-                    actionText = "See less"
+                    actionText = "See less".translated()
                     actionURL = "app://seeLess"
                 } else {
                     displayText = String(fullDescription.prefix(threshold))
-                    actionText = "See more"
+                    actionText = "See more".translated()
                     actionURL = "app://seeMore"
                 }
             }
@@ -993,7 +999,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         if shouldShowFooter {
             if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
                 footer.frame = CGRect(x: 0, y: 0, width: tv.frame.width, height: 200)
-                let buttonTitle = "See More"
+                let buttonTitle = "See More".translated()
                 let attributedString = NSMutableAttributedString(string: buttonTitle)
                 let customFont = UIFont(name: "Poppins-Medium", size: 17) ?? UIFont.systemFont(ofSize: 18)
                 attributedString.addAttribute(.font, value: customFont, range: NSRange(location: 0, length: buttonTitle.count))

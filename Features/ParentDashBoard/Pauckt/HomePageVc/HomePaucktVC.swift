@@ -191,6 +191,7 @@ class HomePaucktVC: UIViewController
             
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
+            dateFormatter.locale = LocaleManager.shared.apiLocale
             
             if let futureDate = dateFormatter.date(from: futureDateString ?? "") {
                 

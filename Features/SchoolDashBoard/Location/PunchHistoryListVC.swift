@@ -164,8 +164,10 @@ class PunchHistoryListVC: UIViewController, UITableViewDelegate, UITableViewData
         titleLabel.textColor = .black
         let dateLabel = UILabel()
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "EEEE, dd MMM yyyy"
         let inputFormatter = DateFormatter()
+        inputFormatter.locale = LocaleManager.shared.apiLocale
         inputFormatter.dateFormat = "dd-MM-yyyy"
         
         if let date = inputFormatter.date(from: selectedDate) {

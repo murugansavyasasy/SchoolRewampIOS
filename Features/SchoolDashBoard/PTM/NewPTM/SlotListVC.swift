@@ -19,12 +19,12 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
     func selectId(id: String?, edit: Bool?) {
         if edit ?? false{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                CustomAlert().showAlertCancel(title: AlertstringFile.Confirm.translated(), message: "Are you sure want to Reopen this slot?".translated(), actionLbl1: AlertstringFile.Yes, actionLbl2: AlertstringFile.No, on: self, onOk: {self.Cancel_and_Reopen_Slot_api(SlotId: id ?? "")}, onNo: {})
+                CustomAlert().showAlertCancel(title: AlertstringFile.Confirm.translated(), message: "Are you sure want to Reopen this slot?".translated(), actionLbl1: AlertstringFile.Yes.translated(), actionLbl2: AlertstringFile.No.translated(), on: self, onOk: {self.Cancel_and_Reopen_Slot_api(SlotId: id ?? "")}, onNo: {})
             }
             
         }else{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                CustomAlert().showAlertCancel(title: AlertstringFile.Confirm.translated(), message: "Are you sure want to Cancel this slot?".translated(), actionLbl1: AlertstringFile.Yes, actionLbl2: AlertstringFile.No, on: self, onOk: {self.cancel_and_close_slot_Api(SlotId: id ?? "")}, onNo: {})
+                CustomAlert().showAlertCancel(title: AlertstringFile.Confirm.translated(), message: "Are you sure want to Cancel this slot?".translated(), actionLbl1: AlertstringFile.Yes.translated(), actionLbl2: AlertstringFile.No.translated(), on: self, onOk: {self.cancel_and_close_slot_Api(SlotId: id ?? "")}, onNo: {})
             }
         }
     }
@@ -82,11 +82,11 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
 //                        slot?.is_cancelled_by_staff = true
 //                        self.tv.reloadRows(at: [indexpath], with: .automatic)
                     }else {
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: success.message ?? "", on: self)
                     }
                 case .failure(let failure):
                     print("Error: ",failure.localizedDescription)
-                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: failure.localizedDescription, on: self)
                 }
                 
             }
@@ -117,11 +117,11 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
 //                        slot?.is_cancelled_by_staff = true
 //                        self.tv.reloadRows(at: [indexpath], with: .automatic)
                     }else {
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self)
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: success.message ?? "", on: self)
                     }
                 case .failure(let failure):
                     print("Error: ",failure.localizedDescription)
-                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self)
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: failure.localizedDescription, on: self)
                 }
                 
             }
@@ -148,7 +148,7 @@ class SlotListVC: UIViewController, UITableViewDataSource, UITableViewDelegate, 
             label.translatesAutoresizingMaskIntoConstraints = false
             label.setFont(style: .title, size: FontSize.TitleSize)
             label.textColor = .darkGray
-            label.text = "Meeting Slots"
+            label.text = "Meeting Slots".translated()
             headerView.addSubview(label)
             
             NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 15),label.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 5),label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -5)])

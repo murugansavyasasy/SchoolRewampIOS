@@ -239,6 +239,7 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, 
             return "Yesterday"
         } else {
             let displayFormatter = DateFormatter()
+            displayFormatter.locale = LocaleManager.shared.apiLocale
             displayFormatter.dateFormat = "MMM dd" // e.g., Jul 13
             return displayFormatter.string(from: date)
         }
@@ -256,6 +257,7 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, 
         }
 
         let timeFormatter = DateFormatter()
+        timeFormatter.locale = LocaleManager.shared.apiLocale
         timeFormatter.dateFormat = "h:mm a"
         return timeFormatter.string(from: date)
     }

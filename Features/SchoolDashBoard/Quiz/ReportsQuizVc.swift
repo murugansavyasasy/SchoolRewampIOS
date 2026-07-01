@@ -225,7 +225,7 @@ extension ReportsQuizVc: UITableViewDataSource, UITableViewDelegate {
             from: quiz.sent_time ?? "",
             isTimeNeeded: true)
         cell.subjectLbl.text = quiz.subject
-        cell.postedByLbl.text = MenuStringFile.Posted_By.translated() + "\(quiz.sent_by ?? "")"
+        cell.postedByLbl.text = MenuStringFile.Posted_By.translated() + " - " + "\(quiz.sent_by ?? "")"
         cell.levelLbl.text = MenuStringFile.Level.translated() + String(quiz.level ?? 0)
         cell.optionsBtn.isHidden = (quiz.can_edit == false && quiz.can_delete == false)
         cell.edit(edit: quiz.can_edit ?? false, delete: quiz.can_delete ?? false, selectedId: quiz.id ?? "")

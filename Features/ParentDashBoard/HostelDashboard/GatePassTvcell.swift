@@ -174,9 +174,11 @@ class GatePassTvcell: UITableViewCell {
 
         let fullFormatter = DateFormatter()
         fullFormatter.dateFormat = "dd MMM yyyy hh:mm a"
+        fullFormatter.locale = LocaleManager.shared.apiLocale
 
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "hh:mm a"
+        timeFormatter.locale = LocaleManager.shared.apiLocale
 
         let parts = range.components(separatedBy: " - ")
             .map { $0.trimmingCharacters(in: .whitespaces) }

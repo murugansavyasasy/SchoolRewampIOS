@@ -6,7 +6,6 @@
 //
 
 import UIKit
-//import DropDown
 
 class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     @IBOutlet weak var searchBtn: UIButton!
@@ -43,9 +42,22 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var selectStudentType = ""
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
     var studentDetails = UserDefaultFileManager.get_child_Details()
-    var Sorting = ["Name A-Z ","Name Z-A","Roll No ↑","Roll No ↓","Admission No ↓","Admission No ↑"]
-    var Gender = ["All","Male","Female","Others"]
-    var Filters = ["All students"]
+    var Sorting = [
+        "Name A-Z".translated(),
+        "Name Z-A".translated(),
+        "Roll No ↑".translated(),
+        "Roll No ↓".translated(),
+        "Admission No ↓".translated(),
+        "Admission No ↑".translated()
+    ]
+    var Gender = [
+        "All".translated(),
+        "Male".translated(),
+        "Female".translated(),
+        "Others".translated()
+    ]
+    
+    var Filters = ["All students".translated()]
     var studentList : [StudentData]?
     var filterStudent : [StudentData]?
     var sortedStudent : [StudentData]?
@@ -56,7 +68,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var showSearch:Bool = false
     var academicId = 0
     var noRecord:Bool = false
-    var Allstudents  = "All students"
+    var Allstudents  = "All students".translated()
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
@@ -107,6 +119,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         clsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         selectedType.setTitleFont(style: .body, size: FontSize.BodySize)
         searchBar.placeholder = CommonStringFile.Search.translated()
+        GenderBtn.setTitle("All".translated(), for: .normal)
     }
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
@@ -179,8 +192,8 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                     getStanderd.isHidden = true
                     getStudentAPI()
                 case 1:
-                    if sectionArray.first != "All" {
-                        sectionArray.insert("All", at: 0)
+                    if sectionArray.first != "All".translated() {
+                        sectionArray.insert("All".translated(), at: 0)
                     }
                     sectionBtn.setTitle(sectionArray.first, for: .normal)
                     getStanderd.isHidden = false
@@ -246,8 +259,8 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             guard let self = self else { return }
             sectionsDetails = standardDetails?[index].sections
             sectionArray = sectionsDetails?.compactMap { $0.name } ?? []
-            if sectionArray.first != "All" {
-                sectionArray.insert("All", at: 0)
+            if sectionArray.first != "All".translated() {
+                sectionArray.insert("All".translated(), at: 0)
             }
             self.clsBtn.setTitle(item.translated(), for: .normal)
             self.sectionBtn.setTitle(sectionArray.first, for: .normal)
@@ -277,16 +290,16 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             filterStudent = []
             return
         }
-        switch gender.lowercased() {
-        case "male":
+        switch gender {
+        case "Male".translated():
             filterStudent = students.filter { $0.gender.lowercased() == "male" }
-        case "female":
+        case "Female".translated():
             filterStudent = students.filter { $0.gender.lowercased() == "female" }
-        case "others":
+        case "Others".translated():
             filterStudent = students.filter {
                 let g = $0.gender.lowercased()
                 return g != "male" && g != "female"}
-        case "all":
+        case "All".translated():
             filterStudent = students
         default:
             filterStudent = students
@@ -312,7 +325,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         standerdArray.removeAll()
                         standardDetails = successMessage.data
                         if Filters.count == 1{
-                            Filters.append("Class & Section")
+                            Filters.append("Class & Section".translated())
                         }
                         sectionsDetails = standardDetails?.first?.sections
                         standerdArray = standardDetails?.compactMap { $0.name } ?? []

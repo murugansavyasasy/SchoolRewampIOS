@@ -109,11 +109,16 @@ class LeveCreateVC: UIViewController{
             toDatePicker.minimumDate = pastMonthDate
         }
         
+        FromDatePicker.locale = LocaleManager.shared.apiLocale
+        toDatePicker.locale = LocaleManager.shared.apiLocale
+        
+        
         setupPlaceholder()
         
         if let leave = editLeaveData{
             
             dateFormatter.dateFormat = "dd MMM yyyy"
+            dateFormatter.locale = LocaleManager.shared.apiLocale
             placeholderLabel.isHidden = !leave.reson.isEmpty
             LeaveTypeBtn.setTitle(leave.LeaveType, for: .normal)
             FromDateBtn.setTitle(leave.fromDate.convertToTargetDateFormat(), for: .normal)
@@ -263,6 +268,7 @@ class LeveCreateVC: UIViewController{
     @IBAction func ToDateDoneBtn(_ sender: Any) {
         
         dateFormatter.dateFormat = "dd MMM yyyy"
+        dateFormatter.locale = LocaleManager.shared.apiLocale
         // NewToDateLbl.text = dateFormatter.string(from: toDatePicker.date)
         toDate = toDatePicker.date
         let formattedDate = dateFormatter.string(from: toDate!)
@@ -276,6 +282,7 @@ class LeveCreateVC: UIViewController{
         
         fromDate = FromDatePicker.date
         dateFormatter.dateFormat = "dd MMM yyyy"
+        dateFormatter.locale = LocaleManager.shared.apiLocale
         let formattedDate = dateFormatter.string(from: fromDate!)
         FromDateBtn.setTitle(formattedDate, for: .normal)
         FromDatePickerView.isHidden = true
@@ -798,6 +805,7 @@ extension LeveCreateVC: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDele
     
     func updateLabels() {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "dd MMM yyyy"
         
         if let from = fromDate {
@@ -818,6 +826,7 @@ extension UILabel {
     func setFormattedDate(from date: Date) {
         
         let dayFormatter = DateFormatter()
+        dayFormatter.locale = LocaleManager.shared.apiLocale
         dayFormatter.dateFormat = "dd" // Ensures 2-digit day format
         
         let dayString = dayFormatter.string(from: date)
@@ -826,6 +835,7 @@ extension UILabel {
         let dayNumber = calendar.component(.day, from: date)
         
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = LocaleManager.shared.apiLocale
         dateFormatter.dateFormat = "E, MMM yyyy" // e.g., "Wed, Jun 2025"
         let dayText = dateFormatter.string(from: date)
         

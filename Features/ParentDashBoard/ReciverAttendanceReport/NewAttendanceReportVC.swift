@@ -140,10 +140,12 @@ class NewAttendanceReportVC: UIViewController, UICollectionViewDelegate, UIColle
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttendanceRepCv, for: indexPath) as! AttendanceRepCv
         let dateStr = FilteredReportData?[indexPath.row].date ?? ""
         let inputFormatter = DateFormatter()
+        inputFormatter.locale = LocaleManager.shared.apiLocale
         inputFormatter.dateFormat = DateInputs.dd_MM_yyyy
         
         if let date = inputFormatter.date(from: dateStr) {
             let outputFormatter = DateFormatter()
+            outputFormatter.locale = LocaleManager.shared.apiLocale
             outputFormatter.dateFormat = "MMM"
             let monthName = outputFormatter.string(from: date)
             let calendar = Calendar.current

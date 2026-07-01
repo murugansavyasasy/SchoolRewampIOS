@@ -77,7 +77,9 @@ class MsgViewVC: UIViewController,UIScrollViewDelegate {
         reasonLbl.isHidden = MsgFromManagmentData.description?.isEmpty ?? true
         reasonDfltLbl.isHidden = reasonLbl.isHidden
         reasonImgView.isHidden = reasonLbl.isHidden
-        postedByLbl.text = (MenuStringFile.Posted_By) + (MsgFromManagmentData.sent_by ?? "")
+        
+        postedByLbl.text = (MenuStringFile.Posted_By.translated()) + " - " + (MsgFromManagmentData.sent_by ?? "")
+        reasonDfltLbl.text = CommonStringFile.Description.translated()
         titleLbl.text = MsgFromManagmentData.title?.capitalized
         reasonLbl.text = MsgFromManagmentData.description
         voiceTitle.text = MsgFromManagmentData.title

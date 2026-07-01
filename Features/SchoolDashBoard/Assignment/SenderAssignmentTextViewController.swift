@@ -63,11 +63,8 @@ class SenderAssignmentTextViewController: UIViewController,
     let photoPickManager = PhotoPickerManager.shared
     let dropDown = DropDown()
     let TypeDropDown = DropDown()
-    var datePicker: UIDatePicker!
     var doneButton: UIButton!
     var pdfData: Data?
-    let customdate = DateFormatter()
-    let formatter = DateFormatter()
     let initialHeight: CGFloat = 60
     let maxHeight: CGFloat = 300
     var player: AVPlayer?
@@ -157,11 +154,9 @@ class SenderAssignmentTextViewController: UIViewController,
         setInitialButtonTitles(date: date)
     }
     func setInitialButtonTitles(date dateString: String?, inputFormat: String = "dd MMM yyyy") {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let localeID = normalizedLocaleIdentifier(for: savedCode)
-        let locale = Locale(identifier: localeID)
+
         let parser = DateFormatter()
-        parser.locale = locale
+        parser.locale = LocaleManager.shared.displayLocale
         parser.dateFormat = inputFormat
         
         let dateToUse: Date
@@ -171,13 +166,13 @@ class SenderAssignmentTextViewController: UIViewController,
             dateToUse = Date()
         }
         let displayDateFormatter = DateFormatter()
-        displayDateFormatter.locale = locale
+        displayDateFormatter.locale = LocaleManager.shared.displayLocale
         displayDateFormatter.dateFormat = "dd MMM yyyy"
         let displayTimeFormatter = DateFormatter()
-        displayTimeFormatter.locale = locale
+        displayTimeFormatter.locale = LocaleManager.shared.displayLocale
         displayTimeFormatter.timeStyle = .short
         let dayFormatter = DateFormatter()
-        dayFormatter.locale = locale
+        dayFormatter.locale = LocaleManager.shared.displayLocale
         dayFormatter.dateFormat = "EEEE"
         dateLbl.text = displayDateFormatter.string(from: dateToUse)
         dayLbl.text = dayFormatter.string(from: dateToUse)

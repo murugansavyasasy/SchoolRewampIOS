@@ -48,8 +48,8 @@ class BookedSlotTV: UITableViewCell {
         callBtn.layer.cornerRadius = callBtn.frame.height / 2
         JoinBtn.layer.cornerRadius = JoinBtn.frame.height / 2
         
-        DateDefLbl.text = PTMString.date
-        timeDefLbl.text = PTMString.time
+        DateDefLbl.text = PTMString.date.translated()
+        timeDefLbl.text = PTMString.time.translated()
         
         callBtn.setTitle(PTMString.call.translated(), for: .normal)
         cancelBtn.setTitle(PTMString.cancel.translated(), for: .normal)

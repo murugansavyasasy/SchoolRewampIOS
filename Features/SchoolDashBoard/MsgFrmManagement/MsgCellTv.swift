@@ -68,7 +68,7 @@ class MsgCellTv: UITableViewCell {
         cardView.layer.masksToBounds = true
         
         // Emergency Banner
-        emergencyTitleLabel.text = "EMERGENCY MESSAGE"
+        emergencyTitleLabel.text = "EMERGENCY MESSAGE".translated()
         emergencyTitleLabel.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         emergencyTitleLabel.textColor = .red
         emergencyIconImageView.image = UIImage(systemName: "light.beacon.max.fill")
@@ -106,7 +106,7 @@ class MsgCellTv: UITableViewCell {
         
         // View Button
         viewButton.backgroundColor = .systemBlue
-        viewButton.setTitle("View", for: .normal)
+        viewButton.setTitle("View".translated(), for: .normal)
         viewButton.setTitleColor(.white, for: .normal)
         viewButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         viewButton.layer.cornerRadius = 22 // Height 44
@@ -120,7 +120,7 @@ class MsgCellTv: UITableViewCell {
             config.cornerStyle = .capsule
             config.image = UIImage(systemName: "eye.fill")
             config.imagePadding = 8
-            config.title = "View"
+            config.title = "View".translated()
             viewButton.configuration = config
         } else {
             viewButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8, bottom: 0, right: 8)

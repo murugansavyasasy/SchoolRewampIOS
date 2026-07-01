@@ -61,7 +61,8 @@ class MessageFromManagementViewController: UIViewController {
     
     // MARK: - Setup Methods
     private func setupUI() {
-        menuNameLbl.text = MenuStringFile.selectedMenuName
+        menuNameLbl.text = MenuStringFile.selectedMenuName.translated()
+        schoolName.text = MenuStringFile.All_Schools.translated()
         menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
         BackBtn.applyBackButton()
         NoDataLbl.setFont(style: .title, size: FontSize.HeaderSize)
@@ -388,7 +389,7 @@ class MessageFromManagementViewController: UIViewController {
     
     @objc private func showSchoolDropDown() {
         guard let details = school_details else { return }
-        let schoolNames = [MenuStringFile.All_Schools] + details.compactMap { $0.school_name }
+        let schoolNames = [MenuStringFile.All_Schools.translated()] + details.compactMap { $0.school_name }
         dropDown.dataSource = schoolNames
         dropDown.anchorView = schoolDropDown
         dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)

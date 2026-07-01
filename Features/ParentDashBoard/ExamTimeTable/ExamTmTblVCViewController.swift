@@ -444,12 +444,14 @@ struct GroupedExam {
 extension String {
     func convertToDate() -> Date? {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "dd-MM-yyyy" // API format
         return formatter.date(from: self)
     }
     
     func convertToHeaderDate() -> String {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "dd-MM-yyyy"
         if let date = formatter.date(from: self) {
             formatter.dateFormat = "MMMM dd, yyyy" // September 30, 2025
@@ -515,6 +517,7 @@ class DashedLineWithTextView: UIView {
     
     func setDateToToday() {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "MMMM dd, yyyy"
         let todayString = formatter.string(from: Date())
         setText(todayString)

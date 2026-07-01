@@ -114,6 +114,7 @@ class ReciverEventTVC: UITableViewCell, SelectedId, UIPopoverPresentationControl
 
         let fullString = "\(dateString) \(timeString)"
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "dd/MM/yy hh:mm a" // adjust if needed
 
         guard let reminderDate = formatter.date(from: fullString) else {

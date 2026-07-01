@@ -12,14 +12,14 @@ class CreatePasswordVc: UIViewController{
     
     @IBOutlet weak var NewPassEyeImage: UIImageView!
     @IBOutlet weak var ConfirmPassEyeImage: UIImageView!
-    @IBOutlet weak var titleLbl: LocalizationLabel!
+    @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var DescriptionLbl: LocalizationLabel!
     @IBOutlet weak var BottomView: UIView!
-    @IBOutlet weak var createPassDefaultLbl: LocalizationLabel!
-    @IBOutlet weak var ConfirmPassLabel: LocalizationLabel!
+    @IBOutlet weak var createPassDefaultLbl: UILabel!
+    @IBOutlet weak var ConfirmPassLabel: UILabel!
     @IBOutlet weak var confirmPassTextFld: UITextField!
-    @IBOutlet weak var confirmPassBtnNam: LocalizationButton!
+    @IBOutlet weak var confirmPassBtnNam: UIButton!
     @IBOutlet weak var createPassTextFLd: UITextField!
     @IBOutlet weak var createPasswordBaseview: UIView!
     @IBOutlet weak var confirmPasswordBaseview: UIView!
@@ -35,16 +35,15 @@ class CreatePasswordVc: UIViewController{
         super.viewDidLoad()
         setUpUI()
         if createNewPassword == true {
-            createPassDefaultLbl.localizationKey = ChangePasswordStringFile.Create_New_Password
-                       ConfirmPassLabel.localizationKey = ChangePasswordStringFile.Confirm_New_Password
-                       titleLbl.localizationKey = ChangePasswordStringFile.create_newpassword
-                       confirmPassBtnNam.setTitle(ChangePasswordStringFile.Create, for: .normal)
+            createPassDefaultLbl.text = ChangePasswordStringFile.Create_New_Password.translated()
+            ConfirmPassLabel.text = ChangePasswordStringFile.Confirm_New_Password.translated()
+            titleLbl.text = ChangePasswordStringFile.create_newpassword.translated()
+            confirmPassBtnNam.setTitle(ChangePasswordStringFile.Create.translated(), for: .normal)
         } else {
-            createPassDefaultLbl.localizationKey = ChangePasswordStringFile.Enter_the_new_password
-            ConfirmPassLabel.localizationKey = ChangePasswordStringFile.confirm_password
-            titleLbl.localizationKey = ChangePasswordStringFile.Reset_password
-            confirmPassBtnNam.localizationKey = ChangePasswordStringFile.Reset_password
-            confirmPassBtnNam.setTitle(ChangePasswordStringFile.Reset_password, for: .normal)
+            createPassDefaultLbl.text = ChangePasswordStringFile.Enter_the_new_password.translated()
+            ConfirmPassLabel.text = ChangePasswordStringFile.confirm_password.translated()
+            titleLbl.text = ChangePasswordStringFile.Reset_password.translated()
+            confirmPassBtnNam.setTitle(ChangePasswordStringFile.Reset_password.translated(), for: .normal)
         }
         
         createPassTextFLd.delegate = self
@@ -65,11 +64,10 @@ class CreatePasswordVc: UIViewController{
         NewPassEyeImage.addGestureRecognizer(NeweyeTap)
         NewPassEyeImage.isUserInteractionEnabled = true
         if chnage_passwordPage{
-            createPassDefaultLbl.localizationKey = ChangePasswordStringFile.Enter_the_old_password
-            ConfirmPassLabel.localizationKey = ChangePasswordStringFile.Enter_the_New_password
-            titleLbl.localizationKey = ChangePasswordStringFile.change_password
-            confirmPassBtnNam.localizationKey = ChangePasswordStringFile.change_password
-            confirmPassBtnNam.setTitle(ChangePasswordStringFile.change_password, for: .normal)
+            createPassDefaultLbl.text = ChangePasswordStringFile.Enter_the_old_password.translated()
+            ConfirmPassLabel.text = ChangePasswordStringFile.Enter_the_New_password.translated()
+            titleLbl.text = ChangePasswordStringFile.change_password.translated()
+            confirmPassBtnNam.setTitle(ChangePasswordStringFile.change_password.translated(), for: .normal)
         }
     }
     
@@ -145,20 +143,20 @@ class CreatePasswordVc: UIViewController{
                         self.CretaeNewPasswordAPIcall()
                     }
                 }else{
-                    view.makeToast(AlertstringFile.Password_Missmatched)
+                    view.makeToast(AlertstringFile.Password_Missmatched.translated())
                 }
             }else{
-                view.makeToast(AlertstringFile.Enterthe_confirm_password)
+                view.makeToast(AlertstringFile.Enterthe_confirm_password.translated())
             }
         }else{
-            view.makeToast(AlertstringFile.Enter_the_new_password)
+            view.makeToast(AlertstringFile.Enter_the_new_password.translated())
         }
         
         if chnage_passwordPage{
             if createPassTextFLd.text != "" && confirmPassTextFld.text != ""{
                 changePassword()
             }else{
-                view.makeToast(AlertstringFile.Enter_the_new_password)
+                view.makeToast(AlertstringFile.Enter_the_new_password.translated())
             }
             
         }

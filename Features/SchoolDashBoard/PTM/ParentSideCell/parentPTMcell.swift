@@ -51,6 +51,8 @@ class parentPTMcell: UITableViewCell,
         AvailableslotLbl.setFont(style: .body, size: FontSize.BodySize)
         MeetingTypeBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         initialBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        
+        AvailableslotLbl.text = "Select Meeting Slot".translated()
 
         cv.register(UINib(nibName: "SlotCV", bundle: nil),
                     forCellWithReuseIdentifier: "SlotCV")

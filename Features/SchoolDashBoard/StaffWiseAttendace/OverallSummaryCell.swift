@@ -52,6 +52,11 @@ class OverallSummaryCell: UITableViewCell {
         presentTitleLabel.textColor = subTitleColor
         absentTitleLabel.textColor = subTitleColor
         notMarkedTitleLabel.textColor = subTitleColor
+        
+        presentTitleLabel.text = "TOTAL PRESENT".translated()
+        absentTitleLabel.text = "TOTAL ABSENT".translated()
+        notMarkedTitleLabel.text = "NOT MARKED".translated()
+        titleLabel.text = "Overall Summary".translated()
     }
 
     func configure(with stat: OverallStat) {

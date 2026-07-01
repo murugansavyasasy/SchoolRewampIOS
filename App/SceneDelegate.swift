@@ -24,6 +24,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate,UNUserNotificationCenter
                   willConnectTo session: UISceneSession,
                   options connectionOptions: UIScene.ConnectionOptions) {
 
+           syncLanguageWithSystem()
+        
            UNUserNotificationCenter.current().delegate = self
 
            // 🔥 App launched from killed state by tapping notification
@@ -120,6 +122,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate,UNUserNotificationCenter
         }
 
         UserDefaults.standard.set(list, forKey: tempKey)
+    }
+    
+    func syncLanguageWithSystem() {
+
+        let appLanguage = Bundle.main.preferredLocalizations.first ?? "en"
+
+        // Map iOS language codes to your app's language codes if needed
+        var languageCode = appLanguage
+
+        switch appLanguage {
+        case "ta-IN":
+            languageCode = "ta-IN"    // Your app uses ta-IN
+        case "en":
+            languageCode = "en"
+        case "hi":
+            languageCode = "hi"
+        case "th":
+            languageCode = "th"
+        case "ar":
+            languageCode = "ar"
+        default:
+            languageCode = "en"
+        }
+
+        UserDefaults.standard.set(languageCode, forKey: DefaultsKeys.Language)
     }
 
 

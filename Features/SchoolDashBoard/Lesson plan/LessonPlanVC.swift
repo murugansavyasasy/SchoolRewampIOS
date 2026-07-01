@@ -43,8 +43,8 @@ class LessonPlanVC: UIViewController {
         searchBar.searchTextField.layer.masksToBounds = true
         searchBar.delegate = self
         
-        let menuName = MenuStringFile.LessonPlan
-        MenuNameLbl.configureAsBackTitle(firstLine: menuName, secondLine: staffDetails?.school_name ?? "")
+        let menuName = MenuStringFile.LessonPlan.translated()
+        MenuNameLbl.configureAsBackTitle(firstLine: menuName.translated(), secondLine: staffDetails?.school_name?.translated() ?? "")
         searchBar.isHidden = true
         MyClassBtn.setTitle(LessonplanStringFile.myClasses.translated(), for: .normal)
         AllClassBtn.setTitle(LessonplanStringFile.allClasses.translated(), for: .normal)
@@ -94,7 +94,7 @@ class LessonPlanVC: UIViewController {
                 case .success(let success):
                     self.LessonPlanData = success.data
                     self.SearchData = LessonPlanData
-                    self.NodataLbl.text = success.status ? CommonStringFile.No_data_found : success.message
+                    self.NodataLbl.text = success.status ? CommonStringFile.No_data_found.translated() : success.message.translated()
                     let Hidden = SearchData?.isEmpty ?? false
                     self.NodataImage.isHidden = !Hidden
                     self.NodataLbl.isHidden = !Hidden

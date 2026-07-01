@@ -50,7 +50,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
     let alert = CustomAlert()
     var Scholldetails = UserDefaultFileManager.getUserDetails()
     let transitionDelegate = TransitioningDelegate()
-    var filterSchoolId: String? = MenuStringFile.All_Schools
+    var filterSchoolId: String? = MenuStringFile.All_Schools.translated()
     override func viewDidLoad() {
         super.viewDidLoad()
         localData.editToken = ""
@@ -69,9 +69,9 @@ class AttachHistroyVC: UIViewController, SelectedId {
         }else{
             if school_details?.count ?? 0 > 1 {
                 schoolDropDownFullview.isHidden = false
-                schoolName.text = MenuStringFile.All_Schools
+                schoolName.text = MenuStringFile.All_Schools.translated()
                 schoolList = school_details?.compactMap { $0.school_name }
-                schoolList?.insert(MenuStringFile.All_Schools, at: 0)
+                schoolList?.insert(MenuStringFile.All_Schools.translated(), at: 0)
                 self.dropDown.dataSource = self.schoolList ?? []
             }else{
                 schoolDropDownFullview.isHidden = true
@@ -129,9 +129,9 @@ class AttachHistroyVC: UIViewController, SelectedId {
         dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             schoolName.text = item
-            if item == MenuStringFile.All_Schools{
-                filterSchoolId = MenuStringFile.All_Schools
-                filterUsingSchoolId(MenuStringFile.All_Schools)
+            if item == MenuStringFile.All_Schools.translated(){
+                filterSchoolId = MenuStringFile.All_Schools.translated()
+                filterUsingSchoolId(MenuStringFile.All_Schools.translated())
                 searchBar.text = ""
             }else{
                 if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
@@ -144,7 +144,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
     }
     
     func filterUsingSchoolId(_ schoolId: String) {
-        if schoolId == MenuStringFile.All_Schools {
+        if schoolId == MenuStringFile.All_Schools.translated() {
             filteredAttachments = attachmentData
         } else {
             filteredAttachments = attachmentData.filter { $0.school_id == schoolId }
@@ -298,8 +298,8 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
                 with: filteredAttachments?[indexPath.row].file_path ?? [],
                 title: filteredAttachments?[indexPath.row].title ?? "",
                 description: filteredAttachments?[indexPath.row].description ?? "",
-                date: MenuStringFile.posted_on + " - " + displayText,
-                sendBy:MenuStringFile.Posted_By + (filteredAttachments?[indexPath.row].sent_by ?? ""),
+                date: MenuStringFile.posted_on.translated() + " - " + displayText,
+                sendBy:MenuStringFile.Posted_By.translated() + " - " + (filteredAttachments?[indexPath.row].sent_by ?? ""),
                 isunread: filteredAttachments?[indexPath.row].is_unread ?? false, dateAndTimeForVideo:  filteredAttachments?[indexPath.row].date ?? "",
                 parentTableView: tv
             )
@@ -354,9 +354,9 @@ extension AttachHistroyVC :  UITableViewDataSource,UITableViewDelegate,UISearchB
     }
     private func filterAttachments(with searchText: String) {
         let lowerSearch = searchText.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
-        let selectedSchoolId = filterSchoolId ?? MenuStringFile.All_Schools
+        let selectedSchoolId = filterSchoolId ?? MenuStringFile.All_Schools.translated()
         var results = attachmentData
-        if selectedSchoolId != MenuStringFile.All_Schools {
+        if selectedSchoolId != MenuStringFile.All_Schools.translated() {
             results = results.filter { $0.school_id == selectedSchoolId }
         }
         if !lowerSearch.isEmpty {

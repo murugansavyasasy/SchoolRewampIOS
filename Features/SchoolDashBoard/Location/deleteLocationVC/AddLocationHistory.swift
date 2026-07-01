@@ -46,37 +46,37 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         return cell
     }
     @objc func buttonTapped(_ sender: UIButton) {
-        let alertController = UIAlertController(title: "Update", message: "Please update your details", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Update".translated(), message: "Please update your details".translated(), preferredStyle: .alert)
         alertController.addTextField { (textField) in
-            textField.placeholder = "Enter your location name"
+            textField.placeholder = "Enter your location name".translated().translated()
             textField.text =  self.locationHistory?[sender.tag].location
         }
         alertController.addTextField { (textField) in
-            textField.placeholder = "Enter your distance"
+            textField.placeholder = "Enter your distance".translated()
             textField.text = self.locationHistory?[sender.tag].distance
         }
-        let confirmAction = UIAlertAction(title: "Update", style: .default) { [self] (_) in
+        let confirmAction = UIAlertAction(title: "Update".translated(), style: .default) { [self] (_) in
             if let location = alertController.textFields?[0].text, let distance = alertController.textFields?[1].text {
                 if distance != "" && location != ""{
                     update(param: ["id":String(self.locationHistory?[sender.tag].id ?? 0),
                                    "location":location,
                                    "distance":Int(distance) ?? 0])
                 }else{
-                    let refreshAlert = UIAlertController(title: "", message: "Location or distance field is empty", preferredStyle: UIAlertController.Style.alert)
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+                    let refreshAlert = UIAlertController(title: "", message: "Location or distance field is empty".translated(), preferredStyle: UIAlertController.Style.alert)
+                    refreshAlert.addAction(UIAlertAction(title: "OK".translated(), style: .default, handler: { [self] (action: UIAlertAction!) in
                     }))
                     present(refreshAlert, animated: true, completion: nil)
                 }
             }
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
         self.present(alertController, animated: true, completion: nil)
     }
     @objc func DeletTapped(_ sender: UIButton) {
-        let refreshAlert = UIAlertController(title: "", message: "Are you sure want to delete this loacation ?", preferredStyle: UIAlertController.Style.alert)
-        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+        let refreshAlert = UIAlertController(title: "", message: "Are you sure want to delete this loacation ?".translated(), preferredStyle: UIAlertController.Style.alert)
+        refreshAlert.addAction(UIAlertAction(title: "OK".translated(), style: .default, handler: { [self] (action: UIAlertAction!) in
             if #available(iOS 15.0, *) {
                 showActivityLoader()
             }
@@ -102,7 +102,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
             
         }))
-        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+        refreshAlert.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: { (action: UIAlertAction!) in
             print("Handle Cancel Logic here")
         }))
         present(refreshAlert, animated: true, completion: nil)

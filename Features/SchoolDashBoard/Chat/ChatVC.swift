@@ -27,7 +27,9 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     var staffMembersData: StaffMember?
     var childDetails = UserDefaultFileManager.get_child_Details()
     var chatDataDetails : [ChatMessage]?
-    let Askedby  = "Asked by ~ "
+    let Askedby  = "Asked by ~ ".translated()
+    var placeholderLabel : UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         profileImage.layer.cornerRadius = profileImage.frame.size.width/2
@@ -39,10 +41,13 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         if staffMembersData?.is_blocked == true {
             blockedView.isHidden = false
             TextViewFullView.isHidden = true
+            blockedLbl.text = CommonStringFile.Reason.translated() + " : " + (staffMembersData?.reason ?? "")
+            
         }else{
             blockedView.isHidden = true
             TextViewFullView.isHidden = false
         }
+        blockedBtn.setTitle(CommonStringFile.You_have_been_blocked_by_the_staff.translated(), for: .normal)
         blockedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         blockedLbl.setFont(style: .body, size: FontSize.BodySize)
         MessgeTextview.addDoneButton()
@@ -65,11 +70,25 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         tableView.showsHorizontalScrollIndicator = false
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
-        MessgeTextview.textColor = .lightGray
+        setupPlaceholder()
+        MessgeTextview.text = ""
         MessgeTextview.delegate = self
         getStaff()
     }
+    
+    func setupPlaceholder() {
+        placeholderLabel = UILabel()
+        placeholderLabel.text = TexviewStringFile.Enter_Chat_Description.translated()
+        placeholderLabel.font = MessgeTextview.font
+        placeholderLabel.textColor = .lightGray
+        placeholderLabel.sizeToFit()
+        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        MessgeTextview.applyRightTxt()
+        MessgeTextview.applyRightTxt(with: placeholderLabel)
+        MessgeTextview.addSubview(placeholderLabel)
+        placeholderLabel.isHidden = !MessgeTextview.text.isEmpty // Hide if text exists
+    }
+    
     
     func scrollToBottom() {
         let lastSection = tableView.numberOfSections - 1
@@ -123,7 +142,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     
     @IBAction func sendBtnAction(_ sender: Any) {
         let text = MessgeTextview.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        guard !text.isEmpty, text != TexviewStringFile.Enter_Chat_Description else {
+        guard !text.isEmpty else {
             return
         }
         sendChat()
@@ -190,17 +209,15 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         present(alert, animated: true, completion: nil)
     }
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if MessgeTextview.text == TexviewStringFile.Enter_Chat_Description {
-            MessgeTextview.text = ""
-            MessgeTextview.textColor = .black
-        }
+        placeholderLabel.isHidden = !textView.text.isEmpty
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text == "" {
-            MessgeTextview.text = TexviewStringFile.Enter_Chat_Description
-            MessgeTextview.textColor = .lightGray
-        }
+        placeholderLabel.isHidden = !textView.text.isEmpty
     }
     func getStaff(){
         APIService.shared

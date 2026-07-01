@@ -21,18 +21,22 @@ class AttendanceHeaderView: UITableViewHeaderFooterView {
 
     func configure(dateString: String, stat: DayStat?) {
         let df = DateFormatter()
+        df.locale = LocaleManager.shared.apiLocale
         df.dateFormat = "dd-MM-yyyy"
         
         if let d = df.date(from: dateString) {
             let dayFormat = DateFormatter()
+            dayFormat.locale = LocaleManager.shared.apiLocale
             dayFormat.dateFormat = "dd"
             dayLabel.text = dayFormat.string(from: d)
             
             let wkFormat = DateFormatter()
+            wkFormat.locale = LocaleManager.shared.apiLocale
             wkFormat.dateFormat = "E"
             dayOfWeekLabel.text = wkFormat.string(from: d)
             
             let fullFormat = DateFormatter()
+            fullFormat.locale = LocaleManager.shared.apiLocale
             fullFormat.dateFormat = "dd MMMM yyyy"
             fullDateLabel.text = fullFormat.string(from: d)
         } else {
@@ -44,6 +48,11 @@ class AttendanceHeaderView: UITableViewHeaderFooterView {
         let present = stat?.present ?? 0
         let absent = stat?.absent ?? 0
         let notMarked = stat?.not_marked ?? 0
-        summaryLabel.text = "Present: \(present) • Absent: \(absent) • Not Marked: \(notMarked)"
+        
+        let presentText = "Present".translated()
+        let absentText = "Absent".translated()
+        let notmarkedText = "Not Marked".translated()
+        
+        summaryLabel.text = "\(presentText): \(present) • \(absentText): \(absent) • \(notmarkedText): \(notMarked)"
     }
 }

@@ -17,7 +17,6 @@ class LocationReportVC: UIViewController{
     var staffdetails = UserDefaultFileManager.get_staff_Details()
     var AttendanceDetails: [StaffAttendance]?
     let currentYear = Calendar.current.component(.year, from: Date())
-    let dateFormatter = DateFormatter()
     var currentMonth = Calendar.current.component(.month, from: Date())
     var years: [String] = []
     var Months: [String] = []
@@ -182,10 +181,9 @@ class LocationReportVC: UIViewController{
     }
     
     func getMonthNames(for selectedYear: String) -> [String] {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let localeID = normalizedLocaleIdentifier(for: savedCode)
+        
         let monthFormatter = DateFormatter()
-        monthFormatter.locale = Locale(identifier: localeID)
+        monthFormatter.locale = LocaleManager.shared.displayLocale
         monthFormatter.dateFormat = "MMMM"
         let currentYear = Calendar.current.component(.year, from: Date())
         let currentMonth = Calendar.current.component(.month, from: Date())
@@ -318,10 +316,13 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
             return nil
         }
         let dayFormatter = DateFormatter()
+        dayFormatter.locale = LocaleManager.shared.apiLocale
         dayFormatter.dateFormat = "dd"
         let monthFormatter = DateFormatter()
+        monthFormatter.locale = LocaleManager.shared.apiLocale
         monthFormatter.dateFormat = "MMM" // Short month format: Jan, Feb, Mar...
         let weekdayFormatter = DateFormatter()
+        weekdayFormatter.locale = LocaleManager.shared.apiLocale
         weekdayFormatter.dateFormat = "EEE" // Full day name: Monday, Tuesday...
         let day = dayFormatter.string(from: date)
         let month = monthFormatter.string(from: date)

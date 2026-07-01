@@ -454,7 +454,7 @@ class LSRWSubmisionListVC: UIViewController,
             if file.type == "video" {
                 let vc = ImageShowVc()
                 vc.fileURL = items
-                vc.subjectName = "Videos"
+                vc.subjectName = "Videos".translated()
                 vc.dateAndTimeForVideo = dateAndTimeForVideo ?? ""
                 vc.index = indexPath.row
                 vc.scrollIndex = indexPath
@@ -463,7 +463,7 @@ class LSRWSubmisionListVC: UIViewController,
             } else {
                 let vc = ImageShowVc()
                 vc.fileURL = items
-                vc.subjectName = "Images & Docs"
+                vc.subjectName = "Images & Docs".translated()
                 vc.index = indexPath.row
                 vc.scrollIndex = indexPath
                 vc.modalPresentationStyle = .fullScreen

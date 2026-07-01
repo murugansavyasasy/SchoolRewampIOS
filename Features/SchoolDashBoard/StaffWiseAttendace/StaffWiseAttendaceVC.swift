@@ -29,7 +29,6 @@ class StaffWiseAttendaceVC: UIViewController, Datepicker {
     let fromDatePicker = UIDatePicker()
     let toDatePicker = UIDatePicker()
     var staffdetails = UserDefaultFileManager.get_staff_Details()
-    let dateFormatter = DateFormatter()
     var dropDown  = DropDown()
     var staffDetails: [GetStaffDetails]?
     var staffId : String = ""
@@ -43,6 +42,7 @@ class StaffWiseAttendaceVC: UIViewController, Datepicker {
         fromdateDefaultLbl.setRequiredText(fromdateDefaultLbl.text ?? "")
         todateDefaultLbl.setRequiredText(todateDefaultLbl.text ?? "")
         selectstaffDefaultLbl.setRequiredText(selectstaffDefaultLbl.text ?? "")
+        stafNameLbl.text = "View All Staff".translated()
         setupTableView()
         SelectFromDate()
         let formatter = DateFormatter()
@@ -113,16 +113,13 @@ class StaffWiseAttendaceVC: UIViewController, Datepicker {
     }
     
     func date(date: String) {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let normalizedCode = normalizedLocaleIdentifier(for: savedCode)
-        let locale = Locale(identifier: normalizedCode)
         
         let inputFormatter = DateFormatter()
-        inputFormatter.locale = locale
+        inputFormatter.locale = LocaleManager.shared.displayLocale
         inputFormatter.dateFormat = "dd MMM yyyy" // correct format
         
         let outputFormatter = DateFormatter()
-        outputFormatter.locale = locale
+        outputFormatter.locale = LocaleManager.shared.displayLocale
         outputFormatter.dateFormat = "dd MMM yyyy"
         
         guard let parsedDate = inputFormatter.date(from: date) else {
@@ -427,6 +424,7 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
         responseData = response
         
         let df = DateFormatter()
+        df.locale = LocaleManager.shared.apiLocale
         df.dateFormat = "dd-MM-yyyy"
         
         if let allAttd = response.data?.first?.all_attd {
@@ -442,9 +440,6 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
             
             fromDatePicker.date = d
             toDatePicker.date = d
-            
-//            fromDateTextField.text = dateFormatter.string(from: d)
-//            toDateTextField.text = dateFormatter.string(from: d)
         }
         
         hideActivityLoader()
@@ -477,7 +472,7 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
     }
     
     @IBAction func staffDropDownList() {
-        var staffName = ["View All Staff"]
+        var staffName = ["View All Staff".translated()]
         staffName += (staffDetails ?? []).compactMap {
             guard let name = $0.name, !name.isEmpty else { return nil }
             return name
@@ -510,8 +505,8 @@ extension StaffWiseAttendaceVC : UITableViewDataSource,UITableViewDelegate{
                 staffId = staffDetails?[index - 1].id ?? ""
             }
             stafNameLbl.text = item
-            is_selectAllStaff = item == "View All Staff"
-            getStaffWiseAttendace(fromDate: convertDate(fromDateTextField.text ?? "") ?? "", toDate: convertDate(toDateTextField.text ?? "") ?? "", staffId: item == "View All Staff" ? "0" : staffId, select_staffAll:is_selectAllStaff)
+            is_selectAllStaff = item == "View All Staff".translated()
+            getStaffWiseAttendace(fromDate: convertDate(fromDateTextField.text ?? "") ?? "", toDate: convertDate(toDateTextField.text ?? "") ?? "", staffId: item == "View All Staff".translated() ? "0" : staffId, select_staffAll:is_selectAllStaff)
         }
     }
     

@@ -1379,6 +1379,8 @@ struct StaffMember: Codable {
     let id: String?
     let name: String?
     let is_blocked: Bool?
+    let reason: String?
+    let blocked_on: String?
     let profile: String?
     let subject_id: String?
     let subject_name: String?

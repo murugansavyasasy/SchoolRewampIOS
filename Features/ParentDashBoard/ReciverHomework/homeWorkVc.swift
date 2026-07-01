@@ -80,6 +80,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     
     func convertDateToString(_ date: Date) -> String {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = DateInputs.dd_MM_yyyy// Match API format!
         formatter.timeZone = TimeZone(identifier: "Asia/Kolkata")
         return formatter.string(from: date)
@@ -381,6 +382,7 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
     
     func getCurrentDateString() -> String {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = DateInputs.dd_MM_yyyy
         return formatter.string(from: Date())
     }
@@ -436,14 +438,11 @@ extension homeWorkVc: UISearchBarDelegate{
 struct CalendarItem {
     let date: Date
     var hasHomework: Bool = false
-    private var locale: Locale {
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let localeID = normalizedLocaleIdentifier(for: savedCode)
-        return Locale(identifier: localeID)
-    }
+    
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
-        formatter.locale = locale
+        formatter.locale = LocaleManager.shared.apiLocale
+        formatter.locale = LocaleManager.shared.displayLocale
         return formatter
     }
     

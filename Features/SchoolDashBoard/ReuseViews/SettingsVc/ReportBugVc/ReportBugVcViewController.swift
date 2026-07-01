@@ -55,8 +55,10 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
         BugsTextview.layer.borderColor = UIColor.lightGray.cgColor
         BugsTextview.addDoneButton()
         scrollView.keyboardDismissMode = .interactive
-        remarkDefaultLbl.setRequiredText("Remarks")
-        selectDefaultLbl.setRequiredText("Select Module")
+        remarkDefaultLbl.setRequiredText("Remarks".translated())
+        selectDefaultLbl.setRequiredText("Select Module".translated())
+        selectModuleLbl.text = "Select the menu".translated()
+        sendBtn.setTitle("Send Mail".translated(), for: .normal)
         hideKeyboardWhenSwipedDown()
         setupPlaceholder()
         
@@ -77,7 +79,7 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
     
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = "Type content"
+        placeholderLabel.text = "Type content".translated()
         placeholderLabel.font = BugsTextview.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
@@ -137,18 +139,18 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
         let isDetailsEmpty = details.isEmpty
         
         if !isMenuSelected && isDetailsEmpty {
-            showAlert(title: "Missing Information",
-                      message: "Please select a module and enter bug details.")
+            showAlert(title: "Missing Information".translated(),
+                      message: "Please select a module and enter bug details.".translated())
             return
         }
         if !isMenuSelected {
-            showAlert(title: "Missing Module",
-                      message: "Please select a module.")
+            showAlert(title: "Missing Module".translated(),
+                      message: "Please select a module.".translated())
             return
         }
         if isDetailsEmpty {
-            showAlert(title: "Missing Details",
-                      message: "Please enter bug details.")
+            showAlert(title: "Missing Details".translated(),
+                      message: "Please enter bug details.".translated())
             return
         }
         
@@ -158,27 +160,27 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
     
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        alert.addAction(UIAlertAction(title: "OK".translated(), style: .default))
         present(alert, animated: true)
     }
     
     func showMailOptions() {
         
         let alert = UIAlertController(
-            title: "Send Email",
-            message: "Choose mail app",
+            title: "Send Email".translated(),
+            message: "Choose mail app".translated(),
             preferredStyle: .actionSheet
         )
         
-        alert.addAction(UIAlertAction(title: "Apple Mail", style: .default) { _ in
+        alert.addAction(UIAlertAction(title: "Apple Mail".translated(), style: .default) { _ in
             self.sendViaAppleMail()
         })
         
-        alert.addAction(UIAlertAction(title: "Gmail", style: .default) { _ in
+        alert.addAction(UIAlertAction(title: "Gmail".translated(), style: .default) { _ in
             self.sendViaGmail()
         })
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel))
         
         if let popover = alert.popoverPresentationController {
             popover.sourceView = self.view
@@ -207,8 +209,8 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
         
         guard MFMailComposeViewController.canSendMail() else {
             showAlert(
-                title: "Apple Mail Not Available",
-                message: "Please configure Apple Mail or choose Gmail."
+                title: "Apple Mail Not Available".translated(),
+                message: "Please configure Apple Mail or choose Gmail.".translated()
             )
             return
         }

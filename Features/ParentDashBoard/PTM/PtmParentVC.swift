@@ -75,11 +75,11 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
         StudentNameLbl.configureAsBackTitle(firstLine: name, secondLine: standard)
         
-        scheduleMeetingBtn.setTitle(PTMString.scheduleMeeting, for: .normal)
-        yourMeetingBtn.setTitle(PTMString.yourMeetings, for: .normal)
-        BookSlotBtn.setTitle(PTMString.bookSlot, for: .normal)
+        scheduleMeetingBtn.setTitle(PTMString.scheduleMeeting.translated(), for: .normal)
+        yourMeetingBtn.setTitle(PTMString.yourMeetings.translated(), for: .normal)
+        BookSlotBtn.setTitle(PTMString.bookSlot.translated(), for: .normal)
         
-        subjectLbl.text = PTMString.allSubjects
+        subjectLbl.text = PTMString.allSubjects.translated()
         
         scheduleMeetingBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
         yourMeetingBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
@@ -116,13 +116,14 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     // MARK: - Date Generation
     private func generateDates() {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
         formatter.dateFormat = "dd-MM-yyyy"
         EventDate = formatter.string(from: Date())
-        let savedCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let localeID = normalizedLocaleIdentifier(for: savedCode)
         let monthFormatter = DateFormatter(); monthFormatter.dateFormat = "MMM"
-        monthFormatter.locale = Locale(identifier: localeID)
-        let dayFormatter = DateFormatter(); dayFormatter.dateFormat = "dd"
+        monthFormatter.locale = LocaleManager.shared.displayLocale
+        let dayFormatter = DateFormatter()
+        dayFormatter.locale = LocaleManager.shared.apiLocale
+        dayFormatter.dateFormat = "dd"
         let today = Calendar.current.startOfDay(for: Date())
         
         for i in 0..<60 {
@@ -141,14 +142,14 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     // MARK: - DropDown
     private func setupDropDown() {
         dropDown.anchorView = subjectsView
-        dropDown.dataSource = [PTMString.allSubjects] + subjectList.compactMap { $0.name }
+        dropDown.dataSource = [PTMString.allSubjects.translated()] + subjectList.compactMap { $0.name }
         
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
             subjectLbl.text = item
             
             switch item {
-            case PTMString.allSubjects:
+            case PTMString.allSubjects.translated():
                 self.subjectId = "0"; self.classteacherId = "0"; self.isManagement = false
             case "Management":
                 self.subjectId = "0"; self.classteacherId = "0"; self.isManagement = true
@@ -293,6 +294,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     
                     // Map counts into dateComponents
                     let formatter = DateFormatter(); formatter.dateFormat = "dd-MM-yyyy"
+                    formatter.locale = LocaleManager.shared.apiLocale
                     for i in 0..<self.dateComponents.count {
                         let compDate = self.dateComponents[i].date
                         let compDateStr = formatter.string(from: compDate)
@@ -577,6 +579,7 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         selectedIndex = indexPath
         let selectedDate = dateComponents[indexPath.item].date
         let formatter = DateFormatter(); formatter.dateFormat = "dd-MM-yyyy"
+        formatter.locale = LocaleManager.shared.apiLocale
         EventDate = formatter.string(from: selectedDate)
         getSlotsApi()
         BookSlotBtn.isHidden = true
