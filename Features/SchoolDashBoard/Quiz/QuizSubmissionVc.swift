@@ -27,7 +27,6 @@ class QuizSubmissionVc: UIViewController, UISearchBarDelegate,call {
     @IBOutlet weak var pendingBtn: UIButton!
     @IBOutlet weak var allSubmissionBtn: UIButton!
     @IBOutlet weak var titleLbl: UILabel!
-    @IBOutlet weak var PostedOnLbl: UILabel!
     @IBOutlet weak var subjectLbl: UILabel!
     @IBOutlet weak var QuizDetailsView: UIView!
     @IBOutlet weak var DescriptionBaseview: UIView!
@@ -189,15 +188,15 @@ extension QuizSubmissionVc: UITableViewDelegate, UITableViewDataSource {
         }
         if student.is_submit ?? false{
             cell.StatusBtn.backgroundColor = .systemGreen
-            cell.StatusBtn.setTitle(MenuStringFile.Submitted + " >>", for: .normal)
-//            let submittedOn = student.submitted_on?.convertToTargetDateFormat()
-//            cell.SubmittedOnBtn.setTitle("Submitted On:\n\(submittedOn ?? "")", for: .normal)
+            cell.StatusBtn.setTitle(MenuStringFile.Submitted.translated() + " >>", for: .normal)
+            //            let submittedOn = student.submitted_on?.convertToTargetDateFormat()
+            //            cell.SubmittedOnBtn.setTitle("Submitted On:\n\(submittedOn ?? "")", for: .normal)
             cell.StatusBtn.tag = indexPath.row
             cell.delegate = self
             cell.StatusBtn.isUserInteractionEnabled = true
         }else{
             cell.StatusBtn.backgroundColor = .pending
-            cell.StatusBtn.setTitle(MenuStringFile.Pending, for: .normal)
+            cell.StatusBtn.setTitle(MenuStringFile.Pending.translated(), for: .normal)
             cell.StatusBtn.isUserInteractionEnabled = false
             
         }
@@ -230,4 +229,8 @@ extension QuizSubmissionVc: UITableViewDelegate, UITableViewDataSource {
                         
                     case .failure(let error):
                         print("Error fetching notices: \(error.localizedDescription)")
-                    }}}}}
+                    }
+                }
+            }
+    }
+}

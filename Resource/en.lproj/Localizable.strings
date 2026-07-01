@@ -1082,6 +1082,13 @@
 "Cancel Meeting" = "Cancel Meeting";
 "Reason for Cancelation" = "Reason for Cancellation";
 "Paste the meeting link here" = "Paste the meeting link here";
+"Add files to Question" = "Add files to Question";
+"Remove Image" = "Remove Image";
+"👨🏻‍🎓 Student Submissions" = "👨🏻‍🎓 Student Submissions";
+"Correct Ans " = "Correct Ans ";
+"Wrong Ans " = "Wrong Ans ";
+"Not Ans " = "Not Ans ";
+"Completed at: " = "Completed at: ";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

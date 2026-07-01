@@ -227,6 +227,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         CorretDefaultLbl.setRequiredText(QuizListStringFile.Correct_Ans)
         markDefaultLbl.setRequiredText(QuizListStringFile.Mark)
         markTxtFild.placeholder = MenuStringFile.dropYourMarkHere.translated()
+        ChapterTxtFld.placeholder = "Enter Chapter here".translated()
         markTxtFild.delegate = self
         ChapterTxtFld.delegate = self
         opDTxtView.delegate = self
@@ -491,7 +492,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                 optionAImageView.image = nil
                 A_option = ""
                 optionAView.isHidden = true
-                sender.setTitle("Add Image", for: .normal)
+                sender.setTitle("Add Image".translated(), for: .normal)
                 if let table =  self.parentTableView {
                     table.beginUpdates()
                     table.endUpdates()
@@ -510,7 +511,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                 optionBImageView.image = nil
                 B_option = ""
                 optionBview.isHidden = true
-                sender.setTitle("Add Image", for: .normal)
+                sender.setTitle("Add Image".translated(), for: .normal)
                 if let table = self.parentTableView {
                     table.beginUpdates()
                     table.endUpdates()
@@ -529,7 +530,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                 optionCImageView.image = nil
                 C_option = ""
                 optionCView.isHidden = true
-                sender.setTitle("Add Image", for: .normal)
+                sender.setTitle("Add Image".translated(), for: .normal)
                 if let table =  self.parentTableView {
                     table.beginUpdates()
                     table.endUpdates()
@@ -548,7 +549,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
                 optionDImageView.image = nil
                 D_option = ""
                 optionDView.isHidden = true
-                sender.setTitle("Add Image", for: .normal)
+                sender.setTitle("Add Image".translated(), for: .normal)
                 if let table =  self.parentTableView {
                     table.beginUpdates()
                     table.endUpdates()
@@ -858,7 +859,7 @@ extension QuistionTvTableViewCell: UICollectionViewDelegate,UICollectionViewData
             switch option {
             case .optionA:
                 self.optionAView.isHidden = false
-                self.OptionAImgBtn.setTitle("Remove Image", for: .normal)
+                self.OptionAImgBtn.setTitle("Remove Image".translated(), for: .normal)
                 
                 if isRemote {
                     self.optionAImageView.kf.setImage(with: URL(string: url ?? ""))
@@ -871,7 +872,7 @@ extension QuistionTvTableViewCell: UICollectionViewDelegate,UICollectionViewData
                 
             case .optionB:
                 self.optionBview.isHidden = false
-                self.OptionBImgBtn.setTitle("Remove Image", for: .normal)
+                self.OptionBImgBtn.setTitle("Remove Image".translated(), for: .normal)
                 
                 if isRemote {
                     self.optionBImageView.kf.setImage(with: URL(string: url ?? ""))
@@ -884,7 +885,7 @@ extension QuistionTvTableViewCell: UICollectionViewDelegate,UICollectionViewData
                 
             case .optionC:
                 self.optionCView.isHidden = false
-                self.OptionCImgBtn.setTitle("Remove Image", for: .normal)
+                self.OptionCImgBtn.setTitle("Remove Image".translated(), for: .normal)
                 
                 if isRemote {
                     self.optionCImageView.kf.setImage(with: URL(string: url ?? ""))
@@ -897,7 +898,7 @@ extension QuistionTvTableViewCell: UICollectionViewDelegate,UICollectionViewData
                 
             case .optionD:
                 self.optionDView.isHidden = false
-                self.OptionDImgBtn.setTitle("Remove Image", for: .normal)
+                self.OptionDImgBtn.setTitle("Remove Image".translated(), for: .normal)
                 
                 if isRemote {
                     self.optionDImageView.kf.setImage(with: URL(string: url ?? ""))

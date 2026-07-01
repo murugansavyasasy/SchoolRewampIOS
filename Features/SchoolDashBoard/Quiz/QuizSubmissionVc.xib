@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -11,12 +11,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QuizSubmissionVc" customModule="School_Chimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QuizSubmissionVc" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
             <connections>
                 <outlet property="DescriptionBaseview" destination="qGo-bD-gcB" id="Nxe-d9-Zj2"/>
                 <outlet property="NoDataImage" destination="oZj-vh-Gy6" id="Gig-Ur-r7B"/>
                 <outlet property="NoDataLbl" destination="B5a-hu-8X3" id="J5D-iQ-BYI"/>
-                <outlet property="PostedOnLbl" destination="267-O5-F03" id="lqt-4U-ecG"/>
                 <outlet property="QuizDetailsView" destination="pJB-5f-mZS" id="bSA-a8-zVI"/>
                 <outlet property="StudentListBaseview" destination="V9z-zq-rm3" id="6u4-VF-e6l"/>
                 <outlet property="allSubmissionBtn" destination="Jb4-FL-E2h" id="adS-WI-YA7"/>
@@ -39,7 +38,7 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="008-tF-pYW" customClass="BottomRoundedView" customModule="School_Chimes" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="008-tF-pYW" customClass="BottomRoundedView" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="183"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gYc-AL-M8d">
@@ -136,7 +135,7 @@
                                                                                 <constraint firstAttribute="width" constant="25" id="n7G-u9-xhh"/>
                                                                             </constraints>
                                                                         </imageView>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="267-O5-F03">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="267-O5-F03" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                                                             <rect key="frame" x="35" y="0.0" width="308" height="25"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                             <nil key="textColor"/>
@@ -179,7 +178,7 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FX7-ch-Y2X">
                                                             <rect key="frame" x="10" y="10" width="343" height="95"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7K9-um-VSx">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7K9-um-VSx" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="343" height="51.333333333333336"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                                     <nil key="textColor"/>
@@ -211,7 +210,7 @@
                                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="wM8-xc-Fce">
                                                                     <rect key="frame" x="0.0" y="0.0" width="343" height="35"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="👨🏻‍🎓 Student Submissions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tOo-f5-UDx">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="👨🏻‍🎓 Student Submissions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tOo-f5-UDx" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="7.3333333333333695" width="293" height="20.333333333333329"/>
                                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                                             <nil key="textColor"/>

@@ -1163,7 +1163,13 @@
 "Cancel Meeting" = "बैठक रद्द करें";
 "Reason for Cancelation" = "रद्द करने का कारण";
 "Paste the meeting link here" = "बैठक का लिंक यहाँ चिपकाएँ";
-
+"Add files to Question" = "प्रश्न में फ़ाइलें जोड़ें";
+"Remove Image" = "छवि हटाएँ";
+"👨🏻‍🎓 Student Submissions" = "👨🏻‍🎓 छात्र प्रस्तुतियाँ";
+"Correct Ans " = "सही उत्तर ";
+"Wrong Ans " = "गलत उत्तर ";
+"Not Ans " = "उत्तर नहीं दिया ";
+"Completed at: " = "पूर्ण किया गया: ";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

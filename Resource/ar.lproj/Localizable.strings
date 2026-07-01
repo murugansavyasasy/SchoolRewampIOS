@@ -1093,6 +1093,13 @@
 "Cancel Meeting" = "إلغاء الاجتماع";
 "Reason for Cancelation" = "سبب الإلغاء";
 "Paste the meeting link here" = "ألصق رابط الاجتماع هنا";
+"Add files to Question" = "إضافة ملفات إلى السؤال";
+"Remove Image" = "إزالة الصورة";
+"👨🏻‍🎓 Student Submissions" = "👨🏻‍🎓 إجابات الطلاب";
+"Correct Ans " = "الإجابة الصحيحة ";
+"Wrong Ans " = "الإجابة الخاطئة ";
+"Not Ans " = "لم تتم الإجابة ";
+"Completed at: " = "اكتمل في: ";
 
 
 //MARK: Flavour strings

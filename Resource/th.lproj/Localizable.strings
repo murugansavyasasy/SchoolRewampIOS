@@ -1156,7 +1156,13 @@
 "Cancel Meeting" = "ยกเลิกการประชุม";
 "Reason for Cancelation" = "เหตุผลในการยกเลิก";
 "Paste the meeting link here" = "วางลิงก์การประชุมที่นี่";
-
+"Add files to Question" = "เพิ่มไฟล์ในคำถาม";
+"Remove Image" = "ลบรูปภาพ";
+"👨🏻‍🎓 Student Submissions" = "👨🏻‍🎓 การส่งงานของนักเรียน";
+"Correct Ans " = "ตอบถูก ";
+"Wrong Ans " = "ตอบผิด ";
+"Not Ans " = "ไม่ได้ตอบ ";
+"Completed at: " = "เสร็จสิ้นเมื่อ: ";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
