@@ -26,7 +26,7 @@ class ExamCardTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
     
     var onToggle: (() -> Void)?
     var onSubjectToggle: (() -> Void)?
-    
+    var onViewMarks: (() -> Void)?
     override func awakeFromNib() {
         super.awakeFromNib()
         setupStyles()
@@ -69,11 +69,14 @@ class ExamCardTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
         viewMarksButton.layer.borderColor = UIColor(red: 220/255, green: 225/255, blue: 253/255, alpha: 1.0).cgColor
         viewMarksButton.backgroundColor = UIColor(red: 240/255, green: 242/255, blue: 254/255, alpha: 1.0)
         viewMarksButton.tintColor = UIColor(red: 74/255, green: 85/255, blue: 246/255, alpha: 1.0)
-        
+        viewMarksButton.addTarget(self, action: #selector(didTapViewMarks), for: .touchUpInside)
         // Chevron button styles
         chevronButton.layer.cornerRadius = 16
     }
     
+    @objc private func didTapViewMarks() {
+        onViewMarks?()
+    }
     private func setupCollectionView() {
         subjectsCollectionView.dataSource = self
         subjectsCollectionView.delegate = self
@@ -141,7 +144,6 @@ class ExamCardTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
             }
         }
     }
-    
     // MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

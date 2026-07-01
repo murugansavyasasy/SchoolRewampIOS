@@ -58,10 +58,38 @@
 		180F58672FF4E89800665D3C /* SubjectRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F583D2FF4E89800665D3C /* SubjectRowView.xib */; };
 		180F58682FF4E89800665D3C /* ExamCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F58392FF4E89800665D3C /* ExamCardTableViewCell.xib */; };
 		180F58692FF4E89800665D3C /* ActivityDetailCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F58342FF4E89800665D3C /* ActivityDetailCardView.xib */; };
-		180F586B2FF4E8B100665D3C /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F586A2FF4E8B100665D3C /* Models.swift */; };
-		180F586C2FF4E8B100665D3C /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F586A2FF4E8B100665D3C /* Models.swift */; };
-		180F586D2FF4E8B100665D3C /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F586A2FF4E8B100665D3C /* Models.swift */; };
-		180F586E2FF4E8B100665D3C /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F586A2FF4E8B100665D3C /* Models.swift */; };
+		180F58852FF514A100665D3C /* MarksHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F58812FF514A100665D3C /* MarksHeaderView.swift */; };
+		180F58862FF514A100665D3C /* MarksDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F587F2FF514A100665D3C /* MarksDetailsViewController.swift */; };
+		180F58872FF514A100665D3C /* SubjectMarksCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F58832FF514A100665D3C /* SubjectMarksCardCell.swift */; };
+		180F58882FF514A100665D3C /* MarksDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F58802FF514A100665D3C /* MarksDetailsViewController.xib */; };
+		180F58892FF514A100665D3C /* MarksHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F58822FF514A100665D3C /* MarksHeaderView.xib */; };
+		180F588A2FF514A100665D3C /* SubjectMarksCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F58842FF514A100665D3C /* SubjectMarksCardCell.xib */; };
+		180F588B2FF514A100665D3C /* MarksHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F58812FF514A100665D3C /* MarksHeaderView.swift */; };
+		180F588C2FF514A100665D3C /* MarksDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F587F2FF514A100665D3C /* MarksDetailsViewController.swift */; };
+		180F588D2FF514A100665D3C /* SubjectMarksCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F58832FF514A100665D3C /* SubjectMarksCardCell.swift */; };
+		180F588E2FF514A100665D3C /* MarksDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F58802FF514A100665D3C /* MarksDetailsViewController.xib */; };
+		180F588F2FF514A100665D3C /* MarksHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F58822FF514A100665D3C /* MarksHeaderView.xib */; };
+		180F58902FF514A100665D3C /* SubjectMarksCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F58842FF514A100665D3C /* SubjectMarksCardCell.xib */; };
+		180F58912FF514A100665D3C /* MarksHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F58812FF514A100665D3C /* MarksHeaderView.swift */; };
+		180F58922FF514A100665D3C /* MarksDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F587F2FF514A100665D3C /* MarksDetailsViewController.swift */; };
+		180F58932FF514A100665D3C /* SubjectMarksCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F58832FF514A100665D3C /* SubjectMarksCardCell.swift */; };
+		180F58942FF514A100665D3C /* MarksDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F58802FF514A100665D3C /* MarksDetailsViewController.xib */; };
+		180F58952FF514A100665D3C /* MarksHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F58822FF514A100665D3C /* MarksHeaderView.xib */; };
+		180F58962FF514A100665D3C /* SubjectMarksCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F58842FF514A100665D3C /* SubjectMarksCardCell.xib */; };
+		180F58972FF514A100665D3C /* MarksHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F58812FF514A100665D3C /* MarksHeaderView.swift */; };
+		180F58982FF514A100665D3C /* MarksDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F587F2FF514A100665D3C /* MarksDetailsViewController.swift */; };
+		180F58992FF514A100665D3C /* SubjectMarksCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F58832FF514A100665D3C /* SubjectMarksCardCell.swift */; };
+		180F589A2FF514A100665D3C /* MarksDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F58802FF514A100665D3C /* MarksDetailsViewController.xib */; };
+		180F589B2FF514A100665D3C /* MarksHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F58822FF514A100665D3C /* MarksHeaderView.xib */; };
+		180F589C2FF514A100665D3C /* SubjectMarksCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F58842FF514A100665D3C /* SubjectMarksCardCell.xib */; };
+		180F589F2FF516E500665D3C /* ActivityMarksRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F589D2FF516E500665D3C /* ActivityMarksRowView.swift */; };
+		180F58A02FF516E500665D3C /* ActivityMarksRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F589E2FF516E500665D3C /* ActivityMarksRowView.xib */; };
+		180F58A12FF516E500665D3C /* ActivityMarksRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F589D2FF516E500665D3C /* ActivityMarksRowView.swift */; };
+		180F58A22FF516E500665D3C /* ActivityMarksRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F589E2FF516E500665D3C /* ActivityMarksRowView.xib */; };
+		180F58A32FF516E500665D3C /* ActivityMarksRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F589D2FF516E500665D3C /* ActivityMarksRowView.swift */; };
+		180F58A42FF516E500665D3C /* ActivityMarksRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F589E2FF516E500665D3C /* ActivityMarksRowView.xib */; };
+		180F58A52FF516E500665D3C /* ActivityMarksRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180F589D2FF516E500665D3C /* ActivityMarksRowView.swift */; };
+		180F58A62FF516E500665D3C /* ActivityMarksRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180F589E2FF516E500665D3C /* ActivityMarksRowView.xib */; };
 		1827E5A22F90C12000B33B20 /* AWSS3Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BE872C197B4A00E32496 /* AWSS3Manager.swift */; };
 		1827E5A32F90C12000B33B20 /* ContactUsTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFFA3A2CCCB49200C11C26 /* ContactUsTVCell.swift */; };
 		1827E5A42F90C12000B33B20 /* TestTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C432D02DE81002BBB97 /* TestTVC.swift */; };
@@ -3712,7 +3740,14 @@
 		180F583B2FF4E89800665D3C /* SubjectBadgeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubjectBadgeCollectionViewCell.xib; sourceTree = "<group>"; };
 		180F583C2FF4E89800665D3C /* SubjectRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectRowView.swift; sourceTree = "<group>"; };
 		180F583D2FF4E89800665D3C /* SubjectRowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubjectRowView.xib; sourceTree = "<group>"; };
-		180F586A2FF4E8B100665D3C /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		180F587F2FF514A100665D3C /* MarksDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarksDetailsViewController.swift; sourceTree = "<group>"; };
+		180F58802FF514A100665D3C /* MarksDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarksDetailsViewController.xib; sourceTree = "<group>"; };
+		180F58812FF514A100665D3C /* MarksHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarksHeaderView.swift; sourceTree = "<group>"; };
+		180F58822FF514A100665D3C /* MarksHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarksHeaderView.xib; sourceTree = "<group>"; };
+		180F58832FF514A100665D3C /* SubjectMarksCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectMarksCardCell.swift; sourceTree = "<group>"; };
+		180F58842FF514A100665D3C /* SubjectMarksCardCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubjectMarksCardCell.xib; sourceTree = "<group>"; };
+		180F589D2FF516E500665D3C /* ActivityMarksRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMarksRowView.swift; sourceTree = "<group>"; };
+		180F589E2FF516E500665D3C /* ActivityMarksRowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityMarksRowView.xib; sourceTree = "<group>"; };
 		1827E91B2F90C12000B33B20 /* SRI SUDHA DHONE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SRI SUDHA DHONE.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		182B09C02F6C25A0002C81A0 /* StatsticTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsticTvCell.swift; sourceTree = "<group>"; };
 		182B09C12F6C25A0002C81A0 /* StatsticTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatsticTvCell.xib; sourceTree = "<group>"; };
@@ -4919,11 +4954,18 @@
 		183FC8D22FF3D82B00234405 /* ClassTest */ = {
 			isa = PBXGroup;
 			children = (
-				180F586A2FF4E8B100665D3C /* Models.swift */,
+				180F589D2FF516E500665D3C /* ActivityMarksRowView.swift */,
+				180F589E2FF516E500665D3C /* ActivityMarksRowView.xib */,
 				180F58332FF4E89800665D3C /* ActivityDetailCardView.swift */,
 				180F58342FF4E89800665D3C /* ActivityDetailCardView.xib */,
 				180F58352FF4E89800665D3C /* ClassTestsHeaderView.swift */,
 				180F58362FF4E89800665D3C /* ClassTestsHeaderView.xib */,
+				180F587F2FF514A100665D3C /* MarksDetailsViewController.swift */,
+				180F58802FF514A100665D3C /* MarksDetailsViewController.xib */,
+				180F58812FF514A100665D3C /* MarksHeaderView.swift */,
+				180F58822FF514A100665D3C /* MarksHeaderView.xib */,
+				180F58832FF514A100665D3C /* SubjectMarksCardCell.swift */,
+				180F58842FF514A100665D3C /* SubjectMarksCardCell.xib */,
 				180F58372FF4E89800665D3C /* ClassTestsStateTracker.swift */,
 				180F58382FF4E89800665D3C /* ExamCardTableViewCell.swift */,
 				180F58392FF4E89800665D3C /* ExamCardTableViewCell.xib */,
@@ -7449,6 +7491,7 @@
 				1827E7C92F90C12000B33B20 /* ImageShowCVCell.xib in Resources */,
 				1827E7CA2F90C12000B33B20 /* ImageShowVc.xib in Resources */,
 				1827E7CB2F90C12000B33B20 /* parentHostelDashboardVC.xib in Resources */,
+				180F58A42FF516E500665D3C /* ActivityMarksRowView.xib in Resources */,
 				1827E7CC2F90C12000B33B20 /* outpassRequestTVcell.xib in Resources */,
 				1827E7CD2F90C12000B33B20 /* VideoPlayerCVC.xib in Resources */,
 				1827E7CE2F90C12000B33B20 /* PtmNavigationVC.xib in Resources */,
@@ -7468,6 +7511,9 @@
 				1827E7DC2F90C12000B33B20 /* AttendanceRepCv.xib in Resources */,
 				1827E7DD2F90C12000B33B20 /* MessageFromManagementViewController.xib in Resources */,
 				1827E7DE2F90C12000B33B20 /* FilterPopover.xib in Resources */,
+				180F588E2FF514A100665D3C /* MarksDetailsViewController.xib in Resources */,
+				180F588F2FF514A100665D3C /* MarksHeaderView.xib in Resources */,
+				180F58902FF514A100665D3C /* SubjectMarksCardCell.xib in Resources */,
 				1827E7DF2F90C12000B33B20 /* LsrwListShowViewController.xib in Resources */,
 				1827E7E02F90C12000B33B20 /* EmergencyInfoPopoverVCViewController.xib in Resources */,
 				1827E7E12F90C12000B33B20 /* NewAttendanceReportVC.xib in Resources */,
@@ -7878,6 +7924,7 @@
 				1868A5F42FAC762E00831144 /* ImageShowCVCell.xib in Resources */,
 				1868A5F52FAC762E00831144 /* ImageShowVc.xib in Resources */,
 				1868A5F62FAC762E00831144 /* parentHostelDashboardVC.xib in Resources */,
+				180F58A02FF516E500665D3C /* ActivityMarksRowView.xib in Resources */,
 				1868A5F72FAC762E00831144 /* outpassRequestTVcell.xib in Resources */,
 				1868A5F82FAC762E00831144 /* VideoPlayerCVC.xib in Resources */,
 				1868A5F92FAC762E00831144 /* PtmNavigationVC.xib in Resources */,
@@ -7897,6 +7944,9 @@
 				1868A6072FAC762E00831144 /* AttendanceRepCv.xib in Resources */,
 				1868A6082FAC762E00831144 /* MessageFromManagementViewController.xib in Resources */,
 				1868A6092FAC762E00831144 /* FilterPopover.xib in Resources */,
+				180F58882FF514A100665D3C /* MarksDetailsViewController.xib in Resources */,
+				180F58892FF514A100665D3C /* MarksHeaderView.xib in Resources */,
+				180F588A2FF514A100665D3C /* SubjectMarksCardCell.xib in Resources */,
 				1868A60A2FAC762E00831144 /* LsrwListShowViewController.xib in Resources */,
 				1868A60B2FAC762E00831144 /* EmergencyInfoPopoverVCViewController.xib in Resources */,
 				1868A60C2FAC762E00831144 /* NewAttendanceReportVC.xib in Resources */,
@@ -8307,6 +8357,7 @@
 				186E60F92FE91EB800BAF454 /* ImageShowCVCell.xib in Resources */,
 				186E60FA2FE91EB800BAF454 /* ImageShowVc.xib in Resources */,
 				186E60FB2FE91EB800BAF454 /* parentHostelDashboardVC.xib in Resources */,
+				180F58A22FF516E500665D3C /* ActivityMarksRowView.xib in Resources */,
 				186E60FC2FE91EB800BAF454 /* outpassRequestTVcell.xib in Resources */,
 				186E60FD2FE91EB800BAF454 /* VideoPlayerCVC.xib in Resources */,
 				186E60FE2FE91EB800BAF454 /* PtmNavigationVC.xib in Resources */,
@@ -8326,6 +8377,9 @@
 				186E610C2FE91EB800BAF454 /* AttendanceRepCv.xib in Resources */,
 				186E610D2FE91EB800BAF454 /* MessageFromManagementViewController.xib in Resources */,
 				186E610E2FE91EB800BAF454 /* FilterPopover.xib in Resources */,
+				180F589A2FF514A100665D3C /* MarksDetailsViewController.xib in Resources */,
+				180F589B2FF514A100665D3C /* MarksHeaderView.xib in Resources */,
+				180F589C2FF514A100665D3C /* SubjectMarksCardCell.xib in Resources */,
 				186E610F2FE91EB800BAF454 /* LsrwListShowViewController.xib in Resources */,
 				186E61102FE91EB800BAF454 /* EmergencyInfoPopoverVCViewController.xib in Resources */,
 				186E61112FE91EB800BAF454 /* NewAttendanceReportVC.xib in Resources */,
@@ -8806,6 +8860,9 @@
 				182B0A892F6D3326002C81A0 /* WeeklyTrendCell.xib in Resources */,
 				188EBD8E2ED5632F00BEA524 /* LICENSE in Resources */,
 				188EBD8F2ED5632F00BEA524 /* DropDownCell.xib in Resources */,
+				180F58942FF514A100665D3C /* MarksDetailsViewController.xib in Resources */,
+				180F58952FF514A100665D3C /* MarksHeaderView.xib in Resources */,
+				180F58962FF514A100665D3C /* SubjectMarksCardCell.xib in Resources */,
 				188EBD902ED5632F00BEA524 /* README.md in Resources */,
 				84EFF9CE2CCC7A6000C11C26 /* PasswordVc.xib in Resources */,
 				FAAF79922DFBE3E000227DCC /* Poppins-Regular.ttf in Resources */,
@@ -8998,6 +9055,7 @@
 				840177E82E3B2CE0006CB477 /* ContentCell.xib in Resources */,
 				84CE676A2E4232610019128B /* AssignmentTVC.xib in Resources */,
 				84CFD72D2F10EAFC008ED044 /* MarksTableViewCell.xib in Resources */,
+				180F58A62FF516E500665D3C /* ActivityMarksRowView.xib in Resources */,
 				84CFD72E2F10EAFC008ED044 /* MarkReviewCVC.xib in Resources */,
 				84CFD72F2F10EAFC008ED044 /* MarksCell.xib in Resources */,
 				84CFD7302F10EAFC008ED044 /* EnterMarkVC.xib in Resources */,
@@ -9413,6 +9471,9 @@
 				1827E6372F90C12000B33B20 /* TicketView.swift in Sources */,
 				1827E6382F90C12000B33B20 /* PunchUserDetailsTVC.swift in Sources */,
 				1827E6392F90C12000B33B20 /* dailyAttendaceDateTvCell.swift in Sources */,
+				180F588B2FF514A100665D3C /* MarksHeaderView.swift in Sources */,
+				180F588C2FF514A100665D3C /* MarksDetailsViewController.swift in Sources */,
+				180F588D2FF514A100665D3C /* SubjectMarksCardCell.swift in Sources */,
 				1827E63A2F90C12000B33B20 /* TopCVCell.swift in Sources */,
 				1827E63B2F90C12000B33B20 /* NetworkMoniter.swift in Sources */,
 				1827E63C2F90C12000B33B20 /* Shimmer.swift in Sources */,
@@ -9549,6 +9610,7 @@
 				1827E6BE2F90C12000B33B20 /* LocationReportVC.swift in Sources */,
 				1827E6BF2F90C12000B33B20 /* ConfettiEmitter.swift in Sources */,
 				1827E6C02F90C12000B33B20 /* StudentReportDashboardVC.swift in Sources */,
+				180F58A32FF516E500665D3C /* ActivityMarksRowView.swift in Sources */,
 				1827E6C12F90C12000B33B20 /* DetailedDayRowCell.swift in Sources */,
 				1827E6C22F90C12000B33B20 /* OutpassRequestsCell.swift in Sources */,
 				1827E6C32F90C12000B33B20 /* ConfettiView.swift in Sources */,
@@ -9600,7 +9662,6 @@
 				1827E6F12F90C12000B33B20 /* ClassicFireworkAnimator.swift in Sources */,
 				1827E6F22F90C12000B33B20 /* VimeoUpload.swift in Sources */,
 				1827E6F32F90C12000B33B20 /* TimetableTvCell.swift in Sources */,
-				180F586C2FF4E8B100665D3C /* Models.swift in Sources */,
 				1827E6F42F90C12000B33B20 /* HostelListTvCell.swift in Sources */,
 				1827E6F52F90C12000B33B20 /* OutpassRequestsVC.swift in Sources */,
 				1827E6F62F90C12000B33B20 /* ImageSparkView.swift in Sources */,
@@ -9888,6 +9949,9 @@
 				1868A4612FAC762E00831144 /* TicketView.swift in Sources */,
 				1868A4622FAC762E00831144 /* PunchUserDetailsTVC.swift in Sources */,
 				1868A4632FAC762E00831144 /* dailyAttendaceDateTvCell.swift in Sources */,
+				180F58852FF514A100665D3C /* MarksHeaderView.swift in Sources */,
+				180F58862FF514A100665D3C /* MarksDetailsViewController.swift in Sources */,
+				180F58872FF514A100665D3C /* SubjectMarksCardCell.swift in Sources */,
 				1868A4642FAC762E00831144 /* TopCVCell.swift in Sources */,
 				1868A4652FAC762E00831144 /* NetworkMoniter.swift in Sources */,
 				1868A4662FAC762E00831144 /* Shimmer.swift in Sources */,
@@ -10024,6 +10088,7 @@
 				1868A4E82FAC762E00831144 /* LocationReportVC.swift in Sources */,
 				1868A4E92FAC762E00831144 /* ConfettiEmitter.swift in Sources */,
 				1868A4EA2FAC762E00831144 /* StudentReportDashboardVC.swift in Sources */,
+				180F589F2FF516E500665D3C /* ActivityMarksRowView.swift in Sources */,
 				1868A4EB2FAC762E00831144 /* DetailedDayRowCell.swift in Sources */,
 				1868A4EC2FAC762E00831144 /* OutpassRequestsCell.swift in Sources */,
 				1868A4ED2FAC762E00831144 /* ConfettiView.swift in Sources */,
@@ -10075,7 +10140,6 @@
 				1868A51B2FAC762E00831144 /* ClassicFireworkAnimator.swift in Sources */,
 				1868A51C2FAC762E00831144 /* VimeoUpload.swift in Sources */,
 				1868A51D2FAC762E00831144 /* TimetableTvCell.swift in Sources */,
-				180F586E2FF4E8B100665D3C /* Models.swift in Sources */,
 				1868A51E2FAC762E00831144 /* HostelListTvCell.swift in Sources */,
 				1868A51F2FAC762E00831144 /* OutpassRequestsVC.swift in Sources */,
 				1868A5202FAC762E00831144 /* ImageSparkView.swift in Sources */,
@@ -10363,6 +10427,9 @@
 				186E5F5F2FE91EB800BAF454 /* TicketView.swift in Sources */,
 				186E5F602FE91EB800BAF454 /* PunchUserDetailsTVC.swift in Sources */,
 				186E5F612FE91EB800BAF454 /* dailyAttendaceDateTvCell.swift in Sources */,
+				180F58972FF514A100665D3C /* MarksHeaderView.swift in Sources */,
+				180F58982FF514A100665D3C /* MarksDetailsViewController.swift in Sources */,
+				180F58992FF514A100665D3C /* SubjectMarksCardCell.swift in Sources */,
 				186E5F622FE91EB800BAF454 /* TopCVCell.swift in Sources */,
 				186E5F632FE91EB800BAF454 /* NetworkMoniter.swift in Sources */,
 				186E5F642FE91EB800BAF454 /* Shimmer.swift in Sources */,
@@ -10499,6 +10566,7 @@
 				186E5FE72FE91EB800BAF454 /* LocationReportVC.swift in Sources */,
 				186E5FE82FE91EB800BAF454 /* ConfettiEmitter.swift in Sources */,
 				186E5FE92FE91EB800BAF454 /* StudentReportDashboardVC.swift in Sources */,
+				180F58A12FF516E500665D3C /* ActivityMarksRowView.swift in Sources */,
 				186E5FEA2FE91EB800BAF454 /* DetailedDayRowCell.swift in Sources */,
 				186E5FEB2FE91EB800BAF454 /* OutpassRequestsCell.swift in Sources */,
 				186E5FEC2FE91EB800BAF454 /* ConfettiView.swift in Sources */,
@@ -10550,7 +10618,6 @@
 				186E601A2FE91EB800BAF454 /* ClassicFireworkAnimator.swift in Sources */,
 				186E601B2FE91EB800BAF454 /* VimeoUpload.swift in Sources */,
 				186E601C2FE91EB800BAF454 /* TimetableTvCell.swift in Sources */,
-				180F586D2FF4E8B100665D3C /* Models.swift in Sources */,
 				186E601D2FE91EB800BAF454 /* HostelListTvCell.swift in Sources */,
 				186E601E2FE91EB800BAF454 /* OutpassRequestsVC.swift in Sources */,
 				186E601F2FE91EB800BAF454 /* ImageSparkView.swift in Sources */,
@@ -10845,6 +10912,9 @@
 				84127AE52E03C8F00092159D /* TicketView.swift in Sources */,
 				8483F6412E6AF89100E2C886 /* PunchUserDetailsTVC.swift in Sources */,
 				1837C7F22F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.swift in Sources */,
+				180F58912FF514A100665D3C /* MarksHeaderView.swift in Sources */,
+				180F58922FF514A100665D3C /* MarksDetailsViewController.swift in Sources */,
+				180F58932FF514A100665D3C /* SubjectMarksCardCell.swift in Sources */,
 				84EFF9D92CCC862F00C11C26 /* TopCVCell.swift in Sources */,
 				849D72362D14272C0060E222 /* NetworkMoniter.swift in Sources */,
 				84EFFA3F2CCCC98100C11C26 /* Shimmer.swift in Sources */,
@@ -10981,6 +11051,7 @@
 				FAF9F4A82DBA4952005F7272 /* LocationReportVC.swift in Sources */,
 				84C829C12D0807CD0024A46A /* ConfettiEmitter.swift in Sources */,
 				842ACE012F569F1400954404 /* StudentReportDashboardVC.swift in Sources */,
+				180F58A52FF516E500665D3C /* ActivityMarksRowView.swift in Sources */,
 				182B0AB62F6D47AB002C81A0 /* DetailedDayRowCell.swift in Sources */,
 				182B0AB72F6D47AB002C81A0 /* OutpassRequestsCell.swift in Sources */,
 				84C829C22D0807CD0024A46A /* ConfettiView.swift in Sources */,
@@ -11032,7 +11103,6 @@
 				84C829FC2D086A490024A46A /* ClassicFireworkAnimator.swift in Sources */,
 				FA0C88B32DC4CD470042DD24 /* VimeoUpload.swift in Sources */,
 				FACD4D772E30F8B40084B125 /* TimetableTvCell.swift in Sources */,
-				180F586B2FF4E8B100665D3C /* Models.swift in Sources */,
 				188272342F680F18000E0901 /* HostelListTvCell.swift in Sources */,
 				84443FA82F76542800DC70F1 /* OutpassRequestsVC.swift in Sources */,
 				84C829FD2D086A490024A46A /* ImageSparkView.swift in Sources */,

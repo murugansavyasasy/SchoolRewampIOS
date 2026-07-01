@@ -45,144 +45,228 @@ class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDel
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 180
         
-        // Load and setup Header View
-//        let headerView = ClassTestsHeaderView.loadFromNib()
-//        headerView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 195)
-//        tableView.tableHeaderView = headerView
     }
 
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        adjustHeaderHeight()
-//    }
 
-//    private func adjustHeaderHeight() {
-//        guard let header = tableView.tableHeaderView as? ClassTestsHeaderView else { return }
-//        let width = tableView.bounds.width
-//        
-//        // Update header width and recalculate correct fit height based on Auto Layout constraints
-//        if header.frame.width != width {
-//            header.frame.size.width = width
-//            let fittingSize = header.systemLayoutSizeFitting(
-//                CGSize(width: width, height: UIView.layoutFittingCompressedSize.height),
-//                withHorizontalFittingPriority: .required,
-//                verticalFittingPriority: .fittingSizeLevel
-//            )
-//            if header.frame.height != fittingSize.height {
-//                header.frame.size.height = fittingSize.height
-//                tableView.tableHeaderView = header
+
+//    private func loadMockData() {
+//        let jsonString = """
+//        {
+//          "status": true,
+//          "message": "Class test details loaded",
+//          "data": [
+//            {
+//              "class_test_id": "1",
+//              "exam_name": "Unit Test 1",
+//              "subjects": [
+//                {
+//                  "subject_id": "113624",
+//                  "subject_name": "MATHS",
+//                  "activities": [
+//                    {
+//                      "class_test_subject_id": "1",
+//                      "exam_date": "25-06-2026",
+//                      "session": "AN",
+//                      "activity_name": "Formula Test",
+//                      "max_mark": "50.00",
+//                      "min_mark": "18.00",
+//                      "syllabus": "Lesson 1 to Lesson 2"
+//                    },
+//                    {
+//                      "class_test_subject_id": "2",
+//                      "exam_date": "25-06-2026",
+//                      "session": "FN",
+//                      "activity_name": "Diagram Test",
+//                      "max_mark": "50.00",
+//                      "min_mark": "18.00",
+//                      "syllabus": "Lesson 3 to Lesson 5"
+//                    }
+//                  ]
+//                }
+//              ]
+//            },
+//            {
+//              "class_test_id": "2",
+//              "exam_name": "Unit Test 2",
+//              "subjects": [
+//                {
+//                  "subject_id": "113624",
+//                  "subject_name": "MATHS",
+//                  "activities": [
+//                    {
+//                      "class_test_subject_id": "1",
+//                      "exam_date": "25-06-2026",
+//                      "session": "AN",
+//                      "activity_name": "Formula Test",
+//                      "max_mark": "50.00",
+//                      "min_mark": "18.00",
+//                      "syllabus": "Lesson 1 to Lesson 2"
+//                    },
+//                    {
+//                      "class_test_subject_id": "2",
+//                      "exam_date": "25-06-2026",
+//                      "session": "FN",
+//                      "activity_name": "Diagram Test",
+//                      "max_mark": "50.00",
+//                      "min_mark": "18.00",
+//                      "syllabus": "Lesson 3 to Lesson 5"
+//                    }
+//                  ]
+//                },
+//                {
+//                  "subject_id": "113623",
+//                  "subject_name": "TAMIL",
+//                  "activities": [
+//                    {
+//                      "class_test_subject_id": "1",
+//                      "exam_date": "25-06-2026",
+//                      "session": "AN",
+//                      "activity_name": "Formula Test",
+//                      "max_mark": "50.00",
+//                      "min_mark": "18.00",
+//                      "syllabus": "Lesson 1 to Lesson 2"
+//                    },
+//                    {
+//                      "class_test_subject_id": "2",
+//                      "exam_date": "25-06-2026",
+//                      "session": "FN",
+//                      "activity_name": "Diagram Test",
+//                      "max_mark": "50.00",
+//                      "min_mark": "18.00",
+//                      "syllabus": "Lesson 3 to Lesson 5"
+//                    }
+//                  ]
+//                },
+//                {
+//                  "subject_id": "113626",
+//                  "subject_name": "ENGLISH",
+//                  "activities": [
+//                    {
+//                      "class_test_subject_id": "2",
+//                      "exam_date": "25-06-2026",
+//                      "session": "FN",
+//                      "activity_name": "Diagram Test",
+//                      "max_mark": "50.00",
+//                      "min_mark": "18.00",
+//                      "syllabus": "Lesson 3 to Lesson 5"
+//                    }
+//                  ]
+//                }
+//              ]
 //            }
+//          ]
 //        }
-//    }
-
+//        """
+    
     private func loadMockData() {
         let jsonString = """
         {
-          "status": true,
-          "message": "Class test details loaded",
-          "data": [
-            {
-              "class_test_id": "1",
-              "exam_name": "Unit Test 1",
-              "subjects": [
+            "status": true,
+            "message": "Class test details loaded",
+            "data": [
                 {
-                  "subject_id": "113624",
-                  "subject_name": "MATHS",
-                  "activities": [
-                    {
-                      "class_test_subject_id": "1",
-                      "exam_date": "25-06-2026",
-                      "session": "AN",
-                      "activity_name": "Formula Test",
-                      "max_mark": "50.00",
-                      "min_mark": "18.00",
-                      "syllabus": "Lesson 1 to Lesson 2"
-                    },
-                    {
-                      "class_test_subject_id": "2",
-                      "exam_date": "25-06-2026",
-                      "session": "FN",
-                      "activity_name": "Diagram Test",
-                      "max_mark": "50.00",
-                      "min_mark": "18.00",
-                      "syllabus": "Lesson 3 to Lesson 5"
-                    }
-                  ]
+                    "class_test_id": "3",
+                    "exam_name": "Unit Test 1",
+                    "over_all_student_marks" : "",
+                    "over_all_Marks" : "",
+                    "over_all_persentage" : "",
+                    "subjects": [
+                        {
+                            "subject_id": "113624",
+                            "subject_name": "MATHS",
+                            "activities": [
+                                {
+                                    "class_test_subject_id": "3",
+                                    "exam_date": "29-06-2026",
+                                    "session": "FN",
+                                    "activity_name": "Formula Test",
+                                    "max_mark": "50.00",
+                                    "min_mark": "18.00",
+                                    "syllabus": "Lesson 1 to Lesson 2",
+                                    "attendance": "P",
+                                    "mark": "59",
+                                    "remarks": ""
+                                },
+                                {
+                                    "class_test_subject_id": "4",
+                                    "exam_date": "30-06-2026",
+                                    "session": "FN",
+                                    "activity_name": "Algebra Test",
+                                    "max_mark": "50.00",
+                                    "min_mark": "18.00",
+                                    "syllabus": "Lesson 3 to Lesson 5",
+                                    "attendance": "P",
+                                    "mark": "61",
+                                    "remarks": ""
+                                }
+                            ]
+                        },
+                        {
+                            "subject_id": "113625",
+                            "subject_name": "SCIENCE",
+                            "activities": [
+                                {
+                                    "class_test_subject_id": "3",
+                                    "exam_date": "29-06-2026",
+                                    "session": "FN",
+                                    "activity_name": "Formula Test",
+                                    "max_mark": "50.00",
+                                    "min_mark": "18.00",
+                                    "syllabus": "Lesson 1 to Lesson 2",
+                                    "attendance": "P",
+                                    "mark": "59",
+                                    "remarks": ""
+                                },
+                                {
+                                    "class_test_subject_id": "4",
+                                    "exam_date": "30-06-2026",
+                                    "session": "FN",
+                                    "activity_name": "Algebra Test",
+                                    "max_mark": "50.00",
+                                    "min_mark": "18.00",
+                                    "syllabus": "Lesson 3 to Lesson 5",
+                                    "attendance": "P",
+                                    "mark": "61",
+                                    "remarks": ""
+                                }
+                            ]
+                        },
+                        {
+                            "subject_id": "113626",
+                            "subject_name": "TAMIL",
+                            "activities": [
+                                {
+                                    "class_test_subject_id": "3",
+                                    "exam_date": "29-06-2026",
+                                    "session": "FN",
+                                    "activity_name": "Formula Test",
+                                    "max_mark": "50.00",
+                                    "min_mark": "18.00",
+                                    "syllabus": "Lesson 1 to Lesson 2",
+                                    "attendance": "P",
+                                    "mark": "59",
+                                    "remarks": ""
+                                },
+                                {
+                                    "class_test_subject_id": "4",
+                                    "exam_date": "30-06-2026",
+                                    "session": "FN",
+                                    "activity_name": "Algebra Test",
+                                    "max_mark": "50.00",
+                                    "min_mark": "18.00",
+                                    "syllabus": "Lesson 3 to Lesson 5",
+                                    "attendance": "P",
+                                    "mark": "61",
+                                    "remarks": ""
+                                }
+                            ]
+                        }
+                    ]
                 }
-              ]
-            },
-            {
-              "class_test_id": "2",
-              "exam_name": "Unit Test 2",
-              "subjects": [
-                {
-                  "subject_id": "113624",
-                  "subject_name": "MATHS",
-                  "activities": [
-                    {
-                      "class_test_subject_id": "1",
-                      "exam_date": "25-06-2026",
-                      "session": "AN",
-                      "activity_name": "Formula Test",
-                      "max_mark": "50.00",
-                      "min_mark": "18.00",
-                      "syllabus": "Lesson 1 to Lesson 2"
-                    },
-                    {
-                      "class_test_subject_id": "2",
-                      "exam_date": "25-06-2026",
-                      "session": "FN",
-                      "activity_name": "Diagram Test",
-                      "max_mark": "50.00",
-                      "min_mark": "18.00",
-                      "syllabus": "Lesson 3 to Lesson 5"
-                    }
-                  ]
-                },
-                {
-                  "subject_id": "113623",
-                  "subject_name": "TAMIL",
-                  "activities": [
-                    {
-                      "class_test_subject_id": "1",
-                      "exam_date": "25-06-2026",
-                      "session": "AN",
-                      "activity_name": "Formula Test",
-                      "max_mark": "50.00",
-                      "min_mark": "18.00",
-                      "syllabus": "Lesson 1 to Lesson 2"
-                    },
-                    {
-                      "class_test_subject_id": "2",
-                      "exam_date": "25-06-2026",
-                      "session": "FN",
-                      "activity_name": "Diagram Test",
-                      "max_mark": "50.00",
-                      "min_mark": "18.00",
-                      "syllabus": "Lesson 3 to Lesson 5"
-                    }
-                  ]
-                },
-                {
-                  "subject_id": "113626",
-                  "subject_name": "ENGLISH",
-                  "activities": [
-                    {
-                      "class_test_subject_id": "2",
-                      "exam_date": "25-06-2026",
-                      "session": "FN",
-                      "activity_name": "Diagram Test",
-                      "max_mark": "50.00",
-                      "min_mark": "18.00",
-                      "syllabus": "Lesson 3 to Lesson 5"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+            ]
         }
         """
+        
         
         guard let data = jsonString.data(using: .utf8) else { return }
         
@@ -196,28 +280,9 @@ class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDel
             print("Failed to decode JSON: \(error)")
         }
     }
-//
+    
+    
     private func calculateStats() {
-//        totalExams = classTests.count
-//        
-//        var uniqueSubjects = Set<String>()
-//        var activityCount = 0
-//        
-//        for exam in classTests {
-//            for subject in exam.subjects {
-//                uniqueSubjects.insert(subject.subjectName)
-//                activityCount += subject.activities.count
-//            }
-//        }
-//        
-//        totalSubjects = uniqueSubjects.count
-//        totalActivities = activityCount
-//        
-//        // Bind to header view
-//        if let headerView = tableView.tableHeaderView as? ClassTestsHeaderView {
-//            headerView.configure(exams: totalExams, subjects: totalSubjects, activities: totalActivities)
-//        }
-//        
         tableView.reloadData()
     }
 
@@ -262,16 +327,26 @@ class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDel
             self.tableView.performBatchUpdates(nil, completion: nil)
         }, onSubjectToggle: { [weak self] in
             guard let self = self else { return }
-            
             // Reconfigure the cell in-place with the proper callbacks intact
             self.configureCell(cell, at: indexPath)
-            
             // Force cell layout refresh before performBatchUpdates
             cell.contentView.layoutIfNeeded()
-            
             // Animate row height change smoothly
             self.tableView.performBatchUpdates(nil, completion: nil)
         })
+        
+        cell.onViewMarks = { [weak self] in
+            guard let self = self else { return }
+            let marksVC = MarksDetailsViewController(nibName: "MarksDetailsViewController", bundle: nil)
+            marksVC.classTest = exam
+            
+            if let nav = self.navigationController {
+                nav.pushViewController(marksVC, animated: true)
+            } else {
+                marksVC.modalPresentationStyle = .fullScreen
+                self.present(marksVC, animated: true, completion: nil)
+            }
+        }
     }
 
     // MARK: - UITableViewDelegate
@@ -298,12 +373,9 @@ class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDel
         }
     }
     
-    
     }
 
     
-
-
 extension UIView {
     static func loadFromNib() -> Self {
         let bundle = Bundle(for: self)
