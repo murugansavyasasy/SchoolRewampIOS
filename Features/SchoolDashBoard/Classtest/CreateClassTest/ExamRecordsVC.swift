@@ -114,12 +114,18 @@ class ExamRecordsVC: UIViewController {
     
     func get_exam_records_api() {
         
+        let param : [String:Any] =
+        [
+            "class_test_subject_id" : "CT001"
+        ]
+        
         APIService.shared.makeApi(
-            url: ServiceUrl.exam_class_test_details,
-            type: ApitTypeSringFile.GET,
+            url: ServiceUrl.exam_api_exam_test_delete_class_test_subject,
+            parameters: param,
+            type: ApitTypeSringFile.PUT,
             token: staffDetails?.access_token ?? "",
             isBaseUrl: true
-        ) { [weak self] (result: Result<StaffClassTestResponse, Error>) in
+        ) { [weak self] (result: Result<CommonApiSuc, Error>) in
             
             DispatchQueue.main.async {[weak self] in
                 
@@ -129,12 +135,22 @@ class ExamRecordsVC: UIViewController {
                 case .success(let success):
                     
                     if success.status == true {
-                        class_test_details = success.data
-                        tv.reloadData()
+                        
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success.translated(), message: success.message ?? "", on: self) {
+                            
+                        }
+                    }else {
+                        
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: success.message ?? "", on: self) {
+                            
+                        }
                     }
                     
                 case .failure(let failure):
-                    print("")
+                   
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: failure.localizedDescription, on: self) {
+                        
+                    }
                 }
             }
         }

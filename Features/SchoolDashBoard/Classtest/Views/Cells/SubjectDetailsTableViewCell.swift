@@ -219,9 +219,15 @@ class SubjectDetailsTableViewCell: UITableViewCell {
             }
 
             form.configureReport(with: activity, index: index)
+            
+            form.onRemoveTapped = { [weak self] in
+              
+            }
 
             testsStackView.addArrangedSubview(form)
         }
+        
+        
 
         addTestButton.isHidden = true
         mergeBannerView.isHidden = true
