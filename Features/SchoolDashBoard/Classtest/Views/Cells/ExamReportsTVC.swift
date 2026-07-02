@@ -17,6 +17,7 @@ class ExamReportsTVC: UITableViewCell {
     @IBOutlet weak var classSectionStack: UIStackView!
 
     var onSectionTap: ((StaffSection) -> Void)?
+    var ontestDeletTap: ((Int) -> Void)?
 
     private var sections: [StaffSection] = []
 
@@ -107,7 +108,10 @@ class ExamReportsTVC: UITableViewCell {
         spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
         classSectionStack.addArrangedSubview(spacer)
     }
-
+    @IBAction func deleteexam(_ sender: UIButton) {
+        ontestDeletTap?(sender.tag)
+    }
+    
     private func makeChipButton(title: String, tint: UIColor) -> UIButton {
         var config = UIButton.Configuration.plain()
 

@@ -78,6 +78,7 @@ class ExamRecordsVC: UIViewController {
 
     
     @IBAction func enterMarks(_ sender: UIButton) {
+        MenuStringFile.selectedMenuName = "View & Enter Marks"
         fetchMarksAndNavigate()
     }
     

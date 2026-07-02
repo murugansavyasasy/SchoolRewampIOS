@@ -55,11 +55,11 @@ class ExamReportsVC: UIViewController, Datepicker {
     var acodemicId: Int?
     let acidamicdrops = DropDown()
     var viewModel : CreateTestViewModel?
-    
+    let alert = CustomAlert()
     private let accentColors: [UIColor] = [
         UIColor(red: 0.42, green: 0.36, blue: 0.90, alpha: 1),
-        UIColor(red: 0.25, green: 0.55, blue: 0.95, alpha: 1),
-        UIColor(red: 0.60, green: 0.40, blue: 0.90, alpha: 1)
+//        UIColor(red: 0.25, green: 0.55, blue: 0.95, alpha: 1),
+//        UIColor(red: 0.60, green: 0.40, blue: 0.90, alpha: 1)
     ]
 
     override func viewDidLoad() {
@@ -67,10 +67,12 @@ class ExamReportsVC: UIViewController, Datepicker {
         setupUI()
 //        setCurrentDate()
         setupTableView()
-        getExamReports()
         getAcademicYearList()
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getExamReports()
+    }
     private func setupUI() {
         tittleLbl.text = "Exams"
         acodomicdropDown.setShadow()
@@ -218,13 +220,8 @@ class ExamReportsVC: UIViewController, Datepicker {
 
 extension ExamReportsVC: UITableViewDataSource, UITableViewDelegate {
 
-    // 🔑 Each exam (StaffClassTest) = one section, with just 1 row showing everything
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return class_test_details.count
-    }
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return class_test_details.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -235,10 +232,10 @@ extension ExamReportsVC: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
 
-        let exam = class_test_details[indexPath.section]
+        let exam = class_test_details[indexPath.row]
         let sections = exam.sections ?? []
-        let tint = accentColors[indexPath.section % accentColors.count]
-
+        let tint = accentColors[indexPath.row % accentColors.count]
+        cell.deleteBtn.tag = indexPath.row
         cell.selectionStyle = .none
         cell.configure(
             examName: exam.exam_name ?? "",
@@ -247,39 +244,62 @@ extension ExamReportsVC: UITableViewDataSource, UITableViewDelegate {
             iconTint: tint
         )
 
-        // Section chip click aana udane inga trigger aagum
         cell.onSectionTap = { [weak self] tappedSection in
             self?.handleSectionTap(exam: exam, section: tappedSection)
+        }
+        cell.ontestDeletTap = { [weak self] index in
+            guard let self = self else { return }
+
+            let examId = self.class_test_details[index].class_test_id
+
+            alert.showAlertCancel(
+                title: "Delete Exam",
+                message: "Are you sure you want to delete this exam?",
+                actionLbl1: "Delete",
+                actionLbl2: "Cancel",
+                on: self,
+                onOk: {
+                    self.deleteExam(exam_id: examId)
+                },
+                onNo: {
+                    print("Cancelled")
+                }
+            )
         }
 
         return cell
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        // Header ippo thevai illa, tittle+sendby cell-la dhaan kaamikirom
-        return nil
-    }
+    func deleteExam(exam_id: String?) {
+        APIService.shared.makeApi(
+            url: ServiceUrl.exam_api_exam_test_delete,
+            parameters: ["class_test_id": exam_id ?? ""],
+            type: ApitTypeSringFile.PUT,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
+            isBaseUrl: true
+        ) { [weak self] (result: Result<TestMarkDetailsResponse<TestMarkData>, Error>) in
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return .leastNormalMagnitude
-    }
+            guard let self = self else { return }
 
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 12
-    }
+            DispatchQueue.main.async {
 
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footer = UIView()
-        footer.backgroundColor = .clear
-        return footer
-    }
+                switch result {
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        // Whole row tap pannalum vera edhum panna vendam,
-        // section chip tap dhaan navigate pannum (mேலே onSectionTap)
-    }
+                case .success(_):
 
+                    self.class_test_details.removeAll {
+                        $0.class_test_id == exam_id
+                    }
+
+                    self.updateExamCount()
+                    self.examListTV.reloadData()
+
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
     // Section chip click -> navigate
     private func handleSectionTap(exam: StaffClassTest, section: StaffSection) {
         print("Navigate -> exam:", exam.exam_name ?? "", "class_test_id:", exam.class_test_id ?? "",

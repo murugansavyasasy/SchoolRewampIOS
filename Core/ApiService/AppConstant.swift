@@ -225,6 +225,7 @@ struct ServiceUrl{
     static let exam_class_test_details_for_student = "exam/api/exam-test/class-tests-for-student"
     static let exam_view_marks_for_student = "exam/api/exam-test/view-marks-for-student"
     static let exam_api_exam_test_delete_class_test_subject = "exam/api/exam-test/delete-class-test-subject"
+    static let exam_api_exam_test_delete = "exam/api/exam-test/delete"
 
 }
 
