@@ -70,8 +70,6 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
         minMarksTextField.delegate = self
         syllabusTextView.delegate = self
         
-        // Target action instance value update
-        
         testDateTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         
         maxMarksTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
@@ -103,14 +101,11 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
         badgeLabel.text = "\(index + 1)"
         testTitleLabel.text = "Activity \(index + 1)"
         
-        removeButton.isHidden = true
-        
         examNameTextView.text = activity.activity_name
         testDateTextField.text = activity.exam_date
         maxMarksTextField.text = activity.max_mark
         minMarksTextField.text = activity.min_mark
         syllabusTextView.text = activity.syllabus
-        
         updateSessionUI(session: activity.session ?? "FN")
         
         examNameTextView.isEditable = false
@@ -120,6 +115,7 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
         maxMarksTextField.isEnabled = false
         minMarksTextField.isEnabled = false
         
+        removeButton.isHidden = false
         fnButton.isEnabled = false
         anButton.isEnabled = false
     }

@@ -42,6 +42,8 @@ public final class CreateTestViewModel {
     public var onStepChanged: ((Int) -> Void)?
     public var onSelectionChanged: (() -> Void)?
     public var exameName = ""
+    var class_test_id:String?
+    var section_id:String?
     // MARK: - Initializer
     public init() {}
     
@@ -333,15 +335,11 @@ public final class CreateTestViewModel {
     }
     
     
-    func getMarkDetails(
-        class_test_id: String? = "3",
-        section_id: String? = "91746",
-        completion: @escaping (Result<[StudentMark], Error>) -> Void
+    func getMarkDetails(completion: @escaping (Result<[StudentMark], Error>) -> Void
     ) {
         let params: [String: String] = [
             "class_test_id": class_test_id ?? "",
-            "section_id": section_id ?? ""
-        ]
+            "section_id": section_id ?? ""]
         
         APIService.shared.makeApi(
             url: ServiceUrl.exam_test_mark_details,

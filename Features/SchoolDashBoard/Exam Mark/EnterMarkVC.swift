@@ -28,7 +28,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     private var popoverHeight: CGFloat = 400
     var isUpdatingPopover = false
     var uploadTest = false
-    var viewModel = CreateTestViewModel() 
+    var viewModel: CreateTestViewModel?
     var selectedFilters: [(type: String, sortValue: String)] = []
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -414,7 +414,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
 
                         self.showActivityLoader()
 
-                        self.viewModel.createSaveRequest(
+                        self.viewModel?.createSaveRequest(
                             studentRecords: self.studentRecords
                         ) { [weak self] result in
 

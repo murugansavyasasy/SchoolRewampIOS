@@ -115,6 +115,9 @@
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="plain" title="View &amp; Enter marks" cornerStyle="large"/>
+                            <connections>
+                                <action selector="enterMarks:" destination="-1" eventType="touchUpInside" id="0fN-ru-HYL"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
