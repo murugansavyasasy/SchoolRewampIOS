@@ -13,6 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExamRecordsVC" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
             <connections>
+                <outlet property="examNameLbl" destination="Kub-to-zcJ" id="EQa-Bm-sx6"/>
                 <outlet property="tv" destination="2jS-yJ-reg" id="cJf-tb-ic4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

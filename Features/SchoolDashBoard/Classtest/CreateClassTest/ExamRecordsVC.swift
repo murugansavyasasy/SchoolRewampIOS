@@ -10,21 +10,72 @@ import UIKit
 class ExamRecordsVC: UIViewController {
     
     @IBOutlet weak var tv: UITableView!
+    @IBOutlet weak var examNameLbl: UILabel!
     
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var class_test_details: StaffSection?
     var test_subjects: [StaffSubject] = []
     var viewModel : CreateTestViewModel?
     private var expandedIndexPath: IndexPath?
+    var ExamNameString = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        examNameLbl.text = ExamNameString
         test_subjects = class_test_details?.subjects ?? []
         tv.register(UINib(nibName: "SubjectDetailsTableViewCell", bundle: nil), forCellReuseIdentifier: "SubjectDetailsTableViewCell")
         tv.delegate = self
         tv.dataSource = self
         
+        if !test_subjects.isEmpty{
+            expandedIndexPath = IndexPath(row: 0, section: 0)
+        }
     }
+    
+    func delete_activity_api(class_test_subject_id:String) {
+        
+        let param : [String:Any] =
+        [
+            "class_test_subject_id" : class_test_subject_id
+        ]
+        
+        APIService.shared.makeApi(
+            url: ServiceUrl.exam_api_exam_test_delete_class_test_subject,
+            parameters: param,
+            type: ApitTypeSringFile.PUT,
+            token: staffDetails?.access_token ?? "",
+            isBaseUrl: true
+        ) { [weak self] (result: Result<CommonApiSuc, Error>) in
+            
+            DispatchQueue.main.async {[weak self] in
+                
+                guard let self = self else { return }
+                
+                switch result {
+                case .success(let success):
+                    
+                    if success.status == true {
+                        
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success.translated(), message: success.message ?? "", on: self) {
+                            
+                        }
+                    }else {
+                        
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: success.message ?? "", on: self) {
+                            
+                        }
+                    }
+                    
+                case .failure(let failure):
+                   
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: failure.localizedDescription, on: self) {
+                        
+                    }
+                }
+            }
+        }
+    }
+
     
     @IBAction func enterMarks(_ sender: UIButton) {
         fetchMarksAndNavigate()
@@ -116,6 +167,10 @@ extension ExamRecordsVC: UITableViewDelegate, UITableViewDataSource {
                     self.tv.scrollToRow(at: indexPath, at: .none, animated: true)
                 }
             }
+        }
+        
+        cell.onRemoveTest = { [weak self] index, class_test_subject_id, section in
+            self?.delete_activity_api(class_test_subject_id: class_test_subject_id)
         }
         
         return cell

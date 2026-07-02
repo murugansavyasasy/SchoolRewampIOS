@@ -192,7 +192,8 @@ class SubjectDetailsTableViewCell: UITableViewCell {
         self.currentReport = report
 
         titleLabel.text = report.subject_name
-        subtitleLabel.text = "Section \((report.subject_id ?? "").uppercased())"
+       // subtitleLabel.text = "Section \((report.subject_id ?? "").uppercased())"
+        subtitleLabel.isHidden = true
 
         checkmarkImageView.isHidden = true
 
@@ -221,7 +222,7 @@ class SubjectDetailsTableViewCell: UITableViewCell {
             form.configureReport(with: activity, index: index)
             
             form.onRemoveTapped = { [weak self] in
-              
+                self?.onRemoveTest?(index,(activity.class_test_subject_id ?? ""), "")
             }
 
             testsStackView.addArrangedSubview(form)

@@ -110,6 +110,9 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
         
         examNameTextView.isEditable = false
         syllabusTextView.isEditable = false
+        examNameTextView.isUserInteractionEnabled = false
+        syllabusTextView.isUserInteractionEnabled = false
+        
         
         testDateTextField.isEnabled = false
         maxMarksTextField.isEnabled = false
