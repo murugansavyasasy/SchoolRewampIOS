@@ -11,41 +11,8 @@ public final class SelectStandardViewController: UIViewController {
     // MARK: - Lifecycle
     public override func viewDidLoad() {
         super.viewDidLoad()
-        setupCollectionView()
-        fetchMarksAndNavigate()    }
-    func fetchMarksAndNavigate() {
-            showActivityLoader()
+        setupCollectionView()   }
 
-            viewModel?.getMarkDetails(
-                class_test_id: "3",
-                section_id: "91746",
-                completion: { [weak self] result in
-                    
-                    guard let self = self else { return }
-
-                    DispatchQueue.main.async {
-                        self.hideActivityLoader()
-
-                        switch result {
-                        case .success(let records):
-                            self.navigateToEnterMark(with: records)
-
-                        case .failure(let error):
-                            print("❌ Error:", error.localizedDescription)
-                        }
-                    }
-                }
-            )
-        }
-
-        func navigateToEnterMark(with records: [StudentMark]) {
-            let vc = EnterMarkVC()
-            vc.studentRecords = records
-            vc.allStudents = records
-            vc.uploadTest = true
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
-        }
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadData()

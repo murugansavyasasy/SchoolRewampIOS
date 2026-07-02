@@ -8,16 +8,17 @@
 import UIKit
 
 class ExamReportsTVC: UITableViewCell {
-
+    @IBOutlet weak var deleteBtn: UIButton!
     @IBOutlet weak var tittleLbl: UILabel!
     @IBOutlet weak var sendbyLbl: UILabel!
     @IBOutlet weak var iconBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
+    @IBOutlet weak var innerView: UIView!
     @IBOutlet weak var classSectionStack: UIStackView!
-    @IBOutlet weak var arrowBtn: UIButton!
 
-    private let classChip = PaddingLabel()
-    private let dateChip = PaddingLabel()
+    var onSectionTap: ((StaffSection) -> Void)?
+
+    private var sections: [StaffSection] = []
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,84 +26,140 @@ class ExamReportsTVC: UITableViewCell {
         selectionStyle = .none
         backgroundColor = .clear
 
-        outerView.layer.cornerRadius = 22
-        outerView.backgroundColor = .white
+        classSectionStack.axis = .horizontal
+        classSectionStack.spacing = 10
+        classSectionStack.alignment = .center
+        classSectionStack.distribution = .fill
 
-        outerView.layer.shadowColor = UIColor.black.cgColor
-        outerView.layer.shadowOpacity = 0.06
-        outerView.layer.shadowRadius = 12
-        outerView.layer.shadowOffset = CGSize(width: 0, height: 6)
-
-        setupChips()
-
-        iconBtn.layer.cornerRadius = 22
-        arrowBtn.layer.cornerRadius = 16
+        styleCard()
+        iconBtn.layer.cornerRadius = 14
+        iconBtn.layer.masksToBounds = true
     }
 
-    private func setupChips() {
+    private func styleCard() {
+        outerView.layer.cornerRadius = 8
+        outerView.layer.masksToBounds = false
+        outerView.layer.shadowColor = UIColor.black.cgColor
+        outerView.layer.shadowOpacity = 0.06
 
-        classChip.backgroundColor = UIColor.systemIndigo.withAlphaComponent(0.1)
-        classChip.textColor = UIColor.systemIndigo
+        innerView.backgroundColor = .clear
+        innerView.layer.cornerRadius = 18
+        innerView.layer.masksToBounds = true
 
-        dateChip.backgroundColor = UIColor.systemGray6
-        dateChip.textColor = UIColor.darkGray
+        tittleLbl.font = .systemFont(ofSize: 17, weight: .bold)
+        tittleLbl.textColor = .label
 
-        [(classChip), (dateChip)].forEach { (label: PaddingLabel) in
-            label.font = .systemFont(ofSize: 12, weight: .semibold)
-            label.clipsToBounds = true
-            label.layer.cornerRadius = 14
+        sendbyLbl.font = .systemFont(ofSize: 13, weight: .medium)
+        sendbyLbl.textColor = .secondaryLabel
+        deleteBtn.layer.cornerRadius = 14
+        deleteBtn.layer.masksToBounds = true
 
-            classSectionStack.addArrangedSubview(label)
+        deleteBtn.backgroundColor = .systemRed.withAlphaComponent(0.08)
+
+        deleteBtn.tintColor = .systemRed
+
+        deleteBtn.layer.borderWidth = 1
+        deleteBtn.layer.borderColor =
+            UIColor.systemRed.withAlphaComponent(0.25).cgColor
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        classSectionStack.arrangedSubviews.forEach {
+            classSectionStack.removeArrangedSubview($0)
+            $0.removeFromSuperview()
         }
+        sections = []
+        onSectionTap = nil
     }
 
     func configure(
-        sectionName: String,
-        dateText: String,
-        session: String,
-        status: String,
+        examName: String,
+        sentBy: String,
+        sections: [StaffSection],
         iconTint: UIColor
     ) {
+        self.sections = sections
 
-        tittleLbl.text = sectionName
-        sendbyLbl.text = status
+        tittleLbl.text = examName
+        sendbyLbl.text = "Sent by: \(sentBy)"
 
-        classChip.text = "📚 \(sectionName)"
+        iconBtn.backgroundColor = iconTint.withAlphaComponent(0.15)
+        iconBtn.setImage(UIImage(systemName: "doc.text.fill"), for: .normal)
+        iconBtn.tintColor = iconTint
+        iconBtn.layer.borderWidth = 1
+        iconBtn.layer.borderColor = iconTint.withAlphaComponent(0.25).cgColor
 
-        dateChip.text =
-        "🕐 \(dateText) • \(session)"
-
-        iconBtn.backgroundColor = iconTint
-        arrowBtn.backgroundColor =
-        iconTint.withAlphaComponent(0.15)
-
-        iconBtn.setImage(
-            UIImage(systemName: "doc.text.fill"),
-            for: .normal
-        )
-
-        iconBtn.tintColor = .white
-
-        arrowBtn.setImage(
-            UIImage(systemName: "chevron.right"),
-            for: .normal
-        )
-
-        arrowBtn.tintColor = iconTint
-    }
-}
-class PaddingLabel: UILabel {
-    var insets = UIEdgeInsets(top: 6, left: 12, bottom: 6, right: 12)
-
-    override func drawText(in rect: CGRect) {
-        super.drawText(in: rect.inset(by: insets))
+        buildSectionChips(iconTint: iconTint)
     }
 
-    override var intrinsicContentSize: CGSize {
-        let size = super.intrinsicContentSize
-        return CGSize(
-            width: size.width + insets.left + insets.right,
-            height: size.height + insets.top + insets.bottom
+    private func buildSectionChips(iconTint: UIColor) {
+        for (index, section) in sections.enumerated() {
+            let chip = makeChipButton(
+                title: section.section_name ?? "",
+                tint: iconTint
+            )
+            chip.tag = index
+            chip.addTarget(self, action: #selector(chipTapped(_:)), for: .touchUpInside)
+            classSectionStack.addArrangedSubview(chip)
+        }
+        let spacer = UIView()
+        spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        classSectionStack.addArrangedSubview(spacer)
+    }
+
+    private func makeChipButton(title: String, tint: UIColor) -> UIButton {
+        var config = UIButton.Configuration.plain()
+
+        config.title = "Section \(title)"
+        config.baseForegroundColor = tint
+        config.baseBackgroundColor = .gray.withAlphaComponent(0.05)
+        config.cornerStyle = .capsule
+        config.background.strokeColor = tint
+        config.background.strokeWidth = 1.5
+        config.background.backgroundColor = .clear
+
+        config.image = UIImage(systemName: "chevron.right.circle")
+        config.imagePlacement = .trailing
+        config.imagePadding = 8
+        config.preferredSymbolConfigurationForImage =
+            UIImage.SymbolConfiguration(pointSize: 11, weight: .bold)
+
+        config.contentInsets = NSDirectionalEdgeInsets(
+            top: 9,
+            leading: 16,
+            bottom: 9,
+            trailing: 12
         )
+
+        config.titleTextAttributesTransformer =
+            UIConfigurationTextAttributesTransformer { incoming in
+                var outgoing = incoming
+                outgoing.font = .systemFont(ofSize: 13, weight: .semibold)
+                return outgoing
+            }
+
+        let button = UIButton(configuration: config)
+        button.translatesAutoresizingMaskIntoConstraints = false
+
+        button.configurationUpdateHandler = { btn in
+            var cfg = btn.configuration
+
+            cfg?.background.backgroundColor =
+                btn.isHighlighted ? tint.withAlphaComponent(0.15) : .clear
+
+            btn.configuration = cfg
+            btn.transform = btn.isHighlighted
+                ? CGAffineTransform(scaleX: 0.96, y: 0.96)
+                : .identity
+        }
+
+        return button
+    }
+
+    @objc private func chipTapped(_ sender: UIButton) {
+        guard sections.indices.contains(sender.tag) else { return }
+        let tappedSection = sections[sender.tag]
+        onSectionTap?(tappedSection)
     }
 }

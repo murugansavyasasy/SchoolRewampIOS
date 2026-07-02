@@ -7,15 +7,53 @@
 
 import UIKit
 
-class ExamReportsVC: UIViewController {
+class ExamReportsVC: UIViewController, Datepicker {
+    func date(date: String) {
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = DateInputs.dd_MMM_yyyy
+        outputFormatter.locale = LocaleManager.shared.displayLocale
+        var selectedDate = Date()
+        if !date.isEmpty {
+            let inputFormatter = DateFormatter()
+            inputFormatter.dateFormat = DateInputs.dd_MMM_yy
+            inputFormatter.locale = LocaleManager.shared.displayLocale
+            selectedDate = inputFormatter.date(from: date) ?? Date()
+        }
+        let comparison = Calendar.current.compare(selectedDate, to: Date(), toGranularity: .day)
+        if comparison == .orderedSame {
+            todayLbl.text = Today
+        } else if comparison == .orderedAscending {
+            let dayFormatter = DateFormatter()
+            dayFormatter.locale = LocaleManager.shared.displayLocale
+            dayFormatter.dateFormat = DateOutPut.EEEE 
+            todayLbl.text = dayFormatter.string(from: selectedDate)
+        } else {
+            todayLbl.text = FutureDate
+        }
+        dateLbl.text = outputFormatter.string(from: selectedDate)
+    }
+    
 
     @IBOutlet weak var tittleLbl: UILabel!
     @IBOutlet weak var examCountLbl: UIButton!
     @IBOutlet weak var examListTV: UITableView!
+    @IBOutlet weak var dateLbl: UILabel!
+    @IBOutlet weak var dateStack: UIStackView!
+    @IBOutlet weak var acodomicYearLbl: UILabel!
+    @IBOutlet weak var acodomicdropDown: UIView!
+    @IBOutlet weak var todayLbl: UILabel!
+    @IBOutlet weak var dateView: UIView!
+    @IBOutlet weak var dateBtn: UIButton!
+    @IBOutlet weak var datestackView: UIView!
 
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var class_test_details: [StaffClassTest] = []
-
+    var AcadimicYearDatas: [AcadimicYearData] = []
+    let Today = "All"
+    let FutureDate = "Select a Date"
+    var accadimYr: [String] = []
+    var acodemicId: Int?
+    let acidamicdrops = DropDown()
     private let accentColors: [UIColor] = [
         UIColor(red: 0.42, green: 0.36, blue: 0.90, alpha: 1),
         UIColor(red: 0.25, green: 0.55, blue: 0.95, alpha: 1),
@@ -25,24 +63,32 @@ class ExamReportsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+//        setCurrentDate()
         setupTableView()
         getExamReports()
+        getAcademicYearList()
     }
 
     private func setupUI() {
         tittleLbl.text = "Exams"
-        tittleLbl.font = .systemFont(ofSize: 30, weight: .heavy)
-
+        acodomicdropDown.setShadow()
+        dateView.setShadow()
         examCountLbl.layer.cornerRadius = examCountLbl.frame.height / 2
+        dateBtn.layer.cornerRadius = 8
         examCountLbl.clipsToBounds = true
-        examCountLbl.backgroundColor = UIColor(red: 0.42, green: 0.36, blue: 0.90, alpha: 1)
-        examCountLbl.setTitleColor(.white, for: .normal)
-        examCountLbl.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
         examCountLbl.isUserInteractionEnabled = false
-
-        view.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.97, alpha: 1)
+        dateStack.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dateStackTapped))
+        dateStack.addGestureRecognizer(tapGesture)
     }
+    func setCurrentDate() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = DateInputs.dd_MMM_yyyy
+        formatter.locale = LocaleManager.shared.displayLocale
 
+        dateLbl.text = formatter.string(from: Date())
+        todayLbl.text = Today
+    }
     private func setupTableView() {
         examListTV.dataSource = self
         examListTV.delegate = self
@@ -52,8 +98,10 @@ class ExamReportsVC: UIViewController {
         examListTV.rowHeight = UITableView.automaticDimension
         examListTV.estimatedRowHeight = 70
         examListTV.sectionHeaderTopPadding = 0
-        examListTV.register(UINib(nibName: "ExamReportsTVC", bundle: nil), forCellReuseIdentifier: "ExamReportsTVC")
-        examListTV.register(ExamHeaderView.self, forHeaderFooterViewReuseIdentifier: "ExamHeaderView")
+        examListTV.register(
+            UINib(nibName: "ExamReportsTVC", bundle: nil),
+            forCellReuseIdentifier: "ExamReportsTVC"
+        )
     }
 
     private func updateExamCount() {
@@ -61,13 +109,28 @@ class ExamReportsVC: UIViewController {
     }
 
     @IBAction func backTapped(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
+    }
+
+    @IBAction func selectDate(_ sender: UIButton) {
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.date = dateLbl.text
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        present(vc, animated: false)
+    }
+
+    // Tap on dateStack -> same action as selectDate
+    @objc private func dateStackTapped() {
+        selectDate(dateBtn)
     }
 
     func getExamReports() {
         APIService.shared.makeApi(
             url: ServiceUrl.exam_class_test_details,
-            parameters: [:],
+            parameters: ["class_test_id":"0", "exam_date":"0","academic_year_id":"8"],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
             isBaseUrl: true
@@ -88,7 +151,16 @@ class ExamReportsVC: UIViewController {
             }
         }
     }
-
+    @IBAction func selectAcademicYear(_ sender: UIButton) {
+        acidamicdrops.anchorView = acodomicdropDown
+        acidamicdrops.dataSource = accadimYr
+        acidamicdrops.bottomOffset = CGPoint(x: 0, y: acodomicdropDown.bounds.height)
+        acidamicdrops.show()
+        acidamicdrops.selectionAction = { [weak self] index, item in
+            self?.acodomicYearLbl.text = item
+            self?.acodemicId = self?.AcadimicYearDatas[index].id
+        }
+    }
     // exam_date: "29-06-2026" -> "29 Jun"
     func formatDate(_ raw: String) -> String {
         guard !raw.isEmpty else { return "" }
@@ -99,19 +171,58 @@ class ExamReportsVC: UIViewController {
         outputFormatter.dateFormat = "dd MMM"
         return outputFormatter.string(from: dateObj)
     }
+
+
+    // MARK: - API Calls (moved here from ExamHeaderView)
+    func getAcademicYearList() {
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_recipient_get_academic_year_list,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token: staffDetails?.access_token ?? "",
+            isBaseUrl: false
+        ) { [weak self] (result: Result<get_academic_yearSuc, Error>) in
+
+            guard let self = self else { return }
+
+            DispatchQueue.main.async {
+                switch result {
+
+                case .success(let res):
+                    guard res.status == true else { return }
+
+                    self.AcadimicYearDatas = res.data ?? []
+                    self.accadimYr = self.AcadimicYearDatas.compactMap { $0.year }
+
+                    // Auto select current academic year
+                    if let currentYear = self.AcadimicYearDatas.first(
+                        where: { $0.current_academic_year == true }
+                    ) {
+
+                        self.acodemicId = currentYear.id
+                        self.acodomicYearLbl.text = currentYear.year
+
+                        // reload based on selected academic year
+                        self.getExamReports()
+                    }
+
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
 }
 
-// MARK: - TableView DataSource & Delegate
 extension ExamReportsVC: UITableViewDataSource, UITableViewDelegate {
 
-    // 🔑 Each exam (StaffClassTest) = one section
+    // 🔑 Each exam (StaffClassTest) = one section, with just 1 row showing everything
     func numberOfSections(in tableView: UITableView) -> Int {
         return class_test_details.count
     }
 
-    // 🔑 Each section (StaffSection) inside the exam = one row
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return class_test_details[section].sections?.count ?? 0
+        return 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -123,41 +234,32 @@ extension ExamReportsVC: UITableViewDataSource, UITableViewDelegate {
         }
 
         let exam = class_test_details[indexPath.section]
-        guard let staffSection = exam.sections?[indexPath.row] else { return cell }
-
-        // First subject's first activity used for date/session/status display
-        let firstActivity = staffSection.subjects?.first?.activities?.first
+        let sections = exam.sections ?? []
+        let tint = accentColors[indexPath.section % accentColors.count]
 
         cell.selectionStyle = .none
         cell.configure(
-            sectionName: staffSection.section_name ?? "",
-            dateText: formatDate(firstActivity?.exam_date ?? ""),
-            session: firstActivity?.session ?? "",
-            status: firstActivity?.status ?? "",
-            iconTint: accentColors[indexPath.section % accentColors.count]
+            examName: exam.exam_name ?? "",
+            sentBy: exam.sent_by ?? "",
+            sections: sections,
+            iconTint: tint
         )
+
+        // Section chip click aana udane inga trigger aagum
+        cell.onSectionTap = { [weak self] tappedSection in
+            self?.handleSectionTap(exam: exam, section: tappedSection)
+        }
 
         return cell
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let header = tableView.dequeueReusableHeaderFooterView(
-            withIdentifier: "ExamHeaderView"
-        ) as? ExamHeaderView else {
-            return nil
-        }
-
-        let exam = class_test_details[section]
-        header.configure(
-            title: exam.exam_name ?? "",
-            sentBy: exam.sent_by ?? "",
-            iconTint: accentColors[section % accentColors.count]
-        )
-        return header
+        // Header ippo thevai illa, tittle+sendby cell-la dhaan kaamikirom
+        return nil
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 60
+        return .leastNormalMagnitude
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -172,83 +274,21 @@ extension ExamReportsVC: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        // Whole row tap pannalum vera edhum panna vendam,
+        // section chip tap dhaan navigate pannum (mேலே onSectionTap)
+    }
 
-        let exam = class_test_details[indexPath.section]
-        guard let staffSection = exam.sections?[indexPath.row] else { return }
+    // Section chip click -> navigate
+    private func handleSectionTap(exam: StaffClassTest, section: StaffSection) {
+        print("Navigate -> exam:", exam.exam_name ?? "", "class_test_id:", exam.class_test_id ?? "",
+              "section:", section.section_name ?? "", "section_id:", section.section_id ?? "")
 
-        print("Selected exam:", exam.exam_name ?? "", "- section:", staffSection.section_name ?? "")
-        // navigate using exam.class_test_id and staffSection.section_id
+        // Idha unga navigation ku maathikonga, example:
+        // let vc = ExamSectionDetailVC(nibName: nil, bundle: nil)
+        // vc.classTestId = exam.class_test_id
+        // vc.sectionId = section.section_id
+        // navigationController?.pushViewController(vc, animated: true)
     }
 }
-import UIKit
 
-class ExamHeaderView: UITableViewHeaderFooterView {
 
-    private let iconView = UIView()
-    private let iconImageView = UIImageView()
-    private let titleLbl = UILabel()
-    private let sentByLbl = UILabel()
-
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-        setupViews()
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupViews()
-    }
-
-    private func setupViews() {
-        contentView.backgroundColor = .clear
-        backgroundView = UIView()
-        backgroundView?.backgroundColor = .clear
-
-        iconView.layer.cornerRadius = 12
-        iconView.translatesAutoresizingMaskIntoConstraints = false
-
-        iconImageView.image = UIImage(systemName: "doc.text.fill")
-        iconImageView.tintColor = .white
-        iconImageView.contentMode = .scaleAspectFit
-        iconImageView.translatesAutoresizingMaskIntoConstraints = false
-
-        titleLbl.font = .systemFont(ofSize: 17, weight: .bold)
-        titleLbl.textColor = .black
-        titleLbl.translatesAutoresizingMaskIntoConstraints = false
-
-        sentByLbl.font = .systemFont(ofSize: 12, weight: .regular)
-        sentByLbl.textColor = .systemGray
-        sentByLbl.translatesAutoresizingMaskIntoConstraints = false
-
-        contentView.addSubview(iconView)
-        iconView.addSubview(iconImageView)
-        contentView.addSubview(titleLbl)
-        contentView.addSubview(sentByLbl)
-
-        NSLayoutConstraint.activate([
-            iconView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            iconView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            iconView.widthAnchor.constraint(equalToConstant: 40),
-            iconView.heightAnchor.constraint(equalToConstant: 40),
-
-            iconImageView.centerXAnchor.constraint(equalTo: iconView.centerXAnchor),
-            iconImageView.centerYAnchor.constraint(equalTo: iconView.centerYAnchor),
-            iconImageView.widthAnchor.constraint(equalToConstant: 18),
-            iconImageView.heightAnchor.constraint(equalToConstant: 18),
-
-            titleLbl.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 12),
-            titleLbl.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            titleLbl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-
-            sentByLbl.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 12),
-            sentByLbl.topAnchor.constraint(equalTo: titleLbl.bottomAnchor, constant: 2),
-            sentByLbl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
-        ])
-    }
-
-    func configure(title: String, sentBy: String, iconTint: UIColor) {
-        titleLbl.text = title
-        sentByLbl.text = "Sent by \(sentBy)"
-        iconView.backgroundColor = iconTint
-    }
-}
