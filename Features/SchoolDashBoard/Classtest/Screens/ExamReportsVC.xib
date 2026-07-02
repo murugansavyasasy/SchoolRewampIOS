@@ -98,6 +98,9 @@
                                             <color key="tintColor" systemColor="systemGray6Color"/>
                                             <inset key="imageEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
                                             <state key="normal" image="calendarimage"/>
+                                            <connections>
+                                                <action selector="selectDate:" destination="-1" eventType="touchUpInside" id="cti-Nh-ToP"/>
+                                            </connections>
                                         </button>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="g55-Zm-bBD">
                                             <rect key="frame" x="60" y="10.666666666666657" width="141" height="41"/>
