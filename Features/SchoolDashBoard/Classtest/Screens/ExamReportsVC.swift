@@ -54,6 +54,8 @@ class ExamReportsVC: UIViewController, Datepicker {
     var accadimYr: [String] = []
     var acodemicId: Int?
     let acidamicdrops = DropDown()
+    var viewModel : CreateTestViewModel?
+    
     private let accentColors: [UIColor] = [
         UIColor(red: 0.42, green: 0.36, blue: 0.90, alpha: 1),
         UIColor(red: 0.25, green: 0.55, blue: 0.95, alpha: 1),
@@ -283,11 +285,13 @@ extension ExamReportsVC: UITableViewDataSource, UITableViewDelegate {
         print("Navigate -> exam:", exam.exam_name ?? "", "class_test_id:", exam.class_test_id ?? "",
               "section:", section.section_name ?? "", "section_id:", section.section_id ?? "")
 
-        // Idha unga navigation ku maathikonga, example:
-        // let vc = ExamSectionDetailVC(nibName: nil, bundle: nil)
-        // vc.classTestId = exam.class_test_id
-        // vc.sectionId = section.section_id
-        // navigationController?.pushViewController(vc, animated: true)
+        viewModel?.class_test_id = exam.class_test_id ?? ""
+        viewModel?.section_id = section.section_id ?? ""
+         let vc = ExamRecordsVC(nibName: nil, bundle: nil)
+        vc.class_test_details = section
+        vc.viewModel = viewModel
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
     }
 }
 
