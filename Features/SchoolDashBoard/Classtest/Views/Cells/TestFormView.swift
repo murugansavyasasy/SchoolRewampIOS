@@ -98,6 +98,32 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
         
     }
     
+    func configureReport(with activity: StaffActivity, index: Int) {
+        
+        badgeLabel.text = "\(index + 1)"
+        testTitleLabel.text = "Activity \(index + 1)"
+        
+        removeButton.isHidden = true
+        
+        examNameTextView.text = activity.activity_name
+        testDateTextField.text = activity.exam_date
+        maxMarksTextField.text = activity.max_mark
+        minMarksTextField.text = activity.min_mark
+        syllabusTextView.text = activity.syllabus
+        
+        updateSessionUI(session: activity.session ?? "FN")
+        
+        examNameTextView.isEditable = false
+        syllabusTextView.isEditable = false
+        
+        testDateTextField.isEnabled = false
+        maxMarksTextField.isEnabled = false
+        minMarksTextField.isEnabled = false
+        
+        fnButton.isEnabled = false
+        anButton.isEnabled = false
+    }
+    
     private func styleTextView(_ textView: UITextView) {
         textView.layer.cornerRadius = 8
         textView.layer.borderWidth = 1.0

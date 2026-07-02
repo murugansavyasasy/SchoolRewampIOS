@@ -80,7 +80,10 @@ class CreateClassTestVc: UIViewController {
             attributedTitle.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
 
             config.attributedTitle = attributedTitle
-            config.image = UIImage(systemName: "arrowtriangle.down.fill")
+            let symbolConfig = UIImage.SymbolConfiguration(pointSize: 10, weight: .semibold)
+            config.image = UIImage(systemName: "arrowtriangle.down.fill")?
+                .applyingSymbolConfiguration(symbolConfig)
+
             config.imagePlacement = .trailing
             config.imagePadding = 8
 
@@ -368,7 +371,7 @@ class CreateClassTestVc: UIViewController {
     
     @IBAction func viewHistoryAct(_ sender: Any) {
         
-        let vc = ExamReportsVC()
+        let vc = ExamRecordsVC()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

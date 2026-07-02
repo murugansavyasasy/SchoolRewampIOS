@@ -42,6 +42,8 @@ class SubjectDetailsTableViewCell: UITableViewCell {
     
     private var currentConfig: SubjectExamConfig?
     private var currentViewModel: CreateTestViewModel?
+    private var currentReport: StaffSubject?
+    private var isReport = false
     
     private var bannerView: UIView?
     private var bannerIconView: UIImageView?
@@ -94,6 +96,8 @@ class SubjectDetailsTableViewCell: UITableViewCell {
     
     public func Configure(with configu : SubjectExamConfig, viewModel: CreateTestViewModel,isExpanded : Bool,isConfigured : Bool ){
         
+        isReport = false
+        currentReport = nil
         self.isCellExpanded = isExpanded
         self.currentConfig = configu
         self.currentViewModel = viewModel
@@ -179,6 +183,51 @@ class SubjectDetailsTableViewCell: UITableViewCell {
         headerView.accessibilityValue = isExpanded ? "Expanded" : "Collapsed"
        
          
+    }
+    
+    //MARK: this is for reports page
+    func configureReport(with report: StaffSubject, isExpanded: Bool) {
+
+        self.isReport = true
+        self.currentReport = report
+
+        titleLabel.text = report.subject_name
+        subtitleLabel.text = "Section \((report.subject_id ?? "").uppercased())"
+
+        checkmarkImageView.isHidden = true
+
+        chevronImageView.image = UIImage(
+            systemName: isExpanded ? "chevron.down" : "chevron.right"
+        )
+
+        detailsContainerView.isHidden = !isExpanded
+
+        testsStackView.arrangedSubviews.forEach {
+            $0.removeFromSuperview()
+        }
+
+        let activities = report.activities ?? []
+
+        for (index, activity) in activities.enumerated() {
+
+            guard let form = Bundle.main.loadNibNamed(
+                "TestFormView",
+                owner: nil,
+                options: nil
+            )?.first as? TestFormView else {
+                continue
+            }
+
+            form.configureReport(with: activity, index: index)
+
+            testsStackView.addArrangedSubview(form)
+        }
+
+        addTestButton.isHidden = true
+        mergeBannerView.isHidden = true
+
+        countContainerView.isHidden = activities.count < 2
+        countLable.text = "\(activities.count) Activities"
     }
     
     @objc private func headerTapped() {

@@ -96,17 +96,39 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gV6-J4-YCG">
                     <rect key="frame" x="0.0" y="183" width="393" height="601"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="2jS-yJ-reg">
-                            <rect key="frame" x="0.0" y="15" width="393" height="586"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unit Test 1" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kub-to-zcJ">
+                            <rect key="frame" x="15" y="14.999999999999998" width="363" height="20.333333333333329"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="2jS-yJ-reg">
+                            <rect key="frame" x="0.0" y="50.333333333333343" width="393" height="470.66666666666663"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UY1-mv-j8g">
+                            <rect key="frame" x="30" y="546" width="333" height="40"/>
+                            <color key="backgroundColor" name="BackGroundClr"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="8oM-iD-byC"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="View &amp; Enter marks" cornerStyle="large"/>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="2jS-yJ-reg" firstAttribute="top" secondItem="gV6-J4-YCG" secondAttribute="top" constant="15" id="1j6-tz-Jb7"/>
                         <constraint firstAttribute="trailing" secondItem="2jS-yJ-reg" secondAttribute="trailing" id="67N-pu-0gH"/>
+                        <constraint firstItem="UY1-mv-j8g" firstAttribute="leading" secondItem="gV6-J4-YCG" secondAttribute="leading" constant="30" id="7Ho-Qx-PGP"/>
+                        <constraint firstItem="Kub-to-zcJ" firstAttribute="top" secondItem="gV6-J4-YCG" secondAttribute="top" constant="15" id="Ajj-Na-N9q"/>
+                        <constraint firstAttribute="trailing" secondItem="UY1-mv-j8g" secondAttribute="trailing" constant="30" id="O49-Qn-XkS"/>
+                        <constraint firstItem="UY1-mv-j8g" firstAttribute="top" secondItem="2jS-yJ-reg" secondAttribute="bottom" constant="25" id="Q8S-k7-hq7"/>
+                        <constraint firstItem="Kub-to-zcJ" firstAttribute="leading" secondItem="gV6-J4-YCG" secondAttribute="leading" constant="15" id="QP6-S6-Spa"/>
                         <constraint firstItem="2jS-yJ-reg" firstAttribute="leading" secondItem="gV6-J4-YCG" secondAttribute="leading" id="UNv-lk-JEf"/>
-                        <constraint firstAttribute="bottom" secondItem="2jS-yJ-reg" secondAttribute="bottom" id="v6O-o1-jKk"/>
+                        <constraint firstAttribute="bottom" secondItem="UY1-mv-j8g" secondAttribute="bottom" constant="15" id="epr-B5-nBe"/>
+                        <constraint firstItem="2jS-yJ-reg" firstAttribute="top" secondItem="Kub-to-zcJ" secondAttribute="bottom" constant="15" id="nzb-Uz-DdK"/>
+                        <constraint firstAttribute="trailing" secondItem="Kub-to-zcJ" secondAttribute="trailing" constant="15" id="wrt-xC-NBR"/>
                     </constraints>
                 </view>
             </subviews>
@@ -122,7 +144,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="gV6-J4-YCG" secondAttribute="bottom" id="hfu-Yz-6OF"/>
                 <constraint firstItem="gV6-J4-YCG" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="q7j-Zi-flh"/>
             </constraints>
-            <point key="canvasLocation" x="139" y="154"/>
+            <point key="canvasLocation" x="138.1679389312977" y="153.52112676056339"/>
         </view>
     </objects>
     <resources>
