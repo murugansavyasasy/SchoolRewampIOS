@@ -314,6 +314,7 @@ extension ExamReportsVC: UITableViewDataSource, UITableViewDelegate {
          let vc = ExamRecordsVC(nibName: nil, bundle: nil)
         vc.class_test_details = section
         vc.viewModel = viewModel
+        vc.ExamNameString = exam.exam_name ?? ""
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
     }

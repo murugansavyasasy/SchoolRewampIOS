@@ -13,6 +13,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExamRecordsVC" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
             <connections>
+                <outlet property="examNameLbl" destination="Kub-to-zcJ" id="EQa-Bm-sx6"/>
+                <outlet property="noDataImage" destination="T70-E8-K5Q" id="0oR-Z2-W3I"/>
+                <outlet property="noDataLabel" destination="dFT-L4-r70" id="RaV-ES-VzB"/>
                 <outlet property="tv" destination="2jS-yJ-reg" id="cJf-tb-ic4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -119,19 +122,37 @@
                                 <action selector="enterMarks:" destination="-1" eventType="touchUpInside" id="0fN-ru-HYL"/>
                             </connections>
                         </button>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T70-E8-K5Q">
+                            <rect key="frame" x="30" y="160.66666666666669" width="333" height="200"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="200" id="5wC-8R-oFh"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Subjects Found!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dFT-L4-r70">
+                            <rect key="frame" x="30" y="375.66666666666663" width="333" height="20.333333333333314"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="2jS-yJ-reg" secondAttribute="trailing" id="67N-pu-0gH"/>
                         <constraint firstItem="UY1-mv-j8g" firstAttribute="leading" secondItem="gV6-J4-YCG" secondAttribute="leading" constant="30" id="7Ho-Qx-PGP"/>
                         <constraint firstItem="Kub-to-zcJ" firstAttribute="top" secondItem="gV6-J4-YCG" secondAttribute="top" constant="15" id="Ajj-Na-N9q"/>
+                        <constraint firstItem="dFT-L4-r70" firstAttribute="leading" secondItem="gV6-J4-YCG" secondAttribute="leading" constant="30" id="JQl-hI-k0k"/>
+                        <constraint firstAttribute="trailing" secondItem="T70-E8-K5Q" secondAttribute="trailing" constant="30" id="O0O-6C-pv1"/>
                         <constraint firstAttribute="trailing" secondItem="UY1-mv-j8g" secondAttribute="trailing" constant="30" id="O49-Qn-XkS"/>
                         <constraint firstItem="UY1-mv-j8g" firstAttribute="top" secondItem="2jS-yJ-reg" secondAttribute="bottom" constant="25" id="Q8S-k7-hq7"/>
                         <constraint firstItem="Kub-to-zcJ" firstAttribute="leading" secondItem="gV6-J4-YCG" secondAttribute="leading" constant="15" id="QP6-S6-Spa"/>
                         <constraint firstItem="2jS-yJ-reg" firstAttribute="leading" secondItem="gV6-J4-YCG" secondAttribute="leading" id="UNv-lk-JEf"/>
+                        <constraint firstItem="T70-E8-K5Q" firstAttribute="leading" secondItem="gV6-J4-YCG" secondAttribute="leading" constant="30" id="UXc-bc-5b8"/>
+                        <constraint firstItem="T70-E8-K5Q" firstAttribute="centerY" secondItem="gV6-J4-YCG" secondAttribute="centerY" constant="-40" id="d5f-Nb-xbM"/>
                         <constraint firstAttribute="bottom" secondItem="UY1-mv-j8g" secondAttribute="bottom" constant="15" id="epr-B5-nBe"/>
                         <constraint firstItem="2jS-yJ-reg" firstAttribute="top" secondItem="Kub-to-zcJ" secondAttribute="bottom" constant="15" id="nzb-Uz-DdK"/>
                         <constraint firstAttribute="trailing" secondItem="Kub-to-zcJ" secondAttribute="trailing" constant="15" id="wrt-xC-NBR"/>
+                        <constraint firstAttribute="trailing" secondItem="dFT-L4-r70" secondAttribute="trailing" constant="30" id="xuE-s6-TDh"/>
+                        <constraint firstItem="dFT-L4-r70" firstAttribute="top" secondItem="T70-E8-K5Q" secondAttribute="bottom" constant="15" id="y3A-jk-vw6"/>
                     </constraints>
                 </view>
             </subviews>

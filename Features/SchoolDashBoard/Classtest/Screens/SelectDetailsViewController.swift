@@ -89,6 +89,8 @@ class SelectDetailsViewController: UIViewController,UITextViewDelegate {
         
         textView.textContainerInset = UIEdgeInsets(top: 10, left: 8, bottom: 8, right: 8)
         textView.adjustsFontForContentSizeCategory = true
+        
+        textView.isScrollEnabled = false 
     }
     
     private func setupSectionsHeader() {
@@ -133,54 +135,92 @@ class SelectDetailsViewController: UIViewController,UITextViewDelegate {
     }
     // MARK: - Keyboard Handling & Auto-Scrolling
     private func registerKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(textFieldDidBeginEditing(_:)), name: UITextField.textDidBeginEditingNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(textFieldDidBeginEditing(_:)), name: UITextView.textDidBeginEditingNotification, object: nil)
     }
     
     private func unregisterKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UITextField.textDidBeginEditingNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UITextView.textDidBeginEditingNotification, object: nil)
     }
     
-    @objc private func keyboardWillShow(_ notification: Notification) {
+    @objc private func keyboardWillChangeFrame(_ notification: Notification) {
         guard let userInfo = notification.userInfo,
-              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-        
-        let keyboardHeight = keyboardFrame.cgRectValue.height
-        
-        tableView.contentInset.bottom = keyboardHeight + 20
-        tableView.scrollIndicatorInsets.bottom = keyboardHeight + 20
-        
-        scrollToActiveTextField()
-    }
-    
-    @objc private func keyboardWillHide(_ notification: Notification) {
-        tableView.contentInset.bottom = 0
-        tableView.scrollIndicatorInsets.bottom = 0
+              let endFrameValue = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
+              let curveRaw = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt else { return }
+
+        let endFrame = view.convert(endFrameValue.cgRectValue, from: nil)
+        // How much of the keyboard actually overlaps our view (0 if it's being dismissed/undocked off-screen)
+        let overlap = max(0, view.bounds.maxY - endFrame.minY)
+        let bottomInset = max(0, overlap - view.safeAreaInsets.bottom)
+
+        let curve = UIView.AnimationCurve(rawValue: Int(curveRaw)) ?? .easeInOut
+        let animator = UIViewPropertyAnimator(duration: duration, curve: curve) { [weak self] in
+            guard let self = self else { return }
+            self.tableView.contentInset.bottom = bottomInset + 20
+            self.tableView.scrollIndicatorInsets.bottom = bottomInset + 20
+        }
+        animator.startAnimation()
+
+        if bottomInset > 0 {
+            scrollToActiveTextField()
+        }
     }
     
     @objc private func textFieldDidBeginEditing(_ notification: Notification) {
         scrollToActiveTextField()
     }
     
-    private func scrollToActiveTextField() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
-            guard let self = self, let activeField = self.view.firstResponders else { return }
-            let rect = activeField.convert(activeField.bounds, to: self.tableView)
-           
-            // Position the editing field around 100 points from the top of the visible area
-            let visibleHeight = self.tableView.bounds.height - self.tableView.contentInset.bottom
-            let maxOffsetY = max(0, self.tableView.contentSize.height - visibleHeight)
-            let targetOffsetY = min(maxOffsetY, max(0, rect.origin.y - 100))
-            
-            self.tableView.setContentOffset(CGPoint(x: 0, y: targetOffsetY), animated: true)
-        }
-    }
+//    private func scrollToActiveTextField() {
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+//            guard let self = self, let activeField = self.view.firstResponders else { return }
+//
+//            self.view.layoutIfNeeded() // make sure any pending row-height/autolayout changes are applied first
+//
+//            let rect = activeField.convert(activeField.bounds, to: self.tableView)
+//            let visibleHeight = self.tableView.bounds.height - self.tableView.contentInset.bottom - self.tableView.contentInset.top
+//            let maxOffsetY = max(-self.tableView.contentInset.top, self.tableView.contentSize.height - visibleHeight)
+//            let targetOffsetY = min(maxOffsetY, max(-self.tableView.contentInset.top, rect.origin.y - 100))
+//
+//            self.tableView.setContentOffset(CGPoint(x: 0, y: targetOffsetY), animated: true)
+//        }
+//    }
     
+    private func scrollToActiveTextField() {
+        guard let activeField = self.view.firstResponders else { return }
+        self.view.layoutIfNeeded()   // force layout before measuring
+
+        var targetRect = activeField.bounds
+        if let textView = activeField as? UITextView,
+           let selectedRange = textView.selectedTextRange {
+            let caretRect = textView.caretRect(for: selectedRange.end)
+            if caretRect.isFinite {
+                targetRect = caretRect.insetBy(dx: 0, dy: -8)
+            }
+        }
+
+        let rect = activeField.convert(targetRect, to: self.tableView)
+        let visibleTop = self.tableView.contentOffset.y
+        let visibleHeight = self.tableView.bounds.height - self.tableView.contentInset.bottom - self.tableView.contentInset.top
+        let visibleBottom = visibleTop + visibleHeight
+        let topPadding: CGFloat = 100
+        let bottomPadding: CGFloat = 20
+
+        var newOffsetY = visibleTop
+        if rect.maxY + bottomPadding > visibleBottom {
+            newOffsetY = rect.maxY + bottomPadding - visibleHeight
+        }
+        if rect.minY - topPadding < newOffsetY {
+            newOffsetY = max(-self.tableView.contentInset.top, rect.minY - topPadding)
+        }
+        let maxOffsetY = max(-self.tableView.contentInset.top, self.tableView.contentSize.height - visibleHeight)
+        newOffsetY = min(newOffsetY, maxOffsetY)
+
+        self.tableView.setContentOffset(CGPoint(x: 0, y: newOffsetY), animated: true)
+    }
     
 }
 
@@ -295,6 +335,17 @@ extension SelectDetailsViewController: UITableViewDelegate, UITableViewDataSourc
             }))
             self?.present(alert, animated: true, completion: nil)
         }
+        
+        cell.onHeightChanged = { [weak self] in
+            guard let self = self else { return }
+            UIView.setAnimationsEnabled(false)
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+            UIView.setAnimationsEnabled(true)
+            DispatchQueue.main.async {
+                self.scrollToActiveTextField()
+            }
+        }
     
         return cell
     }
@@ -332,5 +383,12 @@ fileprivate extension UIView {
             }
         }
         return nil
+    }
+}
+
+
+extension CGRect {
+    var isFinite: Bool {
+        origin.x.isFinite && origin.y.isFinite && size.width.isFinite && size.height.isFinite
     }
 }
