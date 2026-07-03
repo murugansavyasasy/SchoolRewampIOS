@@ -284,7 +284,7 @@ class CreateClassTestVc: UIViewController {
     
     private func updateButtons() {
         let activeColor =  UIColor.primery/*UIColor(red: 0.298, green: 0.302, blue: 0.863, alpha: 1.0)*/
-        let disabledColor = UIColor(red: 0.298, green: 0.302, blue: 0.863, alpha: 0.5)
+        let disabledColor = UIColor.primery.withAlphaComponent(0.5)/*UIColor(red: 0.298, green: 0.302, blue: 0.863, alpha: 0.5)*/
         
         if viewModel.currentStep == 1 {
             acadmicYrBtnName.isHidden = false

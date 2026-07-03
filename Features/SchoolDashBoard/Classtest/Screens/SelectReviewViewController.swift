@@ -5,7 +5,6 @@ public final class SelectReviewViewController: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet public weak var tableView: UITableView!
     @IBOutlet public weak var titleLabel: UILabel!
-    
     @IBOutlet public weak var createButton: UIButton!
     @IBOutlet public weak var backButton: UIButton!
     
@@ -74,8 +73,8 @@ public final class SelectReviewViewController: UIViewController {
         let title = total == 1 ? "  Create 1 Activity" : "  Create \(total) Activity"
         createButton.setTitle(title, for: .normal)
         
-        let activeColor = UIColor(red: 0.298, green: 0.302, blue: 0.863, alpha: 1.0)
-        let disabledColor = UIColor(red: 0.298, green: 0.302, blue: 0.863, alpha: 0.5)
+        let activeColor = UIColor.primery
+        let disabledColor = UIColor.primery.withAlphaComponent(0.5)
         
         let hasTests = total > 0
         createButton.isEnabled = hasTests
@@ -125,7 +124,8 @@ public final class SelectReviewViewController: UIViewController {
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
-                                    self.viewModel?.previousStep()
+                                   // self.viewModel?.previousStep()
+                                    self.parent?.dismiss(animated: true)
                                 }
                         }
                     }else {
