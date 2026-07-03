@@ -26,6 +26,7 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
 
     public var onRemoveTapped : (() -> Void)?
     public var onDataChanged : ((TestDetails) -> Void)?
+    public var onHeightChanged: (() -> Void)? 
     
     private var testDetails = TestDetails()
     private let activeColor = UIColor.primery /*UIColor(red: 0.298, green: 0.302, blue: 0.863, alpha: 1.0)*/ // #4C4DDC
@@ -131,6 +132,7 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
         
         textView.textContainerInset = UIEdgeInsets(top: 10, left: 8, bottom: 8, right: 8)
         textView.adjustsFontForContentSizeCategory = true
+        textView.isScrollEnabled = false 
     }
     
     private func styleTextField(_ textField: UITextField) {
@@ -245,6 +247,7 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
         testDetails.examName = examNameTextView.text ?? ""
         testDetails.syllabus = syllabusTextView.text ?? ""
         notifyDataChanged()
+        onHeightChanged?()
     }
     
 //    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

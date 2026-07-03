@@ -11,6 +11,8 @@ class ExamRecordsVC: UIViewController {
     
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var examNameLbl: UILabel!
+    @IBOutlet weak var noDataImage: UIImageView!
+    @IBOutlet weak var noDataLabel: UILabel!
     
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var class_test_details: StaffSection?
@@ -18,6 +20,7 @@ class ExamRecordsVC: UIViewController {
     var viewModel : CreateTestViewModel?
     private var expandedIndexPath: IndexPath?
     var ExamNameString = ""
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,52 +33,99 @@ class ExamRecordsVC: UIViewController {
         if !test_subjects.isEmpty{
             expandedIndexPath = IndexPath(row: 0, section: 0)
         }
+        
+        updateEmptyState()
     }
     
     func delete_activity_api(class_test_subject_id:String) {
         
-        let param : [String:Any] =
-        [
-            "class_test_subject_id" : class_test_subject_id
-        ]
-        
-        APIService.shared.makeApi(
-            url: ServiceUrl.exam_api_exam_test_delete_class_test_subject,
-            parameters: param,
-            type: ApitTypeSringFile.PUT,
-            token: staffDetails?.access_token ?? "",
-            isBaseUrl: true
-        ) { [weak self] (result: Result<CommonApiSuc, Error>) in
+        CustomAlert().showAlertCancel(title: AlertstringFile.Confirm.translated(), message: AlertstringFile.deletemessage.translated(), actionLbl1: AlertstringFile.Yes.translated(), actionLbl2: AlertstringFile.No.translated(), on: self, onOk: {
             
-            DispatchQueue.main.async {[weak self] in
+            let param : [String:Any] =
+            [
+                "class_test_subject_id" : class_test_subject_id
+            ]
+            
+            APIService.shared.makeApi(
+                url: ServiceUrl.exam_api_exam_test_delete_class_test_subject,
+                parameters: param,
+                type: ApitTypeSringFile.PUT,
+                token: self.staffDetails?.access_token ?? "",
+                isBaseUrl: true
+            ) { [weak self] (result: Result<CommonApiSuc, Error>) in
                 
-                guard let self = self else { return }
-                
-                switch result {
-                case .success(let success):
+                DispatchQueue.main.async {[weak self] in
                     
-                    if success.status == true {
+                    guard let self = self else { return }
+                    
+                    switch result {
+                    case .success(let success):
                         
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success.translated(), message: success.message ?? "", on: self) {
+                        if success.status == true {
+                            
+                            guard let subjectIndex = self.test_subjects.firstIndex(where: { subject in
+                                subject.activities?.contains(where: {
+                                    $0.class_test_subject_id == class_test_subject_id
+                                }) == true
+                            }),
+                                  let activityIndex = self.test_subjects[subjectIndex]
+                                .activities?
+                                .firstIndex(where: {
+                                    $0.class_test_subject_id == class_test_subject_id
+                                })
+                            else {
+                                
+                                return
+                            }
+                            
+                            
+                            self.test_subjects[subjectIndex].activities?.remove(at: activityIndex)
+                            
+                            if self.test_subjects[subjectIndex].activities?.isEmpty == true {
+                                self.test_subjects.remove(at: subjectIndex)
+                            }
+                            
+                            if self.test_subjects.isEmpty {
+                                self.expandedIndexPath = nil
+                            } else {
+                                let row = min(subjectIndex, self.test_subjects.count - 1)
+                                self.expandedIndexPath = IndexPath(row: row, section: 0)
+                            }
+                            
+                            self.tv.reloadData()
+                            self.updateEmptyState()
+                            
+                        }else {
+                            
+                            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: success.message ?? "", on: self) {
+                                
+                            }
+                        }
+                        
+                    case .failure(let failure):
+                        
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: failure.localizedDescription, on: self) {
                             
                         }
-                    }else {
-                        
-                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: success.message ?? "", on: self) {
-                            
-                        }
-                    }
-                    
-                case .failure(let failure):
-                   
-                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed.translated(), message: failure.localizedDescription, on: self) {
-                        
                     }
                 }
             }
+            
+        }) {
+            
         }
     }
-
+    
+    private func updateEmptyState() {
+        let isEmpty = test_subjects.isEmpty
+        
+        noDataImage.isHidden = !isEmpty
+        noDataLabel.isHidden = !isEmpty
+        tv.isHidden = isEmpty
+        
+        noDataLabel.text = "No activities are available for this exam."
+    }
+    
     
     @IBAction func enterMarks(_ sender: UIButton) {
         MenuStringFile.selectedMenuName = "View & Enter Marks"
@@ -90,21 +140,21 @@ class ExamRecordsVC: UIViewController {
     func fetchMarksAndNavigate() {
         showActivityLoader()
         viewModel?.getMarkDetails(completion: { [weak self] result in
+            
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self.hideActivityLoader()
                 
-                guard let self = self else { return }
-                
-                DispatchQueue.main.async {
-                    self.hideActivityLoader()
+                switch result {
+                case .success(let records):
+                    self.navigateToEnterMark(with: records)
                     
-                    switch result {
-                    case .success(let records):
-                        self.navigateToEnterMark(with: records)
-                        
-                    case .failure(let error):
-                        print("❌ Error:", error.localizedDescription)
-                    }
+                case .failure(let error):
+                    print("❌ Error:", error.localizedDescription)
                 }
             }
+        }
         )
     }
     

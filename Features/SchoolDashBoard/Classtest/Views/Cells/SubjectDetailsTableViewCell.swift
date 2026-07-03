@@ -141,6 +141,10 @@ class SubjectDetailsTableViewCell: UITableViewCell {
                 self?.onUpdateTest?(updatedDetails, idx)
             }
             
+            form.onHeightChanged = { [weak self] in
+                self?.onHeightChanged?()
+            }
+            
 //            form.onHeightChanged = { [weak self] in
 //                          self?.onHeightChanged?()
 //                      }

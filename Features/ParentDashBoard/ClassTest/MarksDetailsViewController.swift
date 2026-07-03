@@ -16,6 +16,7 @@ class MarksDetailsViewController: UIViewController, UITableViewDataSource, UITab
     
     var classTest: ClassTestMarks?
     var classTestId: Int?
+    var studentDetails = UserDefaultFileManager.get_child_Details()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +40,7 @@ class MarksDetailsViewController: UIViewController, UITableViewDataSource, UITab
             url: ServiceUrl.exam_view_marks_for_student,
             parameters: params,
             type: ApitTypeSringFile.GET,
-            token:  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGlsZF9pZCI6IjYwMTUyNDAyIiwic2Nob29sX2lkIjoiNzA1MCIsImNsYXNzX2lkIjozMjg4OCwic2VjdGlvbl9pZCI6OTE3NDYsImlhdCI6MTc4MjkwMTkyMH0.MiE0ODRAwDyySsjqD8zcSLAAmJ8pT6tIFQpJTGRLo7M",
+            token: studentDetails?.access_token ?? "",
             isBaseUrl: true
         ) {[weak self] (result:Result<ClassTestMarksResponse, Error>) in
             
