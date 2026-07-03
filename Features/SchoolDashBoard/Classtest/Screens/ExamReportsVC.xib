@@ -20,6 +20,8 @@
                 <outlet property="datestackView" destination="tCp-kL-fTF" id="oDG-Sy-KVh"/>
                 <outlet property="examCountLbl" destination="LSb-mu-06C" id="ZE7-tx-VJR"/>
                 <outlet property="examListTV" destination="gYB-9v-p4h" id="oh6-OJ-jMo"/>
+                <outlet property="nodataImg" destination="bKA-vS-UNm" id="BPj-lk-w9s"/>
+                <outlet property="nodataLbl" destination="V0R-mY-paW" id="Pzg-iT-0De"/>
                 <outlet property="tittleLbl" destination="l89-pg-wsN" id="uaR-p5-icD"/>
                 <outlet property="todayLbl" destination="zo4-iL-21x" id="9t2-Z1-ehz"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -179,15 +181,35 @@
                             <rect key="frame" x="0.0" y="97" width="393" height="582"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="TIH-Dr-ZRc">
+                            <rect key="frame" x="0.0" y="97" width="393" height="0.0"/>
+                            <subviews>
+                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NohomeWork" translatesAutoresizingMaskIntoConstraints="NO" id="bKA-vS-UNm">
+                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="300"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="300" id="jjX-DO-Xp4"/>
+                                    </constraints>
+                                </imageView>
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V0R-mY-paW">
+                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="0.0"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
                         <constraint firstItem="uJJ-gA-zsb" firstAttribute="leading" secondItem="ptU-06-wue" secondAttribute="leading" constant="16" id="2WB-Lh-Pgf"/>
                         <constraint firstAttribute="trailing" secondItem="uJJ-gA-zsb" secondAttribute="trailing" constant="16" id="5Kp-Ww-fDp"/>
                         <constraint firstAttribute="trailing" secondItem="gYB-9v-p4h" secondAttribute="trailing" id="7zH-lr-8wu"/>
+                        <constraint firstItem="TIH-Dr-ZRc" firstAttribute="trailing" secondItem="gYB-9v-p4h" secondAttribute="trailing" id="AWn-iu-91j"/>
                         <constraint firstAttribute="bottom" secondItem="gYB-9v-p4h" secondAttribute="bottom" id="JQe-nO-KhX"/>
                         <constraint firstItem="gYB-9v-p4h" firstAttribute="leading" secondItem="ptU-06-wue" secondAttribute="leading" id="agB-fF-I7t"/>
+                        <constraint firstItem="TIH-Dr-ZRc" firstAttribute="leading" secondItem="gYB-9v-p4h" secondAttribute="leading" id="an7-WO-Naf"/>
                         <constraint firstItem="gYB-9v-p4h" firstAttribute="top" secondItem="uJJ-gA-zsb" secondAttribute="bottom" constant="10" id="lUp-Ca-TCW"/>
+                        <constraint firstItem="TIH-Dr-ZRc" firstAttribute="top" secondItem="gYB-9v-p4h" secondAttribute="top" id="szo-Ww-kDI"/>
                         <constraint firstItem="uJJ-gA-zsb" firstAttribute="top" secondItem="ptU-06-wue" secondAttribute="top" constant="10" id="vbB-X5-bxt"/>
                     </constraints>
                 </view>
@@ -210,6 +232,7 @@
         </view>
     </objects>
     <resources>
+        <image name="NohomeWork" width="1024" height="768"/>
         <image name="calendarimage" width="24" height="24"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="down-arrow" width="512" height="512"/>

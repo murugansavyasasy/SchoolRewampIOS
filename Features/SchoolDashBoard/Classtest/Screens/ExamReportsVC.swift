@@ -44,6 +44,8 @@ class ExamReportsVC: UIViewController, Datepicker {
     @IBOutlet weak var acodomicdropDown: UIView!
     @IBOutlet weak var todayLbl: UILabel!
     @IBOutlet weak var dateView: UIView!
+    @IBOutlet weak var nodataImg: UIImageView!
+    @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var dateBtn: UIButton!
     @IBOutlet weak var datestackView: UIView!
 
@@ -57,16 +59,11 @@ class ExamReportsVC: UIViewController, Datepicker {
     let acidamicdrops = DropDown()
     var viewModel : CreateTestViewModel?
     let alert = CustomAlert()
-    private let accentColors: [UIColor] = [
-        UIColor(red: 0.42, green: 0.36, blue: 0.90, alpha: 1),
-//        UIColor(red: 0.25, green: 0.55, blue: 0.95, alpha: 1),
-//        UIColor(red: 0.60, green: 0.40, blue: 0.90, alpha: 1)
-    ]
+    private let accentColors: [UIColor] = [UIColor.backGroundClr]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-//        setCurrentDate()
         setupTableView()
         getAcademicYearList()
     }
@@ -86,14 +83,7 @@ class ExamReportsVC: UIViewController, Datepicker {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dateStackTapped))
         dateStack.addGestureRecognizer(tapGesture)
     }
-    func setCurrentDate() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = DateInputs.dd_MMM_yyyy
-        formatter.locale = LocaleManager.shared.displayLocale
 
-        dateLbl.text = formatter.string(from: Date())
-        todayLbl.text = Today
-    }
     private func setupTableView() {
         examListTV.dataSource = self
         examListTV.delegate = self
@@ -127,7 +117,7 @@ class ExamReportsVC: UIViewController, Datepicker {
         present(vc, animated: false)
     }
 
-    // Tap on dateStack -> same action as selectDate
+
     @objc private func dateStackTapped() {
         selectDate(dateBtn)
     }
@@ -149,10 +139,16 @@ class ExamReportsVC: UIViewController, Datepicker {
                 case .success(let response):
                     self.class_test_details = response.data ?? []
                     self.updateExamCount()
+                    self.nodataImg.isHidden = !self.class_test_details.isEmpty
+                    self.nodataLbl.isHidden = !self.class_test_details.isEmpty
+                    self.self.nodataLbl.text = response.message
                     self.examListTV.reloadData()
 
                 case .failure(let error):
                     print("❌ Error:", error.localizedDescription)
+                    self.nodataImg.isHidden = !self.class_test_details.isEmpty
+                    self.nodataLbl.isHidden = !self.class_test_details.isEmpty
+                    self.self.nodataLbl.text = error.localizedDescription
                 }
             }
         }
@@ -169,7 +165,7 @@ class ExamReportsVC: UIViewController, Datepicker {
             self.getExamReports()
         }
     }
-    // exam_date: "29-06-2026" -> "29 Jun"
+ 
     func formatDate(_ raw: String) -> String {
         guard !raw.isEmpty else { return "" }
         let inputFormatter = DateFormatter()
@@ -201,16 +197,12 @@ class ExamReportsVC: UIViewController, Datepicker {
 
                     self.AcadimicYearDatas = res.data ?? []
                     self.accadimYr = self.AcadimicYearDatas.compactMap { $0.year }
-
-                    // Auto select current academic year
                     if let currentYear = self.AcadimicYearDatas.first(
                         where: { $0.current_academic_year == true }
                     ) {
 
                         self.acodemicId = currentYear.id
                         self.acodomicYearLbl.text = currentYear.year
-
-                        // reload based on selected academic year
                         self.getExamReports()
                     }
 
@@ -296,6 +288,9 @@ extension ExamReportsVC: UITableViewDataSource, UITableViewDelegate {
                     }
 
                     self.updateExamCount()
+                    self.nodataImg.isHidden = !self.class_test_details.isEmpty
+                    self.nodataLbl.isHidden = !self.class_test_details.isEmpty
+                    self.self.nodataLbl.text = " Class Test not available"
                     self.examListTV.reloadData()
 
                 case .failure(let error):
@@ -304,11 +299,8 @@ extension ExamReportsVC: UITableViewDataSource, UITableViewDelegate {
             }
         }
     }
-    // Section chip click -> navigate
-    private func handleSectionTap(exam: StaffClassTest, section: StaffSection) {
-        print("Navigate -> exam:", exam.exam_name ?? "", "class_test_id:", exam.class_test_id ?? "",
-              "section:", section.section_name ?? "", "section_id:", section.section_id ?? "")
 
+    private func handleSectionTap(exam: StaffClassTest, section: StaffSection) {
         viewModel?.class_test_id = exam.class_test_id ?? ""
         viewModel?.section_id = section.section_id ?? ""
          let vc = ExamRecordsVC(nibName: nil, bundle: nil)
