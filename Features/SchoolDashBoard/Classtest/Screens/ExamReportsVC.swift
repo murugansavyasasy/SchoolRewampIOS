@@ -31,6 +31,7 @@ class ExamReportsVC: UIViewController, Datepicker {
             todayLbl.text = FutureDate
         }
         dateLbl.text = outputFormatter.string(from: selectedDate)
+        getExamReports()
     }
     
 
@@ -132,9 +133,10 @@ class ExamReportsVC: UIViewController, Datepicker {
     }
 
     func getExamReports() {
+        let date = dateLbl.text == "Select a Date" ? "0" : ConvertDateStringSmart(dateLbl.text)
         APIService.shared.makeApi(
             url: ServiceUrl.exam_class_test_details,
-            parameters: ["class_test_id":"0", "exam_date":"0","academic_year_id":"8"],
+            parameters: ["class_test_id":"0", "exam_date":date,"academic_year_id":"\(acodemicId ?? 0)"],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
             isBaseUrl: true
@@ -161,8 +163,10 @@ class ExamReportsVC: UIViewController, Datepicker {
         acidamicdrops.bottomOffset = CGPoint(x: 0, y: acodomicdropDown.bounds.height)
         acidamicdrops.show()
         acidamicdrops.selectionAction = { [weak self] index, item in
-            self?.acodomicYearLbl.text = item
-            self?.acodemicId = self?.AcadimicYearDatas[index].id
+            guard let self = self else { return }
+            self.acodomicYearLbl.text = item
+            self.acodemicId = self.AcadimicYearDatas[index].id
+            self.getExamReports()
         }
     }
     // exam_date: "29-06-2026" -> "29 Jun"

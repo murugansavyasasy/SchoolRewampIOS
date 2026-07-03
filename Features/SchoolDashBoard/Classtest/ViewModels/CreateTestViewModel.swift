@@ -539,17 +539,14 @@ public final class CreateTestViewModel {
             APIService.shared.makeApi(
                 url: ServiceUrl.exam_api_exam_test_upload_marks,
                 parameters: [
-                    "class_test_id": "3",
-                    "section_id": "91746",
+                    "class_test_id": class_test_id ?? "",
+                    "section_id": section_id ?? "",
                     "subjects": Array(subjectsDict.values)
                 ],
                 type: ApitTypeSringFile.POST,
                 token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
                 isBaseUrl: true
             ) { [weak self] (result: Result<Send_AttachmentResponse, Error>) in
-                
-                guard let self = self else { return }
-                
                 switch result {
                 case .success(let response):
                     completion(.success(response))
