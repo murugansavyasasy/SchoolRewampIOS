@@ -94,20 +94,6 @@ class ExamReportsTVC: UITableViewCell {
         buildSectionChips(iconTint: iconTint)
     }
 
-    private func buildSectionChips(iconTint: UIColor) {
-        for (index, section) in sections.enumerated() {
-            let chip = makeChipButton(
-                title: section.section_name ?? "",
-                tint: iconTint
-            )
-            chip.tag = index
-            chip.addTarget(self, action: #selector(chipTapped(_:)), for: .touchUpInside)
-            classSectionStack.addArrangedSubview(chip)
-        }
-        let spacer = UIView()
-        spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        classSectionStack.addArrangedSubview(spacer)
-    }
     @IBAction func deleteexam(_ sender: UIButton) {
         ontestDeletTap?(sender.tag)
     }
@@ -160,7 +146,70 @@ class ExamReportsTVC: UITableViewCell {
 
         return button
     }
+    private func buildSectionChips(iconTint: UIColor) {
 
+        classSectionStack.arrangedSubviews.forEach {
+            classSectionStack.removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }
+
+        classSectionStack.axis = .vertical
+        classSectionStack.spacing = 8
+        classSectionStack.alignment = .fill
+
+        var currentRow = createRow()
+        classSectionStack.addArrangedSubview(currentRow)
+
+        var currentWidth: CGFloat = 0
+        let maxWidth = UIScreen.main.bounds.width - 60
+
+        for (index, section) in sections.enumerated() {
+
+            let chip = makeChipButton(
+                title: section.section_name ?? "",
+                tint: iconTint
+            )
+
+            chip.tag = index
+            chip.addTarget(
+                self,
+                action: #selector(chipTapped(_:)),
+                for: .touchUpInside
+            )
+
+            let chipWidth = chip.intrinsicContentSize.width + 10
+
+            if currentWidth + chipWidth > maxWidth {
+
+                addSpacer(to: currentRow)
+
+                currentRow = createRow()
+                classSectionStack.addArrangedSubview(currentRow)
+
+                currentWidth = 0
+            }
+
+            currentRow.addArrangedSubview(chip)
+            currentWidth += chipWidth
+        }
+
+        addSpacer(to: currentRow)
+    }
+
+    private func createRow() -> UIStackView {
+        let row = UIStackView()
+        row.axis = .horizontal
+        row.spacing = 10
+        row.alignment = .center
+        row.distribution = .fill
+        return row
+    }
+
+    private func addSpacer(to stack: UIStackView) {
+        let spacer = UIView()
+        spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        stack.addArrangedSubview(spacer)
+    }
     @objc private func chipTapped(_ sender: UIButton) {
         guard sections.indices.contains(sender.tag) else { return }
         let tappedSection = sections[sender.tag]
