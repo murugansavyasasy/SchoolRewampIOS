@@ -8,6 +8,7 @@
 import UIKit
 
 class ExamReportsTVC: UITableViewCell {
+    @IBOutlet weak var standerdLbl: UILabel!
     @IBOutlet weak var deleteBtn: UIButton!
     @IBOutlet weak var tittleLbl: UILabel!
     @IBOutlet weak var sendbyLbl: UILabel!
@@ -84,6 +85,7 @@ class ExamReportsTVC: UITableViewCell {
 
         tittleLbl.text = examName
         sendbyLbl.text = "Sent by: \(sentBy)"
+        standerdLbl.text = "standerd: \(sections.first?.class_name ?? "")"
 
         iconBtn.backgroundColor = iconTint.withAlphaComponent(0.15)
         iconBtn.setImage(UIImage(systemName: "doc.text.fill"), for: .normal)
