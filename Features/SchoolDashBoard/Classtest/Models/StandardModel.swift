@@ -230,6 +230,7 @@ struct StaffClassTest: Codable {
 }
 
 struct StaffSection: Codable {
+    var class_name:String?
     var section_id: String?
     var section_name: String?
     var subjects: [StaffSubject]?

@@ -33,7 +33,6 @@ class ExamReportsVC: UIViewController, Datepicker {
         dateLbl.text = outputFormatter.string(from: selectedDate)
         getExamReports()
     }
-    
 
     @IBOutlet weak var tittleLbl: UILabel!
     @IBOutlet weak var examCountLbl: UIButton!
@@ -69,7 +68,10 @@ class ExamReportsVC: UIViewController, Datepicker {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getExamReports()
+        if let acodemicId = acodemicId {
+            getExamReports()
+        }
+       
     }
     private func setupUI() {
         tittleLbl.text = "Exams"
@@ -93,10 +95,7 @@ class ExamReportsVC: UIViewController, Datepicker {
         examListTV.rowHeight = UITableView.automaticDimension
         examListTV.estimatedRowHeight = 70
         examListTV.sectionHeaderTopPadding = 0
-        examListTV.register(
-            UINib(nibName: "ExamReportsTVC", bundle: nil),
-            forCellReuseIdentifier: "ExamReportsTVC"
-        )
+        examListTV.register(UINib(nibName: "ExamReportsTVC", bundle: nil),forCellReuseIdentifier: "ExamReportsTVC")
     }
 
     private func updateExamCount() {
@@ -117,7 +116,6 @@ class ExamReportsVC: UIViewController, Datepicker {
         present(vc, animated: false)
     }
 
-
     @objc private func dateStackTapped() {
         selectDate(dateBtn)
     }
@@ -131,9 +129,7 @@ class ExamReportsVC: UIViewController, Datepicker {
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
             isBaseUrl: true
         ) { [weak self] (result: Result<StaffClassTestResponse, Error>) in
-
             guard let self = self else { return }
-
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
@@ -186,26 +182,20 @@ class ExamReportsVC: UIViewController, Datepicker {
             token: staffDetails?.access_token ?? "",
             isBaseUrl: false
         ) { [weak self] (result: Result<get_academic_yearSuc, Error>) in
-
             guard let self = self else { return }
-
             DispatchQueue.main.async {
                 switch result {
-
                 case .success(let res):
                     guard res.status == true else { return }
-
                     self.AcadimicYearDatas = res.data ?? []
                     self.accadimYr = self.AcadimicYearDatas.compactMap { $0.year }
                     if let currentYear = self.AcadimicYearDatas.first(
                         where: { $0.current_academic_year == true }
                     ) {
-
                         self.acodemicId = currentYear.id
                         self.acodomicYearLbl.text = currentYear.year
                         self.getExamReports()
                     }
-
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
@@ -233,21 +223,14 @@ extension ExamReportsVC: UITableViewDataSource, UITableViewDelegate {
         let tint = accentColors[indexPath.row % accentColors.count]
         cell.deleteBtn.tag = indexPath.row
         cell.selectionStyle = .none
-        cell.configure(
-            examName: exam.exam_name ?? "",
-            sentBy: exam.sent_by ?? "",
-            sections: sections,
-            iconTint: tint
-        )
-
+        
+        cell.configure(examName: exam.exam_name ?? "",sentBy: exam.sent_by ?? "",sections: sections,iconTint: tint)
         cell.onSectionTap = { [weak self] tappedSection in
             self?.handleSectionTap(exam: exam, section: tappedSection)
         }
         cell.ontestDeletTap = { [weak self] index in
             guard let self = self else { return }
-
             let examId = self.class_test_details[index].class_test_id
-
             alert.showAlertCancel(
                 title: "Delete Exam",
                 message: "Are you sure you want to delete this exam?",
@@ -256,10 +239,7 @@ extension ExamReportsVC: UITableViewDataSource, UITableViewDelegate {
                 on: self,
                 onOk: {
                     self.deleteExam(exam_id: examId)
-                },
-                onNo: {
-                    print("Cancelled")
-                }
+                },onNo: {print("Cancelled")}
             )
         }
 
@@ -276,17 +256,12 @@ extension ExamReportsVC: UITableViewDataSource, UITableViewDelegate {
         ) { [weak self] (result: Result<TestMarkDetailsResponse<TestMarkData>, Error>) in
 
             guard let self = self else { return }
-
             DispatchQueue.main.async {
-
                 switch result {
-
                 case .success(_):
-
                     self.class_test_details.removeAll {
                         $0.class_test_id == exam_id
                     }
-
                     self.updateExamCount()
                     self.nodataImg.isHidden = !self.class_test_details.isEmpty
                     self.nodataLbl.isHidden = !self.class_test_details.isEmpty
