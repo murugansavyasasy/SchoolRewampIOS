@@ -303,7 +303,22 @@ class CreateClassTestVc: UIViewController {
             continueButton.isEnabled = canContinue
             continueButton.backgroundColor = canContinue ? activeColor : disabledColor
         } else if viewModel.currentStep == 4 {
-            let canContinue = !viewModel.examConfigurations.isEmpty && viewModel.examConfigurations.allSatisfy { viewModel.isSubjectConfigured(subjectId: $0.subjectId, sectionId: $0.sectionId) }
+            
+            let isExamNameValid = !viewModel.exameName
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .isEmpty
+            
+            let areSubjectsConfigured =
+                    !viewModel.examConfigurations.isEmpty &&
+                    viewModel.examConfigurations.allSatisfy {
+                        viewModel.isSubjectConfigured(
+                            subjectId: $0.subjectId,
+                            sectionId: $0.sectionId
+                        )
+                    }
+            
+            let canContinue = isExamNameValid && areSubjectsConfigured
+            
             continueButton.isEnabled = canContinue
             continueButton.backgroundColor = canContinue ? activeColor : disabledColor
         }else if viewModel.currentStep == 5 {

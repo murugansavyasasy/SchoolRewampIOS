@@ -127,7 +127,7 @@ class ExamReportsVC: UIViewController, Datepicker {
             parameters: ["class_test_id":"0", "exam_date":date,"academic_year_id":"\(acodemicId ?? 0)"],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
-            isBaseUrl: true
+            isBaseUrl: false
         ) { [weak self] (result: Result<StaffClassTestResponse, Error>) in
             guard let self = self else { return }
             DispatchQueue.main.async {

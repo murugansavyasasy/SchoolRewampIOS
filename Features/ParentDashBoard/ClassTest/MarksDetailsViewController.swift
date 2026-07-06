@@ -41,7 +41,7 @@ class MarksDetailsViewController: UIViewController, UITableViewDataSource, UITab
             parameters: params,
             type: ApitTypeSringFile.GET,
             token: studentDetails?.access_token ?? "",
-            isBaseUrl: true
+            isBaseUrl: false
         ) {[weak self] (result:Result<ClassTestMarksResponse, Error>) in
             
             DispatchQueue.main.async {[weak self] in

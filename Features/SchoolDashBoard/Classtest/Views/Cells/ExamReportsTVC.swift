@@ -85,7 +85,7 @@ class ExamReportsTVC: UITableViewCell {
 
         tittleLbl.text = examName
         sendbyLbl.text = "Sent by: \(sentBy)"
-        standerdLbl.text = "standerd: \(sections.first?.class_name ?? "")"
+        standerdLbl.text = "Standard: \(sections.first?.class_name ?? "")"
 
         iconBtn.backgroundColor = iconTint.withAlphaComponent(0.15)
         iconBtn.setImage(UIImage(systemName: "doc.text.fill"), for: .normal)

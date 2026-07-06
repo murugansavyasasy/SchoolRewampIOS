@@ -42,6 +42,7 @@ class SelectDetailsViewController: UIViewController,UITextViewDelegate {
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        exameNameTextView.text = viewModel?.exameName
         registerKeyboardNotifications()
         tableView.reloadData()
     }
@@ -60,6 +61,7 @@ class SelectDetailsViewController: UIViewController,UITextViewDelegate {
     // MARK: - UITextViewDelegate
     public func textViewDidChange(_ textView: UITextView) {
         viewModel?.exameName = exameNameTextView.text ?? ""
+        viewModel?.onSelectionChanged?()
        
     }
     private func setupUI() {
