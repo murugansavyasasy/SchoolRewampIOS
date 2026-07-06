@@ -42,6 +42,7 @@ class SelectDetailsViewController: UIViewController,UITextViewDelegate {
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        exameNameTextView.text = viewModel?.exameName
         registerKeyboardNotifications()
         tableView.reloadData()
     }
@@ -60,6 +61,7 @@ class SelectDetailsViewController: UIViewController,UITextViewDelegate {
     // MARK: - UITextViewDelegate
     public func textViewDidChange(_ textView: UITextView) {
         viewModel?.exameName = exameNameTextView.text ?? ""
+        viewModel?.onSelectionChanged?()
        
     }
     private func setupUI() {
@@ -90,7 +92,7 @@ class SelectDetailsViewController: UIViewController,UITextViewDelegate {
         textView.textContainerInset = UIEdgeInsets(top: 10, left: 8, bottom: 8, right: 8)
         textView.adjustsFontForContentSizeCategory = true
         
-        textView.isScrollEnabled = false 
+        textView.isScrollEnabled = true
     }
     
     private func setupSectionsHeader() {
@@ -191,35 +193,18 @@ class SelectDetailsViewController: UIViewController,UITextViewDelegate {
     
     private func scrollToActiveTextField() {
         guard let activeField = self.view.firstResponders else { return }
-        self.view.layoutIfNeeded()   // force layout before measuring
 
         var targetRect = activeField.bounds
         if let textView = activeField as? UITextView,
            let selectedRange = textView.selectedTextRange {
             let caretRect = textView.caretRect(for: selectedRange.end)
             if caretRect.isFinite {
-                targetRect = caretRect.insetBy(dx: 0, dy: -8)
+                targetRect = caretRect.insetBy(dx: 0, dy: -12) // small breathing room around the line
             }
         }
 
-        let rect = activeField.convert(targetRect, to: self.tableView)
-        let visibleTop = self.tableView.contentOffset.y
-        let visibleHeight = self.tableView.bounds.height - self.tableView.contentInset.bottom - self.tableView.contentInset.top
-        let visibleBottom = visibleTop + visibleHeight
-        let topPadding: CGFloat = 100
-        let bottomPadding: CGFloat = 20
-
-        var newOffsetY = visibleTop
-        if rect.maxY + bottomPadding > visibleBottom {
-            newOffsetY = rect.maxY + bottomPadding - visibleHeight
-        }
-        if rect.minY - topPadding < newOffsetY {
-            newOffsetY = max(-self.tableView.contentInset.top, rect.minY - topPadding)
-        }
-        let maxOffsetY = max(-self.tableView.contentInset.top, self.tableView.contentSize.height - visibleHeight)
-        newOffsetY = min(newOffsetY, maxOffsetY)
-
-        self.tableView.setContentOffset(CGPoint(x: 0, y: newOffsetY), animated: true)
+        let rectInTableView = activeField.convert(targetRect, to: self.tableView)
+        self.tableView.scrollRectToVisible(rectInTableView, animated: true)
     }
     
 }
@@ -338,13 +323,12 @@ extension SelectDetailsViewController: UITableViewDelegate, UITableViewDataSourc
         
         cell.onHeightChanged = { [weak self] in
             guard let self = self else { return }
-            UIView.setAnimationsEnabled(false)
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
-            UIView.setAnimationsEnabled(true)
-            DispatchQueue.main.async {
-                self.scrollToActiveTextField()
+            UIView.performWithoutAnimation {
+                self.tableView.beginUpdates()
+                self.tableView.endUpdates()
+                self.tableView.layoutIfNeeded()   // <-- force layout to commit now, synchronously
             }
+            self.scrollToActiveTextField()
         }
     
         return cell

@@ -13,6 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExamRecordsVC" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
             <connections>
+                <outlet property="entermarksBtn" destination="UY1-mv-j8g" id="g1x-HH-ehn"/>
                 <outlet property="examNameLbl" destination="Kub-to-zcJ" id="EQa-Bm-sx6"/>
                 <outlet property="noDataImage" destination="T70-E8-K5Q" id="0oR-Z2-W3I"/>
                 <outlet property="noDataLabel" destination="dFT-L4-r70" id="RaV-ES-VzB"/>
@@ -122,7 +123,7 @@
                                 <action selector="enterMarks:" destination="-1" eventType="touchUpInside" id="0fN-ru-HYL"/>
                             </connections>
                         </button>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T70-E8-K5Q">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NohomeWork" translatesAutoresizingMaskIntoConstraints="NO" id="T70-E8-K5Q">
                             <rect key="frame" x="30" y="160.66666666666669" width="333" height="200"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="200" id="5wC-8R-oFh"/>
@@ -172,11 +173,12 @@
         </view>
     </objects>
     <resources>
+        <image name="NohomeWork" width="1024" height="768"/>
         <image name="arrowtriangle.down.fill" catalog="system" width="128" height="120"/>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <namedColor name="BackGroundClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

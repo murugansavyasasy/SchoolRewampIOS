@@ -72,7 +72,7 @@ class ParentClassTestVc: UIViewController, UITableViewDataSource, UITableViewDel
             url: ServiceUrl.exam_class_test_details_for_student,
             type: ApitTypeSringFile.GET,
             token: studentDetails?.access_token ?? "",
-            isBaseUrl: true
+            isBaseUrl: false
         ) {[weak self] (result:Result<ClassTestResponse, Error>) in
             
             DispatchQueue.main.async {[weak self] in

@@ -13,6 +13,7 @@ class ExamRecordsVC: UIViewController {
     @IBOutlet weak var examNameLbl: UILabel!
     @IBOutlet weak var noDataImage: UIImageView!
     @IBOutlet weak var noDataLabel: UILabel!
+    @IBOutlet weak var entermarksBtn: UIButton!
     
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var class_test_details: StaffSection?
@@ -122,6 +123,7 @@ class ExamRecordsVC: UIViewController {
         noDataImage.isHidden = !isEmpty
         noDataLabel.isHidden = !isEmpty
         tv.isHidden = isEmpty
+        entermarksBtn.isHidden = isEmpty
         
         noDataLabel.text = "No activities are available for this exam."
     }

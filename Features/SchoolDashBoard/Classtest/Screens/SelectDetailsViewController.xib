@@ -12,7 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectDetailsViewController" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
             <connections>
                 <outlet property="exameNameDefaultLbl" destination="8HR-fF-Q8T" id="kA6-US-UUJ"/>
-                <outlet property="exameNameTextView" destination="MoX-dT-CpE" id="RRt-Pb-IKD"/>
+                <outlet property="exameNameTextView" destination="MoX-dT-CpE" id="S8L-yB-ZaE"/>
                 <outlet property="sectionsContainerView" destination="KXV-BT-cHX" id="vWC-Ao-y5b"/>
                 <outlet property="sectionsStackView" destination="nDV-FA-HLh" id="mP8-ns-aZO"/>
                 <outlet property="tableView" destination="vla-0g-SEn" id="ZED-mG-2UY"/>
