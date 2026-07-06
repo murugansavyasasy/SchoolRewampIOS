@@ -361,7 +361,7 @@
                                     </constraints>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                     <state key="normal" title="❬  Back">
-                                        <color key="titleColor" red="0.29803921570000003" green="0.30196078430000001" blue="0.86274509799999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="titleColor" name="PrimeryColor"/>
                                     </state>
                                     <connections>
                                         <action selector="backButtonTapped:" destination="-1" eventType="touchUpInside" id="mZl-aK-ao8"/>
@@ -418,7 +418,7 @@
         <image name="chevron.forward" catalog="system" width="97" height="128"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <namedColor name="PrimeryColor">
-            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
