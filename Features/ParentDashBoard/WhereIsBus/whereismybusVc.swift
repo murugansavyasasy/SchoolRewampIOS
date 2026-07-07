@@ -16,6 +16,7 @@ class whereismybusVc: UIViewController {
     var liveBusdataDetails : [livebusData]?
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var loginasType : Int?
+    var busStatus  = ""
     override func viewDidLoad() {
         super.viewDidLoad()
 //        LocationPermissionManager.shared.checkLocationPermission()
@@ -40,7 +41,7 @@ class whereismybusVc: UIViewController {
 
     
     func GetBusDetails() {
-        APIService.shared.makeApi(url: ServiceUrl.get_vehicle_live_tracking_details, parameters: [:], type: ApitTypeSringFile.GET, token: (loginasType == 2 ? UserDefaultFileManager.get_child_Details()?.access_token : UserDefaultFileManager.get_staff_Details()?.access_token) ?? "", isBaseUrl: false) {[self] (result: Result<livebusDetails,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.get_vehicle_live_tracking_details, parameters: ["journey_type" : busStatus], type: ApitTypeSringFile.GET, token: (loginasType == 2 ? UserDefaultFileManager.get_child_Details()?.access_token : UserDefaultFileManager.get_staff_Details()?.access_token) ?? "", isBaseUrl: false) {[self] (result: Result<livebusDetails,Error>) in
             switch result{
             case .success(let Success):
                 DispatchQueue.main.async {[self] in

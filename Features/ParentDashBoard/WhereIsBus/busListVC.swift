@@ -108,9 +108,10 @@ class busListVC: UIViewController {
 // MARK: - UITableViewDataSource, UITableViewDelegate
 extension busListVC: UITableViewDataSource, UITableViewDelegate {
     
-    private func findMyBus() {
+    private func findMyBus(busStaus : String) {
         let vc = whereismybusVc(nibName: nil, bundle: nil)
         vc.loginasType = loginasType
+        vc.busStatus = busStaus
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
         
@@ -122,18 +123,22 @@ extension busListVC: UITableViewDataSource, UITableViewDelegate {
         }
         
         if stoppingPoint.journey_type == "DROPPING" {
-            let vc = BusTrakingVC(nibName: nil, bundle: nil)
-            vc.isPickingRoute = false
-            vc.busnumber = routeDataList[index].vehicle_reg_no ?? ""
-            vc.destinationLatitude = myLate
-            vc.destinationLongitude = myLong
-            vc.stops = stoppingPoint.stops ?? []
-            vc.maproutUrl = routeDataList[index].map_url_schoolchimes ?? ""
-            vc.vehicleId =  routeDataList[index].vehicle_reg_no ?? ""
-            vc.routeId = routeDataList[index].route_id
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
-
+            if !is_wonBustracking {
+                findMyBus(busStaus: "DROPPING")
+                
+            }else{
+                let vc = BusTrakingVC(nibName: nil, bundle: nil)
+                vc.isPickingRoute = false
+                vc.busnumber = routeDataList[index].vehicle_reg_no ?? ""
+                vc.destinationLatitude = myLate
+                vc.destinationLongitude = myLong
+                vc.stops = stoppingPoint.stops ?? []
+                vc.maproutUrl = routeDataList[index].map_url_schoolchimes ?? ""
+                vc.vehicleId =  routeDataList[index].vehicle_reg_no ?? ""
+                vc.routeId = routeDataList[index].route_id
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }
         }
     }
     
@@ -143,16 +148,20 @@ extension busListVC: UITableViewDataSource, UITableViewDelegate {
            }
 
            if stoppingPoint.journey_type == "PICKING" {
-               let vc = BusTrakingVC(nibName: nil, bundle: nil)
-               vc.isPickingRoute = true
-               vc.busnumber = routeDataList[index].vehicle_reg_no ?? ""
-               vc.stops = stoppingPoint.stops ?? []
-               vc.vehicleId = routeDataList[index].vehicle_reg_no ?? ""
-               vc.routeId = routeDataList[index].route_id
-               vc.maproutUrl = routeDataList[index].map_url_schoolchimes ?? ""
-               vc.modalPresentationStyle = .fullScreen
-               present(vc, animated: true)
-
+               if !is_wonBustracking {
+                   findMyBus(busStaus: "PICKING")
+                   
+               }else{
+                   let vc = BusTrakingVC(nibName: nil, bundle: nil)
+                   vc.isPickingRoute = true
+                   vc.busnumber = routeDataList[index].vehicle_reg_no ?? ""
+                   vc.stops = stoppingPoint.stops ?? []
+                   vc.vehicleId = routeDataList[index].vehicle_reg_no ?? ""
+                   vc.routeId = routeDataList[index].route_id
+                   vc.maproutUrl = routeDataList[index].map_url_schoolchimes ?? ""
+                   vc.modalPresentationStyle = .fullScreen
+                   present(vc, animated: true)
+               }
            }
        
     }
@@ -218,24 +227,22 @@ extension busListVC: UITableViewDataSource, UITableViewDelegate {
             }
         }
         
+        cell.findMypickBusBtnname.isHidden = false
+        cell.findMyDropBusBtnName.isHidden = false
+        cell.findMyBusButton.isHidden = true
+        
         if is_wonBustracking{
-            cell.findMypickBusBtnname.isHidden = false
-            cell.findMyDropBusBtnName.isHidden = false
-            cell.findMyBusButton.isHidden = true
             cell.pickupHeaderContainer.isHidden = false
             cell.dropHeaderContainer.isHidden = false
         }else{
-            cell.findMypickBusBtnname.isHidden = true
-            cell.findMyDropBusBtnName.isHidden = true
-            cell.findMyBusButton.isHidden = false
             cell.pickupHeaderContainer.isHidden = true
             cell.dropHeaderContainer.isHidden = true
         }
         
-        cell.onFindMyBus = { [weak self] in
-            guard let self = self else { return }
-            self.findMyBus()
-        }
+//        cell.onFindMyBus = { [weak self] in
+//            guard let self = self else { return }
+//            self.findMyBus()
+//        }
         cell.onFindPickupMyBus = { [weak self] index in
             guard let self = self else { return }
             self.pickfunction(index: index)

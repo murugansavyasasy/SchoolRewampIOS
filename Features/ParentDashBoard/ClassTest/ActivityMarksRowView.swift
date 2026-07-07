@@ -9,6 +9,7 @@ import UIKit
 
 class ActivityMarksRowView: UIView {
     
+    @IBOutlet weak var minMarkLbl: UILabel!
     @IBOutlet weak var indexLabel: UILabel!
     @IBOutlet weak var activityNameLabel: UILabel!
     @IBOutlet weak var sessionPillView: UIView!
@@ -38,7 +39,7 @@ class ActivityMarksRowView: UIView {
         activityNameLabel.text = activity.activityName
         dateLabel.text = activity.examDate
         syllabusLabel.text = activity.syllabus
-        
+        minMarkLbl.text =  "Min : " + (activity.minMark ?? "")
         // Format max mark
         if let maxDouble = Double(activity.maxMark ?? "") {
             maxMarkLabel.text = String(format: "%.0f", maxDouble)
@@ -68,16 +69,16 @@ class ActivityMarksRowView: UIView {
                     markUnderlineView.backgroundColor = UIColor(red: 239/255, green: 68/255, blue: 68/255, alpha: 1.0)
                 }
             } else {
-                scoredMarkLabel.text = "--"
-                scoredMarkLabel.textColor = UIColor(red: 142/255, green: 154/255, blue: 168/255, alpha: 1.0)
+                scoredMarkLabel.text = "AB"
+                scoredMarkLabel.textColor = UIColor(red: 239/255, green: 68/255, blue: 68/255, alpha: 1.0)
                 checkmarkImageView.image = UIImage(systemName: "xmark.circle.fill")
                 checkmarkImageView.tintColor = UIColor(red: 239/255, green: 68/255, blue: 68/255, alpha: 1.0)
                 markUnderlineView.backgroundColor = UIColor(red: 239/255, green: 68/255, blue: 68/255, alpha: 1.0)
             }
         } else {
             // Absent/Not present: show "--"
-            scoredMarkLabel.text = "--"
-            scoredMarkLabel.textColor = UIColor(red: 142/255, green: 154/255, blue: 168/255, alpha: 1.0)
+            scoredMarkLabel.text = "AB"
+            scoredMarkLabel.textColor = UIColor(red: 239/255, green: 68/255, blue: 68/255, alpha: 1.0)
             checkmarkImageView.image = UIImage(systemName: "xmark.circle.fill")
             checkmarkImageView.tintColor = UIColor(red: 239/255, green: 68/255, blue: 68/255, alpha: 1.0)
             markUnderlineView.backgroundColor = UIColor(red: 239/255, green: 68/255, blue: 68/255, alpha: 1.0)

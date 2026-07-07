@@ -967,6 +967,9 @@ class RecipientVc: UIViewController{
             selectStandardDropDown.isHidden = true
             tv.isHidden = true
             searchBtn.isHidden = true
+            searchbar.isHidden = true
+            searchBtn.isSelected = false
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         case recipeint_tabBarName.Group:
             target_type = TargetTypes.group
             circular_types =  circular_type.group
@@ -974,6 +977,9 @@ class RecipientVc: UIViewController{
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
             searchBtn.isHidden = false
+            searchbar.isHidden = true
+            searchBtn.isSelected = false
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         case recipeint_tabBarName.Standard:
             target_type = TargetTypes.standard
             circular_types =  circular_type.standard
@@ -981,6 +987,9 @@ class RecipientVc: UIViewController{
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
             searchBtn.isHidden = true
+            searchbar.isHidden = true
+            searchBtn.isSelected = false
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         case recipeint_tabBarName.Section_Student:
             target_type = TargetTypes.section
             circular_types =  circular_type.section
@@ -991,6 +1000,9 @@ class RecipientVc: UIViewController{
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
             searchBtn.isHidden = true
+            searchbar.isHidden = true
+            searchBtn.isSelected = false
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         case recipeint_tabBarName.Staff:
             target_type = TargetTypes.staff
             circular_types =  circular_type.staff
@@ -998,6 +1010,9 @@ class RecipientVc: UIViewController{
             tv.isHidden = false
             selectStandardDropDown.isHidden = true
             searchBtn.isHidden = false
+            searchbar.isHidden = true
+            searchBtn.isSelected = false
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         default:
             print("Unhandled tab selection: \(selectedTitle)")
         }

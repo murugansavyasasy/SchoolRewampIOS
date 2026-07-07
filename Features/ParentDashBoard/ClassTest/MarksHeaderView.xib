@@ -181,7 +181,7 @@
                                                         <constraint firstAttribute="width" constant="20" id="nyh-Bd-qh6"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" P - Well done! Continue to shine brightly (Pass)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQ7-1U-LAy">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" P - Well done! Continue to shine brightly (Pass)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQ7-1U-LAy">
                                                     <rect key="frame" x="25" y="0.0" width="286" height="21.333333333333332"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                                     <nil key="textColor"/>
@@ -200,7 +200,7 @@
                                                         <constraint firstAttribute="height" constant="21.333333333333332" id="sTT-jy-Qx3"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" F -  Keep learning, keep growing. (Fail)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izN-GV-Xl0">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" F -  Keep learning, keep growing. (Fail)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izN-GV-Xl0">
                                                     <rect key="frame" x="25" y="0.0" width="286" height="21.333333333333332"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                                     <nil key="textColor"/>
@@ -211,17 +211,17 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Azn-Cd-JTW">
                                             <rect key="frame" x="0.0" y="138.33333333333334" width="311" height="15.666666666666657"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" - -" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g30-VK-yJT">
-                                                    <rect key="frame" x="0.0" y="0.0" width="20" height="15.666666666666666"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AB" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g30-VK-yJT">
+                                                    <rect key="frame" x="0.0" y="0.0" width="25" height="15.666666666666666"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="20" id="zbZ-hx-Bqe"/>
+                                                        <constraint firstAttribute="width" constant="25" id="zbZ-hx-Bqe"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="12"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="11"/>
                                                     <color key="textColor" red="0.96862745100000003" green="0.16078431369999999" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" A - Absent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="npp-Tq-aPp">
-                                                    <rect key="frame" x="25" y="0.0" width="286" height="15.666666666666666"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A - Absent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="npp-Tq-aPp">
+                                                    <rect key="frame" x="30" y="0.0" width="281" height="15.666666666666666"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                                     <color key="textColor" red="0.96862745100000003" green="0.16078431369999999" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <nil key="highlightedColor"/>
