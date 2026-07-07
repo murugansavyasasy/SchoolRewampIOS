@@ -129,9 +129,30 @@ class CreateClassTestVc: UIViewController {
         BackDismissImg.addGestureRecognizer(backDis)
     }
     
-    @objc func backDismiss(){
-        self.dismiss(animated: true, completion: nil)
+    @objc func backDismiss() {
+        if viewModel.currentStep > 1 {
+            showDiscardAlert()
+        } else {
+            dismiss(animated: true)
+        }
     }
+    
+    private func showDiscardAlert() {
+        let alert = UIAlertController(
+            title: "Discard Changes?",
+            message: "Are you sure you want to discard your changes?",
+            preferredStyle: .alert
+        )
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+        alert.addAction(UIAlertAction(title: "Discard", style: .destructive) { _ in
+            self.dismiss(animated: true)
+        })
+
+        present(alert, animated: true)
+    }
+    
     private func configureCircle(_ view: UIView) {
         view.layer.cornerRadius = 16
         view.layer.borderWidth = 1.5
