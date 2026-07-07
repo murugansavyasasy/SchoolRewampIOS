@@ -18,7 +18,7 @@ public final class ReviewSubjectTableViewCell: UITableViewCell {
     public var onRemoveTestTapped: ((Int) -> Void)?
     
     private var config: SubjectExamConfig?
-    private let activeColor = UIColor(red: 0.298, green: 0.302, blue: 0.863, alpha: 1.0) // #4C4DDC
+    private let activeColor = UIColor.primery
     
     // MARK: - Lifecycle
     public override func awakeFromNib() {
@@ -74,7 +74,7 @@ public final class ReviewSubjectTableViewCell: UITableViewCell {
         avatarLabel.text = initial
         
         let count = config.tests.count
-        testCountLabel.text = count == 1 ? "1 test" : "\(count) tests"
+        testCountLabel.text = count == 1 ? "1 Activity" : "\(count) Activities"
         
         // Compute height constraint synchronously so parent table view sizes correctly during reloadData
         testsTableViewHeightConstraint.constant = CGFloat(count) * 185.0
