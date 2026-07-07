@@ -105,7 +105,7 @@ class MarksDetailsViewController: UIViewController, UITableViewDataSource, UITab
         }
         
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 220
+        tableView.estimatedRowHeight = 280
     }
     
     private func resizeHeaderView() {

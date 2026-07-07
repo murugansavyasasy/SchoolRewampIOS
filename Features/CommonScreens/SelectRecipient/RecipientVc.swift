@@ -997,7 +997,7 @@ class RecipientVc: UIViewController{
             getStaffListAPI()
             tv.isHidden = false
             selectStandardDropDown.isHidden = true
-            searchBtn.isHidden = true
+            searchBtn.isHidden = false
         default:
             print("Unhandled tab selection: \(selectedTitle)")
         }
@@ -1187,8 +1187,9 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         switch cv_itemsarry[segment_selected_index ?? 0] {
 
         case recipeint_tabBarName.Group:
-            let data = isSearching ? filteredGroupDetails : (groupDetails ?? [])
-            return data?.isEmpty ?? true ? 0 : (data?.count ?? 0 + 1)
+            let data = isSearching ? filteredGroupDetails : groupDetails
+             let count = data?.count ?? 0
+             return count == 0 ? 0 : count + 1
             
         case recipeint_tabBarName.Standard:
             let count = standardDetails?.count ?? 0
@@ -1199,8 +1200,9 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             return count == 0 ? 0 : count + 1
 
         case recipeint_tabBarName.Staff:
-            let data = isSearching ? filteredStaffDetails : (staffDetails ?? [])
-            return data?.isEmpty ?? true ? 0 : (data?.count ?? 0 + 1)
+            let data = isSearching ? filteredStaffDetails : staffDetails
+               let count = data?.count ?? 0
+               return count == 0 ? 0 : count + 1
 
         default:
             return 0
@@ -1293,11 +1295,33 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         let dataIndex = indexPath.row - 1
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
-            if var item = filteredGroupDetails?[dataIndex] {
-                item.isSelect?.toggle()
-                filteredGroupDetails?[dataIndex].isSelect = item.isSelect
-                updateSelectionArray(id: item.id, isSelected: item.isSelect)
-            }
+//            if var item = filteredGroupDetails?[dataIndex] {
+//                item.isSelect?.toggle()
+//                filteredGroupDetails?[dataIndex].isSelect = item.isSelect
+//                updateSelectionArray(id: item.id, isSelected: item.isSelect)
+//            }
+            
+            let groups = isSearching ? filteredGroupDetails : groupDetails
+
+              if var item = groups?[dataIndex] {
+
+                  item.isSelect?.toggle()
+
+                  // Update original array
+                  if let index = groupDetails?.firstIndex(where: { $0.id == item.id }) {
+                      groupDetails?[index].isSelect = item.isSelect
+                  }
+
+                  // Update filtered array
+                  if let index = filteredGroupDetails?.firstIndex(where: { $0.id == item.id }) {
+                      filteredGroupDetails?[index].isSelect = item.isSelect
+                  }
+
+                  updateSelectionArray(id: item.id, isSelected: item.isSelect)
+
+                  tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+                  tableView.reloadRows(at: [indexPath], with: .none)
+              }
         case recipeint_tabBarName.Standard:
             if var item = standardDetails?[dataIndex] {
                 item.isSelect?.toggle()
@@ -1340,18 +1364,25 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             
         case recipeint_tabBarName.Staff:
 
-            if var item = filteredStaffDetails?[dataIndex] {
+            let staffs = isSearching ? filteredStaffDetails : staffDetails
 
-                item.isSelect?.toggle()
-                filteredStaffDetails?[dataIndex].isSelect = item.isSelect
+               if var item = staffs?[dataIndex] {
 
-                if let id = item.id,
-                   let index = staffDetails?.firstIndex(where: { $0.id == id }) {
-                    staffDetails?[index].isSelect = item.isSelect
-                }
+                   item.isSelect?.toggle()
 
-                updateSelectionArray(id: item.id, isSelected: item.isSelect)
-            }
+                   if let index = staffDetails?.firstIndex(where: { $0.id == item.id }) {
+                       staffDetails?[index].isSelect = item.isSelect
+                   }
+
+                   if let index = filteredStaffDetails?.firstIndex(where: { $0.id == item.id }) {
+                       filteredStaffDetails?[index].isSelect = item.isSelect
+                   }
+
+                   updateSelectionArray(id: item.id, isSelected: item.isSelect)
+
+                   tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+                   tableView.reloadRows(at: [indexPath], with: .none)
+               }
         default:
             break
         }
@@ -1376,18 +1407,23 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     func isAllSelected() -> Bool {
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
-            let total = isSearching
-                ? (filteredGroupDetails?.count ?? 0)
-                : (groupDetails?.count ?? 0)
+            let visibleItems = isSearching
+                 ? (filteredGroupDetails ?? [])
+                 : (groupDetails ?? [])
 
-            return total > 0 && array_selectedId.count == total
+             return !visibleItems.isEmpty &&
+                    visibleItems.allSatisfy { $0.isSelect == true }
         case recipeint_tabBarName.Standard:
             return standardDetails?.allSatisfy { $0.isSelect == true } ?? false
         case recipeint_tabBarName.Section_Student:
             return sectionsDetails?.allSatisfy { $0.isSelect == true } ?? false
         case recipeint_tabBarName.Staff:
-            let data = isSearching ? (filteredStaffDetails ?? []) : (staffDetails ?? [])
-              return !data.isEmpty && data.allSatisfy { $0.isSelect == true }
+            let visibleItems = isSearching
+                       ? (filteredStaffDetails ?? [])
+                       : (staffDetails ?? [])
+
+                   return !visibleItems.isEmpty &&
+                          visibleItems.allSatisfy { $0.isSelect == true }
         default:
             return false
         }
