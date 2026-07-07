@@ -20,9 +20,10 @@ class MarksDetailsViewController: UIViewController, UITableViewDataSource, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        get_class_tests_Api()
         setupTableView()
         setupNavigationBar()
-        get_class_tests_Api()
+      
     }
     
     override func viewDidLayoutSubviews() {
@@ -53,6 +54,11 @@ class MarksDetailsViewController: UIViewController, UITableViewDataSource, UITab
                     
                     if success.status == true {
                         self.classTest = success.data?.first
+                        if let exam = classTest {
+                            let header = MarksHeaderView.loadFromNib()
+                            header.configure(with: exam)
+                            tableView.tableHeaderView = header
+                        }
                         tableView.reloadData()
                     }else{
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
