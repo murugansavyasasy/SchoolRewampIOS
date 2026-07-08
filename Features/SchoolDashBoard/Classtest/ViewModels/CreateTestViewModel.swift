@@ -538,10 +538,11 @@ public final class CreateTestViewModel {
         }
             
             APIService.shared.makeApi(
-                url: isPublished ? ServiceUrl.exam_api_exam_test_publish_marks: ServiceUrl.exam_api_exam_test_upload_marks,
+                url: ServiceUrl.exam_api_exam_test_upload_marks,
                 parameters: [
                     "class_test_id": class_test_id ?? "",
                     "section_id": section_id ?? "",
+                    "is_publish":isPublished,
                     "subjects": Array(subjectsDict.values)
                 ],
                 type: ApitTypeSringFile.POST,
