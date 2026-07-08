@@ -10,6 +10,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var listLableView: UITableView!
     @IBOutlet weak var saveMarksBtn: UIButton!
+    @IBOutlet weak var publishMarksBtn: UIButton!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var studentNameLbl: UILabel!
     @IBOutlet weak var errorDeclarationLbl: UILabel!
@@ -32,22 +33,24 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     var selectedFilters: [(type: String, sortValue: String)] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-        titleLbl.configureAsBackTitle(
-            firstLine: MenuStringFile.selectedMenuName,
-            secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
-        )
-        
+        publishMarksBtn.isHidden = !uploadTest
         if uploadTest {
             allStudents = studentRecords
+            titleLbl.text = MenuStringFile.selectedMenuName
             setupColumnsFromGetMarksResponse()
         } else {
             Get_Marks(parameters: payload ?? [:])
+            titleLbl.configureAsBackTitle(
+                firstLine: MenuStringFile.selectedMenuName,
+                secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
+            )
         }
         
         setupHeaderCollectionView()
         setupTableView()
         setupKeyboardObservers()
         saveMarksBtn.layer.cornerRadius = 8
+        publishMarksBtn.layer.cornerRadius = 8
         searchBar.searchTextField.backgroundColor = .systemGray5
         searchBar.layer.cornerRadius = 8
         searchBar.searchTextField.layer.masksToBounds = true
@@ -377,7 +380,6 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     private func setupTableView() {
         listLableView.dataSource = self
         listLableView.delegate = self
-        listLableView.showsVerticalScrollIndicator = true
         listLableView.register(UINib(nibName: "MarksTableViewCell", bundle: nil), forCellReuseIdentifier: "MarksTableViewCell")
     }
     
@@ -400,13 +402,32 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     }
     
     @IBAction func saveAllMarks(_ sender: UIButton) {
-        
+        if sender.tag == 1 {
+            let emptyStudentCount = studentRecords.filter { student in
+                (student.marks ?? []).contains { subject in
+                    (subject.activities ?? []).contains {
+                        ($0.mark ?? "")
+                            .trimmingCharacters(in: .whitespacesAndNewlines)
+                            .isEmpty
+                    }
+                }
+            }.count
+
+            if emptyStudentCount > 0 {
+                CustomAlert().showAlert(
+                    title:"",
+                    message:AlertstringFile.fillAllMarksBeforePublish.translated(),
+                    on: self
+                )
+                return
+            }
+        }
         if uploadTest{
                 CustomAlert().showAlertCancel(
-                    title: AlertstringFile.Confirm,
-                    message: AlertstringFile.uploadMark,
-                    actionLbl1: AlertstringFile.save,
-                    actionLbl2: AlertstringFile.Cancel,
+                    title: AlertstringFile.Confirm.translated(),
+                    message:sender.tag == 1 ? AlertstringFile.publishMark.translated(): AlertstringFile.uploadMark.translated(),
+                    actionLbl1: sender.tag == 1 ? AlertstringFile.puplish.translated(): AlertstringFile.save.translated(),
+                    actionLbl2: AlertstringFile.Cancel.translated(),
                     on: self,
                     onOk: {
 
@@ -415,7 +436,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                         self.showActivityLoader()
 
                         self.viewModel?.createSaveRequest(
-                            studentRecords: self.studentRecords
+                            studentRecords: self.studentRecords, isPublished: sender.tag == 1
                         ) { [weak self] result in
 
                             print("createSaveRequest called")
@@ -593,7 +614,7 @@ extension EnterMarkVC {
         let map = getReasonCounts()
         guard !map.isEmpty else {
             errorDeclarationLbl.isHidden = true
-            return "No issues found."
+            return "No issues found.".translated()
         }
         errorDeclarationLbl.isHidden = false
         let total = map.values.reduce(0,+)
@@ -603,7 +624,7 @@ extension EnterMarkVC {
             .map { "\($0.value) \($0.key)" }
             .joined(separator: ", ")
         
-        return "Found \(total) issue(s): " + details
+        return "Found \(total) issue(s): " + details.translated()
     }
 }
 // MARK: - Header CollectionView DataSource & Delegate
@@ -803,33 +824,45 @@ extension EnterMarkVC {
         let colWidth = getColumnWidth(column: column)
 
         let visibleStart = cell.marksCollectionView.contentOffset.x
-        let visibleEnd = visibleStart + cell.marksCollectionView.bounds.width
-
+        let visibleWidth = cell.marksCollectionView.bounds.width
+        let visibleEnd = visibleStart + visibleWidth
         var newOffsetX = visibleStart
 
-        // 👉 Scroll RIGHT (next column)
-        if colX + colWidth > visibleEnd {
-            newOffsetX += colWidth
+        if colX < visibleStart {
+            newOffsetX = colX
+        } else if colX + colWidth > visibleEnd {
+            newOffsetX = colX + colWidth - visibleWidth
         }
 
-        // 👉 Scroll LEFT (previous column)
-        else if colX < visibleStart {
-            newOffsetX -= colWidth
+        let maxOffsetX = max(0, cell.marksCollectionView.contentSize.width - visibleWidth)
+        newOffsetX = min(max(0, newOffsetX), maxOffsetX)
+
+        let offsetChanged = abs(newOffsetX - visibleStart) > 0.5
+
+        if offsetChanged {
+            cell.marksCollectionView.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
+            headerCollectionview.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
         }
-
-        newOffsetX = max(0, newOffsetX)
-
-        cell.marksCollectionView.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
-        headerCollectionview.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
 
         let itemPath = IndexPath(item: column, section: 0)
         cell.marksCollectionView.layoutIfNeeded()
-
-        if let marksCell = cell.marksCollectionView.cellForItem(at: itemPath) as? MarksCell {
-            marksCell.markTxt.becomeFirstResponder()
+        focusCell(in: cell.marksCollectionView, at: itemPath)
+    }
+    private func focusCell(in collectionView: UICollectionView, at itemPath: IndexPath) {
+        DispatchQueue.main.async {
+            collectionView.layoutIfNeeded()
+            DispatchQueue.main.async {
+                if let marksCell = collectionView.cellForItem(at: itemPath) as? MarksCell {
+                    marksCell.markTxt.becomeFirstResponder()
+                } else {
+                    collectionView.scrollToItem(at: itemPath, at: .centeredHorizontally, animated: false)
+                    DispatchQueue.main.async {
+                        (collectionView.cellForItem(at: itemPath) as? MarksCell)?.markTxt.becomeFirstResponder()
+                    }
+                }
+            }
         }
     }
-
     private func columnX(_ column: Int) -> CGFloat {
         var x: CGFloat = 0
         for i in 0..<column {
@@ -874,7 +907,6 @@ extension EnterMarkVC {
             print("⚠️ Already at first column")
         }
     }
-    
     private func getColumnWidth(column: Int) -> CGFloat {
         guard column < subjectColumns.count else { return 110 }
         

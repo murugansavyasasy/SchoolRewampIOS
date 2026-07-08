@@ -35,54 +35,76 @@ class MarksCell: UICollectionViewCell {
         markTxt.placeholder = "--"
         markTxt.font = .systemFont(ofSize: 15)
         markTxt.keyboardType = .decimalPad
-        let toolbar = UIToolbar()
-        toolbar.isTranslucent = false
-        toolbar.barTintColor = .systemGray6
 
-        // 🔒 Disable toolbar animations (iOS 16+)
-        toolbar.layer.actions = [
-            "position": NSNull(),
-            "bounds": NSNull(),
-            "frame": NSNull()
+        markTxt.inputAccessoryView = buildAccessoryView()
+    }
+
+    private func buildAccessoryView() -> UIView {
+
+        let container = UIView()
+        container.frame = CGRect(x: 0,
+                                 y: 0,
+                                 width: UIScreen.main.bounds.width,
+                                 height: 50)
+        container.backgroundColor = .systemGray6
+
+        let hairline = UIView()
+        hairline.backgroundColor = .separator
+        hairline.translatesAutoresizingMaskIntoConstraints = false
+
+        container.addSubview(hairline)
+
+        let buttons: [UIButton] = [
+            createKeyButton(title: "AB", action: #selector(abTapped)),
+            createKeyButton(title: "N/A", action: #selector(naTapped)),
+            createKeyButton(imageName: "arrow.up", action: #selector(upTapped)),
+            createKeyButton(imageName: "arrow.down", action: #selector(downTapped)),
+            createKeyButton(imageName: "arrow.left", action: #selector(leftTapped)),
+            createKeyButton(imageName: "arrow.right", action: #selector(rightTapped))
         ]
 
-        toolbar.sizeToFit()
+        let leftStack = UIStackView(arrangedSubviews: buttons)
+        leftStack.axis = .horizontal
+        leftStack.spacing = 12
+        leftStack.alignment = .center
+        leftStack.distribution = .fill
 
-        let abBtn    = UIBarButtonItem(customView: createKeyButton(title: "AB",
-                                                                  action: #selector(abTapped)))
-        let upBtn    = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.up",
-                                                                  action: #selector(upTapped)))
-        let downBtn  = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.down",
-                                                                  action: #selector(downTapped)))
-        let leftBtn  = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.left",
-                                                                  action: #selector(leftTapped)))
-        let rightBtn = UIBarButtonItem(customView: createKeyButton(imageName: "arrow.right",
-                                                                  action: #selector(rightTapped)))
+        let doneButton = UIButton(type: .system)
+        doneButton.setTitle("Done", for: .normal)
+        doneButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
+        doneButton.addTarget(markTxt,
+                             action: #selector(UITextField.resignFirstResponder),
+                             for: .touchUpInside)
 
-        let doneBtn = UIBarButtonItem(title: "Done",
-                                     style: .plain,
-                                     target: markTxt,
-                                     action: #selector(UITextField.resignFirstResponder))
+        let spacer = UIView()
 
-        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
-                                  target: nil,
-                                  action: nil)
+        let stack = UIStackView(arrangedSubviews: [
+            leftStack,
+            spacer,
+            doneButton
+        ])
 
-        toolbar.items = [
-            abBtn,
-            space(6),
-            upBtn,
-            space(6),
-            downBtn,
-            space(6),
-            leftBtn,
-            space(6),
-            rightBtn,
-            flex,
-            doneBtn
-        ]
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .horizontal
+        stack.alignment = .center
 
-        markTxt.inputAccessoryView = toolbar
+        container.addSubview(stack)
+
+        NSLayoutConstraint.activate([
+
+            hairline.topAnchor.constraint(equalTo: container.topAnchor),
+            hairline.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            hairline.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            hairline.heightAnchor.constraint(equalToConstant: 0.5),
+
+            stack.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 12),
+            stack.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -12),
+            stack.topAnchor.constraint(equalTo: container.topAnchor),
+            stack.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+
+        ])
+
+        return container
     }
 
 
@@ -101,38 +123,57 @@ class MarksCell: UICollectionViewCell {
         action: Selector
     ) -> UIButton {
 
-        let button = UIButton(type: .custom)
-        let width: CGFloat = 44
-        let height: CGFloat = 36
-        button.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        var config = UIButton.Configuration.filled()
 
         if let title = title {
-            button.setTitle(title, for: .normal)
-            button.backgroundColor = .systemOrange
-            button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
-        } else if let imageName = imageName {
-            let config = UIImage.SymbolConfiguration(pointSize: 15,
-                                                     weight: .semibold,
-                                                     scale: .medium)
-            let image = UIImage(systemName: imageName,
-                                withConfiguration: config)
-            button.setImage(image, for: .normal)
-            button.backgroundColor = .systemBlue
+
+            config.title = title
+            config.baseBackgroundColor = .systemOrange
+            config.baseForegroundColor = .white
+
+            config.cornerStyle = .medium
+
+            config.contentInsets = NSDirectionalEdgeInsets(
+                top: 8,
+                leading: 14,
+                bottom: 8,
+                trailing: 14
+            )
+
+        } else {
+
+            config.image = UIImage(
+                systemName: imageName ?? ""
+            )
+
+            config.baseBackgroundColor = .systemBlue
+            config.baseForegroundColor = .white
+
+            config.cornerStyle = .capsule
+
+            config.preferredSymbolConfigurationForImage =
+                UIImage.SymbolConfiguration(
+                    pointSize: 15,
+                    weight: .bold
+                )
+
+            config.contentInsets = NSDirectionalEdgeInsets(
+                top: 8,
+                leading: 8,
+                bottom: 8,
+                trailing: 8
+            )
         }
 
-        button.tintColor = .white
-        button.layer.cornerRadius = 8
-        button.layer.masksToBounds = true
-        
-        button.adjustsImageWhenHighlighted = false
-        button.adjustsImageWhenDisabled = false
-        button.showsTouchWhenHighlighted = false
-        button.layer.actions = [
-            "backgroundColor": NSNull(),
-            "transform": NSNull(),
-            "bounds": NSNull(),
-            "position": NSNull()
-        ]
+        let button = UIButton(configuration: config)
+
+        if title == nil {
+
+            NSLayoutConstraint.activate([
+                button.widthAnchor.constraint(equalToConstant: 36),
+                button.heightAnchor.constraint(equalToConstant: 36)
+            ])
+        }
 
         button.addTarget(self,
                          action: action,
@@ -390,6 +431,16 @@ extension MarksCell {
                              column: columnIndex,
                              value: "AB",
                              reson: "Absent",
+                             subjectName: subjectName)
+        parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex)
+    }
+    @objc private func naTapped() {
+        markTxt.text = "N/A"
+        let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
+        delegate?.updateMark(row: rowIndex,
+                             column: columnIndex,
+                             value: "N/A",
+                             reson: "Not Applicable",
                              subjectName: subjectName)
         parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex)
     }

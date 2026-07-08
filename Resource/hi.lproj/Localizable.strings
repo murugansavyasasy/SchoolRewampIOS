@@ -949,6 +949,9 @@
 "Are you sure you want to send this Attachment?" = "क्या आप यह संलग्नक भेजना चाहते हैं?";
 "Are you sure you want to Delete?" = "क्या आप इसे हटाना चाहते हैं?";
 "Are you sure you want to Save?" = "क्या आप इसे सहेजना चाहते हैं?";
+"Publish" = "प्रकाशित करें";
+"fillAllMarksBeforePublish" = "कृपया प्रकाशित करने से पहले सभी छात्रों के सभी अंक भरें।";
+"publishMark" = "क्या आप वाकई अंक प्रकाशित करना चाहते हैं?";
 "Are you sure you want to send this Notice?" = "क्या आप यह सूचना भेजना चाहते हैं?";
 "Are you sure you want to send this Emergency voice message? note: this will send to all your contacts" = "क्या आप यह आपातकालीन वॉइस संदेश भेजना चाहते हैं? नोट: यह आपके सभी संपर्कों को भेजा जाएगा";
 "Are you sure want to " = "क्या आप ";
@@ -1170,6 +1173,16 @@
 "Wrong Ans " = "गलत उत्तर ";
 "Not Ans " = "उत्तर नहीं दिया ";
 "Completed at: " = "पूर्ण किया गया: ";
+"Save All Marks" = "सभी अंक सहेजें";
+"Publish All Marks" = "सभी अंक प्रकाशित करें";
+"Review & Edit Marks" = "अंकों की समीक्षा करें और संपादित करें";
+"Verify the data and make any necessary corrections." = "डेटा की जाँच करें और आवश्यक सुधार करें।";
+"Note: Use \"AB\" for absent students and \"N/A\" for marks that are not applicable." = "नोट: अनुपस्थित छात्रों के लिए \"AB\" और लागू न होने वाले अंकों के लिए \"N/A\" का उपयोग करें।";
+"⚠️ AI can make mistakes. Please check properly before submitting." = "⚠️ AI से गलती हो सकती है। सबमिट करने से पहले कृपया जाँच लें।";
+
+"Not Applicable" = "लागू नहीं";
+"Absent" = "अनुपस्थित";
+"Maximum mark exceeded" = "अधिकतम अंक से अधिक";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

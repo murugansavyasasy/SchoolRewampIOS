@@ -942,6 +942,9 @@
 "Are you sure you want to send this Attachment?" = "คุณแน่ใจหรือไม่ว่าต้องการส่งไฟล์แนบนี้?";
 "Are you sure you want to Delete?" = "คุณแน่ใจหรือไม่ว่าต้องการลบ?";
 "Are you sure you want to Save?" = "คุณแน่ใจหรือไม่ว่าต้องการบันทึก?";
+"Publish" = "เผยแพร่";
+"Are you sure you want to publish?" = "คุณแน่ใจหรือไม่ว่าต้องการเผยแพร่คะแนน?";
+"fillAllMarksBeforePublish" = "กรุณากรอกคะแนนของนักเรียนทุกคนให้ครบก่อนเผยแพร่";
 "Are you sure you want to send this Notice?" = "คุณแน่ใจหรือไม่ว่าต้องการส่งประกาศนี้?";
 "Are you sure you want to send this Emergency voice message? note: this will send to all your contacts" = "คุณแน่ใจหรือไม่ว่าต้องการส่งข้อความเสียงฉุกเฉินนี้? หมายเหตุ: ข้อความนี้จะถูกส่งไปยังผู้ติดต่อทั้งหมดของคุณ";
 "Are you sure want to " = "คุณแน่ใจหรือไม่ว่าต้องการ ";
@@ -1163,6 +1166,16 @@
 "Wrong Ans " = "ตอบผิด ";
 "Not Ans " = "ไม่ได้ตอบ ";
 "Completed at: " = "เสร็จสิ้นเมื่อ: ";
+"Save All Marks" = "บันทึกคะแนนทั้งหมด";
+"Publish All Marks" = "เผยแพร่คะแนนทั้งหมด";
+"Review & Edit Marks" = "ตรวจสอบและแก้ไขคะแนน";
+"Verify the data and make any necessary corrections." = "ตรวจสอบข้อมูลและแก้ไขให้ถูกต้อง";
+"Note: Use \"AB\" for absent students and \"N/A\" for marks that are not applicable." = "หมายเหตุ: ใช้ \"AB\" สำหรับนักเรียนที่ขาดเรียน และ \"N/A\" สำหรับคะแนนที่ไม่เกี่ยวข้อง";
+"⚠️ AI can make mistakes. Please check properly before submitting." = "⚠️ AI อาจทำผิดพลาด โปรดตรวจสอบก่อนส่ง";
+
+"Not Applicable" = "ไม่เกี่ยวข้อง";
+"Absent" = "ขาดเรียน";
+"Maximum mark exceeded" = "คะแนนเกินคะแนนสูงสุด";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
