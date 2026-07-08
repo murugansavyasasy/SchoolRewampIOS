@@ -252,8 +252,6 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             cell.versionLbl.isHidden = true
         }
-        cell.arrowImg.applyRTLFlip(Language == "ar")
-        cell.imgView.applyRTLFlip(Language == "ar")
 
         cell.selectionStyle = .none
         return cell
@@ -325,10 +323,17 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             present(vc, animated: true)
             
         case menuname.changeAppLanguage.translated():
-            let vc = LanguageVc()
-            vc.modalPresentationStyle = .overFullScreen
-            vc.delegate = self
-            present(vc, animated: true)
+//            let vc = LanguageVc()
+//            vc.modalPresentationStyle = .overFullScreen
+//            vc.delegate = self
+//            present(vc, animated: true)
+            guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+                    return
+                }
+
+                if UIApplication.shared.canOpenURL(settingsURL) {
+                    UIApplication.shared.open(settingsURL)
+                }
         case menuname.termsAndConditions.translated():
             let vc = TermsAndCondVC()
             vc.modalPresentationStyle = .overFullScreen

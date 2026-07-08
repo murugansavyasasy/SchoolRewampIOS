@@ -45,10 +45,6 @@ class NotificationViewController: UIViewController {
     private func setupUI() {
         //BackBtn.setTitle(MenuTapbar.shared.Notifications, for: .normal)
        
-        //let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-//        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft : .forceLeftToRight
-//        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right : .left
-//        BackBtn.imageView?.applyRTLFlip(Language == "ar")
 //        BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         menuNameLbl.text = MenuTapbar.shared.Notifications
         menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)

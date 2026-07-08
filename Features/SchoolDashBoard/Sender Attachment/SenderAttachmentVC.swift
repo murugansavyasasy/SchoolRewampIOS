@@ -71,7 +71,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     override func viewDidLoad() {
         super.viewDidLoad()
         StyleAndTranslater()
-        BackBtn.applyBackButton()
+       
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true
         headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -88,14 +88,10 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         setupPlaceholder()
         assignTitleTxtFld.addDoneButton()
         contentTextView.addDoneButton()
-        contentTextView.applyRightTxt()
+       
         contentTextView.delegate = self
         assignTitleTxtFld.delegate = self
-        AssignmenttypeLbl.applyRightTxt()
-        DescriptionLbl.applyRightTxt()
-        letterscountLbl.applyRightTxt()
-        titleLbl.applyRightTxt()
-        assignTitleTxtFld.applyRightTxt()
+        
         let typeGesture = UITapGestureRecognizer(target: self, action: #selector(typeDropdown))
         AssignmentTypeview.addGestureRecognizer(typeGesture)
         selectImgPdfview.imageCollectionview.delegate = self
@@ -539,10 +535,6 @@ extension SenderAttachmentVC : UITextViewDelegate,UITextFieldDelegate{
         placeholderLabel?.textColor = .lightGray
         placeholderLabel?.sizeToFit()
         placeholderLabel?.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
-        contentTextView.applyRightTxt()
-        contentTextView.applyRightTxt(with: placeholderLabel!)
-        letterscountLbl.applyRightTxt()
-        assignTitleTxtFld.applyRightTxt()
         contentTextView.addSubview(placeholderLabel!)
         placeholderLabel?.isHidden = !contentTextView.text.isEmpty // Hide if text. exists
     }

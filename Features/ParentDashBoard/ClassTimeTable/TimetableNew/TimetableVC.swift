@@ -43,7 +43,6 @@ class TimetableVC: UIViewController {
         TodayDateLbl.text = formatter.string(from: Date())
         
         // UI setup
-        BackBtn.applyBackButton()
         TodayDefLbl.setFont(style: .body, size: FontSize.BodySize)
         TodayDateLbl.setFont(style: .body, size: FontSize.BodySize)
         let Name = studentDetails?.name ?? ""

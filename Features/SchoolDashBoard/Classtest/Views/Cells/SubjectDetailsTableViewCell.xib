@@ -171,7 +171,7 @@
                                                             <constraint firstAttribute="width" constant="18" id="kJa-vQ-tRA"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="IQa-ed-7cI">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="chevron.forward" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="IQa-ed-7cI">
                                                         <rect key="frame" x="245" y="13.999999999999998" width="16" height="12.33333333333333"/>
                                                         <color key="tintColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
@@ -273,7 +273,7 @@
     <resources>
         <image name="book.fill" catalog="system" width="128" height="95"/>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
-        <image name="chevron.right" catalog="system" width="97" height="128"/>
+        <image name="chevron.forward" catalog="system" width="97" height="128"/>
         <image name="exclamationmark.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="PrimeryColor">
             <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -64,7 +64,7 @@ class MessageFromManagementViewController: UIViewController {
         menuNameLbl.text = MenuStringFile.selectedMenuName.translated()
         schoolName.text = MenuStringFile.All_Schools.translated()
         menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
-        BackBtn.applyBackButton()
+      
         NoDataLbl.setFont(style: .title, size: FontSize.HeaderSize)
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true

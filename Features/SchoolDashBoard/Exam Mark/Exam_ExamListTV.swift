@@ -58,7 +58,7 @@ class Exam_ExamListTV: UITableViewCell {
     // ⭐ FINAL FIXED VERSION
     func configureExpansionState(_ expanded: Bool, animated: Bool = true) {
         isExpanded = expanded
-        ArrowBtn.setImage(UIImage(systemName: expanded ? "chevron.down" : "chevron.right"),
+        ArrowBtn.setImage(UIImage(systemName: expanded ? "chevron.down" : "chevron.forward"),
                           for: .normal)
         
         activitiesLbl.isHidden = !expanded

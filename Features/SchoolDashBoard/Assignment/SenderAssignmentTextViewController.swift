@@ -88,10 +88,7 @@ class SenderAssignmentTextViewController: UIViewController,
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-//        backBtn.semanticContentAttribute = language == "ar" ? .forceRightToLeft : .forceLeftToRight
-//        backBtn.contentHorizontalAlignment = language == "ar" ? .right : .left
-//        backBtn.imageView?.applyRTLFlip(language == "ar")
+
         backBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName,
                                       secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         StyleAndTranslater()
@@ -106,16 +103,8 @@ class SenderAssignmentTextViewController: UIViewController,
         assignTitleTxtFld.addDoneButton()
         assignTitleTxtFld.placeholder = "Title".translated()
         contentTextView.addDoneButton()
-        contentTextView.applyRightTxt()
-        categoryLbl.applyRightTxt()
         categoryLbl.setRequiredText("Category".translated())
         SubmissionDateLbl.setRequiredText("Submission Date".translated())
-        categoryDropDownLbl.applyRightTxt()
-        DescriptionLbl.applyRightTxt()
-        letterscountLbl.applyRightTxt()
-        titleLbl.applyRightTxt()
-        SubmissionDateLbl.applyRightTxt()
-        assignTitleTxtFld.applyRightTxt()
         dateView.layer.borderColor = UIColor.lightGray.cgColor
         dateView.layer.borderWidth = 0.5
         dateView.layer.cornerRadius = 8

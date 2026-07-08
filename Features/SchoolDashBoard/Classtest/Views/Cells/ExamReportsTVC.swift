@@ -111,7 +111,7 @@ class ExamReportsTVC: UITableViewCell {
         config.background.strokeWidth = 1.5
         config.background.backgroundColor = .clear
 
-        config.image = UIImage(systemName: "chevron.right.circle")
+        config.image = UIImage(systemName: "chevron.forward.circle")
         config.imagePlacement = .trailing
         config.imagePadding = 8
         config.preferredSymbolConfigurationForImage =

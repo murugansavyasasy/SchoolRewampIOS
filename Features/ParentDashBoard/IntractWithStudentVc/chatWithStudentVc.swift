@@ -92,16 +92,28 @@ class chatWithStudentVc: UIViewController,UITextViewDelegate,UITextFieldDelegate
     }
     
     func setupPlaceholder() {
+        print(MessgeTextview.effectiveUserInterfaceLayoutDirection)
+        print(MessgeTextview.semanticContentAttribute)
+        print(view.effectiveUserInterfaceLayoutDirection)
         placeholderLabel = UILabel()
+        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
         placeholderLabel.text = TexviewStringFile.Enter_Chat_Description.translated()
         placeholderLabel.font = MessgeTextview.font
         placeholderLabel.textColor = .lightGray
-        placeholderLabel.sizeToFit()
-        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
-        MessgeTextview.applyRightTxt()
-        MessgeTextview.applyRightTxt(with: placeholderLabel)
+        placeholderLabel.textAlignment = .natural
+
         MessgeTextview.addSubview(placeholderLabel)
-        placeholderLabel.isHidden = !MessgeTextview.text.isEmpty // Hide if text exists
+        
+        let inset = MessgeTextview.textContainerInset
+        let padding = MessgeTextview.textContainer.lineFragmentPadding
+
+        NSLayoutConstraint.activate([
+            placeholderLabel.topAnchor.constraint(equalTo: MessgeTextview.topAnchor, constant: inset.top),
+            placeholderLabel.leadingAnchor.constraint(equalTo: MessgeTextview.leadingAnchor, constant: inset.left + padding),
+            placeholderLabel.trailingAnchor.constraint(lessThanOrEqualTo: MessgeTextview.trailingAnchor, constant: -(inset.right + padding))
+        ])
+
+        placeholderLabel.isHidden = !MessgeTextview.text.isEmpty
     }
     
     override func viewDidLayoutSubviews() {

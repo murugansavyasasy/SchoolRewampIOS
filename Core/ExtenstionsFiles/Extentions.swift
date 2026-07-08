@@ -21,65 +21,6 @@ fileprivate var loaderContainerView: UIView?
 fileprivate var loaderAnimationView: LottieAnimationView?
 private var loaderBackgroundView: UIView?
 let YOUR_VIMEO_TOKEN = "8d74d8bf6b5742d39971cc7d3ffbb51a"
-extension UIImageView {
-    func applyRTLFlip(_ isRTL: Bool) {
-        if isRTL {
-//            self.transform = CGAffineTransform(scaleX: -1, y: 1)
-            self.transform = CGAffineTransform.identity
-        } else {
-            self.transform = CGAffineTransform.identity
-        }
-    }
-}
-extension UIButton {
-    func applyBackButton() {
-        let isRTL = isAppRTL()
-        self.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
-        self.contentHorizontalAlignment = isRTL ? .right : .left
-        self.imageView?.applyRTLFlip(isRTL)
-    }
-    func applyRightButton() {
-        let isRTL = isAppRTL()
-        self.semanticContentAttribute = isRTL ? .forceLeftToRight: .forceRightToLeft
-        self.imageView?.applyRTLFlip(isRTL)
-    }
-    private func isAppRTL() -> Bool {
-        let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        return language == "ars"
-    }
-}
-extension UIView {
-    func applyRightTxt() {
-        let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let isRTL = (language == "ars")
-        
-        if let textView = self as? UITextView {
-            textView.textAlignment = isRTL ? .right : .left
-        } else if let textField = self as? UITextField {
-            textField.textAlignment = isRTL ? .right : .left
-        } else if let label = self as? UILabel {
-            if isRTL{
-                label.textAlignment = (label.textAlignment == .left) ? .right : .left
-            }
-        }else if let searchBar = self as? UISearchBar {
-            if let textField = searchBar.value(forKey: "searchField") as? UITextField {
-                textField.textAlignment = isRTL ? .right : .left
-            }
-        }
-    }
-    
-    func applyRightTxt(with placeholderLabel: UILabel) {
-        guard let textView = self as? UITextView else { return }
-        
-        let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
-        let isRTL = (language == "ars")
-        
-        textView.textAlignment = isRTL ? .right : .left
-        
-        let xPosition = isRTL ? (textView.frame.width - placeholderLabel.frame.width - 10) : 5
-        placeholderLabel.frame.origin = CGPoint(x: xPosition, y: 8) // Adjust padding
-    }
-}
 
 extension UIView {
     
@@ -1156,7 +1097,7 @@ extension UILabel {
         self.attributedText = attributedText
         self.numberOfLines = 0
         self.lineBreakMode = .byWordWrapping
-        self.textAlignment = .left
+        self.textAlignment = .natural
     }
 }
 

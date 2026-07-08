@@ -107,7 +107,7 @@ class SubjectDetailsTableViewCell: UITableViewCell {
         checkmarkImageView.isHidden = !isConfigured
         
         // toggle chevor direction
-        let chevronName = isExpanded ? "chevron.down" : "chevron.right"
+        let chevronName = isExpanded ? "chevron.down" : "chevron.forward"
         chevronImageView.image = UIImage(systemName: chevronName)
         
         detailsContainerView.isHidden = !isExpanded
@@ -202,7 +202,7 @@ class SubjectDetailsTableViewCell: UITableViewCell {
         checkmarkImageView.isHidden = true
 
         chevronImageView.image = UIImage(
-            systemName: isExpanded ? "chevron.down" : "chevron.right"
+            systemName: isExpanded ? "chevron.down" : "chevron.forward"
         )
 
         detailsContainerView.isHidden = !isExpanded

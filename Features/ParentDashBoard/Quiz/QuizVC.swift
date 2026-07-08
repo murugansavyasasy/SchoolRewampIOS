@@ -41,7 +41,7 @@ class QuizVC: UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        BackBtn.applyBackButton()
+       
         StyleAndTranslate()
         CorrectAnswerLbl.text = CorrectAnswers + " \(correctAnswers) / \(questions.count)"
         IncorrectAnswerLbl.text = IncorrectAnswers + " \(questions.count - (Int(correctAnswers) ?? 0)) / \(questions.count)"

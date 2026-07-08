@@ -101,16 +101,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         timeView.layer.borderWidth = 0.5
         eventTxt.delegate = self
         contentTxtView.delegate = self
-        eventTxt.applyRightTxt()
-        EventTtleLbl.applyRightTxt()
-        placeTxt.applyRightTxt()
-        placeLbl.applyRightTxt()
-        contentTxtView.applyRightTxt()
-        contentCount.applyRightTxt()
-        eventDeatail.applyRightTxt()
-        addPhotoLbl.applyRightTxt()
-        fromLbl.applyRightTxt()
-        eventTxt.applyRightTxt()
         StyleAndTranslate()
         setupTimePicker()
         setInitialButtonTitles(date:nil)
@@ -342,7 +332,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         timeBtn.setTitle(displayTimeFormatter.string(from: dateToUse), for: .normal)
         dayLbl.text = dayFormatter.string(from: dateToUse)
         
-        contentCount.applyRightTxt()
     }
     
     func StyleAndTranslate(){
@@ -379,8 +368,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
         placeholderLabel.frame.origin = CGPoint(x: 5, y: 8)
-        contentTxtView.applyRightTxt()
-        contentTxtView.applyRightTxt(with: placeholderLabel)
         contentTxtView.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !contentTxtView.text.isEmpty
     }

@@ -39,7 +39,7 @@ class SchoolStrengthVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UIupdate()
-        BackBtn.applyBackButton()
+       
         BackBtn
             .configureAsBackButton(
                 firstLine: MenuStringFile.selectedMenuName,

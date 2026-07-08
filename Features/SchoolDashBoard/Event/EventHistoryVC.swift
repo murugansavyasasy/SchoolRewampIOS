@@ -65,7 +65,6 @@ class EventHistoryVC: UIViewController, SelectedId {
         historyTable.delegate = self
         historyTable.dataSource = self
         searchBar.placeholder = CommonStringFile.Search.translated()
-        searchBar.applyRightTxt()
         searchBar.backgroundImage = UIImage()
         searchBar.barTintColor = .clear
         searchBar.backgroundColor = .clear

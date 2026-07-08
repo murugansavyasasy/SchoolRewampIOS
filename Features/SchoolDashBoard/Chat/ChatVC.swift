@@ -83,8 +83,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
         placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
-        MessgeTextview.applyRightTxt()
-        MessgeTextview.applyRightTxt(with: placeholderLabel)
+       
         MessgeTextview.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !MessgeTextview.text.isEmpty // Hide if text exists
     }

@@ -95,8 +95,6 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
         placeholderLabel.frame.origin = CGPoint(x: 5, y: 8)
-        discriptionsTextFild.applyRightTxt()
-        discriptionsTextFild.applyRightTxt(with: placeholderLabel)
         discriptionsTextFild.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !discriptionsTextFild.text.isEmpty
     }

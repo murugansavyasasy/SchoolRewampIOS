@@ -77,8 +77,6 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
         placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
-        DescriptionTextview.applyRightTxt()
-        DescriptionTextview.applyRightTxt(with: placeholderLabel)
         DescriptionTextview.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !DescriptionTextview.text.isEmpty // Hide if text exists
         if let edit = editReport{

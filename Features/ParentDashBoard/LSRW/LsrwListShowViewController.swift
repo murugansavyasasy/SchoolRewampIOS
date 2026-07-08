@@ -39,7 +39,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
         searchBar.searchTextField.addDoneButton()
-        backBtn.applyBackButton()
+       
         backBtn.configureAsBackButton(
             firstLine: "\(childDetails?.name ?? "")",
             secondLine: "\(childDetails?.standard_name ?? "") - \(childDetails?.section_name ?? "")"

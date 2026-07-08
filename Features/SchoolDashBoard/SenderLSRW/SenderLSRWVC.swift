@@ -215,8 +215,6 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
     }
     
     private func setupTextViews() {
-        DetailsTxtview.applyRightTxt()
-        TitleTxtfield.applyRightTxt()
         TitleTxtfield.addDoneButton()
         DetailsTxtview.addDoneButton()
         DetailsTxtview.delegate = self

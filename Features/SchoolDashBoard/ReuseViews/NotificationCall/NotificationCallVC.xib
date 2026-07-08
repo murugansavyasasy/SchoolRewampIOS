@@ -2,15 +2,15 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NotificationCallVC" customModule="School_Chimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NotificationCallVC" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
             <connections>
                 <outlet property="answerStack" destination="JTo-yA-Gis" id="9Gk-rT-bMz"/>
                 <outlet property="cutCallBtn" destination="AuC-1v-Dom" id="ZlV-Cx-gZc"/>
@@ -134,8 +134,7 @@
                                                     </constraints>
                                                     <color key="tintColor" name="Red1"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal">
-                                                        <imageReference key="image" image="chevron.left" catalog="system" symbolScale="small"/>
+                                                    <state key="normal" image="chevron.backward" catalog="system">
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
                                                     </state>
                                                 </button>
@@ -143,8 +142,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="0.0" height="30"/>
                                                     <color key="tintColor" name="Red1"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal">
-                                                        <imageReference key="image" image="chevron.left" catalog="system" symbolScale="medium"/>
+                                                    <state key="normal" image="chevron.backward" catalog="system">
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
                                                     </state>
                                                 </button>
@@ -152,8 +150,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="0.0" height="30"/>
                                                     <color key="tintColor" name="Red1"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal">
-                                                        <imageReference key="image" image="chevron.left" catalog="system" symbolScale="large"/>
+                                                    <state key="normal" image="chevron.backward" catalog="system">
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
                                                     </state>
                                                 </button>
@@ -170,8 +167,7 @@
                                                     </constraints>
                                                     <color key="tintColor" systemColor="systemGreenColor"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal">
-                                                        <imageReference key="image" image="chevron.right" catalog="system" symbolScale="large"/>
+                                                    <state key="normal" image="chevron.forward" catalog="system">
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
                                                     </state>
                                                 </button>
@@ -179,8 +175,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="0.0" height="30"/>
                                                     <color key="tintColor" systemColor="systemGreenColor"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal">
-                                                        <imageReference key="image" image="chevron.right" catalog="system" symbolScale="medium"/>
+                                                    <state key="normal" image="chevron.forward" catalog="system">
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small" weight="semibold"/>
                                                     </state>
                                                 </button>
@@ -188,8 +183,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="0.0" height="30"/>
                                                     <color key="tintColor" systemColor="systemGreenColor"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal">
-                                                        <imageReference key="image" image="chevron.right" catalog="system" symbolScale="small"/>
+                                                    <state key="normal" image="chevron.forward" catalog="system">
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
                                                     </state>
                                                 </button>
@@ -266,8 +260,8 @@
         </view>
     </objects>
     <resources>
-        <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <image name="chevron.right" catalog="system" width="97" height="128"/>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
+        <image name="chevron.forward" catalog="system" width="97" height="128"/>
         <image name="phone.circle.fill" catalog="system" width="128" height="123"/>
         <image name="phone.down.circle.fill" catalog="system" width="128" height="123"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>

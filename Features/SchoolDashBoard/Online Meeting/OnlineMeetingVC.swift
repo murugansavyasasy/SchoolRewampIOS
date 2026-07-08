@@ -93,7 +93,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate, Datepicker {
                     object: nil
                 )
         
-        backBtn.applyBackButton()
+       
         StyleAndTranslater()
         setupTimePicker()
         titleTxtfld.addDoneButton()
