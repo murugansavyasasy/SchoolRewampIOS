@@ -199,7 +199,7 @@ public final class CreateTestViewModel {
     
     public func isSubjectConfigured(subjectId: String, sectionId: String) -> Bool {
         guard let config = examConfigurations.first(where: { $0.subjectId == subjectId && $0.sectionId == sectionId }) else { return false }
-        return !config.tests.isEmpty && config.tests.allSatisfy { !$0.examName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.syllabus.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.testDate.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.maxMarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.minMarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+        return !config.tests.isEmpty && config.tests.allSatisfy { !$0.examName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty /*&& !$0.syllabus.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.testDate.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.maxMarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.minMarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty*/ }
     }
     
     public func printExamConfigurationsJSON() {

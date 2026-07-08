@@ -327,6 +327,7 @@
                 <outlet property="badgeContainer" destination="sTY-Ke-I4J" id="kcn-iA-5bK"/>
                 <outlet property="badgeLabel" destination="ZNa-Ot-S1B" id="Wxt-b4-yr4"/>
                 <outlet property="examNameTextView" destination="AiC-e9-Alr" id="6bt-ww-B55"/>
+                <outlet property="exameDefaultLbl" destination="7Sk-Nc-h2S" id="3Bn-T0-2NX"/>
                 <outlet property="fnButton" destination="RRs-ox-3ee" id="nhY-la-Hof"/>
                 <outlet property="maxMarksTextField" destination="ehM-5z-NrJ" id="eJl-Cz-XwP"/>
                 <outlet property="minMarksTextField" destination="jdP-79-FsL" id="w95-Yt-vcp"/>
@@ -345,7 +346,7 @@
         <image name="doc.text" catalog="system" width="115" height="128"/>
         <image name="trash" catalog="system" width="117" height="128"/>
         <namedColor name="PrimeryColor">
-            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.49799999594688416" green="0.10199999809265137" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -74,7 +74,7 @@ class ExamReportsVC: UIViewController, Datepicker {
        
     }
     private func setupUI() {
-        tittleLbl.text = "Exams"
+        tittleLbl.text = "View Created Test Lists"
         acodomicdropDown.setShadow()
         dateView.setShadow()
         examCountLbl.layer.cornerRadius = examCountLbl.frame.height / 2
@@ -99,7 +99,7 @@ class ExamReportsVC: UIViewController, Datepicker {
     }
 
     private func updateExamCount() {
-        examCountLbl.setTitle("\(class_test_details.count) EXAMS", for: .normal)
+        examCountLbl.setTitle("\(class_test_details.count) Test", for: .normal)
     }
 
     @IBAction func backTapped(_ sender: UIButton) {

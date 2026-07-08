@@ -9,6 +9,7 @@ import UIKit
 
 class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
 
+    @IBOutlet public weak var exameDefaultLbl: UILabel!
     @IBOutlet public weak var badgeContainer: UIView!
     @IBOutlet public weak var badgeLabel: UILabel!
     @IBOutlet public weak var testTitleLabel: UILabel!
@@ -40,7 +41,8 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
     
     
     private func steupUi(){
-      
+        exameDefaultLbl.setRequiredText("ACTIVITY NAME")
+        exameDefaultLbl.font = .systemFont(ofSize: 10, weight: .bold)
         styleTextView(examNameTextView)
         styleTextField(testDateTextField)
         styleTextField(maxMarksTextField)

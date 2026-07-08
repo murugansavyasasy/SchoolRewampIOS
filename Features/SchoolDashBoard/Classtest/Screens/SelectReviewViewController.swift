@@ -74,7 +74,7 @@ public final class SelectReviewViewController: UIViewController {
     
     private func updateButtonsState() {
         let total = totalTestsCount
-        let title = total == 1 ? "  Create 1 Activity" : "  Create \(total) Activity"
+        let title = total == 1 ? "  Create  Test" : "  Create  Test"
         createButton.setTitle(title, for: .normal)
         
         let activeColor = UIColor.primery

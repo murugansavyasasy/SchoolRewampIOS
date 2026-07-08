@@ -68,10 +68,10 @@ public final class ReviewTestDetailTableViewCell: UITableViewCell {
         
         sessionLabel.text = test.session
         
-        dateValueLabel.text = test.testDate.isEmpty ? "Not set" : test.testDate
+        dateValueLabel.text = test.testDate.isEmpty ? "" : test.testDate
         maxMarksValueLabel.text = test.maxMarks
         minMarksValueLabel.text = test.minMarks
-        syllabusValueLabel.text = test.syllabus.isEmpty ? "No details" : test.syllabus
+        syllabusValueLabel.text = test.syllabus.isEmpty ? "" : test.syllabus
     }
     
     @IBAction @objc public func removeButtonTapped(_ sender: UIButton) {
