@@ -270,8 +270,23 @@ extension SelectDetailsViewController: UITableViewDelegate, UITableViewDataSourc
         }
         
         cell.onAddTest = { [weak self] subjectId, sectionId in
-              viewModel.addTest(to: subjectId, sectionId: sectionId)
-              self?.tableView.reloadData()
+
+            // Check if existing tests are fully configured before allowing a new one
+            if let config = viewModel.examConfigurations.first(where: { $0.subjectId == subjectId && $0.sectionId == sectionId }) {
+                if !config.tests.isEmpty && !viewModel.isSubjectConfigured(subjectId: subjectId, sectionId: sectionId) {
+                    let alert = UIAlertController(
+                        title: "Incomplete Details",
+                        message: "Please fill all the details  before adding another Activity.",
+                        preferredStyle: .alert
+                    )
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self?.present(alert, animated: true, completion: nil)
+                    return
+                }
+            }
+            
+            viewModel.addTest(to: subjectId, sectionId: sectionId)
+            self?.tableView.reloadData()
           }
         
         

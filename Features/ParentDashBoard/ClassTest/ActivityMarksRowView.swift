@@ -39,7 +39,7 @@ class ActivityMarksRowView: UIView {
         activityNameLabel.text = activity.activityName
         dateLabel.text = activity.examDate
         syllabusLabel.text = activity.syllabus
-        minMarkLbl.text =  "Min : " + (activity.minMark ?? "")
+        minMarkLbl.text =  "Minimum Mark : " + (activity.minMark ?? "")
         // Format max mark
         if let maxDouble = Double(activity.maxMark ?? "") {
             maxMarkLabel.text = String(format: "%.0f", maxDouble)

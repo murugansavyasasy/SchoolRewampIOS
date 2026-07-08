@@ -166,7 +166,7 @@ public final class CreateTestViewModel {
                         configs.append(prev)
                     } else {
                         // Pre-populate with exactly 1 default test configuration details
-                        let defaultTest = TestDetails(examName: "", maxMarks: "100", minMarks: "35")
+                        let defaultTest = TestDetails(examName: "", maxMarks: "", minMarks: "")
                         configs.append(SubjectExamConfig(subjectId: sub.id, subjectName: sub.name, sectionId: sec.sectionId, sectionName: sec.sectionName, tests: [defaultTest]))
                     }
                 }
