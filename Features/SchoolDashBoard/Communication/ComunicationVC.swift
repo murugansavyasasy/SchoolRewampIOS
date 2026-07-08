@@ -1025,10 +1025,51 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         voiceTitleeTxt.text = ""
     }
     
+//    func startRecording() {
+//        if let url = URL(string: AudioPlayUrl ?? ""){
+//            deleteFile(at:url)
+//        }
+//        playVoicce = false
+//        btnplay.setImage(ImageName.playbutton, for: .normal)
+//        addfile.isHidden = true
+//        sendbtn.isUserInteractionEnabled = false
+//        recrdimg.image = UIImage.gifImageWithName("Mic")
+//        isRecording = true
+//        recordingStartTime = Date()
+//        setupRecorder()
+//        UIApplication.shared.isIdleTimerDisabled = true
+//        audioRecorder?.record()
+//        recordingTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateRecordingTime), userInfo: nil, repeats: true)
+//        playerview.isHidden = true
+//        playerheight.constant = 0
+//        dltbtn.isHidden = true
+//    }
+//    
     func startRecording() {
-        if let url = URL(string: AudioPlayUrl ?? ""){
-            deleteFile(at:url)
+
+        let session = AVAudioSession.sharedInstance()
+
+        do {
+            try session.setCategory(.playAndRecord,
+                                    mode: .default,
+                                    options: [.defaultToSpeaker])
+
+            try session.setActive(true)
+
+            if !session.isInputAvailable {
+                showMicrophoneInUseAlert()
+                return
+            }
+
+        } catch {
+            showMicrophoneInUseAlert()
+            return
         }
+
+        if let url = URL(string: AudioPlayUrl ?? "") {
+            deleteFile(at: url)
+        }
+
         playVoicce = false
         btnplay.setImage(ImageName.playbutton, for: .normal)
         addfile.isHidden = true
@@ -1037,14 +1078,36 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         isRecording = true
         recordingStartTime = Date()
         setupRecorder()
+
         UIApplication.shared.isIdleTimerDisabled = true
+
         audioRecorder?.record()
-        recordingTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateRecordingTime), userInfo: nil, repeats: true)
+
+        recordingTimer = Timer.scheduledTimer(
+            timeInterval: 1.0,
+            target: self,
+            selector: #selector(updateRecordingTime),
+            userInfo: nil,
+            repeats: true
+        )
+
         playerview.isHidden = true
         playerheight.constant = 0
         dltbtn.isHidden = true
     }
     
+    func showMicrophoneInUseAlert() {
+
+        let alert = UIAlertController(
+            title: "Microphone Unavailable",
+            message: "The microphone is currently being used by another app or phone call. Please end the call and try again.",
+            preferredStyle: .alert
+        )
+
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+
+        present(alert, animated: true)
+    }
     func stopRecording() {
         UIApplication.shared.isIdleTimerDisabled = false
         recrdimg.image = ImageName.mic1

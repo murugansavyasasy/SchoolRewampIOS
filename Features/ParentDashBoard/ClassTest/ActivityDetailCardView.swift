@@ -53,9 +53,9 @@ class ActivityDetailCardView: UIView {
     }
     
     func configure(with activity: TestsActivity) {
-        activityNameLabel.text = activity.activityName
-        dateLabel.text = activity.examDate
-        syllabusLabel.text = activity.syllabus
+        activityNameLabel.text = activity.activityName ?? ""
+        dateLabel.text = activity.examDate ?? ""
+        syllabusLabel.text = activity.syllabus ?? ""
         
         // Format marks
         if let maxDouble = Double(activity.maxMark ?? "") {

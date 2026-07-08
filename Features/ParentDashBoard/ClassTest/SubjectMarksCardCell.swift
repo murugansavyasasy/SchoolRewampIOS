@@ -49,7 +49,7 @@ class SubjectMarksCardCell: UITableViewCell {
         var totalScored: Double = 0
         var totalMax: Double = 0
         
-        for activity in subject.activities ?? [] {
+        for activity in subject.activities {
             if activity.attendance?.uppercased() == "P" {
                 if let markStr = activity.mark, let mark = Double(markStr) {
                     totalScored += mark

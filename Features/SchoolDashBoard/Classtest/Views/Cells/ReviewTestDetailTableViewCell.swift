@@ -25,7 +25,8 @@ public final class ReviewTestDetailTableViewCell: UITableViewCell {
     // MARK: - Callbacks
     public var onRemoveTapped: (() -> Void)?
     
-    private let activeColor = UIColor(red: 0.298, green: 0.302, blue: 0.863, alpha: 1.0)
+    private let activeColor = UIColor.primery
+    //UIColor(red: 0.298, green: 0.302, blue: 0.863, alpha: 1.0)
     private let boxBgColor = UIColor(red: 0.961, green: 0.969, blue: 0.984, alpha: 1.0)
     
     // MARK: - Lifecycle

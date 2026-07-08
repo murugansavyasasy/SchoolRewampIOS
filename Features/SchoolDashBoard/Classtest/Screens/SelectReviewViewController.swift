@@ -41,11 +41,15 @@ public final class SelectReviewViewController: UIViewController {
         createButton.layer.cornerRadius = 16
         createButton.layer.masksToBounds = true
         
+        let config = UIImage.SymbolConfiguration(pointSize: 12, weight: .medium)
+
         // Add checkmark image to create button
-        if let checkImage = UIImage(systemName: "checkmark.circle") {
+        if let checkImage = UIImage(systemName: "checkmark.circle",withConfiguration: config) {
             createButton.setImage(checkImage, for: .normal)
             createButton.tintColor = .white
         }
+        
+       
         
         backButton.layer.cornerRadius = 16
         backButton.layer.borderWidth = 1.0

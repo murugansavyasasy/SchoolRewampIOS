@@ -57,7 +57,7 @@ class SubjectRowView: UIView {
             .foregroundColor: UIColor(red: 100/255, green: 116/255, blue: 139/255, alpha: 1.0)
         ]
         
-        let text = NSMutableAttributedString(string: "\(subject.subjectName)  ", attributes: boldAttributes)
+        let text = NSMutableAttributedString(string: "\(subject.subjectName ?? "")  ", attributes: boldAttributes)
         text.append(NSAttributedString(string: activityText, attributes: regularAttributes))
         titleLabel.attributedText = text
         

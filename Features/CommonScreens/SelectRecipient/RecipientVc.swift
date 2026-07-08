@@ -7,6 +7,69 @@
 
 import UIKit
 
+extension RecipientVc: UISearchBarDelegate {
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+
+        let text = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        guard !text.isEmpty else {
+
+            isSearching = false
+
+            filteredGroupDetails = groupDetails ?? []
+            filteredStaffDetails = staffDetails ?? []
+
+            nodataFound.isHidden = true
+            noRecordLbl.isHidden = true
+            tv.isHidden = false
+
+            tv.reloadData()
+            return
+        }
+
+        isSearching = true
+
+        switch cv_itemsarry[segment_selected_index ?? 0] {
+
+        case recipeint_tabBarName.Group:
+
+            filteredGroupDetails = (groupDetails ?? []).filter {
+                $0.name?.localizedCaseInsensitiveContains(text) == true
+            }
+
+            let isEmpty = filteredGroupDetails?.isEmpty
+
+            nodataFound.image = ImageName.missing_file
+            nodataFound.isHidden = !(isEmpty ?? false)
+            noRecordLbl.isHidden = !(isEmpty ?? false)
+            noRecordLbl.text = "No search result found"
+            tv.isHidden = isEmpty ?? false
+
+        case recipeint_tabBarName.Staff:
+
+            filteredStaffDetails = (staffDetails ?? []).filter { staff in
+
+                staff.name?.localizedCaseInsensitiveContains(text) == true ||
+                staff.emp_id?.localizedCaseInsensitiveContains(text) == true ||
+                staff.designation?.localizedCaseInsensitiveContains(text) == true
+            }
+
+            let isEmpty = filteredStaffDetails?.isEmpty
+
+            nodataFound.image = ImageName.missing_file
+            nodataFound.isHidden = !(isEmpty ?? false)
+            noRecordLbl.isHidden = !(isEmpty ?? false)
+            noRecordLbl.text = "No search result found"
+            tv.isHidden = isEmpty ?? false
+
+        default:
+            break
+        }
+
+        tv.reloadData()
+    }
+}
 class RecipientVc: UIViewController{
     
     @IBOutlet weak var subjectDefaultLbl: UILabel!
@@ -34,6 +97,8 @@ class RecipientVc: UIViewController{
     @IBOutlet weak var noRecordLbl: UILabel!
     @IBOutlet weak var acidamicYrDropView: UIView!
     
+    @IBOutlet weak var searchBtn: UIButton!
+    @IBOutlet weak var searchbar: UISearchBar!
     var cv_itemsarry : [String] = []
     var dropDownArray = [String]()
     var subjectList = [String]()
@@ -86,12 +151,21 @@ class RecipientVc: UIViewController{
     var uploadedCount = 0
     var isQuiz_open_to_students: Bool = false
     var IsNoSubjectData: Bool = false
+    var filteredGroupDetails: [GroupDetail]?
+    var filteredStaffDetails: [GetStaffDetails]?
+    var isSearching = false
     override func viewDidLoad() {
         super.viewDidLoad()
         nodataFound.isHidden = true
         noRecordLbl.isHidden = true
         speficBtnName.isHidden = true
         tv.isHidden = true
+        searchBtn.isHidden = true
+        searchbar.isHidden = true
+        searchbar.delegate = self
+        searchbar.searchTextField.addDoneButton()
+        searchbar.placeholder = CommonStringFile.Search.translated()
+        searchbar.backgroundImage = UIImage()
         backbtnMName
             .setTitle(
                 UserDefaultFileManager.get_staff_Details()?.school_name,
@@ -186,6 +260,38 @@ class RecipientVc: UIViewController{
     }
     
 
+    @IBAction func searchBtnAct(_ sender: UIButton) {
+        
+        
+        sender.isSelected.toggle()
+
+           if sender.isSelected {
+
+               searchbar.isHidden = false
+               searchbar.becomeFirstResponder()
+               searchBtn.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
+
+           } else {
+
+               searchbar.isHidden = true
+               view.endEditing(true)
+
+               searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+
+               searchbar.text = ""
+
+               isSearching = false
+
+               filteredGroupDetails = groupDetails ?? []
+               filteredStaffDetails = staffDetails ?? []
+
+               nodataFound.isHidden = true
+               noRecordLbl.isHidden = true
+               tv.isHidden = false
+
+               tv.reloadData()
+           }
+    }
     
     func handleSegmentSelection(index: Int) {
         segment_selected_index = index
@@ -860,18 +966,30 @@ class RecipientVc: UIViewController{
             nodataFound.image = ImageName.girl_and_boy_are
             selectStandardDropDown.isHidden = true
             tv.isHidden = true
+            searchBtn.isHidden = true
+            searchbar.isHidden = true
+            searchBtn.isSelected = false
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         case recipeint_tabBarName.Group:
             target_type = TargetTypes.group
             circular_types =  circular_type.group
             getGrouplistAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
+            searchBtn.isHidden = false
+            searchbar.isHidden = true
+            searchBtn.isSelected = false
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         case recipeint_tabBarName.Standard:
             target_type = TargetTypes.standard
             circular_types =  circular_type.standard
             getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
+            searchBtn.isHidden = true
+            searchbar.isHidden = true
+            searchBtn.isSelected = false
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         case recipeint_tabBarName.Section_Student:
             target_type = TargetTypes.section
             circular_types =  circular_type.section
@@ -881,12 +999,20 @@ class RecipientVc: UIViewController{
             )
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
+            searchBtn.isHidden = true
+            searchbar.isHidden = true
+            searchBtn.isSelected = false
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         case recipeint_tabBarName.Staff:
             target_type = TargetTypes.staff
             circular_types =  circular_type.staff
             getStaffListAPI()
             tv.isHidden = false
             selectStandardDropDown.isHidden = true
+            searchBtn.isHidden = false
+            searchbar.isHidden = true
+            searchBtn.isSelected = false
+            searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         default:
             print("Unhandled tab selection: \(selectedTitle)")
         }
@@ -1054,21 +1180,48 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0
     }
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        let baseCount: Int
+//        switch cv_itemsarry[segment_selected_index ?? 0] {
+//        case recipeint_tabBarName.Group:
+//            baseCount =  filteredGroupDetails?.isEmpty ?? true ? 0 : (filteredGroupDetails?.count ?? 0 + 1)
+//        case recipeint_tabBarName.Standard:
+//            baseCount = standardDetails?.count ?? 0
+//        case recipeint_tabBarName.Section_Student:
+//            baseCount = sectionsDetails?.count ?? 0
+//        case recipeint_tabBarName.Staff:
+//            baseCount = filteredStaffDetails?.isEmpty ?? true ? 0 : (filteredStaffDetails?.count ?? 0) + 1
+//        default:
+//            baseCount = 0
+//        }
+//        return baseCount + 1 // +1 for "Select All"
+//    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let baseCount: Int
+
         switch cv_itemsarry[segment_selected_index ?? 0] {
+
         case recipeint_tabBarName.Group:
-            baseCount = groupDetails?.count ?? 0
+            let data = isSearching ? filteredGroupDetails : groupDetails
+             let count = data?.count ?? 0
+             return count == 0 ? 0 : count + 1
+            
         case recipeint_tabBarName.Standard:
-            baseCount = standardDetails?.count ?? 0
+            let count = standardDetails?.count ?? 0
+            return count == 0 ? 0 : count + 1
+
         case recipeint_tabBarName.Section_Student:
-            baseCount = sectionsDetails?.count ?? 0
+            let count = sectionsDetails?.count ?? 0
+            return count == 0 ? 0 : count + 1
+
         case recipeint_tabBarName.Staff:
-            baseCount = staffDetails?.count ?? 0
+            let data = isSearching ? filteredStaffDetails : staffDetails
+               let count = data?.count ?? 0
+               return count == 0 ? 0 : count + 1
+
         default:
-            baseCount = 0
+            return 0
         }
-        return baseCount + 1 // +1 for "Select All"
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -1083,13 +1236,19 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         let dataIndex = indexPath.row - 1
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
-            if let item = groupDetails?[dataIndex] {
-                cell.cellLabel.text = item.name
+            let groups = isSearching ? filteredGroupDetails : (groupDetails ?? [])
+
+            if dataIndex < groups?.count ?? 0 {
+
+                let item = groups?[dataIndex]
+
+                cell.cellLabel.text = item?.name
                 cell.createdOnlbl.isHidden = false
-                cell.createdOnlbl.text =  item.created_on?
-                    .convertToTargetDateFormat() ?? ""
+                cell.createdOnlbl.text = item?.created_on?.convertToTargetDateFormat() ?? ""
                 cell.createdOnlbl.textAlignment = .right
-                cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
+                cell.checkboxImg.image = (item?.isSelect ?? false)
+                    ? ImageName.checkedSquares
+                    : ImageName.uncheckedSquares
             }
         case recipeint_tabBarName.Standard:
             if let item = standardDetails?[dataIndex] {
@@ -1104,19 +1263,29 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
             }
         case recipeint_tabBarName.Staff:
-            if let item = staffDetails?[dataIndex] {
-                cell.cellLabel.text = item.name
-                cell.createdOnlbl.isHidden = false
+            let staffs = isSearching ? filteredStaffDetails : (staffDetails ?? [])
+
+            if dataIndex < staffs?.count ?? 0 {
+
+                let item = staffs?[dataIndex]
+
+                cell.cellLabel.text = item?.name
                 cell.createdOnlbl.textAlignment = .left
-                if ((item.designation?.isEmpty) != nil) && (
-                    (item.emp_id?.isEmpty) != nil
-                ){
+
+                if (item?.designation?.isEmpty ?? true) &&
+                    (item?.emp_id?.isEmpty ?? true) {
+
                     cell.createdOnlbl.isHidden = true
-                }else{
-                    cell.isHidden = false
-                    cell.createdOnlbl.text = "\(item.designation ?? "") - \(item.emp_id ?? "")"
+
+                } else {
+
+                    cell.createdOnlbl.isHidden = false
+                    cell.createdOnlbl.text = "\(item?.designation ?? "") - \(item?.emp_id ?? "")"
                 }
-                cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
+
+                cell.checkboxImg.image = (item?.isSelect ?? false)
+                    ? ImageName.checkedSquares
+                    : ImageName.uncheckedSquares
             }
         default:
             break
@@ -1141,11 +1310,33 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         let dataIndex = indexPath.row - 1
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
-            if var item = groupDetails?[dataIndex] {
-                item.isSelect?.toggle()
-                groupDetails?[dataIndex].isSelect = item.isSelect
-                updateSelectionArray(id: item.id, isSelected: item.isSelect)
-            }
+//            if var item = filteredGroupDetails?[dataIndex] {
+//                item.isSelect?.toggle()
+//                filteredGroupDetails?[dataIndex].isSelect = item.isSelect
+//                updateSelectionArray(id: item.id, isSelected: item.isSelect)
+//            }
+            
+            let groups = isSearching ? filteredGroupDetails : groupDetails
+
+              if var item = groups?[dataIndex] {
+
+                  item.isSelect?.toggle()
+
+                  // Update original array
+                  if let index = groupDetails?.firstIndex(where: { $0.id == item.id }) {
+                      groupDetails?[index].isSelect = item.isSelect
+                  }
+
+                  // Update filtered array
+                  if let index = filteredGroupDetails?.firstIndex(where: { $0.id == item.id }) {
+                      filteredGroupDetails?[index].isSelect = item.isSelect
+                  }
+
+                  updateSelectionArray(id: item.id, isSelected: item.isSelect)
+
+                  tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+                  tableView.reloadRows(at: [indexPath], with: .none)
+              }
         case recipeint_tabBarName.Standard:
             if var item = standardDetails?[dataIndex] {
                 item.isSelect?.toggle()
@@ -1187,11 +1378,26 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             }
             
         case recipeint_tabBarName.Staff:
-            if var item = staffDetails?[dataIndex] {
-                item.isSelect?.toggle()
-                staffDetails?[dataIndex].isSelect = item.isSelect
-                updateSelectionArray(id: item.id, isSelected: item.isSelect)
-            }
+
+            let staffs = isSearching ? filteredStaffDetails : staffDetails
+
+               if var item = staffs?[dataIndex] {
+
+                   item.isSelect?.toggle()
+
+                   if let index = staffDetails?.firstIndex(where: { $0.id == item.id }) {
+                       staffDetails?[index].isSelect = item.isSelect
+                   }
+
+                   if let index = filteredStaffDetails?.firstIndex(where: { $0.id == item.id }) {
+                       filteredStaffDetails?[index].isSelect = item.isSelect
+                   }
+
+                   updateSelectionArray(id: item.id, isSelected: item.isSelect)
+
+                   tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+                   tableView.reloadRows(at: [indexPath], with: .none)
+               }
         default:
             break
         }
@@ -1216,13 +1422,23 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     func isAllSelected() -> Bool {
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
-            return groupDetails?.allSatisfy { $0.isSelect == true } ?? false
+            let visibleItems = isSearching
+                 ? (filteredGroupDetails ?? [])
+                 : (groupDetails ?? [])
+
+             return !visibleItems.isEmpty &&
+                    visibleItems.allSatisfy { $0.isSelect == true }
         case recipeint_tabBarName.Standard:
             return standardDetails?.allSatisfy { $0.isSelect == true } ?? false
         case recipeint_tabBarName.Section_Student:
             return sectionsDetails?.allSatisfy { $0.isSelect == true } ?? false
         case recipeint_tabBarName.Staff:
-            return staffDetails?.allSatisfy { $0.isSelect == true } ?? false
+            let visibleItems = isSearching
+                       ? (filteredStaffDetails ?? [])
+                       : (staffDetails ?? [])
+
+                   return !visibleItems.isEmpty &&
+                          visibleItems.allSatisfy { $0.isSelect == true }
         default:
             return false
         }
@@ -1231,12 +1447,29 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         let selecting = !isAllSelected()
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
-            groupDetails = groupDetails?.map {
-                var item = $0
-                item.isSelect = selecting
-                return item
+            if isSearching {
+
+                filteredGroupDetails = filteredGroupDetails?.map {
+                    var item = $0
+                    item.isSelect = selecting
+
+                    if let index = groupDetails?.firstIndex(where: { $0.id == item.id }) {
+                        groupDetails?[index].isSelect = selecting
+                    }
+
+                    return item
+                }
+
+            } else {
+
+                groupDetails = groupDetails?.map {
+                    var item = $0
+                    item.isSelect = selecting
+                    return item
+                }
+
+                filteredGroupDetails = groupDetails
             }
-            array_selectedId = selecting ? groupDetails?.compactMap { $0.id } ?? [] : []
         case recipeint_tabBarName.Standard:
             standardDetails = standardDetails?.map {
                 var item = $0
@@ -1313,6 +1546,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                     students[i].isSelect = false
                                 }
                                 groupDetails = students
+                                filteredGroupDetails = students
                             }
                             tv.delegate = self
                             tv.dataSource = self
@@ -1320,11 +1554,13 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         }
                     }else{
                         DispatchQueue.main.async { [self] in
+                            filteredGroupDetails = []
                             nodata(false, message: successmessage.message ?? "" )
                         }
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
+                        self.filteredGroupDetails = []
                         print(error.localizedDescription)
                         self.nodata(false, message: error.localizedDescription)
                     }
@@ -1423,6 +1659,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                     students[i].isSelect = false
                                 }
                                 staffDetails = students
+                                filteredStaffDetails = students
                             }
                             tv.delegate = self
                             tv.dataSource = self
@@ -1434,6 +1671,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         }
                     }else{
                         DispatchQueue.main.async { [self] in
+                            filteredStaffDetails = []
                             selectSubject.isHidden = true
                             subjectDefaultLbl.isHidden = true
                             spaceView.isHidden = true
@@ -1443,8 +1681,11 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         }
                     }
                 case .failure(let error):
-                    print(error.localizedDescription)
-                    nodata(false, message: "Something went wrong")
+                    DispatchQueue.main.async { [self] in
+                        print(error.localizedDescription)
+                        filteredStaffDetails = []
+                        nodata(false, message: "Something went wrong")
+                    }
                 }
             }
         

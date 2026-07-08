@@ -499,7 +499,6 @@ public final class CreateTestViewModel {
 
                     let studentData: [String: Any] = [
                         "student_id": studentId,
-                        "attendance": "P",
                         "mark": activity.mark ?? "",
                         "remarks": activity.reason ?? ""
                     ]
