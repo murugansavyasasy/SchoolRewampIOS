@@ -121,7 +121,6 @@ class ParentCommunicationVc: UIViewController, AudioPlaybackDelegate1, Datepicke
         menuNameLbl.text = MenuStringFile.selectedMenuName
         fromDateLbl.text = "--From date--".translated()
         toDateLbl.text = "--To date--".translated()
-        backBtn.applyBackButton()
         RegisterCell()
         getCommunicationList()
         fromDateView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(SelectFromDate)))

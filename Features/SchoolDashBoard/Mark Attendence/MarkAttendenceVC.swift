@@ -122,7 +122,6 @@ class MarkAttendenceVC: UIViewController {
         get_Academic_year()
         SearchBar.placeholder = CommonStringFile.Search.translated()
         SearchBar.searchTextField.addDoneButton()
-        backBtnName.applyBackButton()
         addUnderline(to: MarkAttendanceBtn, unselectedButton: ReportsBtn)
         let AcademicTap = UITapGestureRecognizer(target: self, action: #selector(Select_Academic_Year))
         AcademicYearView.addGestureRecognizer(AcademicTap)

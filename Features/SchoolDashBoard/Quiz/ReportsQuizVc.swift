@@ -42,7 +42,6 @@ class ReportsQuizVc: UIViewController, SelectNotice, addQuestionAndSubmitedListD
         noDataImg.isHidden = true
         noDataLbl.isHidden = true
         searchView.placeholder = CommonStringFile.Search.translated()
-        searchView.applyRightTxt()
         searchView.backgroundImage = UIImage()
         searchView.barTintColor = .clear
         searchView.backgroundColor = .clear

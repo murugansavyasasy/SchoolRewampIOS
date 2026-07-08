@@ -64,7 +64,6 @@ class ViewLessonVC: UIViewController, SelectedId {
         SearchBar.layer.cornerRadius = 8
         SearchBar.searchTextField.layer.masksToBounds = true
         SearchBar.delegate = self
-        SearchBar.applyRightTxt()
         SearchBar.searchTextField.addDoneButton()
         TableView.showsVerticalScrollIndicator = false
         TableView.showsHorizontalScrollIndicator = false

@@ -519,14 +519,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
         placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
-        TextMsgTittle.applyRightTxt()
-        TxtTitle.applyRightTxt()
-        TextMsgTitleLbl.applyRightTxt()
-        voiceSetTitleLbl.applyRightTxt()
-        voiceTitleeTxt.applyRightTxt()
-        TextMsgContent.applyRightTxt()
-        informationcontent.applyRightTxt()
-        informationcontent.applyRightTxt(with: placeholderLabel)
         informationcontent.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !informationcontent.text.isEmpty // Hide if text exists
     }
@@ -557,12 +549,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
     
     func uiUUpdate(){
         emengencyCall.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
-        moveTextmessage.applyRightButton()
-        historyBtn.applyBackButton()
-        moveVoiceMessage.applyRightButton()
-        BackBtn.applyBackButton()
-        toTime.applyRightButton()
-        fromTime.applyRightButton()
+       
         //MARK: FSCalander View
         Timinglbl.text = defaultTime
         calanderOuter.isHidden = true

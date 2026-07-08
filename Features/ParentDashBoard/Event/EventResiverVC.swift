@@ -75,7 +75,6 @@ class EventResiverVC: UIViewController {
     private func setupUI() {
         searchBtn.isHidden = false
         searchbar.placeholder = CommonStringFile.Search.translated()
-        searchbar.applyRightTxt()
         searchbar.backgroundImage = UIImage()
         searchbar.barTintColor = .clear
         searchbar.backgroundColor = .clear

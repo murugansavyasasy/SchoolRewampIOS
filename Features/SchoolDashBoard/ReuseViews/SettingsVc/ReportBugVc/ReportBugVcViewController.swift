@@ -84,8 +84,6 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
         placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
-        BugsTextview.applyRightTxt()
-        BugsTextview.applyRightTxt(with: placeholderLabel)
         BugsTextview.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !BugsTextview.text.isEmpty // Hide if text exists
     }

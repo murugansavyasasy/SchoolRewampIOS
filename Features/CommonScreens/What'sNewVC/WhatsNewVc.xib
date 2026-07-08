@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WhatsNewVc" customModule="School_Chimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WhatsNewVc" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
             <connections>
                 <outlet property="NextIconBtn" destination="KkP-qm-3L1" id="17A-dg-Lgf"/>
                 <outlet property="PreviousIconBtn" destination="0Yl-jh-Yfr" id="bFn-dp-5mx"/>
@@ -32,11 +31,11 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sAG-UU-jXr" customClass="BottomRoundedView" customModule="School_Chimes" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="154.33333333333334"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sAG-UU-jXr" customClass="BottomRoundedView" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="213.33333333333334"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pCt-NF-3gB">
-                            <rect key="frame" x="10" y="69" width="373" height="65.333333333333314"/>
+                            <rect key="frame" x="10" y="128" width="373" height="65.333333333333314"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PRODUCT UPDATES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="njx-6O-Gi4">
                                     <rect key="frame" x="111.66666666666669" y="0.0" width="150" height="30"/>
@@ -66,7 +65,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q5G-XV-8zO">
-                    <rect key="frame" x="10" y="69" width="35" height="35"/>
+                    <rect key="frame" x="10" y="128" width="35" height="35"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="35" id="4uX-zq-pQE"/>
@@ -75,8 +74,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="23"/>
                     <color key="tintColor" systemColor="labelColor"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal">
-                        <imageReference key="image" image="chevron.left" catalog="system" symbolScale="large"/>
+                    <state key="normal" image="chevron.backward" catalog="system">
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
                     <connections>
@@ -84,10 +82,10 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vdy-cK-Mdp">
-                    <rect key="frame" x="0.0" y="154.33333333333331" width="393" height="663.66666666666674"/>
+                    <rect key="frame" x="0.0" y="213.33333333333331" width="393" height="570.66666666666674"/>
                     <subviews>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="30M-OV-qMR">
-                            <rect key="frame" x="0.0" y="5" width="393" height="513"/>
+                            <rect key="frame" x="0.0" y="5" width="393" height="420"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="GDp-1p-tpR">
                                 <size key="itemSize" width="128" height="128"/>
@@ -97,7 +95,7 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RVw-vZ-rlK">
-                            <rect key="frame" x="146.66666666666666" y="528" width="100" height="35"/>
+                            <rect key="frame" x="146.66666666666666" y="435" width="100" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="100" id="XJu-PX-UV6"/>
                                 <constraint firstAttribute="height" constant="35" id="mSN-ed-eJI"/>
@@ -109,7 +107,7 @@
                             </connections>
                         </button>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="GJK-rU-1YV">
-                            <rect key="frame" x="10" y="573" width="373" height="35"/>
+                            <rect key="frame" x="10" y="480" width="373" height="35"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="mnl-D6-1O3">
                                     <rect key="frame" x="0.0" y="0.0" width="70" height="35"/>
@@ -122,7 +120,7 @@
                                             </constraints>
                                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" image="chevron.left.chevron.left.dotted" catalog="system"/>
+                                            <state key="normal" image="chevron.backward.chevron.backward.dotted" catalog="system"/>
                                             <connections>
                                                 <action selector="skipPrevious:" destination="-1" eventType="touchUpInside" id="hnP-rQ-HSW"/>
                                             </connections>
@@ -171,7 +169,7 @@
                                             </constraints>
                                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" image="chevron.right.dotted.chevron.right" catalog="system"/>
+                                            <state key="normal" image="chevron.forward.dotted.chevron.forward" catalog="system"/>
                                             <connections>
                                                 <action selector="skipNext:" destination="-1" eventType="touchUpInside" id="P3e-tJ-JCA"/>
                                             </connections>
@@ -181,7 +179,7 @@
                             </subviews>
                         </stackView>
                         <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="J8h-0J-9vE">
-                            <rect key="frame" x="160" y="618" width="73" height="25.666666666666629"/>
+                            <rect key="frame" x="160" y="525" width="73" height="25.666666666666629"/>
                             <color key="pageIndicatorTintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="currentPageIndicatorTintColor" name="PrimeryColor"/>
                         </pageControl>
@@ -220,14 +218,14 @@
         </view>
     </objects>
     <resources>
-        <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <image name="chevron.left.chevron.left.dotted" catalog="system" width="128" height="112"/>
-        <image name="chevron.right.dotted.chevron.right" catalog="system" width="128" height="112"/>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
+        <image name="chevron.backward.chevron.backward.dotted" catalog="system" width="128" height="112"/>
+        <image name="chevron.forward.dotted.chevron.forward" catalog="system" width="128" height="112"/>
         <namedColor name="BackGroundClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="PrimeryColor">
-            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

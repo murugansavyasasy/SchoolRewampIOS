@@ -65,7 +65,7 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
         super.viewDidLoad()
         
         noRecordView.layer.cornerRadius = 8
-        BackBtn.applyBackButton()
+       
         BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: StaffDetails?.school_name ?? "")
         
         totalAbsentBtn.layer.cornerRadius = totalAbsentBtn.frame.height / 2

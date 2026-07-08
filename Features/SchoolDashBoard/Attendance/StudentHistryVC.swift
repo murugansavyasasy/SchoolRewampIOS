@@ -63,7 +63,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         target_type = TargetTypes.student
         circular_types =  circular_type.student
         StyleAndTranslater()
-        BackBtn.applyBackButton()
+        
         search.searchTextField.addDoneButton()
         search.searchTextField.borderStyle = .none
         search.backgroundImage = UIImage()

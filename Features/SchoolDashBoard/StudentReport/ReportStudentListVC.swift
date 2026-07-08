@@ -71,9 +71,8 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var Allstudents  = "All students".translated()
     override func viewDidLoad() {
         super.viewDidLoad()
-        BackBtn.applyBackButton()
+       
         BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
-        searchBar.applyRightTxt()
         getacadmicYr()
         uiConfic()
         let cvnib = UINib(nibName:CellConfingName.FiltersCvCell , bundle: nil)

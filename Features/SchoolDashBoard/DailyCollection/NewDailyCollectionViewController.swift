@@ -93,7 +93,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
 
         segmentName.selectedSegmentIndex = 0
         applyShadowAndCornerRadius(to: TodateView, cornerRadius: 6)
-        Backbtn.applyBackButton()
+        
         norecordLbl.isHidden = true
         
         let dateFormatter = DateFormatter()
@@ -263,7 +263,7 @@ extension UIButton {
     
     func configureAsBackButton(firstLine: String, secondLine: String) {
         let fullTitle = "\(firstLine)\n\(secondLine)"
-        let image = UIImage(systemName: "chevron.left")
+        let image = UIImage(systemName: "chevron.backward")
         self.setImage(image, for: .normal)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .left

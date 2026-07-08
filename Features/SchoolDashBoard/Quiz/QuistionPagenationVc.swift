@@ -25,10 +25,7 @@ class QuistionPagenationVc: UIViewController,UIPageViewControllerDataSource, UIP
     override func viewDidLoad() {
         super.viewDidLoad()
         toolbarTitle.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
-//        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-//        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft : .forceLeftToRight
-//        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right : .left
-//        BackBtn.imageView?.applyRTLFlip(Language == "ar")
+
         setupPageViewController()
         loadPages([page1, page2])
         if let firstPage = pages.first {

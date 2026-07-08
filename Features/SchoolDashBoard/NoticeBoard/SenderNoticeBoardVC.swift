@@ -303,10 +303,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
         placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
-        textview.applyRightTxt()
-        textview.applyRightTxt(with: placeholderLabel)
-        DescriptionLettersCount.applyRightTxt()
-        TitleTextfield.applyRightTxt()
         textview.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !textview.text.isEmpty // Hide if text exists
     }

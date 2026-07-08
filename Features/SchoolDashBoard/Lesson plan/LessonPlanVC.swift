@@ -34,8 +34,6 @@ class LessonPlanVC: UIViewController {
         super.viewDidLoad()
         
         UIupdate()
-        BackBtn.applyBackButton()
-        searchBar.applyRightTxt()
         searchBar.searchTextField.addDoneButton()
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.searchTextField.backgroundColor = .systemGray5

@@ -173,7 +173,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             cell.rightArrow.isHidden = false
             cell.arrowWidth.constant = 20
             cell.selectBtnWidth.constant = 0
-            cell.rightArrow.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+            cell.rightArrow.setImage(UIImage(systemName: "chevron.forward"), for: .normal)
         }
         return cell
     }
