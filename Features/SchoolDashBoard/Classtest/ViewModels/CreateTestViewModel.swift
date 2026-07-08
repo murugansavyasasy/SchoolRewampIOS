@@ -335,10 +335,12 @@ public final class CreateTestViewModel {
     }
     
     
-    func getMarkDetails(completion: @escaping (Result<[StudentMark], Error>) -> Void
+    func getMarkDetails(subject_id:String,completion: @escaping (Result<[StudentMark], Error>) -> Void
     ) {
+
         let params: [String: String] = [
             "class_test_id": class_test_id ?? "",
+            "class_test_subject_id":subject_id,
             "section_id": section_id ?? ""]
         
         APIService.shared.makeApi(
@@ -346,7 +348,7 @@ public final class CreateTestViewModel {
             parameters: params,
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
-            isBaseUrl: true
+            isBaseUrl: false
         ) { [weak self] (result: Result<TestMarkDetailsResponse<TestMarkData>, Error>) in
             
             guard let self = self else { return }
@@ -463,11 +465,11 @@ public final class CreateTestViewModel {
     }
     func createSaveRequest(
         studentRecords: [StudentMark],
+        isPublished: Bool,
         completion: @escaping (Result<Send_AttachmentResponse, Error>) -> Void
     ){
 
         var subjectsDict: [String: [String: Any]] = [:]
-
         for student in studentRecords {
 
             guard let studentId = student.student_id else {
@@ -536,7 +538,7 @@ public final class CreateTestViewModel {
         }
             
             APIService.shared.makeApi(
-                url: ServiceUrl.exam_api_exam_test_upload_marks,
+                url: isPublished ? ServiceUrl.exam_api_exam_test_publish_marks: ServiceUrl.exam_api_exam_test_upload_marks,
                 parameters: [
                     "class_test_id": class_test_id ?? "",
                     "section_id": section_id ?? "",
