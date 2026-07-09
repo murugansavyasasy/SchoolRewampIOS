@@ -10,13 +10,9 @@ import UIKit
 extension RecipientVc: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-
         let text = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
 
         guard !text.isEmpty else {
-
-            isSearching = false
-
             filteredGroupDetails = groupDetails ?? []
             filteredStaffDetails = staffDetails ?? []
 
@@ -28,8 +24,6 @@ extension RecipientVc: UISearchBarDelegate {
             return
         }
 
-        isSearching = true
-
         switch cv_itemsarry[segment_selected_index ?? 0] {
 
         case recipeint_tabBarName.Group:
@@ -37,7 +31,6 @@ extension RecipientVc: UISearchBarDelegate {
             filteredGroupDetails = (groupDetails ?? []).filter {
                 $0.name?.localizedCaseInsensitiveContains(text) == true
             }
-
             let isEmpty = filteredGroupDetails?.isEmpty
 
             nodataFound.image = ImageName.missing_file
@@ -49,7 +42,6 @@ extension RecipientVc: UISearchBarDelegate {
         case recipeint_tabBarName.Staff:
 
             filteredStaffDetails = (staffDetails ?? []).filter { staff in
-
                 staff.name?.localizedCaseInsensitiveContains(text) == true ||
                 staff.emp_id?.localizedCaseInsensitiveContains(text) == true ||
                 staff.designation?.localizedCaseInsensitiveContains(text) == true
@@ -153,7 +145,6 @@ class RecipientVc: UIViewController{
     var IsNoSubjectData: Bool = false
     var filteredGroupDetails: [GroupDetail]?
     var filteredStaffDetails: [GetStaffDetails]?
-    var isSearching = false
     override func viewDidLoad() {
         super.viewDidLoad()
         nodataFound.isHidden = true
@@ -272,16 +263,12 @@ class RecipientVc: UIViewController{
                searchBtn.setImage(UIImage(systemName: "magnifyingglass.circle.fill"), for: .normal)
 
            } else {
-
                searchbar.isHidden = true
                view.endEditing(true)
 
                searchBtn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
 
                searchbar.text = ""
-
-               isSearching = false
-
                filteredGroupDetails = groupDetails ?? []
                filteredStaffDetails = staffDetails ?? []
 
@@ -948,6 +935,7 @@ class RecipientVc: UIViewController{
     @IBAction func segment_action(_ sender: UISegmentedControl) {
         array_selectedId.removeAll()
         speficBtnName.isHidden = true
+        searchbar.text = ""
         segment_selected_index = sender.selectedSegmentIndex
         guard segment_selected_index ?? 0 >= 0, segment_selected_index ?? 0 < cv_itemsarry.count else {
             print("Invalid segment index.")
@@ -1202,7 +1190,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         switch cv_itemsarry[segment_selected_index ?? 0] {
 
         case recipeint_tabBarName.Group:
-            let data = isSearching ? filteredGroupDetails : groupDetails
+            let data = filteredGroupDetails
              let count = data?.count ?? 0
              return count == 0 ? 0 : count + 1
             
@@ -1215,7 +1203,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             return count == 0 ? 0 : count + 1
 
         case recipeint_tabBarName.Staff:
-            let data = isSearching ? filteredStaffDetails : staffDetails
+            let data = filteredStaffDetails
                let count = data?.count ?? 0
                return count == 0 ? 0 : count + 1
 
@@ -1226,7 +1214,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.RecipientTvCell, for: indexPath) as! RecipientTvCell
-        if indexPath.row == 0 {
+        if indexPath.row == 0{
             cell.cellLabel.text = "Select All"
             cell.createdOnlbl.isHidden = true
             let allSelected = isAllSelected()
@@ -1236,7 +1224,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         let dataIndex = indexPath.row - 1
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
-            let groups = isSearching ? filteredGroupDetails : (groupDetails ?? [])
+            let groups =  filteredGroupDetails
 
             if dataIndex < groups?.count ?? 0 {
 
@@ -1263,7 +1251,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
             }
         case recipeint_tabBarName.Staff:
-            let staffs = isSearching ? filteredStaffDetails : (staffDetails ?? [])
+            let staffs = filteredStaffDetails
 
             if dataIndex < staffs?.count ?? 0 {
 
@@ -1316,7 +1304,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
 //                updateSelectionArray(id: item.id, isSelected: item.isSelect)
 //            }
             
-            let groups = isSearching ? filteredGroupDetails : groupDetails
+            let groups = filteredGroupDetails
 
               if var item = groups?[dataIndex] {
 
@@ -1379,7 +1367,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             
         case recipeint_tabBarName.Staff:
 
-            let staffs = isSearching ? filteredStaffDetails : staffDetails
+            let staffs = filteredStaffDetails
 
                if var item = staffs?[dataIndex] {
 
@@ -1422,10 +1410,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     func isAllSelected() -> Bool {
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
-            let visibleItems = isSearching
-                 ? (filteredGroupDetails ?? [])
-                 : (groupDetails ?? [])
-
+            let visibleItems = filteredGroupDetails ?? []
              return !visibleItems.isEmpty &&
                     visibleItems.allSatisfy { $0.isSelect == true }
         case recipeint_tabBarName.Standard:
@@ -1433,9 +1418,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         case recipeint_tabBarName.Section_Student:
             return sectionsDetails?.allSatisfy { $0.isSelect == true } ?? false
         case recipeint_tabBarName.Staff:
-            let visibleItems = isSearching
-                       ? (filteredStaffDetails ?? [])
-                       : (staffDetails ?? [])
+            let visibleItems = filteredStaffDetails ?? []
 
                    return !visibleItems.isEmpty &&
                           visibleItems.allSatisfy { $0.isSelect == true }
@@ -1447,8 +1430,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         let selecting = !isAllSelected()
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
-            if isSearching {
-
                 filteredGroupDetails = filteredGroupDetails?.map {
                     var item = $0
                     item.isSelect = selecting
@@ -1459,17 +1440,10 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
 
                     return item
                 }
+            array_selectedId = groupDetails?
+                .filter { $0.isSelect == true }
+                .compactMap { $0.id } ?? []
 
-            } else {
-
-                groupDetails = groupDetails?.map {
-                    var item = $0
-                    item.isSelect = selecting
-                    return item
-                }
-
-                filteredGroupDetails = groupDetails
-            }
         case recipeint_tabBarName.Standard:
             standardDetails = standardDetails?.map {
                 var item = $0
@@ -1508,12 +1482,17 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 speficBtnName.isEnabled = false
             }
         case recipeint_tabBarName.Staff:
-            staffDetails = staffDetails?.map {
+            filteredStaffDetails = filteredStaffDetails?.map {
                 var item = $0
                 item.isSelect = selecting
+                if let index = staffDetails?.firstIndex(where: { $0.id == item.id }) {
+                    staffDetails?[index].isSelect = selecting
+                }
                 return item
             }
-            array_selectedId = selecting ? staffDetails?.compactMap { $0.id } ?? [] : []
+            array_selectedId = staffDetails?
+                .filter { $0.isSelect == true }
+                .compactMap { $0.id } ?? []
             
         default:
             break

@@ -90,7 +90,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click to&quot;SEND&quot; button  to send 📢 important Announcement from Entier School" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wIL-CB-NVg">
-                                                    <rect key="frame" x="0.0" y="164.33333333333334" width="388" height="0.0"/>
+                                                    <rect key="frame" x="0.0" y="182.66666666666666" width="388" height="0.0"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -297,15 +297,16 @@
                                         </button>
                                     </subviews>
                                 </stackView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hm7-rF-0Zg">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hm7-rF-0Zg">
                                     <rect key="frame" x="350.66666666666669" y="0.0" width="44.333333333333314" height="34.333333333333336"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="44.329999999999998" id="Ha5-O7-whp"/>
                                     </constraints>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain">
-                                        <imageReference key="image" image="magnifyingglass" catalog="system" symbolScale="medium"/>
-                                    </buttonConfiguration>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal">
+                                        <imageReference key="image" image="magnifyingglass" catalog="system" symbolScale="default"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="19" weight="bold"/>
+                                    </state>
                                     <connections>
                                         <action selector="searchBtnAct:" destination="-1" eventType="touchUpInside" id="hSl-ir-T1Q"/>
                                     </connections>
@@ -418,10 +419,10 @@
         <image name="missing-file" width="360" height="360"/>
         <image name="paperplane" catalog="system" width="128" height="119"/>
         <namedColor name="BackGroundClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.49799999594688416" green="0.10199999809265137" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="PrimeryColor">
-            <color red="0.49799999594688416" green="0.10199999809265137" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.41899999976158142" green="0.70800000429153442" blue="0.34599998593330383" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
