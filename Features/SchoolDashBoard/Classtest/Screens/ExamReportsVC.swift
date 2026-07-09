@@ -74,7 +74,7 @@ class ExamReportsVC: UIViewController, Datepicker {
        
     }
     private func setupUI() {
-        tittleLbl.text = "View Created Test Lists"
+        tittleLbl.text = "View Created Test List"
         acodomicdropDown.setShadow()
         dateView.setShadow()
         examCountLbl.layer.cornerRadius = examCountLbl.frame.height / 2
@@ -221,6 +221,7 @@ extension ExamReportsVC: UITableViewDataSource, UITableViewDelegate {
         let exam = class_test_details[indexPath.row]
         let sections = exam.sections ?? []
         let tint = accentColors[indexPath.row % accentColors.count]
+        cell.deleteBtn.isHidden = !(exam.can_delete ?? true)
         cell.deleteBtn.tag = indexPath.row
         cell.selectionStyle = .none
         

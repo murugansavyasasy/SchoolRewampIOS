@@ -227,6 +227,7 @@ struct StaffClassTest: Codable {
     var sent_by: String?
     var sent_on: String?
     var sections: [StaffSection]?
+    var can_delete : Bool?
 }
 
 struct StaffSection: Codable {
@@ -251,5 +252,6 @@ struct StaffActivity: Codable {
     var max_mark: String?
     var min_mark: String?
     var syllabus: String?
+    var can_delete : Bool?
 }
 

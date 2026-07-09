@@ -9,6 +9,8 @@ import UIKit
 
 class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
 
+    @IBOutlet weak var minMarkDefaultLbl: UILabel!
+    @IBOutlet weak var maxMarkDefaultLbl: UILabel!
     @IBOutlet public weak var exameDefaultLbl: UILabel!
     @IBOutlet public weak var badgeContainer: UIView!
     @IBOutlet public weak var badgeLabel: UILabel!
@@ -42,7 +44,11 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
     
     private func steupUi(){
         exameDefaultLbl.setRequiredText("ACTIVITY NAME")
+        maxMarkDefaultLbl.setRequiredText("MAX MARKS")
+        minMarkDefaultLbl.setRequiredText("MIN MARKS")
         exameDefaultLbl.font = .systemFont(ofSize: 10, weight: .bold)
+        minMarkDefaultLbl.font = .systemFont(ofSize: 10, weight: .bold)
+        maxMarkDefaultLbl.font = .systemFont(ofSize: 10, weight: .bold)
         styleTextView(examNameTextView)
         styleTextField(testDateTextField)
         styleTextField(maxMarksTextField)
@@ -121,9 +127,10 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
         maxMarksTextField.isEnabled = false
         minMarksTextField.isEnabled = false
         
-        removeButton.isHidden = false
+        removeButton.isHidden = !(activity.can_delete ?? false)
         fnButton.isEnabled = false
         anButton.isEnabled = false
+        
     }
     
     private func styleTextView(_ textView: UITextView) {

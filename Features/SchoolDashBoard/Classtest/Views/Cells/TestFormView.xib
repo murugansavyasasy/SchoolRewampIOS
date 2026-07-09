@@ -329,7 +329,9 @@
                 <outlet property="examNameTextView" destination="AiC-e9-Alr" id="6bt-ww-B55"/>
                 <outlet property="exameDefaultLbl" destination="7Sk-Nc-h2S" id="S4z-qb-9GG"/>
                 <outlet property="fnButton" destination="RRs-ox-3ee" id="nhY-la-Hof"/>
+                <outlet property="maxMarkDefaultLbl" destination="TjQ-Wm-9IH" id="3S3-MF-Cqb"/>
                 <outlet property="maxMarksTextField" destination="ehM-5z-NrJ" id="eJl-Cz-XwP"/>
+                <outlet property="minMarkDefaultLbl" destination="w5e-oU-5s1" id="V9E-VN-5GK"/>
                 <outlet property="minMarksTextField" destination="jdP-79-FsL" id="w95-Yt-vcp"/>
                 <outlet property="removeButton" destination="34f-9N-kyo" id="ZZT-Bl-BaY"/>
                 <outlet property="syllabusTextView" destination="nAY-V1-bLq" id="MiM-g7-ptJ"/>

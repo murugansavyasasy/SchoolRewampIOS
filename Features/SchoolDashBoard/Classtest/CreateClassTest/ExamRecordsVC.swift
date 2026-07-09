@@ -225,7 +225,7 @@ extension ExamRecordsVC: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         }
-        
+    
         cell.onRemoveTest = { [weak self] index, class_test_subject_id, section in
             self?.delete_activity_api(class_test_subject_id: class_test_subject_id)
         }

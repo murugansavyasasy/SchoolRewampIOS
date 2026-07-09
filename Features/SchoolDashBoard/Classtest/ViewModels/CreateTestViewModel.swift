@@ -197,9 +197,33 @@ public final class CreateTestViewModel {
         onSelectionChanged?()
     }
     
+//    public func isSubjectConfigured(subjectId: String, sectionId: String) -> Bool {
+//        guard let config = examConfigurations.first(where: { $0.subjectId == subjectId && $0.sectionId == sectionId }) else { return false }
+//        return !config.tests.isEmpty && config.tests.allSatisfy { !$0.activity_name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && /*!$0.syllabus.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.testDate.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&*/ !$0.maxMarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.minMarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+//    }
+    
     public func isSubjectConfigured(subjectId: String, sectionId: String) -> Bool {
-        guard let config = examConfigurations.first(where: { $0.subjectId == subjectId && $0.sectionId == sectionId }) else { return false }
-        return !config.tests.isEmpty && config.tests.allSatisfy { !$0.activity_name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty /*&& !$0.syllabus.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.testDate.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.maxMarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.minMarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty*/ }
+        guard let config = examConfigurations.first(where: {
+            $0.subjectId == subjectId && $0.sectionId == sectionId
+        }) else {
+            return false
+        }
+
+        return !config.tests.isEmpty && config.tests.allSatisfy { test in
+            let activity = test.activity_name.trimmingCharacters(in: .whitespacesAndNewlines)
+            let maxText = test.maxMarks.trimmingCharacters(in: .whitespacesAndNewlines)
+            let minText = test.minMarks.trimmingCharacters(in: .whitespacesAndNewlines)
+
+            guard !activity.isEmpty,
+                  !maxText.isEmpty,
+                  !minText.isEmpty,
+                  let max = Int(maxText),
+                  let min = Int(minText) else {
+                return false
+            }
+
+            return min < max
+        }
     }
     
     public func printExamConfigurationsJSON() {

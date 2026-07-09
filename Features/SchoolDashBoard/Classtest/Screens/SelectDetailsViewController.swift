@@ -276,7 +276,7 @@ extension SelectDetailsViewController: UITableViewDelegate, UITableViewDataSourc
                 if !config.tests.isEmpty && !viewModel.isSubjectConfigured(subjectId: subjectId, sectionId: sectionId) {
                     let alert = UIAlertController(
                         title: "Incomplete Details",
-                        message: "Please fill all the details  before adding another Activity.",
+                        message: "Please fill in all the details and ensure the minimum mark is less than the maximum mark before adding another activity.",
                         preferredStyle: .alert
                     )
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))

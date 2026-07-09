@@ -435,7 +435,7 @@ extension MarksCell {
         parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex)
     }
     @objc private func naTapped() {
-        markTxt.text = "N/A"
+        markTxt.text = "NA"
         let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
         delegate?.updateMark(row: rowIndex,
                              column: columnIndex,
