@@ -21,6 +21,7 @@ class CreateClassTestVc: UIViewController {
     @IBOutlet public weak var backButton: UIButton!
     @IBOutlet public weak var continueButton: UIButton!
     
+    @IBOutlet weak var addTestMarksBtnName: UIButton!
     @IBOutlet weak var acadmicYrBtnName: UIButton!
     // Stepper node outlets
     @IBOutlet public weak var step1Circle: UIView!
@@ -119,7 +120,8 @@ class CreateClassTestVc: UIViewController {
         backButton.layer.borderWidth = 1.0
         backButton.layer.borderColor = UIColor(red: 0.886, green: 0.909, blue: 0.941, alpha: 1.0).cgColor
         continueButton.layer.cornerRadius = 16
-        childContainerView.layer.cornerRadius = 16 
+        addTestMarksBtnName.layer.cornerRadius = 16
+        childContainerView.layer.cornerRadius = 16
         // Dynamic types
         stepProgressLabel.adjustsFontForContentSizeCategory = true
         stepTitleLabel.adjustsFontForContentSizeCategory = true
@@ -184,7 +186,7 @@ class CreateClassTestVc: UIViewController {
             stepSubtitleLabel.text = "Choose the class for which you want to create a test"
             backButton.isHidden = true
             continueButton.isHidden = false
-            
+            addTestMarksBtnName.isHidden = false
             let vc = SelectStandardViewController(nibName: "SelectStandardViewController", bundle: nil)
             vc.viewModel = viewModel
             transition(to: vc)
@@ -194,7 +196,7 @@ class CreateClassTestVc: UIViewController {
             stepSubtitleLabel.text = "Standard \(viewModel.selectedStandard?.name ?? "") — select one or more"
             backButton.isHidden = false
             continueButton.isHidden = false
-            
+            addTestMarksBtnName.isHidden = true
             let vc = SelectSectionsViewController(nibName: "SelectSectionsViewController", bundle: nil)
             vc.viewModel = viewModel
             transition(to: vc)
@@ -204,24 +206,24 @@ class CreateClassTestVc: UIViewController {
             stepSubtitleLabel.text = "Choose subjects to include in the test"
             backButton.isHidden = false
             continueButton.isHidden = false
-            
+            addTestMarksBtnName.isHidden = true
             let vc = SelectSubjectVc(nibName: "SelectSubjectVc", bundle: nil)
             vc.viewModel = viewModel
             transition(to: vc)
             
         case 4:
             stepTitleLabel.text = "Create Class Test"
-            stepSubtitleLabel.text = "Configure each exam"
+            stepSubtitleLabel.text = "Configure  Test"
             backButton.isHidden = false
             continueButton.isHidden = false
-            
+            addTestMarksBtnName.isHidden = true
             let vc = SelectDetailsViewController(nibName: "SelectDetailsViewController", bundle: nil)
             vc.viewModel = viewModel
             transition(to: vc)
             
         case 5:
             stepTitleLabel.text = "Create Class Test"
-            stepSubtitleLabel.text = "Almost done — confirm your entries"
+            stepSubtitleLabel.text = "Confirm your entries"
             
             
 //            if viewModel.exameName == "" {
@@ -231,6 +233,7 @@ class CreateClassTestVc: UIViewController {
 //            }else{
                 backButton.isHidden = true
                 continueButton.isHidden = true
+            addTestMarksBtnName.isHidden = true
                 let vc = SelectReviewViewController(nibName: "SelectReviewViewController", bundle: nil)
                 vc.viewModel = viewModel
                 
@@ -329,14 +332,16 @@ class CreateClassTestVc: UIViewController {
                     .trimmingCharacters(in: .whitespacesAndNewlines)
                     .isEmpty
             
-            let areSubjectsConfigured =
-                    !viewModel.examConfigurations.isEmpty &&
-                    viewModel.examConfigurations.allSatisfy {
-                        viewModel.isSubjectConfigured(
-                            subjectId: $0.subjectId,
-                            sectionId: $0.sectionId
-                        )
-                    }
+//            let areSubjectsConfigured =
+//                    !viewModel.examConfigurations.isEmpty &&
+//                    viewModel.examConfigurations.allSatisfy {
+//                        viewModel.isSubjectConfigured(
+//                            subjectId: $0.subjectId,
+//                            sectionId: $0.sectionId
+//                        )
+//                    }
+            
+            let areSubjectsConfigured = viewModel.examConfigurations.contains { viewModel.isSubjectConfigured(subjectId: $0.subjectId, sectionId: $0.sectionId) }
             
             let canContinue = isExamNameValid && areSubjectsConfigured
             
@@ -406,11 +411,16 @@ class CreateClassTestVc: UIViewController {
     }
     
     @IBAction func viewHistoryAct(_ sender: Any) {
-        
         let vc = ExamReportsVC()
         vc.viewModel = viewModel
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
     
+    @IBAction func addTestmarksBtnAct(_ sender: UIButton) {
+        let vc = ExamReportsVC()
+        vc.viewModel = viewModel
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
 }

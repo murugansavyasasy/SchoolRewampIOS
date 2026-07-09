@@ -122,7 +122,7 @@
                                                         <constraint firstAttribute="width" constant="14" id="khf-sb-b53"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" contentMode="left" text="TEST DATE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2QQ-55-FSb" userLabel="DateLabel">
+                                                <label opaque="NO" contentMode="left" text="ACTIVITY  DATE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2QQ-55-FSb" userLabel="DateLabel">
                                                     <rect key="frame" x="20" y="2" width="158.66666666666666" height="12"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                                     <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -327,8 +327,11 @@
                 <outlet property="badgeContainer" destination="sTY-Ke-I4J" id="kcn-iA-5bK"/>
                 <outlet property="badgeLabel" destination="ZNa-Ot-S1B" id="Wxt-b4-yr4"/>
                 <outlet property="examNameTextView" destination="AiC-e9-Alr" id="6bt-ww-B55"/>
+                <outlet property="exameDefaultLbl" destination="7Sk-Nc-h2S" id="S4z-qb-9GG"/>
                 <outlet property="fnButton" destination="RRs-ox-3ee" id="nhY-la-Hof"/>
+                <outlet property="maxMarkDefaultLbl" destination="TjQ-Wm-9IH" id="3S3-MF-Cqb"/>
                 <outlet property="maxMarksTextField" destination="ehM-5z-NrJ" id="eJl-Cz-XwP"/>
+                <outlet property="minMarkDefaultLbl" destination="w5e-oU-5s1" id="V9E-VN-5GK"/>
                 <outlet property="minMarksTextField" destination="jdP-79-FsL" id="w95-Yt-vcp"/>
                 <outlet property="removeButton" destination="34f-9N-kyo" id="ZZT-Bl-BaY"/>
                 <outlet property="syllabusTextView" destination="nAY-V1-bLq" id="MiM-g7-ptJ"/>
@@ -345,7 +348,7 @@
         <image name="doc.text" catalog="system" width="115" height="128"/>
         <image name="trash" catalog="system" width="117" height="128"/>
         <namedColor name="PrimeryColor">
-            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.49799999594688416" green="0.10199999809265137" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

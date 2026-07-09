@@ -59,7 +59,7 @@ class MarksTableViewCell: UITableViewCell {
         
         if let rollNo = student.roll_no, let admissionNo = student.admission_no {
             rollNoLabel.text = "Roll No: \(rollNo)"
-            admissNoLabel.text = "Admiss No: \(admissionNo)"
+            admissNoLabel.text = "Adm No: \(admissionNo)"
             rollNoLabel.isHidden = rollNo.isEmpty
             admissNoLabel.isHidden = admissionNo.isEmpty
         } else {
