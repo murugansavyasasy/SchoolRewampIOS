@@ -1,5 +1,12 @@
+//
+//  MarksCell.swift
+//  School Chimes
+//
+//  Created by Chandhru on 07/01/26.
+//
+
 import UIKit
-// MARK: - Enter Mark View Controller
+
 class EnterMarkVC: UIViewController, MarksCellDelegate {
     @IBOutlet weak var filtterBtn: UIButton!
     @IBOutlet weak var searchBtn: UIButton!
@@ -840,66 +847,79 @@ extension EnterMarkVC {
 extension EnterMarkVC {
     func moveToCell(row: Int, column: Int) {
 
-        guard row >= 0 && row < studentRecords.count,
-              column >= 0 && column < subjectColumns.count else { return }
+            guard row >= 0 && row < studentRecords.count,
+                  column >= 0 && column < subjectColumns.count else { return }
 
-        isNavigatingCells = true   // ✅ navigation start
+            isNavigatingCells = true
 
-        let indexPath = IndexPath(row: row, section: 0)
+            let indexPath = IndexPath(row: row, section: 0)
+            if !isRowFullyVisible(at: indexPath) {
+                listLableView.scrollToRow(at: indexPath, at: .none, animated: false)
+                listLableView.layoutIfNeeded()
+            }
 
-        if !(listLableView.indexPathsForVisibleRows?.contains(indexPath) ?? false) {
-            listLableView.scrollToRow(at: indexPath, at: .middle, animated: false)
-            listLableView.layoutIfNeeded()
+            guard let cell = listLableView.cellForRow(at: indexPath) as? MarksTableViewCell else {
+                isNavigatingCells = false
+                return
+            }
+
+            let colX = columnX(column)
+            let colWidth = getColumnWidth(column: column)
+
+            let visibleStart = cell.marksCollectionView.contentOffset.x
+            let visibleWidth = cell.marksCollectionView.bounds.width
+            let visibleEnd = visibleStart + visibleWidth
+            var newOffsetX = visibleStart
+
+            if colX < visibleStart {
+                newOffsetX = colX
+            } else if colX + colWidth > visibleEnd {
+                newOffsetX = colX + colWidth - visibleWidth
+            }
+
+            let maxOffsetX = max(0, cell.marksCollectionView.contentSize.width - visibleWidth)
+            newOffsetX = min(max(0, newOffsetX), maxOffsetX)
+
+            let offsetChanged = abs(newOffsetX - visibleStart) > 0.5
+
+            if offsetChanged {
+                cell.marksCollectionView.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
+                headerCollectionview.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
+            }
+
+            let itemPath = IndexPath(item: column, section: 0)
+            if let marksCell = cell.marksCollectionView.cellForItem(at: itemPath) as? MarksCell {
+                marksCell.markTxt.becomeFirstResponder()
+                isNavigatingCells = false
+            } else {
+                cell.marksCollectionView.layoutIfNeeded()
+                focusCell(in: cell.marksCollectionView, at: itemPath)
+            }
         }
 
-        guard let cell = listLableView.cellForRow(at: indexPath) as? MarksTableViewCell else {
-            isNavigatingCells = false
-            return
+ 
+        private func isRowFullyVisible(at indexPath: IndexPath) -> Bool {
+            guard listLableView.indexPathsForVisibleRows?.contains(indexPath) == true else {
+                return false
+            }
+
+            let rowRect = listLableView.rectForRow(at: indexPath)
+            let visibleTop = listLableView.contentOffset.y + listLableView.contentInset.top
+            let visibleBottom = listLableView.contentOffset.y
+                + listLableView.bounds.height
+                - listLableView.contentInset.bottom
+
+            return rowRect.minY >= visibleTop && rowRect.maxY <= visibleBottom
         }
 
-        let colX = columnX(column)
-        let colWidth = getColumnWidth(column: column)
-
-        let visibleStart = cell.marksCollectionView.contentOffset.x
-        let visibleWidth = cell.marksCollectionView.bounds.width
-        let visibleEnd = visibleStart + visibleWidth
-        var newOffsetX = visibleStart
-
-        if colX < visibleStart {
-            newOffsetX = colX
-        } else if colX + colWidth > visibleEnd {
-            newOffsetX = colX + colWidth - visibleWidth
+        private func focusCell(in collectionView: UICollectionView, at itemPath: IndexPath) {
+            collectionView.scrollToItem(at: itemPath, at: .centeredHorizontally, animated: false)
+            DispatchQueue.main.async {
+                collectionView.layoutIfNeeded()
+                (collectionView.cellForItem(at: itemPath) as? MarksCell)?.markTxt.becomeFirstResponder()
+                self.isNavigatingCells = false
+            }
         }
-
-        let maxOffsetX = max(0, cell.marksCollectionView.contentSize.width - visibleWidth)
-        newOffsetX = min(max(0, newOffsetX), maxOffsetX)
-
-        let offsetChanged = abs(newOffsetX - visibleStart) > 0.5
-
-        if offsetChanged {
-            cell.marksCollectionView.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
-            headerCollectionview.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
-        }
-
-        let itemPath = IndexPath(item: column, section: 0)
-        if let marksCell = cell.marksCollectionView.cellForItem(at: itemPath) as? MarksCell {
-            marksCell.markTxt.becomeFirstResponder()
-            isNavigatingCells = false   // ✅ navigation end
-        } else {
-            cell.marksCollectionView.layoutIfNeeded()
-            focusCell(in: cell.marksCollectionView, at: itemPath)
-        }
-    }
-
-    private func focusCell(in collectionView: UICollectionView, at itemPath: IndexPath) {
-        collectionView.scrollToItem(at: itemPath, at: .centeredHorizontally, animated: false)
-        DispatchQueue.main.async {
-            collectionView.layoutIfNeeded()
-            (collectionView.cellForItem(at: itemPath) as? MarksCell)?.markTxt.becomeFirstResponder()
-            self.isNavigatingCells = false   // ✅ navigation end (async path)
-        }
-    }
-
     private func columnX(_ column: Int) -> CGFloat {
         var x: CGFloat = 0
         for i in 0..<column {

@@ -1,6 +1,12 @@
+//
+//  MarksCell.swift
+//  School Chimes
+//
+//  Created by Chandhru on 07/01/26.
+//
+
 import UIKit
 
-// MARK: - Marks TableView Cell
 class MarksTableViewCell: UITableViewCell {
     
     @IBOutlet weak var nameWidth: NSLayoutConstraint!
@@ -12,7 +18,9 @@ class MarksTableViewCell: UITableViewCell {
     var studentIndex: Int = 0
     weak var parentVC: EnterMarkVC?
     private var isScrolling = false
-    weak var delegate:MarksCellDelegate?
+    private var configuredStudentId: String?
+    weak var delegate: MarksCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupCell()
@@ -26,6 +34,7 @@ class MarksTableViewCell: UITableViewCell {
         admissNoLabel.font = .systemFont(ofSize: 12, weight: .regular)
         rollNoLabel.textColor = .gray
         admissNoLabel.textColor = .gray
+        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
@@ -38,37 +47,43 @@ class MarksTableViewCell: UITableViewCell {
         marksCollectionView.bounces = true
         marksCollectionView.alwaysBounceHorizontal = true
         
+        marksCollectionView.dataSource = self
+        marksCollectionView.delegate = self
+        
         self.selectionStyle = .none
         self.backgroundColor = .white
     }
     
     func configure(student: StudentMark, index: Int, parentVC: EnterMarkVC, nameWidth: CGFloat) {
-        setStudentNameWithGender(label: studentNameLabel,student:student.student_name,gender:student.gender)
-        if let rollNo = student.roll_no,let admissionNo = student.admission_no{
+        setStudentNameWithGender(label: studentNameLabel, student: student.student_name, gender: student.gender)
+        
+        if let rollNo = student.roll_no, let admissionNo = student.admission_no {
             rollNoLabel.text = "Roll No: \(rollNo)"
             admissNoLabel.text = "Admiss No: \(admissionNo)"
             rollNoLabel.isHidden = rollNo.isEmpty
             admissNoLabel.isHidden = admissionNo.isEmpty
-            
-        }else{
+        } else {
             rollNoLabel.isHidden = true
             admissNoLabel.isHidden = true
         }
+        
         self.nameWidth.constant = nameWidth
         self.studentIndex = index
         self.parentVC = parentVC
-        marksCollectionView.dataSource = self
-        marksCollectionView.delegate = self
         marksCollectionView.tag = index
-        marksCollectionView.reloadData()
-        marksCollectionView.layoutIfNeeded()
-
-        marksCollectionView.setContentOffset(
-            CGPoint(x: parentVC.headerCollectionview.contentOffset.x, y: 0),
-            animated: false
-        )
+        
+        let newId = student.student_id ?? "\(index)"
+        if configuredStudentId != newId {
+            configuredStudentId = newId
+            marksCollectionView.reloadData()
+        }
     }
-    func setStudentNameWithGender(label: UILabel, student:String?,gender:String?) {
+
+    func refreshMarks() {
+        marksCollectionView.reloadData()
+    }
+    
+    func setStudentNameWithGender(label: UILabel, student: String?, gender: String?) {
 
         let name = student ?? ""
         let gender = gender?.first?.uppercased()
@@ -81,14 +96,10 @@ class MarksTableViewCell: UITableViewCell {
         }
 
         let attr = NSMutableAttributedString(string: fullText)
-
-        // Name color
         let nameRange = (fullText as NSString).range(of: name)
         attr.addAttribute(.foregroundColor,
                           value: UIColor.label,
                           range: nameRange)
-
-        // Gender color
         if let gender = gender {
             let genderText = "(\(gender))"
             let genderRange = (fullText as NSString).range(of: genderText)
@@ -126,7 +137,7 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
         var mark = ""
         var changeMark: String? = nil
         var hasFlaggedIssue = false
-        var is_edit : Bool?
+        var is_edit: Bool?
         if let subject = student.marks?.first(where: { $0.subject_id == column.subjectId }),
            let activity = subject.activities?.first(where: { $0.id == column.activityId }) {
             mark = activity.mark ?? ""
@@ -259,6 +270,7 @@ extension MarksTableViewCell: UIPopoverPresentationControllerDelegate {
         return .none
     }
 }
+
 extension MarksTableViewCell: MarksCellDelegate {
     func updateMark(row: Int,
                    column: Int,
