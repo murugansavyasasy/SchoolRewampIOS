@@ -4,6 +4,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     @IBOutlet weak var filtterBtn: UIButton!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var subjectHeight: NSLayoutConstraint!
     @IBOutlet weak var nameWidth: NSLayoutConstraint!
     @IBOutlet weak var headerCollectionview: UICollectionView!
     @IBOutlet weak var nodataImg: UIImageView!
@@ -17,6 +18,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     @IBOutlet weak var aiIndimationLbl: UILabel!
     var examId: String?
     private var isSyncing = false
+    private var isNavigatingCells = false
     var editedMarks: [String: [String: String]] = [:]
     var payload: [String: Any]?
     var studentRecords: [StudentMark] = []
@@ -661,30 +663,57 @@ extension EnterMarkVC: UICollectionViewDataSource, UICollectionViewDelegateFlowL
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        let height: CGFloat = 70
         let column = subjectColumns[indexPath.item]
 
-        var textWidths: [CGFloat] = []
-        if let subjectName = column.subjectName {
-            let font = UIFont.systemFont(ofSize: 12, weight: .regular)
-            textWidths.append(subjectName.uppercased().width(usingFont: font))
-        }
-        if let displayName = column.displayName {
-            let font = UIFont.systemFont(ofSize: 13, weight: .medium)
-            textWidths.append(displayName.width(usingFont: font))
-        }
-        if let max = column.maxMarks {
-            let font = UIFont.systemFont(ofSize: 12, weight: .regular)
-            textWidths.append("Max: \(max)".width(usingFont: font))
-        }
-
-        let padding: CGFloat = 16
         let minWidth: CGFloat = 110
+        let maxWidth: CGFloat = 120
+        let padding: CGFloat = 16
 
-        let maxTextWidth = textWidths.max() ?? minWidth
-        let finalWidth = max(maxTextWidth + padding, minWidth)
+        let headerFont = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        let subjectFont = UIFont.systemFont(ofSize: 12, weight: .regular)
+        let maxFont = UIFont.systemFont(ofSize: 12, weight: .regular)
 
-        return CGSize(width: finalWidth, height: height)
+        var widths: [CGFloat] = []
+
+        if let title = column.displayName {
+            widths.append(title.width(usingFont: headerFont))
+        }
+
+        if let subject = column.subjectName {
+            widths.append(subject.uppercased().width(usingFont: subjectFont))
+        }
+
+        if let max = column.maxMarks {
+            widths.append("Max: \(max)".width(usingFont: maxFont))
+        }
+
+        let requiredWidth = (widths.max() ?? minWidth) + padding
+        let finalWidth = min(max(requiredWidth, minWidth), maxWidth)
+
+        // Header height (3 lines max)
+        var headerHeight = headerFont.lineHeight
+
+        if let title = column.displayName {
+
+            let rect = (title as NSString).boundingRect(
+                with: CGSize(width: finalWidth - padding,
+                             height: .greatestFiniteMagnitude),
+                options: [.usesLineFragmentOrigin, .usesFontLeading],
+                attributes: [.font: headerFont],
+                context: nil
+            )
+
+            headerHeight = min(ceil(rect.height), headerFont.lineHeight * 3)
+        }
+
+        let height =
+            headerHeight +
+            subjectFont.lineHeight +
+            maxFont.lineHeight +
+            24
+        subjectHeight.constant = height
+
+        return CGSize(width: finalWidth, height: max(70, height))
     }
 
     
@@ -814,11 +843,19 @@ extension EnterMarkVC {
         guard row >= 0 && row < studentRecords.count,
               column >= 0 && column < subjectColumns.count else { return }
 
-        let indexPath = IndexPath(row: row, section: 0)
-        listLableView.scrollToRow(at: indexPath, at: .middle, animated: false)
-        listLableView.layoutIfNeeded()
+        isNavigatingCells = true   // ✅ navigation start
 
-        guard let cell = listLableView.cellForRow(at: indexPath) as? MarksTableViewCell else { return }
+        let indexPath = IndexPath(row: row, section: 0)
+
+        if !(listLableView.indexPathsForVisibleRows?.contains(indexPath) ?? false) {
+            listLableView.scrollToRow(at: indexPath, at: .middle, animated: false)
+            listLableView.layoutIfNeeded()
+        }
+
+        guard let cell = listLableView.cellForRow(at: indexPath) as? MarksTableViewCell else {
+            isNavigatingCells = false
+            return
+        }
 
         let colX = columnX(column)
         let colWidth = getColumnWidth(column: column)
@@ -845,24 +882,24 @@ extension EnterMarkVC {
         }
 
         let itemPath = IndexPath(item: column, section: 0)
-        cell.marksCollectionView.layoutIfNeeded()
-        focusCell(in: cell.marksCollectionView, at: itemPath)
-    }
-    private func focusCell(in collectionView: UICollectionView, at itemPath: IndexPath) {
-        DispatchQueue.main.async {
-            collectionView.layoutIfNeeded()
-            DispatchQueue.main.async {
-                if let marksCell = collectionView.cellForItem(at: itemPath) as? MarksCell {
-                    marksCell.markTxt.becomeFirstResponder()
-                } else {
-                    collectionView.scrollToItem(at: itemPath, at: .centeredHorizontally, animated: false)
-                    DispatchQueue.main.async {
-                        (collectionView.cellForItem(at: itemPath) as? MarksCell)?.markTxt.becomeFirstResponder()
-                    }
-                }
-            }
+        if let marksCell = cell.marksCollectionView.cellForItem(at: itemPath) as? MarksCell {
+            marksCell.markTxt.becomeFirstResponder()
+            isNavigatingCells = false   // ✅ navigation end
+        } else {
+            cell.marksCollectionView.layoutIfNeeded()
+            focusCell(in: cell.marksCollectionView, at: itemPath)
         }
     }
+
+    private func focusCell(in collectionView: UICollectionView, at itemPath: IndexPath) {
+        collectionView.scrollToItem(at: itemPath, at: .centeredHorizontally, animated: false)
+        DispatchQueue.main.async {
+            collectionView.layoutIfNeeded()
+            (collectionView.cellForItem(at: itemPath) as? MarksCell)?.markTxt.becomeFirstResponder()
+            self.isNavigatingCells = false   // ✅ navigation end (async path)
+        }
+    }
+
     private func columnX(_ column: Int) -> CGFloat {
         var x: CGFloat = 0
         for i in 0..<column {
@@ -870,7 +907,6 @@ extension EnterMarkVC {
         }
         return x
     }
-
 
     func moveToNextRow(row: Int, column: Int) {
         let nextRow = row + 1
@@ -880,7 +916,7 @@ extension EnterMarkVC {
             print("⚠️ Already at last row")
         }
     }
-    
+
     func moveToPreviousRow(row: Int, column: Int) {
         let prevRow = row - 1
         if prevRow >= 0 {
@@ -889,7 +925,7 @@ extension EnterMarkVC {
             print("⚠️ Already at first row")
         }
     }
-    
+
     func moveToNextColumn(row: Int, column: Int) {
         let nextCol = column + 1
         if nextCol < subjectColumns.count {
@@ -898,7 +934,7 @@ extension EnterMarkVC {
             print("⚠️ Already at last column")
         }
     }
-    
+
     func moveToPreviousColumn(row: Int, column: Int) {
         let prevCol = column - 1
         if prevCol >= 0 {
@@ -907,27 +943,28 @@ extension EnterMarkVC {
             print("⚠️ Already at first column")
         }
     }
+
     private func getColumnWidth(column: Int) -> CGFloat {
         guard column < subjectColumns.count else { return 110 }
-        
+
         let col = subjectColumns[column]
         var widths: [CGFloat] = []
-        
+
         if let display = col.displayName {
             let font = UIFont.systemFont(ofSize: 13, weight: .medium)
             widths.append(display.width(usingFont: font))
         }
-        
+
         if let max = col.maxMarks {
             let font = UIFont.systemFont(ofSize: 12, weight: .regular)
             widths.append("Max: \(max)".width(usingFont: font))
         }
-        
+
         let padding: CGFloat = 16
         let minWidth: CGFloat = 110
         let maxTextWidth = widths.max() ?? minWidth
         let finalWidth = max(maxTextWidth + padding, minWidth)
-        
+
         return finalWidth
     }
 }
@@ -969,8 +1006,9 @@ extension EnterMarkVC: UISearchBarDelegate, UIPopoverPresentationControllerDeleg
     }
 
     @objc func keyboardWillHide(_ notification: Notification) {
+        guard !isNavigatingCells else { return }
+        
         isKeyboardVisible = false
-
         UIView.animate(withDuration: 0.2) {
             self.listLableView.contentInset.bottom = 0
             self.listLableView.scrollIndicatorInsets.bottom = 0

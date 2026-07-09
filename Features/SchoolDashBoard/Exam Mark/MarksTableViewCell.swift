@@ -61,6 +61,12 @@ class MarksTableViewCell: UITableViewCell {
         marksCollectionView.delegate = self
         marksCollectionView.tag = index
         marksCollectionView.reloadData()
+        marksCollectionView.layoutIfNeeded()
+
+        marksCollectionView.setContentOffset(
+            CGPoint(x: parentVC.headerCollectionview.contentOffset.x, y: 0),
+            animated: false
+        )
     }
     func setStudentNameWithGender(label: UILabel, student:String?,gender:String?) {
 
@@ -148,28 +154,36 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let parentVC = parentVC else { return CGSize(width: 120, height: 74) }
-        
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        guard let parentVC = parentVC else {
+            return CGSize(width: 120, height: 74)
+        }
+
         let column = parentVC.subjectColumns[indexPath.item]
-        
+
         var widths: [CGFloat] = []
-        
+
         if let display = column.displayName {
             let font = UIFont.systemFont(ofSize: 13, weight: .medium)
             widths.append(display.width(usingFont: font))
         }
-        
+
         if let max = column.maxMarks {
             let font = UIFont.systemFont(ofSize: 12, weight: .regular)
             widths.append("Max: \(max)".width(usingFont: font))
         }
-        
+
         let padding: CGFloat = 16
         let minWidth: CGFloat = 110
+        let maxWidth: CGFloat = 120
+
         let maxTextWidth = widths.max() ?? minWidth
-        let finalWidth = max(maxTextWidth + padding, minWidth)
-        
+
+        let finalWidth = min(max(maxTextWidth + padding, minWidth), maxWidth)
+
         return CGSize(width: finalWidth, height: 74)
     }
     

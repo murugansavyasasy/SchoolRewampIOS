@@ -201,7 +201,7 @@ extension ExamRecordsVC: UITableViewDelegate, UITableViewDataSource {
         
         cell.onToggleExpand = { [weak self] in
             guard let self = self else { return }
-            
+
             let previousExpanded = self.expandedIndexPath
             
             if self.expandedIndexPath == indexPath {
