@@ -56,7 +56,7 @@ class MarksCell: UICollectionViewCell {
 
         let buttons: [UIButton] = [
             createKeyButton(title: "AB", action: #selector(abTapped)),
-            createKeyButton(title: "N/A", action: #selector(naTapped)),
+            createKeyButton(title: "NA", action: #selector(naTapped)),
             createKeyButton(imageName: "arrow.up", action: #selector(upTapped)),
             createKeyButton(imageName: "arrow.down", action: #selector(downTapped)),
             createKeyButton(imageName: "arrow.left", action: #selector(leftTapped)),
@@ -439,7 +439,7 @@ extension MarksCell {
         let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
         delegate?.updateMark(row: rowIndex,
                              column: columnIndex,
-                             value: "N/A",
+                             value: "NA",
                              reson: "Not Applicable",
                              subjectName: subjectName)
         parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex)
