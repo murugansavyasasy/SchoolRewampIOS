@@ -89,7 +89,7 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
         testTitleLabel.text = "Activity \(index+1)"
         
         removeButton.isHidden = !showRemoveButton
-        examNameTextView.text = details.examName
+        examNameTextView.text = details.activity_name
         testDateTextField.text = details.testDate
         maxMarksTextField.text = details.maxMarks
         minMarksTextField.text = details.minMarks
@@ -246,7 +246,7 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
     
     // MARK: - UITextViewDelegate
     public func textViewDidChange(_ textView: UITextView) {
-        testDetails.examName = examNameTextView.text ?? ""
+        testDetails.activity_name = examNameTextView.text ?? ""
         testDetails.syllabus = syllabusTextView.text ?? ""
         notifyDataChanged()
         onHeightChanged?()

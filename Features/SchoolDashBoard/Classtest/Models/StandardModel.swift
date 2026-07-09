@@ -83,7 +83,7 @@ public struct TestDetails: Codable {
     public var minMarks: String
     public var syllabus: String
     public var activity_name : String
-    public init(id: UUID = UUID(), examName: String = "", testDate: String = "", session: String = "FN", maxMarks: String = "100", minMarks: String = "35", syllabus: String = "",activity_name: String = "") {
+    public init(id: UUID = UUID(), examName: String = "", testDate: String = "", session: String = "FN", maxMarks: String = "", minMarks: String = "", syllabus: String = "",activity_name: String = "") {
         self.id = id
         self.examName = examName
         self.testDate = testDate

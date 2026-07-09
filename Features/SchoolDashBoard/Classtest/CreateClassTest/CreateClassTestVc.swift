@@ -332,14 +332,16 @@ class CreateClassTestVc: UIViewController {
                     .trimmingCharacters(in: .whitespacesAndNewlines)
                     .isEmpty
             
-            let areSubjectsConfigured =
-                    !viewModel.examConfigurations.isEmpty &&
-                    viewModel.examConfigurations.allSatisfy {
-                        viewModel.isSubjectConfigured(
-                            subjectId: $0.subjectId,
-                            sectionId: $0.sectionId
-                        )
-                    }
+//            let areSubjectsConfigured =
+//                    !viewModel.examConfigurations.isEmpty &&
+//                    viewModel.examConfigurations.allSatisfy {
+//                        viewModel.isSubjectConfigured(
+//                            subjectId: $0.subjectId,
+//                            sectionId: $0.sectionId
+//                        )
+//                    }
+            
+            let areSubjectsConfigured = viewModel.examConfigurations.contains { viewModel.isSubjectConfigured(subjectId: $0.subjectId, sectionId: $0.sectionId) }
             
             let canContinue = isExamNameValid && areSubjectsConfigured
             

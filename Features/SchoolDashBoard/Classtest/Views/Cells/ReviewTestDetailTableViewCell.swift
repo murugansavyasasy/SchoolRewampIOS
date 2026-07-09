@@ -2,6 +2,7 @@ import UIKit
 
 public final class ReviewTestDetailTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var infoFullStack: UIStackView!
     // MARK: - IBOutlets
     @IBOutlet public weak var badgeContainer: UIView!
     @IBOutlet public weak var badgeLabel: UILabel!
@@ -64,10 +65,9 @@ public final class ReviewTestDetailTableViewCell: UITableViewCell {
     // MARK: - Configuration
     public func configure(with test: TestDetails, index: Int) {
         badgeLabel.text = "\(index + 1)"
-        titleLabel.text = test.activity_name.isEmpty ? "Test \(index + 1)" : test.activity_name
+        titleLabel.text = test.activity_name.isEmpty ? "" : test.activity_name
         
         sessionLabel.text = test.session
-        
         dateValueLabel.text = test.testDate.isEmpty ? "" : test.testDate
         maxMarksValueLabel.text = test.maxMarks
         minMarksValueLabel.text = test.minMarks

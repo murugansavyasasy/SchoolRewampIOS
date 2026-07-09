@@ -41,7 +41,7 @@
                             </constraints>
                         </tableView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bottomActionsContainer">
-                            <rect key="frame" x="0.0" y="370" width="393" height="72"/>
+                            <rect key="frame" x="0.0" y="350" width="393" height="72"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="actionsStack">
                                     <rect key="frame" x="16" y="8" width="361" height="48"/>
@@ -89,7 +89,7 @@
                         <constraint firstItem="bottomActionsContainer" firstAttribute="leading" secondItem="EQY-m5-oul" secondAttribute="leading" id="APa-b5-K7m"/>
                         <constraint firstAttribute="trailing" secondItem="reviewTableView" secondAttribute="trailing" id="HRA-EI-XKG"/>
                         <constraint firstItem="reviewTableView" firstAttribute="leading" secondItem="EQY-m5-oul" secondAttribute="leading" id="Jxk-VE-wmX"/>
-                        <constraint firstItem="bottomActionsContainer" firstAttribute="top" secondItem="reviewTableView" secondAttribute="bottom" constant="20" id="as4-Ss-iKJ"/>
+                        <constraint firstItem="bottomActionsContainer" firstAttribute="top" secondItem="reviewTableView" secondAttribute="bottom" id="as4-Ss-iKJ"/>
                         <constraint firstItem="Obr-C8-iOG" firstAttribute="top" secondItem="EQY-m5-oul" secondAttribute="top" constant="15" id="hlq-0k-RRR"/>
                         <constraint firstItem="reviewTableView" firstAttribute="top" secondItem="Obr-C8-iOG" secondAttribute="bottom" constant="12" id="llF-XL-lls"/>
                         <constraint firstItem="Obr-C8-iOG" firstAttribute="leading" secondItem="EQY-m5-oul" secondAttribute="leading" constant="15" id="tbr-D9-J5b"/>
@@ -110,7 +110,7 @@
     </objects>
     <resources>
         <namedColor name="PrimeryColor">
-            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.49799999594688416" green="0.10199999809265137" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

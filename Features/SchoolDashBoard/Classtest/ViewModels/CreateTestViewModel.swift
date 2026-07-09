@@ -133,8 +133,8 @@ public final class CreateTestViewModel {
         if currentStep == 3 && selectedSubjects.isEmpty {
             return false // Must select at least one subject
         }
-        if currentStep == 4 && (examConfigurations.isEmpty || !examConfigurations.allSatisfy { isSubjectConfigured(subjectId: $0.subjectId, sectionId: $0.sectionId) }) {
-            return false // Must configure all subjects
+        if currentStep == 4 && !examConfigurations.contains(where: { isSubjectConfigured(subjectId: $0.subjectId, sectionId: $0.sectionId) }) {
+            return false // Must configure at least one subject
         }
         
         if currentStep < 5 {
@@ -179,7 +179,7 @@ public final class CreateTestViewModel {
         guard let idx = examConfigurations.firstIndex(where: { $0.subjectId == subjectId && $0.sectionId == sectionId }) else { return }
         // Create another test with incremental default name "Test X"
         let nextIndex = examConfigurations[idx].tests.count + 1
-        examConfigurations[idx].tests.append(TestDetails(examName: "", maxMarks: "100", minMarks: "35"))
+        examConfigurations[idx].tests.append(TestDetails(examName: "", maxMarks: "", minMarks: ""))
         onSelectionChanged?()
     }
     
@@ -199,13 +199,22 @@ public final class CreateTestViewModel {
     
     public func isSubjectConfigured(subjectId: String, sectionId: String) -> Bool {
         guard let config = examConfigurations.first(where: { $0.subjectId == subjectId && $0.sectionId == sectionId }) else { return false }
-        return !config.tests.isEmpty && config.tests.allSatisfy { !$0.examName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty /*&& !$0.syllabus.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.testDate.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.maxMarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.minMarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty*/ }
+        return !config.tests.isEmpty && config.tests.allSatisfy { !$0.activity_name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty /*&& !$0.syllabus.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.testDate.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.maxMarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !$0.minMarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty*/ }
     }
     
     public func printExamConfigurationsJSON() {
         var requestItems: [ExamRequestItem] = []
         for config in examConfigurations {
             for test in config.tests {
+                // Skip if test is empty/unconfigured
+                if test.examName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+                   test.syllabus.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+                   test.testDate.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+                   test.maxMarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+                   test.minMarks.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    continue
+                }
+                
                 let maxVal = Int(test.maxMarks.trimmingCharacters(in: .whitespacesAndNewlines)) ?? 100
                 let minVal = Int(test.minMarks.trimmingCharacters(in: .whitespacesAndNewlines)) ?? 35
                 
@@ -246,6 +255,7 @@ public final class CreateTestViewModel {
             print("Failed to encode exam configurations to JSON: \(error)")
         }
     }
+    
     
     // MARK: - Subject Merging Helpers
     public func getMergeableConfig(for subjectName: String, currentSectionId: String) -> SubjectExamConfig? {
