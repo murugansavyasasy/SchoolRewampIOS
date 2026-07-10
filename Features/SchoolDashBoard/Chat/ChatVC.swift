@@ -81,8 +81,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         placeholderLabel.text = TexviewStringFile.Enter_Chat_Description.translated()
         placeholderLabel.font = MessgeTextview.font
         placeholderLabel.textColor = .lightGray
-        placeholderLabel.sizeToFit()
-        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        placeholderLabel?.positionAsPlaceholder(in: MessgeTextview)
        
         MessgeTextview.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !MessgeTextview.text.isEmpty // Hide if text exists

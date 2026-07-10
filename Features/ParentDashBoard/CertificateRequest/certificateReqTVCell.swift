@@ -76,8 +76,7 @@ class certificateReqTVCell: UITableViewCell,UITextViewDelegate {
         placeholderLabel.text = placeHolderName
         placeholderLabel.font = ResontextView.font
         placeholderLabel.textColor = .lightGray
-        placeholderLabel.sizeToFit()
-        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        placeholderLabel.positionAsPlaceholder(in: ResontextView)
         ResontextView.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !ResontextView.text.isEmpty // Hide if text exists
     }

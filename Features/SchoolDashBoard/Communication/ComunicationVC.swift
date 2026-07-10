@@ -517,8 +517,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         placeholderLabel.text =  CommonStringFile.Description.translated()
         placeholderLabel.font = informationcontent.font
         placeholderLabel.textColor = .lightGray
-        placeholderLabel.sizeToFit()
-        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        placeholderLabel?.positionAsPlaceholder(in: informationcontent)
         informationcontent.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !informationcontent.text.isEmpty // Hide if text exists
     }

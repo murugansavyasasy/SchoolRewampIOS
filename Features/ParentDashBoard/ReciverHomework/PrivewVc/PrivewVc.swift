@@ -196,8 +196,8 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         titleLbl.text = titleString
         discreption.text = descriptionString
         discreption.isScrollEnabled = false
-        discreption.textContainerInset = .zero
-        discreption.textContainer.lineFragmentPadding = 0
+//        discreption.textContainerInset = .zero
+//        discreption.textContainer.lineFragmentPadding = 0
         dateLbl.text =  MenuStringFile.posted_on.translated() + "\(displayText)"
         postedByLbl.text = MenuStringFile.Posted_By.translated() + " - " + "\(postedBy ?? "")"
         
@@ -212,13 +212,22 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
             doneHomeWorkBtnName.isHidden = isCompleted
         }
         
-        backBtn.setTitle(subject_name ?? "", for: .normal)
-        backBtn.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
-        backBtn.tintColor = .white
-        backBtn.semanticContentAttribute = .forceLeftToRight
-        backBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 3, bottom: 0, right: 8)
-        backBtn.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: -8)
+        var config = UIButton.Configuration.plain()
+
+        config.image = UIImage(systemName: "chevron.backward")
+        config.imagePadding = 8    // Space between image and title
+        config.contentInsets = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: 3,
+            bottom: 0,
+            trailing: 0
+        )
+
+        backBtn.configuration = config
+        backBtn.semanticContentAttribute = .unspecified
         backBtn.contentHorizontalAlignment = .leading
+        backBtn.setTitle(subject_name, for: .normal)
+        backBtn.tintColor = .white
         backBtn.titleLabel?.numberOfLines = 0
         backBtn.titleLabel?.lineBreakMode = .byWordWrapping
         

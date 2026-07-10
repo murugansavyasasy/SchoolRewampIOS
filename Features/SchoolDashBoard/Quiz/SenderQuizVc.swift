@@ -93,12 +93,11 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         placeholderLabel.text = CommonStringFile.Description.translated()
         placeholderLabel.font = discriptionsTextFild.font
         placeholderLabel.textColor = .lightGray
-        placeholderLabel.sizeToFit()
-        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8)
+        placeholderLabel.positionAsPlaceholder(in: discriptionsTextFild)
         discriptionsTextFild.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !discriptionsTextFild.text.isEmpty
     }
-
+    
     @IBAction func backBtnAct(_ sender: Any) {
         dismiss(animated: true)
     }

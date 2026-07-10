@@ -183,7 +183,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             attachments.removeAll()
             Attachmentview.imageCollectionview.reloadData()
             editId = nil
-            NextBtn.setTitle("Next", for: .normal)
+            NextBtn.setTitle("Next".translated(), for: .normal)
             return
         }
     
@@ -206,7 +206,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         setInitialDate(notice.visible_from,notice.visible_to)
         Attachmentview.imageCollectionview.reloadData()
         editId = notice.id
-        NextBtn.setTitle("Update", for: .normal)
+        NextBtn.setTitle("Update".translated(), for: .normal)
     }
 
     func imageSelection(){
@@ -296,15 +296,25 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
 
 
 
+//    func setupPlaceholder() {
+//        placeholderLabel = UILabel()
+//        placeholderLabel.text = CommonStringFile.Description.translated()
+//        placeholderLabel.font = textview.font
+//        placeholderLabel.textColor = .lightGray
+//        placeholderLabel.sizeToFit()
+//        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+//        textview.addSubview(placeholderLabel)
+//        placeholderLabel.isHidden = !textview.text.isEmpty // Hide if text exists
+//    }
+
     func setupPlaceholder() {
         placeholderLabel = UILabel()
         placeholderLabel.text = CommonStringFile.Description.translated()
         placeholderLabel.font = textview.font
         placeholderLabel.textColor = .lightGray
-        placeholderLabel.sizeToFit()
-        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        placeholderLabel.positionAsPlaceholder(in: textview)
         textview.addSubview(placeholderLabel)
-        placeholderLabel.isHidden = !textview.text.isEmpty // Hide if text exists
+        placeholderLabel.isHidden = !textview.text.isEmpty
     }
     
     func StyleAndTranslater(){
@@ -433,7 +443,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             SendAttachmentStringFile.visible_from : user_inputs.FromDate,
             SendAttachmentStringFile.visible_to : user_inputs.ToDate
         ]
-        if sender.titleLabel?.text == "Update"{
+        if sender.titleLabel?.text == "Update".translated(){
             let com = commonApi_forSending()
             params[SendAttachmentStringFile.id] = editId
             sendAttachmentFlow(via: com, url: ServiceUrl.admin_api_notice_board_update, Common_request_params: params, isBaseUrl: true)
@@ -476,7 +486,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                     attachments.removeAll()
                     Attachmentview.imageCollectionview.reloadData()
                     editId = nil
-                    NextBtn.setTitle("Next", for: .normal)
+                    NextBtn.setTitle("Next".translated(), for: .normal)
 //                    delegate?.editDta(edit: nil)
                     self.dismiss(animated: true)
                 }

@@ -90,7 +90,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         backBtn.configureAsBackTitle(firstLine: "Event", secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         eventTxt.placeholder = CommonStringFile.Title.translated()
         nextBtn.setAttributedTitle(nil, for: .normal)
-        nextBtn.setTitle("Next", for: .normal)
+        nextBtn.setTitle("Next".translated(), for: .normal)
         dateView.layer.borderColor = UIColor.lightGray.cgColor
         dateView.layer.borderWidth = 0.5
         dateView.layer.cornerRadius = 8
@@ -188,7 +188,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                 }
             }
             
-            nextBtn.setTitle("Update", for: .normal)
+            nextBtn.setTitle("Update".translated(), for: .normal)
             updateTextViewHeight(contentTxtView)
         } else {
             placeTxt.text = ""
@@ -199,7 +199,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             costomView.imageCollectionview.reloadData()
             editId = nil
             
-            nextBtn.setTitle("Next", for: .normal)
+            nextBtn.setTitle("Next".translated(), for: .normal)
             updateTextViewHeight(contentTxtView)
         }
     }
@@ -366,8 +366,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         placeholderLabel.text = CommonStringFile.Description.translated()
         placeholderLabel.font = contentTxtView.font
         placeholderLabel.textColor = .lightGray
-        placeholderLabel.sizeToFit()
-        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8)
+        placeholderLabel?.positionAsPlaceholder(in: contentTxtView)
         contentTxtView.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !contentTxtView.text.isEmpty
     }
@@ -383,7 +382,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         timePicker.minimumDate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())
         self.view.addSubview(timePicker)
         doneButton2 = UIButton(type: .system)
-        doneButton2.setTitle(AlertstringFile.Done, for: .normal)
+        doneButton2.setTitle(AlertstringFile.Done.translated(), for: .normal)
         doneButton2.isHidden = true
         doneButton2.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
         doneButton2.setTitleColor(.white, for: .normal)
@@ -462,7 +461,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                 assignmentResquestStringKey.event_date:date ?? "",
                 assignmentResquestStringKey.category:categoryId ?? 0
             ]
-            if sender.titleLabel?.text == "Update"{
+            if sender.titleLabel?.text == "Update".translated(){
                 let com = commonApi_forSending()
                 params[SendAttachmentStringFile.id] = editId
                 com.SendingAttachmentFlow(
@@ -492,7 +491,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                             costomView.imageCollectionview.reloadData()
                             editId = nil
                             
-                            nextBtn.setTitle("Next", for: .normal)
+                            nextBtn.setTitle("Next".translated(), for: .normal)
                             updateTextViewHeight(contentTxtView)
                             self.dismiss(animated: true)
                         }

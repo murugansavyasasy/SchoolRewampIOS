@@ -87,7 +87,7 @@ class OnboardingVC: UIViewController {
                                   animated: true)
         let isLastPage = currentPage == dataResponse.count - 1
         skipBtn.isHidden = isLastPage
-        nextBtn.setTitle(isLastPage ? "Let's Go" : "Next", for: .normal)
+        nextBtn.setTitle(isLastPage ? "Let's Go" : "Next".translated(), for: .normal)
         // Trigger animation after scroll completes
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             if let cell = self.onBoardingCV.cellForItem(at: IndexPath(item: self.currentPage, section: 0)) as? OnboardingCVC {
