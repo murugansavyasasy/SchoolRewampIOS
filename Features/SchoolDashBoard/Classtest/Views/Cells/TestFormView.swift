@@ -30,7 +30,7 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
     public var onRemoveTapped : (() -> Void)?
     public var onDataChanged : ((TestDetails) -> Void)?
     public var onHeightChanged: (() -> Void)? 
-    
+    public var onInvalidMarksEnter: ((String) -> Void)?
     private var testDetails = TestDetails()
     private let activeColor = UIColor.primery /*UIColor(red: 0.298, green: 0.302, blue: 0.863, alpha: 1.0)*/ // #4C4DDC
     private let inactiveBg = UIColor(red: 0.973, green: 0.976, blue: 0.988, alpha: 1.0)  // #F8F9FC
@@ -251,6 +251,23 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
 //        return true
 //    }
     
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == maxMarksTextField || textField == minMarksTextField {
+            validateMarks()
+        }
+    }
+    
+    private func validateMarks() {
+        guard let maxText = maxMarksTextField.text, !maxText.isEmpty,
+              let minText = minMarksTextField.text, !minText.isEmpty else { return }
+              
+        if let maxVal = Int(maxText.trimmingCharacters(in: .whitespacesAndNewlines)),
+           let minVal = Int(minText.trimmingCharacters(in: .whitespacesAndNewlines)) {
+            if maxVal <= minVal {
+                onInvalidMarksEnter?("Max marks must be higher than min marks.")
+            }
+        }
+    }
     // MARK: - UITextViewDelegate
     public func textViewDidChange(_ textView: UITextView) {
         testDetails.activity_name = examNameTextView.text ?? ""

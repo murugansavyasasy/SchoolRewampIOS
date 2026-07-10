@@ -35,6 +35,7 @@ class SubjectDetailsTableViewCell: UITableViewCell {
     public var onMergeTapped: ((String, String, String) -> Void)?
     public var onUpdateTest : ((TestDetails,Int) -> Void)?
     public var onHeightChanged: (() -> Void)?
+    public var onInvalidMarksEnter: ((String) -> Void)?
     private var isCellExpanded: Bool = false
     private var dashedBorderLayer : CAShapeLayer?
     private var currentSubjectId: String?
@@ -148,6 +149,10 @@ class SubjectDetailsTableViewCell: UITableViewCell {
 //            form.onHeightChanged = { [weak self] in
 //                          self?.onHeightChanged?()
 //                      }
+            
+        form.onInvalidMarksEnter = { [weak self] errorMsg in
+                     self?.onInvalidMarksEnter?(errorMsg)
+            }
             testsStackView.addArrangedSubview(form)
         }
         
