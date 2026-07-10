@@ -106,8 +106,7 @@ class ExamCreatVC: UIViewController, UITextViewDelegate {
         placeholderLabel.text = CommonStringFile.EnterTextHere.translated()
         placeholderLabel.font = contentTxtView.font
         placeholderLabel.textColor = .lightGray
-        placeholderLabel.sizeToFit()
-        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8)
+        placeholderLabel?.positionAsPlaceholder(in: contentTxtView)
         contentTxtView.addSubview(placeholderLabel)
         
         placeholderLabel.isHidden = !contentTxtView.text.isEmpty

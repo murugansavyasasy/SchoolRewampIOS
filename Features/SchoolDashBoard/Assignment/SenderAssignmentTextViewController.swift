@@ -228,8 +228,7 @@ class SenderAssignmentTextViewController: UIViewController,
         placeholderLabel.text = CommonStringFile.Description.translated()
         placeholderLabel.font = contentTextView.font
         placeholderLabel.textColor = .lightGray
-        placeholderLabel.sizeToFit()
-        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8)
+        placeholderLabel?.positionAsPlaceholder(in: contentTextView)
         contentTextView.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !(contentTextView.text?.isEmpty ?? true) &&
         contentTextView.textColor != .lightGray
@@ -265,7 +264,7 @@ class SenderAssignmentTextViewController: UIViewController,
             }
             updateTextViewHeight(contentTextView)
             editId = notice.id
-            chooseRecipientsBtn.setTitle("Update", for: .normal)
+            chooseRecipientsBtn.setTitle("Update".translated(), for: .normal)
             cancelBtn.isHidden = false
         } else {
             assignTitleTxtFld.text = ""
@@ -275,7 +274,7 @@ class SenderAssignmentTextViewController: UIViewController,
             
             attachments.removeAll()
             editId = nil
-            chooseRecipientsBtn.setTitle("Next", for: .normal)
+            chooseRecipientsBtn.setTitle("Next".translated(), for: .normal)
         }
         selectImgPdfview.imageCollectionview.reloadData()
         updateCollectionHeight()
@@ -392,7 +391,7 @@ class SenderAssignmentTextViewController: UIViewController,
         selectImgPdfview.imageCollectionview.reloadData()
         editId = nil
         
-        chooseRecipientsBtn.setTitle("Next", for: .normal)
+        chooseRecipientsBtn.setTitle("Next".translated(), for: .normal)
         cancelBtn.isHidden = true
         updateTextViewHeight(contentTextView)
         delegate?.editDta(edit: nil)
@@ -418,7 +417,7 @@ class SenderAssignmentTextViewController: UIViewController,
         
         user_inputs.VideoPath = selectedVideoURL
         user_inputs.SelectedUrls = attachments
-        if sender.titleLabel?.text == "Update"{
+        if sender.titleLabel?.text == "Update".translated(){
             let com = commonApi_forSending()
             params[SendAttachmentStringFile.id] = editId
             com.SendingAttachmentFlow(
@@ -447,7 +446,7 @@ class SenderAssignmentTextViewController: UIViewController,
                         selectImgPdfview.imageCollectionview.reloadData()
                         editId = nil
                         
-                        chooseRecipientsBtn.setTitle("Next", for: .normal)
+                        chooseRecipientsBtn.setTitle("Next".translated(), for: .normal)
                         cancelBtn.isHidden = true
                         updateTextViewHeight(contentTextView)
                         self.dismiss(animated: true)

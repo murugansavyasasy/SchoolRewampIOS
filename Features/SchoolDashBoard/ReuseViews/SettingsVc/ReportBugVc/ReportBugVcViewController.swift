@@ -82,8 +82,7 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
         placeholderLabel.text = "Type content".translated()
         placeholderLabel.font = BugsTextview.font
         placeholderLabel.textColor = .lightGray
-        placeholderLabel.sizeToFit()
-        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        placeholderLabel.positionAsPlaceholder(in: BugsTextview)
         BugsTextview.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !BugsTextview.text.isEmpty // Hide if text exists
     }

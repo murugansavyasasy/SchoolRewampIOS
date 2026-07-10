@@ -610,10 +610,10 @@ extension DropDown {
 
 		xConstraint = NSLayoutConstraint(
 			item: tableViewContainer,
-			attribute: .leading,
+			attribute: .left,
 			relatedBy: .equal,
 			toItem: self,
-			attribute: .leading,
+			attribute: .left,
 			multiplier: 1,
 			constant: 0)
 		addConstraint(xConstraint)
@@ -711,6 +711,7 @@ extension DropDown {
 		}
 		
 		constraintWidthToFittingSizeIfNecessary(layout: &layout)
+        realignXForRTLIfNeeded(layout: &layout)
 		constraintWidthToBoundsIfNecessary(layout: &layout, in: window)
 		
 		let visibleHeight = tableHeight - layout.offscreenHeight
@@ -718,53 +719,153 @@ extension DropDown {
 
 		return (layout.x, layout.y, layout.width, layout.offscreenHeight, visibleHeight, canBeDisplayed, direction)
 	}
+    
+    fileprivate func realignXForRTLIfNeeded(layout: inout ComputeLayoutTuple) {
+        guard let anchorFrame = anchorView?.plainView.windowFrame,
+              anchorView?.plainView.effectiveUserInterfaceLayoutDirection == .rightToLeft
+        else { return }
 
-	fileprivate func computeLayoutBottomDisplay(window: UIWindow) -> ComputeLayoutTuple {
-		var offscreenHeight: CGFloat = 0
-		
-		let width = self.width ?? (anchorView?.plainView.bounds.width ?? fittingWidth()) - bottomOffset.x
-		
-		let anchorViewX = anchorView?.plainView.windowFrame?.minX ?? window.frame.midX - (width / 2)
-		let anchorViewY = anchorView?.plainView.windowFrame?.minY ?? window.frame.midY - (tableHeight / 2)
-		
-		let x = anchorViewX + bottomOffset.x
-		let y = anchorViewY + bottomOffset.y
-		
-		let maxY = y + tableHeight
-		let windowMaxY = window.bounds.maxY - DPDConstant.UI.HeightPadding - offsetFromWindowBottom
-		
-		let keyboardListener = KeyboardListener.sharedInstance
-		let keyboardMinY = keyboardListener.keyboardFrame.minY - DPDConstant.UI.HeightPadding
-		
-		if keyboardListener.isVisible && maxY > keyboardMinY {
-			offscreenHeight = abs(maxY - keyboardMinY)
-		} else if maxY > windowMaxY {
-			offscreenHeight = abs(maxY - windowMaxY)
-		}
-		
-		return (x, y, width, offscreenHeight)
-	}
+        // Re-anchor to the anchor view's right edge using the FINAL width,
+        // not the width that was assumed when x was first calculated.
+        layout.x = anchorFrame.maxX - layout.width
+    }
 
-	fileprivate func computeLayoutForTopDisplay(window: UIWindow) -> ComputeLayoutTuple {
-		var offscreenHeight: CGFloat = 0
+//	fileprivate func computeLayoutBottomDisplay(window: UIWindow) -> ComputeLayoutTuple {
+//		var offscreenHeight: CGFloat = 0
+//		
+//		let width = self.width ?? (anchorView?.plainView.bounds.width ?? fittingWidth()) - bottomOffset.x
+//		
+////		let anchorViewX = anchorView?.plainView.windowFrame?.minX ?? window.frame.midX - (width / 2)
+////		let anchorViewY = anchorView?.plainView.windowFrame?.minY ?? window.frame.midY - (tableHeight / 2)
+////		
+////		let x = anchorViewX + bottomOffset.x
+////		let y = anchorViewY + bottomOffset.y
+//        
+//        let anchorFrame = anchorView?.plainView.windowFrame
+//
+//        let anchorViewY = anchorFrame?.minY ?? window.frame.midY - (tableHeight / 2)
+//
+//        let isRTL = anchorView?.plainView.effectiveUserInterfaceLayoutDirection == .rightToLeft
+//
+//        let x: CGFloat
+//        if let frame = anchorFrame {
+//            if isRTL {
+//                x = frame.maxX - width + bottomOffset.x
+//            } else {
+//                x = frame.minX + bottomOffset.x
+//            }
+//        } else {
+//            x = window.frame.midX - (width / 2)
+//        }
+//
+//        let y = anchorViewY + bottomOffset.y
+//		
+//		let maxY = y + tableHeight
+//		let windowMaxY = window.bounds.maxY - DPDConstant.UI.HeightPadding - offsetFromWindowBottom
+//		
+//		let keyboardListener = KeyboardListener.sharedInstance
+//		let keyboardMinY = keyboardListener.keyboardFrame.minY - DPDConstant.UI.HeightPadding
+//		
+//		if keyboardListener.isVisible && maxY > keyboardMinY {
+//			offscreenHeight = abs(maxY - keyboardMinY)
+//		} else if maxY > windowMaxY {
+//			offscreenHeight = abs(maxY - windowMaxY)
+//		}
+//		
+//		return (x, y, width, offscreenHeight)
+//	}
+    
+    fileprivate func computeLayoutBottomDisplay(window: UIWindow) -> ComputeLayoutTuple {
+        var offscreenHeight: CGFloat = 0
 
-		let anchorViewX = anchorView?.plainView.windowFrame?.minX ?? 0
-		let anchorViewMaxY = anchorView?.plainView.windowFrame?.maxY ?? 0
+        let width = self.width ?? (anchorView?.plainView.bounds.width ?? fittingWidth()) - bottomOffset.x
 
-		let x = anchorViewX + topOffset.x
-		var y = (anchorViewMaxY + topOffset.y) - tableHeight
+        let anchorFrame = anchorView?.plainView.windowFrame
 
-		let windowY = window.bounds.minY + DPDConstant.UI.HeightPadding
+        let anchorViewY = anchorFrame?.minY ?? window.frame.midY - (tableHeight / 2)
 
-		if y < windowY {
-			offscreenHeight = abs(y - windowY)
-			y = windowY
-		}
-		
-		let width = self.width ?? (anchorView?.plainView.bounds.width ?? fittingWidth()) - topOffset.x
-		
-		return (x, y, width, offscreenHeight)
-	}
+        let isRTL = anchorView?.plainView.effectiveUserInterfaceLayoutDirection == .rightToLeft
+
+        let x: CGFloat
+        if let frame = anchorFrame {
+            x = isRTL
+                ? frame.maxX - width + bottomOffset.x
+                : frame.minX + bottomOffset.x
+        } else {
+            x = window.frame.midX - (width / 2)
+        }
+
+        let y = anchorViewY + bottomOffset.y
+
+        let maxY = y + tableHeight
+        let windowMaxY = window.bounds.maxY - DPDConstant.UI.HeightPadding - offsetFromWindowBottom
+
+        let keyboardListener = KeyboardListener.sharedInstance
+        let keyboardMinY = keyboardListener.keyboardFrame.minY - DPDConstant.UI.HeightPadding
+
+        if keyboardListener.isVisible && maxY > keyboardMinY {
+            offscreenHeight = abs(maxY - keyboardMinY)
+        } else if maxY > windowMaxY {
+            offscreenHeight = abs(maxY - windowMaxY)
+        }
+
+        return (x, y, width, offscreenHeight)
+    }
+
+//	fileprivate func computeLayoutForTopDisplay(window: UIWindow) -> ComputeLayoutTuple {
+//		var offscreenHeight: CGFloat = 0
+//
+//		let anchorViewX = anchorView?.plainView.windowFrame?.minX ?? 0
+//		let anchorViewMaxY = anchorView?.plainView.windowFrame?.maxY ?? 0
+//
+//		let x = anchorViewX + topOffset.x
+//		var y = (anchorViewMaxY + topOffset.y) - tableHeight
+//
+//		let windowY = window.bounds.minY + DPDConstant.UI.HeightPadding
+//
+//		if y < windowY {
+//			offscreenHeight = abs(y - windowY)
+//			y = windowY
+//		}
+//		
+//		let width = self.width ?? (anchorView?.plainView.bounds.width ?? fittingWidth()) - topOffset.x
+//		
+//		return (x, y, width, offscreenHeight)
+//	}
+    
+    fileprivate func computeLayoutForTopDisplay(window: UIWindow) -> ComputeLayoutTuple {
+        var offscreenHeight: CGFloat = 0
+
+        let width = self.width ?? (anchorView?.plainView.bounds.width ?? fittingWidth()) - topOffset.x
+
+        let anchorFrame = anchorView?.plainView.windowFrame
+
+        let anchorViewMaxY = anchorFrame?.maxY ?? 0
+
+        let isRTL = anchorView?.plainView.effectiveUserInterfaceLayoutDirection == .rightToLeft
+
+        let x: CGFloat
+        if let frame = anchorFrame {
+            if isRTL {
+                x = frame.maxX - width + topOffset.x
+            } else {
+                x = frame.minX + topOffset.x
+            }
+        } else {
+            x = 0
+        }
+
+        var y = (anchorViewMaxY + topOffset.y) - tableHeight
+
+        let windowY = window.bounds.minY + DPDConstant.UI.HeightPadding
+
+        if y < windowY {
+            offscreenHeight = abs(y - windowY)
+            y = windowY
+        }
+
+        return (x, y, width, offscreenHeight)
+    }
 	
 	fileprivate func fittingWidth() -> CGFloat {
 		if templateCell == nil {
@@ -786,22 +887,45 @@ extension DropDown {
 		return maxWidth
 	}
 	
-	fileprivate func constraintWidthToBoundsIfNecessary(layout: inout ComputeLayoutTuple, in window: UIWindow) {
-		let windowMaxX = window.bounds.maxX
-		let maxX = layout.x + layout.width
-		
-		if maxX > windowMaxX {
-			let delta = maxX - windowMaxX
-			let newOrigin = layout.x - delta
-			
-			if newOrigin > 0 {
-				layout.x = newOrigin
-			} else {
-				layout.x = 0
-				layout.width += newOrigin // newOrigin is negative, so this operation is a substraction
-			}
-		}
-	}
+//	fileprivate func constraintWidthToBoundsIfNecessary(layout: inout ComputeLayoutTuple, in window: UIWindow) {
+//		let windowMaxX = window.bounds.maxX
+//		let maxX = layout.x + layout.width
+//		
+//		if maxX > windowMaxX {
+//			let delta = maxX - windowMaxX
+//			let newOrigin = layout.x - delta
+//			
+//			if newOrigin > 0 {
+//				layout.x = newOrigin
+//			} else {
+//				layout.x = 0
+//				layout.width += newOrigin // newOrigin is negative, so this operation is a substraction
+//			}
+//		}
+//	}
+    
+    fileprivate func constraintWidthToBoundsIfNecessary(layout: inout ComputeLayoutTuple, in window: UIWindow) {
+        let windowMinX = window.bounds.minX
+        let windowMaxX = window.bounds.maxX
+        let maxX = layout.x + layout.width
+
+        if maxX > windowMaxX {
+            let delta = maxX - windowMaxX
+            let newOrigin = layout.x - delta
+
+            if newOrigin > windowMinX {
+                layout.x = newOrigin
+            } else {
+                layout.x = windowMinX
+                layout.width += newOrigin // newOrigin is negative here, so this shrinks width
+            }
+        } else if layout.x < windowMinX {
+            // NEW: left-edge overflow — common for RTL anchors near the screen's leading edge
+            let delta = windowMinX - layout.x
+            layout.x = windowMinX
+            layout.width -= delta
+        }
+    }
 	
 	fileprivate func constraintWidthToFittingSizeIfNecessary(layout: inout ComputeLayoutTuple) {
 		guard width == nil else { return }

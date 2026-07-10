@@ -273,14 +273,9 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         label.font = textView.font
         label.textColor = .lightGray
         label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.positionAsPlaceholder(in: textView)
         textView.addSubview(label)
         placeholderLabels[textView] = label
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: textView.leadingAnchor, constant: 6),
-            label.topAnchor.constraint(equalTo: textView.topAnchor, constant: 8),
-            label.trailingAnchor.constraint(equalTo: textView.trailingAnchor, constant: -6)
-        ])
     }
     func updatePlaceholderVisibility(for textView: UITextView) {
         let label = placeholderLabels[textView]

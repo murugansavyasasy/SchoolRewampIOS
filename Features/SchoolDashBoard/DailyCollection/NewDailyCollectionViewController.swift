@@ -260,14 +260,15 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
 import UIKit
 
 extension UIButton {
-    
+
     func configureAsBackButton(firstLine: String, secondLine: String) {
+
         let fullTitle = "\(firstLine)\n\(secondLine)"
-        let image = UIImage(systemName: "chevron.backward")
-        self.setImage(image, for: .normal)
+
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .left
+        paragraphStyle.alignment = .natural
         paragraphStyle.lineSpacing = 1
+
         let attributedTitle = NSMutableAttributedString(
             string: fullTitle,
             attributes: [
@@ -275,27 +276,35 @@ extension UIButton {
                 .paragraphStyle: paragraphStyle
             ]
         )
+
         let secondLineRange = (fullTitle as NSString).range(of: secondLine)
         if secondLineRange.location != NSNotFound {
             attributedTitle.addAttributes([
                 .font: UIFont(name: "Poppins-Bold", size: 11) as Any
             ], range: secondLineRange)
         }
-        
-        // Configure title label
-        self.titleLabel?.numberOfLines = 0
-        self.titleLabel?.lineBreakMode = .byWordWrapping
-        self.titleLabel?.textAlignment = .left
-        self.setAttributedTitle(attributedTitle, for: .normal)
-        
-        // Alignments
-        self.contentHorizontalAlignment = .left
-        self.contentVerticalAlignment = .center
-        
-        // Add more space between image and text
-        self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-        self.imageEdgeInsets = .zero
-        self.contentEdgeInsets = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
+
+        setAttributedTitle(attributedTitle, for: .normal)
+
+        titleLabel?.numberOfLines = 0
+        titleLabel?.lineBreakMode = .byWordWrapping
+        titleLabel?.textAlignment = .natural
+
+        // Follow the app's layout direction
+        semanticContentAttribute = .unspecified
+
+        // Leading in LTR, trailing in RTL
+        contentHorizontalAlignment = .leading
+
+        contentVerticalAlignment = .center
+
+        if #available(iOS 15.0, *) {
+            var config = UIButton.Configuration.plain()
+            config.image = UIImage(systemName: "chevron.backward")
+            config.imagePadding = 10
+            configuration = config
+        } else {
+            setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        }
     }
-   
 }

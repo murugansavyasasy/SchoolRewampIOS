@@ -32,7 +32,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n52-nB-r34">
                                     <rect key="frame" x="8" y="7" width="37" height="35"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.left" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Olh-Ie-M47">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.backward" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Olh-Ie-M47">
                                             <rect key="frame" x="0.0" y="2.9999999999999982" width="37" height="29.333333333333329"/>
                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </imageView>
@@ -114,7 +114,7 @@
             </constraints>
             <point key="canvasLocation" x="130.53435114503816" y="-12.67605633802817"/>
         </view>
-        <view contentMode="scaleToFill" ambiguous="YES" id="ot9-VM-xI6">
+        <view contentMode="scaleToFill" id="ot9-VM-xI6">
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
@@ -297,7 +297,7 @@
     </objects>
     <resources>
         <image name="CheckBoximage" width="27" height="27"/>
-        <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <image name="arrow.backward" catalog="system" width="128" height="95"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

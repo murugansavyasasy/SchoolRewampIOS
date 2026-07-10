@@ -19,7 +19,6 @@ struct editLeave{
 
 
 import UIKit
-import FSCalendar
 @available(iOS 14.0, *)
 class LeveCreateVC: UIViewController{
     
@@ -69,8 +68,6 @@ class LeveCreateVC: UIViewController{
     
     var fromDate: Date?
     var toDate: Date?
-    let today = Date()
-    var tapCount = 0
     let dateFormatter = DateFormatter()
     var placeholderLabel: UILabel!
     var childDetails = UserDefaultFileManager.get_child_Details()
@@ -78,7 +75,7 @@ class LeveCreateVC: UIViewController{
     var editLeaveData:editLeave?
     let dropDown = DropDown()
     let dropDown2 = DropDown()
-    let options = [AttendanceString.firstHalf, AttendanceString.secondHalf]
+    let options = [AttendanceString.firstHalf.translated(), AttendanceString.secondHalf.translated()]
     var leaveTypes : [LeaveType] = []
     var selectedLeaveType : Int?
     
@@ -112,7 +109,6 @@ class LeveCreateVC: UIViewController{
         FromDatePicker.locale = LocaleManager.shared.apiLocale
         toDatePicker.locale = LocaleManager.shared.apiLocale
         
-        
         setupPlaceholder()
         
         if let leave = editLeaveData{
@@ -130,8 +126,8 @@ class LeveCreateVC: UIViewController{
             FromDatePickerView.isHidden = true
             FromSessionBtn.setTitle(leave.fromSession, for: .normal)
             ToSessionBtn.setTitle(leave.Tosession, for: .normal)
-            NewLeaveDefLbl.text = AttendanceString.editLeaveRequest
-            let daysText = "\(AttendanceString.updateFor) \(leave.NoOfDays) \(AttendanceString.daysLeave)"
+            NewLeaveDefLbl.text = AttendanceString.editLeaveRequest.translated()
+            let daysText = "\(AttendanceString.updateFor.translated()) \(leave.NoOfDays) \(AttendanceString.daysLeave.translated())"
             ApplyLeaveBtn.setTitle(daysText, for: .normal)
             FromDatePicker.date = dateFormatter.date(from: leave.fromDate.convertToTargetDateFormat() ?? "") ?? Date()
             toDatePicker.date = dateFormatter.date(from: leave.toDate.convertToTargetDateFormat() ?? "") ?? Date()
@@ -236,18 +232,18 @@ class LeveCreateVC: UIViewController{
         SessionDefLbl.text = AttendanceString.session.translated()
         ToSessionDefLbl.text = AttendanceString.session.translated()
         
-        FromDateBtn.setTitle("Select Date", for: .normal)
-        ToDateBtn.setTitle("Select Date", for: .normal)
-        FromSessionBtn.setTitle(AttendanceString.firstHalf, for: .normal)
-        ToSessionBtn.setTitle(AttendanceString.secondHalf, for: .normal)
+        FromDateBtn.setTitle("Select Date".translated(), for: .normal)
+        ToDateBtn.setTitle("Select Date".translated(), for: .normal)
+        FromSessionBtn.setTitle(AttendanceString.firstHalf.translated(), for: .normal)
+        ToSessionBtn.setTitle(AttendanceString.secondHalf.translated(), for: .normal)
         
-        SelectFromDateDefLbl.text = AttendanceString.selectFromDate
-        SelectToDateDefLbl.text = AttendanceString.selectToDate
+        SelectFromDateDefLbl.text = AttendanceString.selectFromDate.translated()
+        SelectToDateDefLbl.text = AttendanceString.selectToDate.translated()
         
-        ApplyLeaveBtn.setTitle(AttendanceString.applyLeave, for: .normal)
+        ApplyLeaveBtn.setTitle(AttendanceString.applyLeave.translated(), for: .normal)
         
-        FromDoneBtn.setTitle(AlertstringFile.Done, for: .normal)
-        ToDoneBtn.setTitle(AlertstringFile.Done, for: .normal)
+        FromDoneBtn.setTitle(AlertstringFile.Done.translated(), for: .normal)
+        ToDoneBtn.setTitle(AlertstringFile.Done.translated(), for: .normal)
     }
     
     func setupDropDowns() {
@@ -309,7 +305,7 @@ class LeveCreateVC: UIViewController{
     
     func validateInputs() -> Bool {
         
-        if LeaveTypeBtn.title(for: .normal) == AttendanceString.selectLeaveType {
+        if LeaveTypeBtn.title(for: .normal) == AttendanceString.selectLeaveType.translated() {
             showError("Please select a Leave Type.")
             return false
         }
@@ -320,13 +316,13 @@ class LeveCreateVC: UIViewController{
         }
         
         if let fromDate = FromDateBtn.title(for: .normal),
-           fromDate.isEmpty || fromDate == "Select Date" {
+           fromDate.isEmpty || fromDate == "Select Date".translated() {
             showError("Please select a From Date.")
             return false
         }
         
         if let toDate = ToDateBtn.title(for: .normal),
-           toDate.isEmpty || toDate == "Select Date" {
+           toDate.isEmpty || toDate == "Select Date".translated() {
             showError("Please select a To Date.")
             return false
         }
@@ -378,9 +374,9 @@ class LeveCreateVC: UIViewController{
         }
         
         if let toTitle = ToSessionBtn.title(for: .normal) {
-            if toTitle.contains("First") {
+            if toTitle == options.first {
                 toSessionCode = "FH"
-            } else if toTitle.contains("Second") {
+            } else if toTitle == options.last {
                 toSessionCode = "SH"
             }
         }
@@ -518,15 +514,14 @@ class LeveCreateVC: UIViewController{
         placeholderLabel.font = CauseTextView.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.numberOfLines = 0
-        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
-        CauseTextView.addSubview(placeholderLabel)
         
-        // Use constraints to align the placeholder with the text view's text
-        NSLayoutConstraint.activate([
-            placeholderLabel.topAnchor.constraint(equalTo: CauseTextView.topAnchor, constant: CauseTextView.textContainerInset.top),
-            placeholderLabel.leadingAnchor.constraint(equalTo: CauseTextView.leadingAnchor, constant: CauseTextView.textContainer.lineFragmentPadding),
-            placeholderLabel.trailingAnchor.constraint(equalTo: CauseTextView.trailingAnchor, constant: -CauseTextView.textContainer.lineFragmentPadding)
-        ])
+        placeholderLabel.positionAsPlaceholder(
+            in: CauseTextView,
+            topPadding: CauseTextView.textContainerInset.top,
+            sidePadding: CauseTextView.textContainer.lineFragmentPadding
+        )
+        
+        CauseTextView.addSubview(placeholderLabel)
     }
     
     func textViewDidChange(_ textView: UITextView) {
@@ -539,27 +534,6 @@ class LeveCreateVC: UIViewController{
     
     func textViewDidEndEditing(_ textView: UITextView) {
         calculateDays()
-    }
-    
-    func updateDayCountLabel(startDateStr: String, endDateStr: String, dayCount: UILabel) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat =  DateFormatString.Date_Day_month_year
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        
-        guard let startDate = dateFormatter.date(from: startDateStr),
-              let endDate = dateFormatter.date(from: endDateStr) else {
-            dayCount.text = "Invalid date"
-            return
-        }
-        
-        let calendar = Calendar.current
-        if let days = calendar.dateComponents([.day], from: startDate, to: endDate).day {
-            let totalDays = days + 1  // Include the end date
-            //dayCount.text = "No of Days - " + " \(totalDays) Day" + (totalDays > 1 ? "s" : "")
-            dayCount.text = "No of Days - " + " \(totalDays)"
-        } else {
-            dayCount.text = "Error calculating"
-        }
     }
     
     @IBAction func BackAct(_ sender: Any) {
@@ -627,19 +601,26 @@ class LeveCreateVC: UIViewController{
         
         // Update button title
         if let leave = editLeaveData {
-            ApplyLeaveBtn.setTitle("Update for \(formattedDays) Days Leave", for: .normal)
+            let updateText = "Update for".translated()
+            let daysText = "Days Leave".translated()
+            ApplyLeaveBtn.setTitle("\(updateText) \(formattedDays) \(daysText)", for: .normal)
         } else {
-            ApplyLeaveBtn.setTitle("Apply for \(formattedDays) Days Leave", for: .normal)
+            let applyText = "Apply for".translated()
+            let daysText = "Days Leave".translated()
+            ApplyLeaveBtn.setTitle("\(applyText) \(formattedDays) \(daysText)", for: .normal)
         }
     }
     
     
     func showError(_ message: String) {
-        let fullMessage = "* \(message)"
+        let fullMessage = "* \(message.translated())"
         errorLbl.text = fullMessage
         errorLbl.textColor = .systemRed
         errorLbl.isHidden = false
-        ApplyLeaveBtn.setTitle("Apply Leave", for: .normal)
+        ApplyLeaveBtn.setTitle(
+                editLeaveData == nil ? AttendanceString.applyLeave.translated() : AttendanceString.editLeaveRequest.translated(),
+                for: .normal
+            )
     }
     
     
@@ -675,11 +656,11 @@ class LeveCreateVC: UIViewController{
     }
     
     func isFirstHalf(session: String) -> Bool {
-        return session.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) == "first half"
+        return session == options.first
     }
     
     func isSecondHalf(session: String) -> Bool {
-        return session.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) == "second half"
+        return session == options.last
     }
 }
 
@@ -718,107 +699,6 @@ extension LeveCreateVC: UITextViewDelegate{
         contentInset.bottom = 0
         scrollView.contentInset = contentInset
         scrollView.scrollIndicatorInsets = contentInset
-    }
-}
-
-@available(iOS 14.0, *)
-extension LeveCreateVC: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
-    
-    //    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-    //            tapCount += 1
-    //
-    //            if tapCount == 1 {
-    //                // Initial tap
-    //                if let from = fromDate {
-    //                    if date < from {
-    //                        toDate = fromDate
-    //                        fromDate = date
-    //                    }else {
-    //
-    //                        fromDate = from
-    //                        toDate = date
-    //                    }
-    //                }
-    //            } else if tapCount == 2 {
-    //                // Second tap → make a range
-    //
-    //                fromDate = date
-    //                toDate = date
-    //                tapCount = 1
-    //
-    //                // Deselect all previously selected dates (optional visual)
-    //                calendar.selectedDates.forEach { calendar.deselect($0) }
-    //                calendar.select(date)
-    //
-    //            } else {
-    //                // Third tap or more → reset
-    //                if let first = fromDate {
-    //                    if date < first {
-    //                        toDate = first
-    //                        fromDate = date
-    //                    } else {
-    //                        fromDate = first
-    //                        toDate = date
-    //                    }
-    //                }
-    //            }
-    //
-    //            updateLabels()
-    //            calendar.reloadData()
-    //        }
-    
-    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        if fromDate == nil && toDate == nil {
-            // First tap: set both
-            fromDate = date
-            toDate = date
-        } else if fromDate != nil && toDate != nil && fromDate == toDate {
-            // Second tap: form a range
-            if date < fromDate! {
-                fromDate = date
-            } else {
-                toDate = date
-            }
-        } else {
-            // Third or more: reset and start again
-            fromDate = date
-            toDate = date
-            
-            // Clear previous selections visually
-            calendar.selectedDates.forEach { calendar.deselect($0) }
-            calendar.select(date)
-        }
-        
-        updateLabels()
-        calendar.reloadData()
-    }
-    
-    
-    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
-        guard let from = fromDate, let to = toDate else { return nil }
-        
-        if date >= from && date <= to {
-            return .systemBlue
-        }
-        return nil
-    }
-    
-    func updateLabels() {
-        let formatter = DateFormatter()
-        formatter.locale = LocaleManager.shared.apiLocale
-        formatter.dateFormat = "dd MMM yyyy"
-        
-        if let from = fromDate {
-            FromDateBtn.titleLabel?.text = "From: \(formatter.string(from: from))"
-        } else {
-            FromDateBtn.titleLabel?.text = "From: -"
-        }
-        
-        if let to = toDate {
-            ToDateBtn.titleLabel?.text = "To: \(formatter.string(from: to))"
-        } else {
-            ToDateBtn.titleLabel?.text = "To: -"
-        }
     }
 }
 
