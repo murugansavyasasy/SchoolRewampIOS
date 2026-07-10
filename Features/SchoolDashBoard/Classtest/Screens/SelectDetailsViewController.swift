@@ -66,7 +66,7 @@ class SelectDetailsViewController: UIViewController,UITextViewDelegate {
     }
     private func setupUI() {
         
-        exameNameDefaultLbl.setRequiredText("Exam Name")
+        exameNameDefaultLbl.setRequiredText("Test Name")
         exameNameTextView.delegate = self
         styleTextView(exameNameTextView)
         sectionsContainerView.layer.cornerRadius = 12
@@ -270,8 +270,23 @@ extension SelectDetailsViewController: UITableViewDelegate, UITableViewDataSourc
         }
         
         cell.onAddTest = { [weak self] subjectId, sectionId in
-              viewModel.addTest(to: subjectId, sectionId: sectionId)
-              self?.tableView.reloadData()
+
+            // Check if existing tests are fully configured before allowing a new one
+            if let config = viewModel.examConfigurations.first(where: { $0.subjectId == subjectId && $0.sectionId == sectionId }) {
+                if !config.tests.isEmpty && !viewModel.isSubjectConfigured(subjectId: subjectId, sectionId: sectionId) {
+                    let alert = UIAlertController(
+                        title: "Incomplete Details",
+                        message: "Please fill in all the details and ensure the minimum mark is less than the maximum mark before adding another activity.",
+                        preferredStyle: .alert
+                    )
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self?.present(alert, animated: true, completion: nil)
+                    return
+                }
+            }
+            
+            viewModel.addTest(to: subjectId, sectionId: sectionId)
+            self?.tableView.reloadData()
           }
         
         
@@ -308,17 +323,17 @@ extension SelectDetailsViewController: UITableViewDelegate, UITableViewDataSourc
 //        }
         
         cell.onMergeTapped = { [weak self] sourceSectionId, targetSectionId, subjectName in
-            let alert = UIAlertController(
-                title: "Merge Data",
-                message: "Do you want to merge the previous \(subjectName) data?",
-                preferredStyle: .alert
-            )
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "Merge", style: .default, handler: { _ in
+//            let alert = UIAlertController(
+//                title: "Merge Data",
+//                message: "Do you want to merge the previous \(subjectName) data?",
+//                preferredStyle: .alert
+//            )
+//            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//            alert.addAction(UIAlertAction(title: "Merge", style: .default, handler: { _ in
                 self?.viewModel?.mergeConfigurations(from: sourceSectionId, to: targetSectionId, subjectName: subjectName)
                 self?.tableView.reloadData()
-            }))
-            self?.present(alert, animated: true, completion: nil)
+//            }))
+//            self?.present(alert, animated: true, completion: nil)
         }
         
         cell.onHeightChanged = { [weak self] in

@@ -879,6 +879,9 @@
 "Are you sure you want to send this Attachment?" = "هل أنت متأكد أنك تريد إرسال هذا المرفق؟";
 "Are you sure you want to Delete?" = "هل أنت متأكد أنك تريد الحذف؟";
 "Are you sure you want to Save?" = "هل أنت متأكد أنك تريد الحفظ؟";
+"Publish" = "نشر";
+"Are you sure you want to publish?" = "هل أنت متأكد أنك تريد نشر الدرجات؟";
+"fillAllMarksBeforePublish" = "يرجى إدخال جميع درجات جميع الطلاب قبل النشر.";
 "Are you sure you want to send this Notice?" = "هل أنت متأكد أنك تريد إرسال هذا الإشعار؟";
 "Are you sure you want to send this Emergency voice message? note: this will send to all your contacts" = "هل أنت متأكد أنك تريد إرسال هذه الرسالة الصوتية الطارئة؟ ملاحظة: سيتم إرسالها إلى جميع جهات الاتصال الخاصة بك";
 "Are you sure want to " = "هل أنت متأكد أنك تريد ";
@@ -1100,7 +1103,16 @@
 "Wrong Ans " = "الإجابة الخاطئة ";
 "Not Ans " = "لم تتم الإجابة ";
 "Completed at: " = "اكتمل في: ";
+"Save All Marks" = "حفظ جميع الدرجات";
+"Publish All Marks" = "نشر جميع الدرجات";
+"Review & Edit Marks" = "مراجعة الدرجات وتعديلها";
+"Verify the data and make any necessary corrections." = "تحقق من البيانات وأجرِ أي تصحيحات ضرورية.";
+"Note: Use \"AB\" for absent students and \"N/A\" for marks that are not applicable." = "ملاحظة: استخدم \"AB\" للطلاب الغائبين و\"N/A\" للدرجات غير المنطبقة.";
+"⚠️ AI can make mistakes. Please check properly before submitting." = "⚠️ قد يرتكب الذكاء الاصطناعي أخطاءً. يرجى التحقق جيدًا قبل الإرسال.";
 
+"Not Applicable" = "غير منطبق";
+"Absent" = "غائب";
+"Maximum mark exceeded" = "الدرجة تتجاوز الحد الأقصى";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

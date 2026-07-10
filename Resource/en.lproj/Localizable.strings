@@ -865,6 +865,9 @@
 "Are you sure you want to send this Attachment?" = "Are you sure you want to send this attachment?";
 "Are you sure you want to Delete?" = "Are you sure you want to delete?";
 "Are you sure you want to Save?" = "Are you sure you want to save?";
+"Publish" = "Publish";
+"Are you sure you want to publish?" = "Are you sure you want to publish?";
+"fillAllMarksBeforePublish" = "Please fill all the marks for all students before publishing.";
 "Are you sure you want to send this Notice?" = "Are you sure you want to send this notice?";
 "Are you sure you want to send this Emergency voice message? note: this will send to all your contacts" = "Are you sure you want to send this emergency voice message? Note: This will be sent to all your contacts.";
 "Are you sure want to " = "Are you sure you want to ";
@@ -1089,7 +1092,16 @@
 "Wrong Ans " = "Wrong Ans ";
 "Not Ans " = "Not Ans ";
 "Completed at: " = "Completed at: ";
+"Save All Marks" = "Save All Marks";
+"Publish All Marks" = "Publish All Marks";
+"Review & Edit Marks" = "Review & Edit Marks";
+"Verify the data and make any necessary corrections." = "Verify the data and make any necessary corrections.";
+"Note: Use \"AB\" for absent students and \"N/A\" for marks that are not applicable." = "Note: Use \"AB\" for absent students and \"N/A\" for marks that are not applicable.";
+"⚠️ AI can make mistakes. Please check properly before submitting." = "⚠️ AI can make mistakes. Please check properly before submitting.";
 
+"Not Applicable" = "Not Applicable";
+"Absent" = "Absent";
+"Maximum mark exceeded" = "Maximum mark exceeded";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";

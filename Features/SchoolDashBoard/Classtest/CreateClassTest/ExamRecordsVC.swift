@@ -130,7 +130,7 @@ class ExamRecordsVC: UIViewController {
     
     
     @IBAction func enterMarks(_ sender: UIButton) {
-        MenuStringFile.selectedMenuName = "View & Enter Marks"
+        MenuStringFile.selectedMenuName = examNameLbl.text ?? ""
         fetchMarksAndNavigate()
     }
     
@@ -141,7 +141,11 @@ class ExamRecordsVC: UIViewController {
     }
     func fetchMarksAndNavigate() {
         showActivityLoader()
-        viewModel?.getMarkDetails(completion: { [weak self] result in
+        let classTestSubjectIds = test_subjects
+            .flatMap { $0.activities ?? [] }
+            .compactMap { $0.class_test_subject_id }
+            .joined(separator: ",")
+        viewModel?.getMarkDetails(subject_id: classTestSubjectIds, completion: { [weak self] result in
             
             guard let self = self else { return }
             
@@ -197,7 +201,7 @@ extension ExamRecordsVC: UITableViewDelegate, UITableViewDataSource {
         
         cell.onToggleExpand = { [weak self] in
             guard let self = self else { return }
-            
+
             let previousExpanded = self.expandedIndexPath
             
             if self.expandedIndexPath == indexPath {
@@ -221,7 +225,7 @@ extension ExamRecordsVC: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         }
-        
+    
         cell.onRemoveTest = { [weak self] index, class_test_subject_id, section in
             self?.delete_activity_api(class_test_subject_id: class_test_subject_id)
         }

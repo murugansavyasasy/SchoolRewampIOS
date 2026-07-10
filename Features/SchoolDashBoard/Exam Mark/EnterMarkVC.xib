@@ -20,10 +20,12 @@
                 <outlet property="nameWidth" destination="UGh-fq-q6j" id="m6M-Xa-vbW"/>
                 <outlet property="nodataImg" destination="LIa-kS-jtd" id="r67-Vn-Hhp"/>
                 <outlet property="nodataLbl" destination="NXK-Hn-vgH" id="ctw-ia-pBa"/>
+                <outlet property="publishMarksBtn" destination="1dN-3k-DiQ" id="oKR-Md-FgX"/>
                 <outlet property="saveMarksBtn" destination="BaF-6R-BlI" id="Rya-sm-VPK"/>
                 <outlet property="searchBar" destination="SlV-ts-bbD" id="gRk-b8-GT0"/>
                 <outlet property="searchBtn" destination="yyO-jg-cBk" id="QZq-Jj-xc6"/>
                 <outlet property="studentNameLbl" destination="c8A-oA-IFJ" id="VUj-Zh-z39"/>
+                <outlet property="subjectHeight" destination="vtW-9T-SKw" id="Hhi-DX-rnX"/>
                 <outlet property="titleLbl" destination="eKr-Pi-JXl" id="GfF-7j-nuc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -100,7 +102,7 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="JyV-Z6-ya8">
                     <rect key="frame" x="10" y="183" width="383" height="34.333333333333343"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Review &amp; Edit Marks" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyg-2i-btM">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Review &amp; Edit Marks" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyg-2i-btM" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="383" height="19.333333333333332"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                             <color key="textColor" name="staffExamColour"/>
@@ -109,13 +111,13 @@
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zhx-d2-dMD">
                             <rect key="frame" x="0.0" y="24.333333333333343" width="383" height="10"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verify the data and make any necessary corrections" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OlY-Fq-Ydd">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verify the data and make any necessary corrections" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OlY-Fq-Ydd" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="383" height="0.0"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note: If a student is absent, mark them as Absent using the &quot;AB&quot; button above the keyboard." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fKy-30-Mmo">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note: Use &quot;AB&quot; for absent students and &quot;NA&quot; for marks that are not applicable." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fKy-30-Mmo" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="10" width="383" height="0.0"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -127,7 +129,7 @@
                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="⚠️ AI can make mistakes. Please check properly before submitting." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lSl-FP-Hpl">
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="⚠️ AI can make mistakes. Please check properly before submitting." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lSl-FP-Hpl" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="10" width="383" height="0.0"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -176,7 +178,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EBj-Kb-KGB">
                                             <rect key="frame" x="0.0" y="0.0" width="160" height="72"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name &amp; Roll No &amp; Admiss No" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8A-oA-IFJ">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name &amp; Roll No &amp; Adm No" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8A-oA-IFJ">
                                                     <rect key="frame" x="10" y="0.0" width="150" height="72"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                     <nil key="textColor"/>
@@ -190,7 +192,6 @@
                                                 <constraint firstAttribute="bottom" secondItem="c8A-oA-IFJ" secondAttribute="bottom" id="ReX-6f-Bnr"/>
                                                 <constraint firstAttribute="width" constant="160" id="UGh-fq-q6j"/>
                                                 <constraint firstAttribute="trailing" secondItem="c8A-oA-IFJ" secondAttribute="trailing" id="ba3-0z-of4"/>
-                                                <constraint firstAttribute="height" constant="72" id="ve0-GM-rZH"/>
                                             </constraints>
                                         </view>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="56F-fR-kgc">
@@ -208,7 +209,7 @@
                                         </collectionView>
                                     </subviews>
                                 </stackView>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vKJ-4S-igu">
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vKJ-4S-igu">
                                     <rect key="frame" x="0.0" y="71.999999999999972" width="393" height="424.66666666666663"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </tableView>
@@ -227,31 +228,49 @@
                         <constraint firstAttribute="trailing" secondItem="oyC-Ea-Ju1" secondAttribute="trailing" constant="20" id="zHg-yZ-jqa"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BaF-6R-BlI">
-                    <rect key="frame" x="40" y="734" width="313" height="40"/>
-                    <color key="backgroundColor" name="ParentClr"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="0Qe-wF-ZlP"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <inset key="imageEdgeInsets" minX="-20" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" title="Save All Marks" image="text.document" catalog="system"/>
-                    <connections>
-                        <action selector="saveAllMarks:" destination="-1" eventType="touchUpInside" id="G69-Nk-NV4"/>
-                    </connections>
-                </button>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="xUb-rx-lFh">
+                    <rect key="frame" x="16" y="734" width="361" height="40"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BaF-6R-BlI" customClass="LocalizationButton" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="175.66666666666666" height="40"/>
+                            <color key="backgroundColor" name="ParentClr"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="0Qe-wF-ZlP"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="-20" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Save All Marks" image="text.document" catalog="system"/>
+                            <connections>
+                                <action selector="saveAllMarks:" destination="-1" eventType="touchUpInside" id="G69-Nk-NV4"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1dN-3k-DiQ" customClass="LocalizationButton" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                            <rect key="frame" x="185.66666666666663" y="0.0" width="175.33333333333337" height="40"/>
+                            <color key="backgroundColor" systemColor="systemGreenColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="dle-CC-guz"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="-20" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Publish All Marks" image="arrow.up.circle" catalog="system"/>
+                            <connections>
+                                <action selector="saveAllMarks:" destination="-1" eventType="touchUpInside" id="Pta-mv-1dJ"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="scr-vw-001" secondAttribute="trailing" id="0xD-X4-z0B"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="BaF-6R-BlI" secondAttribute="trailing" constant="40" id="JbY-oL-9ti"/>
-                <constraint firstItem="BaF-6R-BlI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="S3M-i3-eNd"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="BaF-6R-BlI" secondAttribute="bottom" constant="10" id="VIo-cx-VbP"/>
+                <constraint firstItem="xUb-rx-lFh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="9pM-Mr-ZCe"/>
+                <constraint firstItem="xUb-rx-lFh" firstAttribute="top" secondItem="scr-vw-001" secondAttribute="bottom" constant="10" id="BgL-dq-8wS"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="xUb-rx-lFh" secondAttribute="bottom" constant="10" id="Tx5-Dd-NDg"/>
                 <constraint firstItem="JyV-Z6-ya8" firstAttribute="top" secondItem="IWh-Ee-Qv7" secondAttribute="bottom" constant="10" id="XOK-tN-CLn"/>
                 <constraint firstItem="JyV-Z6-ya8" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="dGY-8x-sY9"/>
-                <constraint firstItem="BaF-6R-BlI" firstAttribute="top" secondItem="scr-vw-001" secondAttribute="bottom" constant="10" id="gm3-oa-L9t"/>
                 <constraint firstItem="6Qw-EN-xKY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="kHw-EP-c2s"/>
                 <constraint firstItem="JyV-Z6-ya8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="pUx-0c-TA9"/>
                 <constraint firstItem="scr-vw-001" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="pqN-KL-uRL"/>
@@ -259,21 +278,23 @@
                 <constraint firstItem="IWh-Ee-Qv7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="top-top"/>
                 <constraint firstAttribute="trailing" secondItem="IWh-Ee-Qv7" secondAttribute="trailing" id="top-trail"/>
                 <constraint firstItem="scr-vw-001" firstAttribute="top" secondItem="JyV-Z6-ya8" secondAttribute="bottom" constant="10" id="uRw-BL-Cbw"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="xUb-rx-lFh" secondAttribute="trailing" constant="16" id="ySq-ly-f8O"/>
             </constraints>
             <point key="canvasLocation" x="73" y="15"/>
         </view>
     </objects>
     <resources>
+        <image name="arrow.up.circle" catalog="system" width="128" height="123"/>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="noStudentReport" width="3000" height="3000"/>
         <image name="slider.horizontal.3" catalog="system" width="128" height="99"/>
         <image name="text.document" catalog="system" width="115" height="128"/>
         <namedColor name="BackGroundClr">
-            <color red="0.41999998688697815" green="0.70999997854232788" blue="0.3449999988079071" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="ParentClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.49799999594688416" green="0.10199999809265137" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="staffExamColour">
             <color red="1" green="0.40392156862745099" blue="0.0039215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -286,6 +307,9 @@
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

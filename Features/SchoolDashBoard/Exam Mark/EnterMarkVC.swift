@@ -1,21 +1,31 @@
+//
+//  MarksCell.swift
+//  School Chimes
+//
+//  Created by Chandhru on 07/01/26.
+//
+
 import UIKit
-// MARK: - Enter Mark View Controller
+
 class EnterMarkVC: UIViewController, MarksCellDelegate {
     @IBOutlet weak var filtterBtn: UIButton!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var subjectHeight: NSLayoutConstraint!
     @IBOutlet weak var nameWidth: NSLayoutConstraint!
     @IBOutlet weak var headerCollectionview: UICollectionView!
     @IBOutlet weak var nodataImg: UIImageView!
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var listLableView: UITableView!
     @IBOutlet weak var saveMarksBtn: UIButton!
+    @IBOutlet weak var publishMarksBtn: UIButton!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var studentNameLbl: UILabel!
     @IBOutlet weak var errorDeclarationLbl: UILabel!
     @IBOutlet weak var aiIndimationLbl: UILabel!
     var examId: String?
     private var isSyncing = false
+    private var isNavigatingCells = false
     var editedMarks: [String: [String: String]] = [:]
     var payload: [String: Any]?
     var studentRecords: [StudentMark] = []
@@ -32,22 +42,24 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     var selectedFilters: [(type: String, sortValue: String)] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-        titleLbl.configureAsBackTitle(
-            firstLine: MenuStringFile.selectedMenuName,
-            secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
-        )
-        
+        publishMarksBtn.isHidden = !uploadTest
         if uploadTest {
             allStudents = studentRecords
+            titleLbl.text = MenuStringFile.selectedMenuName
             setupColumnsFromGetMarksResponse()
         } else {
             Get_Marks(parameters: payload ?? [:])
+            titleLbl.configureAsBackTitle(
+                firstLine: MenuStringFile.selectedMenuName,
+                secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
+            )
         }
         
         setupHeaderCollectionView()
         setupTableView()
         setupKeyboardObservers()
         saveMarksBtn.layer.cornerRadius = 8
+        publishMarksBtn.layer.cornerRadius = 8
         searchBar.searchTextField.backgroundColor = .systemGray5
         searchBar.layer.cornerRadius = 8
         searchBar.searchTextField.layer.masksToBounds = true
@@ -377,7 +389,6 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     private func setupTableView() {
         listLableView.dataSource = self
         listLableView.delegate = self
-        listLableView.showsVerticalScrollIndicator = true
         listLableView.register(UINib(nibName: "MarksTableViewCell", bundle: nil), forCellReuseIdentifier: "MarksTableViewCell")
     }
     
@@ -400,13 +411,32 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     }
     
     @IBAction func saveAllMarks(_ sender: UIButton) {
-        
+        if sender.tag == 1 {
+            let emptyStudentCount = studentRecords.filter { student in
+                (student.marks ?? []).contains { subject in
+                    (subject.activities ?? []).contains {
+                        ($0.mark ?? "")
+                            .trimmingCharacters(in: .whitespacesAndNewlines)
+                            .isEmpty
+                    }
+                }
+            }.count
+
+            if emptyStudentCount > 0 {
+                CustomAlert().showAlert(
+                    title:"",
+                    message:AlertstringFile.fillAllMarksBeforePublish.translated(),
+                    on: self
+                )
+                return
+            }
+        }
         if uploadTest{
                 CustomAlert().showAlertCancel(
-                    title: AlertstringFile.Confirm,
-                    message: AlertstringFile.uploadMark,
-                    actionLbl1: AlertstringFile.save,
-                    actionLbl2: AlertstringFile.Cancel,
+                    title: AlertstringFile.Confirm.translated(),
+                    message:sender.tag == 1 ? AlertstringFile.publishMark.translated(): AlertstringFile.uploadMark.translated(),
+                    actionLbl1: sender.tag == 1 ? AlertstringFile.puplish.translated(): AlertstringFile.save.translated(),
+                    actionLbl2: AlertstringFile.Cancel.translated(),
                     on: self,
                     onOk: {
 
@@ -415,7 +445,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                         self.showActivityLoader()
 
                         self.viewModel?.createSaveRequest(
-                            studentRecords: self.studentRecords
+                            studentRecords: self.studentRecords, isPublished: sender.tag == 1
                         ) { [weak self] result in
 
                             print("createSaveRequest called")
@@ -593,7 +623,7 @@ extension EnterMarkVC {
         let map = getReasonCounts()
         guard !map.isEmpty else {
             errorDeclarationLbl.isHidden = true
-            return "No issues found."
+            return "No issues found.".translated()
         }
         errorDeclarationLbl.isHidden = false
         let total = map.values.reduce(0,+)
@@ -603,7 +633,7 @@ extension EnterMarkVC {
             .map { "\($0.value) \($0.key)" }
             .joined(separator: ", ")
         
-        return "Found \(total) issue(s): " + details
+        return "Found \(total) issue(s): " + details.translated()
     }
 }
 // MARK: - Header CollectionView DataSource & Delegate
@@ -640,30 +670,57 @@ extension EnterMarkVC: UICollectionViewDataSource, UICollectionViewDelegateFlowL
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        let height: CGFloat = 70
         let column = subjectColumns[indexPath.item]
 
-        var textWidths: [CGFloat] = []
-        if let subjectName = column.subjectName {
-            let font = UIFont.systemFont(ofSize: 12, weight: .regular)
-            textWidths.append(subjectName.uppercased().width(usingFont: font))
-        }
-        if let displayName = column.displayName {
-            let font = UIFont.systemFont(ofSize: 13, weight: .medium)
-            textWidths.append(displayName.width(usingFont: font))
-        }
-        if let max = column.maxMarks {
-            let font = UIFont.systemFont(ofSize: 12, weight: .regular)
-            textWidths.append("Max: \(max)".width(usingFont: font))
-        }
-
-        let padding: CGFloat = 16
         let minWidth: CGFloat = 110
+        let maxWidth: CGFloat = 120
+        let padding: CGFloat = 16
 
-        let maxTextWidth = textWidths.max() ?? minWidth
-        let finalWidth = max(maxTextWidth + padding, minWidth)
+        let headerFont = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        let subjectFont = UIFont.systemFont(ofSize: 12, weight: .regular)
+        let maxFont = UIFont.systemFont(ofSize: 12, weight: .regular)
 
-        return CGSize(width: finalWidth, height: height)
+        var widths: [CGFloat] = []
+
+        if let title = column.displayName {
+            widths.append(title.width(usingFont: headerFont))
+        }
+
+        if let subject = column.subjectName {
+            widths.append(subject.uppercased().width(usingFont: subjectFont))
+        }
+
+        if let max = column.maxMarks {
+            widths.append("Max: \(max)".width(usingFont: maxFont))
+        }
+
+        let requiredWidth = (widths.max() ?? minWidth) + padding
+        let finalWidth = min(max(requiredWidth, minWidth), maxWidth)
+
+        // Header height (3 lines max)
+        var headerHeight = headerFont.lineHeight
+
+        if let title = column.displayName {
+
+            let rect = (title as NSString).boundingRect(
+                with: CGSize(width: finalWidth - padding,
+                             height: .greatestFiniteMagnitude),
+                options: [.usesLineFragmentOrigin, .usesFontLeading],
+                attributes: [.font: headerFont],
+                context: nil
+            )
+
+            headerHeight = min(ceil(rect.height), headerFont.lineHeight * 3)
+        }
+
+        let height =
+            headerHeight +
+            subjectFont.lineHeight +
+            maxFont.lineHeight +
+            24
+        subjectHeight.constant = height
+
+        return CGSize(width: finalWidth, height: max(70, height))
     }
 
     
@@ -790,46 +847,79 @@ extension EnterMarkVC {
 extension EnterMarkVC {
     func moveToCell(row: Int, column: Int) {
 
-        guard row >= 0 && row < studentRecords.count,
-              column >= 0 && column < subjectColumns.count else { return }
+            guard row >= 0 && row < studentRecords.count,
+                  column >= 0 && column < subjectColumns.count else { return }
 
-        let indexPath = IndexPath(row: row, section: 0)
-        listLableView.scrollToRow(at: indexPath, at: .middle, animated: false)
-        listLableView.layoutIfNeeded()
+            isNavigatingCells = true
 
-        guard let cell = listLableView.cellForRow(at: indexPath) as? MarksTableViewCell else { return }
+            let indexPath = IndexPath(row: row, section: 0)
+            if !isRowFullyVisible(at: indexPath) {
+                listLableView.scrollToRow(at: indexPath, at: .none, animated: false)
+                listLableView.layoutIfNeeded()
+            }
 
-        let colX = columnX(column)
-        let colWidth = getColumnWidth(column: column)
+            guard let cell = listLableView.cellForRow(at: indexPath) as? MarksTableViewCell else {
+                isNavigatingCells = false
+                return
+            }
 
-        let visibleStart = cell.marksCollectionView.contentOffset.x
-        let visibleEnd = visibleStart + cell.marksCollectionView.bounds.width
+            let colX = columnX(column)
+            let colWidth = getColumnWidth(column: column)
 
-        var newOffsetX = visibleStart
+            let visibleStart = cell.marksCollectionView.contentOffset.x
+            let visibleWidth = cell.marksCollectionView.bounds.width
+            let visibleEnd = visibleStart + visibleWidth
+            var newOffsetX = visibleStart
 
-        // 👉 Scroll RIGHT (next column)
-        if colX + colWidth > visibleEnd {
-            newOffsetX += colWidth
+            if colX < visibleStart {
+                newOffsetX = colX
+            } else if colX + colWidth > visibleEnd {
+                newOffsetX = colX + colWidth - visibleWidth
+            }
+
+            let maxOffsetX = max(0, cell.marksCollectionView.contentSize.width - visibleWidth)
+            newOffsetX = min(max(0, newOffsetX), maxOffsetX)
+
+            let offsetChanged = abs(newOffsetX - visibleStart) > 0.5
+
+            if offsetChanged {
+                cell.marksCollectionView.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
+                headerCollectionview.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
+            }
+
+            let itemPath = IndexPath(item: column, section: 0)
+            if let marksCell = cell.marksCollectionView.cellForItem(at: itemPath) as? MarksCell {
+                marksCell.markTxt.becomeFirstResponder()
+                isNavigatingCells = false
+            } else {
+                cell.marksCollectionView.layoutIfNeeded()
+                focusCell(in: cell.marksCollectionView, at: itemPath)
+            }
         }
 
-        // 👉 Scroll LEFT (previous column)
-        else if colX < visibleStart {
-            newOffsetX -= colWidth
+ 
+        private func isRowFullyVisible(at indexPath: IndexPath) -> Bool {
+            guard listLableView.indexPathsForVisibleRows?.contains(indexPath) == true else {
+                return false
+            }
+
+            let rowRect = listLableView.rectForRow(at: indexPath)
+            let visibleTop = listLableView.contentOffset.y + listLableView.contentInset.top
+            let visibleBottom = listLableView.contentOffset.y
+                + listLableView.bounds.height
+                - listLableView.contentInset.bottom
+
+            return rowRect.minY >= visibleTop && rowRect.maxY <= visibleBottom
         }
 
-        newOffsetX = max(0, newOffsetX)
-
-        cell.marksCollectionView.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
-        headerCollectionview.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
-
-        let itemPath = IndexPath(item: column, section: 0)
-        cell.marksCollectionView.layoutIfNeeded()
-
-        if let marksCell = cell.marksCollectionView.cellForItem(at: itemPath) as? MarksCell {
-            marksCell.markTxt.becomeFirstResponder()
+        private func focusCell(in collectionView: UICollectionView, at itemPath: IndexPath) {
+            collectionView.scrollToItem(at: itemPath, at: .centeredHorizontally, animated: false)
+            DispatchQueue.main.async {
+                collectionView.layoutIfNeeded()
+                (collectionView.cellForItem(at: itemPath) as? MarksCell)?.markTxt.becomeFirstResponder()
+                self.isNavigatingCells = false
+            }
         }
-    }
-
     private func columnX(_ column: Int) -> CGFloat {
         var x: CGFloat = 0
         for i in 0..<column {
@@ -837,7 +927,6 @@ extension EnterMarkVC {
         }
         return x
     }
-
 
     func moveToNextRow(row: Int, column: Int) {
         let nextRow = row + 1
@@ -847,7 +936,7 @@ extension EnterMarkVC {
             print("⚠️ Already at last row")
         }
     }
-    
+
     func moveToPreviousRow(row: Int, column: Int) {
         let prevRow = row - 1
         if prevRow >= 0 {
@@ -856,7 +945,7 @@ extension EnterMarkVC {
             print("⚠️ Already at first row")
         }
     }
-    
+
     func moveToNextColumn(row: Int, column: Int) {
         let nextCol = column + 1
         if nextCol < subjectColumns.count {
@@ -865,7 +954,7 @@ extension EnterMarkVC {
             print("⚠️ Already at last column")
         }
     }
-    
+
     func moveToPreviousColumn(row: Int, column: Int) {
         let prevCol = column - 1
         if prevCol >= 0 {
@@ -874,28 +963,28 @@ extension EnterMarkVC {
             print("⚠️ Already at first column")
         }
     }
-    
+
     private func getColumnWidth(column: Int) -> CGFloat {
         guard column < subjectColumns.count else { return 110 }
-        
+
         let col = subjectColumns[column]
         var widths: [CGFloat] = []
-        
+
         if let display = col.displayName {
             let font = UIFont.systemFont(ofSize: 13, weight: .medium)
             widths.append(display.width(usingFont: font))
         }
-        
+
         if let max = col.maxMarks {
             let font = UIFont.systemFont(ofSize: 12, weight: .regular)
             widths.append("Max: \(max)".width(usingFont: font))
         }
-        
+
         let padding: CGFloat = 16
         let minWidth: CGFloat = 110
         let maxTextWidth = widths.max() ?? minWidth
         let finalWidth = max(maxTextWidth + padding, minWidth)
-        
+
         return finalWidth
     }
 }
@@ -937,8 +1026,9 @@ extension EnterMarkVC: UISearchBarDelegate, UIPopoverPresentationControllerDeleg
     }
 
     @objc func keyboardWillHide(_ notification: Notification) {
+        guard !isNavigatingCells else { return }
+        
         isKeyboardVisible = false
-
         UIView.animate(withDuration: 0.2) {
             self.listLableView.contentInset.bottom = 0
             self.listLableView.scrollIndicatorInsets.bottom = 0

@@ -83,7 +83,7 @@ public struct TestDetails: Codable {
     public var minMarks: String
     public var syllabus: String
     public var activity_name : String
-    public init(id: UUID = UUID(), examName: String = "", testDate: String = "", session: String = "FN", maxMarks: String = "100", minMarks: String = "35", syllabus: String = "",activity_name: String = "") {
+    public init(id: UUID = UUID(), examName: String = "", testDate: String = "", session: String = "FN", maxMarks: String = "", minMarks: String = "", syllabus: String = "",activity_name: String = "") {
         self.id = id
         self.examName = examName
         self.testDate = testDate
@@ -227,6 +227,7 @@ struct StaffClassTest: Codable {
     var sent_by: String?
     var sent_on: String?
     var sections: [StaffSection]?
+    var can_delete : Bool?
 }
 
 struct StaffSection: Codable {
@@ -251,5 +252,6 @@ struct StaffActivity: Codable {
     var max_mark: String?
     var min_mark: String?
     var syllabus: String?
+    var can_delete : Bool?
 }
 

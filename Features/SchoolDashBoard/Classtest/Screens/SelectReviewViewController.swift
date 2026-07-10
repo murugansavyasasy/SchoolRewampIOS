@@ -13,10 +13,24 @@ public final class SelectReviewViewController: UIViewController {
     
      var staffDetails = UserDefaultFileManager.get_staff_Details()
     
+//    private var configuredSubjects: [SubjectExamConfig] {
+//        return viewModel?.examConfigurations.filter { !$0.tests.isEmpty } ?? []
+//    }
     private var configuredSubjects: [SubjectExamConfig] {
-        return viewModel?.examConfigurations.filter { !$0.tests.isEmpty } ?? []
+        guard let viewModel = viewModel else { return [] }
+        var result: [SubjectExamConfig] = []
+        for config in viewModel.examConfigurations {
+            let filledTests = config.tests.filter {
+                !$0.activity_name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            }
+            if !filledTests.isEmpty {
+                var copy = config
+                copy.tests = filledTests
+                result.append(copy)
+            }
+        }
+        return result
     }
-    
     private var totalTestsCount: Int {
         return configuredSubjects.reduce(0) { $0 + $1.tests.count }
     }
@@ -74,7 +88,7 @@ public final class SelectReviewViewController: UIViewController {
     
     private func updateButtonsState() {
         let total = totalTestsCount
-        let title = total == 1 ? "  Create 1 Activity" : "  Create \(total) Activity"
+        let title = total == 1 ? "  Create  Test" : "  Create  Test"
         createButton.setTitle(title, for: .normal)
         
         let activeColor = UIColor.primery
@@ -155,7 +169,7 @@ public final class SelectReviewViewController: UIViewController {
 
         var request: [[String: Any]] = []
 
-        for config in viewModel.examConfigurations {
+        for config in configuredSubjects {
 
             for test in config.tests {
 
@@ -175,7 +189,7 @@ public final class SelectReviewViewController: UIViewController {
 
                 let dict: [String: Any] = [
                     "exam_name": viewModel.exameName,
-                    "activity_name" : test.examName,
+                    "activity_name" : test.activity_name,
                     "section_id": config.sectionId,
                     "subject_id": config.subjectId,
                     "date": formattedDate,

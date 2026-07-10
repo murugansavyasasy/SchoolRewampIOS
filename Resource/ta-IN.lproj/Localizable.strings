@@ -951,6 +951,9 @@
 "Are you sure you want to send this Attachment?" = "இந்த இணைப்பை அனுப்ப விரும்புகிறீர்களா?";
 "Are you sure you want to Delete?" = "நீக்க விரும்புகிறீர்களா?";
 "Are you sure you want to Save?" = "சேமிக்க விரும்புகிறீர்களா?";
+"Publish" = "வெளியிடு";
+"Are you sure you want to publish?" = "நீங்கள் மதிப்பெண்களை வெளியிட விரும்புகிறீர்களா?";
+"fillAllMarksBeforePublish" = "வெளியிடுவதற்கு முன் அனைத்து மாணவர்களுக்கும் அனைத்து மதிப்பெண்களையும் நிரப்பவும்.";
 "Are you sure you want to send this Notice?" = "இந்த அறிவிப்பை அனுப்ப விரும்புகிறீர்களா?";
 "Are you sure you want to send this Emergency voice message? note: this will send to all your contacts" = "இந்த அவசர குரல் செய்தியை அனுப்ப விரும்புகிறீர்களா? குறிப்பு: இது உங்கள் அனைத்து தொடர்புகளுக்கும் அனுப்பப்படும்";
 "Are you sure want to " = "நீங்கள் உறுதியாக ";
@@ -1172,6 +1175,16 @@
 "Wrong Ans " = "தவறான பதில் ";
 "Not Ans " = "பதில் அளிக்கவில்லை ";
 "Completed at: " = "முடிக்கப்பட்ட நேரம்: ";
+"Save All Marks" = "அனைத்து மதிப்பெண்களையும் சேமிக்கவும்";
+"Publish All Marks" = "அனைத்து மதிப்பெண்களையும் வெளியிடவும்";
+"Review & Edit Marks" = "மதிப்பெண்களை சரிபார்த்து திருத்தவும்";
+"Verify the data and make any necessary corrections." = "தரவுகளை சரிபார்த்து தேவையான திருத்தங்களைச் செய்யவும்.";
+"Note: Use \"AB\" for absent students and \"N/A\" for marks that are not applicable." = "குறிப்பு: வராத மாணவர்களுக்கு \"AB\" மற்றும் பொருந்தாத மதிப்பெண்களுக்கு \"N/A\" பயன்படுத்தவும்.";
+"⚠️ AI can make mistakes. Please check properly before submitting." = "⚠️ AI தவறுகள் செய்யக்கூடும். சமர்ப்பிக்கும் முன் சரிபார்க்கவும்.";
+
+"Not Applicable" = "பொருந்தாது";
+"Absent" = "வரவில்லை";
+"Maximum mark exceeded" = "அதிகபட்ச மதிப்பெண்ணை மீறியுள்ளது";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
