@@ -1326,3 +1326,15 @@ final class LocaleManager {
         Locale(identifier: "en_US_POSIX")
     }
 }
+
+
+extension UILabel {
+    func positionAsPlaceholder(in container: UIView, topPadding: CGFloat = 8, sidePadding: CGFloat = 5) {
+        self.sizeToFit()
+        
+        let isRTL = container.effectiveUserInterfaceLayoutDirection == .rightToLeft
+        let xOrigin = isRTL ? container.bounds.width - self.frame.width - sidePadding : sidePadding
+        
+        self.frame.origin = CGPoint(x: xOrigin, y: topPadding)
+    }
+}

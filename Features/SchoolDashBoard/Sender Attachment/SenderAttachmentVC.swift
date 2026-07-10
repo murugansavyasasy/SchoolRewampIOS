@@ -533,8 +533,7 @@ extension SenderAttachmentVC : UITextViewDelegate,UITextFieldDelegate{
         placeholderLabel?.text = CommonStringFile.Description.translated()
         placeholderLabel?.font = contentTextView.font
         placeholderLabel?.textColor = .lightGray
-        placeholderLabel?.sizeToFit()
-        placeholderLabel?.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        placeholderLabel?.positionAsPlaceholder(in: contentTextView)
         contentTextView.addSubview(placeholderLabel!)
         placeholderLabel?.isHidden = !contentTextView.text.isEmpty // Hide if text. exists
     }

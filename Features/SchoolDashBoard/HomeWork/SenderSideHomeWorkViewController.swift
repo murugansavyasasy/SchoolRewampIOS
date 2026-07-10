@@ -64,9 +64,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     let  video = "video"
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-      
-        
         BackBtnNm
             .configureAsBackButton(
                 firstLine: MenuStringFile.selectedMenuName,
@@ -216,7 +213,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     
     @available(iOS 15.0, *)
     @IBAction func RecipentBtnAct(_ sender: Any) {
-        if TitleTxtfield.text != ""  && DetailsTxtview.text != "" && DetailsTxtview.text != CommonStringFile.Description{
+        if TitleTxtfield.text != ""  && DetailsTxtview.text != "" && DetailsTxtview.text != CommonStringFile.Description.translated(){
             user_inputs.SelectedUrls = attachments
             user_inputs.VideoPath = selectedVideoURL
             var params: [String: Any] = [
@@ -458,14 +455,14 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
 @available(iOS 14.0, *)
 extension SenderSideHomeWorkViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if DetailsTxtview.text == CommonStringFile.Description {
+        if DetailsTxtview.text == CommonStringFile.Description.translated() {
             DetailsTxtview.text = ""
             DetailsTxtview.textColor = .black
         }
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         if DetailsTxtview.text == "" {
-            DetailsTxtview.text = CommonStringFile.Description
+            DetailsTxtview.text = CommonStringFile.Description.translated()
             DetailsTxtview.textColor = .gray
         }
     }

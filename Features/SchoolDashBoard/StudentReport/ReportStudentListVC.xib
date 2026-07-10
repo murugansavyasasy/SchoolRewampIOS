@@ -105,7 +105,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VLU-y9-Qpc">
                                             <rect key="frame" x="0.0" y="0.0" width="361.33333333333331" height="50"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b2R-Wl-AQO">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b2R-Wl-AQO">
                                                     <rect key="frame" x="0.0" y="0.0" width="201.33333333333334" height="50"/>
                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -378,7 +378,7 @@
         <image name="noStudentReport" width="3000" height="3000"/>
         <image name="slider.horizontal.3" catalog="system" width="128" height="99"/>
         <namedColor name="PrimeryColor">
-            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.41899999976158142" green="0.70800000429153442" blue="0.34599998593330383" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="topBackgroundCLr">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

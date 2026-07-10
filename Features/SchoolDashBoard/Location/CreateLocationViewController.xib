@@ -56,7 +56,7 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBl-Wf-AtI">
                                                             <rect key="frame" x="10" y="0.0" width="351" height="61.666666666666664"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Accurate location settings are crucial for ensuring that attendance is only marked" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHe-fO-Y9v" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Accurate location settings are crucial for ensuring that attendance is only marked" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHe-fO-Y9v" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                                                     <rect key="frame" x="10" y="10" width="331" height="41.666666666666664"/>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
@@ -93,7 +93,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Pin your loaction name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n0L-hg-M6N">
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Pin your loaction name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n0L-hg-M6N">
                                                     <rect key="frame" x="20" y="164" width="348" height="45"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="45" id="vXk-cE-N7b"/>
@@ -405,7 +405,7 @@
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="down-arrow" width="512" height="512"/>
         <namedColor name="PrimeryColor">
-            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.41899999976158142" green="0.70800000429153442" blue="0.34599998593330383" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
