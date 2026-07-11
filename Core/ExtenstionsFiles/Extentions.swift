@@ -1326,8 +1326,26 @@ final class LocaleManager {
         Locale(identifier: "en_US_POSIX")
     }
 }
+extension String {
 
+    func toEnglishDigits() -> String {
 
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+
+        var result = ""
+
+        for character in self {
+            if let number = formatter.number(from: String(character)) {
+                result += number.stringValue
+            } else {
+                result.append(character)
+            }
+        }
+
+        return result
+    }
+}
 extension UILabel {
     func positionAsPlaceholder(in container: UIView, topPadding: CGFloat = 8, sidePadding: CGFloat = 5) {
         self.sizeToFit()

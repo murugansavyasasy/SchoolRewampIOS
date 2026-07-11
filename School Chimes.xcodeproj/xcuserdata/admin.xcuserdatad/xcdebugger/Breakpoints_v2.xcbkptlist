@@ -14,10 +14,10 @@
             filePath = "Core/ExtenstionsFiles/Extentions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "setAttributedText(for:with:firstString:secondString:color1:color2:)"
-            landmarkType = "9">
+            startingLineNumber = "251"
+            endingLineNumber = "251"
+            landmarkName = "showActivityLoader(maxDuration:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
