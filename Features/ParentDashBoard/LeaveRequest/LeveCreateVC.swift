@@ -124,8 +124,8 @@ class LeveCreateVC: UIViewController{
             let estimatedSize = CauseTextView.sizeThatFits(size)
             CauseTextviewHeight.constant = estimatedSize.height
             FromDatePickerView.isHidden = true
-            FromSessionBtn.setTitle(leave.fromSession, for: .normal)
-            ToSessionBtn.setTitle(leave.Tosession, for: .normal)
+            FromSessionBtn.setTitle(leave.fromSession.translated(), for: .normal)
+            ToSessionBtn.setTitle(leave.Tosession.translated(), for: .normal)
             NewLeaveDefLbl.text = AttendanceString.editLeaveRequest.translated()
             let daysText = "\(AttendanceString.updateFor.translated()) \(leave.NoOfDays) \(AttendanceString.daysLeave.translated())"
             ApplyLeaveBtn.setTitle(daysText, for: .normal)
