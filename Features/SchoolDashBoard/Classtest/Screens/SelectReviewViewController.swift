@@ -233,9 +233,17 @@ extension SelectReviewViewController: UITableViewDataSource, UITableViewDelegate
        
         // Remove test callback
         cell.onRemoveTestTapped = { [weak self] testIdx in
-            self?.viewModel?.removeTest(at: testIdx, from: config.subjectId, sectionId: config.sectionId)
-            self?.tableView.reloadData()
-            self?.updateButtonsState()
+//            self?.viewModel?.removeTest(at: testIdx, from: config.subjectId, sectionId: config.sectionId)
+//            self?.tableView.reloadData()
+//            self?.updateButtonsState()
+            guard let self = self else { return }
+                    self.viewModel?.removeTest(at: testIdx, from: config.subjectId, sectionId: config.sectionId)
+                    self.tableView.reloadData()
+                    self.updateButtonsState()
+                    
+                    if self.totalTestsCount == 0 {
+                        _ = self.viewModel?.previousStep()
+                    }
         }
         
         return cell

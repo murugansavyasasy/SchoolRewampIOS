@@ -146,6 +146,36 @@
             endingLineNumber = "299"
             landmarkName = "GetStudentList(roomId:academicYear:date:sessionID:hostelId:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "5A638DCD-6F03-4A69-81BF-F7947FECADE3 - b57c02e72840bdb2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;School_Chimes.HostelStudentListSuc, Swift.Error&gt;) -&gt; () in School_Chimes.MarkAttendanceViewController.GetStudentList(roomId: Swift.String, academicYear: Swift.String, date: Swift.String, sessionID: Swift.String, hostelId: Swift.String) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/Desktop/NEW_SCHOOLCHIMES/SchoolRewampIOS%207/Features/SchoolDashBoard/HostelAttendace/MarkAttendanceViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "299"
+                  endingLineNumber = "299">
+               </Location>
+               <Location
+                  uuid = "5A638DCD-6F03-4A69-81BF-F7947FECADE3 - ed64402fc27c818d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.HostelStudentListSuc, Swift.Error&gt;) -&gt; () in School_Chimes.MarkAttendanceViewController.GetStudentList(roomId: Swift.String, academicYear: Swift.String, date: Swift.String, sessionID: Swift.String, hostelId: Swift.String) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/Desktop/NEW_SCHOOLCHIMES/SchoolRewampIOS%207/Features/SchoolDashBoard/HostelAttendace/MarkAttendanceViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "301"
+                  endingLineNumber = "301">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -158,10 +188,40 @@
             filePath = "Features/SchoolDashBoard/Classtest/Views/Cells/SubjectDetailsTableViewCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
             landmarkName = "configureReport(with:isExpanded:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BD12E4E7-81BD-4F5E-A92F-47723573D0C9 - 2d0e12153d290f35"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "School_Chimes.SubjectDetailsTableViewCell.configureReport(with: School_Chimes.StaffSubject, isExpanded: Swift.Bool) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/Desktop/NEW_SCHOOLCHIMES/SchoolRewampIOS%207/Features/SchoolDashBoard/Classtest/Views/Cells/SubjectDetailsTableViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "215"
+                  endingLineNumber = "215">
+               </Location>
+               <Location
+                  uuid = "BD12E4E7-81BD-4F5E-A92F-47723573D0C9 - 568953e419f3e10f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.UIView) -&gt; () in School_Chimes.SubjectDetailsTableViewCell.configureReport(with: School_Chimes.StaffSubject, isExpanded: Swift.Bool) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/apple/Desktop/NEW_SCHOOLCHIMES/SchoolRewampIOS%207/Features/SchoolDashBoard/Classtest/Views/Cells/SubjectDetailsTableViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "216"
+                  endingLineNumber = "216">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -209,6 +269,22 @@
             startingLineNumber = "73"
             endingLineNumber = "73"
             landmarkName = "configure(with:index:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7B240438-6EEF-4DA3-85EC-171822AC361F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Features/SchoolDashBoard/Classtest/Screens/SelectReviewViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
+            landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

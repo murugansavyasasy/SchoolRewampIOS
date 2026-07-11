@@ -16,7 +16,7 @@ public final class ReviewSubjectTableViewCell: UITableViewCell {
     
     // MARK: - Callbacks
     public var onRemoveTestTapped: ((Int) -> Void)?
-    
+    public var viewModel: CreateTestViewModel?
     private var config: SubjectExamConfig?
     private let activeColor = UIColor.primery
     
