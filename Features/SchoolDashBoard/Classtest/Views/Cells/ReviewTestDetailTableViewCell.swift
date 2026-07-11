@@ -2,7 +2,7 @@ import UIKit
 
 public final class ReviewTestDetailTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var infoFullStack: UIStackView!
+   
     // MARK: - IBOutlets
     @IBOutlet public weak var badgeContainer: UIView!
     @IBOutlet public weak var badgeLabel: UILabel!

@@ -238,6 +238,17 @@ extension SelectDetailsViewController: UITableViewDelegate, UITableViewDataSourc
         
         //Callback brining
         
+        cell.onInvalidMarksEnter = { [weak self] errorMsg in
+            guard let self = self else { return }
+            let alert = UIAlertController(
+                title: "Invalid Marks",
+                message: errorMsg,
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
         cell.onToggleExpand = {
             [weak self, weak cell] in
             guard let self = self else { return }
