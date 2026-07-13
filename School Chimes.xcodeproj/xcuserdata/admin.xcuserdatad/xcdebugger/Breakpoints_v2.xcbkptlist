@@ -14,8 +14,8 @@
             filePath = "Core/ExtenstionsFiles/Extentions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "251"
-            endingLineNumber = "251"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
             landmarkName = "showActivityLoader(maxDuration:)"
             landmarkType = "7">
          </BreakpointContent>

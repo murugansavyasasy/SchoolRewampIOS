@@ -9,6 +9,7 @@ import UIKit
 
 class EnterMarkVC: UIViewController, MarksCellDelegate {
     @IBOutlet weak var filtterBtn: UIButton!
+    @IBOutlet weak var noteLbl: LocalizationLabel!
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var subjectHeight: NSLayoutConstraint!
@@ -54,7 +55,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                 secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
             )
         }
-        
+        noteLbl.text = uploadTest ? "Note: Use \("AB") for absent students and \("NA") for marks that are not applicable." : "Note: Use \("AB") for absent students."
         setupHeaderCollectionView()
         setupTableView()
         setupKeyboardObservers()

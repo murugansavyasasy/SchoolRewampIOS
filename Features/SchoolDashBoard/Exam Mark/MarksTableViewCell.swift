@@ -20,7 +20,6 @@ class MarksTableViewCell: UITableViewCell {
     private var isScrolling = false
     private var configuredStudentId: String?
     weak var delegate: MarksCellDelegate?
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupCell()
@@ -95,7 +94,7 @@ class MarksTableViewCell: UITableViewCell {
         self.studentIndex = index
         self.parentVC = parentVC
         marksCollectionView.tag = index
-
+        
         let newId = student.student_id ?? "\(index)"
         if configuredStudentId != newId {
             configuredStudentId = newId
@@ -180,7 +179,6 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
             hasFlaggedIssue = activity.isReview ?? false
             is_edit = activity.is_edit ?? true
         }
-        
         cell.configure(
             mark: mark,
             channgeMark: changeMark,

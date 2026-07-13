@@ -27,6 +27,7 @@ class MarksCell: UICollectionViewCell {
     private var hasFlaggedIssue = false
     weak var delegate: MarksCellDelegate?
     weak var parentVC: EnterMarkVC?
+    private var naButton: UIButton?
     override func awakeFromNib() {
         super.awakeFromNib()
         markTxt.delegate = self
@@ -54,9 +55,15 @@ class MarksCell: UICollectionViewCell {
 
         container.addSubview(hairline)
 
+        let abButton = createKeyButton(title: "AB", action: #selector(abTapped))
+
+        let naButton = createKeyButton(title: "NA", action: #selector(naTapped))
+        naButton.isHidden = !(parentVC?.uploadTest ?? false)
+        self.naButton = naButton
+
         let buttons: [UIButton] = [
-            createKeyButton(title: "AB", action: #selector(abTapped)),
-            createKeyButton(title: "NA", action: #selector(naTapped)),
+            abButton,
+            naButton,
             createKeyButton(imageName: "arrow.up", action: #selector(upTapped)),
             createKeyButton(imageName: "arrow.down", action: #selector(downTapped)),
             createKeyButton(imageName: "arrow.left", action: #selector(leftTapped)),
@@ -238,7 +245,6 @@ class MarksCell: UICollectionViewCell {
         self.columnIndex = columnIndex
         self.hasFlaggedIssue = hasFlaggedIssue
         self.parentVC = parentVC
-
         tittleLbl.isHidden = true
         infoBtn.isHidden = true
 
@@ -281,6 +287,7 @@ class MarksCell: UICollectionViewCell {
             )
             return
         }
+        markTxt.inputAccessoryView = buildAccessoryView()
     }
 
     private func applyHighlight(color: UIColor, infoColor: UIColor) {

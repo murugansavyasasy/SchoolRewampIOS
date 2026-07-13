@@ -135,7 +135,28 @@ class CustomView:UIView{
     }
 }
 func optionLetter(for index: Int) -> String {
-    return String(UnicodeScalar(65 + index)!)
+
+    switch LocaleManager.shared.languageCode {
+
+    case "ar":
+        let letters = ["أ", "ب", "ج", "د", "هـ", "و", "ز", "ح", "ط", "ي"]
+        return index < letters.count ? letters[index] : ""
+
+    case "ta":
+        let letters = ["அ", "ஆ", "இ", "ஈ", "உ", "ஊ", "எ", "ஏ", "ஐ", "ஒ"]
+        return index < letters.count ? letters[index] : ""
+
+    case "hi":
+        let letters = ["अ", "आ", "इ", "ई", "उ", "ऊ", "ए", "ऐ", "ओ", "औ"]
+        return index < letters.count ? letters[index] : ""
+
+    case "th":
+        let letters = ["ก", "ข", "ฃ", "ค", "ฅ", "ฆ", "ง", "จ", "ฉ", "ช"]
+        return index < letters.count ? letters[index] : ""
+
+    default:
+        return String(UnicodeScalar(65 + index)!)
+    }
 }
 extension UITapGestureRecognizer {
     func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {

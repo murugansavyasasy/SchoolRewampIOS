@@ -226,7 +226,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
 //                            MenuDetail(id: 206, name: "Class test", description: "Used to apply leave")
 //                        )
                         self.recentActiveMenuCollection.reloadData()
-                        self.get_MenuCount() // 🔹 after menus loaded
+                        self.get_MenuCount()
                         user_inputs.menuList = self.menu_details.compactMap{$0.name}
                         
                         if details.is_birthday ?? false{
@@ -372,7 +372,6 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         for newItem in newDetails {
             guard let newId = newItem.id else { continue }
 
-            // Main menu
             if let index = menu_details.firstIndex(where: { $0.id == newId }) {
                 if menu_details[index].unread_count != newItem.unread_count {
                     menu_details[index].unread_count = newItem.unread_count
@@ -380,9 +379,16 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                 }
             }
 
-            // Recent menu also update
+            if let index = filteredMenu.firstIndex(where: { $0.id == newId }) {
+                filteredMenu[index].unread_count = newItem.unread_count
+            }
+
             if let recentIndex = recentMenuItems?.firstIndex(where: { $0.id == newId }) {
                 recentMenuItems?[recentIndex].unread_count = newItem.unread_count
+            }
+
+            if let recentIndex = filteredRecentMenu.firstIndex(where: { $0.id == newId }) {
+                filteredRecentMenu[recentIndex].unread_count = newItem.unread_count
             }
         }
 
