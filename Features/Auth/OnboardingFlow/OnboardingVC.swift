@@ -14,7 +14,9 @@ class OnboardingVC: UIViewController {
     @IBOutlet weak var skipBtn: UIButton!
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var nextview: UIView!
-    
+    var isRTL: Bool {
+        UIView.userInterfaceLayoutDirection(for: view.semanticContentAttribute) == .rightToLeft
+    }
     var dataResponse: [IntroFeature] = []
     var currentPage = 0
     override func viewDidLoad() {
@@ -27,6 +29,10 @@ class OnboardingVC: UIViewController {
         onBoardingCV.dataSource = self
         nextview.layer.cornerRadius = nextview.frame.height / 2
         onBoarding_Api()
+        if isRTL {
+            onBoardingCV.transform = CGAffineTransform(scaleX: -1, y: 1)
+            pageControl.transform = CGAffineTransform(scaleX: -1, y: 1)
+        }
     }
     
     // MARK: - API Call
@@ -47,6 +53,7 @@ class OnboardingVC: UIViewController {
                             self.pageControl.numberOfPages = self.dataResponse.count
                             self.skipBtn.isHidden = self.dataResponse.count <= 1
                             self.nextBtn.isHidden = self.dataResponse.count <= 1
+                            self.currentPage = self.isRTL ? self.dataResponse.count - 1 : 0
                             self.onBoardingCV.reloadData()
                         }
                     case .failure(let error):
@@ -59,8 +66,10 @@ class OnboardingVC: UIViewController {
     
     // MARK: - Actions
     @IBAction func nextBtnTapped(_ sender: UIButton) {
-        if currentPage < dataResponse.count - 1 {
-            currentPage += 1
+        let isLastLogicalPage = isRTL ? (currentPage == 0) : (currentPage == dataResponse.count - 1)
+        
+        if !isLastLogicalPage {
+            currentPage += isRTL ? -1 : 1
             updateUI()
         } else {
             navigateToLogin()
@@ -85,11 +94,13 @@ class OnboardingVC: UIViewController {
         onBoardingCV.scrollToItem(at: IndexPath(item: currentPage, section: 0),
                                   at: .centeredHorizontally,
                                   animated: true)
-        let isLastPage = currentPage == dataResponse.count - 1
+        
+        let isLastPage = isRTL ? (currentPage == 0) : (currentPage == dataResponse.count - 1)
         skipBtn.isHidden = isLastPage
         nextBtn.setTitle(isLastPage ? "Let's Go" : "Next".translated(), for: .normal)
-        // Trigger animation after scroll completes
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
+            guard let self = self else { return }
             if let cell = self.onBoardingCV.cellForItem(at: IndexPath(item: self.currentPage, section: 0)) as? OnboardingCVC {
                 cell.animateStepByStep()
             }
@@ -132,8 +143,12 @@ extension OnboardingVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        currentPage = Int(scrollView.contentOffset.x / scrollView.frame.width)
-        updateUI()
+        currentPage = Int(round(scrollView.contentOffset.x / scrollView.bounds.width))
+        
+        let isLastPage = isRTL ? (currentPage == 0) : (currentPage == dataResponse.count - 1)
+        pageControl.currentPage = currentPage
+        skipBtn.isHidden = isLastPage
+        nextBtn.setTitle(isLastPage ? "Let's Go" : "Next".translated(), for: .normal)
     }
     
     func collectionView(_ collectionView: UICollectionView,

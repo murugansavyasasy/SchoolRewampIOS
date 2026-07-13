@@ -18,6 +18,7 @@
                 <outlet property="percentageLbl" destination="BaB-uE-3dx" id="81Q-gm-GTw"/>
                 <outlet property="remarkView" destination="QYg-tg-tEz" id="2EQ-q7-aYP"/>
                 <outlet property="slider" destination="lix-fw-vuL" id="ArZ-Sr-tOT"/>
+                <outlet property="submitBtn" destination="McO-oQ-Biu" id="bbm-iC-qDA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -27,10 +28,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="i6a-Bf-Qsa">
-                    <rect key="frame" x="10" y="128" width="373" height="35"/>
+                    <rect key="frame" x="10" y="128" width="373" height="180.33333333333337"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w4h-BE-IiX">
-                            <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                            <rect key="frame" x="0.0" y="72.666666666666657" width="35" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="JRH-1Y-hAd"/>
                                 <constraint firstAttribute="width" constant="35" id="U0i-1b-kEC"/>
@@ -46,7 +47,7 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MySubmistion " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HLY-Gm-tGL">
-                            <rect key="frame" x="35" y="6.666666666666659" width="338" height="21.666666666666671"/>
+                            <rect key="frame" x="35" y="79.333333333333343" width="338" height="21.666666666666671"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -57,13 +58,13 @@
                     </constraints>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="anq-kt-saI">
-                    <rect key="frame" x="0.0" y="173" width="393" height="679"/>
+                    <rect key="frame" x="0.0" y="318.33333333333331" width="393" height="533.66666666666674"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="vpG-AJ-hy7">
-                            <rect key="frame" x="0.0" y="10" width="393" height="601"/>
+                            <rect key="frame" x="0.0" y="10" width="393" height="455.66666666666669"/>
                             <subviews>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="xWy-zP-QTT">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="601"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="455.66666666666669"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aR3-1x-lSR">
                                         <size key="itemSize" width="128" height="128"/>
@@ -73,7 +74,7 @@
                                     </collectionViewFlowLayout>
                                 </collectionView>
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QYg-tg-tEz">
-                                    <rect key="frame" x="0.0" y="601" width="393" height="145.33333333333337"/>
+                                    <rect key="frame" x="0.0" y="455.66666666666669" width="393" height="150.33333333333331"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="lxd-G5-TT5">
                                             <rect key="frame" x="20" y="10.000000000000004" width="353" height="60.333333333333343"/>
@@ -98,18 +99,15 @@
                                                 </slider>
                                             </subviews>
                                         </stackView>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="McO-oQ-Biu">
-                                            <rect key="frame" x="126.66666666666669" y="100.33333333333337" width="140" height="35"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="McO-oQ-Biu" customClass="LocalizationButton" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                            <rect key="frame" x="100" y="100.33333333333337" width="193" height="40"/>
+                                            <color key="backgroundColor" name="ParentClr"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="35" id="HHT-B8-NiN"/>
+                                                <constraint firstAttribute="height" constant="40" id="HHT-B8-NiN"/>
                                             </constraints>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="plain" title="Submit Remark">
-                                                <backgroundConfiguration key="background" cornerRadius="6">
-                                                    <color key="backgroundColor" name="ParentClr"/>
-                                                </backgroundConfiguration>
-                                            </buttonConfiguration>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" title="Submit Remark"/>
                                             <connections>
                                                 <action selector="updateRemark:" destination="-1" eventType="touchUpInside" id="zDa-T8-XXF"/>
                                             </connections>
@@ -117,12 +115,13 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
+                                        <constraint firstItem="McO-oQ-Biu" firstAttribute="leading" secondItem="QYg-tg-tEz" secondAttribute="leading" constant="100" id="2aq-Cc-ke9"/>
                                         <constraint firstItem="McO-oQ-Biu" firstAttribute="top" secondItem="lxd-G5-TT5" secondAttribute="bottom" constant="30" id="BCO-yf-3Uy"/>
                                         <constraint firstItem="lxd-G5-TT5" firstAttribute="leading" secondItem="QYg-tg-tEz" secondAttribute="leading" constant="20" id="IaP-in-gbO"/>
                                         <constraint firstAttribute="bottom" secondItem="McO-oQ-Biu" secondAttribute="bottom" constant="10" id="egZ-pb-tR5"/>
                                         <constraint firstItem="lxd-G5-TT5" firstAttribute="top" secondItem="QYg-tg-tEz" secondAttribute="top" constant="10" id="fmK-sV-hbi"/>
+                                        <constraint firstAttribute="trailing" secondItem="McO-oQ-Biu" secondAttribute="trailing" constant="100" id="h9m-yj-O31"/>
                                         <constraint firstAttribute="trailing" secondItem="lxd-G5-TT5" secondAttribute="trailing" constant="20" id="k3V-SY-dvK"/>
-                                        <constraint firstItem="McO-oQ-Biu" firstAttribute="centerX" secondItem="QYg-tg-tEz" secondAttribute="centerX" id="sP9-td-Urp"/>
                                     </constraints>
                                 </view>
                             </subviews>
@@ -157,10 +156,10 @@
     <resources>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <namedColor name="ParentClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="PrimeryColor">
-            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.49799999594688416" green="0.10199999809265137" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

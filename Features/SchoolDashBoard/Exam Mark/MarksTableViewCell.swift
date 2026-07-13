@@ -20,7 +20,6 @@ class MarksTableViewCell: UITableViewCell {
     private var isScrolling = false
     private var configuredStudentId: String?
     weak var delegate: MarksCellDelegate?
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupCell()
@@ -55,9 +54,33 @@ class MarksTableViewCell: UITableViewCell {
     }
     
     func configure(student: StudentMark, index: Int, parentVC: EnterMarkVC, nameWidth: CGFloat) {
-        setStudentNameWithGender(label: studentNameLabel, student: student.student_name, gender: student.gender)
-        
-        if let rollNo = student.roll_no, let admissionNo = student.admission_no {
+
+        setStudentNameWithGender(label: studentNameLabel,
+                                 student: student.student_name,
+                                 gender: student.gender)
+
+        if UIView.userInterfaceLayoutDirection(
+            for: contentView.semanticContentAttribute
+        ) == .rightToLeft {
+
+            studentNameLabel.textAlignment = .right
+            rollNoLabel.textAlignment = .right
+            admissNoLabel.textAlignment = .right
+
+            studentNameLabel.semanticContentAttribute = .forceRightToLeft
+            rollNoLabel.semanticContentAttribute = .forceRightToLeft
+            admissNoLabel.semanticContentAttribute = .forceRightToLeft
+
+        } else {
+
+            studentNameLabel.textAlignment = .left
+            rollNoLabel.textAlignment = .left
+            admissNoLabel.textAlignment = .left
+        }
+
+        if let rollNo = student.roll_no,
+           let admissionNo = student.admission_no {
+
             rollNoLabel.text = "Roll No: \(rollNo)"
             admissNoLabel.text = "Adm No: \(admissionNo)"
             rollNoLabel.isHidden = rollNo.isEmpty
@@ -66,7 +89,7 @@ class MarksTableViewCell: UITableViewCell {
             rollNoLabel.isHidden = true
             admissNoLabel.isHidden = true
         }
-        
+
         self.nameWidth.constant = nameWidth
         self.studentIndex = index
         self.parentVC = parentVC
@@ -96,16 +119,27 @@ class MarksTableViewCell: UITableViewCell {
         }
 
         let attr = NSMutableAttributedString(string: fullText)
+
         let nameRange = (fullText as NSString).range(of: name)
         attr.addAttribute(.foregroundColor,
                           value: UIColor.label,
                           range: nameRange)
+
         if let gender = gender {
             let genderText = "(\(gender))"
             let genderRange = (fullText as NSString).range(of: genderText)
             attr.addAttribute(.foregroundColor,
                               value: UIColor.systemPink,
                               range: genderRange)
+        }
+
+        // RTL Support
+        if UIView.userInterfaceLayoutDirection(for: label.semanticContentAttribute) == .rightToLeft {
+            label.textAlignment = .right
+            label.semanticContentAttribute = .forceRightToLeft
+        } else {
+            label.textAlignment = .left
+            label.semanticContentAttribute = .forceLeftToRight
         }
 
         label.attributedText = attr
@@ -145,7 +179,6 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
             hasFlaggedIssue = activity.isReview ?? false
             is_edit = activity.is_edit ?? true
         }
-        
         cell.configure(
             mark: mark,
             channgeMark: changeMark,

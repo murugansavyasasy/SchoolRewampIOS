@@ -19,7 +19,6 @@
                 <outlet property="TitleTxtfield" destination="5Tq-fx-tKi" id="UNr-QN-yg1"/>
                 <outlet property="ToStdOrSecBtnBottom" destination="fMp-z2-ggI" id="UPb-Mk-mJ8"/>
                 <outlet property="audioFile" destination="swF-vH-WBt" id="i2s-7R-Aey"/>
-                <outlet property="backBtn" destination="zNx-dR-ANi" id="bcG-dZ-J2p"/>
                 <outlet property="collectionViewHeight" destination="QoB-F1-DOQ" id="zhE-oc-yre"/>
                 <outlet property="dateLbl" destination="viv-SG-9q1" id="Kgm-gV-erL"/>
                 <outlet property="dateView" destination="FWP-cF-qbv" id="Wvl-aT-5Mc"/>
@@ -30,6 +29,7 @@
                 <outlet property="scrollView" destination="aYd-vN-O0s" id="QiO-Vf-X4F"/>
                 <outlet property="selectedDateLbl" destination="849-od-99j" id="iG2-Wr-08z"/>
                 <outlet property="titleLbl" destination="SQj-1m-94r" id="XT0-gw-tMq"/>
+                <outlet property="tittleLbl" destination="Vj2-DO-YMA" id="X0F-5q-All"/>
                 <outlet property="typeSectionCV" destination="Ch5-hB-Dkh" id="pSZ-Gh-1rA"/>
                 <outlet property="uploadAttachmentView" destination="Nkv-yR-VcH" id="JDl-jL-1Sj"/>
                 <outlet property="uploadattachmentLbl" destination="t8m-dU-eg6" id="pVB-5a-4Cj"/>
@@ -42,27 +42,38 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zNx-dR-ANi">
-                    <rect key="frame" x="10" y="118" width="363" height="35"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="35" id="d0B-r1-NR5"/>
-                    </constraints>
-                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" title="Create LSRW" image="chevron.backward" catalog="system">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
-                    </state>
-                    <connections>
-                        <action selector="back:" destination="-1" eventType="touchUpInside" id="si3-2d-du3"/>
-                    </connections>
-                </button>
+                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xAo-8A-dgo">
+                    <rect key="frame" x="10" y="128" width="373" height="35"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N6f-Oy-6Fb">
+                            <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="35" id="ASI-pO-2xN"/>
+                                <constraint firstAttribute="height" constant="35" id="JRg-9f-pu3"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="chevron.backward" catalog="system">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                            </state>
+                            <connections>
+                                <action selector="back:" destination="-1" eventType="touchUpInside" id="s4g-bq-IMZ"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LSRW" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vj2-DO-YMA">
+                            <rect key="frame" x="35" y="0.0" width="338" height="35"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7sS-WE-KBw">
-                    <rect key="frame" x="0.0" y="163" width="393" height="689"/>
+                    <rect key="frame" x="0.0" y="173" width="393" height="679"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aYd-vN-O0s">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="689"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="679"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dNZ-WV-gqI">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="627"/>
@@ -332,14 +343,14 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="PrimeryColor"/>
             <constraints>
-                <constraint firstItem="7sS-WE-KBw" firstAttribute="top" secondItem="zNx-dR-ANi" secondAttribute="bottom" constant="10" id="5cM-aq-UKw"/>
-                <constraint firstItem="zNx-dR-ANi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="8Sd-6t-BOa"/>
+                <constraint firstItem="7sS-WE-KBw" firstAttribute="top" secondItem="xAo-8A-dgo" secondAttribute="bottom" constant="10" id="1up-vN-EfB"/>
+                <constraint firstItem="xAo-8A-dgo" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="4oz-Ww-mNg"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="7sS-WE-KBw" secondAttribute="trailing" id="9ey-Mh-WiJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="dNZ-WV-gqI" secondAttribute="trailing" id="SEU-J7-2NH"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="zNx-dR-ANi" secondAttribute="trailing" constant="20" id="SGr-uu-n3r"/>
                 <constraint firstItem="dNZ-WV-gqI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="WpN-Pl-qGT"/>
-                <constraint firstItem="zNx-dR-ANi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="eEZ-4d-Tek"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="xAo-8A-dgo" secondAttribute="trailing" constant="10" id="b2l-FF-0IU"/>
                 <constraint firstItem="7sS-WE-KBw" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="lJK-lc-FWa"/>
+                <constraint firstItem="xAo-8A-dgo" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="qft-r9-3za"/>
                 <constraint firstAttribute="bottom" secondItem="7sS-WE-KBw" secondAttribute="bottom" id="ymw-zh-dc3"/>
             </constraints>
             <point key="canvasLocation" x="20.610687022900763" y="19.718309859154932"/>
@@ -351,7 +362,7 @@
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="mic 1" width="26" height="26"/>
         <namedColor name="PrimeryColor">
-            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.41899999976158142" green="0.70800000429153442" blue="0.34599998593330383" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

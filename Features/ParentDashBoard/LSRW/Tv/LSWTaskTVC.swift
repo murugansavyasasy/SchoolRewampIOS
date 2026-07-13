@@ -49,15 +49,23 @@ class LSWTaskTVC: UITableViewCell, AudioPlaybackDelegate{
             descriptionLbl.setNeedsLayout()
             descriptionLbl.layoutIfNeeded()
         // Icon button setup
-        if let type = assignment.activity_type{
-            self.type.text = "\(type)".translated()
+        if let type = assignment.activity_type {
+
+            let translatedType = "\(type)".capitalized(with: Locale.current).translated()
+            self.type.text = translatedType
+
             let iconConfig = getIconConfiguration(for: type)
             iconBtn.setTitle(type.icon, for: .normal)
             iconBtn.backgroundColor = iconConfig.backgroundColor
             iconBtn.setTitleColor(iconConfig.textColor, for: .normal)
         }
         dateBtn.setTitle(formattedDateStatus(from: assignment.created_on ?? ""), for: .normal)
-        dateBtn.setImage(UIImage(systemName: "calendar")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        dateBtn.setImage(UIImage(systemName: "calendar"), for: .normal)
+
+        var config = dateBtn.configuration ?? UIButton.Configuration.plain()
+        config.imagePadding = 8
+        config.imagePlacement = .leading
+        dateBtn.configuration = config
         reminderBtn.layer.cornerRadius = 8
         exportRecordBtn.layer.cornerRadius = 8
         attachmentList = attachments

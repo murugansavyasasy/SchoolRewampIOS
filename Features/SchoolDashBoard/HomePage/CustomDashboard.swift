@@ -559,36 +559,60 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
     
     func showSideMenu() {
         guard let window = UIApplication.shared.windows.first else { return }
+
+        let isRTL = UIView.userInterfaceLayoutDirection(
+            for: view.semanticContentAttribute
+        ) == .rightToLeft
+
+        let menuWidth: CGFloat = 250
+
         let dimView = UIView(frame: window.bounds)
         dimView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideSideMenu))
         dimView.addGestureRecognizer(tapGesture)
+
         window.addSubview(dimView)
         self.dimmedView = dimView
-        
+
         let menuVC = SideMenuVC()
-        menuVC.view.frame = CGRect(x: -250, y: 0, width: 250, height: window.bounds.height)
-        applyGradientBackground(to: menuVC.view)
         menuVC.isStudent = false
+        applyGradientBackground(to: menuVC.view)
+
+        // Initial Position
+        menuVC.view.frame = CGRect(
+            x: isRTL ? window.bounds.width : -menuWidth,
+            y: 0,
+            width: menuWidth,
+            height: window.bounds.height
+        )
+
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(hideSideMenu))
-        swipeGesture.direction = .left
+        swipeGesture.direction = isRTL ? .right : .left
         dimView.addGestureRecognizer(swipeGesture)
-        
+
         menuVC.delegate = self
         window.addSubview(menuVC.view)
         window.rootViewController?.addChild(menuVC)
         menuVC.didMove(toParent: window.rootViewController)
+
         self.sideMenu = menuVC
-        
+
         UIView.animate(withDuration: 0.3) {
-            menuVC.view.frame.origin.x = 0
+            menuVC.view.frame.origin.x = isRTL ? (window.bounds.width - menuWidth) : 0
         }
     }
-    
+
     @objc func hideSideMenu() {
-        guard let menuVC = sideMenu else { return }
+        guard let menuVC = sideMenu,
+              let window = UIApplication.shared.windows.first else { return }
+
+        let isRTL = UIView.userInterfaceLayoutDirection(
+            for: view.semanticContentAttribute
+        ) == .rightToLeft
+
         UIView.animate(withDuration: 0.3, animations: {
-            menuVC.view.frame.origin.x = -300
+            menuVC.view.frame.origin.x = isRTL ? window.bounds.width : -300
             self.dimmedView?.alpha = 0
         }) { _ in
             menuVC.view.removeFromSuperview()

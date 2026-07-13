@@ -226,7 +226,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
 //                            MenuDetail(id: 206, name: "Class test", description: "Used to apply leave")
 //                        )
                         self.recentActiveMenuCollection.reloadData()
-                        self.get_MenuCount() // 🔹 after menus loaded
+                        self.get_MenuCount()
                         user_inputs.menuList = self.menu_details.compactMap{$0.name}
                         
                         if details.is_birthday ?? false{
@@ -372,7 +372,6 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         for newItem in newDetails {
             guard let newId = newItem.id else { continue }
 
-            // Main menu
             if let index = menu_details.firstIndex(where: { $0.id == newId }) {
                 if menu_details[index].unread_count != newItem.unread_count {
                     menu_details[index].unread_count = newItem.unread_count
@@ -380,9 +379,16 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                 }
             }
 
-            // Recent menu also update
+            if let index = filteredMenu.firstIndex(where: { $0.id == newId }) {
+                filteredMenu[index].unread_count = newItem.unread_count
+            }
+
             if let recentIndex = recentMenuItems?.firstIndex(where: { $0.id == newId }) {
                 recentMenuItems?[recentIndex].unread_count = newItem.unread_count
+            }
+
+            if let recentIndex = filteredRecentMenu.firstIndex(where: { $0.id == newId }) {
+                filteredRecentMenu[recentIndex].unread_count = newItem.unread_count
             }
         }
 
@@ -457,45 +463,70 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     
     func showSideMenu() {
         guard let window = UIApplication.shared.windows.first else { return }
+
+        let isRTL = UIView.userInterfaceLayoutDirection(
+            for: view.semanticContentAttribute
+        ) == .rightToLeft
+
+        let menuWidth: CGFloat = 250
+
         let dimView = UIView(frame: window.bounds)
         dimView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideSideMenu))
         dimView.addGestureRecognizer(tapGesture)
+
         window.addSubview(dimView)
         self.dimmedView = dimView
-        
+
         let menuVC = SideMenuVC(isStudent: true)
-        menuVC.view.frame = CGRect(x: -250, y: 0, width: 250, height: window.bounds.height)
         applyGradientBackground(to: menuVC.view)
-       
+
+        let startX = isRTL ? window.bounds.width : -menuWidth
+        let endX = isRTL ? window.bounds.width - menuWidth : 0
+
+        menuVC.view.frame = CGRect(
+            x: startX,
+            y: 0,
+            width: menuWidth,
+            height: window.bounds.height
+        )
+
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(hideSideMenu))
-        swipeGesture.direction = .left
+        swipeGesture.direction = isRTL ? .right : .left
         dimView.addGestureRecognizer(swipeGesture)
-        
+
         menuVC.delegate = self
         window.addSubview(menuVC.view)
         window.rootViewController?.addChild(menuVC)
         menuVC.didMove(toParent: window.rootViewController)
+
         self.sideMenu = menuVC
-        
+
         UIView.animate(withDuration: 0.3) {
-            menuVC.view.frame.origin.x = 0
+            menuVC.view.frame.origin.x = endX
         }
     }
 
     @objc func hideSideMenu() {
-        guard let menuVC = sideMenu else { return }
+        guard let sideMenu = sideMenu,
+              let window = UIApplication.shared.windows.first else { return }
+
+        let isRTL = UIView.userInterfaceLayoutDirection(
+            for: view.semanticContentAttribute
+        ) == .rightToLeft
+
         UIView.animate(withDuration: 0.3, animations: {
-            menuVC.view.frame.origin.x = -300
+            sideMenu.view.frame.origin.x = isRTL ? window.bounds.width : -250
             self.dimmedView?.alpha = 0
         }) { _ in
-            menuVC.view.removeFromSuperview()
-            menuVC.removeFromParent()
+            sideMenu.willMove(toParent: nil)
+            sideMenu.view.removeFromSuperview()
+            sideMenu.removeFromParent()
             self.dimmedView?.removeFromSuperview()
-            self.sideMenu = nil
-            self.dimmedView = nil
         }
     }
+    
     func applyGradientBackground(to view: UIView) {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = view.bounds
