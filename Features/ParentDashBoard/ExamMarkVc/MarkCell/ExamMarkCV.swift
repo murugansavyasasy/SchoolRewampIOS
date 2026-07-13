@@ -30,8 +30,8 @@ class ExamMarkCV: UICollectionViewCell {
         viewMarksBtn.layer.cornerRadius = 10
         viewProgressBtn.layer.cornerRadius = 10
         
-        viewMarksBtn.setTitle(ExamStringFile.viewMarks, for: .normal)
-        viewProgressBtn.setTitle(ExamStringFile.viewProgress, for: .normal)
+        viewMarksBtn.setTitle(ExamStringFile.viewMarks.translated(), for: .normal)
+        viewProgressBtn.setTitle(ExamStringFile.viewProgress.translated(), for: .normal)
         
         ExamLbl.setFont(style: .title, size: FontSize.TitleSize)
         viewMarksBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)

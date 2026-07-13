@@ -54,8 +54,8 @@ class ExamDetailsVC: UIViewController, Searchable {
             secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
         )
 
-        TimeTableBtn.setTitle(ExamStringFile.examTimetable, for: .normal)
-        ExamMarksBtn.setTitle(ExamStringFile.examMarks, for: .normal)
+        TimeTableBtn.setTitle(ExamStringFile.examTimetable.translated(), for: .normal)
+        ExamMarksBtn.setTitle(ExamStringFile.examMarks.translated(), for: .normal)
 
         NameLbl.text = studentDetails?.name ?? ""
         StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"

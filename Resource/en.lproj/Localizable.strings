@@ -1102,6 +1102,36 @@
 "Not Applicable" = "Not Applicable";
 "Absent" = "Absent";
 "Maximum mark exceeded" = "Maximum mark exceeded";
+"Apply for" = "Apply for";
+"Loading" = "Loading";
+"\"Click\" here when you're done" = "\"Click\" here when you're done";
+"🎉 Well Done!" = "🎉 Well Done!";
+"That's it! Homework done – you're amazing!" = "That's it! Homework done – you're amazing!";
+"Payment" = "Payment";
+"Receipt" = "Receipt";
+"All Transactions" = "All Transactions";
+"Refresh" = "Refresh";
+"Paid Amount" = "Paid Amount";
+"Payment Status" = "Payment Status";
+"Transaction ID" = "Transaction ID";
+"Created On" = "Created On";
+"Last Update On" = "Last Updated On";
+"Payment Completed" = "Payment Completed";
+"Paid Amount:" = "Paid Amount:";
+"Receipt No:" = "Receipt No:";
+"Fee Receipt" = "Fee Receipt";
+"Payment Done" = "Payment Done";
+"Payment successful. You can download receipt in receipt tab." = "Payment successful. You can download the receipt from the Receipt tab.";
+"Payment Failed" = "Payment Failed";
+"Please try again later." = "Please try again later.";
+"Select Country" = "Select Country";
+"Select the country where your educational institution is located." = "Select the country where your educational institution is located.";
+"Find your country" = "Find your country";
+"I agree to the Terms and Conditions" = "I agree to the Terms and Conditions";
+"All Countries" = "All Countries";
+"Top Countries" = "Top Countries";
+"No Data Found" = "No Data Found";
+
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";

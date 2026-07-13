@@ -1180,10 +1180,38 @@
 "Verify the data and make any necessary corrections." = "डेटा की जाँच करें और आवश्यक सुधार करें।";
 "Note: Use \"AB\" for absent students and \"N/A\" for marks that are not applicable." = "नोट: अनुपस्थित छात्रों के लिए \"AB\" और लागू न होने वाले अंकों के लिए \"N/A\" का उपयोग करें।";
 "⚠️ AI can make mistakes. Please check properly before submitting." = "⚠️ AI से गलती हो सकती है। सबमिट करने से पहले कृपया जाँच लें।";
-
 "Not Applicable" = "लागू नहीं";
 "Absent" = "अनुपस्थित";
 "Maximum mark exceeded" = "अधिकतम अंक से अधिक";
+"Apply for" = "के लिए आवेदन करें";
+"Loading" = "लोड हो रहा है";
+"\"Click\" here when you're done" = "पूरा होने पर यहाँ \"क्लिक\" करें";
+"🎉 Well Done!" = "🎉 बहुत बढ़िया!";
+"That's it! Homework done – you're amazing!" = "बस हो गया! होमवर्क पूरा हो गया – आपने शानदार काम किया!";
+"Payment" = "भुगतान";
+"Receipt" = "रसीद";
+"All Transactions" = "सभी लेनदेन";
+"Refresh" = "रीफ़्रेश करें";
+"Paid Amount" = "भुगतान की गई राशि";
+"Payment Status" = "भुगतान की स्थिति";
+"Transaction ID" = "लेनदेन आईडी";
+"Created On" = "बनाया गया";
+"Last Update On" = "अंतिम अपडेट";
+"Payment Completed" = "भुगतान पूरा हुआ";
+"Paid Amount:" = "भुगतान की गई राशि:";
+"Receipt No:" = "रसीद संख्या:";
+"Fee Receipt" = "शुल्क रसीद";
+"Payment Done" = "भुगतान हो गया";
+"Payment successful. You can download receipt in receipt tab." = "भुगतान सफल रहा। आप रसीद टैब से रसीद डाउनलोड कर सकते हैं।";
+"Payment Failed" = "भुगतान विफल";
+"Please try again later." = "कृपया बाद में पुनः प्रयास करें।";
+"Select Country" = "देश चुनें";
+"Select the country where your educational institution is located." = "वह देश चुनें जहाँ आपका शैक्षणिक संस्थान स्थित है।";
+"Find your country" = "अपना देश खोजें";
+"I agree to the Terms and Conditions" = "मैं नियम एवं शर्तों से सहमत हूँ";
+"All Countries" = "सभी देश";
+"Top Countries" = "प्रमुख देश";
+"No Data Found" = "कोई डेटा नहीं मिला";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

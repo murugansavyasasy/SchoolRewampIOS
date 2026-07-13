@@ -72,7 +72,7 @@ class SubmitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = CommonStringFile.Description
+        placeholderLabel.text = CommonStringFile.Description.translated()
         placeholderLabel.font = DescriptionTextview.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.positionAsPlaceholder(in: DescriptionTextview)

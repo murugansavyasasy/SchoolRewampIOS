@@ -231,7 +231,7 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         backBtn.titleLabel?.numberOfLines = 0
         backBtn.titleLabel?.lineBreakMode = .byWordWrapping
         
-        doneHomeWorkBtnName.setTitle("\"Click\" here when you're done", for: .normal)
+        doneHomeWorkBtnName.setTitle("\"Click\" here when you're done".translated(), for: .normal)
         doneHomeWorkBtnName.setTitleColor(.systemBlue, for: .normal)
         doneHomeWorkBtnName.setImage(UIImage(systemName: "hand.thumbsup"), for: .normal)
         doneHomeWorkBtnName.contentHorizontalAlignment = .right

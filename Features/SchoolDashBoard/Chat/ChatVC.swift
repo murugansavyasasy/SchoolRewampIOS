@@ -51,6 +51,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         blockedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         blockedLbl.setFont(style: .body, size: FontSize.BodySize)
         MessgeTextview.addDoneButton()
+        MessgeTextview.layer.cornerRadius = 12
         let nib = UINib(nibName: CellConfingName.ChatTVCell, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: CellConfingName.ChatTVCell)
         ReplyTextFild.layer.cornerRadius = Colornames.CORadius5

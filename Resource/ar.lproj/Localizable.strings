@@ -1114,6 +1114,35 @@
 "Not Applicable" = "غير منطبق";
 "Absent" = "غائب";
 "Maximum mark exceeded" = "الدرجة تتجاوز الحد الأقصى";
+"Apply for" = "التقديم على";
+"Loading" = "جارٍ التحميل";
+"\"Click\" here when you're done" = "انقر هنا عند الانتهاء";
+"🎉 Well Done!" = "🎉 أحسنت!";
+"That's it! Homework done – you're amazing!" = "هذا كل شيء! لقد أنجزت الواجب المنزلي — عمل رائع!";
+"Payment" = "الدفع";
+"Receipt" = "الإيصال";
+"All Transactions" = "جميع المعاملات";
+"Refresh" = "تحديث";
+"Paid Amount" = "المبلغ المدفوع";
+"Payment Status" = "حالة الدفع";
+"Transaction ID" = "رقم المعاملة";
+"Created On" = "تاريخ الإنشاء";
+"Last Update On" = "آخر تحديث";
+"Payment Completed" = "اكتمل الدفع";
+"Paid Amount:" = "المبلغ المدفوع:";
+"Receipt No:" = "رقم الإيصال:";
+"Fee Receipt" = "إيصال الرسوم";
+"Payment Done" = "تم الدفع";
+"Payment successful. You can download receipt in receipt tab." = "تم الدفع بنجاح. يمكنك تنزيل الإيصال من تبويب الإيصالات.";
+"Payment Failed" = "فشل الدفع";
+"Please try again later." = "يرجى المحاولة مرة أخرى لاحقًا.";
+"Select Country" = "اختر الدولة";
+"Select the country where your educational institution is located." = "اختر الدولة التي تقع فيها مؤسستك التعليمية.";
+"Find your country" = "ابحث عن دولتك";
+"I agree to the Terms and Conditions" = "أوافق على الشروط والأحكام";
+"All Countries" = "جميع الدول";
+"Top Countries" = "أهم الدول";
+"No Data Found" = "لا توجد بيانات";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
