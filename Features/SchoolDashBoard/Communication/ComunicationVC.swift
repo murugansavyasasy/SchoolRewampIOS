@@ -292,7 +292,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         for i in 0..<selectedDates.count {
             let dateFormatter = DateFormatter()
             dateFormatter.locale = LocaleManager.shared.apiLocale
-            dateFormatter.dateStyle = .medium
+            dateFormatter.dateFormat = "dd MMM yyyy"
             let formattedDate = dateFormatter.string(from: selectedDates[i])
             ScheduleSelectedDate.append(formattedDate)
         }
@@ -685,7 +685,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
     private func setInitialButtonTitles() {
         let formatter = DateFormatter()
         formatter.locale = LocaleManager.shared.apiLocale
-        formatter.timeStyle = .short
+        formatter.dateFormat = "h:mm a"
+        //formatter.timeStyle = .short
         
         let initialFromTime = Date()
         let initialToTime = Calendar.current.date(byAdding: .minute, value: intervalMinutes, to: initialFromTime) ?? Date()
@@ -843,7 +844,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         btnplay.setImage(ImageName.playbutton, for: .normal)
         let formatter = DateFormatter()
         formatter.locale = LocaleManager.shared.apiLocale
-        formatter.timeStyle = .short
+        formatter.dateFormat = "h:mm a"
+       // formatter.timeStyle = .short
         messageSendTime.text = "\(formatter.string(from: Date()))"
         getAudioDuration(from: selectedFileURL) { seconds, formatted in
             self.voiceTiming.text = formatted
@@ -1128,7 +1130,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
             }
             let formatter = DateFormatter()
             formatter.locale = LocaleManager.shared.apiLocale
-            formatter.timeStyle = .short
+            formatter.dateFormat = "h:mm a"
+           // formatter.timeStyle = .short
             messageSendTime.text = "\(formatter.string(from: Date()))"
             playerheight.constant = voiceTiming.text == "00:00" ? 0:60
             playerview.isHidden = voiceTiming.text == "00:00" ? true:false
@@ -1232,7 +1235,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         
         let formatter = DateFormatter()
         formatter.locale = LocaleManager.shared.apiLocale
-        formatter.timeStyle = .short
+        formatter.dateFormat = "h:mm a"
+//        formatter.timeStyle = .short
         
         if activeButton == fromTime {
             selectedFromTime = timePicker.date
@@ -1932,7 +1936,8 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         let selectedDate = selectedDates[indexPath.item]
         let dateFormatter = DateFormatter()
         dateFormatter.locale = LocaleManager.shared.apiLocale
-        dateFormatter.dateStyle = .medium // You can change this style to your preference
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        //dateFormatter.dateStyle = .medium // You can change this style to your preference
         let formattedDate = dateFormatter.string(from: selectedDate)
         cell.dateLbl.text = formattedDate
         cell.dateDelet.tag = indexPath.item

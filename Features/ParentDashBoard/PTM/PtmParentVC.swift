@@ -9,10 +9,6 @@ import UIKit
 
 class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var scheduleMeetingBtn: UIButton!
-    @IBOutlet weak var yourMeetingBtn: UIButton!
-    @IBOutlet weak var topView: UIView!
-    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var CV: UICollectionView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var BookSlotBtn: UIButton!
@@ -21,10 +17,8 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var noDataImage: UIImageView!
     @IBOutlet weak var NodataLbl: UILabel!
-    @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var StudentNameLbl: UILabel!
     
     var dateComponents: [(month: String, day: String, date: Date, count: String?)] = []
     var selectedIndex: IndexPath?
@@ -68,30 +62,13 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     
     private func setupUI() {
-        topView.layer.cornerRadius = 20
-        topView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         
-        let name = childDetails?.name ?? ""
-        let standard = (childDetails?.standard_name ?? "") + " - " + (childDetails?.section_name ?? "")
-        StudentNameLbl.configureAsBackTitle(firstLine: name, secondLine: standard)
-        
-        scheduleMeetingBtn.setTitle(PTMString.scheduleMeeting.translated(), for: .normal)
-        yourMeetingBtn.setTitle(PTMString.yourMeetings.translated(), for: .normal)
         BookSlotBtn.setTitle(PTMString.bookSlot.translated(), for: .normal)
-        
         subjectLbl.text = PTMString.allSubjects.translated()
-        
-        scheduleMeetingBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
-        yourMeetingBtn.setTitleFont(style: .body, size: FontSize.HeaderSize)
-        
-        scheduleMeetingBtn.layer.cornerRadius = 12
-        scheduleMeetingBtn.backgroundColor = .white
-        yourMeetingBtn.layer.cornerRadius = 12
         
         noDataImage.isHidden = true
         NodataLbl.isHidden = true
         NodataLbl.setFont(style: .body, size: FontSize.TitleSize)
-        searchBtn.isHidden = true
         
         BookSlotBtn.isHidden = true
         
@@ -306,6 +283,14 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     }
                     self.CV.reloadData()
                     
+                    DispatchQueue.main.async {
+                        if let indexPath = self.selectedIndex {
+                            self.CV.scrollToItem(at: indexPath,
+                                                 at: .centeredHorizontally,
+                                                 animated: false)
+                        }
+                    }
+                    
                     
                 case .failure(let failure):
                     print("Error: ", failure.localizedDescription)
@@ -441,34 +426,10 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         }
     }
     
-   
-    @IBAction func scheduleMeetingAct(_ sender: Any) {
-        scheduleMeetingBtn.backgroundColor = .white
-        yourMeetingBtn.backgroundColor = .clear
-        removeChildVc()
-        getSlotsApi()
-    }
-    @IBAction func yourMeetingAct(_ sender: Any) {
-        scheduleMeetingBtn.backgroundColor = .clear
-        yourMeetingBtn.backgroundColor = .white
-        addChildVc()
-    }
-    @IBAction func backAct(_ sender: Any) {
-        dismiss(animated: true)
-    }
-    
-    @IBAction func searchBtnAct(_ sender: Any) {
-        
-        if let Child = childVc{
-            Child.searchBar.isHidden.toggle()
-        }
-    }
-    
     
     // MARK: - Child VC
     func addChildVc(){
         removeChildVc()
-        searchBtn.isHidden = false
         let vc = PtmHistoryVC(nibName: nil, bundle: nil)
         addChild(vc)
         containerView.addSubview(vc.view)
@@ -491,7 +452,6 @@ class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         vc.view.removeFromSuperview()
         vc.removeFromParent()
         childVc = nil
-        searchBtn.isHidden = true
     }
     
     // MARK: - TableView

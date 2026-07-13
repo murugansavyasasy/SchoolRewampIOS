@@ -71,6 +71,12 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate, refrech {
         studentNameLbl.configureAsBackTitle(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         
         refreshBtn.layer.cornerRadius = 10
+        
+        createBtn.setTitle("Payment".translated(), for: .normal)
+        refreshBtn.setTitle("Refresh".translated(), for: .normal)
+        reportsBtn.setTitle("Receipt".translated(), for: .normal)
+        transBtnName.setTitle("All Transactions".translated(), for: .normal)
+        
         feeDetailTableView.register(
             UINib(nibName: CellConfingName.FeedetailTVC, bundle: nil),
             forCellReuseIdentifier: CellConfingName.FeedetailTVC
@@ -310,11 +316,13 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
         if isreceptSelect{
             let cell = feeDetailTableView.dequeueReusableCell(withIdentifier: CellConfingName.FeedetailTVC, for: indexPath) as! FeedetailTVC
             let feeDetail = feeDetailsList[indexPath.row]
-            cell.invoceNo.text = "Receipt No: \(feeDetail.invoice_no ?? "")"
+            let receiptText  = "Receipt No:".translated()
+            cell.invoceNo.text = "\(receiptText) \(feeDetail.invoice_no ?? "")"
             let result = extractDateAndTime(from: feeDetail.invoice_date ?? "")
             cell.invoceDate.text = "\(result.date ?? "") \(result.time ?? "")"
             cell.timeLbl.text = result.time
-            cell.invoceAmount.text = "Paid Amount: \(feeDetail.invoice_amount ?? "")"
+            let paidAmountText  = "Paid Amount:".translated()
+            cell.invoceAmount.text = "\(paidAmountText) \(feeDetail.invoice_amount ?? "")"
             let iconImage = UIImage(named: "pdf (1)")
             cell.document.image = iconImage
             return cell
@@ -347,7 +355,7 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
         fileURL.append(FilePath(url: url, type: ""))
         let vc = ImageShowVc()
         vc.fileURL = fileURL
-        vc.subjectName = "Fee Receipt"
+        vc.subjectName = "Fee Receipt".translated()
         vc.isPaymentReceipt = true
         vc.index = 0
         vc.scrollIndex = IndexPath(row: 0, section: 0)
@@ -397,15 +405,15 @@ extension FeeDetails: UITableViewDelegate, UITableViewDataSource {
         if urlString.contains("/#/paymentsucccess/success") {
             
             alert.showAlert(
-                title: "Payment Done",
-                message: "Payment successful. You can download receipt in receipt tab.", on: self
+                title: "Payment Done".translated(),
+                message: "Payment successful. You can download receipt in receipt tab.".translated(), on: self
             )
             
         } else if urlString.contains("/#/paymentsucccess/failed") {
             
             alert.showAlert(
-                title: "Payment Failed",
-                message: "Please try again later.", on: self
+                title: "Payment Failed".translated(),
+                message: "Please try again later.".translated(), on: self
             )
         }
     }
