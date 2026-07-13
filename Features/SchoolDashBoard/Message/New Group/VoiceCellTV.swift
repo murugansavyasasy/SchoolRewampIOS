@@ -365,7 +365,8 @@ extension VoiceCellTV{
             // Set message send time
             let formatter = DateFormatter()
             formatter.locale = LocaleManager.shared.apiLocale
-            formatter.timeStyle = .short
+           // formatter.timeStyle = .short
+            formatter.dateFormat = "h:mm a"
 //            messageSendTime.text = "\(formatter.string(from: Date()))"
             nextBtnName.isEnabled = duration.text == "00:00" ? false:true
             choosePreRecordBtnName.isHidden = duration.text == "00:00" ? false:true

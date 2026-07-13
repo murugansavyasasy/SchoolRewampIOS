@@ -1176,6 +1176,35 @@
 "Not Applicable" = "ไม่เกี่ยวข้อง";
 "Absent" = "ขาดเรียน";
 "Maximum mark exceeded" = "คะแนนเกินคะแนนสูงสุด";
+"Apply for" = "สมัคร";
+"Loading" = "กำลังโหลด";
+"\"Click\" here when you're done" = "เมื่อเสร็จแล้วให้ \"คลิก\" ที่นี่";
+"🎉 Well Done!" = "🎉 เยี่ยมมาก!";
+"That's it! Homework done – you're amazing!" = "เสร็จเรียบร้อย! ทำการบ้านเสร็จแล้ว คุณเก่งมาก!";
+"Payment" = "การชำระเงิน";
+"Receipt" = "ใบเสร็จ";
+"All Transactions" = "ธุรกรรมทั้งหมด";
+"Refresh" = "รีเฟรช";
+"Paid Amount" = "จำนวนเงินที่ชำระ";
+"Payment Status" = "สถานะการชำระเงิน";
+"Transaction ID" = "รหัสธุรกรรม";
+"Created On" = "สร้างเมื่อ";
+"Last Update On" = "อัปเดตล่าสุด";
+"Payment Completed" = "ชำระเงินสำเร็จ";
+"Paid Amount:" = "จำนวนเงินที่ชำระ:";
+"Receipt No:" = "เลขที่ใบเสร็จ:";
+"Fee Receipt" = "ใบเสร็จค่าธรรมเนียม";
+"Payment Done" = "ชำระเงินเรียบร้อย";
+"Payment successful. You can download receipt in receipt tab." = "ชำระเงินสำเร็จ คุณสามารถดาวน์โหลดใบเสร็จได้จากแท็บใบเสร็จ";
+"Payment Failed" = "การชำระเงินล้มเหลว";
+"Please try again later." = "โปรดลองอีกครั้งในภายหลัง";
+"Select Country" = "เลือกประเทศ";
+"Select the country where your educational institution is located." = "เลือกประเทศที่สถาบันการศึกษาของคุณตั้งอยู่";
+"Find your country" = "ค้นหาประเทศของคุณ";
+"I agree to the Terms and Conditions" = "ฉันยอมรับข้อกำหนดและเงื่อนไข";
+"All Countries" = "ทุกประเทศ";
+"Top Countries" = "ประเทศยอดนิยม";
+"No Data Found" = "ไม่พบข้อมูล";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

@@ -122,7 +122,7 @@ extension MarkListVC: UITableViewDataSource, UITableViewDelegate {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setFont(style: .title, size: FontSize.TitleSize)
         label.textColor = .label
-        label.text = section == 1 ? ExamStringFile.subjectAndMarks : ExamStringFile.otherActivities
+        label.text = section == 1 ? ExamStringFile.subjectAndMarks.translated() : ExamStringFile.otherActivities.translated()
         headerView.addSubview(label)
         
         NSLayoutConstraint.activate([label.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 15),label.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -15),label.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 5),label.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -5)])
@@ -156,7 +156,7 @@ extension MarkListVC: UITableViewDataSource, UITableViewDelegate {
             cell.ExamTitleLbl.text = ExamTitle
             cell.obtainedMarkLbl.text = mark?.total_obtained
             cell.totalMarkLbl.text = "out of \(mark?.total_mark ?? "")"
-            cell.GradeLbl.text = "\(ExamStringFile.overallGrade) : \(mark?.grade ?? "")"
+            cell.GradeLbl.text = "\(ExamStringFile.overallGrade.translated()) : \(mark?.grade ?? "")"
             cell.RemarksLbl.text = mark?.message
             return cell
             

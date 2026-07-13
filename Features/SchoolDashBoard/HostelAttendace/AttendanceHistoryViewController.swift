@@ -68,7 +68,8 @@ class AttendanceHistoryViewController: UIViewController, Datepicker
         
         let displayTimeFormatter = DateFormatter()
         displayTimeFormatter.locale = LocaleManager.shared.displayLocale
-        displayTimeFormatter.timeStyle = .short
+        //displayTimeFormatter.timeStyle = .short
+        displayTimeFormatter.dateFormat = "h:mm a"
         
         let dayFormatter = DateFormatter()
         dayFormatter.locale = LocaleManager.shared.displayLocale

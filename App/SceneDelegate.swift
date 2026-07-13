@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate,UNUserNotificationCenter
                   willConnectTo session: UISceneSession,
                   options connectionOptions: UIScene.ConnectionOptions) {
 
-           syncLanguageWithSystem()
+       //    syncLanguageWithSystem()
         
       //  UIView.appearance().semanticContentAttribute = .forceRightToLeft
         

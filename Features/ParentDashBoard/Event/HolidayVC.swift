@@ -30,7 +30,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     private var holidayColors: [String: UIColor] = [:]
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var staffDetails = UserDefaultFileManager.get_child_Details()
-    private let weekdays = ["Sun".translated(),"Mon".translated(), "Tue".translated(), "Wed".translated(), "Thu".translated(), "Fri".translated(), "Sat".translated()]
+    private let weekdays = ["Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     let formatter = DateFormatter()
     var passValue = 0
     

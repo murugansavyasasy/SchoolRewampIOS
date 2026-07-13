@@ -52,7 +52,7 @@
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                     </state>
                                     <buttonConfiguration key="configuration" style="plain" imagePlacement="leading" imagePadding="0.0">
-                                        <imageReference key="image" image="chevron.left" catalog="system" symbolScale="large"/>
+                                        <imageReference key="image" image="chevron.backward" catalog="system" symbolScale="large"/>
                                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="bold"/>
                                     </buttonConfiguration>
                                     <connections>
@@ -262,7 +262,7 @@
     </objects>
     <resources>
         <image name="chevron.backward" width="128" height="128"/>
-        <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="downloads" width="100" height="100"/>
         <image name="interactionBackground" width="150" height="150"/>
         <image name="paperplane.fill" catalog="system" width="128" height="119"/>

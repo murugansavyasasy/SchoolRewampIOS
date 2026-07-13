@@ -38,6 +38,8 @@ class PaymentHistoryCell: UITableViewCell {
         mainContainerView.clipsToBounds = true
         mainContainerView.backgroundColor = .white
         
+        refreshDefaultLbl.text = "Refresh".translated()
+        
 //        topBackgroundView.backgroundColor = UIColor(red: 45/255, green: 120/255, blue: 255/255, alpha: 1.0)
         
         statusContainerView.layer.cornerRadius = 14

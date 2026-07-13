@@ -323,7 +323,8 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         
         let displayTimeFormatter = DateFormatter()
         displayTimeFormatter.locale = locale
-        displayTimeFormatter.timeStyle = .short
+        //displayTimeFormatter.timeStyle = .short
+        displayTimeFormatter.dateFormat = "h:mm a"
         
         let dayFormatter = DateFormatter()
         dayFormatter.locale = locale
@@ -394,7 +395,8 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     @objc func selectedTime() {
         let timeFormatter = DateFormatter()
         timeFormatter.locale = LocaleManager.shared.apiLocale
-        timeFormatter.timeStyle = .short
+     //   timeFormatter.timeStyle = .short
+        timeFormatter.dateFormat = "h:mm a"
         let selectedTime = timePicker.date
         let formattedTime = timeFormatter.string(from: selectedTime)
         

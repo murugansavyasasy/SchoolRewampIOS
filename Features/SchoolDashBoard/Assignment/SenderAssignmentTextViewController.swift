@@ -159,7 +159,8 @@ class SenderAssignmentTextViewController: UIViewController,
         displayDateFormatter.dateFormat = "dd MMM yyyy"
         let displayTimeFormatter = DateFormatter()
         displayTimeFormatter.locale = LocaleManager.shared.displayLocale
-        displayTimeFormatter.timeStyle = .short
+        //displayTimeFormatter.timeStyle = .short
+        displayTimeFormatter.dateFormat = "h:mm a"
         let dayFormatter = DateFormatter()
         dayFormatter.locale = LocaleManager.shared.displayLocale
         dayFormatter.dateFormat = "EEEE"
