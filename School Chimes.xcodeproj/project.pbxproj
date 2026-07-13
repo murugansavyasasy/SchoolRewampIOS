@@ -11488,12 +11488,12 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.5;
+				CURRENT_PROJECT_VERSION = 3.7;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WISDOM GROUP";
+				INFOPLIST_KEY_CFBundleDisplayName = "Wisdom Smart Connect";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
@@ -11514,7 +11514,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5;
+				MARKETING_VERSION = 2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -11534,11 +11534,11 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.5;
+				CURRENT_PROJECT_VERSION = 3.7;
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WISDOM GROUP";
+				INFOPLIST_KEY_CFBundleDisplayName = "Wisdom Smart Connect";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
@@ -11559,7 +11559,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5;
+				MARKETING_VERSION = 2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
