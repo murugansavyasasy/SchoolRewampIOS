@@ -31,6 +31,7 @@ class LessonEditTV: UITableViewCell, Datepicker {
         super.awakeFromNib()
         setupUI()
         setupDropdownGesture()
+
     }
     
     private func setupUI() {

@@ -35,6 +35,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
     // MARK: - IBOutlets
     @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var newImg: UIImageView!
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var assignmentProgressLbl: UILabel!
     @IBOutlet weak var readVieaw: UIView!
@@ -137,7 +138,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         outerView.setShadow()
         outerView.backgroundColor = .systemBackground
         outerView.layer.cornerRadius = 12
-        
+        newImg.image = UIImage(named: "new-image")?.imageFlippedForRightToLeftLayoutDirection()
         titleLbl.font = .systemFont(ofSize: 16, weight: .semibold)
         titleLbl.textColor = .label
         

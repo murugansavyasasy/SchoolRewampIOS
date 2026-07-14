@@ -134,6 +134,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         let dateTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectDateTapped))
         dateSelectionView.isUserInteractionEnabled = true
         dateSelectionView.addGestureRecognizer(dateTapGesture)
+        let isRTL = UIView.userInterfaceLayoutDirection(
+            for: view.semanticContentAttribute
+        ) == .rightToLeft
     }
     @objc private func selectDateTapped() {
         dateSelection = true
