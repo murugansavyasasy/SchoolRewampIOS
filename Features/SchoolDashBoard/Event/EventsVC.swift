@@ -304,35 +304,59 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         }
     }
     
-    func setInitialButtonTitles(date dateString: String?, inputFormat: String = "dd MMM yyyy") {
-        
+    func setInitialButtonTitles(date dateString: String?,
+                                inputFormat: String = "dd MMM yyyy") {
+
         let locale = LocaleManager.shared.displayLocale
+
         let parser = DateFormatter()
         parser.locale = Locale(identifier: "en_US_POSIX")
         parser.dateFormat = inputFormat
-        
-        let dateToUse: Date
-        if let dateString = dateString, let parsed = parser.date(from: dateString) {
-            dateToUse = parsed
-        } else {
-            dateToUse = Date()
+
+        var dateToUse = Date()
+
+        if let dateString = dateString,
+           let parsedDate = parser.date(from: dateString) {
+
+            // Input format-la time illa na current time add pannum
+            if !inputFormat.contains("H") &&
+                !inputFormat.contains("h") &&
+                !inputFormat.contains("m") {
+
+                let calendar = Calendar.current
+
+                let dateComponents = calendar.dateComponents([.year, .month, .day], from: parsedDate)
+                let timeComponents = calendar.dateComponents([.hour, .minute], from: Date())
+
+                var components = DateComponents()
+                components.year = dateComponents.year
+                components.month = dateComponents.month
+                components.day = dateComponents.day
+                components.hour = timeComponents.hour
+                components.minute = timeComponents.minute
+
+                dateToUse = calendar.date(from: components) ?? parsedDate
+            } else {
+                // API date + time iruntha athaye use pannum
+                dateToUse = parsedDate
+            }
         }
+
         let displayDateFormatter = DateFormatter()
         displayDateFormatter.locale = locale
         displayDateFormatter.dateFormat = "dd MMM yyyy"
-        
+
         let displayTimeFormatter = DateFormatter()
         displayTimeFormatter.locale = locale
-        //displayTimeFormatter.timeStyle = .short
         displayTimeFormatter.dateFormat = "h:mm a"
-        
+
         let dayFormatter = DateFormatter()
         dayFormatter.locale = locale
         dayFormatter.dateFormat = "EEEE"
+
         dateLbl.text = displayDateFormatter.string(from: dateToUse)
         timeBtn.setTitle(displayTimeFormatter.string(from: dateToUse), for: .normal)
         dayLbl.text = dayFormatter.string(from: dateToUse)
-        
     }
     
     func StyleAndTranslate(){

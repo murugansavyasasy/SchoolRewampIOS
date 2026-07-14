@@ -131,7 +131,15 @@ class OTPVc: UIViewController {
             if #available(iOS 15.0, *) {
                 showActivityLoader()
             }
-            Validate_OTP(mobileNumber: mobile_number ?? "" , otp: otpTextField1.text! + otpTextField2.text! + otpTextField3.text! + otpTextField4.text! + otpTextField5.text! + otpTextField6.text!)
+            let otp = (
+                otpTextField1.text! +
+                otpTextField2.text! +
+                otpTextField3.text! +
+                otpTextField4.text! +
+                otpTextField5.text! +
+                otpTextField6.text!
+            ).toEnglishDigits()
+            Validate_OTP(mobileNumber: mobile_number ?? "" , otp:otp)
         }else{
             view.makeToast(AlertstringFile.Enter_Otp)
         }
@@ -441,8 +449,15 @@ extension OTPVc : UITextFieldDelegate{
         }
         
         if otpTextField1.text != "" && otpTextField2.text != "" && otpTextField3.text != "" && otpTextField4.text != "" && otpTextField5.text != "" && otpTextField6.text != ""  {
-            
-            Validate_OTP(mobileNumber: mobile_number ?? "" , otp: otpTextField1.text! + otpTextField2.text! + otpTextField3.text! + otpTextField4.text! + otpTextField5.text! + otpTextField6.text!)
+            let otp = (
+                otpTextField1.text! +
+                otpTextField2.text! +
+                otpTextField3.text! +
+                otpTextField4.text! +
+                otpTextField5.text! +
+                otpTextField6.text!
+            ).toEnglishDigits()
+            Validate_OTP(mobileNumber: mobile_number ?? "" , otp:otp)
             
         }
     }

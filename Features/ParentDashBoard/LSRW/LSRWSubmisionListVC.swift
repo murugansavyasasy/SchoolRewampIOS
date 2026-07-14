@@ -19,6 +19,7 @@ class LSRWSubmisionListVC: UIViewController,
                            UICollectionViewDelegateFlowLayout, AudioPlaybackDelegate {
     
     @IBOutlet weak var remarkView: UIView!
+    @IBOutlet weak var submitBtn: LocalizationButton!
     @IBOutlet weak var slider: CustomSlider!
     @IBOutlet weak var percentageLbl: UILabel!
     @IBOutlet weak var lsrwCV: UICollectionView!
@@ -62,6 +63,7 @@ class LSRWSubmisionListVC: UIViewController,
         lsrwCV.reloadData()
         slider.minimumValue = 0
         slider.maximumValue = 100
+        submitBtn.layer.cornerRadius = 10
         setSlider(from: mark ?? "50%")
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -341,7 +343,7 @@ class LSRWSubmisionListVC: UIViewController,
         guard indexPath.section == 1 else { return header }
         
         let titleLabel = UILabel()
-        titleLabel.text = "🖼 Files"
+        titleLabel.text = "🖼 Files".translated()
         titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         titleLabel.textColor = .black
         titleLabel.frame = CGRect(

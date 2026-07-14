@@ -235,7 +235,7 @@
 "Completed" = "Completed";
 "Pending" = "Pending";
 "START" = "START";
-
+"Submit Remark" = "Submit Remark";
 // MARK: Settings page
 "general" = "General";
 "notifications" = "Notifications";

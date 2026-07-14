@@ -50,7 +50,7 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
     
     // MARK: - IBOutlets
     @IBOutlet weak var typeSectionCV: UICollectionView!
-    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var tittleLbl: UILabel!
     @IBOutlet weak var dateView: UIView!
     @IBOutlet weak var dateLbl: UITextField!
     @IBOutlet weak var recordingView: UIView!
@@ -106,8 +106,7 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         super.viewDidLoad()
         setupInitialConfiguration()
         setupPlaceholderIfNeeded()
-        backBtn.setTitle(MenuStringFile.selectedMenuName, for: .normal)
-        // Enable user interaction
+        titleLbl.text = MenuStringFile.selectedMenuName
         dateView.isUserInteractionEnabled = true
         uploadAttachmentView.imageCollectionview.backgroundColor = .clear
         // Add tap gesture

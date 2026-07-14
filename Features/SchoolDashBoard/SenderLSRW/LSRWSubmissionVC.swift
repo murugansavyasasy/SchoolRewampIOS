@@ -50,7 +50,7 @@ class LSRWSubmissionVC: UIViewController {
         searchBar.delegate = self
         searchBar.layer.borderWidth = 0
         searchBar.backgroundImage = UIImage()
-        searchBar.addDoneButton()
+        searchBar.searchTextField.addDoneButton()
         
         updateNoDataView()
     }

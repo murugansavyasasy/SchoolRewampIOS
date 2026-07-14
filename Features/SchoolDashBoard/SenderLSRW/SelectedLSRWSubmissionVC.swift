@@ -59,7 +59,9 @@ class SelectedLSRWSubmissionVC: UIViewController, FilterDelegate {
     
     // MARK: - Dropdown
     @objc func viewTapped() {
-        dropDown.dataSource = Calendar.current.monthSymbols
+        let formatter = DateFormatter()
+            formatter.locale = LocaleManager.shared.displayLocale
+            dropDown.dataSource = formatter.monthSymbols
         dropDown.anchorView = dropDownView
         dropDown.bottomOffset = CGPoint(x: 0, y: dropDown.anchorView?.plainView.bounds.height ?? 0)
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
