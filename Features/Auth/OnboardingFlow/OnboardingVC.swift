@@ -13,6 +13,7 @@ class OnboardingVC: UIViewController {
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var skipBtn: UIButton!
     @IBOutlet weak var nextBtn: UIButton!
+    @IBOutlet weak var nextBtn1: UIButton!
     @IBOutlet weak var nextview: UIView!
     var isRTL: Bool {
         UIView.userInterfaceLayoutDirection(for: view.semanticContentAttribute) == .rightToLeft
@@ -24,7 +25,8 @@ class OnboardingVC: UIViewController {
         
         onBoardingCV.register(UINib(nibName: CellConfingName.OnboardingCVC, bundle: nil),
                               forCellWithReuseIdentifier: CellConfingName.OnboardingCVC)
-        
+        self.skipBtn.isHidden = self.dataResponse.count < 1
+        self.nextview.isHidden = self.dataResponse.count < 1
         onBoardingCV.delegate = self
         onBoardingCV.dataSource = self
         nextview.layer.cornerRadius = nextview.frame.height / 2
@@ -51,13 +53,15 @@ class OnboardingVC: UIViewController {
                         if success.status ?? false {
                             self.dataResponse = success.data ?? []
                             self.pageControl.numberOfPages = self.dataResponse.count
-                            self.skipBtn.isHidden = self.dataResponse.count <= 1
-                            self.nextBtn.isHidden = self.dataResponse.count <= 1
-                            self.currentPage = self.isRTL ? self.dataResponse.count - 1 : 0
+                            self.skipBtn.isHidden = self.dataResponse.count < 1
+                            self.nextview.isHidden = self.dataResponse.count < 1
+                            self.currentPage = self.isRTL ? max(0, self.dataResponse.count - 1) : 0
                             self.onBoardingCV.reloadData()
                         }
                     case .failure(let error):
                         print("Onboarding API Error:", error.localizedDescription)
+                        self.skipBtn.isHidden = self.dataResponse.count < 1
+                        self.nextview.isHidden = self.dataResponse.count < 1
                     }
                 }
             }

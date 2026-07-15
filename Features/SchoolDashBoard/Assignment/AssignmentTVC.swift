@@ -138,7 +138,9 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         outerView.setShadow()
         outerView.backgroundColor = .systemBackground
         outerView.layer.cornerRadius = 12
-        newImg.image = UIImage(named: "new-image")?.imageFlippedForRightToLeftLayoutDirection()
+        let isRTL = UIView.userInterfaceLayoutDirection(for: contentView.semanticContentAttribute) == .rightToLeft
+        
+        newImg.transform = isRTL ? CGAffineTransform(rotationAngle: -.pi / 2):.identity
         titleLbl.font = .systemFont(ofSize: 16, weight: .semibold)
         titleLbl.textColor = .label
         
