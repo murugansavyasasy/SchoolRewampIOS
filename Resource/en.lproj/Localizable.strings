@@ -1150,3 +1150,10 @@
 "REPORT_BUG_STRING" = "Dear School Chimes Team";
 "TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
 "APP_STORE_ID" = "6758079127";
+"SUBMIT_QUIZ" = "Submit Quiz";
+"SUBMIT_QUIZ_CONFIRMATION" = "Are you sure you want to submit the quiz?";
+"MARK" = "Mark";
+"NEXT_QUESTION" = "Next Question";
+"PREVIOUS_QUESTION" = "Previous Question";
+"ASSIGNED" = "Assigned";
+"DEADLINE" = "Deadline";

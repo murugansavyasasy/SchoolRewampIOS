@@ -13,6 +13,7 @@ class OnboardingVC: UIViewController {
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var skipBtn: UIButton!
     @IBOutlet weak var nextBtn: UIButton!
+    @IBOutlet weak var nextBtn1: UIButton!
     @IBOutlet weak var nextview: UIView!
     var isRTL: Bool {
         UIView.userInterfaceLayoutDirection(for: view.semanticContentAttribute) == .rightToLeft
@@ -24,15 +25,13 @@ class OnboardingVC: UIViewController {
         
         onBoardingCV.register(UINib(nibName: CellConfingName.OnboardingCVC, bundle: nil),
                               forCellWithReuseIdentifier: CellConfingName.OnboardingCVC)
-        
+        self.skipBtn.isHidden = self.dataResponse.count < 1
+        self.nextview.isHidden = self.dataResponse.count < 1
         onBoardingCV.delegate = self
         onBoardingCV.dataSource = self
         nextview.layer.cornerRadius = nextview.frame.height / 2
+       
         onBoarding_Api()
-        if isRTL {
-            onBoardingCV.transform = CGAffineTransform(scaleX: -1, y: 1)
-            pageControl.transform = CGAffineTransform(scaleX: -1, y: 1)
-        }
     }
     
     // MARK: - API Call
@@ -51,13 +50,27 @@ class OnboardingVC: UIViewController {
                         if success.status ?? false {
                             self.dataResponse = success.data ?? []
                             self.pageControl.numberOfPages = self.dataResponse.count
-                            self.skipBtn.isHidden = self.dataResponse.count <= 1
-                            self.nextBtn.isHidden = self.dataResponse.count <= 1
-                            self.currentPage = self.isRTL ? self.dataResponse.count - 1 : 0
+                            self.skipBtn.isHidden = self.dataResponse.count < 1
+                            self.nextview.isHidden = self.dataResponse.count < 1
+                            
                             self.onBoardingCV.reloadData()
+                            self.onBoardingCV.layoutIfNeeded()
+                            self.onBoardingCV.scrollToItem(at: IndexPath(item: 0, section: 0),
+                                                            at: .centeredHorizontally,
+                                                            animated: false)
+                            
+                            self.currentPage = 0
+                            self.pageControl.currentPage = 0
+                            
+                            if self.dataResponse.count == 0 {
+                                self.navigateToLogin()
+                            }
                         }
                     case .failure(let error):
                         print("Onboarding API Error:", error.localizedDescription)
+                        self.navigateToLogin()
+                        self.skipBtn.isHidden = self.dataResponse.count < 1
+                        self.nextview.isHidden = self.dataResponse.count < 1
                     }
                 }
             }
@@ -66,10 +79,9 @@ class OnboardingVC: UIViewController {
     
     // MARK: - Actions
     @IBAction func nextBtnTapped(_ sender: UIButton) {
-        let isLastLogicalPage = isRTL ? (currentPage == 0) : (currentPage == dataResponse.count - 1)
-        
+        let isLastLogicalPage = currentPage >= dataResponse.count - 1
         if !isLastLogicalPage {
-            currentPage += isRTL ? -1 : 1
+            currentPage += 1
             updateUI()
         } else {
             navigateToLogin()
@@ -89,16 +101,11 @@ class OnboardingVC: UIViewController {
     
     // MARK: - Update UI
     private func updateUI() {
-        pageControl.currentPage = currentPage
+        onBoardingCV.scrollToItem(at: IndexPath(item: currentPage, section: 0),at: .centeredHorizontally,animated: true)
         
-        onBoardingCV.scrollToItem(at: IndexPath(item: currentPage, section: 0),
-                                  at: .centeredHorizontally,
-                                  animated: true)
-        
-        let isLastPage = isRTL ? (currentPage == 0) : (currentPage == dataResponse.count - 1)
+        let isLastPage = currentPage == dataResponse.count - 1
         skipBtn.isHidden = isLastPage
-        nextBtn.setTitle(isLastPage ? "Let's Go" : "Next".translated(), for: .normal)
-        
+        nextBtn.setTitle(isLastPage ? "Let's Go" : "Next".translated(), for:.normal)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             guard let self = self else { return }
             if let cell = self.onBoardingCV.cellForItem(at: IndexPath(item: self.currentPage, section: 0)) as? OnboardingCVC {
@@ -137,20 +144,31 @@ extension OnboardingVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
+        pageControl.currentPage = indexPath.item
         if let onboardingCell = cell as? OnboardingCVC {
             onboardingCell.animateStepByStep()
+           
         }
     }
-    
+
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        currentPage = Int(round(scrollView.contentOffset.x / scrollView.bounds.width))
-        
-        let isLastPage = isRTL ? (currentPage == 0) : (currentPage == dataResponse.count - 1)
+
+        let visibleRect = CGRect(origin: onBoardingCV.contentOffset,
+                                 size: onBoardingCV.bounds.size)
+        let visiblePoint = CGPoint(x: visibleRect.midX,
+                                   y: visibleRect.midY)
+        guard let indexPath = onBoardingCV.indexPathForItem(at: visiblePoint),
+              indexPath.item < dataResponse.count else {
+            return
+        }
+
+        currentPage = indexPath.item
         pageControl.currentPage = currentPage
+
+        let isLastPage = currentPage == dataResponse.count - 1
         skipBtn.isHidden = isLastPage
         nextBtn.setTitle(isLastPage ? "Let's Go" : "Next".translated(), for: .normal)
     }
-    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {

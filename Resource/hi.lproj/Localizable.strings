@@ -1231,3 +1231,10 @@
 "REPORT_BUG_STRING" = "Dear School Chimes Team";
 "TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
 "APP_STORE_ID" = "6758079127";
+"SUBMIT_QUIZ" = "क्विज़ सबमिट करें";
+"SUBMIT_QUIZ_CONFIRMATION" = "क्या आप वाकई इस क्विज़ को सबमिट करना चाहते हैं?";
+"MARK" = "अंक";
+"NEXT_QUESTION" = "अगला प्रश्न";
+"PREVIOUS_QUESTION" = "पिछला प्रश्न";
+"ASSIGNED" = "असाइन किया गया";
+"DEADLINE" = "अंतिम तिथि";

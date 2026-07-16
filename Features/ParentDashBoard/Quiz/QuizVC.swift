@@ -272,7 +272,7 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
         )
         let imgae = stausType == "1" ? UIImage(systemName: "play.fill") : UIImage(systemName: "arrowshape.right.fill")
         cell.playBtn.setImage(imgae, for: .normal)
-        let title = stausType == "1" ? "Play Now" : ""
+        let title = stausType == "1" ? "Play Now".translated() : ""
         cell.playBtn.setTitle(title.translated(), for: .normal)
         cell.playBtnWidth.constant = stausType == "1" ? 138 : 40
         return cell

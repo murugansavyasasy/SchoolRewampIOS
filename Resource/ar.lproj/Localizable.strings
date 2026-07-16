@@ -548,7 +548,6 @@
 "Date" = "التاريخ";
 "Time" = "الوقت";
 "Call" = "اتصال";
-"Cancel" = "إلغاء";
 "With" = "مع";
 "You have %d Meetings Today" = "لديك %d اجتماع اليوم";
 "Minutes" = "دقائق";
@@ -923,7 +922,6 @@
 "Video" = "فيديو";
 "PDF" = "PDF";
 "Document" = "مستند";
-"Cancel" = "إلغاء";
 "Choose a Number" = "اختر رقمًا";
 " Leave Request" = "طلب إجازة";
 "Mark All as Present?" = "هل تريد تحديد الجميع كحاضرين؟";
@@ -1162,3 +1160,10 @@
 "REPORT_BUG_STRING" = "Dear School Chimes Team";
 "TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
 "APP_STORE_ID" = "6758079127";
+"SUBMIT_QUIZ" = "إرسال الاختبار";
+"SUBMIT_QUIZ_CONFIRMATION" = "هل أنت متأكد أنك تريد إرسال الاختبار؟";
+"MARK" = "الدرجة";
+"NEXT_QUESTION" = "السؤال التالي";
+"PREVIOUS_QUESTION" = "السؤال السابق";
+"ASSIGNED" = "تم التعيين";
+"DEADLINE" = "الموعد النهائي";

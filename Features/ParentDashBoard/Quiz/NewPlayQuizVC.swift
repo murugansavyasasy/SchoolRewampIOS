@@ -37,7 +37,7 @@ class NewPlayQuizVC: UIViewController {
         questionTable.register(UINib(nibName: "QuestionTVC", bundle: nil), forCellReuseIdentifier: "QuestionTVC")
         questionTable.register(UINib(nibName: "OptionTVC", bundle: nil), forCellReuseIdentifier: "OptionTVC")
         questionTable.register(UINib(nibName: "NodataTVC", bundle: nil), forCellReuseIdentifier: "NodataTVC")
-        
+        priviousBtn.setTitle("PREVIOUS_QUESTION".translated(), for: .normal)
         questionTable.delegate = self
         questionTable.dataSource = self
         questionTable.separatorStyle = .none
@@ -68,21 +68,21 @@ class NewPlayQuizVC: UIViewController {
     }
     func updateNextButtonTitle() {
         if questionIndex == qustList.count - 1 {
-            nextBtn.setTitle("Submit", for: .normal)
+            nextBtn.setTitle("Submit".translated(), for: .normal)
         } else {
-            nextBtn.setTitle("Next Question", for: .normal)
+            nextBtn.setTitle("NEXT_QUESTION".translated(), for: .normal)
         }
     }
     func showSubmitConfirmation() {
         let alert = UIAlertController(
-            title: "Submit Quiz",
-            message: "Are you sure you want to submit the quiz?",
+            title: "SUBMIT_QUIZ".translated(),
+            message: "SUBMIT_QUIZ_CONFIRMATION".translated(),
             preferredStyle: .alert
         )
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel))
         
-        alert.addAction(UIAlertAction(title: "Submit", style: .destructive) { [weak self] _ in
+        alert.addAction(UIAlertAction(title: "Submit".translated(), style: .destructive) { [weak self] _ in
             
             self?.submitQuiz()
         })
@@ -168,8 +168,8 @@ extension NewPlayQuizVC: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "QuestionTVC", for: indexPath) as! QuestionTVC
             cell.qstLbl.text = question.question
-            cell.qstCountLbl.text = "Question \(questionIndex + 1)/\(qustList.count)"
-            cell.markLbl.text = "Makr / \(question.mark ?? "")"
+            cell.qstCountLbl.text = "\("Question".translated())\(questionIndex + 1)/\(qustList.count)"
+            cell.markLbl.text = "\("MARK".translated() )/ \(question.mark ?? "")"
             
             if let files = question.q_file_path, !files.isEmpty {
                 cell.conficList(filePath: files)

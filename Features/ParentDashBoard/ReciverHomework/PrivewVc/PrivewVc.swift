@@ -723,21 +723,40 @@ extension PrivewVc:UITableViewDataSource, UITableViewDelegate, SearchDelegate{
     }
 }
 class LeftAlignedFlowLayout: UICollectionViewFlowLayout {
+
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        let attributes = super.layoutAttributesForElements(in: rect)
-        var leftMargin = sectionInset.left
-        var maxY: CGFloat = -1.0
-        
-        attributes?.forEach { layoutAttribute in
-            if layoutAttribute.representedElementCategory == .cell {
-                if layoutAttribute.frame.origin.y >= maxY {
-                    leftMargin = sectionInset.left
-                }
-                layoutAttribute.frame.origin.x = leftMargin
-                leftMargin += layoutAttribute.frame.width + minimumInteritemSpacing
-                maxY = max(layoutAttribute.frame.maxY, maxY)
-            }
+
+        guard let collectionView = collectionView,
+              let attributes = super.layoutAttributesForElements(in: rect)?
+                .map({ $0.copy() as! UICollectionViewLayoutAttributes }) else {
+            return nil
         }
+
+        let isRTL = collectionView.effectiveUserInterfaceLayoutDirection == .rightToLeft
+
+        var leftMargin = sectionInset.left
+        var rightMargin = collectionView.bounds.width - sectionInset.right
+        var maxY: CGFloat = -1
+
+        for attribute in attributes where attribute.representedElementCategory == .cell {
+
+            if attribute.frame.origin.y >= maxY {
+                leftMargin = sectionInset.left
+                rightMargin = collectionView.bounds.width - sectionInset.right
+            }
+
+            if isRTL {
+                rightMargin -= attribute.frame.width
+                attribute.frame.origin.x = rightMargin
+                rightMargin -= minimumInteritemSpacing
+            } else {
+                attribute.frame.origin.x = leftMargin
+                leftMargin += attribute.frame.width + minimumInteritemSpacing
+            }
+
+            maxY = max(attribute.frame.maxY, maxY)
+        }
+
         return attributes
     }
 }

@@ -1233,3 +1233,10 @@
 "REPORT_BUG_STRING" = "Dear School Chimes Team";
 "TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
 "APP_STORE_ID" = "6758079127";
+"SUBMIT_QUIZ" = "வினாடி வினாவை சமர்ப்பிக்கவும்";
+"SUBMIT_QUIZ_CONFIRMATION" = "இந்த வினாடி வினாவை சமர்ப்பிக்க விரும்புகிறீர்களா?";
+"MARK" = "மதிப்பெண்";
+"NEXT_QUESTION" = "அடுத்த கேள்வி";
+"PREVIOUS_QUESTION" = "முந்தைய கேள்வி";
+"ASSIGNED" = "ஒதுக்கப்பட்டது";
+"DEADLINE" = "காலக்கெடு";

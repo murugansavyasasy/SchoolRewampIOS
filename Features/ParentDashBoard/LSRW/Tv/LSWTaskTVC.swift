@@ -62,9 +62,19 @@ class LSWTaskTVC: UITableViewCell, AudioPlaybackDelegate{
         dateBtn.setTitle(formattedDateStatus(from: assignment.created_on ?? ""), for: .normal)
         dateBtn.setImage(UIImage(systemName: "calendar"), for: .normal)
 
+        let isRTL = UIView.userInterfaceLayoutDirection(for: contentView.semanticContentAttribute) == .rightToLeft
+
+        if isRTL {
+            dateBtn.semanticContentAttribute = .forceRightToLeft
+            dateBtn.contentHorizontalAlignment = .right
+        } else {
+            dateBtn.semanticContentAttribute = .forceLeftToRight
+            dateBtn.contentHorizontalAlignment = .left
+        }
+
         var config = dateBtn.configuration ?? UIButton.Configuration.plain()
-        config.imagePadding = 8
         config.imagePlacement = .leading
+        config.imagePadding = 8
         dateBtn.configuration = config
         reminderBtn.layer.cornerRadius = 8
         exportRecordBtn.layer.cornerRadius = 8
@@ -119,7 +129,6 @@ extension LSWTaskTVC:UICollectionViewDataSource, UICollectionViewDelegate, UICol
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let file = attachmentList[indexPath.item]
         
-        // 🔊 AUDIO CELL
         if file.type?.uppercased() == CommonStringFile.M4A {
             if #available(iOS 15.0, *) {
                 guard let cell = collectionView.dequeueReusableCell(
@@ -142,7 +151,6 @@ extension LSWTaskTVC:UICollectionViewDataSource, UICollectionViewDelegate, UICol
             }
         }
         
-        // 📎 ATTACHMENT CELL
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: CellConfingName.AttachmentCVC,
             for: indexPath
@@ -150,7 +158,6 @@ extension LSWTaskTVC:UICollectionViewDataSource, UICollectionViewDelegate, UICol
             return UICollectionViewCell()
         }
         
-        // Detect file type
         if let fileType = file.type?.uppercased() {
             switch fileType {
             case CommonStringFile.IMAGE:
@@ -169,7 +176,6 @@ extension LSWTaskTVC:UICollectionViewDataSource, UICollectionViewDelegate, UICol
             cell.imgIconBtn.setTitle("DOC", for: .normal)
         }
         
-        // File name extract
         if let urlString = file.url,
            let path = URL(string: urlString) {
             let fullFileName = path.lastPathComponent
@@ -177,7 +183,6 @@ extension LSWTaskTVC:UICollectionViewDataSource, UICollectionViewDelegate, UICol
             cell.imageNameLbl.text = fileName
         }
         
-        // File size fetch
         if let sizeURL = URL(string: file.url ?? "") {
             getRemoteFileSize(from: sizeURL) { sizeString in
                 DispatchQueue.main.async {
