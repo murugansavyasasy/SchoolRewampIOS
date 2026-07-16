@@ -1131,6 +1131,19 @@
 "All Countries" = "All Countries";
 "Top Countries" = "Top Countries";
 "No Data Found" = "No Data Found";
+"CURRENT LEAVE REQUEST" = "CURRENT LEAVE REQUEST";
+"Are you sure want to approve the leave request" = "Are you sure you want to approve the leave request?";
+"Are you sure want to reject the leave request" = "Are you sure you want to reject the leave request?";
+"The management has received your request and it is currently being process..." = "The management has received your request, and it is currently being processed...";
+"Requested On" = "Requested On";
+"Certificated Date" = "Certificate Date";
+"Certificate Type" = "Certificate Type";
+"Staff Information" = "Staff Information";
+"Personal and institutional details" = "Personal and institutional details";
+"Institution" = "Institution";
+"Staff Name" = "Staff Name";
+"Designation" = "Designation";
+"Verified" = "Verified";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

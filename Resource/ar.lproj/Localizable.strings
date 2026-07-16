@@ -1143,6 +1143,19 @@
 "All Countries" = "جميع الدول";
 "Top Countries" = "أهم الدول";
 "No Data Found" = "لا توجد بيانات";
+"CURRENT LEAVE REQUEST" = "طلب الإجازة الحالي";
+"Are you sure want to approve the leave request" = "هل أنت متأكد من الموافقة على طلب الإجازة؟";
+"Are you sure want to reject the leave request" = "هل أنت متأكد من رفض طلب الإجازة؟";
+"The management has received your request and it is currently being process..." = "تم استلام طلبك من قبل الإدارة، وهو قيد المعالجة حالياً...";
+"Requested On" = "تاريخ الطلب";
+"Certificated Date" = "تاريخ الشهادة";
+"Certificate Type" = "نوع الشهادة";
+"Staff Information" = "بيانات الموظف";
+"Personal and institutional details" = "البيانات الشخصية وبيانات المؤسسة";
+"Institution" = "المؤسسة";
+"Staff Name" = "اسم الموظف";
+"Designation" = "المسمى الوظيفي";
+"Verified" = "تم التحقق";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

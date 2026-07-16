@@ -1206,6 +1206,19 @@
 "All Countries" = "ทุกประเทศ";
 "Top Countries" = "ประเทศยอดนิยม";
 "No Data Found" = "ไม่พบข้อมูล";
+"CURRENT LEAVE REQUEST" = "คำขอลาปัจจุบัน";
+"Are you sure want to approve the leave request" = "คุณแน่ใจหรือไม่ว่าต้องการอนุมัติคำขอลานี้?";
+"Are you sure want to reject the leave request" = "คุณแน่ใจหรือไม่ว่าต้องการปฏิเสธคำขอลานี้?";
+"The management has received your request and it is currently being process..." = "ฝ่ายบริหารได้รับคำขอของคุณแล้ว และขณะนี้กำลังดำเนินการ...";
+"Requested On" = "วันที่ยื่นคำขอ";
+"Certificated Date" = "วันที่ในใบรับรอง";
+"Certificate Type" = "ประเภทใบรับรอง";
+"Staff Information" = "ข้อมูลเจ้าหน้าที่";
+"Personal and institutional details" = "ข้อมูลส่วนบุคคลและข้อมูลของสถาบัน";
+"Institution" = "สถาบัน";
+"Staff Name" = "ชื่อเจ้าหน้าที่";
+"Designation" = "ตำแหน่ง";
+"Verified" = "ยืนยันแล้ว";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

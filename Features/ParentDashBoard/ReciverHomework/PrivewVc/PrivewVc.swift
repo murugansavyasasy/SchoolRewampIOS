@@ -198,7 +198,8 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         discreption.isScrollEnabled = false
 //        discreption.textContainerInset = .zero
 //        discreption.textContainer.lineFragmentPadding = 0
-        dateLbl.text =  MenuStringFile.posted_on.translated() + "\(displayText)"
+        let ltr = "\u{200E}"
+        dateLbl.text =  MenuStringFile.posted_on.translated() + "\(ltr)\(displayText)\(ltr)"
         postedByLbl.text = MenuStringFile.Posted_By.translated() + " - " + "\(postedBy ?? "")"
         
         if is_unreadStatus ?? false{

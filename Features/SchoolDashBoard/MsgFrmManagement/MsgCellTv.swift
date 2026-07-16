@@ -9,6 +9,7 @@ import UIKit
 
 class MsgCellTv: UITableViewCell {
     
+    @IBOutlet weak var newImg: UIImageView!
     @IBOutlet weak var readView: UIView!
     @IBOutlet weak var schoolName: UILabel!
     @IBOutlet weak var containerView: UIView!
@@ -53,6 +54,11 @@ class MsgCellTv: UITableViewCell {
         self.contentView.backgroundColor = UIColor(white: 0.95, alpha: 1.0) // Light gray background for the cell
         
         // Container View (Shadow Layer)
+        
+        let isRTL = UIView.userInterfaceLayoutDirection(for: contentView.semanticContentAttribute) == .rightToLeft
+        
+        newImg.transform = isRTL ? CGAffineTransform(rotationAngle: -.pi / 2) :.identity
+        
         containerView.backgroundColor = .white
         containerView.layer.cornerRadius = 16
         containerView.layer.masksToBounds = false

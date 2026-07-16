@@ -1214,6 +1214,19 @@
 "All Countries" = "அனைத்து நாடுகளும்";
 "Top Countries" = "முக்கிய நாடுகள்";
 "No Data Found" = "தரவு எதுவும் கிடைக்கவில்லை";
+"CURRENT LEAVE REQUEST" = "தற்போதைய விடுப்பு கோரிக்கை";
+"Are you sure want to approve the leave request" = "இந்த விடுப்பு கோரிக்கையை அங்கீகரிக்க விரும்புகிறீர்களா?";
+"Are you sure want to reject the leave request" = "இந்த விடுப்பு கோரிக்கையை நிராகரிக்க விரும்புகிறீர்களா?";
+"The management has received your request and it is currently being process..." = "உங்கள் கோரிக்கையை நிர்வாகம் பெற்றுள்ளது. அது தற்போது செயலாக்கத்தில் உள்ளது...";
+"Requested On" = "கோரிய தேதி";
+"Certificated Date" = "சான்றிதழ் தேதி";
+"Certificate Type" = "சான்றிதழ் வகை";
+"Staff Information" = "பணியாளர் தகவல்";
+"Personal and institutional details" = "தனிப்பட்ட மற்றும் நிறுவன விவரங்கள்";
+"Institution" = "நிறுவனம்";
+"Staff Name" = "பணியாளர் பெயர்";
+"Designation" = "பதவி";
+"Verified" = "சரிபார்க்கப்பட்டது";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

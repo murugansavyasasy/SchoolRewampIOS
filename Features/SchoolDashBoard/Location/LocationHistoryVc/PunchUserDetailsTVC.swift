@@ -51,6 +51,12 @@ class PunchUserDetailsTVC: UITableViewCell {
 //        containerView.layer.masksToBounds = true
         setupIcons()
         
+        titleLabel.text = "Staff Information".translated()
+        subtitleLabel.text = "Personal and institutional details".translated()
+        institutionLabel.text = "Institution".translated()
+        staffNameLabel.text = "Staff Name".translated()
+        designationLabel.text = "Designation".translated()
+      
         // Configure labels
 //        setupLabels()
         

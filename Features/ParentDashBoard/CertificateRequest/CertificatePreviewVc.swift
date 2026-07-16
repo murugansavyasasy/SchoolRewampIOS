@@ -18,7 +18,7 @@ class CertificatePreviewVc: UIViewController {
     @IBOutlet weak var reasonLbl: UILabel!
     @IBOutlet weak var webview: WKWebView!
     @IBOutlet weak var fullview: UIView!
-    @IBOutlet weak var pendingMessageLbl: UILabel!
+    @IBOutlet weak var pendingMessageLbl: LocalizationLabel!
     @IBOutlet weak var certificateNameLbl: UILabel!
     
     var certificate = CertificateRequest()

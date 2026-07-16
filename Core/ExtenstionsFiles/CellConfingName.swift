@@ -128,7 +128,6 @@ class CellConfingName {
     static let  GenderDistriTvcel = "GenderDistriTvcel"
     static let  LblTvCell = "LblTvCell"
     static let  SectionStregnthCVC = "SectionStregnthCVC"
-    static let  MsgTvCell = "MsgTvCell"
     static let  MsgVoiceCvCell = "MsgVoiceCvCell"
     static let  LSRWProgressTVC = "LSRWProgressTVC"
     static let  LSRWTaskTVC = "LSRWTaskTVC"

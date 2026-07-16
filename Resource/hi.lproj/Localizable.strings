@@ -1212,6 +1212,19 @@
 "All Countries" = "सभी देश";
 "Top Countries" = "प्रमुख देश";
 "No Data Found" = "कोई डेटा नहीं मिला";
+"CURRENT LEAVE REQUEST" = "वर्तमान अवकाश अनुरोध";
+"Are you sure want to approve the leave request" = "क्या आप वाकई अवकाश अनुरोध को स्वीकृत करना चाहते हैं?";
+"Are you sure want to reject the leave request" = "क्या आप वाकई अवकाश अनुरोध को अस्वीकार करना चाहते हैं?";
+"The management has received your request and it is currently being process..." = "प्रबंधन को आपका अनुरोध प्राप्त हो गया है और वर्तमान में उस पर कार्य किया जा रहा है...";
+"Requested On" = "अनुरोध की तिथि";
+"Certificated Date" = "प्रमाणपत्र तिथि";
+"Certificate Type" = "प्रमाणपत्र प्रकार";
+"Staff Information" = "कर्मचारी जानकारी";
+"Personal and institutional details" = "व्यक्तिगत एवं संस्थान संबंधी विवरण";
+"Institution" = "संस्थान";
+"Staff Name" = "कर्मचारी का नाम";
+"Designation" = "पद";
+"Verified" = "सत्यापित";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
