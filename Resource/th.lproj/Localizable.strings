@@ -1212,3 +1212,10 @@
 "REPORT_BUG_STRING" = "Dear School Chimes Team";
 "TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
 "APP_STORE_ID" = "6758079127";
+"SUBMIT_QUIZ" = "ส่งแบบทดสอบ";
+"SUBMIT_QUIZ_CONFIRMATION" = "คุณแน่ใจหรือไม่ว่าต้องการส่งแบบทดสอบนี้?";
+"MARK" = "คะแนน";
+"NEXT_QUESTION" = "คำถามถัดไป";
+"PREVIOUS_QUESTION" = "คำถามก่อนหน้า";
+"ASSIGNED" = "มอบหมาย";
+"DEADLINE" = "กำหนดส่ง";

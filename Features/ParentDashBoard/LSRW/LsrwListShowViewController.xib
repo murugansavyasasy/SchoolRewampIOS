@@ -71,7 +71,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ynr-y0-lTl">
-                    <rect key="frame" x="0.0" y="183" width="393" height="601"/>
+                    <rect key="frame" x="0.0" y="183" width="393" height="669"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="OQT-wD-pyU">
                             <rect key="frame" x="5" y="59.666666666666657" width="383" height="0.0"/>
@@ -141,7 +141,6 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="hXu-vi-gsd" secondAttribute="bottom" id="4NM-nz-sOP"/>
                         <constraint firstItem="hXu-vi-gsd" firstAttribute="top" secondItem="HHl-hQ-OkN" secondAttribute="bottom" constant="8" id="8td-FT-ZTx"/>
                         <constraint firstItem="OQT-wD-pyU" firstAttribute="leading" secondItem="HHl-hQ-OkN" secondAttribute="leading" id="Kx2-i4-sYa"/>
                         <constraint firstItem="hXu-vi-gsd" firstAttribute="leading" secondItem="Ynr-y0-lTl" secondAttribute="leading" id="Mpw-rd-WXa"/>
@@ -157,11 +156,12 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="BackGroundClr"/>
             <constraints>
+                <constraint firstItem="hXu-vi-gsd" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="2ke-Ud-2cw"/>
                 <constraint firstItem="Ynr-y0-lTl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="9MU-Rf-Qvw"/>
                 <constraint firstItem="Ynr-y0-lTl" firstAttribute="top" secondItem="qjc-ha-zjw" secondAttribute="bottom" constant="5" id="Gcp-0e-CwV"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Ynr-y0-lTl" secondAttribute="trailing" id="GxY-gS-lu3"/>
                 <constraint firstItem="qjc-ha-zjw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZSi-b9-mo1"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Ynr-y0-lTl" secondAttribute="bottom" id="mAJ-Xj-gn7"/>
+                <constraint firstAttribute="bottom" secondItem="Ynr-y0-lTl" secondAttribute="bottom" id="mAJ-Xj-gn7"/>
                 <constraint firstItem="qjc-ha-zjw" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="xxc-uH-blZ"/>
                 <constraint firstAttribute="trailing" secondItem="qjc-ha-zjw" secondAttribute="trailing" id="zgs-ko-pIL"/>
             </constraints>
@@ -172,7 +172,7 @@
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="lsrwNodata" width="1159" height="772.32000732421875"/>
         <namedColor name="BackGroundClr">
-            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.49799999594688416" green="0.10199999809265137" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

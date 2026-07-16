@@ -2011,28 +2011,35 @@ enum LSRWType: Codable {
         
         // Normalize translated values back to English
         let mapToEnglish: [String: LSRWType] = [
+            // English
             "listening": .listening,
             "speaking": .speaking,
             "reading": .reading,
             "writing": .writing,
-            
+
             // Tamil
             "கேட்குதல்": .listening,
             "பேசுதல்": .speaking,
             "படித்தல்": .reading,
             "எழுதுதல்": .writing,
-            
+
             // Hindi
             "सुनना": .listening,
             "बोलना": .speaking,
             "पढ़ना": .reading,
             "लिखना": .writing,
-            
+
             // Thai
             "การฟัง": .listening,
             "การพูด": .speaking,
             "การอ่าน": .reading,
-            "การเขียน": .writing
+            "การเขียน": .writing,
+
+            // Arabic
+            "الاستماع": .listening,
+            "التحدث": .speaking,
+            "القراءة": .reading,
+            "الكتابة": .writing
         ]
         
         if let mapped = mapToEnglish[value] {

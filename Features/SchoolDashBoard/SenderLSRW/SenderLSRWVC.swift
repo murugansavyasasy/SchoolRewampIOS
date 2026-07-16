@@ -93,10 +93,10 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
     private var isRemoteAudio = false
     var editReport:LSRWTask?
     let taskTypes = [
-        ("Listening".translated(), "headphones"),
-        ("Speaking".translated(), "mic"),
-        ("Reading".translated(), "book"),
-        ("Writing".translated(), "pencil")
+        ("Listening", "headphones"),
+        ("Speaking", "mic"),
+        ("Reading", "book"),
+        ("Writing", "pencil")
     ]
     private let tempKey = "TempRecordings"
     var selectedTaskIndex: Int = 0
@@ -700,7 +700,7 @@ extension SenderLSRWVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
         if collectionView == typeSectionCV {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TaskTypeCell.identifier, for: indexPath) as! TaskTypeCell
             let (title, icon) = taskTypes[indexPath.item]
-            cell.configure(title: title, icon: icon, isSelected: indexPath.item == selectedTaskIndex)
+            cell.configure(title: title.translated(), icon: icon, isSelected: indexPath.item == selectedTaskIndex)
             return cell
         } else {
             if indexPath.section == 0 {
@@ -803,7 +803,6 @@ extension SenderLSRWVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
         if collectionView == typeSectionCV {
             selectedTaskIndex = indexPath.item
             collectionView.reloadData()
-            print("Selected Task: \(taskTypes[selectedTaskIndex].0)")
         } else {
             if indexPath.section == 0 {
                 if indexPath.row == 0 {
