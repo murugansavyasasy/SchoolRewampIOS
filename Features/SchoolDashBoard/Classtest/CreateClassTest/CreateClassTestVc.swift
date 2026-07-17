@@ -9,6 +9,7 @@ import UIKit
 
 class CreateClassTestVc: UIViewController {
 
+    @IBOutlet weak var noteLabel: UILabel!
     // MARK: - IBOutlets
     @IBOutlet public weak var headerBackgroundView: UIView!
     @IBOutlet weak var BackDismissImg: UIImageView!
@@ -115,7 +116,22 @@ class CreateClassTestVc: UIViewController {
         configureCircle(step3Circle)
         configureCircle(step4Circle)
         configureCircle(step5Circle)
-        
+        noteLabel.text = NSLocalizedString("class_test_note", comment: "")
+        step1Title.text = "Standard".translated()
+        step2Title.text = "Sections".translated()
+        step3Title.text = "Subjects".translated()
+        step4Title.text = "Details".translated()
+        step5Title.text = "Review".translated()
+        continueButton.setTitle(NSLocalizedString("continue", comment: ""), for: .normal)
+        backButton.setTitle(NSLocalizedString("back", comment: ""), for: .normal)
+        addTestMarksBtnName.setTitle(
+            NSLocalizedString("add_test_marks", comment: ""),
+            for: .normal
+        )
+        viewHistoryBtn.setTitle(
+            NSLocalizedString("view_created_test", comment: ""),
+            for: .normal
+        )
         // Customize action buttons
         backButton.layer.cornerRadius = 16
         backButton.layer.borderWidth = 1.0
@@ -142,14 +158,14 @@ class CreateClassTestVc: UIViewController {
     
     private func showDiscardAlert() {
         let alert = UIAlertController(
-            title: "Discard Changes?",
-            message: "Are you sure you want to discard your changes?",
+            title: "Discard Changes?".translated(),
+            message: "Are you sure you want to discard your changes?".translated(),
             preferredStyle: .alert
         )
 
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel))
 
-        alert.addAction(UIAlertAction(title: "Discard", style: .destructive) { _ in
+        alert.addAction(UIAlertAction(title: "Discard".translated(), style: .destructive) { _ in
             self.dismiss(animated: true)
         })
 
@@ -177,74 +193,163 @@ class CreateClassTestVc: UIViewController {
         }
     }
     
+//    private func updateStepView(for step: Int) {
+//        // 1. Update text content
+//        stepProgressLabel.text = "Step \(step) of 5"
+//        
+//        switch step {
+//        case 1:
+//            stepTitleLabel.text = "Select Standard"
+//            stepSubtitleLabel.text = "Choose the class for which you want to create a test"
+//            backButton.isHidden = true
+//            continueButton.isHidden = false
+//            addTestMarksBtnName.isHidden = false
+//            let vc = SelectStandardViewController(nibName: "SelectStandardViewController", bundle: nil)
+//            vc.viewModel = viewModel
+//            transition(to: vc)
+//            
+//        case 2:
+//            stepTitleLabel.text = "Select Sections"
+//            stepSubtitleLabel.text = "Standard \(viewModel.selectedStandard?.name ?? "") — select one or more"
+//            backButton.isHidden = false
+//            continueButton.isHidden = false
+//            addTestMarksBtnName.isHidden = true
+//            let vc = SelectSectionsViewController(nibName: "SelectSectionsViewController", bundle: nil)
+//            vc.viewModel = viewModel
+//            transition(to: vc)
+//            
+//        case 3:
+//            stepTitleLabel.text = "Create Class Test"
+//            stepSubtitleLabel.text = "Choose subjects to include in the test"
+//            backButton.isHidden = false
+//            continueButton.isHidden = false
+//            addTestMarksBtnName.isHidden = true
+//            let vc = SelectSubjectVc(nibName: "SelectSubjectVc", bundle: nil)
+//            vc.viewModel = viewModel
+//            transition(to: vc)
+//            
+//        case 4:
+//            stepTitleLabel.text = "Create Class Test"
+//            stepSubtitleLabel.text = "Configure  Test"
+//            backButton.isHidden = false
+//            continueButton.isHidden = false
+//            addTestMarksBtnName.isHidden = true
+//            let vc = SelectDetailsViewController(nibName: "SelectDetailsViewController", bundle: nil)
+//            vc.viewModel = viewModel
+//            transition(to: vc)
+//            
+//        case 5:
+//            stepTitleLabel.text = "Create Class Test"
+//            stepSubtitleLabel.text = "Confirm your entries"
+//            
+//            
+////            if viewModel.exameName == "" {
+////                backButton.isHidden = false
+////                continueButton.isHidden = false
+////                alert.showAlert(title: "", message: "Exame Name is required", on: self)
+////            }else{
+//                backButton.isHidden = true
+//                continueButton.isHidden = true
+//            addTestMarksBtnName.isHidden = true
+//                let vc = SelectReviewViewController(nibName: "SelectReviewViewController", bundle: nil)
+//                vc.viewModel = viewModel
+//                
+//                transition(to: vc)
+////            }
+//        default:
+//            return
+//        }
+//        
+//        // Update steps indicator UI
+//        updateStepperIndicators(currentStep: step)
+//        updateButtons()
+//    }
+    
+    
     private func updateStepView(for step: Int) {
-        // 1. Update text content
-        stepProgressLabel.text = "Step \(step) of 5"
-        
+
+        // MARK: - Progress
+        stepProgressLabel.text = String(
+            format: NSLocalizedString("step_progress", comment: ""),
+            step
+        )
+
+        // MARK: - Default Button States
+        backButton.isHidden = false
+        continueButton.isHidden = false
+        addTestMarksBtnName.isHidden = true
+
         switch step {
+
         case 1:
-            stepTitleLabel.text = "Select Standard"
-            stepSubtitleLabel.text = "Choose the class for which you want to create a test"
+            stepTitleLabel.text = NSLocalizedString("step1_title", comment: "")
+            stepSubtitleLabel.text = NSLocalizedString("step1_subtitle", comment: "")
+
             backButton.isHidden = true
-            continueButton.isHidden = false
             addTestMarksBtnName.isHidden = false
-            let vc = SelectStandardViewController(nibName: "SelectStandardViewController", bundle: nil)
+
+            let vc = SelectStandardViewController(
+                nibName: "SelectStandardViewController",
+                bundle: nil
+            )
             vc.viewModel = viewModel
             transition(to: vc)
-            
+
         case 2:
-            stepTitleLabel.text = "Select Sections"
-            stepSubtitleLabel.text = "Standard \(viewModel.selectedStandard?.name ?? "") — select one or more"
-            backButton.isHidden = false
-            continueButton.isHidden = false
-            addTestMarksBtnName.isHidden = true
-            let vc = SelectSectionsViewController(nibName: "SelectSectionsViewController", bundle: nil)
+            stepTitleLabel.text = NSLocalizedString("step2_title", comment: "")
+            stepSubtitleLabel.text = String(
+                format: NSLocalizedString("step2_subtitle", comment: ""),
+                viewModel.selectedStandard?.name ?? ""
+            )
+
+            let vc = SelectSectionsViewController(
+                nibName: "SelectSectionsViewController",
+                bundle: nil
+            )
             vc.viewModel = viewModel
             transition(to: vc)
-            
+
         case 3:
-            stepTitleLabel.text = "Create Class Test"
-            stepSubtitleLabel.text = "Choose subjects to include in the test"
-            backButton.isHidden = false
-            continueButton.isHidden = false
-            addTestMarksBtnName.isHidden = true
-            let vc = SelectSubjectVc(nibName: "SelectSubjectVc", bundle: nil)
+            stepTitleLabel.text = NSLocalizedString("step3_title", comment: "")
+            stepSubtitleLabel.text = NSLocalizedString("step3_subtitle", comment: "")
+
+            let vc = SelectSubjectVc(
+                nibName: "SelectSubjectVc",
+                bundle: nil
+            )
             vc.viewModel = viewModel
             transition(to: vc)
-            
+
         case 4:
-            stepTitleLabel.text = "Create Class Test"
-            stepSubtitleLabel.text = "Configure  Test"
-            backButton.isHidden = false
-            continueButton.isHidden = false
-            addTestMarksBtnName.isHidden = true
-            let vc = SelectDetailsViewController(nibName: "SelectDetailsViewController", bundle: nil)
+            stepTitleLabel.text = NSLocalizedString("step4_title", comment: "")
+            stepSubtitleLabel.text = NSLocalizedString("step4_subtitle", comment: "")
+
+            let vc = SelectDetailsViewController(
+                nibName: "SelectDetailsViewController",
+                bundle: nil
+            )
             vc.viewModel = viewModel
             transition(to: vc)
-            
+
         case 5:
-            stepTitleLabel.text = "Create Class Test"
-            stepSubtitleLabel.text = "Confirm your entries"
-            
-            
-//            if viewModel.exameName == "" {
-//                backButton.isHidden = false
-//                continueButton.isHidden = false
-//                alert.showAlert(title: "", message: "Exame Name is required", on: self)
-//            }else{
-                backButton.isHidden = true
-                continueButton.isHidden = true
-            addTestMarksBtnName.isHidden = true
-                let vc = SelectReviewViewController(nibName: "SelectReviewViewController", bundle: nil)
-                vc.viewModel = viewModel
-                
-                transition(to: vc)
-//            }
+            stepTitleLabel.text = NSLocalizedString("step5_title", comment: "")
+            stepSubtitleLabel.text = NSLocalizedString("step5_subtitle", comment: "")
+
+            backButton.isHidden = true
+            continueButton.isHidden = true
+
+            let vc = SelectReviewViewController(
+                nibName: "SelectReviewViewController",
+                bundle: nil
+            )
+            vc.viewModel = viewModel
+            transition(to: vc)
+
         default:
             return
         }
-        
-        // Update steps indicator UI
+
+        // MARK: - Update Stepper & Buttons
         updateStepperIndicators(currentStep: step)
         updateButtons()
     }

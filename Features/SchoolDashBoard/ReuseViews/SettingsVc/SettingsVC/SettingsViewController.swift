@@ -66,7 +66,7 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
             title: menuname.preference,
             items: [
                 menuname.notifications,
-//                menuname.changeAppLanguage
+                menuname.changeAppLanguage
             ]
         ),
         Section(

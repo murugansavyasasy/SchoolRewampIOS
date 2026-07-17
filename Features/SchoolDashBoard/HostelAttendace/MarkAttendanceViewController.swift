@@ -14,7 +14,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     func outPassApproval(for index: Int) {
         alert.showAlertCancel(
             title: AlertstringFile.Confirm_title,
-            message: "Are you sure want to approval outpass?",
+            message: "Are you sure want to approval outpass?".translated(),
             actionLbl1:  AlertstringFile.Yes_Send,
             actionLbl2: AlertstringFile.Cancel,
             on: self,
@@ -30,7 +30,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     func outPassReject(for index: Int) {
         alert.showAlertCancel(
             title: AlertstringFile.Confirm_title,
-            message: "Are you sure want to reject outpass?",
+            message: "Are you sure want to reject outpass?".translated(),
             actionLbl1:  AlertstringFile.Yes_Send,
             actionLbl2: AlertstringFile.Cancel,
             on: self,
@@ -44,6 +44,8 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
     }
     
 
+
+    @IBOutlet weak var SelectDateBtn: UIButton!
     @IBOutlet weak var arrowImageView: UIImageView!
     @IBOutlet weak var sessionBtnName: UIButton!
     @IBOutlet weak var mothLbl: UILabel!
@@ -187,6 +189,8 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         calendar.scrollEnabled = false
         mothView.layer.cornerRadius = 10
         SelectionDateFullView.layer.cornerRadius = 10
+        markAllButton.setTitle(NSLocalizedString("Mark Attendance", comment: ""), for: .normal)
+        SelectDateBtn.setTitle(NSLocalizedString("Select Date", comment: ""), for: .normal)
     }
 
     private func setupTableView() {
@@ -269,8 +273,8 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
                 state = "0"
             }
         }
-        let inandoutdate = "out date : \(student.out_date ?? "")"
-        cell.indateLbl.text = "in date : \(student.in_date ?? "")"
+        let inandoutdate = "\("out date :".translated()) \(student.out_date ?? "")"
+        cell.indateLbl.text = "\("in date :".translated()) \(student.in_date ?? "")"
         cell.configure(
             name: student.name ?? "",
             id: student.id ?? "",
@@ -314,7 +318,7 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
                             }
                         }
                    
-                        subtitleLabel.text =   "\(Success.data?.count ?? 0) Students • \(total_beds ?? 0) Beds"
+                        subtitleLabel.text =   "\(Success.data?.count ?? 0) \("Students".translated()) • \(total_beds ?? 0) \("Beds".translated())"
                         tableView.reloadData()
                         updateProgress()
                         

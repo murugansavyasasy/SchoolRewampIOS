@@ -70,6 +70,7 @@ class ExamCardTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
         viewMarksButton.backgroundColor = UIColor(red: 240/255, green: 242/255, blue: 254/255, alpha: 1.0)
         viewMarksButton.tintColor = UIColor(red: 74/255, green: 85/255, blue: 246/255, alpha: 1.0)
         viewMarksButton.addTarget(self, action: #selector(didTapViewMarks), for: .touchUpInside)
+        viewMarksButton.setTitle(NSLocalizedString("View Marks", comment: ""), for: .normal)
         // Chevron button styles
         chevronButton.layer.cornerRadius = 16
     }
@@ -108,8 +109,19 @@ class ExamCardTableViewCell: UITableViewCell, UICollectionViewDataSource, UIColl
         
         let subjectCount = exam.subjects.count
         let totalTests = exam.subjects.reduce(0) { $0 + $1.activities.count }
-        let subjectStr = subjectCount == 1 ? "1 subject" : "\(subjectCount) subjects"
-        let testStr = totalTests == 1 ? "1 test" : "\(totalTests) tests"
+        let subjectKey = subjectCount == 1 ? "%d Subject" : "%d Subjects"
+        let testKey = totalTests == 1 ? "%d Test" : "%d Tests"
+
+        let subjectStr = String(
+            format: NSLocalizedString(subjectKey, comment: ""),
+            subjectCount
+        )
+
+        let testStr = String(
+            format: NSLocalizedString(testKey, comment: ""),
+            totalTests
+        )
+
         examSubtitleLabel.text = "\(subjectStr)  ·  \(testStr)"
         
         // 2. Refresh Subject Badges collection view

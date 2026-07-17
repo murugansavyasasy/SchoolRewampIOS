@@ -36,7 +36,7 @@ extension RecipientVc: UISearchBarDelegate {
             nodataFound.image = ImageName.missing_file
             nodataFound.isHidden = !(isEmpty ?? false)
             noRecordLbl.isHidden = !(isEmpty ?? false)
-            noRecordLbl.text = "No search result found"
+            noRecordLbl.text = "No search result found".translated()
             tv.isHidden = isEmpty ?? false
 
         case recipeint_tabBarName.Staff:
@@ -66,7 +66,8 @@ class RecipientVc: UIViewController{
     
     @IBOutlet weak var subjectDefaultLbl: UILabel!
     @IBOutlet weak var addLevel: UIView!
-    @IBOutlet weak var chooseDefaultLbl: UILabel!
+  
+    @IBOutlet weak var chooseDefaultLbl: LocalizationLabel!
     @IBOutlet weak var acidmicYrLbl: UILabel!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var backbtnMName: UIButton!
@@ -157,11 +158,28 @@ class RecipientVc: UIViewController{
         searchbar.searchTextField.addDoneButton()
         searchbar.placeholder = CommonStringFile.Search.translated()
         searchbar.backgroundImage = UIImage()
-        backbtnMName
-            .setTitle(
-                UserDefaultFileManager.get_staff_Details()?.school_name,
-                for: .normal)
+//        backbtnMName
+//            .setTitle(
+//                UserDefaultFileManager.get_staff_Details()?.school_name,
+//                for: .normal)
+//        backbtnMName.setTitleFont(style: .secondary, size: 18.0)
+        
+        let isRTL = UIView.userInterfaceLayoutDirection(
+            for: view.semanticContentAttribute
+        ) == .rightToLeft
+
+        backbtnMName.setTitle(
+            UserDefaultFileManager.get_staff_Details()?.school_name,
+            for: .normal
+        )
+
         backbtnMName.setTitleFont(style: .secondary, size: 18.0)
+
+        if isRTL {
+            backbtnMName.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        } else {
+            backbtnMName.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        }
         getacadmicYr{
             self.homeWorkShowProps{ succes in
                 if !succes{
@@ -194,6 +212,8 @@ class RecipientVc: UIViewController{
         selectSubject.addGestureRecognizer(tap3)
         selectLevel.addGestureRecognizer(tap4)
         acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
+        sendbtnName.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
+        speficBtnName.setTitle(NSLocalizedString("Specific Student", comment: ""), for: .normal)
     }
     func configureRecipientTabs() {
         segmentName.removeAllSegments()
@@ -237,7 +257,7 @@ class RecipientVc: UIViewController{
             }
             circular_types = circular_type.school
             target_type = TargetTypes.school
-            noRecordLbl.text = CommonStringFile.Tap_SEND_to_share_this
+            noRecordLbl.text = CommonStringFile.Tap_SEND_to_share_this.translated()
             defaultIndex = 1
         default:
             print("Unhandled staff role")
@@ -342,8 +362,8 @@ class RecipientVc: UIViewController{
         // Validate selection
         guard isEntireSchool || !array_selectedId.isEmpty else {
             alert.showAlert(
-                title: AlertstringFile.Alert_title,
-                message: AlertstringFile.Choose_any_target,
+                title: AlertstringFile.Alert_title.translated(),
+                message: AlertstringFile.Choose_any_target.translated(),
                 on: self
             )
             return
@@ -356,8 +376,8 @@ class RecipientVc: UIViewController{
         case Menu_id.homeWorkMenuId, Menu_id.isAssaignment:
             guard let subjectId = subjectId, !subjectId.isEmpty else {
                 alert.showAlert(
-                    title: AlertstringFile.Alert_title,
-                    message: AlertstringFile.Choose_any_section,
+                    title: AlertstringFile.Alert_title.translated(),
+                    message: AlertstringFile.Choose_any_section.translated(),
                     on: self
                 )
                 return
@@ -375,8 +395,8 @@ class RecipientVc: UIViewController{
         case Menu_id.quiz:
             guard let subjectId = subjectId, !subjectId.isEmpty else {
                 alert.showAlert(
-                    title: AlertstringFile.Alert_title,
-                    message: AlertstringFile.Choose_any_section,
+                    title: AlertstringFile.Alert_title.translated(),
+                    message: AlertstringFile.Choose_any_section.translated(),
                     on: self)
                 return}
             
@@ -389,8 +409,8 @@ class RecipientVc: UIViewController{
         case Menu_id.lsrw:
             guard let subjectId = subjectId, !subjectId.isEmpty else {
                 alert.showAlert(
-                    title: AlertstringFile.Alert_title,
-                    message: AlertstringFile.Choose_any_section,
+                    title: AlertstringFile.Alert_title.translated(),
+                    message: AlertstringFile.Choose_any_section.translated(),
                     on: self
                 )
                 return
@@ -833,15 +853,15 @@ class RecipientVc: UIViewController{
         var selectedTabItem = cv_itemsarry[segmentName.selectedSegmentIndex]
         
         if cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Section_Student{
-            selectedTabItem = "Section"
+            selectedTabItem = "Section".translated()
         }
         var message : String?
         if accadmicDefaultYrName == acidmicYrLbl.text{
-            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(selectedTabItem) (s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+            message = AlertstringFile.Selected_target.translated() + "\(array_selectedId.count) " + "\(selectedTabItem) (s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed.translated()
         }else{
             
-            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
-                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+            message = AlertstringFile.Selected_target.translated() + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.Change_academic_year.translated() + " " + (
+                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1.translated() +   "\n" + AlertstringFile.Change_academic_year2.translated()
         }
         
         return message ?? ""
@@ -903,8 +923,8 @@ class RecipientVc: UIViewController{
         guard  array_selectedId.count > 0 else {
             self.alert
                 .showAlert(
-                    title: AlertstringFile.Alert_title,
-                    message: AlertstringFile.Choose_any_standard_section ,
+                    title: AlertstringFile.Alert_title.translated(),
+                    message: AlertstringFile.Choose_any_standard_section.translated() ,
                     on: self
                 )
             return
@@ -949,7 +969,7 @@ class RecipientVc: UIViewController{
             circular_types =  circular_type.school
             nodataFound.isHidden = false
             noRecordLbl.isHidden = false
-            noRecordLbl.text = CommonStringFile.Tap_SEND_to_share_this
+            noRecordLbl.text = CommonStringFile.Tap_SEND_to_share_this.translated()
             sendbtnName.isHidden = false
             nodataFound.image = ImageName.girl_and_boy_are
             selectStandardDropDown.isHidden = true
@@ -1056,7 +1076,7 @@ class RecipientVc: UIViewController{
                 self.alert
                     .showAlert(
                         title: AlertstringFile.Oops,
-                        message: "No Section Found",
+                        message: "No Section Found".translated(),
                         on: self
                     )
             }else{
@@ -1588,7 +1608,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             self.alert
                                 .showAlert(
                                     title: AlertstringFile.Oops,
-                                    message: "No Section Found",
+                                    message: "No Section Found".translated(),
                                     on: self
                                 )
                         }
@@ -1663,7 +1683,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     DispatchQueue.main.async { [self] in
                         print(error.localizedDescription)
                         filteredStaffDetails = []
-                        nodata(false, message: "Something went wrong")
+                        nodata(false, message: "Something went wrong".translated())
                     }
                 }
             }
@@ -1744,7 +1764,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         speficBtnName.backgroundColor = .gray
                         self.alert
                             .showAlert(
-                                title: AlertstringFile.Oops,
+                                title: AlertstringFile.Oops.translated(),
                                 message: successMessage.message ?? "",
                                 on: self
                             )
@@ -1754,7 +1774,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 print(error.localizedDescription)
                 self.alert
                     .showAlert(
-                        title: AlertstringFile.Oops,
+                        title: AlertstringFile.Oops.translated(),
                         message: error.localizedDescription,
                         on: self
                     )
@@ -1816,7 +1836,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             DispatchQueue.main.async {
                 self.alert
                     .showAlert(
-                        title: AlertstringFile.Error,
+                        title: AlertstringFile.Error.translated(),
                         message: localData.accidamic_year_data?.message ?? "" ,
                         on: self
                     )
@@ -1841,8 +1861,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             textStorage.addLayoutManager(layoutManager)
             let index = layoutManager.characterIndex(for: tapLocation, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
             if NSLocationInRange(index, nsRange) {
-                let subject = "Request to configure communication academic year"
-                let body = "Dear School Chimes Team,\n\n Please configure communication academic year  as 20xx - 20xx for any queries contact .\n\n Your name,\nMobile No"
+                let subject = "Request to configure communication academic year".translated()
+                let body = "Dear School Chimes Team,\n\n Please configure communication academic year  as 20xx - 20xx for any queries contact .\n\n Your name,\nMobile No".translated()
                 // URL encode
                 let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
                 let encodedBody = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""

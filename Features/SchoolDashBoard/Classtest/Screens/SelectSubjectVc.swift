@@ -83,7 +83,13 @@ class SelectSubjectVc: UIViewController {
         guard let viewModel = viewModel else { return }
         let selected = viewModel.selectedSubjects.count
         let total = viewModel.totalSubjectsCount()
-        summaryLabel.text = "✓ \(selected) of \(total) subjects selected"
+        let text = "✓ " + String(
+            format: NSLocalizedString("%d of %d subjects selected", comment: ""),
+            selected,
+            total
+        )
+
+        summaryLabel.text = text
     }
 }
 

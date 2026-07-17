@@ -72,7 +72,7 @@ class ActivityDetailCardView: UIView {
         
         // Format session pill
         let isFN = activity.session?.uppercased() == "FN"
-        sessionPillLabel.text = isFN ? "Forenoon" : "Afternoon"
+        sessionPillLabel.text = isFN ? "Forenoon".translated() : "Afternoon".translated()
         sessionPillView.layer.cornerRadius = 10
         
         if isFN {

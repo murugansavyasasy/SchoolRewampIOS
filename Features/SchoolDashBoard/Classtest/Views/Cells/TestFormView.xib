@@ -43,7 +43,7 @@
                                         <constraint firstItem="ZNa-Ot-S1B" firstAttribute="bottom" secondItem="sTY-Ke-I4J" secondAttribute="bottom" id="uih-YQ-piz"/>
                                     </constraints>
                                 </view>
-                                <label opaque="NO" contentMode="left" text="Test 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MVe-HY-zRH" userLabel="TestTitle">
+                                <label opaque="NO" contentMode="left" text="Test 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MVe-HY-zRH" userLabel="TestTitle">
                                     <rect key="frame" x="28" y="35" width="243" height="17"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                     <color key="textColor" name="PrimeryColor"/>
@@ -82,7 +82,7 @@
                                                 <constraint firstAttribute="height" constant="14" id="i5j-nk-w6O"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" contentMode="left" text="ACTIVITY NAME" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Sk-Nc-h2S" userLabel="ExamNameLabel">
+                                        <label opaque="NO" contentMode="left" text="ACTIVITY NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Sk-Nc-h2S" userLabel="ExamNameLabel" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                             <rect key="frame" x="20" y="2" width="349" height="12"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                             <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -122,7 +122,7 @@
                                                         <constraint firstAttribute="width" constant="14" id="khf-sb-b53"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" contentMode="left" text="ACTIVITY  DATE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2QQ-55-FSb" userLabel="DateLabel">
+                                                <label opaque="NO" contentMode="left" text="ACTIVITY  DATE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2QQ-55-FSb" userLabel="DateLabel" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="2" width="158.66666666666666" height="12"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                                     <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -133,7 +133,7 @@
                                                 <constraint firstAttribute="height" constant="16" id="C8I-mQ-uMS"/>
                                             </constraints>
                                         </stackView>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select date" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s1w-zL-F2K">
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s1w-zL-F2K">
                                             <rect key="frame" x="0.0" y="20" width="178.66666666666666" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="sHs-MF-k8s"/>
@@ -157,7 +157,7 @@
                                                         <constraint firstAttribute="width" constant="14" id="gWb-A2-7zr"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" contentMode="left" text="SESSION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KlI-Wq-24P" userLabel="SessionLabel">
+                                                <label opaque="NO" contentMode="left" text="SESSION" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KlI-Wq-24P" userLabel="SessionLabel" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                                     <rect key="frame" x="20" y="2" width="158.33333333333334" height="12"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                                     <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -205,7 +205,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="ql3-mY-Q7v">
                                             <rect key="frame" x="0.0" y="0.0" width="178.66666666666666" height="16"/>
                                             <subviews>
-                                                <label opaque="NO" contentMode="left" text="#" textAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RwU-Q2-rOB" userLabel="HashLabel1">
+                                                <label hidden="YES" opaque="NO" contentMode="left" text="#" textAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RwU-Q2-rOB" userLabel="HashLabel1">
                                                     <rect key="frame" x="0.0" y="1" width="14" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="14" id="LRb-IL-eeO"/>
@@ -214,8 +214,8 @@
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                     <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
-                                                <label opaque="NO" contentMode="left" text="MAX MARKS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TjQ-Wm-9IH" userLabel="MaxMarksLabel">
-                                                    <rect key="frame" x="20" y="2" width="158.66666666666666" height="12"/>
+                                                <label opaque="NO" contentMode="left" text="MAX MARKS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TjQ-Wm-9IH" userLabel="MaxMarksLabel" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="2" width="178.66666666666666" height="12"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                                     <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -225,7 +225,7 @@
                                                 <constraint firstAttribute="height" constant="16" id="HO8-FJ-vWw"/>
                                             </constraints>
                                         </stackView>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="100" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ehM-5z-NrJ">
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="100" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ehM-5z-NrJ">
                                             <rect key="frame" x="0.0" y="20" width="178.66666666666666" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="hR5-15-hMT"/>
@@ -241,7 +241,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="6rZ-S3-MBI">
                                             <rect key="frame" x="0.0" y="0.0" width="178.33333333333334" height="16"/>
                                             <subviews>
-                                                <label opaque="NO" contentMode="left" text="#" textAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DjN-fg-yD2" userLabel="HashLabel2">
+                                                <label hidden="YES" opaque="NO" contentMode="left" text="#" textAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DjN-fg-yD2" userLabel="HashLabel2">
                                                     <rect key="frame" x="0.0" y="1" width="14" height="14"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="14" id="PbB-Er-ufY"/>
@@ -250,8 +250,8 @@
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                     <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
-                                                <label opaque="NO" contentMode="left" text="MIN MARKS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w5e-oU-5s1" userLabel="MinMarksLabel">
-                                                    <rect key="frame" x="20" y="2" width="158.33333333333334" height="12"/>
+                                                <label opaque="NO" contentMode="left" text="MIN MARKS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w5e-oU-5s1" userLabel="MinMarksLabel" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="2" width="178.33333333333334" height="12"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                                     <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -261,7 +261,7 @@
                                                 <constraint firstAttribute="height" constant="16" id="62U-9A-KLe"/>
                                             </constraints>
                                         </stackView>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="35" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jdP-79-FsL">
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="35" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jdP-79-FsL">
                                             <rect key="frame" x="0.0" y="20" width="178.33333333333334" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="ty6-fS-cw9"/>
@@ -287,7 +287,7 @@
                                                 <constraint firstAttribute="height" constant="14" id="OjH-C5-JIZ"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" contentMode="left" text="SYLLABUS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xwD-rv-nHJ" userLabel="SyllabusLabel">
+                                        <label opaque="NO" contentMode="left" text="SYLLABUS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xwD-rv-nHJ" userLabel="SyllabusLabel" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                             <rect key="frame" x="20" y="2" width="349" height="12"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                             <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -327,11 +327,11 @@
                 <outlet property="badgeContainer" destination="sTY-Ke-I4J" id="kcn-iA-5bK"/>
                 <outlet property="badgeLabel" destination="ZNa-Ot-S1B" id="Wxt-b4-yr4"/>
                 <outlet property="examNameTextView" destination="AiC-e9-Alr" id="6bt-ww-B55"/>
-                <outlet property="exameDefaultLbl" destination="7Sk-Nc-h2S" id="S4z-qb-9GG"/>
+                <outlet property="exameDefaultLbl" destination="7Sk-Nc-h2S" id="LHp-Q4-cF4"/>
                 <outlet property="fnButton" destination="RRs-ox-3ee" id="nhY-la-Hof"/>
-                <outlet property="maxMarkDefaultLbl" destination="TjQ-Wm-9IH" id="3S3-MF-Cqb"/>
+                <outlet property="maxMarkDefaultLbl" destination="TjQ-Wm-9IH" id="DCs-LK-VB2"/>
                 <outlet property="maxMarksTextField" destination="ehM-5z-NrJ" id="eJl-Cz-XwP"/>
-                <outlet property="minMarkDefaultLbl" destination="w5e-oU-5s1" id="V9E-VN-5GK"/>
+                <outlet property="minMarkDefaultLbl" destination="w5e-oU-5s1" id="tR1-x4-0al"/>
                 <outlet property="minMarksTextField" destination="jdP-79-FsL" id="w95-Yt-vcp"/>
                 <outlet property="removeButton" destination="34f-9N-kyo" id="ZZT-Bl-BaY"/>
                 <outlet property="syllabusTextView" destination="nAY-V1-bLq" id="MiM-g7-ptJ"/>
@@ -348,7 +348,7 @@
         <image name="doc.text" catalog="system" width="115" height="128"/>
         <image name="trash" catalog="system" width="117" height="128"/>
         <namedColor name="PrimeryColor">
-            <color red="0.49799999594688416" green="0.10199999809265137" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

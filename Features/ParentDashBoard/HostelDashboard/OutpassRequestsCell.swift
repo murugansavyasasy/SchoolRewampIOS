@@ -4,6 +4,7 @@ protocol newRequestScreen: AnyObject {
 }
 class OutpassRequestsCell: UITableViewCell {
 
+    @IBOutlet weak var newRequestBtn: UIButton!
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var containerStackView: UIStackView!
     @IBOutlet weak var Tv: SelfSizingTableView!
@@ -15,6 +16,7 @@ class OutpassRequestsCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        newRequestBtn.setTitle(NSLocalizedString("New Request", comment: ""), for: .normal)
         cardView.layer.cornerRadius = 12
         cardView.layer.shadowColor = UIColor.black.cgColor
         cardView.layer.shadowOpacity = 0.05

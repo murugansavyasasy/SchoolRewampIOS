@@ -46,6 +46,7 @@ class MarksHeaderView: UIView {
         let subjectsCount = exam.subjects.count
         let assessedCount = exam.subjects.reduce(0) { $0 + $1.activities.count }
         let subjectStr = subjectsCount == 1 ? "1 subject" : "\(subjectsCount) subjects"
+        
         let assessedStr = assessedCount == 1 ? "1 assessed" : "\(assessedCount) assessed"
         examCountsLabel.text = "\(subjectStr)  ·  \(assessedStr)"
         
