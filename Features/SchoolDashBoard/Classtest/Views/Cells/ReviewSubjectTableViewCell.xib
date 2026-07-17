@@ -53,13 +53,13 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="textStack">
                                                         <rect key="frame" x="48" y="6.3333333333333339" width="121" height="27.333333333333329"/>
                                                         <subviews>
-                                                            <label opaque="NO" contentMode="left" text="MATHS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="titleLabel" userLabel="TitleLabel">
+                                                            <label opaque="NO" contentMode="left" text="MATHS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="titleLabel" userLabel="TitleLabel">
                                                                 <rect key="frame" x="0.0" y="0.0" width="121" height="12"/>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                                                 <color key="textColor" red="0.1019607843" green="0.10980392160000001" blue="0.16078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" contentMode="left" text="Section C" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="subtitleLabel" userLabel="SubtitleLabel">
+                                                            <label opaque="NO" contentMode="left" text="Section C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="subtitleLabel" userLabel="SubtitleLabel">
                                                                 <rect key="frame" x="0.0" y="14.000000000000004" width="121" height="13.333333333333332"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                 <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -70,7 +70,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pillBadgeContainer">
                                                         <rect key="frame" x="181" y="8" width="75" height="24"/>
                                                         <subviews>
-                                                            <label opaque="NO" contentMode="left" text="2 tests" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="testCountLabel" userLabel="TestCountLabel">
+                                                            <label opaque="NO" contentMode="left" text="2 tests" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="testCountLabel" userLabel="TestCountLabel">
                                                                 <rect key="frame" x="5" y="4" width="65" height="16"/>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                                                 <color key="textColor" name="PrimeryColor"/>
@@ -161,7 +161,7 @@
     </objects>
     <resources>
         <namedColor name="PrimeryColor">
-            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

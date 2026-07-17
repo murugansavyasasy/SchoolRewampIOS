@@ -71,26 +71,34 @@ class parentHostelDashboardVC: UIViewController {
         dismiss(animated: true)
     }
     
-    func setupYearAndMonth(){
-        
-        let calendar = Calendar.current
+    func setupYearAndMonth() {
+
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = LocaleManager.shared.displayLocale
+
         let currentDate = Date()
-        
+
         let month = calendar.component(.month, from: currentDate)
         let year = calendar.component(.year, from: currentDate)
-        let monthName = calendar.monthSymbols
-        let shortName = calendar.shortMonthSymbols
-        
+
+        let formatter = DateFormatter()
+        formatter.calendar = calendar
+        formatter.locale =  LocaleManager.shared.displayLocale
+
+        let monthNames = formatter.monthSymbols
+        let shortNames = formatter.shortMonthSymbols
+
         years = [String(year - 1), String(year)]
-        
-       selectedMonth = MonthItem(
-        id: month,
-        name: monthName[month - 1],
-        shortName: shortName[month - 1],
-        monthNumber: month,
-        year: year,
-        isSelected: true
-       )
+
+        selectedMonth = MonthItem(
+            id: month,
+            name: monthNames?[month - 1] ?? "",
+            shortName: shortNames?[month - 1] ?? "",
+            monthNumber: month,
+            year: year,
+            isSelected: true
+        )
+
         DateBtn.setTitle("\(selectedMonth?.name ?? "") \(selectedMonth?.year ?? 0)", for: .normal)
     }
     

@@ -1,6 +1,20 @@
 import UIKit
+extension NewOutpassRequestVC: UITextViewDelegate {
 
-class NewOutpassRequestVC: UIViewController,UITextViewDelegate, UITextFieldDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == reasonPlaceholder {
+            textView.text = ""
+            textView.textColor = .label
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            setReasonPlaceholder()
+        }
+    }
+}
+class NewOutpassRequestVC: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var reasonTextView: UITextView!
@@ -40,7 +54,7 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate, UITextFieldDeleg
     var studentHostelInfo  : HostelDetailsData?
     let alert = CustomAlert()
     var activeField: UIView?
-    
+    private let reasonPlaceholder = NSLocalizedString("Enter reason...", comment: "")
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -57,20 +71,20 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate, UITextFieldDeleg
         activeField = textField
     }
 
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        activeField = textView
-        if textView.text == "Enter reason..." {
-            textView.text = ""
-            textView.textColor = .black
-        }
-    }
-
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "Enter reason..."
-            textView.textColor = .lightGray
-        }
-    }
+//    func textViewDidBeginEditing(_ textView: UITextView) {
+//        activeField = textView
+//        if textView.text == "Enter reason..." {
+//            textView.text = ""
+//            textView.textColor = .black
+//        }
+//    }
+//
+//    func textViewDidEndEditing(_ textView: UITextView) {
+//        if textView.text.isEmpty {
+//            textView.text = "Enter reason..."
+//            textView.textColor = .lightGray
+//        }
+//    }
     
     func setupUI() {
         // Corner Radii
@@ -96,7 +110,7 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate, UITextFieldDeleg
         
         // Back Button action
         backBtn.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
-        reasonTextView.text = "Enter reason..."
+        reasonTextView.text = "Enter reason...".translated()
         reasonTextView.textColor = .lightGray
         reasonTextView.delegate = self
         
@@ -104,15 +118,21 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate, UITextFieldDeleg
         
         reasonTextView.addDoneButton()
         emergencyContactTextField.addDoneButton()
-        
+        emergencyContactTextField.placeholder = "Enter contact number".translated()
+        submitBtn.setTitle(NSLocalizedString("Submit Request", comment: ""), for: .normal)
         reasonDefLbl.setRequiredText("Reason for Outpass")
         fromDateDefLbl.setRequiredText("From Date")
         toDateDefLbl.setRequiredText("To Date")
         fromTimeDefLbl.setRequiredText("From Time")
         toTimeDefLbl.setRequiredText("To Time")
         emergencyDefLbl.setRequiredText("Emergency Contact Number")
+        reasonTextView.delegate = self
+          setReasonPlaceholder()
     }
-    
+    private func setReasonPlaceholder() {
+        reasonTextView.text = reasonPlaceholder
+        reasonTextView.textColor = .placeholderText
+    }
     func setupTapGestures() {
         fromDateView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openFromDate)))
         toDateView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(openToDate)))
@@ -160,51 +180,72 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate, UITextFieldDeleg
 
     func setupDatePicker(for textField: UITextField, picker: UIDatePicker, mode: UIDatePicker.Mode) {
         picker.datePickerMode = mode
+
         if #available(iOS 14.0, *) {
             picker.preferredDatePickerStyle = mode == .date ? .inline : .wheels
         }
-        
-        picker.locale = LocaleManager.shared.apiLocale
+
+        // Always English
+        picker.locale = LocaleManager.shared.displayLocale
+        picker.calendar = Calendar(identifier: .gregorian)
 
         textField.inputView = picker
 
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePicker))
-        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+
+        let doneBtn = UIBarButtonItem(
+            barButtonSystemItem: .done,
+            target: self,
+            action: #selector(donePicker)
+        )
+
+        let space = UIBarButtonItem(
+            barButtonSystemItem: .flexibleSpace,
+            target: nil,
+            action: nil
+        )
+
         toolbar.setItems([space, doneBtn], animated: false)
         textField.inputAccessoryView = toolbar
 
-        picker.addTarget(self, action: #selector(datePickerChanged(_:)), for: .valueChanged)
+        picker.addTarget(self,
+                         action: #selector(datePickerChanged(_:)),
+                         for: .valueChanged)
     }
 
     @objc func datePickerChanged(_ sender: UIDatePicker) {
+
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.displayLocale
+        formatter.calendar = Calendar(identifier: .gregorian)
+
         if sender == fromDatePicker {
-            formatter.locale = LocaleManager.shared.apiLocale
+
             formatter.dateFormat = "MMMM d, yyyy"
             fromDateTextField.text = formatter.string(from: sender.date)
-            
-            // "toDate" cannot be before the newly selected "fromDate"
+
             toDatePicker.minimumDate = sender.date
+
             if toDatePicker.date < sender.date {
                 toDatePicker.date = sender.date
                 toDateTextField.text = formatter.string(from: sender.date)
             }
-            
-            print("Selected From Date: \(fromDateTextField.text ?? "")")
+
         } else if sender == toDatePicker {
+
             formatter.dateFormat = "MMMM d, yyyy"
             toDateTextField.text = formatter.string(from: sender.date)
-            print("Selected To Date: \(toDateTextField.text ?? "")")
+
         } else if sender == fromTimePicker {
+
             formatter.dateFormat = "hh:mm a"
             fromTimeTextField.text = formatter.string(from: sender.date)
-            print("Selected From Time: \(fromTimeTextField.text ?? "")")
+
         } else if sender == toTimePicker {
+
             formatter.dateFormat = "hh:mm a"
             toTimeTextField.text = formatter.string(from: sender.date)
-            print("Selected To Time: \(toTimeTextField.text ?? "")")
         }
     }
 
@@ -239,16 +280,20 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate, UITextFieldDeleg
     }
     
     func updateTextFields() {
+
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = LocaleManager.shared.apiLocale
+        dateFormatter.locale = LocaleManager.shared.displayLocale
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
         dateFormatter.dateFormat = "MMMM d, yyyy"
-        
+
         let timeFormatter = DateFormatter()
-        timeFormatter.locale = LocaleManager.shared.apiLocale
+        timeFormatter.locale = LocaleManager.shared.displayLocale
+        timeFormatter.calendar = Calendar(identifier: .gregorian)
         timeFormatter.dateFormat = "hh:mm a"
-        
+
         fromDateTextField.text = dateFormatter.string(from: fromDatePicker.date)
         toDateTextField.text = dateFormatter.string(from: toDatePicker.date)
+
         fromTimeTextField.text = timeFormatter.string(from: fromTimePicker.date)
         toTimeTextField.text = timeFormatter.string(from: toTimePicker.date)
     }
@@ -341,7 +386,7 @@ class NewOutpassRequestVC: UIViewController,UITextViewDelegate, UITextFieldDeleg
         
         if !isValid(emergencyContactTextField.text) {
             alert.showAlert(title: AlertstringFile.Oops,
-                            message: "Enter emergency contact",
+                            message: "Enter emergency contact".translated(),
                             on: self)
             return false
         }

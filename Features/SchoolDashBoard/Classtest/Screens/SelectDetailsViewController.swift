@@ -241,11 +241,11 @@ extension SelectDetailsViewController: UITableViewDelegate, UITableViewDataSourc
         cell.onInvalidMarksEnter = { [weak self] errorMsg in
             guard let self = self else { return }
             let alert = UIAlertController(
-                title: "Invalid Marks",
+                title: "Invalid Marks".translated(),
                 message: errorMsg,
                 preferredStyle: .alert
             )
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK".translated(), style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
         
@@ -286,8 +286,8 @@ extension SelectDetailsViewController: UITableViewDelegate, UITableViewDataSourc
             if let config = viewModel.examConfigurations.first(where: { $0.subjectId == subjectId && $0.sectionId == sectionId }) {
                 if !config.tests.isEmpty && !viewModel.isSubjectConfigured(subjectId: subjectId, sectionId: sectionId) {
                     let alert = UIAlertController(
-                        title: "Incomplete Details",
-                        message: "Please fill in all the details and ensure the minimum mark is less than the maximum mark before adding another activity.",
+                        title: "Incomplete Details".translated(),
+                        message: "Please fill in all the details and ensure the minimum mark is less than the maximum mark before adding another activity.".translated(),
                         preferredStyle: .alert
                     )
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))

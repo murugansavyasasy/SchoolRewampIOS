@@ -9,9 +9,10 @@ import UIKit
 
 class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
 
-    @IBOutlet weak var minMarkDefaultLbl: UILabel!
-    @IBOutlet weak var maxMarkDefaultLbl: UILabel!
-    @IBOutlet public weak var exameDefaultLbl: UILabel!
+   
+    @IBOutlet weak var minMarkDefaultLbl: LocalizationLabel!
+    @IBOutlet weak var maxMarkDefaultLbl: LocalizationLabel!
+    @IBOutlet public weak var exameDefaultLbl: LocalizationLabel!
     @IBOutlet public weak var badgeContainer: UIView!
     @IBOutlet public weak var badgeLabel: UILabel!
     @IBOutlet public weak var testTitleLabel: UILabel!
@@ -44,11 +45,13 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
     
     private func steupUi(){
         exameDefaultLbl.setRequiredText("ACTIVITY NAME")
-        maxMarkDefaultLbl.setRequiredText("MAX MARKS")
-        minMarkDefaultLbl.setRequiredText("MIN MARKS")
+        maxMarkDefaultLbl.setRequiredText("# MAX MARKS")
+        minMarkDefaultLbl.setRequiredText("# MIN MARKS")
+        testDateTextField.placeholder = "Select Date".translated()
         exameDefaultLbl.font = .systemFont(ofSize: 10, weight: .bold)
         minMarkDefaultLbl.font = .systemFont(ofSize: 10, weight: .bold)
         maxMarkDefaultLbl.font = .systemFont(ofSize: 10, weight: .bold)
+        removeButton.setTitle(NSLocalizedString("Remove", comment: ""), for: .normal)
         styleTextView(examNameTextView)
         styleTextField(testDateTextField)
         styleTextField(maxMarksTextField)
@@ -92,7 +95,8 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
         self.testDetails = details
         
         badgeLabel.text = "\(index+1)"
-        testTitleLabel.text = "Activity \(index+1)"
+        let activity = "Activity".translated()
+        testTitleLabel.text = "\(activity) \(index+1)"
         
         removeButton.isHidden = !showRemoveButton
         examNameTextView.text = details.activity_name
@@ -108,7 +112,9 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
     func configureReport(with activity: StaffActivity, index: Int) {
         
         badgeLabel.text = "\(index + 1)"
-        testTitleLabel.text = "Activity \(index + 1)"
+        
+        let activityDefaulName = "Activity".translated()
+        testTitleLabel.text = "\(activityDefaulName) \(index + 1)".translated()
         
         examNameTextView.text = activity.activity_name
         testDateTextField.text = activity.exam_date
@@ -154,7 +160,7 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
         let padView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 1))
         textField.leftView = padView
         textField.leftViewMode = .always
-        
+        textField.textAlignment = .natural
         textField.adjustsFontForContentSizeCategory = true
     }
     
@@ -165,6 +171,11 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
         datePicker.date = Date()
         datePicker.minimumDate = Date()
 
+        // Force US locale
+        datePicker.locale = LocaleManager.shared.displayLocale
+        datePicker.calendar = Calendar(identifier: .gregorian)
+        datePicker.timeZone = .current
+        
         datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
 
         testDateTextField.inputView = datePicker
@@ -183,6 +194,7 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
     
     @objc private func dateChanged(_ sender: UIDatePicker) {
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.displayLocale
         formatter.dateFormat = "dd/MM/yyyy"
         testDateTextField.text = formatter.string(from: sender.date)
         textFieldDidChange()
@@ -192,6 +204,7 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
     @objc private func doneButtonTapped() {
 
         let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.displayLocale
         formatter.dateFormat = "dd/MM/yyyy"
 
         // Always set the selected date
@@ -264,7 +277,7 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
         if let maxVal = Int(maxText.trimmingCharacters(in: .whitespacesAndNewlines)),
            let minVal = Int(minText.trimmingCharacters(in: .whitespacesAndNewlines)) {
             if maxVal <= minVal {
-                onInvalidMarksEnter?("Max marks must be higher than min marks.")
+                onInvalidMarksEnter?("Max marks must be higher than min marks.".translated())
             }
         }
     }

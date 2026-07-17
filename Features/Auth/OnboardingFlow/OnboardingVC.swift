@@ -49,14 +49,21 @@ class OnboardingVC: UIViewController {
                     switch result {
                     case .success(let success):
                         if success.status ?? false {
-                            self.dataResponse = success.data ?? []
-                            self.pageControl.numberOfPages = self.dataResponse.count
-                            self.skipBtn.isHidden = self.dataResponse.count <= 1
-                            self.nextBtn.isHidden = self.dataResponse.count <= 1
-                            self.currentPage = self.isRTL ? self.dataResponse.count - 1 : 0
-                            self.onBoardingCV.reloadData()
+                            if success.data?.count == 0{
+                                self.navigateToLogin()
+                            }else{
+                                self.dataResponse = success.data ?? []
+                                self.pageControl.numberOfPages = self.dataResponse.count
+                                self.skipBtn.isHidden = self.dataResponse.count <= 1
+                                self.nextBtn.isHidden = self.dataResponse.count <= 1
+                                self.currentPage = self.isRTL ? self.dataResponse.count - 1 : 0
+                                self.onBoardingCV.reloadData()
+                            }
+                        }else{
+                            self.navigateToLogin()
                         }
                     case .failure(let error):
+                        self.navigateToLogin()
                         print("Onboarding API Error:", error.localizedDescription)
                     }
                 }

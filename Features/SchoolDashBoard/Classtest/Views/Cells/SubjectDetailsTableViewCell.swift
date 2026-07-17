@@ -82,7 +82,7 @@ class SubjectDetailsTableViewCell: UITableViewCell {
         
         mergeBannerButton.layer.cornerRadius = 15
         mergeBannerButton.layer.masksToBounds = true
-        
+        mergeBannerButton.setTitle(NSLocalizedString("Copy", comment: ""), for: .normal)
         // Add gesture reconizer for header
         let tap = UITapGestureRecognizer(target: self, action: #selector(headerTapped))
         headerView.addGestureRecognizer(tap)
@@ -103,7 +103,8 @@ class SubjectDetailsTableViewCell: UITableViewCell {
         self.currentConfig = configu
         self.currentViewModel = viewModel
         titleLabel.text = configu.subjectName
-        subtitleLabel.text = "Section \(configu.sectionName.uppercased())"
+        let sections = "Section".translated()
+        subtitleLabel.text = "\(sections) \(configu.sectionName.uppercased())"
         // Show green checkmark if all test are populate
         checkmarkImageView.isHidden = !isConfigured
         
@@ -145,10 +146,7 @@ class SubjectDetailsTableViewCell: UITableViewCell {
             form.onHeightChanged = { [weak self] in
                 self?.onHeightChanged?()
             }
-            
-//            form.onHeightChanged = { [weak self] in
-//                          self?.onHeightChanged?()
-//                      }
+
             
         form.onInvalidMarksEnter = { [weak self] errorMsg in
                      self?.onInvalidMarksEnter?(errorMsg)
@@ -158,9 +156,9 @@ class SubjectDetailsTableViewCell: UITableViewCell {
         
         // Dynamic title based on test forms list count
         if configu.tests.isEmpty {
-            addTestButton.setTitle("+ Add Activity", for: .normal)
+            addTestButton.setTitle("+ Add Activity".translated(), for: .normal)
         } else {
-            addTestButton.setTitle("+ Add Another Activity", for: .normal)
+            addTestButton.setTitle("+ Add Another Activity".translated(), for: .normal)
         }
         
         // Manage Counterpart Subject Merge Banner
@@ -170,12 +168,26 @@ class SubjectDetailsTableViewCell: UITableViewCell {
             if isExpanded {
                 mergeBannerIconImageView.isHidden = true
                 mergeBannerSubtitleLabel.isHidden = false
-                mergeBannerTitleLabel.text = "Copy data from \(configu.subjectName) · Sec \(mergeable.sectionName)?"
-                mergeBannerSubtitleLabel.text = "Fills all tests from that subject into this section"
+
+                mergeBannerTitleLabel.text = String(
+                    format: NSLocalizedString("Copy data from %@ · Sec %@?", comment: ""),
+                    configu.subjectName,
+                    mergeable.sectionName
+                )
+
+                mergeBannerSubtitleLabel.text = NSLocalizedString(
+                    "Fills all tests from that subject into this section",
+                    comment: ""
+                )
             } else {
                 mergeBannerIconImageView.isHidden = false
                 mergeBannerSubtitleLabel.isHidden = true
-                mergeBannerTitleLabel.text = "\(configu.subjectName) (Sec \(mergeable.sectionName)) is filled"
+
+                mergeBannerTitleLabel.text = String(
+                    format: NSLocalizedString("%@ (Sec %@) is filled", comment: ""),
+                    configu.subjectName,
+                    mergeable.sectionName
+                )
             }
         } else {
             mergeBannerView.isHidden = true
@@ -184,7 +196,8 @@ class SubjectDetailsTableViewCell: UITableViewCell {
         countContainerView.isHidden = true
         if configu.tests.count >= 2{
             countContainerView.isHidden = false
-            countLable.text = "\(configu.tests.count) Activity"
+            let activitiesDefaultlbl = "Activity".translated()
+            countLable.text = "\(configu.tests.count) \(activitiesDefaultlbl)"
         }
         
         // Accessibility
@@ -243,7 +256,8 @@ class SubjectDetailsTableViewCell: UITableViewCell {
         mergeBannerView.isHidden = true
 
         countContainerView.isHidden = activities.count < 2
-        countLable.text = "\(activities.count) Activities"
+        let activitiesDefaultlbl = "Activities".translated()
+        countLable.text = "\(activities.count) \(activitiesDefaultlbl)"
     }
     
     @objc private func headerTapped() {

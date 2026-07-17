@@ -48,12 +48,15 @@ public final class SectionSubjectsTableViewCell: UITableViewCell {
     public func configure(with sectionSubjects: TestSectionSubjects, viewModel: CreateTestViewModel) {
         let sectionName = sectionSubjects.sectionName.uppercased()
         avatarLabel.text = sectionName
-        sectionTitleLabel.text = "Section \(sectionName)"
+        let sections = "Section".translated()
+        sectionTitleLabel.text = "\(sections) \(sectionName)"
         
         let totalCount = sectionSubjects.subjects.count
         let selectedCount = viewModel.selectedSubjectsCount(in: sectionSubjects.sectionId)
         
-        selectedCountLabel.text = "\(selectedCount)/\(totalCount) selected"
+        let selectedDefaultText = "selected".translated()
+        
+        selectedCountLabel.text = "\(selectedCount)/\(totalCount) \(selectedDefaultText)"
         
         // Toggle header action text (Select All vs Deselect All)
         let allSelected = (selectedCount == totalCount)
@@ -139,8 +142,9 @@ public final class SectionSubjectsTableViewCell: UITableViewCell {
             
             let selectedLabel = UILabel()
             selectedLabel.translatesAutoresizingMaskIntoConstraints = false
-            selectedLabel.text = "Selected"
+            selectedLabel.text = "Selected".translated()
             selectedLabel.textColor = activeColor
+            selectedLabel.textAlignment = .natural
             selectedLabel.font = .systemFont(ofSize: 10, weight: .bold)
             
             selectedPill.addSubview(selectedLabel)

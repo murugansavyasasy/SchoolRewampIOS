@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6-12" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ActivityDetailCardView" customModule="parentScreenVc" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ActivityDetailCardView" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="343" height="210"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -19,37 +20,37 @@
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="mainStack" userLabel="Main Stack View">
                             <rect key="frame" x="16" y="16" width="311" height="178"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="titleSessionStack">
+                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="titleSessionStack">
                                     <rect key="frame" x="0.0" y="0.0" width="311" height="32"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" image="doc.text.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="iconView">
-                                            <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" ambiguous="YES" image="doc.text.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="iconView">
+                                            <rect key="frame" x="0.0" y="0.33333333333333037" width="32" height="31.666666666666671"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="32" id="w1"/>
                                                 <constraint firstAttribute="height" constant="32" id="h1"/>
+                                                <constraint firstAttribute="width" constant="32" id="w1"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Formula Test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblName">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="Formula Test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblName">
                                             <rect key="frame" x="40" y="7.6666666666666679" width="179" height="17"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                            <color key="textColor" red="0.1176470588" green="0.1607843137" blue="0.2313725490" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="textColor" red="0.1176470588" green="0.16078431369999999" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pillView" userLabel="Session Pill View">
+                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pillView" userLabel="Session Pill View">
                                             <rect key="frame" x="227" y="6" width="84" height="20"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="pillStack">
+                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="pillStack">
                                                     <rect key="frame" x="8" y="0.0" width="68" height="20"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="clock.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="pillIcon">
-                                                            <rect key="frame" x="0.0" y="5.0000000000000009" width="10" height="9.9999999999999982"/>
+                                                            <rect key="frame" x="0.0" y="5.6666666666666661" width="10" height="8.6666666666666679"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="10" id="w2"/>
                                                                 <constraint firstAttribute="height" constant="10" id="h2"/>
+                                                                <constraint firstAttribute="width" constant="10" id="w2"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Afternoon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblPill">
-                                                            <rect key="frame" x="14" y="3.6666666666666679" width="54" height="13"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="Afternoon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblPill">
+                                                            <rect key="frame" x="14" y="4" width="54" height="12"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -59,52 +60,52 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="h3"/>
                                                 <constraint firstItem="pillStack" firstAttribute="leading" secondItem="pillView" secondAttribute="leading" constant="8" id="p1"/>
                                                 <constraint firstAttribute="trailing" secondItem="pillStack" secondAttribute="trailing" constant="8" id="p2"/>
                                                 <constraint firstItem="pillStack" firstAttribute="top" secondItem="pillView" secondAttribute="top" id="p3"/>
                                                 <constraint firstAttribute="bottom" secondItem="pillStack" secondAttribute="bottom" id="p4"/>
-                                                <constraint firstAttribute="height" constant="20" id="h3"/>
                                             </constraints>
                                         </view>
                                     </subviews>
                                 </stackView>
-                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="dateRow">
+                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="dateRow">
                                     <rect key="frame" x="0.0" y="44" width="311" height="16"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="calendar" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="dateIcon">
-                                            <rect key="frame" x="0.0" y="1.6666666666666661" width="16" height="13.000000000000002"/>
-                                            <color key="tintColor" red="0.5568627451" green="0.6039215686" blue="0.6588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" ambiguous="YES" image="calendar" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="dateIcon">
+                                            <rect key="frame" x="0.0" y="1.6666666666666643" width="16" height="13.000000000000004"/>
+                                            <color key="tintColor" red="0.5568627451" green="0.60392156860000001" blue="0.6588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="16" id="w4"/>
                                                 <constraint firstAttribute="height" constant="16" id="h4"/>
+                                                <constraint firstAttribute="width" constant="16" id="w4"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="25-06-2026" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblDate">
-                                            <rect key="frame" x="22" y="0.0" width="289" height="16"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="25-06-2026" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblDate">
+                                            <rect key="frame" x="22" y="0.33333333333333481" width="289" height="15.666666666666664"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </stackView>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="syllabusContainer" userLabel="Syllabus Container">
+                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="syllabusContainer" userLabel="Syllabus Container">
                                     <rect key="frame" x="0.0" y="72" width="311" height="38"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="syllabusStack">
+                                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="syllabusStack">
                                             <rect key="frame" x="12" y="6" width="287" height="26"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="book.closed" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="syllabusIcon">
-                                                    <rect key="frame" x="0.0" y="1.6666666666666661" width="16" height="13.000000000000002"/>
+                                                    <rect key="frame" x="0.0" y="0.33333333333333215" width="16" height="15.666666666666668"/>
                                                     <color key="tintColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="16" id="w5"/>
                                                         <constraint firstAttribute="height" constant="16" id="h5"/>
+                                                        <constraint firstAttribute="width" constant="16" id="w5"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Lesson 1 to Lesson 2" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblSyllabus">
                                                     <rect key="frame" x="26" y="0.0" width="261" height="14.333333333333334"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" red="0.2784313725" green="0.3333333333" blue="0.4117647059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" red="0.2784313725" green="0.33333333329999998" blue="0.41176470590000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -127,16 +128,16 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="maxLabelStack">
                                                     <rect key="frame" x="4" y="8" width="141.66666666666666" height="40"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="MAX MARKS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblMaxTitle">
-                                                            <rect key="frame" x="42.990291262135905" y="0.0" width="56" height="12"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="MAX MARKS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblMaxTitle" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                                            <rect key="frame" x="41.333333333333343" y="0.0" width="58.666666666666657" height="14.333333333333334"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
-                                                            <color key="textColor" red="0.1803921569" green="0.4901960784" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="textColor" red="0.18039215689999999" green="0.49019607840000001" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="50" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblMaxValue">
-                                                            <rect key="frame" x="61.029126213592209" y="14" width="19.666666666666671" height="26"/>
+                                                            <rect key="frame" x="60.666666666666671" y="16.333333333333343" width="20" height="23.666666666666671"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                            <color key="textColor" red="0.1803921569" green="0.4901960784" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="textColor" red="0.18039215689999999" green="0.49019607840000001" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -156,16 +157,16 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="minLabelStack">
                                                     <rect key="frame" x="4" y="8" width="141.33333333333334" height="40"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="MIN MARKS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblMinTitle">
-                                                            <rect key="frame" x="44.64724919093855" y="0.0" width="52.333333333333343" height="12"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="MIN MARKS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblMinTitle" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                                            <rect key="frame" x="43" y="0.0" width="55" height="14.333333333333334"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
-                                                            <color key="textColor" red="0.7764705882" green="0.1568627451" blue="0.1568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="textColor" red="0.77647058820000003" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="18" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblMinValue">
-                                                            <rect key="frame" x="62.64724919093855" y="14" width="16.333333333333343" height="26"/>
+                                                            <rect key="frame" x="61.666666666666679" y="16.333333333333343" width="17.666666666666664" height="23.666666666666671"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                            <color key="textColor" red="0.7764705882" green="0.1568627451" blue="0.1568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="textColor" red="0.77647058820000003" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -199,10 +200,10 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="containerView" secondAttribute="bottom" id="lBottom"/>
                 <constraint firstItem="containerView" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="lLeft"/>
                 <constraint firstAttribute="trailing" secondItem="containerView" secondAttribute="trailing" id="lRight"/>
                 <constraint firstItem="containerView" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="lTop"/>
-                <constraint firstAttribute="bottom" secondItem="containerView" secondAttribute="bottom" id="lBottom"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
@@ -224,9 +225,9 @@
         </view>
     </objects>
     <resources>
+        <image name="book.closed" catalog="system" width="115" height="128"/>
         <image name="calendar" catalog="system" width="128" height="107"/>
         <image name="clock.fill" catalog="system" width="128" height="123"/>
         <image name="doc.text.fill" catalog="system" width="115" height="128"/>
-        <image name="book.closed" catalog="system" width="115" height="128"/>
     </resources>
 </document>
