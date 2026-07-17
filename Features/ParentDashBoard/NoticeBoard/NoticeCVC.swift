@@ -69,6 +69,7 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, 
 
         descriptionLbl.setContentHuggingPriority(.defaultLow, for: .vertical)
         descriptionLbl.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        
     }
     @IBAction func edit(_ sender: UIButton) {
         

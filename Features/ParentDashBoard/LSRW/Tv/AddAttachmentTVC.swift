@@ -69,7 +69,6 @@ class AddAttachmentTVC: UITableViewCell,
         
         let height = collectionView.collectionViewLayout.collectionViewContentSize.height
         let newHeight = max(height, 120)
-        
         // Only update if height actually changed
         if abs(collectionViewHeight.constant - newHeight) > 1.0 {
             collectionViewHeight.constant = newHeight
@@ -168,8 +167,6 @@ class AddAttachmentTVC: UITableViewCell,
         imageCV?.delegate = self
         imageCV?.dataSource = self
         imageCV?.backgroundColor = .clear
-        
-        // Enable prefetching for better performance
         imageCV?.isPrefetchingEnabled = true
     }
     

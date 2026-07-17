@@ -188,7 +188,7 @@ class LSRWActivitesVC: UIViewController, BaktoHome, AssignmentDetailTVCDelegate,
                 let imageVC = ImageShowVc(nibName: nil, bundle: nil)
                 imageVC.fileURL = filterArray
                 imageVC.subjectName = subjectName
-                imageVC.scrollIndex = IndexPath(item: newIndex, section: 0) // ✅ Correct adjusted index
+                imageVC.scrollIndex = IndexPath(item: newIndex, section: 0)
                 imageVC.index = newIndex
                 imageVC.modalPresentationStyle = .fullScreen
                 present(imageVC, animated: true)
