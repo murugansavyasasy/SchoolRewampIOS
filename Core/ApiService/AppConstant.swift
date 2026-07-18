@@ -306,11 +306,11 @@ struct PriorityType{
 }
 
 struct recipeint_tabBarName{
-    static let Standard = "Standards"
-    static let Group = "Groups"
-    static let Section_Student = "Section/Students"
-    static let Staff = "Staff"
-    static let Entier_School = "Entire School"
+    static let Standard = "Standards".translated()
+    static let Group = "Groups".translated()
+    static let Section_Student = "Section/Students".translated()
+    static let Staff = "Staff".translated()
+    static let Entier_School = "Entire School".translated()
 }
 
 struct Filecount{

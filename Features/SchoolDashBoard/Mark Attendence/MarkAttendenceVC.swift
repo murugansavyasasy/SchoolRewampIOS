@@ -958,6 +958,11 @@ extension MarkAttendenceVC: FSCalendarDataSource, FSCalendarDelegate, FSCalendar
             }
         }
     }
+    
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        updateMonthLabel()
+    }
+    
     func minimumDate(for calendar: FSCalendar) -> Date {
         return Date(timeIntervalSince1970: 0) // very old date
     }

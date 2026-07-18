@@ -95,6 +95,11 @@ class CreatePasswordVc: UIViewController{
         let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
         confirmPassTextFld.leftView = paddingView2
         confirmPassTextFld.leftViewMode = .always
+        createPassTextFLd.textAlignment = .natural
+        confirmPassTextFld.textAlignment = .natural
+
+        createPassTextFLd.semanticContentAttribute = .unspecified
+        confirmPassTextFld.semanticContentAttribute = .unspecified
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }

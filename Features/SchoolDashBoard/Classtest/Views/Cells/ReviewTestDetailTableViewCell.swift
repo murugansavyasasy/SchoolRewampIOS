@@ -50,6 +50,7 @@ public final class ReviewTestDetailTableViewCell: UITableViewCell {
         sessionPill.backgroundColor = UIColor(red: 0.298, green: 0.302, blue: 0.863, alpha: 0.08)
         sessionLabel.textColor = activeColor
         
+        removeButton.setTitle(NSLocalizedString("Remove", comment: ""), for: .normal)
         styleBox(dateBox)
         styleBox(maxBox)
         styleBox(minBox)

@@ -76,15 +76,28 @@ class PendingFeeCell: UITableViewCell {
         // --- 1. Top Section ---
 //        feeNameLabel.text =  "Hostel fee"
         // --- 2. Hostel Details Bar ---
+        
         if let hDetails = data.hostel_details {
             let hName = hDetails.hostel_name ?? "-"
-            setupAttributedText(for: hostelNameLabel, title: "Hostel: ", value: hName)
-            
+            setupAttributedText(
+                for: hostelNameLabel,
+                title: NSLocalizedString("Hostel", comment: "") + ": ",
+                value: hName
+            )
+
             let rNum = hDetails.room_no ?? "-"
-            setupAttributedText(for: roomLabel, title: "Room: ", value: rNum)
-            
+            setupAttributedText(
+                for: roomLabel,
+                title: NSLocalizedString("Room", comment: "") + ": ",
+                value: rNum
+            )
+
             let bNum = hDetails.bed_no ?? "-"
-            setupAttributedText(for: bedLabel, title: "Bed: ", value: bNum)
+            setupAttributedText(
+                for: bedLabel,
+                title: NSLocalizedString("Bed", comment: "") + ": ",
+                value: bNum
+            )
         }
         
         // --- 3. Summary Block ---

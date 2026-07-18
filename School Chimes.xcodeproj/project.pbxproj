@@ -218,7 +218,6 @@
 		1827E6212F90C12000B33B20 /* PreviewTargetTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCE7DD2E9E1868002C8068 /* PreviewTargetTVC.swift */; };
 		1827E6222F90C12000B33B20 /* HostelDashBoardVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1841DE8E2F56F8B700B88801 /* HostelDashBoardVc.swift */; };
 		1827E6232F90C12000B33B20 /* CVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AA82E03C8F00092159D /* CVCell.swift */; };
-		1827E6242F90C12000B33B20 /* VoicePreviewTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D09A442F023AA500D1930D /* VoicePreviewTvCell.swift */; };
 		1827E6252F90C12000B33B20 /* parentHostelDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D40AF02F614A7A00FE3B2C /* parentHostelDashboardVC.swift */; };
 		1827E6262F90C12000B33B20 /* ActivateCoupenTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127A9E2E03C8F00092159D /* ActivateCoupenTVC.swift */; };
 		1827E6272F90C12000B33B20 /* AddCoupenTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AA02E03C8F00092159D /* AddCoupenTVC.swift */; };
@@ -495,7 +494,6 @@
 		1827E7362F90C12000B33B20 /* ReportBugVcViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFFAE82CCFA4A100C11C26 /* ReportBugVcViewController.swift */; };
 		1827E7372F90C12000B33B20 /* HOTCODE_COMMON_API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */; };
 		1827E7382F90C12000B33B20 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84395FE72D10026100FC3242 /* ChatVC.swift */; };
-		1827E7392F90C12000B33B20 /* MsgTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C3A1EC2E66AD41002E7506 /* MsgTvCell.swift */; };
 		1827E73A2F90C12000B33B20 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BE432C19719700E32496 /* SceneDelegate.swift */; };
 		1827E73B2F90C12000B33B20 /* LSWTaskTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84235A142E1E287F002F2E1D /* LSWTaskTVC.swift */; };
 		1827E73C2F90C12000B33B20 /* Std_Grp_header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849757072D2BA575006A27FD /* Std_Grp_header.swift */; };
@@ -564,7 +562,6 @@
 		1827E77D2F90C12000B33B20 /* ReportBugVcViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EFFAE92CCFA4A100C11C26 /* ReportBugVcViewController.xib */; };
 		1827E77E2F90C12000B33B20 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */; };
 		1827E77F2F90C12000B33B20 /* VoiceMessageVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAF2EFFAAFB008B71FF /* VoiceMessageVc.xib */; };
-		1827E7802F90C12000B33B20 /* VoicePreviewTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D09A452F023AA500D1930D /* VoicePreviewTvCell.xib */; };
 		1827E7812F90C12000B33B20 /* CommonPagenationVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AA72EFFAAFB008B71FF /* CommonPagenationVc.xib */; };
 		1827E7822F90C12000B33B20 /* ScheduleCallVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAB2EFFAAFB008B71FF /* ScheduleCallVC.xib */; };
 		1827E7832F90C12000B33B20 /* EmergencyVoiceRecordCel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AA92EFFAAFB008B71FF /* EmergencyVoiceRecordCel.xib */; };
@@ -587,7 +584,6 @@
 		1827E7942F90C12000B33B20 /* PunchHistoryListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718972D0D477900E9EDA3 /* PunchHistoryListVC.xib */; };
 		1827E7952F90C12000B33B20 /* ScheduleExamVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BB5EA62D11330E00AD0C87 /* ScheduleExamVC.xib */; };
 		1827E7962F90C12000B33B20 /* certificateHstryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84017F7C2E44942A006CB477 /* certificateHstryCell.xib */; };
-		1827E7972F90C12000B33B20 /* MsgTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C3A1ED2E66AD41002E7506 /* MsgTvCell.xib */; };
 		1827E7982F90C12000B33B20 /* AddLocationHistory.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D7188C2D0D477900E9EDA3 /* AddLocationHistory.xib */; };
 		1827E7992F90C12000B33B20 /* PunchHistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718752D0D477900E9EDA3 /* PunchHistTableViewCell.xib */; };
 		1827E79A2F90C12000B33B20 /* AttendenceOverviewTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842ACE152F56A03600954404 /* AttendenceOverviewTVC.xib */; };
@@ -1197,7 +1193,6 @@
 		1868A44B2FAC762E00831144 /* PreviewTargetTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCE7DD2E9E1868002C8068 /* PreviewTargetTVC.swift */; };
 		1868A44C2FAC762E00831144 /* HostelDashBoardVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1841DE8E2F56F8B700B88801 /* HostelDashBoardVc.swift */; };
 		1868A44D2FAC762E00831144 /* CVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AA82E03C8F00092159D /* CVCell.swift */; };
-		1868A44E2FAC762E00831144 /* VoicePreviewTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D09A442F023AA500D1930D /* VoicePreviewTvCell.swift */; };
 		1868A44F2FAC762E00831144 /* parentHostelDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D40AF02F614A7A00FE3B2C /* parentHostelDashboardVC.swift */; };
 		1868A4502FAC762E00831144 /* ActivateCoupenTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127A9E2E03C8F00092159D /* ActivateCoupenTVC.swift */; };
 		1868A4512FAC762E00831144 /* AddCoupenTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AA02E03C8F00092159D /* AddCoupenTVC.swift */; };
@@ -1474,7 +1469,6 @@
 		1868A5602FAC762E00831144 /* ReportBugVcViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFFAE82CCFA4A100C11C26 /* ReportBugVcViewController.swift */; };
 		1868A5612FAC762E00831144 /* HOTCODE_COMMON_API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */; };
 		1868A5622FAC762E00831144 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84395FE72D10026100FC3242 /* ChatVC.swift */; };
-		1868A5632FAC762E00831144 /* MsgTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C3A1EC2E66AD41002E7506 /* MsgTvCell.swift */; };
 		1868A5642FAC762E00831144 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BE432C19719700E32496 /* SceneDelegate.swift */; };
 		1868A5652FAC762E00831144 /* LSWTaskTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84235A142E1E287F002F2E1D /* LSWTaskTVC.swift */; };
 		1868A5662FAC762E00831144 /* Std_Grp_header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849757072D2BA575006A27FD /* Std_Grp_header.swift */; };
@@ -1544,7 +1538,6 @@
 		1868A5A82FAC762E00831144 /* ReportBugVcViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EFFAE92CCFA4A100C11C26 /* ReportBugVcViewController.xib */; };
 		1868A5A92FAC762E00831144 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */; };
 		1868A5AA2FAC762E00831144 /* VoiceMessageVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAF2EFFAAFB008B71FF /* VoiceMessageVc.xib */; };
-		1868A5AB2FAC762E00831144 /* VoicePreviewTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D09A452F023AA500D1930D /* VoicePreviewTvCell.xib */; };
 		1868A5AC2FAC762E00831144 /* CommonPagenationVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AA72EFFAAFB008B71FF /* CommonPagenationVc.xib */; };
 		1868A5AD2FAC762E00831144 /* ScheduleCallVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAB2EFFAAFB008B71FF /* ScheduleCallVC.xib */; };
 		1868A5AE2FAC762E00831144 /* EmergencyVoiceRecordCel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AA92EFFAAFB008B71FF /* EmergencyVoiceRecordCel.xib */; };
@@ -1567,7 +1560,6 @@
 		1868A5BF2FAC762E00831144 /* PunchHistoryListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718972D0D477900E9EDA3 /* PunchHistoryListVC.xib */; };
 		1868A5C02FAC762E00831144 /* ScheduleExamVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BB5EA62D11330E00AD0C87 /* ScheduleExamVC.xib */; };
 		1868A5C12FAC762E00831144 /* certificateHstryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84017F7C2E44942A006CB477 /* certificateHstryCell.xib */; };
-		1868A5C22FAC762E00831144 /* MsgTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C3A1ED2E66AD41002E7506 /* MsgTvCell.xib */; };
 		1868A5C32FAC762E00831144 /* AddLocationHistory.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D7188C2D0D477900E9EDA3 /* AddLocationHistory.xib */; };
 		1868A5C42FAC762E00831144 /* PunchHistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718752D0D477900E9EDA3 /* PunchHistTableViewCell.xib */; };
 		1868A5C52FAC762E00831144 /* AttendenceOverviewTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842ACE152F56A03600954404 /* AttendenceOverviewTVC.xib */; };
@@ -2082,7 +2074,6 @@
 		186E5F472FE91EB800BAF454 /* PreviewTargetTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCE7DD2E9E1868002C8068 /* PreviewTargetTVC.swift */; };
 		186E5F482FE91EB800BAF454 /* HostelDashBoardVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1841DE8E2F56F8B700B88801 /* HostelDashBoardVc.swift */; };
 		186E5F492FE91EB800BAF454 /* CVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127AA82E03C8F00092159D /* CVCell.swift */; };
-		186E5F4A2FE91EB800BAF454 /* VoicePreviewTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D09A442F023AA500D1930D /* VoicePreviewTvCell.swift */; };
 		186E5F4B2FE91EB800BAF454 /* PaymentHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1868A8112FACA13700831144 /* PaymentHistoryCell.swift */; };
 		186E5F4C2FE91EB800BAF454 /* parentHostelDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D40AF02F614A7A00FE3B2C /* parentHostelDashboardVC.swift */; };
 		186E5F4D2FE91EB800BAF454 /* ActivateCoupenTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84127A9E2E03C8F00092159D /* ActivateCoupenTVC.swift */; };
@@ -2365,7 +2356,6 @@
 		186E60622FE91EB800BAF454 /* ReportBugVcViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFFAE82CCFA4A100C11C26 /* ReportBugVcViewController.swift */; };
 		186E60632FE91EB800BAF454 /* HOTCODE_COMMON_API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */; };
 		186E60642FE91EB800BAF454 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84395FE72D10026100FC3242 /* ChatVC.swift */; };
-		186E60652FE91EB800BAF454 /* MsgTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C3A1EC2E66AD41002E7506 /* MsgTvCell.swift */; };
 		186E60662FE91EB800BAF454 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BE432C19719700E32496 /* SceneDelegate.swift */; };
 		186E60672FE91EB800BAF454 /* LSWTaskTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84235A142E1E287F002F2E1D /* LSWTaskTVC.swift */; };
 		186E60682FE91EB800BAF454 /* Std_Grp_header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849757072D2BA575006A27FD /* Std_Grp_header.swift */; };
@@ -2435,7 +2425,6 @@
 		186E60AA2FE91EB800BAF454 /* ReportBugVcViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EFFAE92CCFA4A100C11C26 /* ReportBugVcViewController.xib */; };
 		186E60AB2FE91EB800BAF454 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */; };
 		186E60AC2FE91EB800BAF454 /* VoiceMessageVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAF2EFFAAFB008B71FF /* VoiceMessageVc.xib */; };
-		186E60AD2FE91EB800BAF454 /* VoicePreviewTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D09A452F023AA500D1930D /* VoicePreviewTvCell.xib */; };
 		186E60AE2FE91EB800BAF454 /* StopTimelineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1880E9EE2FD14BF40025EB96 /* StopTimelineCell.xib */; };
 		186E60AF2FE91EB800BAF454 /* CommonPagenationVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AA72EFFAAFB008B71FF /* CommonPagenationVc.xib */; };
 		186E60B02FE91EB800BAF454 /* ScheduleCallVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAB2EFFAAFB008B71FF /* ScheduleCallVC.xib */; };
@@ -2460,7 +2449,6 @@
 		186E60C32FE91EB800BAF454 /* PunchHistoryListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718972D0D477900E9EDA3 /* PunchHistoryListVC.xib */; };
 		186E60C42FE91EB800BAF454 /* ScheduleExamVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BB5EA62D11330E00AD0C87 /* ScheduleExamVC.xib */; };
 		186E60C52FE91EB800BAF454 /* certificateHstryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84017F7C2E44942A006CB477 /* certificateHstryCell.xib */; };
-		186E60C62FE91EB800BAF454 /* MsgTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C3A1ED2E66AD41002E7506 /* MsgTvCell.xib */; };
 		186E60C72FE91EB800BAF454 /* AddLocationHistory.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D7188C2D0D477900E9EDA3 /* AddLocationHistory.xib */; };
 		186E60C82FE91EB800BAF454 /* PunchHistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718752D0D477900E9EDA3 /* PunchHistTableViewCell.xib */; };
 		186E60C92FE91EB800BAF454 /* AttendenceOverviewTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842ACE152F56A03600954404 /* AttendenceOverviewTVC.xib */; };
@@ -2962,8 +2950,6 @@
 		18D09A3F2EFFECF700D1930D /* VoiceCellTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D09A3C2EFFECF700D1930D /* VoiceCellTV.swift */; };
 		18D09A422F00055E00D1930D /* VoiceMessagesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D09A412F00055E00D1930D /* VoiceMessagesVC.xib */; };
 		18D09A432F00055E00D1930D /* VoiceMessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D09A402F00055E00D1930D /* VoiceMessagesVC.swift */; };
-		18D09A462F023AA500D1930D /* VoicePreviewTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D09A452F023AA500D1930D /* VoicePreviewTvCell.xib */; };
-		18D09A472F023AA500D1930D /* VoicePreviewTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D09A442F023AA500D1930D /* VoicePreviewTvCell.swift */; };
 		18D09A522F02640900D1930D /* SendMsgTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D09A512F02640900D1930D /* SendMsgTvCell.xib */; };
 		18D09A532F02640900D1930D /* SendMsgTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D09A502F02640900D1930D /* SendMsgTvCell.swift */; };
 		18D09B3F2F0288FE00D1930D /* schoolchimes_tone.wav in Resources */ = {isa = PBXBuildFile; fileRef = 18D09B3E2F0288FE00D1930D /* schoolchimes_tone.wav */; };
@@ -3392,8 +3378,6 @@
 		84C00E6E2CF6D7C500E34A83 /* TermsAndCondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */; };
 		84C08C682EB396E9009F657B /* PopoverViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C08C662EB396E9009F657B /* PopoverViewVC.swift */; };
 		84C08C692EB396E9009F657B /* PopoverViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C08C672EB396E9009F657B /* PopoverViewVC.xib */; };
-		84C3A1EE2E66AD41002E7506 /* MsgTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C3A1ED2E66AD41002E7506 /* MsgTvCell.xib */; };
-		84C3A1EF2E66AD41002E7506 /* MsgTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C3A1EC2E66AD41002E7506 /* MsgTvCell.swift */; };
 		84C3A1F22E66BE55002E7506 /* MsgViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C3A1F12E66BE55002E7506 /* MsgViewVC.xib */; };
 		84C3A1F32E66BE55002E7506 /* MsgViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C3A1F02E66BE55002E7506 /* MsgViewVC.swift */; };
 		84C3A1F62E66EF4B002E7506 /* MsgVoiceCvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C3A1F52E66EF4B002E7506 /* MsgVoiceCvCell.xib */; };
@@ -3940,8 +3924,6 @@
 		18D09A3D2EFFECF700D1930D /* VoiceCellTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoiceCellTV.xib; sourceTree = "<group>"; };
 		18D09A402F00055E00D1930D /* VoiceMessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMessagesVC.swift; sourceTree = "<group>"; };
 		18D09A412F00055E00D1930D /* VoiceMessagesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoiceMessagesVC.xib; sourceTree = "<group>"; };
-		18D09A442F023AA500D1930D /* VoicePreviewTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoicePreviewTvCell.swift; sourceTree = "<group>"; };
-		18D09A452F023AA500D1930D /* VoicePreviewTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoicePreviewTvCell.xib; sourceTree = "<group>"; };
 		18D09A502F02640900D1930D /* SendMsgTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMsgTvCell.swift; sourceTree = "<group>"; };
 		18D09A512F02640900D1930D /* SendMsgTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendMsgTvCell.xib; sourceTree = "<group>"; };
 		18D09B3E2F0288FE00D1930D /* schoolchimes_tone.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = schoolchimes_tone.wav; sourceTree = "<group>"; };
@@ -4380,8 +4362,6 @@
 		84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsAndCondVC.xib; sourceTree = "<group>"; };
 		84C08C662EB396E9009F657B /* PopoverViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverViewVC.swift; sourceTree = "<group>"; };
 		84C08C672EB396E9009F657B /* PopoverViewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopoverViewVC.xib; sourceTree = "<group>"; };
-		84C3A1EC2E66AD41002E7506 /* MsgTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgTvCell.swift; sourceTree = "<group>"; };
-		84C3A1ED2E66AD41002E7506 /* MsgTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MsgTvCell.xib; sourceTree = "<group>"; };
 		84C3A1F02E66BE55002E7506 /* MsgViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgViewVC.swift; sourceTree = "<group>"; };
 		84C3A1F12E66BE55002E7506 /* MsgViewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MsgViewVC.xib; sourceTree = "<group>"; };
 		84C3A1F42E66EF4B002E7506 /* MsgVoiceCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgVoiceCvCell.swift; sourceTree = "<group>"; };
@@ -5098,8 +5078,6 @@
 			children = (
 				187CF4902D11355D001422CE /* MessageFromManagementViewController.swift */,
 				187CF4912D11355D001422CE /* MessageFromManagementViewController.xib */,
-				84C3A1EC2E66AD41002E7506 /* MsgTvCell.swift */,
-				84C3A1ED2E66AD41002E7506 /* MsgTvCell.xib */,
 				84C3A1F02E66BE55002E7506 /* MsgViewVC.swift */,
 				84C3A1F12E66BE55002E7506 /* MsgViewVC.xib */,
 				84C3A1F42E66EF4B002E7506 /* MsgVoiceCvCell.swift */,
@@ -5362,8 +5340,6 @@
 			children = (
 				18D09A3C2EFFECF700D1930D /* VoiceCellTV.swift */,
 				18D09A3D2EFFECF700D1930D /* VoiceCellTV.xib */,
-				18D09A442F023AA500D1930D /* VoicePreviewTvCell.swift */,
-				18D09A452F023AA500D1930D /* VoicePreviewTvCell.xib */,
 				18D09A502F02640900D1930D /* SendMsgTvCell.swift */,
 				18D09A512F02640900D1930D /* SendMsgTvCell.xib */,
 			);
@@ -7412,7 +7388,6 @@
 				1827E77D2F90C12000B33B20 /* ReportBugVcViewController.xib in Resources */,
 				1827E77E2F90C12000B33B20 /* UpdateProfileVC.xib in Resources */,
 				1827E77F2F90C12000B33B20 /* VoiceMessageVc.xib in Resources */,
-				1827E7802F90C12000B33B20 /* VoicePreviewTvCell.xib in Resources */,
 				1880E9EF2FD14BF40025EB96 /* StopTimelineCell.xib in Resources */,
 				1827E7812F90C12000B33B20 /* CommonPagenationVc.xib in Resources */,
 				1827E7822F90C12000B33B20 /* ScheduleCallVC.xib in Resources */,
@@ -7437,7 +7412,6 @@
 				1827E7942F90C12000B33B20 /* PunchHistoryListVC.xib in Resources */,
 				1827E7952F90C12000B33B20 /* ScheduleExamVC.xib in Resources */,
 				1827E7962F90C12000B33B20 /* certificateHstryCell.xib in Resources */,
-				1827E7972F90C12000B33B20 /* MsgTvCell.xib in Resources */,
 				1827E7982F90C12000B33B20 /* AddLocationHistory.xib in Resources */,
 				1827E7992F90C12000B33B20 /* PunchHistTableViewCell.xib in Resources */,
 				1827E79A2F90C12000B33B20 /* AttendenceOverviewTVC.xib in Resources */,
@@ -7845,7 +7819,6 @@
 				1868A5A82FAC762E00831144 /* ReportBugVcViewController.xib in Resources */,
 				1868A5A92FAC762E00831144 /* UpdateProfileVC.xib in Resources */,
 				1868A5AA2FAC762E00831144 /* VoiceMessageVc.xib in Resources */,
-				1868A5AB2FAC762E00831144 /* VoicePreviewTvCell.xib in Resources */,
 				1880E9F32FD14BF40025EB96 /* StopTimelineCell.xib in Resources */,
 				1868A5AC2FAC762E00831144 /* CommonPagenationVc.xib in Resources */,
 				1868A5AD2FAC762E00831144 /* ScheduleCallVC.xib in Resources */,
@@ -7870,7 +7843,6 @@
 				1868A5BF2FAC762E00831144 /* PunchHistoryListVC.xib in Resources */,
 				1868A5C02FAC762E00831144 /* ScheduleExamVC.xib in Resources */,
 				1868A5C12FAC762E00831144 /* certificateHstryCell.xib in Resources */,
-				1868A5C22FAC762E00831144 /* MsgTvCell.xib in Resources */,
 				1868A5C32FAC762E00831144 /* AddLocationHistory.xib in Resources */,
 				1868A5C42FAC762E00831144 /* PunchHistTableViewCell.xib in Resources */,
 				1868A5C52FAC762E00831144 /* AttendenceOverviewTVC.xib in Resources */,
@@ -8278,7 +8250,6 @@
 				186E60AA2FE91EB800BAF454 /* ReportBugVcViewController.xib in Resources */,
 				186E60AB2FE91EB800BAF454 /* UpdateProfileVC.xib in Resources */,
 				186E60AC2FE91EB800BAF454 /* VoiceMessageVc.xib in Resources */,
-				186E60AD2FE91EB800BAF454 /* VoicePreviewTvCell.xib in Resources */,
 				186E60AE2FE91EB800BAF454 /* StopTimelineCell.xib in Resources */,
 				186E60AF2FE91EB800BAF454 /* CommonPagenationVc.xib in Resources */,
 				186E60B02FE91EB800BAF454 /* ScheduleCallVC.xib in Resources */,
@@ -8303,7 +8274,6 @@
 				186E60C32FE91EB800BAF454 /* PunchHistoryListVC.xib in Resources */,
 				186E60C42FE91EB800BAF454 /* ScheduleExamVC.xib in Resources */,
 				186E60C52FE91EB800BAF454 /* certificateHstryCell.xib in Resources */,
-				186E60C62FE91EB800BAF454 /* MsgTvCell.xib in Resources */,
 				186E60C72FE91EB800BAF454 /* AddLocationHistory.xib in Resources */,
 				186E60C82FE91EB800BAF454 /* PunchHistTableViewCell.xib in Resources */,
 				186E60C92FE91EB800BAF454 /* AttendenceOverviewTVC.xib in Resources */,
@@ -8718,7 +8688,6 @@
 				84EFFAEA2CCFA4A100C11C26 /* ReportBugVcViewController.xib in Resources */,
 				84444C562E66EE3B00B4B8EB /* UpdateProfileVC.xib in Resources */,
 				18887AB62EFFAAFB008B71FF /* VoiceMessageVc.xib in Resources */,
-				18D09A462F023AA500D1930D /* VoicePreviewTvCell.xib in Resources */,
 				18887AB72EFFAAFB008B71FF /* CommonPagenationVc.xib in Resources */,
 				18887AB82EFFAAFB008B71FF /* ScheduleCallVC.xib in Resources */,
 				18887AB92EFFAAFB008B71FF /* EmergencyVoiceRecordCel.xib in Resources */,
@@ -8741,7 +8710,6 @@
 				18D718B92D0D477900E9EDA3 /* PunchHistoryListVC.xib in Resources */,
 				84BB5EA72D11330E00AD0C87 /* ScheduleExamVC.xib in Resources */,
 				84017F7D2E44942A006CB477 /* certificateHstryCell.xib in Resources */,
-				84C3A1EE2E66AD41002E7506 /* MsgTvCell.xib in Resources */,
 				18D718BA2D0D477900E9EDA3 /* AddLocationHistory.xib in Resources */,
 				18D718BB2D0D477900E9EDA3 /* PunchHistTableViewCell.xib in Resources */,
 				842ACE182F56A03600954404 /* AttendenceOverviewTVC.xib in Resources */,
@@ -9441,7 +9409,6 @@
 				1827E6212F90C12000B33B20 /* PreviewTargetTVC.swift in Sources */,
 				1827E6222F90C12000B33B20 /* HostelDashBoardVc.swift in Sources */,
 				1827E6232F90C12000B33B20 /* CVCell.swift in Sources */,
-				1827E6242F90C12000B33B20 /* VoicePreviewTvCell.swift in Sources */,
 				1868A8182FACA13700831144 /* PaymentHistoryCell.swift in Sources */,
 				1827E6252F90C12000B33B20 /* parentHostelDashboardVC.swift in Sources */,
 				1827E6262F90C12000B33B20 /* ActivateCoupenTVC.swift in Sources */,
@@ -9734,7 +9701,6 @@
 				1827E7362F90C12000B33B20 /* ReportBugVcViewController.swift in Sources */,
 				1827E7372F90C12000B33B20 /* HOTCODE_COMMON_API.swift in Sources */,
 				1827E7382F90C12000B33B20 /* ChatVC.swift in Sources */,
-				1827E7392F90C12000B33B20 /* MsgTvCell.swift in Sources */,
 				1827E73A2F90C12000B33B20 /* SceneDelegate.swift in Sources */,
 				1827E73B2F90C12000B33B20 /* LSWTaskTVC.swift in Sources */,
 				1827E73C2F90C12000B33B20 /* Std_Grp_header.swift in Sources */,
@@ -9919,7 +9885,6 @@
 				1868A44B2FAC762E00831144 /* PreviewTargetTVC.swift in Sources */,
 				1868A44C2FAC762E00831144 /* HostelDashBoardVc.swift in Sources */,
 				1868A44D2FAC762E00831144 /* CVCell.swift in Sources */,
-				1868A44E2FAC762E00831144 /* VoicePreviewTvCell.swift in Sources */,
 				1868A8142FACA13700831144 /* PaymentHistoryCell.swift in Sources */,
 				1868A44F2FAC762E00831144 /* parentHostelDashboardVC.swift in Sources */,
 				1868A4502FAC762E00831144 /* ActivateCoupenTVC.swift in Sources */,
@@ -10212,7 +10177,6 @@
 				1868A5602FAC762E00831144 /* ReportBugVcViewController.swift in Sources */,
 				1868A5612FAC762E00831144 /* HOTCODE_COMMON_API.swift in Sources */,
 				1868A5622FAC762E00831144 /* ChatVC.swift in Sources */,
-				1868A5632FAC762E00831144 /* MsgTvCell.swift in Sources */,
 				1868A5642FAC762E00831144 /* SceneDelegate.swift in Sources */,
 				1868A5652FAC762E00831144 /* LSWTaskTVC.swift in Sources */,
 				1868A5662FAC762E00831144 /* Std_Grp_header.swift in Sources */,
@@ -10397,7 +10361,6 @@
 				186E5F472FE91EB800BAF454 /* PreviewTargetTVC.swift in Sources */,
 				186E5F482FE91EB800BAF454 /* HostelDashBoardVc.swift in Sources */,
 				186E5F492FE91EB800BAF454 /* CVCell.swift in Sources */,
-				186E5F4A2FE91EB800BAF454 /* VoicePreviewTvCell.swift in Sources */,
 				186E5F4B2FE91EB800BAF454 /* PaymentHistoryCell.swift in Sources */,
 				186E5F4C2FE91EB800BAF454 /* parentHostelDashboardVC.swift in Sources */,
 				186E5F4D2FE91EB800BAF454 /* ActivateCoupenTVC.swift in Sources */,
@@ -10690,7 +10653,6 @@
 				186E60622FE91EB800BAF454 /* ReportBugVcViewController.swift in Sources */,
 				186E60632FE91EB800BAF454 /* HOTCODE_COMMON_API.swift in Sources */,
 				186E60642FE91EB800BAF454 /* ChatVC.swift in Sources */,
-				186E60652FE91EB800BAF454 /* MsgTvCell.swift in Sources */,
 				186E60662FE91EB800BAF454 /* SceneDelegate.swift in Sources */,
 				186E60672FE91EB800BAF454 /* LSWTaskTVC.swift in Sources */,
 				186E60682FE91EB800BAF454 /* Std_Grp_header.swift in Sources */,
@@ -10882,7 +10844,6 @@
 				84BCE7DF2E9E1868002C8068 /* PreviewTargetTVC.swift in Sources */,
 				1841DE932F56F8B700B88801 /* HostelDashBoardVc.swift in Sources */,
 				84127AC92E03C8F00092159D /* CVCell.swift in Sources */,
-				18D09A472F023AA500D1930D /* VoicePreviewTvCell.swift in Sources */,
 				1868A8152FACA13700831144 /* PaymentHistoryCell.swift in Sources */,
 				18D40AF32F614A7A00FE3B2C /* parentHostelDashboardVC.swift in Sources */,
 				84127ACA2E03C8F00092159D /* ActivateCoupenTVC.swift in Sources */,
@@ -11175,7 +11136,6 @@
 				84EFFAEB2CCFA4A100C11C26 /* ReportBugVcViewController.swift in Sources */,
 				842FDC202D854AD800DCE4FF /* HOTCODE_COMMON_API.swift in Sources */,
 				84395FE92D10026100FC3242 /* ChatVC.swift in Sources */,
-				84C3A1EF2E66AD41002E7506 /* MsgTvCell.swift in Sources */,
 				84A5BE442C19719700E32496 /* SceneDelegate.swift in Sources */,
 				84235A172E1E287F002F2E1D /* LSWTaskTVC.swift in Sources */,
 				8497570E2D2BA575006A27FD /* Std_Grp_header.swift in Sources */,
@@ -11306,7 +11266,7 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.7;
+				CURRENT_PROJECT_VERSION = 3.8;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -11332,7 +11292,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.7;
+				MARKETING_VERSION = 2.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -11352,11 +11312,102 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.7;
+				CURRENT_PROJECT_VERSION = 3.8;
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "SRI SUDHA DHONE";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need access to Face ID for authentication.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show it on the map.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show it on the map.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow to microphone access";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "We need access to create reminders for you.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = SplashVC;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.8;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		1868A7442FAC762E00831144 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = FA81631A2F3314B000ADA8F3 /* Flavours */;
+			baseConfigurationReferenceRelativePath = SRIKALAIVANIVIDHYALAYA/SRIKALAIVANIVIDHYALAYA.xcconfig;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3.7;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = VPA36TGVRS;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "SRI KALAIVANI VIDHYALAYA";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need access to Face ID for authentication.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show it on the map.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show it on the map.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow to microphone access";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "We need access to create reminders for you.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = SplashVC;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.7;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1868A7452FAC762E00831144 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = FA81631A2F3314B000ADA8F3 /* Flavours */;
+			baseConfigurationReferenceRelativePath = SRIKALAIVANIVIDHYALAYA/SRIKALAIVANIVIDHYALAYA.xcconfig;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3.7;
+				DEVELOPMENT_TEAM = VPA36TGVRS;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "SRI KALAIVANI VIDHYALAYA";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
@@ -11387,97 +11438,6 @@
 			};
 			name = Release;
 		};
-		1868A7442FAC762E00831144 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = FA81631A2F3314B000ADA8F3 /* Flavours */;
-			baseConfigurationReferenceRelativePath = SRIKALAIVANIVIDHYALAYA/SRIKALAIVANIVIDHYALAYA.xcconfig;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.6;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = VPA36TGVRS;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "SRI KALAIVANI VIDHYALAYA";
-				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
-				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need access to Face ID for authentication.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show it on the map.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show it on the map.";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow to microphone access";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
-				INFOPLIST_KEY_NSRemindersUsageDescription = "We need access to create reminders for you.";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = SplashVC;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 2.6;
-				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		1868A7452FAC762E00831144 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = FA81631A2F3314B000ADA8F3 /* Flavours */;
-			baseConfigurationReferenceRelativePath = SRIKALAIVANIVIDHYALAYA/SRIKALAIVANIVIDHYALAYA.xcconfig;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.6;
-				DEVELOPMENT_TEAM = VPA36TGVRS;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "SRI KALAIVANI VIDHYALAYA";
-				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
-				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need access to Face ID for authentication.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show it on the map.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show it on the map.";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow to microphone access";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
-				INFOPLIST_KEY_NSRemindersUsageDescription = "We need access to create reminders for you.";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = SplashVC;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 2.6;
-				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		186E62492FE91EB800BAF454 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = FA81631A2F3314B000ADA8F3 /* Flavours */;
@@ -11488,12 +11448,12 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.5;
+				CURRENT_PROJECT_VERSION = 3.8;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WISDOM GROUP";
+				INFOPLIST_KEY_CFBundleDisplayName = "Wisdom Smart Connect";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
@@ -11514,7 +11474,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5;
+				MARKETING_VERSION = 2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -11534,11 +11494,11 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.5;
+				CURRENT_PROJECT_VERSION = 3.8;
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "WISDOM GROUP";
+				INFOPLIST_KEY_CFBundleDisplayName = "Wisdom Smart Connect";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
@@ -11559,7 +11519,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5;
+				MARKETING_VERSION = 2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -11771,19 +11731,19 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.7;
+				CURRENT_PROJECT_VERSION = 3.8;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
-				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Contacts access is required to choose recipients' email addresses from your contact list for sending information.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need access to Face ID for authentication.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show it on the map.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show it on the map.";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow to microphone access";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone access is required to record and send voice messages to teachers, students, parents, and staff.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Photo Library access is required to select and upload photos and documents for assignments, notices, messages, and profile pictures.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "We need access to create reminders for you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = SplashVC;
@@ -11796,7 +11756,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.6;
+				MARKETING_VERSION = 2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -11815,18 +11775,18 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3.7;
+				CURRENT_PROJECT_VERSION = 3.8;
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
-				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Contacts access is required to choose recipients' email addresses from your contact list for sending information.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need access to Face ID for authentication.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show it on the map.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show it on the map.";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow to microphone access";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone access is required to record and send voice messages to teachers, students, parents, and staff.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Photo Library access is required to select and upload photos and documents for assignments, notices, messages, and profile pictures.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "We need access to create reminders for you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = SplashVC;
@@ -11839,7 +11799,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.6;
+				MARKETING_VERSION = 2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -14,25 +14,9 @@
             filePath = "Core/ExtenstionsFiles/Extentions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
-            landmarkName = "showActivityLoader(maxDuration:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "73C758E9-7604-41D6-AB60-6BB20845A85B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Features/SchoolDashBoard/NoticeBoard/SenderNoticeBoardVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "365"
-            endingLineNumber = "365"
-            landmarkName = "toDate(_:)"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
+            landmarkName = "didTapAttributedTextInLabel(label:inRange:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -84,28 +68,28 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "7DA3C443-908B-4240-BCB7-52B48BE3FD2F - 5d47f84d6cf0c852"
+                  uuid = "7DA3C443-908B-4240-BCB7-52B48BE3FD2F - a486920361552f2e"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "WISDOM_GROUP.EditLessonVC.UpdateAct(Any) -&gt; ()"
-                  moduleName = "WISDOM GROUP.debug.dylib"
+                  symbolName = "School_Chimes.EditLessonVC.UpdateAct(Any) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School_New/SchoolRewampIOS/Features/SchoolDashBoard/Lesson%20plan/EditLessonVC.swift"
+                  urlString = "file:///Users/admin/Desktop/School_source/SchoolRewampIOS/Features/SchoolDashBoard/Lesson%20plan/EditLessonVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "210"
                   endingLineNumber = "210">
                </Location>
                <Location
-                  uuid = "7DA3C443-908B-4240-BCB7-52B48BE3FD2F - d3816922a6a2e265"
+                  uuid = "7DA3C443-908B-4240-BCB7-52B48BE3FD2F - db599267caf58f59"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in WISDOM_GROUP.EditLessonVC.UpdateAct(Any) -&gt; ()"
-                  moduleName = "WISDOM GROUP.debug.dylib"
+                  symbolName = "closure #1 () -&gt; () in School_Chimes.EditLessonVC.UpdateAct(Any) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School_New/SchoolRewampIOS/Features/SchoolDashBoard/Lesson%20plan/EditLessonVC.swift"
+                  urlString = "file:///Users/admin/Desktop/School_source/SchoolRewampIOS/Features/SchoolDashBoard/Lesson%20plan/EditLessonVC.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "211"

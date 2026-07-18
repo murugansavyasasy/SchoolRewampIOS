@@ -51,7 +51,7 @@ class AssignmentsearchTVC: UITableViewCell, UISearchBarDelegate {
         allBtn.tintColor = .black
         submitedBtn.tintColor = .black
         pendingBtn.tintColor = .black
-        searchBar.placeholder = "Search here..."
+        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.backgroundImage = UIImage()
         if let textField = searchBar.value(forKey: "searchField") as? UITextField {
             textField.addDoneButton()

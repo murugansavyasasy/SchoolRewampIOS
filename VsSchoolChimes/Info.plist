@@ -2,7 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -17,12 +16,12 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>googlegmail</string>
-        <string>x-apple-reminder</string>
-        <string>upi</string>
-           <string>tez</string>
-           <string>phonepe</string>
-           <string>paytmmp</string>
-           <string>credpay</string>
+		<string>x-apple-reminder</string>
+		<string>upi</string>
+		<string>tez</string>
+		<string>phonepe</string>
+		<string>paytmmp</string>
+		<string>credpay</string>
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
@@ -56,6 +55,8 @@
 			</array>
 		</dict>
 	</dict>
+	<key>UIApplicationSupportsRightToLeft</key>
+	<false/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
@@ -63,7 +64,5 @@
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>
-    <key>UIApplicationSupportsRightToLeft</key>
-    <false/>
 </dict>
 </plist>

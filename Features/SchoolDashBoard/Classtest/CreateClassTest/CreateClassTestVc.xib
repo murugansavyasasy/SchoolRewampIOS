@@ -24,6 +24,7 @@
                 <outlet property="line3To4" destination="mrP-FG-Xli" id="kUZ-ao-M89"/>
                 <outlet property="line4To5" destination="HGf-jR-uoE" id="KpG-nh-V95"/>
                 <outlet property="maincardView" destination="XnC-Qt-J9f" id="8ZW-jt-C8R"/>
+                <outlet property="noteLabel" destination="skN-vu-Knw" id="Egk-b8-RL8"/>
                 <outlet property="step1Circle" destination="ts1-PA-VpJ" id="IYr-JE-gKf"/>
                 <outlet property="step1Label" destination="Vbv-je-VAc" id="eTB-YA-xeh"/>
                 <outlet property="step1Title" destination="eUO-Ey-apk" id="Tnn-0i-KlO"/>
@@ -65,7 +66,7 @@
                                         <constraint firstAttribute="height" constant="28" id="pmI-3u-RbZ"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Create Class Test" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WMt-ca-A91" userLabel="AppNameLabel">
+                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Create Class Test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WMt-ca-A91" userLabel="AppNameLabel">
                                     <rect key="frame" x="28" y="4.3333333333333357" width="208" height="19.333333333333332"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -105,19 +106,19 @@
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="VTf-EJ-kHY">
                             <rect key="frame" x="16" y="103" width="361" height="82"/>
                             <subviews>
-                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Class Test" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xci-qb-O8a" userLabel="CreateClassTestLabel">
+                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Class Test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xci-qb-O8a" userLabel="CreateClassTestLabel">
                                     <rect key="frame" x="0.0" y="0.0" width="361" height="23"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick the standard first" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CcZ-wh-IbB" userLabel="PickStandardLabel">
+                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick the standard first" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CcZ-wh-IbB" userLabel="PickStandardLabel">
                                     <rect key="frame" x="0.0" y="29.000000000000004" width="361" height="15.666666666666668"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="**Note:** These class tests and its marks will not be considered for report card and calculations" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="skN-vu-Knw" userLabel="PickStandardLabel">
+                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="**Note:** These class tests and its marks will not be considered for report card and calculations" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="skN-vu-Knw" userLabel="PickStandardLabel">
                                     <rect key="frame" x="0.0" y="50.666666666666664" width="361" height="31.333333333333336"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
@@ -125,15 +126,13 @@
                                 </label>
                             </subviews>
                         </stackView>
-                        <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4OE-4k-fzv">
-                            <rect key="frame" x="214" y="195" width="171" height="34.333333333333343"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4OE-4k-fzv">
+                            <rect key="frame" x="251" y="195" width="134" height="30"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" title="View Created Test ">
-                                <imageReference key="image" image="chevron.forward" catalog="system" symbolScale="medium"/>
-                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" weight="semibold"/>
-                                <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="15"/>
-                            </buttonConfiguration>
+                            <inset key="titleEdgeInsets" minX="3" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="View Created Test "/>
                             <connections>
                                 <action selector="viewHistoryAct:" destination="-1" eventType="touchUpInside" id="cxe-AW-4SA"/>
                             </connections>
@@ -446,10 +445,9 @@
     <resources>
         <image name="arrowtriangle.down.fill" catalog="system" width="128" height="120"/>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
-        <image name="chevron.forward" catalog="system" width="97" height="128"/>
         <image name="plus.circle" catalog="system" width="128" height="123"/>
         <namedColor name="PrimeryColor">
-            <color red="0.49799999594688416" green="0.10199999809265137" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

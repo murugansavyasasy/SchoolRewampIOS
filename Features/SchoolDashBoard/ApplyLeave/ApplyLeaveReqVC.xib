@@ -536,6 +536,9 @@
                                             <state key="normal" image="chevron.forward.dotted.chevron.forward" catalog="system">
                                                 <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </state>
+                                            <connections>
+                                                <action selector="HistoryBtnAct:" destination="-1" eventType="touchUpInside" id="zPT-6x-NLu"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                 </stackView>
@@ -629,7 +632,7 @@
         <image name="pencil.line" catalog="system" width="128" height="117"/>
         <image name="window.ceiling.closed" catalog="system" width="128" height="105"/>
         <namedColor name="BackGroundClr">
-            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.41999998688697815" green="0.70999997854232788" blue="0.3449999988079071" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="ClickClr">
             <color red="0.76099997758865356" green="0.90600001811981201" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

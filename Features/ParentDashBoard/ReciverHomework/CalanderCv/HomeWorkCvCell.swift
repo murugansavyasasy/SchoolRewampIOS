@@ -31,6 +31,9 @@ class HomeWorkCvCell: UICollectionViewCell,SelectedId, UIPopoverPresentationCont
         applyShadowAndCornerRadius(to: contentView)
         homeWorkCompletImg.isHidden = true
         newImage.isHidden = true
+        let isRTL = UIView.userInterfaceLayoutDirection(for: contentView.semanticContentAttribute) == .rightToLeft
+        
+        newImage.transform = isRTL ? CGAffineTransform(rotationAngle: -.pi / 2) :.identity
     }
     
     @IBAction func threeDotBtnAction(_ sender: UIButton) {

@@ -25,12 +25,26 @@ public final class SummaryTableViewCell: UITableViewCell {
     
     // MARK: - Configuration
     public func configure(withCount count: Int) {
-        let text = "\(count) section" + (count == 1 ? "" : "s") + " selected"
+
+        let key = count == 1
+            ? "%d section selected"
+            : "%d sections selected"
+
+        let text = String(
+            format: NSLocalizedString(key, comment: ""),
+            count
+        )
+
         summaryLabel.text = text
-        summaryLabel.textColor = UIColor(red: 0.298, green: 0.302, blue: 0.863, alpha: 1.0) // #4C4DDC
-        
+        summaryLabel.textColor = UIColor(
+            red: 0.298,
+            green: 0.302,
+            blue: 0.863,
+            alpha: 1.0
+        )
+
         // Accessibility
-        self.isAccessibilityElement = true
-        self.accessibilityLabel = text
+        isAccessibilityElement = true
+        accessibilityLabel = text
     }
 }
