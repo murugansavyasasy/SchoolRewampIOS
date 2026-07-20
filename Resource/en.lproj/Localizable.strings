@@ -655,7 +655,16 @@
 "Pick From Question Bank" = "Pick From Question Bank";
 "Select All" = "Select All";
 "Import Question" = "Import Question";
-
+"Add Image" = "Add Image";
+"Please fill the Chapter for Question" = "Please fill in the Chapter for the Question";
+"Please fill the Question text for Question" = "Please fill in the Question text";
+"Please provide Option A for Question" = "Please provide Option A for the Question";
+"Please provide Option B for Question" = "Please provide Option B for the Question";
+"Please provide Option C for Question" = "Please provide Option C for the Question";
+"Please provide Option D for Question" = "Please provide Option D for the Question";
+"Please select the correct answer for Question" = "Please select the correct answer for the Question";
+"Please select the correct answer text for Question" = "Please select the correct answer text for the Question";
+"Please assign marks for Question" = "Please assign marks for the Question";
 //MARK: FeePending
 "CATEGORY_WISE" = "Category Wise";
 "CLASS_WISE" = "Class Wise";
@@ -1358,6 +1367,25 @@
 "PREVIOUS_QUESTION" = "Previous Question";
 "ASSIGNED" = "Assigned";
 "DEADLINE" = "Deadline";
+"Add Image" = "Add Image";
+"Please fill the Chapter for Question" = "Please fill in the Chapter for the Question";
+"Please fill the Question text for Question" = "Please fill in the Question text";
+"Please provide Option A for Question" = "Please provide Option A for the Question";
+"Please provide Option B for Question" = "Please provide Option B for the Question";
+"Please provide Option C for Question" = "Please provide Option C for the Question";
+"Please provide Option D for Question" = "Please provide Option D for the Question";
+"Please select the correct answer for Question" = "Please select the correct answer for the Question";
+"Please select the correct answer text for Question" = "Please select the correct answer text for the Question";
+"Please assign marks for Question" = "Please assign marks for the Question";
+"Almost there! You’ve created" = "Almost there! You’ve created";
+"out of" = "out of";
+"questions." = "questions.";
+"You still need to add" = "You still need to add";
+"more question(s) to complete the quiz — but don’t worry, you can add them later." = "more question(s) to complete the quiz — but don’t worry, you can add them later.";
+"Note: The quiz will be visible to students only after all questions are filled" = "Note: The quiz will be visible to students only after all questions are filled.";
+"The quiz will be visible to students only after all questions are filled and Submitted" = "The quiz will be visible to students only after all questions are filled and submitted.";
+"View & Enter marks" = "View & Enter Marks";
+"Select a Date" = "Select a Date";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

@@ -1442,7 +1442,25 @@
 "PREVIOUS_QUESTION" = "முந்தைய கேள்வி";
 "ASSIGNED" = "ஒதுக்கப்பட்டது";
 "DEADLINE" = "காலக்கெடு";
-
+"Add Image" = "படத்தைச் சேர்";
+"Please fill the Chapter for Question" = "கேள்விக்கான அத்தியாயத்தை நிரப்பவும்";
+"Please fill the Question text for Question" = "கேள்வி உரையை நிரப்பவும்";
+"Please provide Option A for Question" = "கேள்விக்கான விருப்பம் A-ஐ வழங்கவும்";
+"Please provide Option B for Question" = "கேள்விக்கான விருப்பம் B-ஐ வழங்கவும்";
+"Please provide Option C for Question" = "கேள்விக்கான விருப்பம் C-ஐ வழங்கவும்";
+"Please provide Option D for Question" = "கேள்விக்கான விருப்பம் D-ஐ வழங்கவும்";
+"Please select the correct answer for Question" = "கேள்விக்கான சரியான பதிலைத் தேர்ந்தெடுக்கவும்";
+"Please select the correct answer text for Question" = "கேள்விக்கான சரியான பதில் உரையைத் தேர்ந்தெடுக்கவும்";
+"Please assign marks for Question" = "கேள்விக்கான மதிப்பெண்களை வழங்கவும்";
+"Almost there! You’ve created" = "கிட்டத்தட்ட முடிந்துவிட்டது! நீங்கள்";
+"out of" = "இல்";
+"questions." = "கேள்விகளை உருவாக்கியுள்ளீர்கள்.";
+"You still need to add" = "இன்னும்";
+"more question(s) to complete the quiz — but don’t worry, you can add them later." = "கேள்வி(கள்) சேர்க்க வேண்டும். கவலைப்பட வேண்டாம் — பின்னரும் அவற்றைச் சேர்க்கலாம்.";
+"Note: The quiz will be visible to students only after all questions are filled" = "குறிப்பு: அனைத்து கேள்விகளும் நிரப்பப்பட்ட பிறகே வினாடி வினா மாணவர்களுக்கு காண்பிக்கப்படும்.";
+"The quiz will be visible to students only after all questions are filled and Submitted" = "அனைத்து கேள்விகளும் நிரப்பப்பட்டு சமர்ப்பிக்கப்பட்ட பிறகே வினாடி வினா மாணவர்களுக்கு காண்பிக்கப்படும்.";
+"View & Enter marks" = "மதிப்பெண்களைப் பார்க்கவும் & பதிவு செய்யவும்";
+"Select a Date" = "தேதியைத் தேர்ந்தெடுக்கவும்";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

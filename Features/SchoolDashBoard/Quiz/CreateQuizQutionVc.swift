@@ -214,14 +214,13 @@ class CreateQuizQutionVc: UIViewController {
         
         if id == "" || id == nil{
             let remaining = noOfQuestion - questions.count
-            let msg =
-            """
-            Almost there! You’ve created \(questions.count) out of \(noOfQuestion) questions.
-            
-            You still need to add \(remaining) more question(s) to complete the quiz — but don’t worry, you can add them later.
-            
-            Note: The quiz will be visible to students only after all questions are filled
-            """
+            let msg = """
+               \("Almost there! You’ve created".translated()) \(questions.count) \("out of".translated()) \(noOfQuestion) \("questions.".translated())
+
+               \("You still need to add".translated()) \(remaining) \("more question(s) to complete the quiz — but don’t worry, you can add them later.".translated())
+
+               \("Note: The quiz will be visible to students only after all questions are filled".translated())
+               """
             CustomAlert().showAlertCancel(
                 title: AlertstringFile.Confirm,
                 message: msg,
@@ -255,13 +254,12 @@ class CreateQuizQutionVc: UIViewController {
             } else {
                 // ❗ Not fully filled → Show your custom message
                 let remaining = noOfQuestion - questions.count
-                let msg =
-                """
-                Almost there! You’ve created \(questions.count) out of \(noOfQuestion) questions.
-                
-                You still need to add \(remaining) more question(s) to complete the quiz — but don’t worry, you can add them later.
-                
-                Note: The quiz will be visible to students only after all questions are filled
+                let msg = """
+                \("Almost there! You’ve created".translated()) \(questions.count) \("out of".translated()) \(noOfQuestion) \("questions.".translated())
+
+                \("You still need to add".translated()) \(remaining) \("more question(s) to complete the quiz — but don’t worry, you can add them later.".translated())
+
+                \("Note: The quiz will be visible to students only after all questions are filled".translated())
                 """
                 CustomAlert().showAlertCancel(
                     title: AlertstringFile.Confirm,
@@ -299,7 +297,7 @@ class CreateQuizQutionVc: UIViewController {
                             self.infoLbl.speed = .duration(18.0)   // Slower scroll
                             self.infoLbl.fadeLength = 10.0
                             self.infoLbl.trailingBuffer = 30.0
-                            self.infoLbl.text = "⏳ " + " The quiz will be visible to students only after all questions are filled and Submitted"
+                            self.infoLbl.text = "⏳  " + "The quiz will be visible to students only after all questions are filled and Submitted".translated()
                         }
                     } else {
                         self.questions = [QuizQuestiondata()]
@@ -675,34 +673,42 @@ class CreateQuizQutionVc: UIViewController {
     func validateQuestions() -> String? {
         for (i, q) in questions.enumerated() {
             if q.chapter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                return "Please fill the Chapter for Question \(i + 1)."
+                return "\("Please fill the Chapter for Question".translated()) \(i + 1)."
             }
-            if q.question.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.question == "Enter Question here"{
-                return "Please fill the Question text for Question \(i + 1)."
+
+            if q.question.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.question == "Enter Question here".translated() {
+                return "\("Please fill the Question text for Question".translated()) \(i + 1)."
             }
-            if q.a_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.a_option == "Enter Option A"{
-                return "Please provide Option A for Question \(i + 1)."
+
+            if q.a_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.a_option == "Enter Option A".translated() {
+                return "\("Please provide Option A for Question".translated()) \(i + 1)."
             }
-            if q.b_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.b_option == "Enter Option B"{
-                return "Please provide Option B for Question \(i + 1)."
+
+            if q.b_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.b_option == "Enter Option B".translated() {
+                return "\("Please provide Option B for Question".translated()) \(i + 1)."
             }
-            if q.c_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.c_option == "Enter Option C"{
-                return "Please provide Option C for Question \(i + 1)."
+
+            if q.c_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.c_option == "Enter Option C".translated() {
+                return "\("Please provide Option C for Question".translated()) \(i + 1)."
             }
-            if q.d_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.d_option == "Enter Option D"{
-                return "Please provide Option D for Question \(i + 1)."
+
+            if q.d_option.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || q.d_option == "Enter Option D".translated() {
+                return "\("Please provide Option D for Question".translated()) \(i + 1)."
             }
-            if q.answer == nil || q.answer == "Select correct answer" {
-                return "Please select the correct answer for Question \(i + 1)."
+
+            if q.answer == nil || q.answer == "Select correct answer".translated() {
+                return "\("Please select the correct answer for Question".translated()) \(i + 1)."
             }
+
             if q.correct_answer_text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
-                return "Please select the correct answer text for Question \(i + 1)."
+                return "\("Please select the correct answer text for Question".translated()) \(i + 1)."
             }
+
             if q.mark == nil || q.mark == 0 {
-                return "Please assign marks for Question \(i + 1)."
+                return "\("Please assign marks for Question".translated()) \(i + 1)."
             }
         }
-        return nil // ✅ all good
+        return nil
     }
     
     

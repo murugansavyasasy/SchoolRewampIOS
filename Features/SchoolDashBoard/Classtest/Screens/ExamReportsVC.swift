@@ -51,8 +51,8 @@ class ExamReportsVC: UIViewController, Datepicker {
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var class_test_details: [StaffClassTest] = []
     var AcadimicYearDatas: [AcadimicYearData] = []
-    let Today = "All"
-    let FutureDate = "Select a Date"
+    let Today = "All".translated()
+    let FutureDate = "Select a Date".translated()
     var accadimYr: [String] = []
     var acodemicId: Int?
     let acidamicdrops = DropDown()
@@ -75,6 +75,8 @@ class ExamReportsVC: UIViewController, Datepicker {
     }
     private func setupUI() {
         tittleLbl.text = "View Created Test List"
+        dateLbl.text = "Select a Date".translated()
+        todayLbl.text = Today.translated()
         acodomicdropDown.setShadow()
         dateView.setShadow()
         examCountLbl.layer.cornerRadius = examCountLbl.frame.height / 2
@@ -99,7 +101,7 @@ class ExamReportsVC: UIViewController, Datepicker {
     }
 
     private func updateExamCount() {
-        examCountLbl.setTitle("\(class_test_details.count) Test", for: .normal)
+        examCountLbl.setTitle("\(class_test_details.count) \("Test".translated())", for: .normal)
     }
 
     @IBAction func backTapped(_ sender: UIButton) {
@@ -121,7 +123,7 @@ class ExamReportsVC: UIViewController, Datepicker {
     }
 
     func getExamReports() {
-        let date = dateLbl.text == "Select a Date" ? "0" : ConvertDateStringSmart(dateLbl.text)
+        let date = dateLbl.text == "Select a Date".translated() ? "0" : ConvertDateStringSmart(dateLbl.text)
         APIService.shared.makeApi(
             url: ServiceUrl.exam_class_test_details,
             parameters: ["class_test_id":"0", "exam_date":date,"academic_year_id":"\(acodemicId ?? 0)"],

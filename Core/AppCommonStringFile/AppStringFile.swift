@@ -88,7 +88,7 @@ struct MenuStringFile{
     static let  End_time_must_be_greater_than_start_time   = "End time must be greater than start time."
     static let  ChaptersCompleted   = "Chapters Completed"
     static let  Create   = "Create"
-    static let  CreateOn   = "Created On "
+    static let  CreateOn   = "Created On"
     static let  Update   = "Update"
     static let  DaysApplication   = " Days Application"
     static let  Taptoviewlocationhistory   = "Tap to view location history"

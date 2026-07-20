@@ -1431,7 +1431,25 @@
 "You haven't added questions to this quiz yet. Would you like to add them or do it later?" = "คุณยังไม่ได้เพิ่มคำถามในแบบทดสอบนี้ ต้องการเพิ่มตอนนี้หรือภายหลัง?";
 "Later" = "ภายหลัง";
 "Add Now" = "เพิ่มตอนนี้";
-
+"Add Image" = "เพิ่มรูปภาพ";
+"Please fill the Chapter for Question" = "กรุณากรอกบทสำหรับคำถาม";
+"Please fill the Question text for Question" = "กรุณากรอกข้อความของคำถาม";
+"Please provide Option A for Question" = "กรุณากรอกตัวเลือก A สำหรับคำถาม";
+"Please provide Option B for Question" = "กรุณากรอกตัวเลือก B สำหรับคำถาม";
+"Please provide Option C for Question" = "กรุณากรอกตัวเลือก C สำหรับคำถาม";
+"Please provide Option D for Question" = "กรุณากรอกตัวเลือก D สำหรับคำถาม";
+"Please select the correct answer for Question" = "กรุณาเลือกคำตอบที่ถูกต้องสำหรับคำถาม";
+"Please select the correct answer text for Question" = "กรุณาเลือกข้อความคำตอบที่ถูกต้องสำหรับคำถาม";
+"Please assign marks for Question" = "กรุณากำหนดคะแนนสำหรับคำถาม";
+"Almost there! You’ve created" = "เกือบเสร็จแล้ว! คุณสร้างไปแล้ว";
+"out of" = "จากทั้งหมด";
+"questions." = "ข้อ";
+"You still need to add" = "คุณยังต้องเพิ่มอีก";
+"more question(s) to complete the quiz — but don’t worry, you can add them later." = "ข้อเพื่อให้แบบทดสอบสมบูรณ์ แต่ไม่ต้องกังวล คุณสามารถเพิ่มภายหลังได้";
+"Note: The quiz will be visible to students only after all questions are filled" = "หมายเหตุ: แบบทดสอบจะแสดงให้นักเรียนเห็นก็ต่อเมื่อเพิ่มคำถามครบทั้งหมดแล้ว";
+"The quiz will be visible to students only after all questions are filled and Submitted" = "แบบทดสอบจะแสดงให้นักเรียนเห็นก็ต่อเมื่อกรอกคำถามครบทั้งหมดและส่งเรียบร้อยแล้ว";
+"View & Enter marks" = "ดูและบันทึกคะแนน";
+"Select a Date" = "เลือกวันที่";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

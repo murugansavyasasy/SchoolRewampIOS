@@ -1373,6 +1373,25 @@
 "PREVIOUS_QUESTION" = "السؤال السابق";
 "ASSIGNED" = "تم التعيين";
 "DEADLINE" = "الموعد النهائي";
+"Add Image" = "إضافة صورة";
+"Please fill the Chapter for Question" = "يرجى إدخال الفصل الخاص بالسؤال";
+"Please fill the Question text for Question" = "يرجى إدخال نص السؤال";
+"Please provide Option A for Question" = "يرجى إدخال الخيار (أ) للسؤال";
+"Please provide Option B for Question" = "يرجى إدخال الخيار (ب) للسؤال";
+"Please provide Option C for Question" = "يرجى إدخال الخيار (ج) للسؤال";
+"Please provide Option D for Question" = "يرجى إدخال الخيار (د) للسؤال";
+"Please select the correct answer for Question" = "يرجى اختيار الإجابة الصحيحة للسؤال";
+"Please select the correct answer text for Question" = "يرجى اختيار نص الإجابة الصحيحة للسؤال";
+"Please assign marks for Question" = "يرجى تحديد الدرجة المخصصة للسؤال";
+"Almost there! You’ve created" = "أوشكت على الانتهاء! لقد أنشأت";
+"out of" = "من أصل";
+"questions." = "أسئلة.";
+"You still need to add" = "لا يزال عليك إضافة";
+"more question(s) to complete the quiz — but don’t worry, you can add them later." = "المزيد من الأسئلة لإكمال الاختبار — ولكن لا تقلق، يمكنك إضافتها لاحقًا.";
+"Note: The quiz will be visible to students only after all questions are filled" = "ملاحظة: لن يكون الاختبار مرئيًا للطلاب إلا بعد إدخال جميع الأسئلة.";
+"The quiz will be visible to students only after all questions are filled and Submitted" = "لن يكون الاختبار مرئيًا للطلاب إلا بعد إدخال جميع الأسئلة وإرسالها.";
+"View & Enter marks" = "عرض الدرجات وإدخالها";
+"Select a Date" = "اختر تاريخًا";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

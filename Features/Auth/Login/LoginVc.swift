@@ -74,7 +74,7 @@ class LoginVc: UIViewController {
         MobilTextFld.layer.borderColor = UIColor.clear.cgColor
         MobilTextFld.placeholder = country_data?.mobile_no_hint
         MobilTextFld.delegate = self
-        MobilTextFld.keyboardType = .phonePad
+        MobilTextFld.keyboardType = .asciiCapableNumberPad
         MobilTextFld.textContentType = .telephoneNumber
         MobilTextFld.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20)) // Adjust width for padding

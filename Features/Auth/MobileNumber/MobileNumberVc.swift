@@ -80,7 +80,7 @@ class MobileNumberVc: UIViewController{
         continueBtnName.layer.shadowRadius = 6
         MobilTextFld.placeholder = country_data?.mobile_no_hint
         MobilTextFld.delegate = self
-        MobilTextFld.keyboardType = .phonePad
+        MobilTextFld.keyboardType = .asciiCapableNumberPad
         MobilTextFld.textContentType = .telephoneNumber
         MobilTextFld.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         WelcomeLbl.setFont(style: .title, size: 16)

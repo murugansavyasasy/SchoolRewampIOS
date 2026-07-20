@@ -48,7 +48,8 @@ class CountryListVC: UIViewController {
         backBtn.layer.cornerRadius = backBtn.frame.width / 2
         newNextBtn.layer.cornerRadius = 10
         newNextBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)
-        newNextBtn.setTitle("Next".translated(), for: .normal)
+       // newNextBtn.setTitle("Next".translated(), for: .normal)
+        newNextBtn.setTitle("Next", for: .normal)
         NoDataImg.isHidden = true
         NoDataLbl.isHidden = true
         termsCheckBtn.tintColor = .backGroundClr
@@ -69,7 +70,8 @@ class CountryListVC: UIViewController {
     }
     
     private func configureSearchBar() {
-        searchBar.placeholder = "Find your country".translated()
+        searchBar.placeholder = "Find your country"
+       // searchBar.placeholder = "Find your country".translated()
         searchBar.searchTextField.backgroundColor = .white
         searchBar.backgroundImage = UIImage()
         searchBar.searchTextField.addDoneButton()
@@ -79,8 +81,8 @@ class CountryListVC: UIViewController {
     // MARK: - Terms Label Setup (Underline + Tap Only on Text)
     
     private func setupTermsAndConditionsLabel() {
-        let fullText = "I agree to the Terms and Conditions".translated()
-        let underlineText = "Terms and Conditions".translated()
+        let fullText = "I agree to the Terms and Conditions"/*.translated()*/
+        let underlineText = "Terms and Conditions"/*.translated()*/
         let attributedString = NSMutableAttributedString(string: fullText)
         if let range = fullText.range(of: underlineText) {
             termsRange = NSRange(range, in: fullText)
@@ -231,8 +233,8 @@ extension CountryListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView,
                    titleForHeaderInSection section: Int) -> String? {
         return filteredTopCountries.isEmpty
-        ? "All Countries".translated()
-        : (section == 0 ? "Top Countries".translated() : "All Countries".translated())
+        ? "All Countries"/*.translated()*/
+        : (section == 0 ? "Top Countries"/*.translated()*/ : "All Countries"/*.translated()*/)
     }
     
     func tableView(_ tableView: UITableView,
@@ -281,7 +283,7 @@ extension CountryListVC: UISearchBarDelegate {
         ? CountryListRespons
         : CountryListRespons.filter { $0.name?.lowercased().contains(query) ?? false }
         if Filter_CountryList.isEmpty {
-            showNoData(text: "No Data Found".translated())
+            showNoData(text: "No Data Found"/*.translated()*/)
         } else {
             NoDataImg.isHidden = true
             NoDataLbl.isHidden = true

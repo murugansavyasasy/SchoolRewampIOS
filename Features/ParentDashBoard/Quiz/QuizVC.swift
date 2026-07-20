@@ -266,11 +266,11 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
         cell.LevelLbl.text = String(filteredExams[indexPath.row].level ?? 0)
         cell.MaxmarkLbl.text = String(filteredExams[indexPath.row].max_mark ?? 0)
         cell.NoOfQuestionLbl.text = String(filteredExams[indexPath.row].no_of_questions ?? 0)
-        cell.createdDateLbl.text = MenuStringFile.CreateOn.translated() + formattedDateStatus(from: filteredExams[indexPath.row].created_on ?? "", isTimeNeeded: true)
+        cell.createdDateLbl.text = MenuStringFile.CreateOn.translated() + " " + formattedDateStatus(from: filteredExams[indexPath.row].created_on ?? "", isTimeNeeded: true)
         cell.PostByLbl.text = MenuStringFile.Posted_By.translated() + " - " + (
             filteredExams[indexPath.row].sent_by ?? ""
         )
-        let imgae = stausType == "1" ? UIImage(systemName: "play.fill") : UIImage(systemName: "arrowshape.right.fill")
+        let imgae = stausType == "1" ? UIImage(systemName: "play.fill") : UIImage(systemName: "arrowshape.forward.fill")
         cell.playBtn.setImage(imgae, for: .normal)
         let title = stausType == "1" ? "Play Now".translated() : ""
         cell.playBtn.setTitle(title.translated(), for: .normal)

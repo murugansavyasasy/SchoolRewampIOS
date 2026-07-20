@@ -1440,6 +1440,26 @@
 "PREVIOUS_QUESTION" = "पिछला प्रश्न";
 "ASSIGNED" = "असाइन किया गया";
 "DEADLINE" = "अंतिम तिथि";
+"Add Image" = "चित्र जोड़ें";
+"Please fill the Chapter for Question" = "कृपया प्रश्न के लिए अध्याय भरें";
+"Please fill the Question text for Question" = "कृपया प्रश्न का पाठ भरें";
+"Please provide Option A for Question" = "कृपया प्रश्न के लिए विकल्प A प्रदान करें";
+"Please provide Option B for Question" = "कृपया प्रश्न के लिए विकल्प B प्रदान करें";
+"Please provide Option C for Question" = "कृपया प्रश्न के लिए विकल्प C प्रदान करें";
+"Please provide Option D for Question" = "कृपया प्रश्न के लिए विकल्प D प्रदान करें";
+"Please select the correct answer for Question" = "कृपया प्रश्न के लिए सही उत्तर चुनें";
+"Please select the correct answer text for Question" = "कृपया प्रश्न के लिए सही उत्तर का पाठ चुनें";
+"Please assign marks for Question" = "कृपया प्रश्न के लिए अंक निर्धारित करें";
+"Almost there! You’ve created" = "लगभग हो गया! आपने";
+"out of" = "में से";
+"questions." = "प्रश्न बना लिए हैं।";
+"You still need to add" = "आपको अभी भी";
+"more question(s) to complete the quiz — but don’t worry, you can add them later." = "और प्रश्न जोड़ने होंगे ताकि क्विज़ पूरा हो सके — लेकिन चिंता न करें, आप उन्हें बाद में भी जोड़ सकते हैं।";
+"Note: The quiz will be visible to students only after all questions are filled" = "नोट: सभी प्रश्न भरने के बाद ही क्विज़ छात्रों को दिखाई देगा।";
+"The quiz will be visible to students only after all questions are filled and Submitted" = "सभी प्रश्न भरकर जमा करने के बाद ही क्विज़ छात्रों को दिखाई देगा।";
+"View & Enter marks" = "अंक देखें एवं दर्ज करें";
+"Select a Date" = "तिथि चुनें";
+
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";

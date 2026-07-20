@@ -226,6 +226,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         optDDefaultLbl.setRequiredText(QuizListStringFile.Option_D)
         CorretDefaultLbl.setRequiredText(QuizListStringFile.Correct_Ans)
         markDefaultLbl.setRequiredText(QuizListStringFile.Mark)
+        addFileBtnName.setTitle("Add files to Question".translated(), for: .normal)
         markTxtFild.placeholder = MenuStringFile.dropYourMarkHere.translated()
         ChapterTxtFld.placeholder = "Enter Chapter here".translated()
         markTxtFild.delegate = self
@@ -235,7 +236,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         opBTxtView.delegate = self
         opATxtView.delegate = self
         questionTxtView.delegate = self
-        markTxtFild.keyboardType = .numberPad
+        markTxtFild.keyboardType = .asciiCapableNumberPad
         opATxtView.addDoneButton()
         markTxtFild.addDoneButton()
         ChapterTxtFld.addDoneButton()
@@ -261,6 +262,11 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         QuestionImageCv.imageCollectionview.delegate = self
         QuestionImageCv.imageCollectionview.dataSource = self
         QuestionImageCv.imageCollectionview.backgroundColor = .clear
+        
+        OptionAImgBtn.setTitle("Add Image".translated(), for: .normal)
+        OptionBImgBtn.setTitle("Add Image".translated(), for: .normal)
+        OptionCImgBtn.setTitle("Add Image".translated(), for: .normal)
+        OptionDImgBtn.setTitle("Add Image".translated(), for: .normal)
     }
     
     func setPlaceholder(_ placeholder: String, for textView: UITextView) {

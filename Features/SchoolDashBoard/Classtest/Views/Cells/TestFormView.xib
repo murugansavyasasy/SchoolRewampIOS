@@ -231,7 +231,7 @@
                                                 <constraint firstAttribute="height" constant="40" id="hR5-15-hMT"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="ASCIICapableNumberPad" returnKeyType="done"/>
                                         </textField>
                                     </subviews>
                                 </stackView>
@@ -267,7 +267,7 @@
                                                 <constraint firstAttribute="height" constant="40" id="ty6-fS-cw9"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="ASCIICapableNumberPad" returnKeyType="done"/>
                                         </textField>
                                     </subviews>
                                 </stackView>

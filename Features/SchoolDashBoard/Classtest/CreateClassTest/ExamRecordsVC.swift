@@ -31,6 +31,8 @@ class ExamRecordsVC: UIViewController {
         tv.delegate = self
         tv.dataSource = self
         
+        entermarksBtn.setTitle("View & Enter marks".translated(), for: .normal)
+        
         if !test_subjects.isEmpty{
             expandedIndexPath = IndexPath(row: 0, section: 0)
         }
