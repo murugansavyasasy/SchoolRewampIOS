@@ -585,23 +585,23 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         if remaining > 0 {
             let alertController = UIAlertController(title: AlertstringFile.Select.translated(), message: AlertstringFile.Chooseanoption.translated(), preferredStyle: .actionSheet)
             // Camera option
-            let cameraAction = UIAlertAction(title: CommonStringFile.Camera, style: .default) { [self] _ in
+            let cameraAction = UIAlertAction(title: CommonStringFile.Camera.translated(), style: .default) { [self] _ in
                 openCamera()
             }
             alertController.addAction(cameraAction)
             // Gallery option
-            let galleryAction = UIAlertAction(title: CommonStringFile.Photos, style: .default) { [self] _ in
+            let galleryAction = UIAlertAction(title: CommonStringFile.Photos.translated(), style: .default) { [self] _ in
                 selectImages()//
             }
             alertController.addAction(galleryAction)
             
-            let pdfAction = UIAlertAction(title: CommonStringFile.Document, style: .default) { [self] _ in
+            let pdfAction = UIAlertAction(title: CommonStringFile.Document.translated(), style: .default) { [self] _ in
                 selectDocuments()
             }
             alertController.addAction(pdfAction)
             //   VIDEO option
             let VideoAction = UIAlertAction(title:
-                                                CommonStringFile.Video, style: .default) { [self] _ in
+                                                CommonStringFile.Video.translated(), style: .default) { [self] _ in
                 
                 let totalRemaining = Filecount.SelectImageAndDocumetCount - file_path.count
                 let videoCount = file_path.filter { $0.type?.lowercased() == video }.count
@@ -621,7 +621,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
             alertController.addAction(VideoAction)
             // Cancel action
             let cancelAction = UIAlertAction(
-                title: CommonStringFile.Cancel,
+                title: CommonStringFile.Cancel.translated(),
                 style: .cancel,
                 handler: nil
             )

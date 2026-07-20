@@ -1002,7 +1002,7 @@ extension MarkAttendenceVC: UIPopoverPresentationControllerDelegate {
         if let popover = contentVC.popoverPresentationController {
             popover.sourceView = sender
             popover.sourceRect = sender.bounds
-            popover.permittedArrowDirections = .left
+            popover.permittedArrowDirections = .any
             popover.delegate = self
             popover.backgroundColor = .white
         }

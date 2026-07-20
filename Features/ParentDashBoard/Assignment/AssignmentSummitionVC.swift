@@ -163,29 +163,30 @@ class AssignmentSummitionVC: UIViewController,UITableViewDelegate,UITableViewDat
         if submitedList {
             if let data = submissions_details?[indexPath.row],
                let submittedDate = data.submitted_on?.submissionTimeDisplay() {
-                
+                let submittedText = "Submitted".translated()
                 let (timeAgo, dateString) = submittedDate
                 cell.assignmentTitle.text = titleName
                 cell.subjectName.text = subject
                 cell.FilesUrl = data.file_path
                 if let dateString = data.submitted_on,
                    let formattedDate = dateString.convertToTargetDateFormat() {
-                    cell.timeLeft.text = "Submitted: \(formattedDate)"
+                    cell.timeLeft.text = "\(submittedText): \(formattedDate)"
                 } else {
-                    cell.timeLeft.text = "Submitted: N/A"
+                    cell.timeLeft.text = "\(submittedText): N/A"
                 }
                 cell.descriptionLbl.text = data.description
                 cell.loadFiles(into: cell, files: data.file_path ?? [])
             }
             return cell
         }else{
+            let submittedText = "Submitted".translated()
             if let data = assignments?[indexPath.row]{
                 if let (timeAgo, dateString) = data.submitted_on?.submissionTimeDisplay(){
                     if let dateString = data.submitted_on,
                        let formattedDate = dateString.convertToTargetDateFormat() {
-                        cell.timeLeft.text = "Submitted: \(formattedDate)"
+                        cell.timeLeft.text = "\(submittedText): \(formattedDate)"
                     } else {
-                        cell.timeLeft.text = "Submitted: N/A"
+                        cell.timeLeft.text = "\(submittedText): N/A"
                     }
                 }
                 cell.assignmentTitle.text = titleName

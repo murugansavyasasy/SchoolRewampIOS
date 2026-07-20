@@ -101,16 +101,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9E6C7664-3E43-4AE2-9AF6-12A8E0D5A915"
-            shouldBeEnabled = "Yes"
+            uuid = "4CE9374D-A494-483E-9441-210D711400FA"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Features/SchoolDashBoard/Lesson plan/EditLessonVC.swift"
+            filePath = "Core/ExtenstionsFiles/Extentions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
-            landmarkName = "LessonPlan_Update_Api()"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
+            landmarkName = "didTapAttributedTextInLabel(label:inRange:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

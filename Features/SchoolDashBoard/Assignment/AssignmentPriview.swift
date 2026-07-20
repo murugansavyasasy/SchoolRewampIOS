@@ -176,10 +176,10 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
         if searchText == "All" {
             filterAssignment = submittedAssignment
             selectedAssignment = submittedAssignment
-        } else if searchText == "Submited" {
+        } else if searchText == "Submited".translated() {
             filterAssignment = submittedAssignment.filter { ($0.submit_status ?? "") != "NOTSUBMITTED" }
             selectedAssignment = filterAssignment
-        } else if searchText == "Pending" {
+        } else if searchText == "Pending".translated() {
             filterAssignment = submittedAssignment.filter { ($0.submit_status ?? "") == "NOTSUBMITTED" }
             selectedAssignment = filterAssignment
         } else if searchText == "true" {
@@ -241,9 +241,14 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentsearchTVC", for: indexPath) as? AssignmentsearchTVC else {
                 return UITableViewCell()
             }
-            cell.allBtn.setTitle("All Students(\(data?.total_count ?? 0))", for: .normal)
-            cell.submitedBtn.setTitle("Submitted(\(data?.submitted_count ?? 0))", for: .normal)
-            cell.pendingBtn.setTitle("Pending(\((data?.total_count ?? 0) - (data?.submitted_count ?? 0)))", for: .normal)
+            
+            let allStudentText = "All Students".translated()
+            let SubmittedText = "Submitted".translated()
+            let PendingText = "Pending".translated()
+            
+            cell.allBtn.setTitle("\(allStudentText)(\(data?.total_count ?? 0))", for: .normal)
+            cell.submitedBtn.setTitle("\(SubmittedText)(\(data?.submitted_count ?? 0))", for: .normal)
+            cell.pendingBtn.setTitle("\(PendingText)(\((data?.total_count ?? 0) - (data?.submitted_count ?? 0)))", for: .normal)
             cell.delegate = self
             return cell
 
@@ -299,7 +304,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
             }
             cell.standerdScection?.text = "\(student.standard ?? "") - \(student.section ?? "")"
             let isNotSubmitted = student.submit_status == "NOTSUBMITTED"
-            let statusText = isNotSubmitted ? "Pending" : "Submitted"
+            let statusText = isNotSubmitted ? "Pending".translated() : "Submitted".translated()
             let statusColor = isNotSubmitted ? UIColor.brown : UIColor.systemGreen
 
             cell.statusView.backgroundColor = isNotSubmitted ? UIColor.systemGray5 : UIColor.systemGray6
@@ -321,7 +326,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
 
             let lastSubmittedOn = student.submissions_details?.last?.submitted_on
             let date: String? = lastSubmittedOn?.isEmpty == false ? lastSubmittedOn : data?.end_date
-            let txt = (lastSubmittedOn?.isEmpty == false) ? "Submitted" : "Due Date"
+            let txt = (lastSubmittedOn?.isEmpty == false) ? "Submitted".translated() : "Due Date".translated()
 
             cell.submitDate.text = "\(txt): \(formattedDateStatus(from: date ?? ""))"
             cell.statusView.setImage(icon, for: .normal)
@@ -341,12 +346,15 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
 
         let selectedStudent = filterAssignment[indexPath.row]
         if selectedStudent.submit_status == "NOTSUBMITTED" {
+            
+            let thisStudentText = "This student".translated()
+            let hasNotSubmittedText = "has not submitted the assignment yet.".translated()
             let alert = UIAlertController(
-                title: "No Submission",
-                message: "\(selectedStudent.student_name ?? "This student") has not submitted the assignment yet.",
+                title: "No Submission".translated(),
+                message: "\(selectedStudent.student_name ?? thisStudentText) \(hasNotSubmittedText)",
                 preferredStyle: .alert
             )
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            alert.addAction(UIAlertAction(title: "OK".translated(), style: .default))
             present(alert, animated: true)
             return
         }
@@ -358,7 +366,7 @@ class AssignmentPriview: UIViewController, UITableViewDataSource, UITableViewDel
         submissionVC.submissions_details = selectedStudent.submissions_details
         submissionVC.backBtnTittle1 = userNameValue ?? ""
         submissionVC.backBtnTittle2 = sectionValue ?? ""
-        submissionVC.isStudent = "Submission"
+        submissionVC.isStudent = "Submission".translated()
         submissionVC.modalPresentationStyle = .fullScreen
         present(submissionVC, animated: false)
     }

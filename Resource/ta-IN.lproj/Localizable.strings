@@ -1040,6 +1040,7 @@
 "Admission No ↑" = "சேர்க்கை எண் ↑";
 "Others" = "மற்றவை";
 "All students" = "அனைத்து மாணவர்களும்";
+"All Students" = "அனைத்து மாணவர்களும்";
 "Class & Section" = "வகுப்பு & பிரிவு";
 "Admission No" = "சேர்க்கை எண்";
 "SMS" = "குறுஞ்செய்தி";
@@ -1425,11 +1426,15 @@
 "Student" = "மாணவர்கள்";
 "Send to multiple school" = "பல பள்ளிகளுக்கு அனுப்பவும்";
 "Select recipient" = "பெறுநரைத் தேர்வு செய்யவும்";
-//MARK: Flavour strings
-"WELCOME_STRING" = "Welcome to School Chimes";
-"REPORT_BUG_STRING" = "Dear School Chimes Team";
-"TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
-"APP_STORE_ID" = "6758079127";
+"No Submission" = "சமர்ப்பிப்பு இல்லை";
+"This student" = "இந்த மாணவர்";
+"has not submitted the assignment yet." = "இன்னும் பணியை சமர்ப்பிக்கவில்லை.";
+"Submission Progress" = "சமர்ப்பிப்பு முன்னேற்றம்";
+"𓄲 Attachments" = "𓄲 இணைப்புகள்";
+"Are you sure want to update this Quiz?" = "இந்த வினாடி வினாவை புதுப்பிக்க விரும்புகிறீர்களா?";
+"You haven't added questions to this quiz yet. Would you like to add them or do it later?" = "இந்த வினாடி வினாவில் இன்னும் கேள்விகள் சேர்க்கப்படவில்லை. இப்போது சேர்க்க விரும்புகிறீர்களா அல்லது பின்னர் சேர்க்கவா?";
+"Later" = "பின்னர்";
+"Add Now" = "இப்போது சேர்";
 "SUBMIT_QUIZ" = "வினாடி வினாவை சமர்ப்பிக்கவும்";
 "SUBMIT_QUIZ_CONFIRMATION" = "இந்த வினாடி வினாவை சமர்ப்பிக்க விரும்புகிறீர்களா?";
 "MARK" = "மதிப்பெண்";
@@ -1455,3 +1460,10 @@
 "male" = "ஆண்";
 "female" = "பெண்";
 "others" = "மற்றவை";
+
+
+//MARK: Flavour strings
+"WELCOME_STRING" = "Welcome to School Chimes";
+"REPORT_BUG_STRING" = "Dear School Chimes Team";
+"TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
+"APP_STORE_ID" = "6758079127";
