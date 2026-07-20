@@ -82,7 +82,7 @@ class SubjectDetailsTableViewCell: UITableViewCell {
         
         mergeBannerButton.layer.cornerRadius = 15
         mergeBannerButton.layer.masksToBounds = true
-        mergeBannerButton.setTitle(NSLocalizedString("Copy", comment: ""), for: .normal)
+        mergeBannerButton.setTitle("Copy".translated(), for: .normal)
         // Add gesture reconizer for header
         let tap = UITapGestureRecognizer(target: self, action: #selector(headerTapped))
         headerView.addGestureRecognizer(tap)
@@ -170,21 +170,18 @@ class SubjectDetailsTableViewCell: UITableViewCell {
                 mergeBannerSubtitleLabel.isHidden = false
 
                 mergeBannerTitleLabel.text = String(
-                    format: NSLocalizedString("Copy data from %@ · Sec %@?", comment: ""),
+                    format: "Copy data from %@ · Sec %@?".translated(),
                     configu.subjectName,
                     mergeable.sectionName
                 )
 
-                mergeBannerSubtitleLabel.text = NSLocalizedString(
-                    "Fills all tests from that subject into this section",
-                    comment: ""
-                )
+                mergeBannerSubtitleLabel.text = "Fills all tests from that subject into this section".translated()
             } else {
                 mergeBannerIconImageView.isHidden = false
                 mergeBannerSubtitleLabel.isHidden = true
 
                 mergeBannerTitleLabel.text = String(
-                    format: NSLocalizedString("%@ (Sec %@) is filled", comment: ""),
+                    format: "%@ (Sec %@) is filled".translated(),
                     configu.subjectName,
                     mergeable.sectionName
                 )

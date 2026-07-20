@@ -64,7 +64,7 @@ public final class SelectReviewViewController: UIViewController {
         }
         
        
-        backButton.setTitle(NSLocalizedString("back", comment: ""), for: .normal)
+        backButton.setTitle("back".translated(), for: .normal)
         backButton.layer.cornerRadius = 16
         backButton.layer.borderWidth = 1.0
         backButton.layer.borderColor = UIColor(red: 0.886, green: 0.909, blue: 0.941, alpha: 1.0).cgColor // #E2E8F0
@@ -89,7 +89,7 @@ public final class SelectReviewViewController: UIViewController {
     private func updateButtonsState() {
         let total = totalTestsCount
         let title = total == 1 ? "  Create  Test" : "  Create  Test"
-        createButton.setTitle(NSLocalizedString("Create Test", comment: ""), for: .normal)
+        createButton.setTitle("Create Test".translated(), for: .normal)
 //        createButton.setTitle(title, for: .normal)
         
         let activeColor = UIColor.primery
@@ -157,7 +157,7 @@ public final class SelectReviewViewController: UIViewController {
                         }
                     }
                 case .failure(let failure):
-                    CustomAlert.showAlertWithOkAction(title: "Error", message: "Something went Wrong", on: self)
+                    CustomAlert.showAlertWithOkAction(title: "Error".translated(), message: "Something went Wrong".translated(), on: self)
                     print("Error: ",failure.localizedDescription)
                 }
             }

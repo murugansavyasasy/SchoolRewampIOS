@@ -31,7 +31,7 @@ public final class SummaryTableViewCell: UITableViewCell {
             : "%d sections selected"
 
         let text = String(
-            format: NSLocalizedString(key, comment: ""),
+            format: key.translated(),
             count
         )
 

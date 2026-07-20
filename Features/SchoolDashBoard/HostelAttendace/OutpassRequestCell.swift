@@ -42,9 +42,9 @@ class OutpassRequestCell: UITableViewCell {
         approveButton.layer.cornerRadius = 12
         rejectButton.layer.cornerRadius = 12
         
-        approveButton.setTitle(NSLocalizedString("Reject", comment: ""), for: .normal)
+        approveButton.setTitle("Reject".translated(), for: .normal)
         
-        rejectButton.setTitle(NSLocalizedString("Approve", comment: ""), for: .normal)
+        rejectButton.setTitle("Approve".translated(), for: .normal)
         cardView.backgroundColor = .white
         cardView.layer.shadowColor = UIColor.black.cgColor
         cardView.layer.shadowOffset = CGSize(width: 1, height: 2)

@@ -212,8 +212,8 @@ class RecipientVc: UIViewController{
         selectSubject.addGestureRecognizer(tap3)
         selectLevel.addGestureRecognizer(tap4)
         acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
-        sendbtnName.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
-        speficBtnName.setTitle(NSLocalizedString("Specific Student", comment: ""), for: .normal)
+        sendbtnName.setTitle("Send".translated(), for: .normal)
+        speficBtnName.setTitle("Specific Student".translated(), for: .normal)
     }
     func configureRecipientTabs() {
         segmentName.removeAllSegments()

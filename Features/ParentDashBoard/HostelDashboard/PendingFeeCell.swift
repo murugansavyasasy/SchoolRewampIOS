@@ -81,21 +81,21 @@ class PendingFeeCell: UITableViewCell {
             let hName = hDetails.hostel_name ?? "-"
             setupAttributedText(
                 for: hostelNameLabel,
-                title: NSLocalizedString("Hostel", comment: "") + ": ",
+                title: "Hostel".translated() + ": ",
                 value: hName
             )
 
             let rNum = hDetails.room_no ?? "-"
             setupAttributedText(
                 for: roomLabel,
-                title: NSLocalizedString("Room", comment: "") + ": ",
+                title: "Room".translated() + ": ",
                 value: rNum
             )
 
             let bNum = hDetails.bed_no ?? "-"
             setupAttributedText(
                 for: bedLabel,
-                title: NSLocalizedString("Bed", comment: "") + ": ",
+                title: "Bed".translated() + ": ",
                 value: bNum
             )
         }

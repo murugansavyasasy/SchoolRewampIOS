@@ -51,7 +51,7 @@ class TestFormView: UIView,UITextFieldDelegate,UITextViewDelegate {
         exameDefaultLbl.font = .systemFont(ofSize: 10, weight: .bold)
         minMarkDefaultLbl.font = .systemFont(ofSize: 10, weight: .bold)
         maxMarkDefaultLbl.font = .systemFont(ofSize: 10, weight: .bold)
-        removeButton.setTitle(NSLocalizedString("Remove", comment: ""), for: .normal)
+        removeButton.setTitle("Remove".translated(), for: .normal)
         styleTextView(examNameTextView)
         styleTextField(testDateTextField)
         styleTextField(maxMarksTextField)

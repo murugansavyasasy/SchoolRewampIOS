@@ -189,8 +189,8 @@ class MarkAttendanceViewController: UIViewController, UITableViewDataSource, UIT
         calendar.scrollEnabled = false
         mothView.layer.cornerRadius = 10
         SelectionDateFullView.layer.cornerRadius = 10
-        markAllButton.setTitle(NSLocalizedString("Mark Attendance", comment: ""), for: .normal)
-        SelectDateBtn.setTitle(NSLocalizedString("Select Date", comment: ""), for: .normal)
+        markAllButton.setTitle("Mark Attendance".translated(), for: .normal)
+        SelectDateBtn.setTitle("Select Date".translated(), for: .normal)
     }
 
     private func setupTableView() {
