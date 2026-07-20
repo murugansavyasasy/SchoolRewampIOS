@@ -135,7 +135,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         DetailsTxtview.textColor = content != "" ? .black:.lightGray
         TitleTxtfield.text = title
         self.editId = editId
-        RecipientBtn.setTitle(CommonStringFile.UPDATE, for: .normal)
+        RecipientBtn.setTitle(CommonStringFile.Update.translated(), for: .normal)
         let imageItems: [AttachmentItem] = imageUrls.map { file in
             let type = file.type?.lowercased() ?? ""
             return AttachmentItem(
@@ -219,7 +219,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             var params: [String: Any] = [
                 assignmentResquestStringKey.title: TitleTxtfield.text ?? "",
                 assignmentResquestStringKey.description: DetailsTxtview.text ?? "",]
-            if (sender as AnyObject).titleLabel.text == CommonStringFile.UPDATE{
+            if (sender as AnyObject).titleLabel.text == CommonStringFile.Update.translated(){
                 let com = commonApi_forSending()
                 params[SendAttachmentStringFile.id] = editId
                 com.SendingAttachmentFlow(
@@ -241,7 +241,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                             on: self
                         ) { [self] in
                             editId = ""
-                            RecipientBtn.setTitle(CommonStringFile.NEXT, for: .normal)
+                            RecipientBtn.setTitle(CommonStringFile.NEXT.translated(), for: .normal)
                             TitleTxtfield.text = ""
                             DetailsTxtview.text = ""
                             attachments.removeAll()
@@ -391,23 +391,23 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
             if remaining > 0 {
                 let alertController = UIAlertController(title: AlertstringFile.Select.translated(), message: AlertstringFile.Chooseanoption.translated(), preferredStyle: .actionSheet)
                 // Camera option
-                let cameraAction = UIAlertAction(title: CommonStringFile.Camera, style: .default) { [self] _ in
+                let cameraAction = UIAlertAction(title: CommonStringFile.Camera.translated(), style: .default) { [self] _ in
                     openCamera()
                 }
                 alertController.addAction(cameraAction)
                 // Gallery option
-                let galleryAction = UIAlertAction(title: CommonStringFile.Photos, style: .default) { [self] _ in
+                let galleryAction = UIAlertAction(title: CommonStringFile.Photos.translated(), style: .default) { [self] _ in
                     selectImages()//
                 }
                 alertController.addAction(galleryAction)
                 
-                let pdfAction = UIAlertAction(title: CommonStringFile.Document, style: .default) { [self] _ in
+                let pdfAction = UIAlertAction(title: CommonStringFile.Document.translated(), style: .default) { [self] _ in
                     selectDocuments()
                 }
                 alertController.addAction(pdfAction)
                 //   VIDEO option
                 let VideoAction = UIAlertAction(title:
-                                                    CommonStringFile.Video, style: .default) { [self] _ in
+                                                    CommonStringFile.Video.translated(), style: .default) { [self] _ in
                     
                     let totalRemaining = Filecount.SelectImageAndDocumetCount - attachments.count
                     let videoCount = attachments.filter { $0.fileType.lowercased() == video }.count
@@ -427,7 +427,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                 alertController.addAction(VideoAction)
                 // Cancel action
                 let cancelAction = UIAlertAction(
-                    title: CommonStringFile.Cancel,
+                    title: CommonStringFile.Cancel.translated(),
                     style: .cancel,
                     handler: nil
                 )

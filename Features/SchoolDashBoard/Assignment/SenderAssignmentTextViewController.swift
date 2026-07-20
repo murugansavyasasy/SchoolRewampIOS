@@ -595,7 +595,7 @@ extension SenderAssignmentTextViewController: UICollectionViewDelegate,
             alertController.addAction(UIAlertAction(title: "Document".translated(), style: .default) { [weak self] _ in
                 self?.selectPDF()
             })
-            alertController.addAction(UIAlertAction(title: "Video", style: .default) { [weak self] _ in
+            alertController.addAction(UIAlertAction(title: "Video".translated(), style: .default) { [weak self] _ in
                 self?.VideoPick()
             })
             alertController.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil))

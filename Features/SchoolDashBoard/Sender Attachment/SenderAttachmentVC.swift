@@ -127,7 +127,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         contentTextView.textColor = content != "" ? .black:.lightGray
         assignTitleTxtFld.text = title
         self.editId = editId
-        chooseRecipientsBtn.setTitle(CommonStringFile.UPDATE.translated(), for: .normal)
+        chooseRecipientsBtn.setTitle(CommonStringFile.Update.translated(), for: .normal)
         let imageItems: [AttachmentItem] = imageUrls.map { file in
             let type = file.type?.lowercased() ?? ""
             return AttachmentItem(
@@ -459,20 +459,20 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
             let remaining = Filecount.SelectImageAndDocumetCount - attachments.count
             if remaining > 0 {
                 let alertController = UIAlertController(title: AlertstringFile.Select.translated(), message: AlertstringFile.Choose_file_type.translated(), preferredStyle: .actionSheet)
-                let cameraAction = UIAlertAction(title: CommonStringFile.Camera, style: .default) { [self] _ in
+                let cameraAction = UIAlertAction(title: CommonStringFile.Camera.translated(), style: .default) { [self] _ in
                     openCamera()
                 }
                 alertController.addAction(cameraAction)
-                let galleryAction = UIAlertAction(title: CommonStringFile.Photos, style: .default) { [self] _ in
+                let galleryAction = UIAlertAction(title: CommonStringFile.Photos.translated(), style: .default) { [self] _ in
                     selectImages()
                 }
                 alertController.addAction(galleryAction)
-                let pdfAction = UIAlertAction(title: CommonStringFile.Document, style: .default) { [self] _ in
+                let pdfAction = UIAlertAction(title: CommonStringFile.Document.translated(), style: .default) { [self] _ in
                     selectDocuments()
                 }
                 alertController.addAction(pdfAction)
                 let VideoAction = UIAlertAction(title:
-                                                    CommonStringFile.Video, style: .default) { [self] _ in
+                                                    CommonStringFile.Video.translated(), style: .default) { [self] _ in
                     let totalRemaining = Filecount.SelectImageAndDocumetCount - attachments.count
                     let videoCount = attachments.filter { $0.fileType.lowercased() == "video" }.count
                     let videoRemaining = Filecount.SelectVideoCount - videoCount
@@ -491,7 +491,7 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
                 alertController.addAction(VideoAction)
                 // Cancel action
                 let cancelAction = UIAlertAction(
-                    title: CommonStringFile.Cancel,
+                    title: CommonStringFile.Cancel.translated(),
                     style: .cancel,
                     handler: nil
                 )

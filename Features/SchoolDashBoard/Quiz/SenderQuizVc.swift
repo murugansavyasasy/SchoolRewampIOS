@@ -40,7 +40,7 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         titleText.addDoneButton()
         discriptionsTextFild.addDoneButton()
         numberOfQuestionText.addDoneButton()
-        numberOfQuestionText.keyboardType = .numberPad
+        numberOfQuestionText.keyboardType = .asciiCapableNumberPad
         setupPlaceholder()
         numberOfQuestionText.placeholder = MenuStringFile.No_of_question.translated()
         titleText.placeholder = MenuStringFile.Title.translated()
@@ -177,7 +177,7 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
         }
         
         if editQuiz != nil{
-            CustomAlert().showAlertCancel(title: AlertstringFile.Confirm, message: "Are you sure want to update this Quiz?", actionLbl1: AlertstringFile.Yes, actionLbl2: AlertstringFile.Cancel, on: self) {
+            CustomAlert().showAlertCancel(title: AlertstringFile.Confirm, message: "Are you sure want to update this Quiz?".translated(), actionLbl1: AlertstringFile.Yes, actionLbl2: AlertstringFile.Cancel, on: self) {
                 
                 self.update_Quiz()
             } onNo: {}
@@ -186,19 +186,19 @@ class SenderQuizVc: UIViewController, UITextFieldDelegate, UITextViewDelegate {
             
             let alert = UIAlertController(
                 title: AlertstringFile.Alert_title,
-                message: "You haven't added questions to this quiz yet. Would you like to add them or do it later?",
+                message: "You haven't added questions to this quiz yet. Would you like to add them or do it later?".translated(),
                 preferredStyle: .alert
             )
             
-            let cancelAction = UIAlertAction(title: AlertstringFile.Cancel, style: .cancel) { _ in
+            let cancelAction = UIAlertAction(title: AlertstringFile.Cancel.translated(), style: .cancel) { _ in
                 print("Cancel tapped")
             }
             
-            let laterAction = UIAlertAction(title: "Later", style: .default) { _ in
+            let laterAction = UIAlertAction(title: "Later".translated(), style: .default) { _ in
                 self.AddLater()
             }
             
-            let okAction = UIAlertAction(title: "Add Now", style: .default) { _ in
+            let okAction = UIAlertAction(title: "Add Now".translated(), style: .default) { _ in
                 self.AddNow()
             }
             alert.addAction(cancelAction)

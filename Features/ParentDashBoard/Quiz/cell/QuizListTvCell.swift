@@ -69,7 +69,7 @@ class QuizListTvCell: UITableViewCell, SelectedId, UIPopoverPresentationControll
         if let popoverController = popoverContentVC.popoverPresentationController {
             popoverController.sourceView = sender
             popoverController.sourceRect = sender.bounds
-            popoverController.permittedArrowDirections = .right
+            popoverController.permittedArrowDirections = .any
             popoverController.delegate = self
         }
         
