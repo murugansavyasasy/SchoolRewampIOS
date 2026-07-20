@@ -1,8 +1,3 @@
-////
-////  AWSS3Manager.swift
-////  VsSchoolChimes
-////  Created by chandhru on 12/04/24.
-//
 
 import UIKit
 import AWSS3
@@ -70,19 +65,19 @@ class AWSUploadManager {
                     contentType = "audio/wav"
                     fileURL = url
                 }else {
-                    let time = Int(Date().timeIntervalSince1970)
+                    let time = Int(Date().timeIntervalSince1970 * 1000)
                     fileName = "file_\(time).\(url.pathExtension)"
                     contentType = getContentType(from: fileName)
                     fileURL = url
                 }
             }else{
                 if isAudioFile(url: url) {
-                    let timestamp = Int(Date().timeIntervalSince1970)
+                    let timestamp = Int(Date().timeIntervalSince1970 * 1000)
                     fileName = "original_\(timestamp).\(url.pathExtension)"
                     contentType = "audio/\(url.pathExtension)"
                     fileURL = url
                 }else {
-                    let time = Int(Date().timeIntervalSince1970)
+                    let time = Int(Date().timeIntervalSince1970 * 1000)
                     fileName = "file_\(time).\(url.pathExtension)"
                     contentType = getContentType(from: fileName)
                     fileURL = url
@@ -221,7 +216,7 @@ class AWSUploadManager {
             
         case Menu_id.communicationMenuId:
             Bucket = BucketName.schoolchimes_communication
-            Path = "\(Awsmenu.voice)/\("original")/\(today_date)"
+            Path = "\(Awsmenu.voice)/\("original")/\(school_id)/\(today_date)"
         case Menu_id.quiz:
             Bucket = BucketName.schoolchimes_activities
             Path = "\(Awsmenu.marksheets)/\(school_id)/\(today_date)"
