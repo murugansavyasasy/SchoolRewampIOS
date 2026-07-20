@@ -1391,6 +1391,11 @@
 "male" = "ذكر";
 "female" = "أنثى";
 "others" = "أخرى";
+"select_type" = "اختر النوع";
+"sort" = "ترتيب";
+"student_name_roll_adm_no" = "اسم الطالب ورقم السجل ورقم القبول";
+"clear" = "مسح";
+"apply" = "تطبيق";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

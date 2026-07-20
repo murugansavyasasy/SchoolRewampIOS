@@ -11,6 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterPopover" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
             <connections>
+                <outlet property="applyBtn" destination="5wM-hW-8LD" id="FXS-8B-PbM"/>
+                <outlet property="clearBtn" destination="W4d-s4-x7e" id="pRq-u6-c4g"/>
                 <outlet property="verticalstackView" destination="G1G-Ba-mBB" id="nKK-BO-Ger"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outletCollection property="horizontalstackViews" destination="aD2-sX-40G" collectionClass="NSMutableArray" id="hs1-aD-001"/>
@@ -221,14 +223,14 @@
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="LLu-lD-Vbj">
                             <rect key="frame" x="20" y="601" width="333" height="35"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W4d-s4-x7e" customClass="LocalizationButton" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W4d-s4-x7e">
                                     <rect key="frame" x="0.0" y="0.0" width="159" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="35" id="Yct-ly-Spl"/>
                                     </constraints>
                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="Clear">
+                                    <buttonConfiguration key="configuration" style="plain" title="clear">
                                         <backgroundConfiguration key="background" cornerRadius="17">
                                             <color key="backgroundColor" red="0.043137254899999998" green="0.20000000000000001" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>
                                         </backgroundConfiguration>
@@ -238,14 +240,14 @@
                                         <action selector="clearSort:" destination="-1" eventType="touchUpInside" id="Ipw-Pa-j5D"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5wM-hW-8LD" customClass="LocalizationButton" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5wM-hW-8LD">
                                     <rect key="frame" x="174" y="0.0" width="159" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="35" id="Hs0-HD-z2h"/>
                                     </constraints>
                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="Apply">
+                                    <buttonConfiguration key="configuration" style="plain" title="apply">
                                         <backgroundConfiguration key="background" cornerRadius="17">
                                             <color key="backgroundColor" red="0.043137254899999998" green="0.20000000000000001" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>
                                         </backgroundConfiguration>

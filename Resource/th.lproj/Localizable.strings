@@ -1449,7 +1449,11 @@
 "You haven't added questions to this quiz yet. Would you like to add them or do it later?" = "คุณยังไม่ได้เพิ่มคำถามในแบบทดสอบนี้ ต้องการเพิ่มตอนนี้หรือภายหลัง?";
 "Later" = "ภายหลัง";
 "Add Now" = "เพิ่มตอนนี้";
-
+"select_type" = "เลือกประเภท";
+"sort" = "เรียงลำดับ";
+"student_name_roll_adm_no" = "ชื่อนักเรียน และเลขที่ และเลขรับเข้า";
+"clear" = "ล้าง";
+"apply" = "นำไปใช้";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

@@ -1376,6 +1376,11 @@
 "male" = "Male";
 "female" = "Female";
 "others" = "Others";
+"select_type" = "Select Type";
+"sort" = "Sort";
+"student_name_roll_adm_no" = "Student Name & Roll No & Adm No";
+"clear" = "Clear";
+"apply" = "Apply";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

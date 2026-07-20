@@ -1460,7 +1460,11 @@
 "male" = "ஆண்";
 "female" = "பெண்";
 "others" = "மற்றவை";
-
+"select_type" = "வகையைத் தேர்ந்தெடுக்கவும்";
+"sort" = "வரிசைப்படுத்து";
+"student_name_roll_adm_no" = "மாணவர் பெயர் & வரிசை எண் & சேர்க்கை எண்";
+"clear" = "அழி";
+"apply" = "பயன்படுத்து";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

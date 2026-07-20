@@ -1458,6 +1458,11 @@
 "male" = "पुरुष";
 "female" = "महिला";
 "others" = "अन्य";
+"select_type" = "प्रकार चुनें";
+"sort" = "क्रमबद्ध करें";
+"student_name_roll_adm_no" = "छात्र का नाम और रोल नंबर और प्रवेश संख्या";
+"clear" = "साफ़ करें";
+"apply" = "लागू करें";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";
