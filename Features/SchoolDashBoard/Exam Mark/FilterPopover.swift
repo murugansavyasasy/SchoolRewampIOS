@@ -25,7 +25,7 @@ class FilterPopover: UIViewController {
     weak var delegate: FilterPopoverDelegate?
     var stackViewReferences: [Int: (typeView: UIView, sortView: UIView, innerStack: UIStackView)] = [:]
     
-    var filterSection: [FilterSection]? = [
+    var filterSection: [FilterSection] = [
         FilterSection(type: "Student Name", section: ["Ascending", "Descending"]),
         FilterSection(type: "Admission Number", section: ["Ascending", "Descending"]),
         FilterSection(type: "Roll Number", section: ["Ascending", "Descending"]),
@@ -73,7 +73,7 @@ class FilterPopover: UIViewController {
             }
             
             // Find the filter section for this type
-            if let filterSectionForType = filterSection?.first(where: { $0.type == appliedFilter.type }) {
+            if let filterSectionForType = filterSection.first(where: { $0.type == appliedFilter.type }) {
                 // Remove from available filters
                 availableFilters.removeAll { $0.type == appliedFilter.type }
                 
@@ -129,7 +129,7 @@ class FilterPopover: UIViewController {
         }
         
         if let sortView = stackViewReferences[0]?.sortView,
-           let firstFilter = filterSection?.first {
+           let firstFilter = filterSection.first {
             setupSortDropdown(for: sortView, filterSection: firstFilter, stackIndex: 0)
         }
     }
@@ -176,7 +176,7 @@ class FilterPopover: UIViewController {
             let selectedFilter = self.availableFilters[index]
             self.availableFilters.remove(at: index)
             if let previousType = previouslySelectedType, previousType != selectedFilter.type {
-                if let previousFilter = self.filterSection?.first(where: { $0.type == previousType }) {
+                if let previousFilter = self.filterSection.first(where: { $0.type == previousType }) {
                     self.availableFilters.append(previousFilter)
                     self.availableFilters.sort { $0.type < $1.type }
                 }
@@ -245,7 +245,7 @@ class FilterPopover: UIViewController {
             let selectedFilter = self.availableFilters[index]
             self.availableFilters.remove(at: index)
             if let previousType = previouslySelectedType, previousType != selectedFilter.type {
-                if let previousFilter = self.filterSection?.first(where: { $0.type == previousType }) {
+                if let previousFilter = self.filterSection.first(where: { $0.type == previousType }) {
                     self.availableFilters.append(previousFilter)
                     self.availableFilters.sort { $0.type < $1.type }
                 }
@@ -535,7 +535,7 @@ class FilterPopover: UIViewController {
     // MARK: - Remove Stack
     func removeStack(at stackIndex: Int) {
         if let selectedFilter = selectedFilters.first(where: { $0.stackIndex == stackIndex }) {
-            if let originalFilter = filterSection?.first(where: { $0.type == selectedFilter.type }) {
+            if let originalFilter = filterSection.first(where: { $0.type == selectedFilter.type }) {
                 availableFilters.append(originalFilter)
                 availableFilters.sort { $0.type < $1.type }
             }
@@ -592,7 +592,7 @@ class FilterPopover: UIViewController {
                     setupTypeDropdown(for: typeView, stackIndex: 0)
                 }
                 if let sortView = getSortViewForStack(at: 0),
-                   let firstFilter = filterSection?.first {
+                   let firstFilter = filterSection.first {
                     setupSortDropdown(for: sortView, filterSection: firstFilter, stackIndex: 0)
                 }
                 updateAddRemoveButton(at: 0)

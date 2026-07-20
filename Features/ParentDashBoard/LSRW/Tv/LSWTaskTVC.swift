@@ -80,7 +80,7 @@ class LSWTaskTVC: UITableViewCell, AudioPlaybackDelegate{
         exportRecordBtn.layer.cornerRadius = 8
         attachmentList = attachments
         attachmentLbl.isHidden = attachments.count == 0
-        attachmentLbl.text = "𓄲 \("Attachments".translated()) (\(attachments.count))"
+        attachmentLbl.text = "\("𓄲 Attachments".translated()) (\(attachments.count))"
         reloadCollectionAndUpdateHeight()
     }
     private func stopAllOtherAudioCells(except playingIndex: Int) {
