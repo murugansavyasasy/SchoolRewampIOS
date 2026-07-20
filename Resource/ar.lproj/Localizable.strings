@@ -1379,6 +1379,31 @@
 "ASSIGNED" = "تم التعيين";
 "DEADLINE" = "الموعد النهائي";
 //MARK: Bus
+"enable" = "تمكين";
+"enable_face_id_touch_id" = "تمكين Face ID / Touch ID";
+"enable_face_id_touch_id_message" = "هل ترغب في تمكين Face ID / Touch ID لهذا التطبيق؟";
+"almost_complete" = "اكتمل تقريبًا!";
+"note_ab_na" = "ملاحظة: استخدم \"AB\" للطلاب الغائبين و\"NA\" للدرجات غير المنطبقة.";
+"note_ab" = "ملاحظة: استخدم \"AB\" للطلاب الغائبين.";
+
+"student_name" = "اسم الطالب";
+"admission_number" = "رقم القبول";
+"roll_number" = "رقم السجل";
+"gender" = "الجنس";
+
+"ascending" = "تصاعدي";
+"descending" = "تنازلي";
+
+"male" = "ذكر";
+"female" = "أنثى";
+"others" = "أخرى";
+"select_type" = "اختر النوع";
+"sort" = "ترتيب";
+"student_name_roll_adm_no" = "اسم الطالب ورقم السجل ورقم القبول";
+"clear" = "مسح";
+"apply" = "تطبيق";
+"skip" = "تخطي";
+"lets_go" = "لنبدأ";
 
 "Live Bus Tracking" = "تتبع الحافلة المباشر";
 "Your Stop" = "محطتك";

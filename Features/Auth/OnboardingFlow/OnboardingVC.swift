@@ -30,7 +30,7 @@ class OnboardingVC: UIViewController {
         onBoardingCV.delegate = self
         onBoardingCV.dataSource = self
         nextview.layer.cornerRadius = nextview.frame.height / 2
-       
+        skipBtn.setTitle("skip".translated(), for: .normal)
         onBoarding_Api()
     }
     
@@ -55,8 +55,10 @@ class OnboardingVC: UIViewController {
                                 self.pageControl.numberOfPages = self.dataResponse.count
                                 self.skipBtn.isHidden = self.dataResponse.count < 1
                                 self.nextview.isHidden = self.dataResponse.count < 1
-                                self.currentPage = self.isRTL ? self.dataResponse.count - 1 : 0
                                 self.onBoardingCV.reloadData()
+                                DispatchQueue.main.async {
+                                    self.updateUI(animated: false)
+                                }
                             }
                         }else{
                             self.navigateToLogin()
@@ -96,23 +98,16 @@ class OnboardingVC: UIViewController {
     }
     
     // MARK: - Update UI
-    private func updateUI() {
-
-        pageControl.currentPage = currentPage
-
+    private func updateUI(animated: Bool = true) {
         onBoardingCV.scrollToItem(
             at: IndexPath(item: currentPage, section: 0),
             at: .centeredHorizontally,
-            animated: true
+            animated: animated
         )
 
         let isLastPage = currentPage == dataResponse.count - 1
-
         skipBtn.isHidden = isLastPage
-        nextBtn.setTitle(
-            isLastPage ? "Let's Go" : "Next".translated(),
-            for: .normal
-        )
+        nextBtn.setTitle(isLastPage ? "lets_go".translated() : "Next".translated(), for: .normal)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             guard let self = self else { return }

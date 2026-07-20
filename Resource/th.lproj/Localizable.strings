@@ -1426,6 +1426,24 @@
 "PREVIOUS_QUESTION" = "คำถามก่อนหน้า";
 "ASSIGNED" = "มอบหมาย";
 "DEADLINE" = "กำหนดส่ง";
+"enable" = "เปิดใช้งาน";
+"enable_face_id_touch_id" = "เปิดใช้งาน Face ID / Touch ID";
+"enable_face_id_touch_id_message" = "คุณต้องการเปิดใช้งาน Face ID / Touch ID สำหรับแอปนี้หรือไม่?";
+"almost_complete" = "เกือบเสร็จสมบูรณ์แล้ว!";
+"note_ab_na" = "หมายเหตุ: ใช้ \"AB\" สำหรับนักเรียนที่ขาดเรียน และ \"NA\" สำหรับคะแนนที่ไม่สามารถใช้ได้";
+"note_ab" = "หมายเหตุ: ใช้ \"AB\" สำหรับนักเรียนที่ขาดเรียน";
+
+"student_name" = "ชื่อนักเรียน";
+"admission_number" = "เลขที่รับเข้า";
+"roll_number" = "เลขที่";
+"gender" = "เพศ";
+
+"ascending" = "เรียงจากน้อยไปมาก";
+"descending" = "เรียงจากมากไปน้อย";
+
+"male" = "ชาย";
+"female" = "หญิง";
+"others" = "อื่นๆ";
 "No Submission" = "ไม่มีการส่ง";
 "This student" = "นักเรียนคนนี้";
 "has not submitted the assignment yet." = "ยังไม่ได้ส่งงาน";
@@ -1448,6 +1466,13 @@
 "Drop Bus" = "รถบัสส่ง";
 "Pickup Bus" = "รถบัสรับ";
 "Track route in real time" = "ติดตามเส้นทางแบบเรียลไทม์";
+"select_type" = "เลือกประเภท";
+"sort" = "เรียงลำดับ";
+"student_name_roll_adm_no" = "ชื่อนักเรียน และเลขที่ และเลขรับเข้า";
+"clear" = "ล้าง";
+"apply" = "นำไปใช้";
+"skip" = "ข้าม";
+"lets_go" = "เริ่มกันเลย";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

@@ -1453,6 +1453,31 @@
 "Drop Bus" = "ड्रॉप बस";
 "Pickup Bus" = "पिकअप बस";
 "Track route in real time" = "मार्ग को रीयल-टाइम में ट्रैक करें";
+"enable" = "सक्षम करें";
+"enable_face_id_touch_id" = "Face ID / Touch ID सक्षम करें";
+"enable_face_id_touch_id_message" = "क्या आप इस ऐप के लिए Face ID / Touch ID सक्षम करना चाहते हैं?";
+"almost_complete" = "लगभग पूरा हो गया!";
+"note_ab_na" = "नोट: अनुपस्थित छात्रों के लिए \"AB\" और लागू न होने वाले अंकों के लिए \"NA\" का उपयोग करें।";
+"note_ab" = "नोट: अनुपस्थित छात्रों के लिए \"AB\" का उपयोग करें।";
+
+"student_name" = "छात्र का नाम";
+"admission_number" = "प्रवेश संख्या";
+"roll_number" = "रोल नंबर";
+"gender" = "लिंग";
+
+"ascending" = "आरोही";
+"descending" = "अवरोही";
+
+"male" = "पुरुष";
+"female" = "महिला";
+"others" = "अन्य";
+"select_type" = "प्रकार चुनें";
+"sort" = "क्रमबद्ध करें";
+"student_name_roll_adm_no" = "छात्र का नाम और रोल नंबर और प्रवेश संख्या";
+"clear" = "साफ़ करें";
+"apply" = "लागू करें";
+"skip" = "छोड़ें";
+"lets_go" = "चलिए शुरू करें";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";

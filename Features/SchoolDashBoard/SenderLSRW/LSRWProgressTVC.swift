@@ -34,14 +34,25 @@ class LSRWProgressTVC: UITableViewCell, UICollectionViewDelegate, UICollectionVi
 
         progressCV.delegate = self
         progressCV.dataSource = self
+
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 4
         layout.minimumInteritemSpacing = 4
         layout.sectionInset = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
         progressCV.collectionViewLayout = layout
+
         progressCV.showsHorizontalScrollIndicator = false
         progressCV.backgroundColor = .clear
+
+        // RTL Support
+        if UIView.userInterfaceLayoutDirection(
+            for: contentView.semanticContentAttribute
+        ) == .rightToLeft {
+            progressCV.transform = CGAffineTransform(scaleX: -1, y: 1)
+        } else {
+            progressCV.transform = .identity
+        }
     }
 
     func configure(with data: Any?, selectedIndex: Int = 0, selection: Bool? = false) {
@@ -50,6 +61,12 @@ class LSRWProgressTVC: UITableViewCell, UICollectionViewDelegate, UICollectionVi
         self.selection = selection ?? false
         self.selectedIndex = selectedIndex
         progressCV.reloadData()
+        DispatchQueue.main.async {
+            let index = IndexPath(item: 0, section: 0)
+            self.progressCV.scrollToItem(at: index,
+                                         at: .left,
+                                         animated: false)
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -57,8 +74,16 @@ class LSRWProgressTVC: UITableViewCell, UICollectionViewDelegate, UICollectionVi
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         if let data = progressDataArray, !data.isEmpty {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LSRWProgressCVC", for: indexPath) as? LSRWProgressCVC else { return UICollectionViewCell() }
+            if UIView.userInterfaceLayoutDirection(
+                for: contentView.semanticContentAttribute
+            ) == .rightToLeft {
+                cell.contentView.transform = CGAffineTransform(scaleX: -1, y: 1)
+            } else {
+                cell.contentView.transform = .identity
+            }
             let isSelected = indexPath.item == selectedIndex
             if selection {
                 if isSelected {
@@ -75,6 +100,13 @@ class LSRWProgressTVC: UITableViewCell, UICollectionViewDelegate, UICollectionVi
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FiltersCvCell", for: indexPath) as? FiltersCvCell else { return UICollectionViewCell() }
+            if UIView.userInterfaceLayoutDirection(
+                for: contentView.semanticContentAttribute
+            ) == .rightToLeft {
+                cell.contentView.transform = CGAffineTransform(scaleX: -1, y: 1)
+            } else {
+                cell.contentView.transform = .identity
+            }
             cell.FilterLbl.text = filterArray[indexPath.row]
             cell.cellView.backgroundColor = (selectedIndex == indexPath.item) ? UIColor.blue.withAlphaComponent(0.6) : .systemGray5
             cell.FilterLbl.textColor = (selectedIndex == indexPath.item) ? .white : .black
