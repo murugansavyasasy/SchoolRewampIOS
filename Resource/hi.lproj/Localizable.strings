@@ -1463,6 +1463,8 @@
 "student_name_roll_adm_no" = "छात्र का नाम और रोल नंबर और प्रवेश संख्या";
 "clear" = "साफ़ करें";
 "apply" = "लागू करें";
+"skip" = "छोड़ें";
+"lets_go" = "चलिए शुरू करें";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";

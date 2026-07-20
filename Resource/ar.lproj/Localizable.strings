@@ -1396,6 +1396,8 @@
 "student_name_roll_adm_no" = "اسم الطالب ورقم السجل ورقم القبول";
 "clear" = "مسح";
 "apply" = "تطبيق";
+"skip" = "تخطي";
+"lets_go" = "لنبدأ";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

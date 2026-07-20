@@ -1465,6 +1465,8 @@
 "student_name_roll_adm_no" = "மாணவர் பெயர் & வரிசை எண் & சேர்க்கை எண்";
 "clear" = "அழி";
 "apply" = "பயன்படுத்து";
+"skip" = "தவிர்";
+"lets_go" = "தொடங்கலாம்";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

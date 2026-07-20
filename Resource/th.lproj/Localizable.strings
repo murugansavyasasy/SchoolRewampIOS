@@ -1454,6 +1454,8 @@
 "student_name_roll_adm_no" = "ชื่อนักเรียน และเลขที่ และเลขรับเข้า";
 "clear" = "ล้าง";
 "apply" = "นำไปใช้";
+"skip" = "ข้าม";
+"lets_go" = "เริ่มกันเลย";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

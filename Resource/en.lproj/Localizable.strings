@@ -1381,6 +1381,8 @@
 "student_name_roll_adm_no" = "Student Name & Roll No & Adm No";
 "clear" = "Clear";
 "apply" = "Apply";
+"skip" = "Skip";
+"lets_go" = "Let's Go";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
