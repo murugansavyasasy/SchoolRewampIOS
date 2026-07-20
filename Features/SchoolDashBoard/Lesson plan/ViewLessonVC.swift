@@ -76,6 +76,9 @@ class ViewLessonVC: UIViewController, SelectedId {
         FilterCV.register(cvnib, forCellWithReuseIdentifier: CellConfingName.FiltersCvCell)
         FilterCV.delegate = self
         FilterCV.dataSource = self
+        if UIView.userInterfaceLayoutDirection(for: view.semanticContentAttribute) == .rightToLeft {
+            FilterCV.transform = CGAffineTransform(scaleX: -1, y: 1)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
