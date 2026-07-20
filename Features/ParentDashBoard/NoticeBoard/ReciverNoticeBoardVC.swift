@@ -270,7 +270,7 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
         }
         noDataImg.isHidden = !searchData.isEmpty
         noDataLbl.isHidden = !searchData.isEmpty
-        noDataLbl.text = "No Data Found"
+        noDataLbl.text = "No Data Found!".translated()
 //        noDataImg.image = UIImage(named: "noSearchData")
         updateCounts()
         collectionView.reloadData()

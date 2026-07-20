@@ -311,7 +311,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         self.filterStudent = self.sortedStudent
         nodataImg.isHidden = !(filterStudent?.isEmpty ?? false)
         nodataLbl.isHidden = !(filterStudent?.isEmpty ?? false)
-        nodataLbl.text = "No data found"
+        nodataLbl.text = "No Data Found!".translated()
     }
     func getStandardsAPI(academic_year_id:Int){
         standerdArray.removeAll()

@@ -702,7 +702,7 @@ extension SenderLeaveRqstVC: UISearchBarDelegate {
         } else {
             filteredLeaveRecords = baseData
         }
-        NodateLbl.text = CommonStringFile.No_data_found
+        NodateLbl.text = CommonStringFile.No_data_found.translated()
         NodateLbl.isHidden = !(filteredLeaveRecords?.isEmpty ?? false)
         NodataImage.isHidden = !(filteredLeaveRecords?.isEmpty ?? false)
         leaveRequestTable.reloadData()

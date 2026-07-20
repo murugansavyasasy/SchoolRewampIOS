@@ -1397,7 +1397,7 @@
 "The quiz will be visible to students only after all questions are filled and Submitted" = "لن يكون الاختبار مرئيًا للطلاب إلا بعد إدخال جميع الأسئلة وإرسالها.";
 "View & Enter marks" = "عرض الدرجات وإدخالها";
 "Select a Date" = "اختر تاريخًا";
-
+"todays_event" = "حدث اليوم";
 //MARK: Bus
 "enable" = "تمكين";
 "enable_face_id_touch_id" = "تمكين Face ID / Touch ID";
