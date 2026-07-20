@@ -1147,7 +1147,8 @@
 "Verified" = "Verified";
 
 //MARK: Class Test Creation
-
+"SECTION" = "Section";
+"SECTIONS" = "Sections";
 "Standard" = "Standard";
 "Sections" = "Sections";
 "Subjects" = "Subject";
@@ -1358,6 +1359,17 @@
 "PREVIOUS_QUESTION" = "Previous Question";
 "ASSIGNED" = "Assigned";
 "DEADLINE" = "Deadline";
+//MARK: Bus
+"Live Bus Tracking" = "Live Bus Tracking";
+"Your Stop" = "Your Stop";
+"PICKUP" = "PICKUP";
+"DROP" = "DROP";
+"Bus  Number" = "Bus Number";
+"Pickup Route Details" = "Pickup Route Details";
+"Drop Route Details" = "Drop Route Details";
+"Drop Bus" = "Drop Bus";
+"Pickup Bus" = "Pickup Bus";
+"Track route in real time" = "Track route in real time";
 "enable" = "Enable";
 "enable_face_id_touch_id" = "Enable Face ID / Touch ID";
 "enable_face_id_touch_id_message" = "Would you like to enable Face ID / Touch ID for this app?";

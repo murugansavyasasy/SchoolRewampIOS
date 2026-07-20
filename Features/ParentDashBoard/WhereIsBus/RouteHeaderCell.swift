@@ -15,8 +15,9 @@ class RouteHeaderCell: UITableViewCell, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var dropTimeLabel: UILabel!
     @IBOutlet weak var busNumberValueLabel: UILabel!
     // Pickup Accordion Outlets
+    @IBOutlet weak var pickupHeaderTitleLabel: LocalizationLabel!
     @IBOutlet weak var pickupHeaderContainer: UIView!
-    @IBOutlet weak var pickupHeaderTitleLabel: UILabel!
+  
     @IBOutlet weak var pickupHeaderIconImageView: UIImageView!
     @IBOutlet weak var pickupHeaderChevron: UIImageView!
     @IBOutlet weak var pickupDetailsStack: UIStackView!
@@ -31,7 +32,8 @@ class RouteHeaderCell: UITableViewCell, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var pickupStopsTableView: DynamicHeightTableView!
     // Drop Accordion Outlets
     @IBOutlet weak var dropHeaderContainer: UIView!
-    @IBOutlet weak var dropHeaderTitleLabel: UILabel!
+   
+    @IBOutlet weak var dropHeaderTitleLabel: LocalizationLabel!
     @IBOutlet weak var dropHeaderIconImageView: UIImageView!
     @IBOutlet weak var dropHeaderChevron: UIImageView!
     @IBOutlet weak var dropDetailsStack: UIStackView!
@@ -116,6 +118,10 @@ class RouteHeaderCell: UITableViewCell, UITableViewDataSource, UITableViewDelega
             self.invalidateIntrinsicContentSize()
             self.onSizeChanged?()
         }
+        
+        findMyDropBusBtnName.setTitle(NSLocalizedString("Drop Bus", comment: ""), for: .normal)
+        
+        findMypickBusBtnname.setTitle(NSLocalizedString("Pickup Bus", comment: ""), for: .normal)
      
     }
     

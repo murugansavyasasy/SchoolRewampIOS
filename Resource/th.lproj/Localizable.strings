@@ -1222,6 +1222,8 @@
 "Verified" = "ยืนยันแล้ว";
 
 //MARK: Create Class test
+"SECTION" = "ห้องเรียน";
+"SECTIONS" = "ห้องเรียน";
 "Standard" = "ระดับชั้น";
 "Sections" = "ห้องเรียน";
 "Subjects" = "วิชา";
@@ -1280,7 +1282,9 @@
 "%d section selected" = "เลือก 1 ห้อง";
 "%d sections selected" = "เลือก %d ห้อง";
 //MARK: Hostel
-
+"PENDING" = "รอดำเนินการ";
+"APPROVED" = "อนุมัติแล้ว";
+"REJECTED" = "ถูกปฏิเสธ";
 "Reason for Outpass" = "เหตุผลในการขอออกนอกหอพัก";
 "To Date" = "ถึงวันที่";
 "Emergency Contact Number" = "หมายเลขติดต่อฉุกเฉิน";
@@ -1449,6 +1453,19 @@
 "You haven't added questions to this quiz yet. Would you like to add them or do it later?" = "คุณยังไม่ได้เพิ่มคำถามในแบบทดสอบนี้ ต้องการเพิ่มตอนนี้หรือภายหลัง?";
 "Later" = "ภายหลัง";
 "Add Now" = "เพิ่มตอนนี้";
+
+//MARK: Bus
+
+"Live Bus Tracking" = "ติดตามรถบัสแบบเรียลไทม์";
+"Your Stop" = "ป้ายของคุณ";
+"PICKUP" = "รับ";
+"DROP" = "ส่ง";
+"Bus  Number" = "หมายเลขรถบัส";
+"Pickup Route Details" = "รายละเอียดเส้นทางรับ";
+"Drop Route Details" = "รายละเอียดเส้นทางส่ง";
+"Drop Bus" = "รถบัสส่ง";
+"Pickup Bus" = "รถบัสรับ";
+"Track route in real time" = "ติดตามเส้นทางแบบเรียลไทม์";
 "select_type" = "เลือกประเภท";
 "sort" = "เรียงลำดับ";
 "student_name_roll_adm_no" = "ชื่อนักเรียน และเลขที่ และเลขรับเข้า";

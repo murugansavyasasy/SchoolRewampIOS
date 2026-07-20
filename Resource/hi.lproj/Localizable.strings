@@ -1293,7 +1293,9 @@
 "Submit Request" = "अनुरोध सबमिट करें";
 "Note: Your outpass request will be sent to the warden for approval. You will be notified once the decision is made. Please ensure all details are accurate." = "नोट: आपका आउटपास अनुरोध अनुमोदन के लिए वार्डन को भेजा जाएगा। निर्णय होने के बाद आपको सूचित किया जाएगा। कृपया सुनिश्चित करें कि सभी विवरण सही हैं।";
 "Enter reason..." = "कारण दर्ज करें...";
-
+"PENDING" = "लंबित";
+"APPROVED" = "स्वीकृत";
+"REJECTED" = "अस्वीकृत";
 "Pending Hostel Fees" = "लंबित छात्रावास शुल्क";
 "Detailed Attendance Reports" = "विस्तृत उपस्थिति रिपोर्ट";
 "Evening" = "शाम";
@@ -1440,6 +1442,17 @@
 "PREVIOUS_QUESTION" = "पिछला प्रश्न";
 "ASSIGNED" = "असाइन किया गया";
 "DEADLINE" = "अंतिम तिथि";
+//MARK: Bus
+"Live Bus Tracking" = "लाइव बस ट्रैकिंग";
+"Your Stop" = "आपका स्टॉप";
+"PICKUP" = "पिकअप";
+"DROP" = "ड्रॉप";
+"Bus  Number" = "बस नंबर";
+"Pickup Route Details" = "पिकअप मार्ग विवरण";
+"Drop Route Details" = "ड्रॉप मार्ग विवरण";
+"Drop Bus" = "ड्रॉप बस";
+"Pickup Bus" = "पिकअप बस";
+"Track route in real time" = "मार्ग को रीयल-टाइम में ट्रैक करें";
 "enable" = "सक्षम करें";
 "enable_face_id_touch_id" = "Face ID / Touch ID सक्षम करें";
 "enable_face_id_touch_id_message" = "क्या आप इस ऐप के लिए Face ID / Touch ID सक्षम करना चाहते हैं?";
