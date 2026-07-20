@@ -1230,6 +1230,8 @@
 "Verified" = "சரிபார்க்கப்பட்டது";
 
 //MARK: Create Class test
+"SECTION" = "வகுப்பு";
+"SECTIONS" = "வகுப்புகள்";
 "Standard" = "வகுப்பு";
 "Sections" = "பிரிவுகள்";
 "Subjects" = "பாடம்";
@@ -1321,7 +1323,7 @@
 "Paid Amount" = "செலுத்திய தொகை";
 "Total Amount" = "மொத்த தொகை";
 "PENDING" = "நிலுவையில்";
-"Today's Attendance" = "இன்றைய வருகை";
+"Today Attendance" = "இன்றைய வருகை";
 "Room No:" = "அறை எண்:";
 "Hostel" = "விடுதி";
 "Room" = "அறை";
@@ -1398,6 +1400,9 @@
 "female" = "பெண்";
 "girls" = "பெண் மாணவர்கள்";
 "%d HOSTELS AVAILABLE" = "%d விடுதிகள் கிடைக்கின்றன";
+"PENDING" = "நிலுவையில்";
+"APPROVED" = "அங்கீகரிக்கப்பட்டது";
+"REJECTED" = "நிராகரிக்கப்பட்டது";
 //MARK: Recipent
 "No Section Found" = "பிரிவு எதுவும் கிடைக்கவில்லை";
 "Something went wrong" = "ஏதோ தவறு ஏற்பட்டுள்ளது";
@@ -1461,6 +1466,42 @@
 "The quiz will be visible to students only after all questions are filled and Submitted" = "அனைத்து கேள்விகளும் நிரப்பப்பட்டு சமர்ப்பிக்கப்பட்ட பிறகே வினாடி வினா மாணவர்களுக்கு காண்பிக்கப்படும்.";
 "View & Enter marks" = "மதிப்பெண்களைப் பார்க்கவும் & பதிவு செய்யவும்";
 "Select a Date" = "தேதியைத் தேர்ந்தெடுக்கவும்";
+"enable" = "இயக்கு";
+"enable_face_id_touch_id" = "Face ID / Touch ID-ஐ இயக்கு";
+"enable_face_id_touch_id_message" = "இந்த செயலிக்கு Face ID / Touch ID-ஐ இயக்க விரும்புகிறீர்களா?";
+"almost_complete" = "கிட்டத்தட்ட முடிந்துவிட்டது!";
+"note_ab_na" = "குறிப்பு: வராத மாணவர்களுக்கு \"AB\" மற்றும் பொருந்தாத மதிப்பெண்களுக்கு \"NA\"-ஐ பயன்படுத்தவும்.";
+"note_ab" = "குறிப்பு: வராத மாணவர்களுக்கு \"AB\"-ஐ பயன்படுத்தவும்.";
+
+"student_name" = "மாணவர் பெயர்";
+"admission_number" = "சேர்க்கை எண்";
+"roll_number" = "வரிசை எண்";
+"gender" = "பாலினம்";
+
+"ascending" = "ஏறுவரிசை";
+"descending" = "இறங்குவரிசை";
+
+//MARK: Bus
+"Live Bus Tracking" = "நேரடி பேருந்து கண்காணிப்பு";
+"Your Stop" = "உங்கள் நிறுத்தம்";
+"PICKUP" = "ஏற்றம்";
+"DROP" = "இறக்கம்";
+"Bus  Number" = "பேருந்து எண்";
+"Pickup Route Details" = "ஏற்றும் பாதை விவரங்கள்";
+"Drop Route Details" = "இறக்கும் பாதை விவரங்கள்";
+"Drop Bus" = "இறக்கும் பேருந்து";
+"Pickup Bus" = "ஏற்றும் பேருந்து";
+"Track route in real time" = "நிகழ்நேரத்தில் பாதையை கண்காணிக்கவும்";
+"male" = "ஆண்";
+"female" = "பெண்";
+"others" = "மற்றவை";
+"select_type" = "வகையைத் தேர்ந்தெடுக்கவும்";
+"sort" = "வரிசைப்படுத்து";
+"student_name_roll_adm_no" = "மாணவர் பெயர் & வரிசை எண் & சேர்க்கை எண்";
+"clear" = "அழி";
+"apply" = "பயன்படுத்து";
+"skip" = "தவிர்";
+"lets_go" = "தொடங்கலாம்";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

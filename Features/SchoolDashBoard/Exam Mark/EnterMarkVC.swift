@@ -55,7 +55,9 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                 secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
             )
         }
-        noteLbl.text = uploadTest ? "Note: Use \("AB") for absent students and \("NA") for marks that are not applicable." : "Note: Use \("AB") for absent students."
+        noteLbl.text = uploadTest
+            ? "note_ab_na".translated()
+            : "note_ab".translated()
         setupHeaderCollectionView()
         setupTableView()
         setupKeyboardObservers()

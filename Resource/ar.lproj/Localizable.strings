@@ -1157,6 +1157,8 @@
 "Verified" = "تم التحقق";
 
 //MARK: Create Class test
+"SECTION" = "قسم";
+"SECTIONS" = "أقسام";
 "Standard" = "الصف";
 "Sections" = "الأقسام";
 "Subjects" = "المادة";
@@ -1179,8 +1181,8 @@
 "step5_subtitle" = "أكد بياناتك";
 "class_test_note" = "**ملاحظة:** لن يتم احتساب هذه الاختبارات الصفية ودرجاتها في بطاقة التقرير أو العمليات الحسابية.";
 
-"continue" = "❮ متابعة";
-"back" = "رجوع ❯";
+"continue" = "متابعة ❯";
+"back" = "❮ رجوع";
 "add_test_marks" = "إضافة درجات الاختبار";
 "view_created_test" = "❮ عرض الاختبارات المُنشأة";
 "ACTIVITY DATE" = "تاريخ النشاط";
@@ -1220,6 +1222,9 @@
 "%d sections selected" = "تم تحديد %d أقسام";
 //MARK: Hostel
 "Reason for Outpass" = "سبب تصريح الخروج";
+"PENDING" = "قيد الانتظار";
+"APPROVED" = "تمت الموافقة";
+"REJECTED" = "مرفوض";
 "To Date" = "إلى تاريخ";
 "Emergency Contact Number" = "رقم الاتصال في حالات الطوارئ";
 "Enter contact number" = "أدخل رقم الاتصال";
@@ -1251,7 +1256,7 @@
 "Paid Amount" = "المبلغ المدفوع";
 "Total Amount" = "إجمالي المبلغ";
 "PENDING" = "قيد الانتظار";
-"Today's Attendance" = "حضور اليوم";
+"Today Attendance" = "حضور اليوم";
 "Room No:" = "رقم الغرفة:";
 "Hostel" = "السكن";
 "Room" = "الغرفة";
@@ -1393,6 +1398,43 @@
 "View & Enter marks" = "عرض الدرجات وإدخالها";
 "Select a Date" = "اختر تاريخًا";
 
+//MARK: Bus
+"enable" = "تمكين";
+"enable_face_id_touch_id" = "تمكين Face ID / Touch ID";
+"enable_face_id_touch_id_message" = "هل ترغب في تمكين Face ID / Touch ID لهذا التطبيق؟";
+"almost_complete" = "اكتمل تقريبًا!";
+"note_ab_na" = "ملاحظة: استخدم \"AB\" للطلاب الغائبين و\"NA\" للدرجات غير المنطبقة.";
+"note_ab" = "ملاحظة: استخدم \"AB\" للطلاب الغائبين.";
+
+"student_name" = "اسم الطالب";
+"admission_number" = "رقم القبول";
+"roll_number" = "رقم السجل";
+"gender" = "الجنس";
+
+"ascending" = "تصاعدي";
+"descending" = "تنازلي";
+
+"male" = "ذكر";
+"female" = "أنثى";
+"others" = "أخرى";
+"select_type" = "اختر النوع";
+"sort" = "ترتيب";
+"student_name_roll_adm_no" = "اسم الطالب ورقم السجل ورقم القبول";
+"clear" = "مسح";
+"apply" = "تطبيق";
+"skip" = "تخطي";
+"lets_go" = "لنبدأ";
+
+"Live Bus Tracking" = "تتبع الحافلة المباشر";
+"Your Stop" = "محطتك";
+"PICKUP" = "الاستلام";
+"DROP" = "الإنزال";
+"Bus  Number" = "رقم الحافلة";
+"Pickup Route Details" = "تفاصيل مسار الاستلام";
+"Drop Route Details" = "تفاصيل مسار الإنزال";
+"Drop Bus" = "حافلة الإنزال";
+"Pickup Bus" = "حافلة الاستلام";
+"Track route in real time" = "تتبع المسار في الوقت الفعلي";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";

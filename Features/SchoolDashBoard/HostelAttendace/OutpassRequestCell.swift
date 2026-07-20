@@ -59,7 +59,7 @@ class OutpassRequestCell: UITableViewCell {
     ) {
         nameLabel.text = name
         roomLabel.text = " Room No \(room)"
-        statusLabel.text = status.capitalized
+        statusLabel.text = status.translated()
 
         if let first = name.first {
             avatarLabel.text = String(first).uppercased()

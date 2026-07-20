@@ -48,13 +48,14 @@ public final class SectionSubjectsTableViewCell: UITableViewCell {
     public func configure(with sectionSubjects: TestSectionSubjects, viewModel: CreateTestViewModel) {
         let sectionName = sectionSubjects.sectionName.uppercased()
         avatarLabel.text = sectionName
+        
         let sections = "Section".translated()
         sectionTitleLabel.text = "\(sections) \(sectionName)"
         
         let totalCount = sectionSubjects.subjects.count
         let selectedCount = viewModel.selectedSubjectsCount(in: sectionSubjects.sectionId)
         
-        let selectedDefaultText = "selected".translated()
+        let selectedDefaultText = "Selected".translated()
         
         selectedCountLabel.text = "\(selectedCount)/\(totalCount) \(selectedDefaultText)"
         

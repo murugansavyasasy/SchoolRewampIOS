@@ -1156,7 +1156,8 @@
 "Verified" = "Verified";
 
 //MARK: Class Test Creation
-
+"SECTION" = "Section";
+"SECTIONS" = "Sections";
 "Standard" = "Standard";
 "Sections" = "Sections";
 "Subjects" = "Subject";
@@ -1386,6 +1387,42 @@
 "The quiz will be visible to students only after all questions are filled and Submitted" = "The quiz will be visible to students only after all questions are filled and submitted.";
 "View & Enter marks" = "View & Enter Marks";
 "Select a Date" = "Select a Date";
+//MARK: Bus
+"Live Bus Tracking" = "Live Bus Tracking";
+"Your Stop" = "Your Stop";
+"PICKUP" = "PICKUP";
+"DROP" = "DROP";
+"Bus  Number" = "Bus Number";
+"Pickup Route Details" = "Pickup Route Details";
+"Drop Route Details" = "Drop Route Details";
+"Drop Bus" = "Drop Bus";
+"Pickup Bus" = "Pickup Bus";
+"Track route in real time" = "Track route in real time";
+"enable" = "Enable";
+"enable_face_id_touch_id" = "Enable Face ID / Touch ID";
+"enable_face_id_touch_id_message" = "Would you like to enable Face ID / Touch ID for this app?";
+"almost_complete" = "Almost Complete!";
+"note_ab_na" = "Note: Use \"AB\" for absent students and \"NA\" for marks that are not applicable.";
+"note_ab" = "Note: Use \"AB\" for absent students.";
+
+"student_name" = "Student Name";
+"admission_number" = "Admission Number";
+"roll_number" = "Roll Number";
+"gender" = "Gender";
+
+"ascending" = "Ascending";
+"descending" = "Descending";
+
+"male" = "Male";
+"female" = "Female";
+"others" = "Others";
+"select_type" = "Select Type";
+"sort" = "Sort";
+"student_name_roll_adm_no" = "Student Name & Roll No & Adm No";
+"clear" = "Clear";
+"apply" = "Apply";
+"skip" = "Skip";
+"lets_go" = "Let's Go";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

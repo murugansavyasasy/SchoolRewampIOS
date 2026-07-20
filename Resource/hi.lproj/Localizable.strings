@@ -1293,7 +1293,9 @@
 "Submit Request" = "अनुरोध सबमिट करें";
 "Note: Your outpass request will be sent to the warden for approval. You will be notified once the decision is made. Please ensure all details are accurate." = "नोट: आपका आउटपास अनुरोध अनुमोदन के लिए वार्डन को भेजा जाएगा। निर्णय होने के बाद आपको सूचित किया जाएगा। कृपया सुनिश्चित करें कि सभी विवरण सही हैं।";
 "Enter reason..." = "कारण दर्ज करें...";
-
+"PENDING" = "लंबित";
+"APPROVED" = "स्वीकृत";
+"REJECTED" = "अस्वीकृत";
 "Pending Hostel Fees" = "लंबित छात्रावास शुल्क";
 "Detailed Attendance Reports" = "विस्तृत उपस्थिति रिपोर्ट";
 "Evening" = "शाम";
@@ -1459,7 +1461,42 @@
 "The quiz will be visible to students only after all questions are filled and Submitted" = "सभी प्रश्न भरकर जमा करने के बाद ही क्विज़ छात्रों को दिखाई देगा।";
 "View & Enter marks" = "अंक देखें एवं दर्ज करें";
 "Select a Date" = "तिथि चुनें";
+//MARK: Bus
+"Live Bus Tracking" = "लाइव बस ट्रैकिंग";
+"Your Stop" = "आपका स्टॉप";
+"PICKUP" = "पिकअप";
+"DROP" = "ड्रॉप";
+"Bus  Number" = "बस नंबर";
+"Pickup Route Details" = "पिकअप मार्ग विवरण";
+"Drop Route Details" = "ड्रॉप मार्ग विवरण";
+"Drop Bus" = "ड्रॉप बस";
+"Pickup Bus" = "पिकअप बस";
+"Track route in real time" = "मार्ग को रीयल-टाइम में ट्रैक करें";
+"enable" = "सक्षम करें";
+"enable_face_id_touch_id" = "Face ID / Touch ID सक्षम करें";
+"enable_face_id_touch_id_message" = "क्या आप इस ऐप के लिए Face ID / Touch ID सक्षम करना चाहते हैं?";
+"almost_complete" = "लगभग पूरा हो गया!";
+"note_ab_na" = "नोट: अनुपस्थित छात्रों के लिए \"AB\" और लागू न होने वाले अंकों के लिए \"NA\" का उपयोग करें।";
+"note_ab" = "नोट: अनुपस्थित छात्रों के लिए \"AB\" का उपयोग करें।";
 
+"student_name" = "छात्र का नाम";
+"admission_number" = "प्रवेश संख्या";
+"roll_number" = "रोल नंबर";
+"gender" = "लिंग";
+
+"ascending" = "आरोही";
+"descending" = "अवरोही";
+
+"male" = "पुरुष";
+"female" = "महिला";
+"others" = "अन्य";
+"select_type" = "प्रकार चुनें";
+"sort" = "क्रमबद्ध करें";
+"student_name_roll_adm_no" = "छात्र का नाम और रोल नंबर और प्रवेश संख्या";
+"clear" = "साफ़ करें";
+"apply" = "लागू करें";
+"skip" = "छोड़ें";
+"lets_go" = "चलिए शुरू करें";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";
