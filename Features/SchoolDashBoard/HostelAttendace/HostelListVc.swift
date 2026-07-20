@@ -63,7 +63,7 @@ class HostelListVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
                     if Success.status ?? false{
                         hostelData = Success.data ?? []
                         hostelAviabelCountLbl.text = String(
-                            format: NSLocalizedString("%d HOSTELS AVAILABLE", comment: ""),
+                            format:"%d HOSTELS AVAILABLE".translated(),
                             hostelData.count
                         )
                         tv.reloadData()

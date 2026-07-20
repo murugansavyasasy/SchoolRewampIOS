@@ -116,20 +116,20 @@ class CreateClassTestVc: UIViewController {
         configureCircle(step3Circle)
         configureCircle(step4Circle)
         configureCircle(step5Circle)
-        noteLabel.text = NSLocalizedString("class_test_note", comment: "")
+        noteLabel.text = "class_test_note".translated()
         step1Title.text = "Standard".translated()
         step2Title.text = "Sections".translated()
         step3Title.text = "Subjects".translated()
         step4Title.text = "Details".translated()
         step5Title.text = "Review".translated()
-        continueButton.setTitle(NSLocalizedString("continue", comment: ""), for: .normal)
-        backButton.setTitle(NSLocalizedString("back", comment: ""), for: .normal)
+        continueButton.setTitle("continue".translated(), for: .normal)
+        backButton.setTitle("back".translated(), for: .normal)
         addTestMarksBtnName.setTitle(
-            NSLocalizedString("add_test_marks", comment: ""),
+            "add_test_marks".translated(),
             for: .normal
         )
         viewHistoryBtn.setTitle(
-            NSLocalizedString("view_created_test", comment: ""),
+            "view_created_test".translated(),
             for: .normal
         )
         // Customize action buttons
@@ -270,7 +270,7 @@ class CreateClassTestVc: UIViewController {
 
         // MARK: - Progress
         stepProgressLabel.text = String(
-            format: NSLocalizedString("step_progress", comment: ""),
+            format: "step_progress".translated(),
             step
         )
 
@@ -282,8 +282,8 @@ class CreateClassTestVc: UIViewController {
         switch step {
 
         case 1:
-            stepTitleLabel.text = NSLocalizedString("step1_title", comment: "")
-            stepSubtitleLabel.text = NSLocalizedString("step1_subtitle", comment: "")
+            stepTitleLabel.text = "step1_title".translated()
+            stepSubtitleLabel.text = "step1_subtitle".translated()
 
             backButton.isHidden = true
             addTestMarksBtnName.isHidden = false
@@ -296,9 +296,9 @@ class CreateClassTestVc: UIViewController {
             transition(to: vc)
 
         case 2:
-            stepTitleLabel.text = NSLocalizedString("step2_title", comment: "")
+            stepTitleLabel.text = "step2_title".translated()
             stepSubtitleLabel.text = String(
-                format: NSLocalizedString("step2_subtitle", comment: ""),
+                format: "step2_subtitle".translated(),
                 viewModel.selectedStandard?.name ?? ""
             )
 
@@ -310,8 +310,8 @@ class CreateClassTestVc: UIViewController {
             transition(to: vc)
 
         case 3:
-            stepTitleLabel.text = NSLocalizedString("step3_title", comment: "")
-            stepSubtitleLabel.text = NSLocalizedString("step3_subtitle", comment: "")
+            stepTitleLabel.text = "step3_title".translated()
+            stepSubtitleLabel.text = "step3_subtitle".translated()
 
             let vc = SelectSubjectVc(
                 nibName: "SelectSubjectVc",
@@ -321,9 +321,8 @@ class CreateClassTestVc: UIViewController {
             transition(to: vc)
 
         case 4:
-            stepTitleLabel.text = NSLocalizedString("step4_title", comment: "")
-            stepSubtitleLabel.text = NSLocalizedString("step4_subtitle", comment: "")
-
+            stepTitleLabel.text = "step4_title".translated()
+            stepSubtitleLabel.text = "step4_subtitle".translated()
             let vc = SelectDetailsViewController(
                 nibName: "SelectDetailsViewController",
                 bundle: nil
@@ -332,8 +331,8 @@ class CreateClassTestVc: UIViewController {
             transition(to: vc)
 
         case 5:
-            stepTitleLabel.text = NSLocalizedString("step5_title", comment: "")
-            stepSubtitleLabel.text = NSLocalizedString("step5_subtitle", comment: "")
+            stepTitleLabel.text = "step5_title".translated()
+            stepSubtitleLabel.text = "step5_subtitle".translated()
 
             backButton.isHidden = true
             continueButton.isHidden = true

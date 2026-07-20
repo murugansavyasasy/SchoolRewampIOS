@@ -58,12 +58,14 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         setupRadioButton(button: allbtnName)
         setupRadioButton(button: studentBtnName)
         setupRadioButton(button: staffBtnName)
-        allbtnName.setTitle(NSLocalizedString("All", comment: ""), for: .normal)
-        staffBtnName.setTitle(NSLocalizedString("Staff", comment: ""), for: .normal)
-        studentBtnName.setTitle(NSLocalizedString("Student", comment: ""), for: .normal)
-        segmentName.setTitle(NSLocalizedString("Send to multiple school", comment: ""), forSegmentAt: 0)
-        segmentName.setTitle(NSLocalizedString("Select recipient", comment: ""), forSegmentAt: 1)
-        sendBtnName.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
+        allbtnName.setTitle("All".translated(), for: .normal)
+        staffBtnName.setTitle("Staff".translated(), for: .normal)
+        studentBtnName.setTitle("Student".translated(), for: .normal)
+
+        segmentName.setTitle("Send to multiple school".translated(), forSegmentAt: 0)
+        segmentName.setTitle("Select recipient".translated(), forSegmentAt: 1)
+
+        sendBtnName.setTitle("Send".translated(), for: .normal)
         schoolBtn.layer.cornerRadius = 8
         chooseUrSchoolLbl.setFont(style: .header, size: 13)
         headerSchoolLbl.setFont(style: .header, size: 16)

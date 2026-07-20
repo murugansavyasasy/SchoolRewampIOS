@@ -119,9 +119,9 @@ class RouteHeaderCell: UITableViewCell, UITableViewDataSource, UITableViewDelega
             self.onSizeChanged?()
         }
         
-        findMyDropBusBtnName.setTitle(NSLocalizedString("Drop Bus", comment: ""), for: .normal)
+        findMyDropBusBtnName.setTitle("Drop Bus".translated(), for: .normal)
         
-        findMypickBusBtnname.setTitle(NSLocalizedString("Pickup Bus", comment: ""), for: .normal)
+        findMypickBusBtnname.setTitle("Pickup Bus".translated(), for: .normal)
      
     }
     

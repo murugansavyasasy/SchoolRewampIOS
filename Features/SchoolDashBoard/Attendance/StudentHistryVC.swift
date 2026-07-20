@@ -89,7 +89,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             academic_year_id: selectedAcadimicYearId ?? 0
         )
         search.delegate = self
-        sendbtnName.setTitle(NSLocalizedString("Send", comment: ""), for: .normal)
+        sendbtnName.setTitle("Send".translated(), for: .normal)
     }
     
     func StyleAndTranslater() {

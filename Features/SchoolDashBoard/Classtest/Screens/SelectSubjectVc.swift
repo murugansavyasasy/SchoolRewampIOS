@@ -84,7 +84,7 @@ class SelectSubjectVc: UIViewController {
         let selected = viewModel.selectedSubjects.count
         let total = viewModel.totalSubjectsCount()
         let text = "✓ " + String(
-            format: NSLocalizedString("%d of %d subjects selected", comment: ""),
+            format: "%d of %d subjects selected".translated(),
             selected,
             total
         )

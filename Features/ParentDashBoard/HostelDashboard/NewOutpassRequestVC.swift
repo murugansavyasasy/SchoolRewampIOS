@@ -54,7 +54,7 @@ class NewOutpassRequestVC: UIViewController, UITextFieldDelegate {
     var studentHostelInfo  : HostelDetailsData?
     let alert = CustomAlert()
     var activeField: UIView?
-    private let reasonPlaceholder = NSLocalizedString("Enter reason...", comment: "")
+    private let reasonPlaceholder = "Enter reason...".translated()
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -119,7 +119,7 @@ class NewOutpassRequestVC: UIViewController, UITextFieldDelegate {
         reasonTextView.addDoneButton()
         emergencyContactTextField.addDoneButton()
         emergencyContactTextField.placeholder = "Enter contact number".translated()
-        submitBtn.setTitle(NSLocalizedString("Submit Request", comment: ""), for: .normal)
+        submitBtn.setTitle("Submit Request".translated(), for: .normal)
         reasonDefLbl.setRequiredText("Reason for Outpass")
         fromDateDefLbl.setRequiredText("From Date")
         toDateDefLbl.setRequiredText("To Date")

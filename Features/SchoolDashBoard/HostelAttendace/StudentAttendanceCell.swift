@@ -52,10 +52,10 @@ class StudentAttendanceCell: UITableViewCell {
         outPassRequestFullView.layer.cornerRadius = 10
         outpassApproveBtnName.layer.cornerRadius = 10
         OutPassRejectBtnName.layer.cornerRadius = 10
-        OutPassRejectBtnName.setTitle(NSLocalizedString("Reject", comment: ""), for: .normal)
-        outpassApproveBtnName.setTitle(NSLocalizedString("Approve", comment: ""), for: .normal)
-        presentButton.setTitle(NSLocalizedString("Present", comment: ""), for: .normal)
-        absentButton.setTitle(NSLocalizedString("Absent", comment: ""), for: .normal)
+        OutPassRejectBtnName.setTitle("Reject".translated(), for: .normal)
+        outpassApproveBtnName.setTitle("Approve".translated(), for: .normal)
+        presentButton.setTitle("Present".translated(), for: .normal)
+        absentButton.setTitle("Absent".translated(), for: .normal)
       
         statusView.layer.cornerRadius = 12
     }

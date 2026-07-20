@@ -16,7 +16,7 @@ class OutpassRequestsCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        newRequestBtn.setTitle(NSLocalizedString("New Request", comment: ""), for: .normal)
+        newRequestBtn.setTitle("New Request".translated(), for: .normal)
         cardView.layer.cornerRadius = 12
         cardView.layer.shadowColor = UIColor.black.cgColor
         cardView.layer.shadowOpacity = 0.05
