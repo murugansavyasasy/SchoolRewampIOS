@@ -35,8 +35,8 @@ public final class SectionTableViewCell: UITableViewCell {
     // MARK: - Configuration
     public func configure(with section: TestSection, standardName: String, isSelected: Bool) {
         avatarLabel.text = section.name
-        sectionTitleLabel.text = "Section \(section.name)"
-        sectionSubtitleLabel.text = "Standard \(standardName) — \(section.name)"
+        sectionTitleLabel.text = "\("Section".translated()) \(section.name)"
+        sectionSubtitleLabel.text = "\("Standard".translated()) \(standardName) — \(section.name)"
         
         checkmarkImageView.isHidden = !isSelected
         

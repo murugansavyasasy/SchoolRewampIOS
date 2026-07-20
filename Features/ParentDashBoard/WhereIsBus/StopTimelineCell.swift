@@ -73,7 +73,7 @@ class StopTimelineCell: UITableViewCell {
             
             badgeContainer.isHidden = false
             badgeContainer.backgroundColor = accentColor
-            badgeLabel.text = "Your Stop"
+            badgeLabel.text = "Your Stop".translated()
             
             timeIconImageView.tintColor = accentColor
         } else {

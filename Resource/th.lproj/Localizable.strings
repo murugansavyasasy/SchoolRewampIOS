@@ -1222,6 +1222,8 @@
 "Verified" = "ยืนยันแล้ว";
 
 //MARK: Create Class test
+"SECTION" = "ห้องเรียน";
+"SECTIONS" = "ห้องเรียน";
 "Standard" = "ระดับชั้น";
 "Sections" = "ห้องเรียน";
 "Subjects" = "วิชา";
@@ -1280,7 +1282,9 @@
 "%d section selected" = "เลือก 1 ห้อง";
 "%d sections selected" = "เลือก %d ห้อง";
 //MARK: Hostel
-
+"PENDING" = "รอดำเนินการ";
+"APPROVED" = "อนุมัติแล้ว";
+"REJECTED" = "ถูกปฏิเสธ";
 "Reason for Outpass" = "เหตุผลในการขอออกนอกหอพัก";
 "To Date" = "ถึงวันที่";
 "Emergency Contact Number" = "หมายเลขติดต่อฉุกเฉิน";
@@ -1432,6 +1436,18 @@
 "Later" = "ภายหลัง";
 "Add Now" = "เพิ่มตอนนี้";
 
+//MARK: Bus
+
+"Live Bus Tracking" = "ติดตามรถบัสแบบเรียลไทม์";
+"Your Stop" = "ป้ายของคุณ";
+"PICKUP" = "รับ";
+"DROP" = "ส่ง";
+"Bus  Number" = "หมายเลขรถบัส";
+"Pickup Route Details" = "รายละเอียดเส้นทางรับ";
+"Drop Route Details" = "รายละเอียดเส้นทางส่ง";
+"Drop Bus" = "รถบัสส่ง";
+"Pickup Bus" = "รถบัสรับ";
+"Track route in real time" = "ติดตามเส้นทางแบบเรียลไทม์";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

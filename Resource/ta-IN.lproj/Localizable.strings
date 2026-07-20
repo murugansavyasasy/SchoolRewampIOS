@@ -1230,6 +1230,8 @@
 "Verified" = "சரிபார்க்கப்பட்டது";
 
 //MARK: Create Class test
+"SECTION" = "வகுப்பு";
+"SECTIONS" = "வகுப்புகள்";
 "Standard" = "வகுப்பு";
 "Sections" = "பிரிவுகள்";
 "Subjects" = "பாடம்";
@@ -1321,7 +1323,7 @@
 "Paid Amount" = "செலுத்திய தொகை";
 "Total Amount" = "மொத்த தொகை";
 "PENDING" = "நிலுவையில்";
-"Today's Attendance" = "இன்றைய வருகை";
+"Today Attendance" = "இன்றைய வருகை";
 "Room No:" = "அறை எண்:";
 "Hostel" = "விடுதி";
 "Room" = "அறை";
@@ -1398,6 +1400,9 @@
 "female" = "பெண்";
 "girls" = "பெண் மாணவர்கள்";
 "%d HOSTELS AVAILABLE" = "%d விடுதிகள் கிடைக்கின்றன";
+"PENDING" = "நிலுவையில்";
+"APPROVED" = "அங்கீகரிக்கப்பட்டது";
+"REJECTED" = "நிராகரிக்கப்பட்டது";
 //MARK: Recipent
 "No Section Found" = "பிரிவு எதுவும் கிடைக்கவில்லை";
 "Something went wrong" = "ஏதோ தவறு ஏற்பட்டுள்ளது";
@@ -1443,6 +1448,17 @@
 "ASSIGNED" = "ஒதுக்கப்பட்டது";
 "DEADLINE" = "காலக்கெடு";
 
+//MARK: Bus
+"Live Bus Tracking" = "நேரடி பேருந்து கண்காணிப்பு";
+"Your Stop" = "உங்கள் நிறுத்தம்";
+"PICKUP" = "ஏற்றம்";
+"DROP" = "இறக்கம்";
+"Bus  Number" = "பேருந்து எண்";
+"Pickup Route Details" = "ஏற்றும் பாதை விவரங்கள்";
+"Drop Route Details" = "இறக்கும் பாதை விவரங்கள்";
+"Drop Bus" = "இறக்கும் பேருந்து";
+"Pickup Bus" = "ஏற்றும் பேருந்து";
+"Track route in real time" = "நிகழ்நேரத்தில் பாதையை கண்காணிக்கவும்";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
