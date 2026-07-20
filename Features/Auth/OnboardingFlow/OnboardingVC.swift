@@ -30,7 +30,7 @@ class OnboardingVC: UIViewController {
         onBoardingCV.delegate = self
         onBoardingCV.dataSource = self
         nextview.layer.cornerRadius = nextview.frame.height / 2
-        skipBtn.setTitle("skip".translated(), for: .normal)
+        skipBtn.setTitle("Skip", for: .normal)
         onBoarding_Api()
     }
     
@@ -107,7 +107,7 @@ class OnboardingVC: UIViewController {
 
         let isLastPage = currentPage == dataResponse.count - 1
         skipBtn.isHidden = isLastPage
-        nextBtn.setTitle(isLastPage ? "lets_go".translated() : "Next".translated(), for: .normal)
+        nextBtn.setTitle(isLastPage ? "Let's Go" : "Next", for: .normal)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             guard let self = self else { return }
@@ -170,7 +170,7 @@ extension OnboardingVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
 
         let isLastPage = currentPage == dataResponse.count - 1
         skipBtn.isHidden = isLastPage
-        nextBtn.setTitle(isLastPage ? "Let's Go" : "Next".translated(), for: .normal)
+        nextBtn.setTitle(isLastPage ? "Let's Go" : "Next", for: .normal)
     }
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
