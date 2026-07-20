@@ -1437,3 +1437,21 @@
 "PREVIOUS_QUESTION" = "முந்தைய கேள்வி";
 "ASSIGNED" = "ஒதுக்கப்பட்டது";
 "DEADLINE" = "காலக்கெடு";
+"enable" = "இயக்கு";
+"enable_face_id_touch_id" = "Face ID / Touch ID-ஐ இயக்கு";
+"enable_face_id_touch_id_message" = "இந்த செயலிக்கு Face ID / Touch ID-ஐ இயக்க விரும்புகிறீர்களா?";
+"almost_complete" = "கிட்டத்தட்ட முடிந்துவிட்டது!";
+"note_ab_na" = "குறிப்பு: வராத மாணவர்களுக்கு \"AB\" மற்றும் பொருந்தாத மதிப்பெண்களுக்கு \"NA\"-ஐ பயன்படுத்தவும்.";
+"note_ab" = "குறிப்பு: வராத மாணவர்களுக்கு \"AB\"-ஐ பயன்படுத்தவும்.";
+
+"student_name" = "மாணவர் பெயர்";
+"admission_number" = "சேர்க்கை எண்";
+"roll_number" = "வரிசை எண்";
+"gender" = "பாலினம்";
+
+"ascending" = "ஏறுவரிசை";
+"descending" = "இறங்குவரிசை";
+
+"male" = "ஆண்";
+"female" = "பெண்";
+"others" = "மற்றவை";

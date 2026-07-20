@@ -55,8 +55,10 @@ class OnboardingVC: UIViewController {
                                 self.pageControl.numberOfPages = self.dataResponse.count
                                 self.skipBtn.isHidden = self.dataResponse.count < 1
                                 self.nextview.isHidden = self.dataResponse.count < 1
-                                self.currentPage = self.isRTL ? self.dataResponse.count - 1 : 0
                                 self.onBoardingCV.reloadData()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    self.updateUI()
+                                }
                             }
                         }else{
                             self.navigateToLogin()
@@ -97,23 +99,11 @@ class OnboardingVC: UIViewController {
     
     // MARK: - Update UI
     private func updateUI() {
-
-        pageControl.currentPage = currentPage
-
-        onBoardingCV.scrollToItem(
-            at: IndexPath(item: currentPage, section: 0),
-            at: .centeredHorizontally,
-            animated: true
-        )
-
+        onBoardingCV.scrollToItem(at: IndexPath(item: currentPage, section: 0),at: .centeredHorizontally,animated: true)
+        
         let isLastPage = currentPage == dataResponse.count - 1
-
         skipBtn.isHidden = isLastPage
-        nextBtn.setTitle(
-            isLastPage ? "Let's Go" : "Next".translated(),
-            for: .normal
-        )
-
+        nextBtn.setTitle(isLastPage ? "Let's Go" : "Next".translated(), for:.normal)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             guard let self = self else { return }
             if let cell = self.onBoardingCV.cellForItem(at: IndexPath(item: self.currentPage, section: 0)) as? OnboardingCVC {

@@ -1353,3 +1353,21 @@
 "PREVIOUS_QUESTION" = "Previous Question";
 "ASSIGNED" = "Assigned";
 "DEADLINE" = "Deadline";
+"enable" = "Enable";
+"enable_face_id_touch_id" = "Enable Face ID / Touch ID";
+"enable_face_id_touch_id_message" = "Would you like to enable Face ID / Touch ID for this app?";
+"almost_complete" = "Almost Complete!";
+"note_ab_na" = "Note: Use \"AB\" for absent students and \"NA\" for marks that are not applicable.";
+"note_ab" = "Note: Use \"AB\" for absent students.";
+
+"student_name" = "Student Name";
+"admission_number" = "Admission Number";
+"roll_number" = "Roll Number";
+"gender" = "Gender";
+
+"ascending" = "Ascending";
+"descending" = "Descending";
+
+"male" = "Male";
+"female" = "Female";
+"others" = "Others";

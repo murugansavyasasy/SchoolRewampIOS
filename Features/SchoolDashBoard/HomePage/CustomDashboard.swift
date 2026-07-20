@@ -114,7 +114,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             
             BiometricAuthentication.shared.showEnableBiometricPopup(
                 from: self,
-                message: "Would you like to enable Face ID / Touch ID for this app?"
+                message: "enable_face_id_touch_id_message"
             ){[weak self] _ in
                 guard let self = self else { return }
                 self.presentAppTourIfNeeded()
