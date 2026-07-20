@@ -170,7 +170,8 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
             let generatedStack = createSubCategoriesStack(with: categories)
             subCatogoriesStack.addArrangedSubview(generatedStack)
         }
-        assignmentProgressLbl.text = "Submission Progress (\(assignment.submitted_count ?? 0)/\(assignment.total_count ?? 0))"
+        let submissionProgressText = "Submission Progress".translated()
+        assignmentProgressLbl.text = "\(submissionProgressText) (\(assignment.submitted_count ?? 0)/\(assignment.total_count ?? 0))"
         let progress = calculateProgressPercentage(submitted: assignment.submitted_count, total: assignment.total_count)
         configureProgress(progress)
     }
@@ -244,7 +245,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         if let popoverController = popoverContentVC.popoverPresentationController {
             popoverController.sourceView = sender
             popoverController.sourceRect = sender.bounds
-            popoverController.permittedArrowDirections = .right
+            popoverController.permittedArrowDirections = .any
             popoverController.delegate = self
         }
         

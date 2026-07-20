@@ -1031,6 +1031,7 @@
 "Admission No ↑" = "เลขที่รับเข้า ↑";
 "Others" = "อื่น ๆ";
 "All students" = "นักเรียนทั้งหมด";
+"All Students" = "นักเรียนทั้งหมด";
 "Class & Section" = "ชั้นเรียนและห้อง";
 "Admission No" = "เลขที่รับเข้า";
 "SMS" = "SMS";
@@ -1206,6 +1207,19 @@
 "All Countries" = "ทุกประเทศ";
 "Top Countries" = "ประเทศยอดนิยม";
 "No Data Found" = "ไม่พบข้อมูล";
+"CURRENT LEAVE REQUEST" = "คำขอลาปัจจุบัน";
+"Are you sure want to approve the leave request" = "คุณแน่ใจหรือไม่ว่าต้องการอนุมัติคำขอลานี้?";
+"Are you sure want to reject the leave request" = "คุณแน่ใจหรือไม่ว่าต้องการปฏิเสธคำขอลานี้?";
+"The management has received your request and it is currently being process..." = "ฝ่ายบริหารได้รับคำขอของคุณแล้ว และขณะนี้กำลังดำเนินการ...";
+"Requested On" = "วันที่ยื่นคำขอ";
+"Certificated Date" = "วันที่ในใบรับรอง";
+"Certificate Type" = "ประเภทใบรับรอง";
+"Staff Information" = "ข้อมูลเจ้าหน้าที่";
+"Personal and institutional details" = "ข้อมูลส่วนบุคคลและข้อมูลของสถาบัน";
+"Institution" = "สถาบัน";
+"Staff Name" = "ชื่อเจ้าหน้าที่";
+"Designation" = "ตำแหน่ง";
+"Verified" = "ยืนยันแล้ว";
 
 //MARK: Create Class test
 "Standard" = "ระดับชั้น";
@@ -1401,11 +1415,6 @@
 "Student" = "นักเรียน";
 "Send to multiple school" = "ส่งไปยังหลายโรงเรียน";
 "Select recipient" = "เลือกผู้รับ";
-//MARK: Flavour strings
-"WELCOME_STRING" = "Welcome to School Chimes";
-"REPORT_BUG_STRING" = "Dear School Chimes Team";
-"TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
-"APP_STORE_ID" = "6758079127";
 "SUBMIT_QUIZ" = "ส่งแบบทดสอบ";
 "SUBMIT_QUIZ_CONFIRMATION" = "คุณแน่ใจหรือไม่ว่าต้องการส่งแบบทดสอบนี้?";
 "MARK" = "คะแนน";
@@ -1413,3 +1422,19 @@
 "PREVIOUS_QUESTION" = "คำถามก่อนหน้า";
 "ASSIGNED" = "มอบหมาย";
 "DEADLINE" = "กำหนดส่ง";
+"No Submission" = "ไม่มีการส่ง";
+"This student" = "นักเรียนคนนี้";
+"has not submitted the assignment yet." = "ยังไม่ได้ส่งงาน";
+"Submission Progress" = "ความคืบหน้าการส่งงาน";
+"𓄲 Attachments" = "𓄲 ไฟล์แนบ";
+"Are you sure want to update this Quiz?" = "คุณแน่ใจหรือไม่ว่าต้องการอัปเดตแบบทดสอบนี้?";
+"You haven't added questions to this quiz yet. Would you like to add them or do it later?" = "คุณยังไม่ได้เพิ่มคำถามในแบบทดสอบนี้ ต้องการเพิ่มตอนนี้หรือภายหลัง?";
+"Later" = "ภายหลัง";
+"Add Now" = "เพิ่มตอนนี้";
+
+
+//MARK: Flavour strings
+"WELCOME_STRING" = "Welcome to School Chimes";
+"REPORT_BUG_STRING" = "Dear School Chimes Team";
+"TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
+"APP_STORE_ID" = "6758079127";

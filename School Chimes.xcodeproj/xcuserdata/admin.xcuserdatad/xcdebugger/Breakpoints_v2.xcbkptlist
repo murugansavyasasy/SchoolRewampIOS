@@ -14,25 +14,9 @@
             filePath = "Core/ExtenstionsFiles/Extentions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
-            landmarkName = "showActivityLoader(maxDuration:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "73C758E9-7604-41D6-AB60-6BB20845A85B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Features/SchoolDashBoard/NoticeBoard/SenderNoticeBoardVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "365"
-            endingLineNumber = "365"
-            landmarkName = "toDate(_:)"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
+            landmarkName = "didTapAttributedTextInLabel(label:inRange:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -46,8 +30,8 @@
             filePath = "Features/SchoolDashBoard/Lesson plan/ViewLessonVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "225"
-            endingLineNumber = "225"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
             landmarkName = "createLessonPlan(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -62,8 +46,8 @@
             filePath = "Features/SchoolDashBoard/Lesson plan/ViewLessonVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "220"
-            endingLineNumber = "220"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
             landmarkName = "createLessonPlan(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -117,16 +101,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9E6C7664-3E43-4AE2-9AF6-12A8E0D5A915"
-            shouldBeEnabled = "Yes"
+            uuid = "4CE9374D-A494-483E-9441-210D711400FA"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Features/SchoolDashBoard/Lesson plan/EditLessonVC.swift"
+            filePath = "Core/ExtenstionsFiles/Extentions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
-            landmarkName = "LessonPlan_Update_Api()"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
+            landmarkName = "didTapAttributedTextInLabel(label:inRange:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

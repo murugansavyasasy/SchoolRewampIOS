@@ -198,7 +198,8 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         discreption.isScrollEnabled = false
 //        discreption.textContainerInset = .zero
 //        discreption.textContainer.lineFragmentPadding = 0
-        dateLbl.text =  MenuStringFile.posted_on.translated() + "\(displayText)"
+        let ltr = "\u{200E}"
+        dateLbl.text =  MenuStringFile.posted_on.translated() + ": \(ltr)\(displayText)\(ltr)"
         postedByLbl.text = MenuStringFile.Posted_By.translated() + " - " + "\(postedBy ?? "")"
         
         if is_unreadStatus ?? false{
@@ -584,9 +585,12 @@ extension PrivewVc:UITableViewDataSource, UITableViewDelegate, SearchDelegate{
             let submittedCount = filterhomeworkDetails?.filter { $0.status == "Completed" }.count ?? 0
             let pendingCount = filterhomeworkDetails?.filter { $0.status == "Not Complete" }.count ?? 0
             
-            cell.allBtn.setTitle("All Students(\(totalCount))", for: .normal)
-            cell.submitedBtn.setTitle("Submitted(\(submittedCount))", for: .normal)
-            cell.pendingBtn.setTitle("Pending(\(pendingCount))", for: .normal)
+            let allStudentText = "All Students".translated()
+            let SubmittedText = "Submitted".translated()
+            let PendingText = "Pending".translated()
+            cell.allBtn.setTitle("\(allStudentText)(\(totalCount))", for: .normal)
+            cell.submitedBtn.setTitle("\(SubmittedText)(\(submittedCount))", for: .normal)
+            cell.pendingBtn.setTitle("\(PendingText)(\(pendingCount))", for: .normal)
             cell.delegate = self
             
             return cell

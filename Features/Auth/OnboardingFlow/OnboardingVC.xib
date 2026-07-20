@@ -39,7 +39,7 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="JOb-BO-AIA">
-                            <rect key="frame" x="350" y="626" width="33" height="40"/>
+                            <rect key="frame" x="220" y="626" width="163" height="40"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H0c-sf-QOJ">
                                     <rect key="frame" x="0.0" y="0.0" width="33" height="40"/>
@@ -52,8 +52,8 @@
                                         <action selector="skipBtnTapped:" destination="-1" eventType="touchUpInside" id="zLU-sr-XNw"/>
                                     </connections>
                                 </button>
-                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bSb-qm-CTf">
-                                    <rect key="frame" x="0.0" y="0.0" width="115" height="40"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bSb-qm-CTf">
+                                    <rect key="frame" x="48" y="0.0" width="115" height="40"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ga7-bz-PQD">
                                             <rect key="frame" x="0.0" y="0.0" width="105" height="40"/>

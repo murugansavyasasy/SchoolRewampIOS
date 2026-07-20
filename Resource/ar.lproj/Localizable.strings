@@ -966,6 +966,7 @@
 "Admission No ↑" = "رقم القبول ↑";
 "Others" = "أخرى";
 "All students" = "جميع الطلاب";
+"All Students" = "جميع الطلاب";
 "Class & Section" = "الصف والشعبة";
 "Admission No" = "رقم القبول";
 "SMS" = "رسالة نصية";
@@ -1141,6 +1142,19 @@
 "All Countries" = "جميع الدول";
 "Top Countries" = "أهم الدول";
 "No Data Found" = "لا توجد بيانات";
+"CURRENT LEAVE REQUEST" = "طلب الإجازة الحالي";
+"Are you sure want to approve the leave request" = "هل أنت متأكد من الموافقة على طلب الإجازة؟";
+"Are you sure want to reject the leave request" = "هل أنت متأكد من رفض طلب الإجازة؟";
+"The management has received your request and it is currently being process..." = "تم استلام طلبك من قبل الإدارة، وهو قيد المعالجة حالياً...";
+"Requested On" = "تاريخ الطلب";
+"Certificated Date" = "تاريخ الشهادة";
+"Certificate Type" = "نوع الشهادة";
+"Staff Information" = "بيانات الموظف";
+"Personal and institutional details" = "البيانات الشخصية وبيانات المؤسسة";
+"Institution" = "المؤسسة";
+"Staff Name" = "اسم الموظف";
+"Designation" = "المسمى الوظيفي";
+"Verified" = "تم التحقق";
 
 //MARK: Create Class test
 "Standard" = "الصف";
@@ -1343,11 +1357,15 @@
 "Student" = "الطلاب";
 "Send to multiple school" = "إرسال إلى عدة مدارس";
 "Select recipient" = "اختر المستلم";
-//MARK: Flavour strings
-"WELCOME_STRING" = "Welcome to School Chimes";
-"REPORT_BUG_STRING" = "Dear School Chimes Team";
-"TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
-"APP_STORE_ID" = "6758079127";
+"No Submission" = "لا يوجد تسليم";
+"This student" = "هذا الطالب";
+"has not submitted the assignment yet." = "لم يقم بتسليم الواجب بعد.";
+"Submission Progress" = "تقدم التسليم";
+"𓄲 Attachments" = "𓄲 المرفقات";
+"Are you sure want to update this Quiz?" = "هل أنت متأكد من تحديث هذا الاختبار؟";
+"You haven't added questions to this quiz yet. Would you like to add them or do it later?" = "لم تقم بإضافة أسئلة إلى هذا الاختبار بعد. هل ترغب في إضافتها الآن أم لاحقًا؟";
+"Later" = "لاحقًا";
+"Add Now" = "إضافة الآن";
 "SUBMIT_QUIZ" = "إرسال الاختبار";
 "SUBMIT_QUIZ_CONFIRMATION" = "هل أنت متأكد أنك تريد إرسال الاختبار؟";
 "MARK" = "الدرجة";
@@ -1355,3 +1373,10 @@
 "PREVIOUS_QUESTION" = "السؤال السابق";
 "ASSIGNED" = "تم التعيين";
 "DEADLINE" = "الموعد النهائي";
+
+//MARK: Flavour strings
+"WELCOME_STRING" = "Welcome to School Chimes";
+"REPORT_BUG_STRING" = "Dear School Chimes Team";
+"TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
+"APP_STORE_ID" = "6758079127";
+

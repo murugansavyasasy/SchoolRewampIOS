@@ -1038,6 +1038,7 @@
 "Admission No ↑" = "प्रवेश संख्या ↑";
 "Others" = "अन्य";
 "All students" = "सभी छात्र";
+"All Students" = "सभी छात्र";
 "Class & Section" = "कक्षा और अनुभाग";
 "Admission No" = "प्रवेश संख्या";
 "SMS" = "एसएमएस";
@@ -1212,6 +1213,19 @@
 "All Countries" = "सभी देश";
 "Top Countries" = "प्रमुख देश";
 "No Data Found" = "कोई डेटा नहीं मिला";
+"CURRENT LEAVE REQUEST" = "वर्तमान अवकाश अनुरोध";
+"Are you sure want to approve the leave request" = "क्या आप वाकई अवकाश अनुरोध को स्वीकृत करना चाहते हैं?";
+"Are you sure want to reject the leave request" = "क्या आप वाकई अवकाश अनुरोध को अस्वीकार करना चाहते हैं?";
+"The management has received your request and it is currently being process..." = "प्रबंधन को आपका अनुरोध प्राप्त हो गया है और वर्तमान में उस पर कार्य किया जा रहा है...";
+"Requested On" = "अनुरोध की तिथि";
+"Certificated Date" = "प्रमाणपत्र तिथि";
+"Certificate Type" = "प्रमाणपत्र प्रकार";
+"Staff Information" = "कर्मचारी जानकारी";
+"Personal and institutional details" = "व्यक्तिगत एवं संस्थान संबंधी विवरण";
+"Institution" = "संस्थान";
+"Staff Name" = "कर्मचारी का नाम";
+"Designation" = "पद";
+"Verified" = "सत्यापित";
 //MARK: Class Test Creation
 "Standard" = "कक्षा";
 "Sections" = "अनुभाग";
@@ -1410,11 +1424,15 @@
 "Student" = "छात्र";
 "Send to multiple school" = "एकाधिक विद्यालयों में भेजें";
 "Select recipient" = "प्राप्तकर्ता चुनें";
-//MARK: Flavour strings
-"WELCOME_STRING" = "Welcome to School Chimes";
-"REPORT_BUG_STRING" = "Dear School Chimes Team";
-"TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
-"APP_STORE_ID" = "6758079127";
+"No Submission" = "कोई सबमिशन नहीं";
+"This student" = "इस छात्र ने";
+"has not submitted the assignment yet." = "अभी तक असाइनमेंट जमा नहीं किया है।";
+"Submission Progress" = "सबमिशन प्रगति";
+"𓄲 Attachments" = "𓄲 संलग्नक";
+"Are you sure want to update this Quiz?" = "क्या आप वाकई इस क्विज़ को अपडेट करना चाहते हैं?";
+"You haven't added questions to this quiz yet. Would you like to add them or do it later?" = "आपने अभी तक इस क्विज़ में प्रश्न नहीं जोड़े हैं। क्या आप उन्हें अभी जोड़ना चाहते हैं या बाद में?";
+"Later" = "बाद में";
+"Add Now" = "अभी जोड़ें";
 "SUBMIT_QUIZ" = "क्विज़ सबमिट करें";
 "SUBMIT_QUIZ_CONFIRMATION" = "क्या आप वाकई इस क्विज़ को सबमिट करना चाहते हैं?";
 "MARK" = "अंक";
@@ -1422,3 +1440,9 @@
 "PREVIOUS_QUESTION" = "पिछला प्रश्न";
 "ASSIGNED" = "असाइन किया गया";
 "DEADLINE" = "अंतिम तिथि";
+//MARK: Flavour strings
+"WELCOME_STRING" = "Welcome to School Chimes";
+"REPORT_BUG_STRING" = "Dear School Chimes Team";
+"TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
+"APP_STORE_ID" = "6758079127";
+
