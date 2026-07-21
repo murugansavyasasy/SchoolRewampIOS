@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SummaryTableViewCell" rowHeight="56" id="KGk-i7-Jjw" customClass="SummaryTableViewCell" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="summaryContainer" userLabel="SummaryContainerView">
+                        <rect key="frame" x="12" y="8" width="296" height="40"/>
+                        <subviews>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 sections selected" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="summaryLabel" userLabel="SummaryLabel">
+                                <rect key="frame" x="16" y="10" width="264" height="20"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                <color key="textColor" name="NotificationLandingClr"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" name="MsgColor"/>
+                        <constraints>
+                            <constraint firstItem="summaryLabel" firstAttribute="bottom" secondItem="summaryContainer" secondAttribute="bottom" constant="-10" id="sb"/>
+                            <constraint firstItem="summaryLabel" firstAttribute="leading" secondItem="summaryContainer" secondAttribute="leading" constant="16" id="sl"/>
+                            <constraint firstItem="summaryLabel" firstAttribute="trailing" secondItem="summaryContainer" secondAttribute="trailing" constant="-16" id="sr"/>
+                            <constraint firstItem="summaryLabel" firstAttribute="top" secondItem="summaryContainer" secondAttribute="top" constant="10" id="st"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" systemColor="lightTextColor"/>
+                <constraints>
+                    <constraint firstItem="summaryContainer" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottom" constant="-8" id="scb"/>
+                    <constraint firstItem="summaryContainer" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="scl"/>
+                    <constraint firstItem="summaryContainer" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="scp"/>
+                    <constraint firstItem="summaryContainer" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailing" constant="-12" id="sct"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="summaryContainerView" destination="summaryContainer" id="sm1"/>
+                <outlet property="summaryLabel" destination="summaryLabel" id="sm2"/>
+            </connections>
+            <point key="canvasLocation" x="138.93129770992365" y="19.718309859154932"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="MsgColor">
+            <color red="0.81199997663497925" green="0.9100000262260437" blue="0.9649999737739563" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="NotificationLandingClr">
+            <color red="0.40392156862745099" green="0.61568627450980395" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="lightTextColor">
+            <color white="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

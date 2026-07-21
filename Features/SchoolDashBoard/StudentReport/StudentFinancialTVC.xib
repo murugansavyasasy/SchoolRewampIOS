@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="258" id="KGk-i7-Jjw" customClass="StudentFinancialTVC" customModule="School_Chimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="468" height="258"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="468" height="258"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Csd-aV-uu7">
+                        <rect key="frame" x="10" y="10" width="448" height="238"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="td9-ur-Y5X">
+                                <rect key="frame" x="5" y="10" width="438" height="218"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nZe-oM-9dm">
+                                        <rect key="frame" x="0.0" y="0.0" width="438" height="25"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ph1-3m-dtJ">
+                                                <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="25" id="O5N-zj-kEP"/>
+                                                    <constraint firstAttribute="width" constant="25" id="Y72-zc-FSn"/>
+                                                </constraints>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" image="wallet.bifold" catalog="system"/>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fees Overview" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Yi-HD-hU5">
+                                                <rect key="frame" x="35" y="0.0" width="403" height="24"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Mwm-Vs-byk">
+                                        <rect key="frame" x="0.0" y="38" width="438" height="128"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ddI-5J-IA0">
+                                                <rect key="frame" x="0.0" y="0.0" width="139.33333333333334" height="128"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="rd9-rJ-0rx">
+                                                        <rect key="frame" x="9.9999999999999929" y="10" width="119.33333333333331" height="108"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="₹ Total" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCg-iN-MAK">
+                                                                <rect key="frame" x="0.0" y="0.0" width="119.33333333333333" height="15.666666666666666"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                                                <color key="textColor" systemColor="systemBlueColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="₹60,000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZR-84-Zm3">
+                                                                <rect key="frame" x="0.0" y="88.666666666666657" width="119.33333333333333" height="19.333333333333329"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.38039215686274508" green="0.33333333333333331" blue="0.96078431372549022" alpha="0.088193221830985921" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="rd9-rJ-0rx" secondAttribute="trailing" constant="10" id="CLU-qo-Qob"/>
+                                                    <constraint firstItem="rd9-rJ-0rx" firstAttribute="top" secondItem="ddI-5J-IA0" secondAttribute="top" constant="10" id="KAF-uW-Ubz"/>
+                                                    <constraint firstAttribute="bottom" secondItem="rd9-rJ-0rx" secondAttribute="bottom" constant="10" id="kwr-vG-ubO"/>
+                                                    <constraint firstItem="rd9-rJ-0rx" firstAttribute="leading" secondItem="ddI-5J-IA0" secondAttribute="leading" constant="10" id="yw5-o6-NaA"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VwU-cH-0q9">
+                                                <rect key="frame" x="149.33333333333331" y="0.0" width="139.33333333333331" height="128"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="1Bb-ZX-kqs">
+                                                        <rect key="frame" x="9.9999999999999929" y="10" width="119.33333333333331" height="108"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="₹ Paid" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Wg-TS-eDN">
+                                                                <rect key="frame" x="0.0" y="0.0" width="119.33333333333333" height="15.666666666666666"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                                                <color key="textColor" systemColor="systemGreenColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="₹45,000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3P0-Mh-JlY">
+                                                                <rect key="frame" x="0.0" y="88.666666666666657" width="119.33333333333333" height="19.333333333333329"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="0.078207526408450703" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="1Bb-ZX-kqs" secondAttribute="trailing" constant="10" id="Cmi-vw-XmI"/>
+                                                    <constraint firstItem="1Bb-ZX-kqs" firstAttribute="top" secondItem="VwU-cH-0q9" secondAttribute="top" constant="10" id="ICR-qE-Rha"/>
+                                                    <constraint firstItem="1Bb-ZX-kqs" firstAttribute="leading" secondItem="VwU-cH-0q9" secondAttribute="leading" constant="10" id="avs-sE-fzj"/>
+                                                    <constraint firstAttribute="bottom" secondItem="1Bb-ZX-kqs" secondAttribute="bottom" constant="10" id="m43-8M-hFV"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b5Y-UR-iWX">
+                                                <rect key="frame" x="298.66666666666669" y="0.0" width="139.33333333333331" height="128"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="BxM-yL-ff3">
+                                                        <rect key="frame" x="9.9999999999999929" y="10" width="119.33333333333331" height="108"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="₹ Pending" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5qj-dA-IO0">
+                                                                <rect key="frame" x="0.0" y="0.0" width="119.33333333333333" height="15.666666666666666"/>
+                                                                <color key="tintColor" red="1" green="0.21960784310000001" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                                                <color key="textColor" systemColor="systemRedColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="₹15,000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zW5-Sd-OQm">
+                                                                <rect key="frame" x="0.0" y="88.666666666666657" width="119.33333333333333" height="19.333333333333329"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" red="1" green="0.2196078431372549" blue="0.23529411764705882" alpha="0.069514744718309859" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="BxM-yL-ff3" secondAttribute="trailing" constant="10" id="TP5-nm-zMp"/>
+                                                    <constraint firstAttribute="bottom" secondItem="BxM-yL-ff3" secondAttribute="bottom" constant="10" id="Xmv-jn-PAB"/>
+                                                    <constraint firstItem="BxM-yL-ff3" firstAttribute="top" secondItem="b5Y-UR-iWX" secondAttribute="top" constant="10" id="e8I-dG-c7S"/>
+                                                    <constraint firstItem="BxM-yL-ff3" firstAttribute="leading" secondItem="b5Y-UR-iWX" secondAttribute="leading" constant="10" id="lYI-fV-gFF"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9Pg-WW-ava">
+                                        <rect key="frame" x="0.0" y="178.66666666666666" width="438" height="39.333333333333343"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="luZ-aO-jdJ">
+                                                <rect key="frame" x="0.0" y="0.0" width="438" height="19.333333333333332"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Payment Progress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="exS-Vb-q2x">
+                                                        <rect key="frame" x="0.0" y="0.0" width="113" height="19.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                                        <color key="textColor" systemColor="systemGrayColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="75% Paid" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h50-bO-fBS">
+                                                        <rect key="frame" x="368" y="0.0" width="70" height="19.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                                        <color key="textColor" systemColor="tintColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Oby-Br-6NK">
+                                                <rect key="frame" x="0.0" y="29.333333333333343" width="438" height="10"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="10" id="N1S-Ar-CMa"/>
+                                                </constraints>
+                                            </progressView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="td9-ur-Y5X" secondAttribute="bottom" constant="10" id="2Vu-2G-uHD"/>
+                            <constraint firstItem="td9-ur-Y5X" firstAttribute="leading" secondItem="Csd-aV-uu7" secondAttribute="leading" constant="5" id="c5L-wL-Dsv"/>
+                            <constraint firstItem="td9-ur-Y5X" firstAttribute="top" secondItem="Csd-aV-uu7" secondAttribute="top" constant="10" id="cAc-mT-TlB"/>
+                            <constraint firstAttribute="trailing" secondItem="td9-ur-Y5X" secondAttribute="trailing" constant="5" id="rJA-9Y-7AO"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="Csd-aV-uu7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Q2g-FX-K2k"/>
+                    <constraint firstAttribute="bottom" secondItem="Csd-aV-uu7" secondAttribute="bottom" constant="10" id="fli-iZ-lhf"/>
+                    <constraint firstAttribute="trailing" secondItem="Csd-aV-uu7" secondAttribute="trailing" constant="10" id="sLg-A4-3jr"/>
+                    <constraint firstItem="Csd-aV-uu7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="wVh-KF-27F"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="outerView" destination="Csd-aV-uu7" id="G8O-UP-CfG"/>
+                <outlet property="paidAmountLbl" destination="3P0-Mh-JlY" id="yqX-zZ-WeX"/>
+                <outlet property="paidPercentageLbl" destination="h50-bO-fBS" id="h40-oE-y5W"/>
+                <outlet property="paidProgressView" destination="Oby-Br-6NK" id="eRC-jp-hmY"/>
+                <outlet property="paidView" destination="VwU-cH-0q9" id="NWb-hq-Hp7"/>
+                <outlet property="pendingAmmountLbl" destination="zW5-Sd-OQm" id="NB6-sf-Fzs"/>
+                <outlet property="pendingView" destination="b5Y-UR-iWX" id="8hT-zG-A1t"/>
+                <outlet property="tatalAmmountLbl" destination="EZR-84-Zm3" id="z64-A8-wIO"/>
+                <outlet property="totalView" destination="ddI-5J-IA0" id="FvW-zU-ZFX"/>
+            </connections>
+            <point key="canvasLocation" x="207.63358778625954" y="166.90140845070422"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="wallet.bifold" catalog="system" width="128" height="103"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.53333333333333333" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.2196078431372549" blue="0.23529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.53333333333333333" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

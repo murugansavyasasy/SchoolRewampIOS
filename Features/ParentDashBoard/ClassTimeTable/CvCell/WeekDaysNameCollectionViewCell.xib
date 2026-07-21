@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="WeekDaysNameCollectionViewCell" customModule="School_Chimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="122" height="94"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="122" height="94"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7CZ-6e-XJs" customClass="UIViewX" customModule="School_Chimes" customModuleProvider="target">
+                        <rect key="frame" x="5" y="5" width="112" height="84"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gGU-FG-3ca">
+                                <rect key="frame" x="36.666666666666664" y="33" width="38.999999999999993" height="18"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="gGU-FG-3ca" firstAttribute="centerX" secondItem="7CZ-6e-XJs" secondAttribute="centerX" id="3Bf-ts-lAb"/>
+                            <constraint firstItem="gGU-FG-3ca" firstAttribute="centerY" secondItem="7CZ-6e-XJs" secondAttribute="centerY" id="VHa-O8-qu9"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="7CZ-6e-XJs" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="RTT-Gs-kTL"/>
+                <constraint firstItem="7CZ-6e-XJs" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="T9q-xR-nMH"/>
+                <constraint firstAttribute="trailing" secondItem="7CZ-6e-XJs" secondAttribute="trailing" constant="5" id="dmI-he-jS9"/>
+                <constraint firstAttribute="bottom" secondItem="7CZ-6e-XJs" secondAttribute="bottom" constant="5" id="efm-Cv-8nH"/>
+            </constraints>
+            <size key="customSize" width="122" height="94"/>
+            <connections>
+                <outlet property="bgView" destination="7CZ-6e-XJs" id="s0n-PD-3dn"/>
+                <outlet property="weekDaysNameLbl" destination="gGU-FG-3ca" id="zm5-g2-rTu"/>
+            </connections>
+            <point key="canvasLocation" x="192.36641221374046" y="4.2253521126760569"/>
+        </collectionViewCell>
+    </objects>
+</document>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="AttendanceHeaderView" customModule="School_Chimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="90"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o9h-G1-123">
+                    <rect key="frame" x="16" y="8" width="361" height="74"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dt-bg-abc">
+                            <rect key="frame" x="16" y="12" width="45" height="50"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dy-lb-xyz">
+                                    <rect key="frame" x="0.0" y="6" width="45" height="24"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fri" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wk-lb-mno">
+                                    <rect key="frame" x="0.0" y="30" width="45" height="12"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" name="BackGroundClr"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="h-dt-bg"/>
+                                <constraint firstItem="dy-lb-xyz" firstAttribute="leading" secondItem="dt-bg-abc" secondAttribute="leading" id="ld-dy-lb"/>
+                                <constraint firstItem="wk-lb-mno" firstAttribute="leading" secondItem="dt-bg-abc" secondAttribute="leading" id="ld-wk-lb"/>
+                                <constraint firstItem="dy-lb-xyz" firstAttribute="top" secondItem="dt-bg-abc" secondAttribute="top" constant="6" id="tp-dy-lb"/>
+                                <constraint firstItem="wk-lb-mno" firstAttribute="top" secondItem="dy-lb-xyz" secondAttribute="bottom" id="tp-wk-lb"/>
+                                <constraint firstAttribute="trailing" secondItem="dy-lb-xyz" secondAttribute="trailing" id="tr-dy-lb"/>
+                                <constraint firstAttribute="trailing" secondItem="wk-lb-mno" secondAttribute="trailing" id="tr-wk-lb"/>
+                                <constraint firstAttribute="width" constant="45" id="w-dt-bg"/>
+                            </constraints>
+                        </view>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="SK2-kt-UfL">
+                            <rect key="frame" x="76" y="15" width="275" height="44"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="28 February 2025" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fl-dt-lbl">
+                                    <rect key="frame" x="0.0" y="0.0" width="275" height="25.666666666666668"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                    <color key="textColor" systemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Present: 1 • Absent: 6 • Not Marked: 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sm-lbl-123">
+                                    <rect key="frame" x="0.0" y="29.666666666666661" width="275" height="14.333333333333332"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.90588235294117647" green="0.96470588235294119" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstItem="SK2-kt-UfL" firstAttribute="top" secondItem="o9h-G1-123" secondAttribute="top" constant="15" id="9fO-DH-Aip"/>
+                        <constraint firstAttribute="bottom" secondItem="SK2-kt-UfL" secondAttribute="bottom" constant="15" id="HYS-3t-T9R"/>
+                        <constraint firstAttribute="trailing" secondItem="SK2-kt-UfL" secondAttribute="trailing" constant="10" id="Jrv-86-hIH"/>
+                        <constraint firstItem="dt-bg-abc" firstAttribute="centerY" secondItem="o9h-G1-123" secondAttribute="centerY" id="cy-dt-bg"/>
+                        <constraint firstItem="SK2-kt-UfL" firstAttribute="leading" secondItem="dt-bg-abc" secondAttribute="trailing" constant="15" id="kGa-LM-6Bw"/>
+                        <constraint firstItem="dt-bg-abc" firstAttribute="leading" secondItem="o9h-G1-123" secondAttribute="leading" constant="16" id="ld-dt-bg"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="o9h-G1-123" secondAttribute="bottom" constant="8" id="bt-o9h"/>
+                <constraint firstItem="o9h-G1-123" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="ld-o9h"/>
+                <constraint firstItem="o9h-G1-123" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="tp-o9h"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="o9h-G1-123" secondAttribute="trailing" constant="16" id="tr-o9h"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="containerView" destination="o9h-G1-123" id="out-cnt-vw"/>
+                <outlet property="dateBadgeView" destination="dt-bg-abc" id="out-dt-bg"/>
+                <outlet property="dayLabel" destination="dy-lb-xyz" id="out-dy-lb"/>
+                <outlet property="dayOfWeekLabel" destination="wk-lb-mno" id="out-wk-lb"/>
+                <outlet property="fullDateLabel" destination="fl-dt-lbl" id="out-fl-lbl"/>
+                <outlet property="summaryLabel" destination="sm-lbl-123" id="out-sm-lbl"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="153"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="BackGroundClr">
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

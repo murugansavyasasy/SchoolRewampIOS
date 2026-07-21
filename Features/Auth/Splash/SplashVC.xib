@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SplashVC" customModule="School_Chimes" customModuleProvider="target">
+            <connections>
+                <outlet property="confettiContainerView" destination="confetti-container" id="confetti-outlet"/>
+                <outlet property="dot1" destination="dCz-Pw-tFU" id="dot1-outlet"/>
+                <outlet property="dot2" destination="7jd-3c-lPb" id="dot2-outlet"/>
+                <outlet property="dot3" destination="Djn-fW-A4w" id="dot3-outlet"/>
+                <outlet property="empoweringLabel" destination="hfo-ou-k6S" id="empower-outlet"/>
+                <outlet property="headerLabel" destination="ZAU-c8-ooc" id="header-outlet"/>
+                <outlet property="logoImageView" destination="logo-img" id="logo-outlet"/>
+                <outlet property="underlineView" destination="e8a-3c-qXn" id="underline-outlet"/>
+                <outlet property="underlineWidthConstraint" destination="underline-width" id="underline-width-outlet"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gradient-bg" customClass="GradientView" customModule="School_Chimes" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                    <color key="backgroundColor" red="0.878" green="0.94899999999999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="confetti-container">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ripple-container">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONNECTING EDUCATION COMMUNITIES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZAU-c8-ooc">
+                    <rect key="frame" x="40" y="118.99999999999999" width="313" height="38.333333333333329"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                    <color key="textColor" red="0.33000000000000002" green="0.42999999999999999" blue="0.54000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="school 2" translatesAutoresizingMaskIntoConstraints="NO" id="logo-img">
+                    <rect key="frame" x="46.666666666666657" y="288.66666666666669" width="300" height="220"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="220" id="logo-height"/>
+                        <constraint firstAttribute="width" constant="300" id="logo-width"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empowering 3000+ schools" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfo-ou-k6S">
+                    <rect key="frame" x="81" y="588.66666666666663" width="231" height="21.666666666666629"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                    <color key="textColor" red="0.32000000000000001" green="0.34999999999999998" blue="0.55000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e8a-3c-qXn">
+                    <rect key="frame" x="196.66666666666666" y="618.33333333333337" width="0.0" height="3"/>
+                    <color key="backgroundColor" red="0.28999999999999998" green="0.33000000000000002" blue="0.70999999999999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="3" id="underline-height"/>
+                        <constraint firstAttribute="width" id="underline-width"/>
+                    </constraints>
+                </view>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="aqx-22-W7C">
+                    <rect key="frame" x="173.66666666666666" y="778" width="46" height="10"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dCz-Pw-tFU">
+                            <rect key="frame" x="0.0" y="0.0" width="10" height="10"/>
+                            <color key="backgroundColor" red="0.28999999999999998" green="0.33000000000000002" blue="0.70999999999999996" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="10" id="dot1-h"/>
+                                <constraint firstAttribute="width" constant="10" id="dot1-w"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7jd-3c-lPb">
+                            <rect key="frame" x="18" y="0.0" width="10" height="10"/>
+                            <color key="backgroundColor" red="0.28999999999999998" green="0.33000000000000002" blue="0.70999999999999996" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="10" id="dot2-h"/>
+                                <constraint firstAttribute="width" constant="10" id="dot2-w"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Djn-fW-A4w">
+                            <rect key="frame" x="36" y="0.0" width="10" height="10"/>
+                            <color key="backgroundColor" red="0.28999999999999998" green="0.33000000000000002" blue="0.70999999999999996" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="10" id="dot3-h"/>
+                                <constraint firstAttribute="width" constant="10" id="dot3-w"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" red="0.878" green="0.94899999999999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="confetti-container" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="conf-bottom"/>
+                <constraint firstItem="confetti-container" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="conf-lead"/>
+                <constraint firstItem="confetti-container" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="conf-top"/>
+                <constraint firstItem="confetti-container" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="conf-trail"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="aqx-22-W7C" secondAttribute="bottom" constant="30" id="dots-bottom"/>
+                <constraint firstItem="aqx-22-W7C" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="dots-centerx"/>
+                <constraint firstItem="hfo-ou-k6S" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="empower-centerx"/>
+                <constraint firstItem="hfo-ou-k6S" firstAttribute="top" secondItem="logo-img" secondAttribute="bottom" constant="80" id="empower-top"/>
+                <constraint firstItem="gradient-bg" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="grad-bottom"/>
+                <constraint firstItem="gradient-bg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="grad-lead"/>
+                <constraint firstItem="gradient-bg" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="grad-top"/>
+                <constraint firstItem="gradient-bg" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="grad-trail"/>
+                <constraint firstItem="ZAU-c8-ooc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="header-lead"/>
+                <constraint firstItem="ZAU-c8-ooc" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="60" id="header-top"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ZAU-c8-ooc" secondAttribute="trailing" constant="40" id="header-trail"/>
+                <constraint firstItem="logo-img" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="logo-centerx"/>
+                <constraint firstItem="logo-img" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" constant="-40" id="logo-centery"/>
+                <constraint firstItem="e8a-3c-qXn" firstAttribute="centerX" secondItem="hfo-ou-k6S" secondAttribute="centerX" id="underline-centerx"/>
+                <constraint firstItem="e8a-3c-qXn" firstAttribute="top" secondItem="hfo-ou-k6S" secondAttribute="bottom" constant="8" id="underline-top"/>
+            </constraints>
+            <point key="canvasLocation" x="27" y="20"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="school 2" width="400" height="206"/>
+    </resources>
+</document>

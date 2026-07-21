@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SenderLeaveRqstVC" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+            <connections>
+                <outlet property="BackBtn" destination="atx-K4-uC7" id="jGR-hk-yDc"/>
+                <outlet property="NodataImage" destination="qhc-SZ-Mme" id="VLM-AI-j5Y"/>
+                <outlet property="NodateLbl" destination="1xQ-Bq-U4w" id="3JM-rp-BcI"/>
+                <outlet property="TopView" destination="m8Z-ib-bLY" id="L8M-Bw-gao"/>
+                <outlet property="allBtn" destination="hxx-ci-XQD" id="fGl-il-WMT"/>
+                <outlet property="approvedBtn" destination="jAm-bc-Sxt" id="dWB-pR-R5c"/>
+                <outlet property="filterBtnStack" destination="LSO-dg-dWh" id="uka-uM-33Y"/>
+                <outlet property="leaveRequestTable" destination="nxa-sv-jIe" id="WLU-Pw-fFF"/>
+                <outlet property="menuNameLbl" destination="URm-mP-QaY" id="WdA-S0-A8t"/>
+                <outlet property="rejectedBtn" destination="rO5-TV-Dr5" id="4Hk-8u-uNv"/>
+                <outlet property="searchBar" destination="gCb-kQ-6B9" id="NgK-fa-wZM"/>
+                <outlet property="searchBtn" destination="N4S-qO-Ytr" id="3bw-zn-imv"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="waitingBtn" destination="gw7-T3-cjN" id="Oo1-6p-Ix2"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m8Z-ib-bLY" customClass="BottomRoundedView" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="183"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="kEV-bF-9YD">
+                            <rect key="frame" x="10" y="128" width="373" height="35"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="atx-K4-uC7">
+                                    <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="Prd-Wj-qGP"/>
+                                        <constraint firstAttribute="width" constant="35" id="rxg-PQ-VTT"/>
+                                    </constraints>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="chevron.backward" catalog="system">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="back:" destination="-1" eventType="touchUpInside" id="WcZ-MM-XZM"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leave" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URm-mP-QaY">
+                                    <rect key="frame" x="35" y="7.333333333333341" width="303" height="20.333333333333329"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N4S-qO-Ytr">
+                                    <rect key="frame" x="338" y="0.0" width="35" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="35" id="ffQ-v4-Pk6"/>
+                                        <constraint firstAttribute="height" constant="35" id="ict-60-wM8"/>
+                                    </constraints>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="magnifyingglass" catalog="system">
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="searchBtnAct:" destination="-1" eventType="touchUpInside" id="tzI-PQ-Uvv"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" name="BackGroundClr"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="kEV-bF-9YD" secondAttribute="trailing" constant="10" id="R1R-fW-hMo"/>
+                        <constraint firstAttribute="bottom" secondItem="kEV-bF-9YD" secondAttribute="bottom" constant="20" id="YJL-UP-JF8"/>
+                        <constraint firstItem="kEV-bF-9YD" firstAttribute="leading" secondItem="m8Z-ib-bLY" secondAttribute="leading" constant="10" id="YR7-72-cYr"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="21u-Ph-GdD">
+                    <rect key="frame" x="0.0" y="198" width="393" height="586"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="d8j-EA-Wgx">
+                            <rect key="frame" x="0.0" y="8" width="393" height="419"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="LSO-dg-dWh">
+                                    <rect key="frame" x="10" y="0.0" width="373" height="30"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxx-ci-XQD" customClass="LocalizationButton" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="78.333333333333329" height="30"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" title="All"/>
+                                            <connections>
+                                                <action selector="allBtnAct:" destination="-1" eventType="touchUpInside" id="JNK-gP-4GF"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jAm-bc-Sxt" customClass="LocalizationButton" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                            <rect key="frame" x="98.333333333333343" y="0.0" width="78.333333333333343" height="30"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" title="Approved"/>
+                                            <connections>
+                                                <action selector="approvedBtnAct:" destination="-1" eventType="touchUpInside" id="Cza-Lo-iyv"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rO5-TV-Dr5" customClass="LocalizationButton" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                            <rect key="frame" x="196.66666666666666" y="0.0" width="77.999999999999972" height="30"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" title="Rejected"/>
+                                            <connections>
+                                                <action selector="rejectedBtnAct:" destination="-1" eventType="touchUpInside" id="c7O-Oc-kaY"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gw7-T3-cjN" customClass="LocalizationButton" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                            <rect key="frame" x="294.66666666666669" y="0.0" width="78.333333333333314" height="30"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" title="Waiting"/>
+                                            <connections>
+                                                <action selector="waitingBtnAct:" destination="-1" eventType="touchUpInside" id="enH-sJ-5vD"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </stackView>
+                                <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="gCb-kQ-6B9">
+                                    <rect key="frame" x="5" y="45" width="383" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="7qV-On-Atx"/>
+                                    </constraints>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="Wjb-YU-ufb"/>
+                                    </connections>
+                                </searchBar>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noLeaveHistory" translatesAutoresizingMaskIntoConstraints="NO" id="qhc-SZ-Mme">
+                                    <rect key="frame" x="0.0" y="100" width="393" height="280"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="280" id="l7s-qk-QtC"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1xQ-Bq-U4w">
+                                    <rect key="frame" x="50" y="395" width="293" height="24"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="1xQ-Bq-U4w" secondAttribute="trailing" constant="50" id="0DJ-AH-N39"/>
+                                <constraint firstAttribute="trailing" secondItem="LSO-dg-dWh" secondAttribute="trailing" constant="10" id="1mL-eh-tjw"/>
+                                <constraint firstItem="LSO-dg-dWh" firstAttribute="leading" secondItem="d8j-EA-Wgx" secondAttribute="leading" constant="10" id="6f1-3D-QYO"/>
+                                <constraint firstItem="gCb-kQ-6B9" firstAttribute="leading" secondItem="d8j-EA-Wgx" secondAttribute="leading" constant="5" id="OZE-SI-VPy"/>
+                                <constraint firstItem="qhc-SZ-Mme" firstAttribute="leading" secondItem="d8j-EA-Wgx" secondAttribute="leading" id="dZB-qA-Ld1"/>
+                                <constraint firstAttribute="trailing" secondItem="qhc-SZ-Mme" secondAttribute="trailing" id="gjr-s5-fKq"/>
+                                <constraint firstItem="1xQ-Bq-U4w" firstAttribute="leading" secondItem="d8j-EA-Wgx" secondAttribute="leading" constant="50" id="pNw-GH-ad2"/>
+                                <constraint firstAttribute="trailing" secondItem="gCb-kQ-6B9" secondAttribute="trailing" constant="5" id="wxl-fe-Ofy"/>
+                            </constraints>
+                        </stackView>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nxa-sv-jIe">
+                            <rect key="frame" x="5" y="435" width="383" height="151"/>
+                            <color key="backgroundColor" systemColor="systemGray6Color"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="uLW-kX-T7C"/>
+                                <outlet property="delegate" destination="-1" id="97t-wM-bHR"/>
+                            </connections>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="d8j-EA-Wgx" firstAttribute="top" secondItem="21u-Ph-GdD" secondAttribute="top" constant="8" id="20a-JP-s3y"/>
+                        <constraint firstAttribute="trailing" secondItem="nxa-sv-jIe" secondAttribute="trailing" constant="5" id="4wx-YF-1jT"/>
+                        <constraint firstAttribute="bottom" secondItem="nxa-sv-jIe" secondAttribute="bottom" id="54v-C3-cXq"/>
+                        <constraint firstItem="nxa-sv-jIe" firstAttribute="top" secondItem="d8j-EA-Wgx" secondAttribute="bottom" constant="8" id="6hi-bo-kZp"/>
+                        <constraint firstAttribute="trailing" secondItem="d8j-EA-Wgx" secondAttribute="trailing" id="87a-qO-oNh"/>
+                        <constraint firstItem="nxa-sv-jIe" firstAttribute="leading" secondItem="21u-Ph-GdD" secondAttribute="leading" constant="5" id="EwH-Zg-RFx"/>
+                        <constraint firstItem="d8j-EA-Wgx" firstAttribute="leading" secondItem="21u-Ph-GdD" secondAttribute="leading" id="Mjc-bj-6qe"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" name="topBackgroundCLr"/>
+            <constraints>
+                <constraint firstItem="m8Z-ib-bLY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="1Rk-MC-MMd"/>
+                <constraint firstItem="m8Z-ib-bLY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="D7p-bp-38j"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="21u-Ph-GdD" secondAttribute="trailing" id="QP2-lE-DWC"/>
+                <constraint firstItem="21u-Ph-GdD" firstAttribute="top" secondItem="m8Z-ib-bLY" secondAttribute="bottom" constant="15" id="e91-DD-l6t"/>
+                <constraint firstItem="21u-Ph-GdD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="eBI-Xt-Dfo"/>
+                <constraint firstItem="kEV-bF-9YD" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="f20-sM-ggd"/>
+                <constraint firstAttribute="trailing" secondItem="m8Z-ib-bLY" secondAttribute="trailing" id="oK7-bl-Myn"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="21u-Ph-GdD" secondAttribute="bottom" id="wiS-zx-tzv"/>
+            </constraints>
+            <point key="canvasLocation" x="-25.190839694656489" y="19.718309859154932"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <image name="noLeaveHistory" width="600" height="600"/>
+        <namedColor name="BackGroundClr">
+            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="topBackgroundCLr">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

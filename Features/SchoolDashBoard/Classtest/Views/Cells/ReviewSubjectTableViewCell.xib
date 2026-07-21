@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReviewSubjectTableViewCell" rowHeight="160" id="KGk-i7-Jjw" customClass="ReviewSubjectTableViewCell" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cardContainer">
+                        <rect key="frame" x="16" y="8" width="288" height="144"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="verticalMainStack">
+                                <rect key="frame" x="0.0" y="0.0" width="288" height="144"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="headerView">
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="56"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="headerStack">
+                                                <rect key="frame" x="16" y="8" width="256" height="40"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="avatarView">
+                                                        <rect key="frame" x="0.0" y="2" width="36" height="36"/>
+                                                        <subviews>
+                                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="M" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avatarLabel" userLabel="AvatarLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                                <color key="textColor" name="PrimeryColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="avatarLabel" firstAttribute="bottom" secondItem="avatarView" secondAttribute="bottom" id="avb"/>
+                                                            <constraint firstAttribute="height" constant="36" id="avh"/>
+                                                            <constraint firstItem="avatarLabel" firstAttribute="leading" secondItem="avatarView" secondAttribute="leading" id="avl"/>
+                                                            <constraint firstItem="avatarLabel" firstAttribute="trailing" secondItem="avatarView" secondAttribute="trailing" id="avr"/>
+                                                            <constraint firstItem="avatarLabel" firstAttribute="top" secondItem="avatarView" secondAttribute="top" id="avt"/>
+                                                            <constraint firstAttribute="width" constant="36" id="avw"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="textStack">
+                                                        <rect key="frame" x="48" y="6.3333333333333339" width="121" height="27.333333333333329"/>
+                                                        <subviews>
+                                                            <label opaque="NO" contentMode="left" text="MATHS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="titleLabel" userLabel="TitleLabel">
+                                                                <rect key="frame" x="0.0" y="0.0" width="121" height="12"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                                <color key="textColor" red="0.1019607843" green="0.10980392160000001" blue="0.16078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" contentMode="left" text="Section C" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="subtitleLabel" userLabel="SubtitleLabel">
+                                                                <rect key="frame" x="0.0" y="14.000000000000004" width="121" height="13.333333333333332"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                                <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pillBadgeContainer">
+                                                        <rect key="frame" x="181" y="8" width="75" height="24"/>
+                                                        <subviews>
+                                                            <label opaque="NO" contentMode="left" text="2 tests" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="testCountLabel" userLabel="TestCountLabel">
+                                                                <rect key="frame" x="5" y="4" width="65" height="16"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                                <color key="textColor" name="PrimeryColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" red="0.29803921570000003" green="0.30196078430000001" blue="0.86274509799999999" alpha="0.080000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="75" id="JHY-Mo-Ye2"/>
+                                                            <constraint firstItem="testCountLabel" firstAttribute="bottom" secondItem="pillBadgeContainer" secondAttribute="bottom" constant="-4" id="plbb"/>
+                                                            <constraint firstAttribute="height" constant="24" id="plbh"/>
+                                                            <constraint firstItem="testCountLabel" firstAttribute="leading" secondItem="pillBadgeContainer" secondAttribute="leading" constant="5" id="plbl"/>
+                                                            <constraint firstItem="testCountLabel" firstAttribute="trailing" secondItem="pillBadgeContainer" secondAttribute="trailing" constant="-5" id="plbr"/>
+                                                            <constraint firstItem="testCountLabel" firstAttribute="top" secondItem="pillBadgeContainer" secondAttribute="top" constant="4" id="plbt"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="12"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="headerStack" firstAttribute="bottom" secondItem="headerView" secondAttribute="bottom" constant="-8" id="hsb"/>
+                                            <constraint firstItem="headerStack" firstAttribute="leading" secondItem="headerView" secondAttribute="leading" constant="16" id="hsl"/>
+                                            <constraint firstItem="headerStack" firstAttribute="trailing" secondItem="headerView" secondAttribute="trailing" constant="-16" id="hsr"/>
+                                            <constraint firstItem="headerStack" firstAttribute="top" secondItem="headerView" secondAttribute="top" constant="8" id="hst"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bodyContainerView">
+                                        <rect key="frame" x="0.0" y="56" width="288" height="88"/>
+                                        <subviews>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="testsTableView">
+                                                <rect key="frame" x="0.0" y="0.0" width="288" height="88"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="88" id="testsTableViewHeight"/>
+                                                </constraints>
+                                            </tableView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="testsTableView" firstAttribute="bottom" secondItem="bodyContainerView" secondAttribute="bottom" id="ssb"/>
+                                            <constraint firstItem="testsTableView" firstAttribute="leading" secondItem="bodyContainerView" secondAttribute="leading" id="ssl"/>
+                                            <constraint firstItem="testsTableView" firstAttribute="trailing" secondItem="bodyContainerView" secondAttribute="trailing" id="ssr"/>
+                                            <constraint firstItem="testsTableView" firstAttribute="top" secondItem="bodyContainerView" secondAttribute="top" id="sst"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="verticalMainStack" firstAttribute="bottom" secondItem="cardContainer" secondAttribute="bottom" id="vsb"/>
+                            <constraint firstItem="verticalMainStack" firstAttribute="leading" secondItem="cardContainer" secondAttribute="leading" id="vsl"/>
+                            <constraint firstItem="verticalMainStack" firstAttribute="trailing" secondItem="cardContainer" secondAttribute="trailing" id="vsr"/>
+                            <constraint firstItem="verticalMainStack" firstAttribute="top" secondItem="cardContainer" secondAttribute="top" id="vst"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="cardContainer" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottom" constant="-8" id="ccb"/>
+                    <constraint firstItem="cardContainer" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ccl"/>
+                    <constraint firstItem="cardContainer" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailing" constant="-16" id="ccr"/>
+                    <constraint firstItem="cardContainer" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="cct"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="avatarLabel" destination="avatarLabel" id="avatarLabelOutlet"/>
+                <outlet property="avatarView" destination="avatarView" id="avatarViewOutlet"/>
+                <outlet property="cardContainerView" destination="cardContainer" id="cardContainerOutlet"/>
+                <outlet property="headerView" destination="headerView" id="headerViewOutlet"/>
+                <outlet property="subtitleLabel" destination="subtitleLabel" id="subtitleLabelOutlet"/>
+                <outlet property="testCountLabel" destination="testCountLabel" id="testCountLabelOutlet"/>
+                <outlet property="testsTableView" destination="testsTableView" id="testsTableViewOutlet"/>
+                <outlet property="testsTableViewHeightConstraint" destination="testsTableViewHeight" id="testsTableViewHeightOutlet"/>
+                <outlet property="titleLabel" destination="titleLabel" id="titleLabelOutlet"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="19"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="PrimeryColor">
+            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

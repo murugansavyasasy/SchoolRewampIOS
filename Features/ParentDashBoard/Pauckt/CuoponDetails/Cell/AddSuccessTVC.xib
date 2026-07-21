@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="262" id="KGk-i7-Jjw" customClass="AddSuccessTVC" customModule="rewardDesign" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="373" height="262"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="373" height="262"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HdN-kK-QaR">
+                        <rect key="frame" x="0.0" y="0.0" width="373" height="262"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="qr-code" translatesAutoresizingMaskIntoConstraints="NO" id="du0-vx-T6e">
+                                <rect key="frame" x="122.66666666666669" y="10" width="128" height="128"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="128" id="fyV-lG-I60"/>
+                                    <constraint firstAttribute="height" constant="128" id="hev-81-46v"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let the staff scan the QR code or use the coupon code to claim the offer" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cL7-v7-5S3">
+                                <rect key="frame" x="10" y="188" width="353" height="63"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pua-5E-jmj">
+                                <rect key="frame" x="111.66666666666669" y="148" width="150" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ucd-JX-axG">
+                                        <rect key="frame" x="114.99999999999999" y="0.0" width="25.000000000000014" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="25" id="dVN-3i-AQd"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.0" green="0.59215686270000001" blue="0.52901888969999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="imageEdgeInsets" minX="4" minY="5" maxX="4" maxY="5"/>
+                                        <state key="normal" image="doc.on.doc" catalog="system"/>
+                                        <connections>
+                                            <action selector="copyCode:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Zy7-8s-j39"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="PICKPAUK123" placeholder="PICKPAUK123" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lUV-cH-oKO">
+                                        <rect key="frame" x="10" y="0.0" width="95" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="c0K-C7-2fA"/>
+                                        </constraints>
+                                        <color key="textColor" red="0.0" green="0.51107393280000002" blue="0.41071152259999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Ucd-JX-axG" secondAttribute="trailing" constant="10" id="11h-Ng-VXZ"/>
+                                    <constraint firstItem="Ucd-JX-axG" firstAttribute="leading" secondItem="lUV-cH-oKO" secondAttribute="trailing" constant="10" id="8FV-MF-Qr6"/>
+                                    <constraint firstAttribute="bottom" secondItem="lUV-cH-oKO" secondAttribute="bottom" id="AWL-CW-rKw"/>
+                                    <constraint firstItem="Ucd-JX-axG" firstAttribute="top" secondItem="Pua-5E-jmj" secondAttribute="top" id="V5H-z2-BwV"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ucd-JX-axG" secondAttribute="bottom" id="Xj3-zD-RQ2"/>
+                                    <constraint firstItem="lUV-cH-oKO" firstAttribute="leading" secondItem="Pua-5E-jmj" secondAttribute="leading" constant="10" id="YAf-Nk-UgF"/>
+                                    <constraint firstAttribute="width" constant="150" id="ats-Ua-8VB"/>
+                                    <constraint firstItem="lUV-cH-oKO" firstAttribute="top" secondItem="Pua-5E-jmj" secondAttribute="top" id="c2x-pe-wnU"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="cL7-v7-5S3" firstAttribute="leading" secondItem="HdN-kK-QaR" secondAttribute="leading" constant="10" id="NLe-DD-GpZ"/>
+                            <constraint firstItem="du0-vx-T6e" firstAttribute="top" secondItem="HdN-kK-QaR" secondAttribute="top" constant="10" id="OZH-wI-Za5"/>
+                            <constraint firstItem="cL7-v7-5S3" firstAttribute="top" secondItem="Pua-5E-jmj" secondAttribute="bottom" constant="10" id="Uqz-uh-bDH"/>
+                            <constraint firstAttribute="bottom" secondItem="cL7-v7-5S3" secondAttribute="bottom" constant="11" id="Wl6-jZ-ydh"/>
+                            <constraint firstItem="Pua-5E-jmj" firstAttribute="centerX" secondItem="du0-vx-T6e" secondAttribute="centerX" id="s98-7k-oQd"/>
+                            <constraint firstItem="du0-vx-T6e" firstAttribute="centerX" secondItem="HdN-kK-QaR" secondAttribute="centerX" id="tP9-7h-n2t"/>
+                            <constraint firstAttribute="trailing" secondItem="cL7-v7-5S3" secondAttribute="trailing" constant="10" id="tgB-uh-rgx"/>
+                            <constraint firstItem="Pua-5E-jmj" firstAttribute="top" secondItem="du0-vx-T6e" secondAttribute="bottom" constant="10" id="wgx-RG-Vkz"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="HdN-kK-QaR" secondAttribute="trailing" id="BUJ-gh-u9v"/>
+                    <constraint firstItem="HdN-kK-QaR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Jp9-z6-lUS"/>
+                    <constraint firstAttribute="bottom" secondItem="HdN-kK-QaR" secondAttribute="bottom" id="ZIF-BA-nPH"/>
+                    <constraint firstItem="HdN-kK-QaR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ptw-r0-7Mg"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="contentLbl" destination="cL7-v7-5S3" id="3ap-YG-WVW"/>
+                <outlet property="copyView" destination="Pua-5E-jmj" id="5LM-rK-sFK"/>
+                <outlet property="coupenCode" destination="lUV-cH-oKO" id="HvZ-4Y-GbU"/>
+            </connections>
+            <point key="canvasLocation" x="179.38931297709922" y="95.774647887323951"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="doc.on.doc" catalog="system" width="116" height="128"/>
+        <image name="qr-code" width="512" height="512"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -1,0 +1,194 @@
+//
+//  PunchHistoryListVC.swift
+//  School Chimes
+//
+//  Created by Chandhru on 05/09/25.
+//
+
+import UIKit
+
+class PunchHistoryListVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var historyView: UIView!
+    @IBOutlet weak var backView: UIButton!
+    @IBOutlet weak var noRecordLbl: UILabel!
+    @IBOutlet weak var tv: UITableView!
+    
+    var selected_staff_id: String?
+    var staffdetails = UserDefaultFileManager.get_staff_Details()
+    var PunchDetails: [puchHistoryList]? = []
+    var selectedDate = ""
+    var user: String?
+    var roll: String?
+    var date: String?
+    var comeFromStaffWiseAttendaceReportMenu : Bool = false
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        historyView.layer.cornerRadius = 10
+        historyView.layer.borderColor = UIColor.systemGray5.cgColor
+        historyView.layer.borderWidth = 1
+        if #available(iOS 15.0, *) {
+            tv.sectionHeaderTopPadding = 0
+        }
+        // Register cells
+        let rowNib = UINib(nibName: CellConfingName.PunchHistTableViewCell, bundle: nil)
+        tv.register(rowNib, forCellReuseIdentifier: CellConfingName.PunchHistTableViewCell)
+        tv.register(UINib(nibName: CellConfingName.PunchUserDetailsTVC, bundle: nil),
+                    forCellReuseIdentifier: CellConfingName.PunchUserDetailsTVC)
+        
+        noRecordLbl.isHidden = true
+        
+        // Back tap
+        let back = UITapGestureRecognizer(target: self, action: #selector(backClick))
+        backView.addGestureRecognizer(back)
+        
+        tv.delegate = self
+        tv.dataSource = self
+        
+        Geometric_Punch_History()
+    }
+    
+    @IBAction func backClick() {
+        dismiss(animated: true)
+    }
+    
+    // MARK: - API Call
+    func Geometric_Punch_History() {
+        APIService.shared.makeApi(
+            url: ServiceUrl.staff_attd_geometric_geometric_punch_history,
+            parameters: [
+                punchHistoryStringFile.from_date : selectedDate,
+                punchHistoryStringFile.to_date : selectedDate,
+                punchHistoryStringFile.staff_id : selected_staff_id ?? ""
+            ],
+            type: ApitTypeSringFile.GET,
+            token: staffdetails?.access_token ?? "", isBaseUrl: false
+        ) { [weak self] (result: Result<PunchHistoryResponse, Error>) in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let response):
+                DispatchQueue.main.async {
+                    if response.status == true {
+                        self.noRecordLbl.isHidden = true
+                        self.PunchDetails = response.data?.first?.timings
+                        self.tv.reloadData()
+                    } else {
+                        self.noRecordLbl.isHidden = false
+                        self.noRecordLbl.text = response.message
+                        self.PunchDetails = response.data?.first?.timings
+                        self.tv.reloadData()
+                    }
+                }
+                
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print("API Error: \(error.localizedDescription)")
+                    self.noRecordLbl.isHidden = false
+                    self.noRecordLbl.text = error.localizedDescription
+                    self.PunchDetails = []
+                }
+            }
+        }
+    }
+    
+    // MARK: - TableView Setup
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return section == 0 ? 1 : (PunchDetails?.count ?? 0)
+    }
+    
+    // ✅ Only section 1 has header
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return section == 1 ? makeAttendanceHeaderView() : nil
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 1 ? 70 : 0
+    }
+    
+    // ❌ No footer anywhere
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return .leastNormalMagnitude
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.PunchUserDetailsTVC, for: indexPath) as! PunchUserDetailsTVC
+            
+            if comeFromStaffWiseAttendaceReportMenu{
+                cell.configureWithDetails(
+                    institutionName: staffdetails?.school_name ?? "",
+                    staffName: user ?? "",
+                    designation: roll ?? "",
+                    date: selectedDate
+                )
+            }else{
+                cell.configureWithDetails(
+                    institutionName: staffdetails?.school_name ?? "",
+                    staffName: staffdetails?.name ?? "",
+                    designation: staffdetails?.role ?? "",
+                    date: selectedDate
+                )
+            }
+            
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.PunchHistTableViewCell, for: indexPath) as! PunchHistTableViewCell
+            if let punch = PunchDetails?[indexPath.row] {
+                cell.configure(with: punch)
+            }
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    // MARK: - Helper (Custom Header View)
+    private func makeAttendanceHeaderView() -> UIView {
+        let headerView = UIView()
+        headerView.backgroundColor = .clear
+        // Title
+        let titleLabel = UILabel()
+        titleLabel.text = "History"
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        titleLabel.textColor = .black
+        let dateLabel = UILabel()
+        let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
+        formatter.dateFormat = "EEEE, dd MMM yyyy"
+        let inputFormatter = DateFormatter()
+        inputFormatter.locale = LocaleManager.shared.apiLocale
+        inputFormatter.dateFormat = "dd-MM-yyyy"
+        
+        if let date = inputFormatter.date(from: selectedDate) {
+            dateLabel.text = formatter.string(from: date)
+        } else {
+            dateLabel.text = formatter.string(from: Date())
+        }
+        
+        dateLabel.font = UIFont.systemFont(ofSize: 14)
+        dateLabel.textColor = .darkGray
+        headerView.addSubview(titleLabel)
+        headerView.addSubview(dateLabel)
+        [titleLabel, dateLabel].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 8),
+            titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
+            dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            dateLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            dateLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -8),
+        ])
+        
+        return headerView
+    }
+}

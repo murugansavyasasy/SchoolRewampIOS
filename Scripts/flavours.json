@@ -1,0 +1,51 @@
+{
+  "flavours": [
+      {
+          "id": "SRISUDHADHONE",
+          "targetName": "Sri Sudha Dhone",
+          "bundleId": "com.srisudhadhone.schools",
+          "displayName": "SRI SUDHA DHONE",
+          "strings": {
+              "WELCOME_STRING": "WELCOME TO SRI SUDHA DHONE",
+              "TERMS_URL": "https://www.schoolchimes.com/vs_web/wl_terms_of_use/?id=6053",
+              "REPORT_BUG_STRING": "Dear SRI SUDHA DHONE Team",
+              "Empowering": "Dear SRI SUDHA DHONE Team",
+              "School_Id" : "6053",
+              "APP_STORE_ID" : "6763021550"
+          }
+      },
+      
+      
+      {
+          "id": "SRIKALAIVANIVIDHYALAYA",
+          "targetName": "Sri Kalaivani Vidhyalaya",
+          "bundleId": "com.Kalaivani.schools",
+          "displayName": "SRI KALAIVANI VIDHYALAYA",
+          "strings": {
+              "WELCOME_STRING": "WELCOME TO SRI KALAIVANI VIDHYALAYA",
+              "TERMS_URL": "https://www.schoolchimes.com/vs_web/wl_terms_of_use/?id=6748",
+              "REPORT_BUG_STRING": "Dear SRI KALAIVANI VIDHYALAYA Team",
+              "Empowering": "Dear SRI KALAIVANI VIDHYALAYA Team",
+              "School_Id" : "6748",
+              "APP_STORE_ID" : "6768877824"
+          }
+      },
+      
+      {
+          "id": "WISDOMGROUPOFINSTITUTIONS",
+          "targetName": "Wisdom group of institutions",
+          "bundleId": "com.wisdom.schools",
+          "displayName": "WISDOM GROUP",
+          "strings": {
+              "WELCOME_STRING": "WELCOME TO WISDOM GROUP OF INSTITUTIONS",
+              "TERMS_URL": "https://www.schoolchimes.com/vs_web/wl_terms_of_use/?id=7645",
+              "REPORT_BUG_STRING": "Dear WISDOM GROUP OF INSTITUTIONS Team",
+              "Empowering": "Dear WISDOM GROUP OF INSTITUTIONS Team",
+              "School_Id" : "7645",
+              "APP_STORE_ID" : "6785767763"
+          }
+      }
+  ]
+}
+
+

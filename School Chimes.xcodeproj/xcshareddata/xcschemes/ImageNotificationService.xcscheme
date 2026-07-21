@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+<<<<<<< HEAD
+<<<<<<< HEAD
+   LastUpgradeVersion = "1610"
+=======
+   LastUpgradeVersion = "1600"
+>>>>>>> development
+   wasCreatedForAppExtension = "YES"
+=======
+   LastUpgradeVersion = "1610"
+>>>>>>> development
+   version = "2.0">
+   <BuildAction
+      parallelizeBuildables = "YES"
+      buildImplicitDependencies = "YES"
+      buildArchitectures = "Automatic">
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "189E99612CE35F6C00FE98A5"
+               BuildableName = "ImageNotificationService.appex"
+               BlueprintName = "ImageNotificationService"
+               ReferencedContainer = "container:VsSchoolChimes.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "84A5BE3D2C19719700E32496"
+               BuildableName = "VsSchoolChimes.app"
+               BlueprintName = "VsSchoolChimes"
+               ReferencedContainer = "container:VsSchoolChimes.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldAutocreateTestPlan = "YES">
+   </TestAction>
+   <LaunchAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = ""
+      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
+      launchStyle = "0"
+      askForAppToLaunch = "Yes"
+      useCustomWorkingDirectory = "NO"
+      ignoresPersistentStateOnLaunch = "NO"
+      debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
+      allowLocationSimulation = "YES"
+      launchAutomaticallySubstyle = "2">
+<<<<<<< HEAD
+<<<<<<< HEAD
+      <RemoteRunnable
+         runnableDebuggingMode = "1"
+         BundleIdentifier = "com.voicesnap.schoolmessenger"
+         RemotePath = "/Users/admin/Library/Developer/CoreSimulator/Devices/0E669490-2201-4BFB-8000-3BA2D48E935C/data/Containers/Bundle/Application/FE6E8FF5-E8D3-49BC-90F9-63BEC8B19355/VsSchoolChimes.app">
+      </RemoteRunnable>
+      <MacroExpansion>
+=======
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+>>>>>>> development
+=======
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+>>>>>>> development
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "84A5BE3D2C19719700E32496"
+            BuildableName = "VsSchoolChimes.app"
+            BlueprintName = "VsSchoolChimes"
+            ReferencedContainer = "container:VsSchoolChimes.xcodeproj">
+         </BuildableReference>
+<<<<<<< HEAD
+<<<<<<< HEAD
+      </MacroExpansion>
+=======
+      </BuildableProductRunnable>
+>>>>>>> development
+=======
+      </BuildableProductRunnable>
+>>>>>>> development
+   </LaunchAction>
+   <ProfileAction
+      buildConfiguration = "Release"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      savedToolIdentifier = ""
+      useCustomWorkingDirectory = "NO"
+      debugDocumentVersioning = "YES"
+      launchAutomaticallySubstyle = "2">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "84A5BE3D2C19719700E32496"
+            BuildableName = "VsSchoolChimes.app"
+            BlueprintName = "VsSchoolChimes"
+            ReferencedContainer = "container:VsSchoolChimes.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </ProfileAction>
+   <AnalyzeAction
+      buildConfiguration = "Debug">
+   </AnalyzeAction>
+   <ArchiveAction
+      buildConfiguration = "Release"
+      revealArchiveInOrganizer = "YES">
+   </ArchiveAction>
+</Scheme>

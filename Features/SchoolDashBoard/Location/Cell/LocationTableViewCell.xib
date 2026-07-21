@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="146" id="KGk-i7-Jjw" customClass="LocationTableViewCell" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="170"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="170"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ep6-9k-KQJ">
+                        <rect key="frame" x="10" y="10" width="300" height="150"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="aHk-Tm-ZuP">
+                                <rect key="frame" x="63" y="16" width="112" height="70"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CHANDHRU V" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XtB-wn-D9d">
+                                        <rect key="frame" x="0.0" y="0.0" width="112" height="32.666666666666664"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Principal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUD-hr-lq9">
+                                        <rect key="frame" x="0.0" y="37.666666666666657" width="112" height="32.333333333333343"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                        <color key="textColor" red="0.34509803919999998" green="0.3803921569" blue="0.4431372549" alpha="0.76701510679999996" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="tYS-lG-4qJ">
+                                <rect key="frame" x="10" y="106" width="280" height="34"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Wnc-kg-7Fa">
+                                        <rect key="frame" x="0.0" y="0.0" width="93.333333333333329" height="34"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CHECK-IN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JIl-7H-Anc" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="93.333333333333329" height="17"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
+                                                <color key="textColor" red="0.34509803919999998" green="0.3798705657" blue="0.44134596259999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="03" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GkZ-ZA-G3Y">
+                                                <rect key="frame" x="0.0" y="17" width="93.333333333333329" height="17"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                <color key="textColor" red="0.043137254899999998" green="0.1058823529" blue="0.49803921569999998" alpha="0.89776767030000004" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="6Un-lh-cm0">
+                                        <rect key="frame" x="93.333333333333343" y="0.0" width="93.333333333333343" height="34"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CHECK-OUT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6A-wV-uZf" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="93.333333333333329" height="17"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
+                                                <color key="textColor" red="0.34509803919999998" green="0.3803921569" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="03" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xRp-yt-NLJ">
+                                                <rect key="frame" x="0.0" y="17" width="93.333333333333329" height="17"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                <color key="textColor" red="0.043137254899999998" green="0.1058823529" blue="0.49803921569999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="hht-Ik-TPc">
+                                        <rect key="frame" x="186.66666666666666" y="0.0" width="93.333333333333343" height="34"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HOURS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8HT-eW-UIw" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="93.333333333333329" height="17"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
+                                                <color key="textColor" red="0.34509803919999998" green="0.3798705657" blue="0.44134596259999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="03" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lsc-pc-yeU">
+                                                <rect key="frame" x="0.0" y="17" width="93.333333333333329" height="17"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                <color key="textColor" systemColor="systemGreenColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7oe-P8-zx0">
+                                <rect key="frame" x="10" y="29.666666666666664" width="43" height="42.999999999999993"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Q4X-Hn-2RQ">
+                                        <rect key="frame" x="0.0" y="3" width="43" height="37"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="03" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmv-zR-ElZ">
+                                                <rect key="frame" x="10.333333333333334" y="0.0" width="22.333333333333329" height="22.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                <color key="textColor" red="0.98823529409999999" green="0.98823529409999999" blue="0.98823529409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WED" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chB-x8-mCB">
+                                                <rect key="frame" x="8.6666666666666679" y="22.333333333333336" width="26.000000000000004" height="14.666666666666664"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
+                                                <color key="textColor" red="0.98823529409999999" green="0.98823529409999999" blue="0.98823529409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" name="HomeWorkClr"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="43" id="FN8-G2-3lc"/>
+                                    <constraint firstAttribute="trailing" secondItem="Q4X-Hn-2RQ" secondAttribute="trailing" id="GxW-u6-PyV"/>
+                                    <constraint firstAttribute="width" constant="43" id="KDF-r0-4Mo"/>
+                                    <constraint firstItem="Q4X-Hn-2RQ" firstAttribute="top" secondItem="7oe-P8-zx0" secondAttribute="top" constant="3" id="NJN-yg-Foa"/>
+                                    <constraint firstItem="Q4X-Hn-2RQ" firstAttribute="leading" secondItem="7oe-P8-zx0" secondAttribute="leading" id="QnV-dL-dPo"/>
+                                    <constraint firstAttribute="bottom" secondItem="Q4X-Hn-2RQ" secondAttribute="bottom" constant="3" id="fYx-CL-dAp"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6cK-uG-Hbz">
+                                <rect key="frame" x="185" y="10" width="110" height="30"/>
+                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="ldD-mN-1xZ"/>
+                                    <constraint firstAttribute="width" constant="110" id="vFZ-Iu-cIr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                <color key="tintColor" red="0.98823529409999999" green="0.98823529409999999" blue="0.98823529409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Full Day Absent"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wfr-Lj-Wf3">
+                                <rect key="frame" x="10" y="102" width="280" height="1"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="J3h-vM-mVG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="aHk-Tm-ZuP" firstAttribute="leading" secondItem="7oe-P8-zx0" secondAttribute="trailing" constant="10" id="0bu-uV-FtF"/>
+                            <constraint firstItem="Wfr-Lj-Wf3" firstAttribute="leading" secondItem="ep6-9k-KQJ" secondAttribute="leading" constant="10" id="5OD-vd-laG"/>
+                            <constraint firstItem="6cK-uG-Hbz" firstAttribute="leading" secondItem="aHk-Tm-ZuP" secondAttribute="trailing" constant="10" id="9N6-6k-5Pw"/>
+                            <constraint firstAttribute="bottom" secondItem="tYS-lG-4qJ" secondAttribute="bottom" constant="10" id="BTe-iy-C0d"/>
+                            <constraint firstItem="Wfr-Lj-Wf3" firstAttribute="top" secondItem="aHk-Tm-ZuP" secondAttribute="bottom" constant="16" id="Cy5-GA-dWX"/>
+                            <constraint firstItem="aHk-Tm-ZuP" firstAttribute="top" secondItem="ep6-9k-KQJ" secondAttribute="top" constant="16" id="ET9-K7-gkC"/>
+                            <constraint firstAttribute="trailing" secondItem="6cK-uG-Hbz" secondAttribute="trailing" constant="5" id="PWu-3U-3qe"/>
+                            <constraint firstAttribute="trailing" secondItem="tYS-lG-4qJ" secondAttribute="trailing" constant="10" id="WC0-dg-9vq"/>
+                            <constraint firstItem="6cK-uG-Hbz" firstAttribute="top" secondItem="ep6-9k-KQJ" secondAttribute="top" constant="10" id="aB3-0S-pG0"/>
+                            <constraint firstItem="7oe-P8-zx0" firstAttribute="centerY" secondItem="aHk-Tm-ZuP" secondAttribute="centerY" id="eH3-B3-Naa"/>
+                            <constraint firstItem="tYS-lG-4qJ" firstAttribute="leading" secondItem="ep6-9k-KQJ" secondAttribute="leading" constant="10" id="o1d-2B-bdj"/>
+                            <constraint firstItem="7oe-P8-zx0" firstAttribute="leading" secondItem="ep6-9k-KQJ" secondAttribute="leading" constant="10" id="qVe-hR-1Fy"/>
+                            <constraint firstItem="tYS-lG-4qJ" firstAttribute="top" secondItem="Wfr-Lj-Wf3" secondAttribute="bottom" constant="3" id="rqL-A5-CbH"/>
+                            <constraint firstAttribute="trailing" secondItem="Wfr-Lj-Wf3" secondAttribute="trailing" constant="10" id="xtQ-Ya-OY8"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="ep6-9k-KQJ" secondAttribute="bottom" constant="10" id="9ln-2t-QrL"/>
+                    <constraint firstAttribute="trailing" secondItem="ep6-9k-KQJ" secondAttribute="trailing" constant="10" id="DAN-pM-Vvj"/>
+                    <constraint firstItem="ep6-9k-KQJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="aM9-b0-dh7"/>
+                    <constraint firstItem="ep6-9k-KQJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="shz-RE-Acv"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="checkinLbl" destination="GkZ-ZA-G3Y" id="nsG-5P-Qmu"/>
+                <outlet property="checkoutLbl" destination="xRp-yt-NLJ" id="RZ6-7Z-vZg"/>
+                <outlet property="dateLbl" destination="cmv-zR-ElZ" id="HK7-UX-bZF"/>
+                <outlet property="dateView" destination="7oe-P8-zx0" id="sVa-85-3OM"/>
+                <outlet property="dateViewHeightCon" destination="FN8-G2-3lc" id="a7N-Bu-PKk"/>
+                <outlet property="dateViewWidthCon" destination="KDF-r0-4Mo" id="B08-2g-Qzs"/>
+                <outlet property="dayLbl" destination="chB-x8-mCB" id="LBe-IF-Fca"/>
+                <outlet property="fullView" destination="ep6-9k-KQJ" id="PYP-qf-wOc"/>
+                <outlet property="hoursLbl" destination="lsc-pc-yeU" id="sJ9-Lx-bDn"/>
+                <outlet property="namelbl" destination="XtB-wn-D9d" id="Vke-1n-VMD"/>
+                <outlet property="rollLable" destination="cUD-hr-lq9" id="kG5-TC-qDU"/>
+                <outlet property="statusBtn" destination="6cK-uG-Hbz" id="b6m-Vl-C03"/>
+            </connections>
+            <point key="canvasLocation" x="-80.152671755725194" y="3.5211267605633805"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="HomeWorkClr">
+            <color red="0.3919999897480011" green="0.40400001406669617" blue="0.82400000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.21960784310000001" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

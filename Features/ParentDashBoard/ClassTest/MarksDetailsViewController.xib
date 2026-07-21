@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MarksDetailsViewController" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+            <connections>
+                <outlet property="backButton" destination="btnBack" id="out-back"/>
+                <outlet property="navigationBarView" destination="navBar" id="out-navBar"/>
+                <outlet property="tableView" destination="table" id="out-table"/>
+                <outlet property="titleLabel" destination="lblNavTitle" id="out-navTitle"/>
+                <outlet property="view" destination="iN0-l3-epB" id="out-view"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="navBar" userLabel="Navigation Bar View">
+                    <rect key="frame" x="0.0" y="118" width="393" height="56"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="btnBack">
+                            <rect key="frame" x="16" y="12" width="32" height="32"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="32" id="hBack"/>
+                                <constraint firstAttribute="width" constant="32" id="wBack"/>
+                            </constraints>
+                            <color key="tintColor" red="0.1176470588" green="0.16078431369999999" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="chevron.backward" catalog="system"/>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Class Tests" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblNavTitle">
+                            <rect key="frame" x="152.66666666666666" y="18.333333333333343" width="88" height="19.333333333333329"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                            <color key="textColor" red="0.1176470588" green="0.16078431369999999" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="56" id="hNavBar"/>
+                        <constraint firstItem="btnBack" firstAttribute="leading" secondItem="navBar" secondAttribute="leading" constant="16" id="nb1"/>
+                        <constraint firstItem="btnBack" firstAttribute="centerY" secondItem="navBar" secondAttribute="centerY" id="nb2"/>
+                        <constraint firstItem="lblNavTitle" firstAttribute="centerX" secondItem="navBar" secondAttribute="centerX" id="nb3"/>
+                        <constraint firstItem="lblNavTitle" firstAttribute="centerY" secondItem="navBar" secondAttribute="centerY" id="nb4"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="table">
+                    <rect key="frame" x="0.0" y="174" width="393" height="610"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" red="0.94901960784313721" green="0.96078431372549022" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="navBar" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="l1"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="navBar" secondAttribute="trailing" id="l2"/>
+                <constraint firstItem="navBar" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="l3"/>
+                <constraint firstItem="table" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="l4"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="table" secondAttribute="trailing" id="l5"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="table" secondAttribute="bottom" id="l6"/>
+                <constraint firstItem="table" firstAttribute="top" secondItem="navBar" secondAttribute="bottom" id="l7"/>
+            </constraints>
+            <point key="canvasLocation" x="-32" y="10"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
+    </resources>
+</document>

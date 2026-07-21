@@ -1,0 +1,554 @@
+//
+//  PtmParentVC.swift
+//  School Chimes
+//
+//  Created by Lakshmanan on 28/08/25.
+//
+
+import UIKit
+
+class PtmParentVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var CV: UICollectionView!
+    @IBOutlet weak var tv: UITableView!
+    @IBOutlet weak var BookSlotBtn: UIButton!
+    @IBOutlet weak var subjectsView: UIView!
+    @IBOutlet weak var subjectLbl: UILabel!
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var noDataImage: UIImageView!
+    @IBOutlet weak var NodataLbl: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
+    
+    var dateComponents: [(month: String, day: String, date: Date, count: String?)] = []
+    var selectedIndex: IndexPath?
+    var childDetails = UserDefaultFileManager.get_child_Details()
+    var subjectList : [Subject] = []
+    var events : [EventData] = []
+    var selectedSlots: [StudentSlot] = []     // only user-selected (not API my_booking)
+    var EventDate = ""
+    var subjectId = "0"
+    var classteacherId = "0"
+    var isManagement = false
+    let alert = CustomAlert()
+    let dropDown = DropDown()
+    var childVc : PtmHistoryVC?
+    var availableSlots : [AvailableSlot] = []
+    var hasLoadedOnce = false
+    
+    // MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        generateDates()
+        getsubjects()
+        Get_Available_slot_count()
+        hasLoadedOnce = true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateTableHeight()
+    }
+    
+    func Reload(){
+        getSlotsApi()
+        Get_Available_slot_count()
+    }
+   
+    func updateTableHeight() {
+        tv.layoutIfNeeded()
+        tableViewHeight.constant = tv.contentSize.height
+    }
+    
+    private func setupUI() {
+        
+        BookSlotBtn.setTitle(PTMString.bookSlot.translated(), for: .normal)
+        subjectLbl.text = PTMString.allSubjects.translated()
+        
+        noDataImage.isHidden = true
+        NodataLbl.isHidden = true
+        NodataLbl.setFont(style: .body, size: FontSize.TitleSize)
+        
+        BookSlotBtn.isHidden = true
+        
+        CV.layer.cornerRadius = 12
+        CV.backgroundColor = .clear
+        CV.register(UINib(nibName:CellConfingName.DateCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.DateCvCell)
+        CV.delegate = self
+        CV.dataSource = self
+        
+        subjectsView.layer.cornerRadius = 15
+        subjectsView.layer.borderWidth = 0.5
+        subjectsView.layer.borderColor = UIColor.systemGray4.cgColor
+        subjectsView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectSubjectAct)))
+        
+        BookSlotBtn.layer.cornerRadius = 12
+        
+        tv.register(UINib(nibName: CellConfingName.parentPTMcell, bundle: nil), forCellReuseIdentifier: CellConfingName.parentPTMcell)
+        tv.delegate = self
+        tv.dataSource = self
+    }
+    
+    // MARK: - Date Generation
+    private func generateDates() {
+        let formatter = DateFormatter()
+        formatter.locale = LocaleManager.shared.apiLocale
+        formatter.dateFormat = "dd-MM-yyyy"
+        EventDate = formatter.string(from: Date())
+        let monthFormatter = DateFormatter(); monthFormatter.dateFormat = "MMM"
+        monthFormatter.locale = LocaleManager.shared.displayLocale
+        let dayFormatter = DateFormatter()
+        dayFormatter.locale = LocaleManager.shared.apiLocale
+        dayFormatter.dateFormat = "dd"
+        let today = Calendar.current.startOfDay(for: Date())
+        
+        for i in 0..<60 {
+            if let nextDate = Calendar.current.date(byAdding: .day, value: i, to: today) {
+                dateComponents.append((month: monthFormatter.string(from: nextDate),
+                                       day: dayFormatter.string(from: nextDate),
+                                       date: nextDate,
+                                       count: nil))
+                if Calendar.current.isDate(nextDate, inSameDayAs: today) {
+                    selectedIndex = IndexPath(item: i, section: 0)
+                }
+            }
+        }
+    }
+    
+    // MARK: - DropDown
+    private func setupDropDown() {
+        dropDown.anchorView = subjectsView
+        dropDown.dataSource = [PTMString.allSubjects.translated()] + subjectList.compactMap { $0.name }
+        
+        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+            guard let self = self else { return }
+            subjectLbl.text = item
+            
+            switch item {
+            case PTMString.allSubjects.translated():
+                self.subjectId = "0"; self.classteacherId = "0"; self.isManagement = false
+            case "Management":
+                self.subjectId = "0"; self.classteacherId = "0"; self.isManagement = true
+            case "Class Teacher":
+                self.subjectId = "0"; self.classteacherId = self.subjectList[index - 1].id ?? ""; self.isManagement = false
+            default:
+                self.classteacherId = "0"; self.subjectId = self.subjectList[index - 1].id ?? "" ; self.isManagement = false
+            }
+            self.getSlotsApi()
+        }
+        
+        dropDown.direction = .bottom
+        dropDown.bottomOffset = CGPoint(x: 0, y: subjectsView.bounds.height)
+        dropDown.cellHeight = 50
+        dropDown.backgroundColor = .white
+        dropDown.textColor = .black
+    }
+    
+    // MARK: - APIs
+    func getsubjects(){
+        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_subject_list_with_class_teacher,
+                                  parameters: [:],
+                                  type: ApitTypeSringFile.GET,
+                                  token: childDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<SubjectListResponse,Error>) in
+            guard let self = self else {return}
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let success):
+                    if success.status == true {
+                        self.subjectList = success.data ?? []
+                        self.setupDropDown()
+                        self.getSlotsApi()
+                    }
+                case .failure:
+                    print("Error")
+                }
+            }
+        }
+    }
+    
+    func getSlotsApi(){
+        let param : [String:Any] = [
+            PTMRequestStringFile.event_date:EventDate,
+            PTMRequestStringFile.subject_id:subjectId,
+            PTMRequestStringFile.class_teacher_id: classteacherId,
+            PTMRequestStringFile.is_management: isManagement
+        ]
+        
+        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_teacherwise_slots_availability_for_student,
+                                  parameters: param,
+                                  type: ApitTypeSringFile.GET,
+                                  token: childDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<StudentSlotResponse,Error>) in
+            guard let self = self else {return}
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let success):
+                    if success.status == true {
+                        self.selectedSlots.removeAll()
+                        self.events = (success.data ?? []).map { ev in
+                            var copy = ev
+                            copy.slots = ev.slots?.map { s in
+                                var x = s
+                                x.userSelected = false
+                                x.is_conflictDisabled = false
+                                return x
+                            }
+                            return copy
+                        }
+                        self.recomputeConflicts() // lock rows with my_booking
+                        self.tv.isHidden = false
+                        self.noDataImage.isHidden = true
+                        self.NodataLbl.isHidden = true
+                       // self.BookSlotBtn.isHidden = false
+                        self.tv.reloadData()
+                        DispatchQueue.main.async {
+                            self.updateTableHeight()
+                        }
+                    } else {
+                        self.NodataLbl.text = success.message
+                        self.tv.isHidden = true
+                        self.noDataImage.isHidden = false
+                        self.NodataLbl.isHidden = false
+                        self.BookSlotBtn.isHidden = true
+                    }
+                case .failure(let failure):
+                    print("Error:", failure.localizedDescription)
+                    self.NodataLbl.text = failure.localizedDescription
+                    self.tv.isHidden = true
+                    self.tableViewHeight.constant = 0
+                    self.noDataImage.isHidden = false
+                    self.NodataLbl.isHidden = false
+                    self.BookSlotBtn.isHidden = true
+                }
+            }
+        }
+    }
+    
+    func Book_Slots_Api(){
+        let slots : [String] = selectedSlots.compactMap { $0.id }
+        let param : [String:Any] = [PTMRequestStringFile.slot_ids: slots]
+        
+        APIService.shared.makeApi(url: ServiceUrl.ptm_api_ptm_schedule_book_slots_for_student,
+                                  parameters: param,
+                                  type: ApitTypeSringFile.PUT,
+                                  token: childDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result:Result<CommonApiSuc,Error>) in
+            guard let self = self else {return}
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let success):
+                    if success.status == true {
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Success,
+                                                          message: success.message ?? "",
+                                                          on: self) {
+                            self.getSlotsApi()
+                            self.Get_Available_slot_count()
+                        }
+                    } else {
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed,
+                                                          message: success.message ?? "",
+                                                          on: self)
+                    }
+                case .failure(let failure):
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed,
+                                                      message: failure.localizedDescription,
+                                                      on: self)
+                }
+            }
+        }
+    }
+    
+    func Get_Available_slot_count(){
+        APIService.shared.makeApi(url:ServiceUrl.ptm_api_ptm_schedule_available_slots_count_for_student,
+                                  parameters: [:],
+                                  type: ApitTypeSringFile.GET,
+                                  token: childDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result:Result<AvailableSlotsResponse , Error>) in
+            guard let self = self else {return}
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let success):
+                    self.availableSlots = success.data ?? []
+                    
+                    
+                    // Map counts into dateComponents
+                    let formatter = DateFormatter(); formatter.dateFormat = "dd-MM-yyyy"
+                    formatter.locale = LocaleManager.shared.apiLocale
+                    for i in 0..<self.dateComponents.count {
+                        let compDate = self.dateComponents[i].date
+                        let compDateStr = formatter.string(from: compDate)
+                        if let match = self.availableSlots.first(where: { $0.event_date == compDateStr }) {
+                            self.dateComponents[i].count = match.count
+                        } else {
+                            self.dateComponents[i].count = nil
+                        }
+                    }
+                    self.CV.reloadData()
+                    
+                    DispatchQueue.main.async {
+                        if let indexPath = self.selectedIndex {
+                            self.CV.scrollToItem(at: indexPath,
+                                                 at: .centeredHorizontally,
+                                                 animated: false)
+                        }
+                    }
+                    
+                    
+                case .failure(let failure):
+                    print("Error: ", failure.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    // MARK: - Time helpers
+    private lazy var timeFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "hh:mm a"
+        f.locale = Locale(identifier: "en_US_POSIX")
+        f.amSymbol = "AM"; f.pmSymbol = "PM"
+        return f
+    }()
+    private func timeStringToDate(_ time: String?) -> Date? {
+        guard let t = time, !t.isEmpty else { return nil }
+        return timeFormatter.date(from: t)
+    }
+    private func isOverlapping(slot1: StudentSlot, slot2: StudentSlot) -> Bool {
+        guard let s1 = timeStringToDate(slot1.slot_from),
+              let e1 = timeStringToDate(slot1.slot_to),
+              let s2 = timeStringToDate(slot2.slot_from),
+              let e2 = timeStringToDate(slot2.slot_to) else { return false }
+        return max(s1, s2) < min(e1, e2)
+    }
+    
+    // MARK: - Conflict recomputation (locks my_booking rows; ignores them in cross-row conflicts)
+    private func recomputeConflicts() {
+        struct Selection { let slot: StudentSlot; let eventIndex: Int }
+        var blockingSelections: [Selection] = []
+
+        // Collect blocking slots = user selections + my_booking slots
+        for (eIdx, ev) in events.enumerated() {
+            guard let slots = ev.slots else { continue }
+            for sl in slots {
+                if (sl.userSelected ?? false) || (sl.my_booking ?? false) {
+                    blockingSelections.append(.init(slot: sl, eventIndex: eIdx))
+                }
+            }
+        }
+
+        for e in 0..<events.count {
+            guard var slots = events[e].slots else { continue }
+            let rowHasMyBooking = slots.contains { $0.my_booking ?? false }
+
+            for s in 0..<slots.count {
+                var slot = slots[s]
+
+                if rowHasMyBooking {
+                    // Row has a booked slot → only keep that booked slot enabled
+                    slot.is_conflictDisabled = false//!(slot.my_booking ?? false)
+                } else if slot.is_booked ?? false {
+                    // Already booked by someone else
+                    slot.is_conflictDisabled = false
+                } else {
+                    // Normal row → check conflicts with other rows
+                    let hasConflict = blockingSelections.contains { sel in
+                        sel.eventIndex != e && isOverlapping(slot1: sel.slot, slot2: slot)
+                    }
+                    slot.is_conflictDisabled = hasConflict
+                }
+
+                slots[s] = slot
+            }
+            events[e].slots = slots
+        }
+    }
+
+
+
+    
+    private func updateSelectedSlots() {
+        selectedSlots.removeAll()
+        for event in events {
+            if let slots = event.slots {
+                selectedSlots.append(contentsOf: slots.filter { $0.userSelected ?? false })
+            }
+        }
+        
+        BookSlotBtn.isHidden = selectedSlots.isEmpty
+    }
+
+    
+    private func handleSlotSelection(eventIndex: Int, slotIndex: Int) {
+        var event = events[eventIndex]
+        guard var slots = event.slots else { return }
+        var tapped = slots[slotIndex]
+
+        // Toggle selection
+        if tapped.userSelected ?? false {
+            tapped.userSelected = false
+            slots[slotIndex] = tapped
+            events[eventIndex].slots = slots
+            updateSelectedSlots()      // ✅ keep array updated
+            recomputeConflicts()
+            tv.reloadData()
+            return
+        }
+
+        // Only one slot can be selected in this event
+        for i in 0..<slots.count {
+            slots[i].userSelected = (i == slotIndex)
+        }
+        events[eventIndex].slots = slots
+
+        updateSelectedSlots()          // ✅ keep array updated
+        recomputeConflicts()
+        tv.reloadData()
+    }
+
+
+    
+    // MARK: - Actions
+    @IBAction func selectSubjectAct(){
+        dropDown.show()
+    }
+    
+    @IBAction func BookSlotsAct(_ sender: Any) {
+        if selectedSlots.isEmpty {
+            CustomAlert.showAlertWithOkAction(title: AlertstringFile.Missing_Information.translated(),
+                                              message: PTMString.Please_select_at_least_one_slot_to_continue.translated(),
+                                              on: self)
+        } else {
+            alert.showAlertCancel(title: AlertstringFile.Confirm.translated(),
+                                  message: PTMString.Are_you_sure_you_want_to_book_selected_slots.translated(),
+                                  actionLbl1: AlertstringFile.OK.translated(),
+                                  actionLbl2: AlertstringFile.Cancel.translated(),
+                                  on: self) {
+                self.Book_Slots_Api()
+            } onNo: { }
+        }
+    }
+    
+    
+    // MARK: - Child VC
+    func addChildVc(){
+        removeChildVc()
+        let vc = PtmHistoryVC(nibName: nil, bundle: nil)
+        addChild(vc)
+        containerView.addSubview(vc.view)
+        vc.view.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            vc.view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            vc.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            vc.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            vc.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            vc.view.widthAnchor.constraint(equalTo: containerView.widthAnchor) // Important for scroll
+        ])
+
+        vc.didMove(toParent: self)
+        self.childVc = vc
+    }
+    func removeChildVc(){
+        guard let vc = childVc else { return }
+        vc.willMove(toParent: nil)
+        vc.view.removeFromSuperview()
+        vc.removeFromParent()
+        childVc = nil
+    }
+    
+    // MARK: - TableView
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return events.count
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.parentPTMcell,
+                                          for: indexPath) as! parentPTMcell
+        let event = events[indexPath.row]
+        cell.configure(with: event.slots ?? [], parentTableView: tv)
+        cell.TitleLbl.text = event.event_name
+        cell.StaffNameLbl.text = event.staff_name
+        let subjects = (event.slots?.first?.subject_name?.isEmpty ?? false) ? " " : event.slots?.first?.subject_name?.joined(separator: ", ")
+        cell.subjectLbl.text = subjects
+        cell.MeetingTypeBtn.setTitle(event.slots?.first?.event_mode, for: .normal)
+        if let name = event.staff_name, let firstChar = name.first {
+            cell.initialBtn.setTitle(String(firstChar), for: .normal)
+        }
+
+        if event.slots?.first?.event_mode == "In Person"{
+            cell.MeetingTypeBtn.setImage(UIImage(systemName: "person.2.fill"), for: .normal)
+        }else if event.slots?.first?.event_mode == "Phone Call"{
+            cell.MeetingTypeBtn.setImage(UIImage(systemName: "phone"), for: .normal)
+        }else if event.slots?.first?.event_mode == "Virtual" {
+            cell.MeetingTypeBtn.setImage(UIImage(systemName: "network"), for: .normal)
+        }
+        
+        cell.slotSelected = { [weak self] selectedIndex in
+            guard let self = self else { return }
+            self.handleSlotSelection(eventIndex: indexPath.row, slotIndex: selectedIndex)
+            
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+            DispatchQueue.main.async {
+                self.updateTableHeight()
+            }
+        }
+    
+    // MARK: - CollectionView (Dates)
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        dateComponents.count
+    }
+    
+   func collectionView(_ collectionView: UICollectionView,
+                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+       let cell = CV.dequeueReusableCell(withReuseIdentifier: CellConfingName.DateCvCell, for: indexPath) as! DateCvCell
+        let comp = dateComponents[indexPath.item]
+        cell.monthLbl.text = comp.month
+        cell.dateLbl.text = comp.day
+        
+        // Configure selection UI
+        if selectedIndex == indexPath {
+            cell.cellView.backgroundColor = .backGroundClr
+            cell.monthLbl.textColor = .white
+            cell.dateBaseView.backgroundColor = .white
+        } else {
+            cell.cellView.backgroundColor = .white
+            cell.monthLbl.textColor = .black
+//            cell.dateBaseView.backgroundColor = .attendence.lighter(by:10)
+        }
+        
+        // Show count if available
+        if let count = comp.count {
+            cell.countBtn.setTitle("Avl: "+count, for: .normal)
+            cell.countBtn.setTitleColor(.systemRed, for: .normal)
+            cell.countBtn.isHidden = false
+        } else {
+            cell.countBtn.isHidden = true
+        }
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedIndex = indexPath
+        let selectedDate = dateComponents[indexPath.item].date
+        let formatter = DateFormatter(); formatter.dateFormat = "dd-MM-yyyy"
+        formatter.locale = LocaleManager.shared.apiLocale
+        EventDate = formatter.string(from: selectedDate)
+        getSlotsApi()
+        BookSlotBtn.isHidden = true
+        CV.reloadData()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: 65, height: 120)
+    }
+}

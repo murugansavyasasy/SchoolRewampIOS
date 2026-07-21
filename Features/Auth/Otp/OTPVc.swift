@@ -1,0 +1,555 @@
+//
+//  OTPVc.swift
+//  VsSchoolChimes
+//
+//  Created by admin on 23/10/24.
+//
+
+import UIKit
+import LocalAuthentication
+@available(iOS 14.0, *)
+class OTPVc: UIViewController {
+    
+    @IBOutlet weak var OtpContentLbl: UILabel!
+    @IBOutlet weak var otpTextField1: UITextField!
+    @IBOutlet weak var otpTextField2: UITextField!
+    @IBOutlet weak var otpTextField3: UITextField!
+    @IBOutlet weak var otpTextField4: UITextField!
+    @IBOutlet weak var BottomView: UIView!
+    @IBOutlet weak var otpTextField5: UITextField!
+    @IBOutlet weak var otpTextField6: UITextField!
+    @IBOutlet weak var BackBtn: UIButton!
+    @IBOutlet weak var ResendLbl: UILabel!
+    @IBOutlet weak var DidnotReciveOtpLbl: UILabel!
+    @IBOutlet weak var callUsLbl: LocalizationLabel!
+    
+    var countdownTimer: Timer?
+    var remainingTime = 30
+    var forgetType  = false
+    var otpFields: [UITextField] = []
+    var mobile_number:String?
+    var validateMobileData : [UserData] = []
+    var forgotpasswordData : [ForgotPasswordData] = []
+    var AlertModal = CustomAlert()
+    var pageType : Int?
+    var otpContent:String?
+    var didnotReciveMessage: String?
+    let Didnt_receive_the_verification_code = "Didn't receive a Verification code?".translated()
+    let resendText = "Resend".translated()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        BottomView.layer.cornerRadius = 40
+        BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+        BackBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        BackBtn.layer.cornerRadius = BackBtn.frame.width / 2
+        OtpContentLbl.setFont(style: .body, size: FontSize.BodySize)
+        ResendLbl.setFont(style: .body, size: FontSize.BodySize)
+        DidnotReciveOtpLbl.setFont(style: .body, size: FontSize.BodySize)
+        callUsLbl.textColor = .primery
+        
+        ResendLbl.isUserInteractionEnabled = true
+        setupLabel()
+        startTimer()
+        
+        if pageType == screenType.isSplash {
+            BackBtn.isHidden = true
+        }
+        
+        if  pageType == screenType.isForgotPassword{
+            OtpContentLbl.text =  otpContent
+            DidnotReciveOtpLbl.text = didnotReciveMessage
+            
+        }else{
+            OtpContentLbl.text = (validateMobileData.first?.message ?? "")
+            DidnotReciveOtpLbl.text = (validateMobileData.first?.more_info ?? "")
+            //+ (mobile_number ?? "") + "  "
+        }
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+        
+        setupOTPTextFields()
+        let callUsGesture = UITapGestureRecognizer(target: self,action: #selector(showDialOptions))
+        callUsLbl.addGestureRecognizer(callUsGesture)
+        checkAutoFillPermission()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @IBAction func BackBtn(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
+    @objc func showDialOptions() {
+        doneButtonAction()
+        var dialNumbersString = validateMobileData.first?.dial_numbers ?? ""
+        if pageType == screenType.isForgotPassword {
+            dialNumbersString = forgotpasswordData.first?.dial_numbers ?? ""
+        }
+        let dialNumbers = dialNumbersString.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+        guard !dialNumbers.isEmpty else {
+            return
+        }
+        
+        let alertController = UIAlertController(title: AlertstringFile.Choose_a_Number, message: nil, preferredStyle: .actionSheet)
+        
+        for number in dialNumbers {
+            let action = UIAlertAction(title: number, style: .default) { _ in
+                self.callNumber(phoneNumber: number)
+            }
+            alertController.addAction(action)
+        }
+        
+        let cancelAction = UIAlertAction(title: AlertstringFile.Cancel, style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func callNumber(phoneNumber: String) {
+        if let url = URL(string: "tel://\(phoneNumber)"),
+           UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    
+    @IBAction func validationBtn(_ sender: Any) {
+        if otpTextField1.text != "" && otpTextField2.text != "" && otpTextField3.text != "" && otpTextField4.text != "" && otpTextField5.text != "" && otpTextField6.text != ""  {
+            if #available(iOS 15.0, *) {
+                showActivityLoader()
+            }
+            let otp = (
+                otpTextField1.text! +
+                otpTextField2.text! +
+                otpTextField3.text! +
+                otpTextField4.text! +
+                otpTextField5.text! +
+                otpTextField6.text!
+            ).toEnglishDigits()
+            Validate_OTP(mobileNumber: mobile_number ?? "" , otp:otp)
+        }else{
+            view.makeToast(AlertstringFile.Enter_Otp)
+        }
+    }
+    
+    func setupOTPTextFields() {
+        otpFields = [otpTextField1, otpTextField2, otpTextField3, otpTextField4, otpTextField5, otpTextField6]
+        
+        for (index, textField) in otpFields.enumerated() {
+            textField.textContentType = .oneTimeCode
+            textField.isSecureTextEntry = false
+            textField.delegate = self
+            textField.tag = index
+            textField.textAlignment = .center
+            textField.keyboardType = .numberPad
+            textField.font = UIFont.systemFont(ofSize: 24)
+            textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+            textField.layer.borderColor = UIColor.systemGray4.cgColor
+            textField.layer.borderWidth = 1
+            textField.layer.cornerRadius = 5
+            textField.addDoneButton()
+        }
+        otpTextField1.becomeFirstResponder()
+    }
+    
+    func collectOTP() -> String {
+        let otpFields = [otpTextField1, otpTextField2, otpTextField3, otpTextField4, otpTextField5, otpTextField6]
+        return otpFields.compactMap { $0?.text }.joined()
+    }
+    
+    
+    func setupLabel() {
+        ResendLbl.frame = CGRect(x: 18, y: 100, width: view.frame.width - 60, height: 40)
+        ResendLbl.textAlignment = .left
+        ResendLbl.setFont(style: .body, size: FontSize.BodySize)
+        ResendLbl.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
+        ResendLbl.addGestureRecognizer(tapGesture)
+        updateLabelWithTime()
+    }
+    
+    func startTimer() {
+        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            self.remainingTime -= 1
+            if self.remainingTime <= 0 {
+                self.countdownTimer?.invalidate()
+                self.showResend()
+            } else {
+                self.updateLabelWithTime()
+            }
+        }
+    }
+    
+    func updateLabelWithTime() {
+       
+        let text = "\(Didnt_receive_the_verification_code) 00:\(String(format: "%02d", remainingTime))"
+        let attributedText = NSMutableAttributedString(string: text)
+        ResendLbl.attributedText = attributedText
+    }
+    
+    func showResend() {
+        let text = "\(Didnt_receive_the_verification_code) \(resendText)"
+        let attributed = NSMutableAttributedString(string: text)
+        let resendRange = (text as NSString).range(of: resendText)
+        attributed.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: resendRange)
+        attributed.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: resendRange)
+        
+        ResendLbl.attributedText = attributed
+        
+//        ForgotPasswordAPIcall()
+    }
+    
+    @objc func labelTapped(_ gesture: UITapGestureRecognizer) {
+        guard let label = gesture.view as? UILabel,
+              let text = label.attributedText?.string else { return }
+        let resendRange = (text as NSString).range(of: resendText)
+        if resendRange.location == NSNotFound { return }
+        let tapLocation = gesture.location(in: label)
+        let textStorage = NSTextStorage(attributedString: label.attributedText!)
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: label.bounds.size)
+        textContainer.lineFragmentPadding = 0
+        textContainer.maximumNumberOfLines = label.numberOfLines
+        textContainer.lineBreakMode = label.lineBreakMode
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+        let index = layoutManager.characterIndex(for: tapLocation, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        
+        if NSLocationInRange(index, resendRange) {
+           ForgotPasswordAPIcall()
+            self.remainingTime = 30
+            self.startTimer()
+        }
+    }
+    func priotyScreenVC(){
+        let vc = PriorityVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    
+    func Validate_OTP(mobileNumber : String , otp : String) {
+        APIService.shared.makeApi(url: ServiceUrl.validate_validate_otp, parameters: [
+            COMMON_PARAMETER.mobile_number :  mobileNumber,
+            OTP_PARAMETER.otp :  otp], type: ApitTypeSringFile.POST, token: "", isBaseUrl: true) { [self] (
+                result: Result<ValidateOTPSuc,
+                Error>) in
+                switch result {
+                case .success(let successMessage):
+                    DispatchQueue.main.async { [weak self] in
+                        
+                        guard let self = self else {return}
+                        if #available(iOS 15.0, *) {
+                            self.hideActivityLoader()
+                        }
+                        if successMessage.status == true {
+                            self.remainingTime = 0
+                            self.startTimer()
+                            
+                            if(pageType == screenType.isForgotPassword){
+                                let vc = CreatePasswordVc(nibName: nil, bundle: nil)
+                                vc.modalPresentationStyle = .fullScreen
+                                vc.createNewPassword = false
+                                vc.mobile_number = mobileNumber
+                                present(vc, animated: true)
+                                
+                            }else if(UserDefaultFileManager
+                                .getUserDetails()?.is_password_updated == false){
+                                let vc = CreatePasswordVc(nibName: nil,bundle: nil)
+                                vc.modalPresentationStyle = .fullScreen
+                                vc.createNewPassword = true
+                                vc.mobile_number = mobileNumber
+                                present(vc, animated: true)
+                            }
+                            else if ((UserDefaultFileManager.getLoginCredentials()?.pwd.isEmpty) == nil){
+                                let vc = PasswordVc(nibName: nil, bundle: nil)
+                                vc.modalPresentationStyle = .fullScreen
+                                vc.mobile_number = mobileNumber
+                                present(vc, animated: true)
+                            }
+                            else {
+                                
+                                let password = UserDefaultFileManager.getLoginCredentials()?.pwd
+                                UserDefaultFileManager
+                                    .saveLoginCredentials(
+                                        mobile_number:mobile_number ?? "", pwd: password ?? ""
+                                    )
+                                
+                                if(UserDefaultFileManager
+                                    .getUserDetails()?.user_details?.is_staff == true) &&  (
+                                        UserDefaultFileManager
+                                            .getUserDetails()?.user_details?.is_parent == true){
+                                    let vc = PriorityVC(nibName: nil,bundle: nil)
+                                    vc.modalPresentationStyle = .fullScreen
+                                    present(vc, animated: true)
+                                }else if(UserDefaultFileManager
+                                    .getUserDetails()?.user_details?.is_staff == true){
+                                    
+                                    if(UserDefaultFileManager
+                                        .getUserDetails()?.user_details?.staff_role == PriorityType.is_staff) || (UserDefaultFileManager.getUserDetails()?.user_details?.staff_role == PriorityType.is_grouphead
+                                        ) || (UserDefaultFileManager
+                                            .getUserDetails()?.user_details?.staff_role == PriorityType.is_principal){
+                                        if(UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.count ?? 0 > 1)
+                                        {
+                                            let vc = PriorityVC(nibName: nil,bundle: nil)
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }else{
+                                            if let data = UserDefaultFileManager
+                                                .getUserDetails()?.user_details?.staff_details?.first{
+                                                UserDefaultFileManager.saveStaffDetails(data: data)
+                                            }
+                                            
+                                            let vc = TapBarVC(nibName: nil,bundle: nil)
+                                            vc.login_astype = 1
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
+                                        
+                                    }else{
+                                        if let data = UserDefaultFileManager
+                                            .getUserDetails()?.user_details?.staff_details?.first{
+                                            UserDefaultFileManager.saveStaffDetails(data: data)
+                                        }
+                                        let vc = TapBarVC(nibName: nil, bundle: nil)
+                                        vc.login_astype = 1
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
+                                    }
+                                    
+                                }else if(UserDefaultFileManager
+                                    .getUserDetails()?.user_details?.is_parent == true){
+                                    
+                                    if(
+                                        UserDefaultFileManager
+                                            .getUserDetails()?.user_details?.child_details?.count ?? 0 > 1
+                                    ){
+                                        let vc = PriorityVC(nibName: nil,bundle: nil)
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
+                                    } else{
+                                        if let data = UserDefaultFileManager
+                                            .getUserDetails()?.user_details?.child_details?.first{
+                                            UserDefaultFileManager.saveChildDetails(data: data)
+                                        }
+                                        
+                                        if UserDefaultFileManager.get_child_Details()?.is_not_allow ?? false{
+                                            showCustomAlertNoDismiss(message: UserDefaultFileManager.get_child_Details()?.display_message ?? "", from: self )
+                                        }else{
+                                            let vc = TapBarVC(nibName: nil,bundle: nil)
+                                            vc.login_astype = 2
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
+                                       
+                                    }
+                                }
+                            }
+                        }else{
+                            DispatchQueue.main.async {
+                                self.AlertModal.showAlert(title: AlertstringFile.Oops, message: successMessage.message ?? "", on: self)
+                            }
+                        }
+                    }
+                    
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                        if #available(iOS 15.0, *) {
+                            self.hideActivityLoader()
+                        }
+                    }
+                }
+            }
+    }
+    
+    func ForgotPasswordAPIcall() {
+        if #available(iOS 15.0, *) {
+            showActivityLoader()
+        }
+        APIService.shared
+            .makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : mobile_number ?? ""], type: ApitTypeSringFile.POST, token: "", isBaseUrl: true){[self] (
+                result : Result<ForgotPasswordResponeSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let successmessage):
+                    DispatchQueue.main.async { [self] in
+                        if #available(iOS 15.0, *) {
+                            self.hideActivityLoader()
+                        }
+                        if successmessage.status == true {
+//                            let vc = OTPVc(nibName: nil, bundle: nil)
+//                            vc.modalPresentationStyle = .fullScreen
+//                            vc.mobile_number = MobilTextFld.text
+//                            vc.pageType = screenType.isForgotPassword
+//                            vc.forgotpasswordData = successmessage.data ?? []
+//                            vc.otpContent = successmessage.data?.first?.forgot_otp_message ?? ""
+//                            vc.didnotReciveMessage = successmessage.data?.first?.more_info ?? ""
+//                            present(vc, animated: true)
+                            
+                        }else {
+                            DispatchQueue.main.async {
+                                self.AlertModal.showAlert(
+                                    title: AlertstringFile.Oops,
+                                    message: successmessage.message ?? "",
+                                    on: self)
+                            }
+                        }
+                    }
+                    
+                case.failure(let error):
+                    
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                        if #available(iOS 15.0, *) {
+                            self.hideActivityLoader()
+                        }
+                    }
+                }
+            }
+    }
+    
+ 
+}
+
+@available(iOS 14.0, *)
+extension OTPVc : UITextFieldDelegate{
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        let text = textField.text ?? ""
+        
+        if text.count == 1 {
+            let nextTag = textField.tag + 1
+            if nextTag < otpFields.count {
+                otpFields[nextTag].becomeFirstResponder()
+            } else {
+                textField.resignFirstResponder()
+            }
+        } else if text.count == 0 {
+            let prevTag = textField.tag - 1
+            if prevTag >= 0 {
+                otpFields[prevTag].becomeFirstResponder()
+            }
+        }
+        
+        if otpTextField1.text != "" && otpTextField2.text != "" && otpTextField3.text != "" && otpTextField4.text != "" && otpTextField5.text != "" && otpTextField6.text != ""  {
+            let otp = (
+                otpTextField1.text! +
+                otpTextField2.text! +
+                otpTextField3.text! +
+                otpTextField4.text! +
+                otpTextField5.text! +
+                otpTextField6.text!
+            ).toEnglishDigits()
+            Validate_OTP(mobileNumber: mobile_number ?? "" , otp:otp)
+            
+        }
+    }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string.count > 1 {
+            let characters = Array(string)
+            var index = 0
+            
+            for field in otpFields {
+                if index < characters.count {
+                    field.text = String(characters[index])
+                } else {
+                    field.text = ""
+                }
+                index += 1
+            }
+            let lastIndex = min(characters.count, otpFields.count - 1)
+            otpFields[lastIndex].becomeFirstResponder()
+            
+            return false
+        }
+        if string.isEmpty {
+            if textField.tag > 0 {
+                let previousTextField = otpFields[textField.tag - 1]
+                DispatchQueue.main.async {
+                    previousTextField.becomeFirstResponder()
+                }
+            }
+            return true
+        }
+        return textField.text?.count == 0
+    }
+    
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+        
+        let elements: [UIView] = [otpTextField1, ResendLbl, DidnotReciveOtpLbl, callUsLbl]
+        let bottomMost = elements.map {
+            $0.convert($0.bounds, to: self.view).maxY
+        }.max() ?? 0
+        
+        let keyboardTop = self.view.frame.height - keyboardFrame.height
+        if bottomMost > keyboardTop {
+            let overlap = bottomMost - keyboardTop + 20
+            UIView.animate(withDuration: 0.3) {
+                self.view.frame.origin.y = -overlap
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = 0
+        }
+    }
+    
+    
+    @objc func doneButtonAction() {
+        view.endEditing(true)
+    }
+    
+    
+    func checkAutoFillPermission() {
+        let context = LAContext()
+        var error: NSError?
+        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+            print("🔹 Auto-Fill is enabled.")
+        } else {
+            print("❌ Auto-Fill is disabled.")
+            showAutoFillAlert()
+        }
+    }
+    func showAutoFillAlert() {
+        let alert = UIAlertController(
+            title: "Enable Auto-Fill".translated(),
+            message: "To automatically fill your OTP, please enable Auto-Fill in Settings:\n\nSettings → Passwords & Accounts → AutoFill Passwords".translated(),
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "Open Settings".translated(), style: .default, handler: { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil))
+        
+        DispatchQueue.main.async {
+            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+        }
+    }
+}

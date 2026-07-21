@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6-12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ClassTestsHeaderView" customModule="parentScreenVc" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="195"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="mainStack" userLabel="Main Stack View">
+                    <rect key="frame" x="16" y="16" width="343" height="159"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="titleStack" userLabel="Title Stack View">
+                            <rect key="frame" x="0.0" y="0.0" width="343" height="48"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iconContainer" userLabel="Icon Container">
+                                    <rect key="frame" x="0.0" y="4" width="40" height="40"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="rosette" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="titleIcon">
+                                            <rect key="frame" x="8" y="8" width="24" height="24"/>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="24" id="w1"/>
+                                                <constraint firstAttribute="height" constant="24" id="h1"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="40" id="w2"/>
+                                        <constraint firstAttribute="height" constant="40" id="h2"/>
+                                        <constraint firstItem="titleIcon" firstAttribute="centerX" secondItem="iconContainer" secondAttribute="centerX" id="c1"/>
+                                        <constraint firstItem="titleIcon" firstAttribute="centerY" secondItem="iconContainer" secondAttribute="centerY" id="c2"/>
+                                    </constraints>
+                                </view>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="leading" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="textStack" userLabel="Text Stack View">
+                                    <rect key="frame" x="52" y="5.6666666666666679" width="291" height="37"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="ACADEMIC YEAR 2025-26" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="academicYearLabel">
+                                            <rect key="frame" x="0.0" y="0.0" width="138.66666666666666" height="14.333333333333334"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                            <color key="textColor" white="1" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Class Tests" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="titleLabel">
+                                            <rect key="frame" x="0.0" y="16.333333333333332" width="107" height="20.666666666666668"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="hTitleStack"/>
+                            </constraints>
+                        </stackView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="statsCard" userLabel="Stats Card View">
+                            <rect key="frame" x="0.0" y="64" width="343" height="95"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="statsStack" userLabel="Stats Horizontal Stack View">
+                                    <rect key="frame" x="8" y="8" width="327" height="79"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="examsCol" userLabel="Exams Col">
+                                            <rect key="frame" x="0.0" y="19" width="109" height="41"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="examsCountLabel">
+                                                    <rect key="frame" x="0.0" y="0.0" width="109" height="24"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Exams" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="examsTitleLabel">
+                                                    <rect key="frame" x="0.0" y="28" width="109" height="13"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" white="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="subjectsCol" userLabel="Subjects Col">
+                                            <rect key="frame" x="109" y="19" width="109" height="41"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="subjectsCountLabel">
+                                                    <rect key="frame" x="0.0" y="0.0" width="109" height="24"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Subjects" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="subjectsTitleLabel">
+                                                    <rect key="frame" x="0.0" y="28" width="109" height="13"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" white="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="activitiesCol" userLabel="Activities Col">
+                                            <rect key="frame" x="218" y="19" width="109" height="41"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="activitiesCountLabel">
+                                                    <rect key="frame" x="0.0" y="0.0" width="109" height="24"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Activities" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="activitiesTitleLabel">
+                                                    <rect key="frame" x="0.0" y="28" width="109" height="13"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" white="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="statsStack" firstAttribute="top" secondItem="statsCard" secondAttribute="top" constant="8" id="s1"/>
+                                <constraint firstAttribute="bottom" secondItem="statsStack" secondAttribute="bottom" constant="8" id="s2"/>
+                                <constraint firstItem="statsStack" firstAttribute="leading" secondItem="statsCard" secondAttribute="leading" constant="8" id="s3"/>
+                                <constraint firstAttribute="trailing" secondItem="statsStack" secondAttribute="trailing" constant="8" id="s4"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" red="0.2901960784" green="0.3333333333" blue="0.9647058823" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="mainStack" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="cTitleTop"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="mainStack" secondAttribute="trailing" constant="16" id="cTitleRight"/>
+                <constraint firstItem="mainStack" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="cTitleLeft"/>
+                <constraint firstAttribute="bottom" secondItem="mainStack" secondAttribute="bottom" constant="20" id="cTitleBottom"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="activitiesCountLabel" destination="activitiesCountLabel" id="out-act"/>
+                <outlet property="examsCountLabel" destination="examsCountLabel" id="out-exam"/>
+                <outlet property="headerStatsContainerView" destination="statsCard" id="out-stats"/>
+                <outlet property="headerTitleBadgeView" destination="iconContainer" id="out-badge"/>
+                <outlet property="subjectsCountLabel" destination="subjectsCountLabel" id="out-sub"/>
+            </connections>
+            <point key="canvasLocation" x="-32" y="-12"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="rosette" catalog="system" width="128" height="121"/>
+    </resources>
+</document>

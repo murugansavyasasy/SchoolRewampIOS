@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6-12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ActivityDetailCardView" customModule="parentScreenVc" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="343" height="210"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="containerView" userLabel="Card Container View">
+                    <rect key="frame" x="0.0" y="0.0" width="343" height="210"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="mainStack" userLabel="Main Stack View">
+                            <rect key="frame" x="16" y="16" width="311" height="178"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="titleSessionStack">
+                                    <rect key="frame" x="0.0" y="0.0" width="311" height="32"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" image="doc.text.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="iconView">
+                                            <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="32" id="w1"/>
+                                                <constraint firstAttribute="height" constant="32" id="h1"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Formula Test" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblName">
+                                            <rect key="frame" x="40" y="7.6666666666666679" width="179" height="17"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                            <color key="textColor" red="0.1176470588" green="0.1607843137" blue="0.2313725490" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pillView" userLabel="Session Pill View">
+                                            <rect key="frame" x="227" y="6" width="84" height="20"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="pillStack">
+                                                    <rect key="frame" x="8" y="0.0" width="68" height="20"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="clock.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="pillIcon">
+                                                            <rect key="frame" x="0.0" y="5.0000000000000009" width="10" height="9.9999999999999982"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="10" id="w2"/>
+                                                                <constraint firstAttribute="height" constant="10" id="h2"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Afternoon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblPill">
+                                                            <rect key="frame" x="14" y="3.6666666666666679" width="54" height="13"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="pillStack" firstAttribute="leading" secondItem="pillView" secondAttribute="leading" constant="8" id="p1"/>
+                                                <constraint firstAttribute="trailing" secondItem="pillStack" secondAttribute="trailing" constant="8" id="p2"/>
+                                                <constraint firstItem="pillStack" firstAttribute="top" secondItem="pillView" secondAttribute="top" id="p3"/>
+                                                <constraint firstAttribute="bottom" secondItem="pillStack" secondAttribute="bottom" id="p4"/>
+                                                <constraint firstAttribute="height" constant="20" id="h3"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="dateRow">
+                                    <rect key="frame" x="0.0" y="44" width="311" height="16"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="calendar" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="dateIcon">
+                                            <rect key="frame" x="0.0" y="1.6666666666666661" width="16" height="13.000000000000002"/>
+                                            <color key="tintColor" red="0.5568627451" green="0.6039215686" blue="0.6588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="16" id="w4"/>
+                                                <constraint firstAttribute="height" constant="16" id="h4"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="25-06-2026" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblDate">
+                                            <rect key="frame" x="22" y="0.0" width="289" height="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="syllabusContainer" userLabel="Syllabus Container">
+                                    <rect key="frame" x="0.0" y="72" width="311" height="38"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="syllabusStack">
+                                            <rect key="frame" x="12" y="6" width="287" height="26"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="book.closed" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="syllabusIcon">
+                                                    <rect key="frame" x="0.0" y="1.6666666666666661" width="16" height="13.000000000000002"/>
+                                                    <color key="tintColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="16" id="w5"/>
+                                                        <constraint firstAttribute="height" constant="16" id="h5"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Lesson 1 to Lesson 2" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblSyllabus">
+                                                    <rect key="frame" x="26" y="0.0" width="261" height="14.333333333333334"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.2784313725" green="0.3333333333" blue="0.4117647059" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="syllabusStack" firstAttribute="leading" secondItem="syllabusContainer" secondAttribute="leading" constant="12" id="sc1"/>
+                                        <constraint firstAttribute="trailing" secondItem="syllabusStack" secondAttribute="trailing" constant="12" id="sc2"/>
+                                        <constraint firstItem="syllabusStack" firstAttribute="top" secondItem="syllabusContainer" secondAttribute="top" constant="6" id="sc3"/>
+                                        <constraint firstAttribute="bottom" secondItem="syllabusStack" secondAttribute="bottom" constant="6" id="sc4"/>
+                                    </constraints>
+                                </view>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="marksRow">
+                                    <rect key="frame" x="0.0" y="122" width="311" height="56"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="maxBox">
+                                            <rect key="frame" x="0.0" y="0.0" width="149.66666666666666" height="56"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="maxLabelStack">
+                                                    <rect key="frame" x="4" y="8" width="141.66666666666666" height="40"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="MAX MARKS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblMaxTitle">
+                                                            <rect key="frame" x="42.990291262135905" y="0.0" width="56" height="12"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
+                                                            <color key="textColor" red="0.1803921569" green="0.4901960784" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="50" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblMaxValue">
+                                                            <rect key="frame" x="61.029126213592209" y="14" width="19.666666666666671" height="26"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                            <color key="textColor" red="0.1803921569" green="0.4901960784" blue="0.1960784314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="maxLabelStack" firstAttribute="leading" secondItem="maxBox" secondAttribute="leading" constant="4" id="ml1"/>
+                                                <constraint firstAttribute="trailing" secondItem="maxLabelStack" secondAttribute="trailing" constant="4" id="ml2"/>
+                                                <constraint firstItem="maxLabelStack" firstAttribute="top" secondItem="maxBox" secondAttribute="top" constant="8" id="ml3"/>
+                                                <constraint firstAttribute="bottom" secondItem="maxLabelStack" secondAttribute="bottom" constant="8" id="ml4"/>
+                                            </constraints>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="minBox">
+                                            <rect key="frame" x="161.66666666666663" y="0.0" width="149.33333333333337" height="56"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="minLabelStack">
+                                                    <rect key="frame" x="4" y="8" width="141.33333333333334" height="40"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="MIN MARKS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblMinTitle">
+                                                            <rect key="frame" x="44.64724919093855" y="0.0" width="52.333333333333343" height="12"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
+                                                            <color key="textColor" red="0.7764705882" green="0.1568627451" blue="0.1568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="18" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lblMinValue">
+                                                            <rect key="frame" x="62.64724919093855" y="14" width="16.333333333333343" height="26"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                            <color key="textColor" red="0.7764705882" green="0.1568627451" blue="0.1568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="minLabelStack" firstAttribute="leading" secondItem="minBox" secondAttribute="leading" constant="4" id="nl1"/>
+                                                <constraint firstAttribute="trailing" secondItem="minLabelStack" secondAttribute="trailing" constant="4" id="nl2"/>
+                                                <constraint firstItem="minLabelStack" firstAttribute="top" secondItem="minBox" secondAttribute="top" constant="8" id="nl3"/>
+                                                <constraint firstAttribute="bottom" secondItem="minLabelStack" secondAttribute="bottom" constant="8" id="nl4"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="56" id="hMarksRow"/>
+                                    </constraints>
+                                </stackView>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="mainStack" firstAttribute="leading" secondItem="containerView" secondAttribute="leading" constant="16" id="k1"/>
+                        <constraint firstAttribute="trailing" secondItem="mainStack" secondAttribute="trailing" constant="16" id="k2"/>
+                        <constraint firstItem="mainStack" firstAttribute="top" secondItem="containerView" secondAttribute="top" constant="16" id="k3"/>
+                        <constraint firstAttribute="bottom" secondItem="mainStack" secondAttribute="bottom" constant="16" id="k4"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="containerView" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="lLeft"/>
+                <constraint firstAttribute="trailing" secondItem="containerView" secondAttribute="trailing" id="lRight"/>
+                <constraint firstItem="containerView" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="lTop"/>
+                <constraint firstAttribute="bottom" secondItem="containerView" secondAttribute="bottom" id="lBottom"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="activityIconImageView" destination="iconView" id="out-icon"/>
+                <outlet property="activityNameLabel" destination="lblName" id="out-name"/>
+                <outlet property="cardContainerView" destination="containerView" id="out-container"/>
+                <outlet property="dateLabel" destination="lblDate" id="out-date"/>
+                <outlet property="maxMarksContainerView" destination="maxBox" id="out-maxbox"/>
+                <outlet property="maxMarksLabel" destination="lblMaxValue" id="out-maxlbl"/>
+                <outlet property="minMarksContainerView" destination="minBox" id="out-minbox"/>
+                <outlet property="minMarksLabel" destination="lblMinValue" id="out-minlbl"/>
+                <outlet property="sessionPillImageView" destination="pillIcon" id="out-pillicon"/>
+                <outlet property="sessionPillLabel" destination="lblPill" id="out-pilllbl"/>
+                <outlet property="sessionPillView" destination="pillView" id="out-pillview"/>
+                <outlet property="syllabusContainerView" destination="syllabusContainer" id="out-syllbox"/>
+                <outlet property="syllabusLabel" destination="lblSyllabus" id="out-sylllbl"/>
+            </connections>
+            <point key="canvasLocation" x="-32" y="10"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="calendar" catalog="system" width="128" height="107"/>
+        <image name="clock.fill" catalog="system" width="128" height="123"/>
+        <image name="doc.text.fill" catalog="system" width="115" height="128"/>
+        <image name="book.closed" catalog="system" width="115" height="128"/>
+    </resources>
+</document>

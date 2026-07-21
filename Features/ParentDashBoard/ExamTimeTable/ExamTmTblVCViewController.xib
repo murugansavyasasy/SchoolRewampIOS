@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExamTmTblVCViewController" customModule="School_Chimes" customModuleProvider="target">
+            <connections>
+                <outlet property="NoDataImage" destination="dmb-tq-sMC" id="F3d-hE-FLO"/>
+                <outlet property="NoDataLbl" destination="ajR-iP-vRv" id="1B8-Nw-oJs"/>
+                <outlet property="searchBar" destination="fPx-rM-TeE" id="5cC-4G-OA9"/>
+                <outlet property="tv" destination="zp7-BQ-emi" id="mAH-hp-vNK"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hDl-9k-U6U">
+                    <rect key="frame" x="0.0" y="118" width="393" height="666"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="xg7-ic-xMX">
+                            <rect key="frame" x="0.0" y="10" width="393" height="318"/>
+                            <subviews>
+                                <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="fPx-rM-TeE">
+                                    <rect key="frame" x="10" y="0.0" width="373" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="9OL-F6-vHp"/>
+                                    </constraints>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="examTimeTable" translatesAutoresizingMaskIntoConstraints="NO" id="dmb-tq-sMC">
+                                    <rect key="frame" x="0.0" y="42" width="393" height="250"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="250" id="i7m-99-mRK"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajR-iP-vRv">
+                                    <rect key="frame" x="50" y="294" width="293" height="24"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="dmb-tq-sMC" secondAttribute="trailing" id="2b0-jn-ppC"/>
+                                <constraint firstItem="ajR-iP-vRv" firstAttribute="leading" secondItem="xg7-ic-xMX" secondAttribute="leading" constant="50" id="2zx-VY-a9F"/>
+                                <constraint firstAttribute="trailing" secondItem="ajR-iP-vRv" secondAttribute="trailing" constant="50" id="7tM-Fy-kaZ"/>
+                                <constraint firstItem="dmb-tq-sMC" firstAttribute="leading" secondItem="xg7-ic-xMX" secondAttribute="leading" id="Jnj-vH-Shi"/>
+                                <constraint firstAttribute="trailing" secondItem="fPx-rM-TeE" secondAttribute="trailing" constant="10" id="MxO-wU-Fvc"/>
+                                <constraint firstItem="fPx-rM-TeE" firstAttribute="leading" secondItem="xg7-ic-xMX" secondAttribute="leading" constant="10" id="cKF-Qc-zmq"/>
+                            </constraints>
+                        </stackView>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zp7-BQ-emi">
+                            <rect key="frame" x="10" y="328" width="373" height="319"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="zp7-BQ-emi" firstAttribute="top" secondItem="xg7-ic-xMX" secondAttribute="bottom" id="0dQ-h8-jg8"/>
+                        <constraint firstAttribute="trailing" secondItem="zp7-BQ-emi" secondAttribute="trailing" constant="10" id="Rbl-0D-mUa"/>
+                        <constraint firstItem="zp7-BQ-emi" firstAttribute="leading" secondItem="hDl-9k-U6U" secondAttribute="leading" constant="10" id="X82-t9-QL8"/>
+                        <constraint firstAttribute="trailing" secondItem="xg7-ic-xMX" secondAttribute="trailing" id="gCg-Nt-vN6"/>
+                        <constraint firstItem="xg7-ic-xMX" firstAttribute="top" secondItem="hDl-9k-U6U" secondAttribute="top" constant="10" id="iI8-4J-rV4"/>
+                        <constraint firstAttribute="bottom" secondItem="zp7-BQ-emi" secondAttribute="bottom" constant="19" id="nWw-BH-tRd"/>
+                        <constraint firstItem="xg7-ic-xMX" firstAttribute="leading" secondItem="hDl-9k-U6U" secondAttribute="leading" id="xfS-O9-E5V"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="hDl-9k-U6U" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="6LY-uY-1In"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="hDl-9k-U6U" secondAttribute="bottom" id="KRP-dw-HLQ"/>
+                <constraint firstItem="hDl-9k-U6U" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="qBD-XA-znD"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hDl-9k-U6U" secondAttribute="trailing" id="zBg-2T-1SP"/>
+            </constraints>
+            <point key="canvasLocation" x="130.53435114503816" y="-11.267605633802818"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="examTimeTable" width="1500" height="1500"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
