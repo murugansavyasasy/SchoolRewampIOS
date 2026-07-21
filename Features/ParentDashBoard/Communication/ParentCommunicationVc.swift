@@ -1094,7 +1094,7 @@ extension ParentCommunicationVc : UISearchBarDelegate {
         let isEmpty = displayedMessages.isEmpty
         NodataLbl.isHidden = !isEmpty
         NodataImage.isHidden = !isEmpty
-        NodataLbl.text = "No Data Found"
+        NodataLbl.text = "No Data Found!".translated()
         tv.isScrollEnabled = !isEmpty
         tv.reloadData()
     }

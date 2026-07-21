@@ -262,7 +262,7 @@ extension LessonPlanVC: UISearchBarDelegate{
             }
         }
         
-        NodataLbl.text = "No Data Found!"
+        NodataLbl.text = "No Data Found!".translated()
         NodataImage.isHidden = !(SearchData?.isEmpty ?? false)
         NodataLbl.isHidden = !(SearchData?.isEmpty ?? false)
         tableview.reloadData()

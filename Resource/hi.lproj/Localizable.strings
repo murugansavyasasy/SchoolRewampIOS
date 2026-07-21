@@ -1461,6 +1461,7 @@
 "The quiz will be visible to students only after all questions are filled and Submitted" = "सभी प्रश्न भरकर जमा करने के बाद ही क्विज़ छात्रों को दिखाई देगा।";
 "View & Enter marks" = "अंक देखें एवं दर्ज करें";
 "Select a Date" = "तिथि चुनें";
+"todays_event" = "आज का कार्यक्रम";
 //MARK: Bus
 "Live Bus Tracking" = "लाइव बस ट्रैकिंग";
 "Your Stop" = "आपका स्टॉप";

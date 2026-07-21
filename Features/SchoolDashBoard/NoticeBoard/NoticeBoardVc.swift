@@ -367,7 +367,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
             }
         }
         self.noDataLbl.isHidden = !self.searchData.isEmpty
-        self.noDataLbl.text = "No Data Found"
+        self.noDataLbl.text = "No Data Found!".translated()
         self.noDataImg.isHidden = !self.searchData.isEmpty
         collectionView.reloadData()
     }

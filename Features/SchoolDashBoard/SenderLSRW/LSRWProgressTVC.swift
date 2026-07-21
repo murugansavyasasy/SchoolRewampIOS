@@ -62,10 +62,13 @@ class LSRWProgressTVC: UITableViewCell, UICollectionViewDelegate, UICollectionVi
         self.selectedIndex = selectedIndex
         progressCV.reloadData()
         DispatchQueue.main.async {
-            let index = IndexPath(item: 0, section: 0)
-            self.progressCV.scrollToItem(at: index,
-                                         at: .left,
-                                         animated: false)
+            let itemCount = self.progressCV.numberOfItems(inSection: 0)
+            guard itemCount > 0 else { return }
+            self.progressCV.scrollToItem(
+                at: IndexPath(item: 0, section: 0),
+                at: .left,
+                animated: false
+            )
         }
     }
 

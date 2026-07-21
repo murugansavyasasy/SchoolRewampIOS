@@ -1492,6 +1492,7 @@
 "apply" = "นำไปใช้";
 "skip" = "ข้าม";
 "lets_go" = "เริ่มกันเลย";
+"todays_event" = "กิจกรรมของวันนี้";
 
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";

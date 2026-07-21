@@ -354,7 +354,7 @@ extension EventResiverVC: UITableViewDelegate, UITableViewDataSource {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         let label = UILabel()
-        label.text = "No Data Found"
+        label.text = "No Data Found!".translated()
         label.textColor = .gray
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         label.textAlignment = .center

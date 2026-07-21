@@ -165,7 +165,7 @@ struct AlertstringFile{
     static let deletemessage = "Are you sure you want to Delete?"
     static let uploadMark = "Are you sure you want to Save?"
     static let fillAllMarksBeforePublish = "fillAllMarksBeforePublish"
-    static let publishMark = "Are you sure you want to publish the marks?"
+    static let publishMark = "Are you sure you want to publish?"
     static let are_yousure_youWant_to_send_Notice = "Are you sure you want to send this Notice?"
     static let are_yousure_youWant_to_send_emergency_voiceMessage = "Are you sure you want to send this Emergency voice message? note: this will send to all your contacts"
     static let ConfirmLeave = "Are you sure want to "

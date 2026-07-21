@@ -237,7 +237,7 @@ class LsrwListShowViewController: UIViewController, UITableViewDelegate, UITable
         
         nodataImg.isHidden = !filteredTasks.isEmpty
         nodataLbl.isHidden = !filteredTasks.isEmpty
-        nodataLbl.text = "No Data Found"
+        nodataLbl.text = "No Data Found!".translated()
         tv.reloadData()
     }
     
