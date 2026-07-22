@@ -127,7 +127,11 @@ struct ServiceUrl{
     static let comm_api_certificate_types = "comm/api/certificate/types"
     static let comm_api_certificate_send_request = "comm/api/certificate/send-request"
     static let exam_api_exam_get_exams = "exam/api/exam/get-exams"
+    
+    static let exam_api_exam_get_new_exams = "exam/api/new-exam/get-exams"
+    
     static let exam_api_exam_list = "exam/api/exam/list"
+    static let get_report_status = "exam/api/new-exam/get-report-status"
     static let exam_api_exam_view_marks = "exam/api/exam/view-marks"
     static let exam_api_get_progress_card = "exam/api/exam/get-progress-card"
     static let interaction_classes_for_chat = "comm/api/interaction/classes-for-chat"
