@@ -137,7 +137,7 @@ extension ExamListCell: UITableViewDataSource, UITableViewDelegate {
         
         cell.separatorview.isHidden = indexPath.row == subjectList.count - 1
         cell.subjectNameLbl.text = subjectList[indexPath.row].subject_name
-        cell.Activities = subjectList[indexPath.row].splitup_details ?? []
+        cell.Activities = subjectList[indexPath.row].activities ?? []
         cell.configureExpansionState(expandedRow == indexPath, animated: false)
         
         // INNER EXPAND

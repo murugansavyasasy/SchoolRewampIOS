@@ -2805,6 +2805,32 @@ struct StaffExamData: Codable {
     let ai_mark_entry: Bool?
 }
 
+//struct SubjectWiseExamResponse: Codable {
+//    let status: Bool?
+//    let message: String?
+//    let data: [SubjectExamData]?
+//}
+//
+//struct SubjectExamData: Codable {
+//    let section_id: String?
+//    let section_name: String?
+//    let class_id: String?
+//    let class_name: String?
+//    let subject_id: String?
+//    let subject_name: String?
+//    var splitup_details: [SplitDetail]?
+//}
+//
+//struct SplitDetail: Codable {
+//    let id: String?
+//    let name: String?
+//    let max_mark: String?
+//    
+//    // UI STATE
+//    var isChecked: Bool? = false
+//    var selectedAIOption: String? = nil
+//}
+
 struct SubjectWiseExamResponse: Codable {
     let status: Bool?
     let message: String?
@@ -2812,21 +2838,29 @@ struct SubjectWiseExamResponse: Codable {
 }
 
 struct SubjectExamData: Codable {
-    let section_id: String?
-    let section_name: String?
-    let class_id: String?
-    let class_name: String?
     let subject_id: String?
+    let institute_subject_id: String?
     let subject_name: String?
-    var splitup_details: [SplitDetail]?
+    var activities: [ActivityData]?
 }
 
-struct SplitDetail: Codable {
-    let id: String?
-    let name: String?
+struct ActivityData: Codable {
+    let activity_id: String?
+    let activity_name: String?
+    let max_mark: String?
+    var rubrics: [RubricData]?
+    
+    // UI State
+    var isChecked: Bool? = false
+    var selectedAIOption: String? = nil
+}
+
+struct RubricData: Codable {
+    let rubric_id: String?
+    let rubric_name: String?
     let max_mark: String?
     
-    // UI STATE
+    // UI State
     var isChecked: Bool? = false
     var selectedAIOption: String? = nil
 }

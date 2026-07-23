@@ -20,7 +20,7 @@ class Exam_ExamListTV: UITableViewCell {
     var onHeightChanged: (() -> Void)?
     var onExpand: (() -> Void)?
     private var isExpanded: Bool = false
-    var Activities : [SplitDetail] = []
+    var Activities : [ActivityData] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -143,7 +143,7 @@ extension Exam_ExamListTV: UICollectionViewDelegate, UICollectionViewDataSource 
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ExamActivitiesCV,for: indexPath) as! ExamActivitiesCV
         
-        cell.nameLbl.text = Activities[indexPath.item].name
+        cell.nameLbl.text = Activities[indexPath.item].activity_name
         return cell
     }
 }
@@ -152,7 +152,7 @@ extension Exam_ExamListTV: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let text = Activities[indexPath.item].name ?? ""  // your data source
+        let text = Activities[indexPath.item].activity_name ?? ""  // your data source
         
         let font = UIFont.systemFont(ofSize: 17)
         let textWidth = (text as NSString).size(withAttributes: [.font: font]).width

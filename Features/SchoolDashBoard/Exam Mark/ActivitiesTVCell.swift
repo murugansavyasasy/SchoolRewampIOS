@@ -7,44 +7,60 @@
 
 import UIKit
 protocol ActivityCellDelegate: AnyObject {
-    func didToggleSplit(subjectIndex: Int, splitIndex: Int, isChecked: Bool)
-    func didUpdateAISplit(subjectIndex: Int, splitIndex: Int, isChecked: Bool, aiOption: String?)
+    
+    func didToggleSplit(
+        subjectIndex: Int,
+        splitIndex: Int,
+        isChecked: Bool
+    )
+    func didUpdateAISplit(
+        subjectIndex: Int,
+        splitIndex: Int,
+        isChecked: Bool,
+        aiOption: String?
+    )
+    func didToggleRubric(
+        subjectIndex: Int,
+        splitIndex: Int,
+        rubricIndex: Int,
+        isChecked: Bool
+    )
+    func didToggleActivityWithRubrics(
+        subjectIndex: Int,
+        splitIndex: Int,
+        rubrics: [RubricData],
+        isChecked: Bool
+    )
+    
+    func didToggleRubricsExpansion(
+        splitIndex: Int,
+        expanded: Bool
+    )
+    
 }
 
 class ActivitiesTVCell: UITableViewCell {
 
     @IBOutlet weak var CheckBoxBtnName: UIButton!
     @IBOutlet weak var activityNameLbl: UILabel!
-    @IBOutlet weak var dropdownView: UIView!
-    @IBOutlet weak var dropdownLbl: UILabel!
-    @IBOutlet weak var ActivityStatusView: UIView!
     @IBOutlet weak var ActivitystatusLbl: UILabel!
     @IBOutlet weak var clearBtn: UIButton!
-    
+    @IBOutlet weak var rubicsStack: UIStackView!
+    @IBOutlet weak var ArrowBtn: UIButton!
     let dropdown = DropDown()
     weak var delegate: ActivityCellDelegate?
     private var subjectIndex = 0
     private var splitIndex = 0
     private var isAIFlow = false
-    
     var items:[String]?
+    var rubrics: [RubricData]?
+    private var isRubricsExpanded = false
+    var onHeightChanged: (() -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
        
-        dropdownView.layer.cornerRadius = 10
-        dropdownView.layer.borderWidth = 0.5
-        dropdownView.layer.borderColor = UIColor.lightGray.cgColor
-        
-        ActivityStatusView.layer.cornerRadius = 10
-        ActivityStatusView.layer.borderWidth = 0.5
-        ActivityStatusView.layer.borderColor = UIColor.lightGray.cgColor
-        
-        ActivityStatusView.isHidden = true
         ActivitystatusLbl.isHidden = true
-        dropdownView.isHidden = true
-        dropdownView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showDropdown)))
-        
         setupDropdown()
     }
     
@@ -55,21 +71,22 @@ class ActivitiesTVCell: UITableViewCell {
     func configure(
         subjectIndex: Int,
         splitIndex: Int,
-        split: SplitDetail,
-        isAi: Bool,items: [String]
+        split: ActivityData,
+        isAi: Bool,items: [String],
+        isRubricsExpanded: Bool
     ) {
         self.subjectIndex = subjectIndex
         self.splitIndex = splitIndex
         self.isAIFlow = isAi
         dropdown.dataSource = items
-        let nameText = split.name ?? ""
+        let nameText = split.activity_name ?? ""
         let maxText = " (Max: \(split.max_mark ?? "") marks)"
         print(items)
         let fullText = nameText + maxText
         
         let attributedString = NSMutableAttributedString(string: fullText)
         
-        attributedString.addAttributes([.foregroundColor: UIColor.black,.font: UIFont(name: "Poppins-Medium", size: 15) ?? UIFont.systemFont(ofSize: 15, weight: .semibold)], range: NSRange(location: 0, length: nameText.count))
+        attributedString.addAttributes([.foregroundColor: UIColor.black,.font: UIFont(name: "Poppins-Medium", size: 15) ?? UIFont.systemFont(ofSize: 20, weight: .semibold)], range: NSRange(location: 0, length: nameText.count))
         
         attributedString.addAttributes([.foregroundColor: UIColor.darkGray, .font : UIFont(name: "Poppins-Medium", size: 12) ?? UIFont.systemFont(ofSize: 12)], range: NSRange(location: nameText.count, length: maxText.count))
         
@@ -99,6 +116,13 @@ class ActivitiesTVCell: UITableViewCell {
         } else {
             contentView.backgroundColor = .systemBackground
         }
+        
+           self.isRubricsExpanded = isRubricsExpanded
+           self.rubrics = split.rubrics
+           setupRubrics(self.rubrics)
+           rubicsStack.isHidden = !isRubricsExpanded
+        
+          ArrowBtn.setImage(UIImage(systemName: isRubricsExpanded ? "chevron.up" : "chevron.forward"), for: .normal)
     }
 
     
@@ -109,7 +133,32 @@ class ActivitiesTVCell: UITableViewCell {
             return
         }
 
-        // MANUAL FLOW
+        // Activity has rubrics
+        if var rubrics = self.rubrics, !rubrics.isEmpty {
+
+            let shouldSelect = !(rubrics.allSatisfy { $0.isChecked == true })
+
+            for index in rubrics.indices {
+                rubrics[index].isChecked = shouldSelect
+            }
+
+            self.rubrics = rubrics
+
+            CheckBoxBtnName.isSelected = shouldSelect
+            updateCheckboxUI(isChecked: shouldSelect)
+
+            delegate?.didToggleActivityWithRubrics(
+                subjectIndex: subjectIndex,
+                splitIndex: splitIndex,
+                rubrics: rubrics,
+                isChecked: shouldSelect
+            )
+
+            setupRubrics(rubrics)
+            return
+        }
+
+        // No rubrics
         sender.isSelected.toggle()
         updateCheckboxUI(isChecked: sender.isSelected)
 
@@ -126,7 +175,6 @@ class ActivitiesTVCell: UITableViewCell {
         // UI reset
             CheckBoxBtnName.isSelected = false
             updateCheckboxUI(isChecked: false)
-            dropdownView.isHidden = true
             ActivitystatusLbl.isHidden = true
             clearBtn.isHidden = true
 
@@ -142,7 +190,7 @@ class ActivitiesTVCell: UITableViewCell {
 
        func updateCheckboxUI(isChecked: Bool) {
            if isChecked {
-               CheckBoxBtnName.setImage(UIImage(systemName: "record.circle.fill"), for: .normal)
+               CheckBoxBtnName.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
                CheckBoxBtnName.tintColor = .staffExamColour
            } else {
                CheckBoxBtnName.setImage(UIImage(systemName: "circle"), for: .normal)
@@ -151,7 +199,6 @@ class ActivitiesTVCell: UITableViewCell {
        }
     
     func setupDropdown() {
-            dropdown.anchorView = dropdownView
             dropdown.backgroundColor = .white
             dropdown.cornerRadius = 10
 
@@ -168,7 +215,7 @@ class ActivitiesTVCell: UITableViewCell {
             .first(where: { $0.isKeyWindow }) else { return }
         
         // Convert dropdownView frame to window coords
-        let frame = dropdownView.convert(dropdownView.bounds, to: window)
+        let frame = activityNameLbl.convert(activityNameLbl.bounds, to: window)
         let screenHeight = UIScreen.main.bounds.height
         
         // Set direction manually
@@ -201,5 +248,109 @@ class ActivitiesTVCell: UITableViewCell {
         
         
         dropdown.show()
+    }
+    
+    
+    @IBAction func ArrowBtnAct(_ sender: UIButton) {
+        isRubricsExpanded.toggle()
+        rubicsStack.isHidden = !isRubricsExpanded
+        sender.setImage(UIImage(systemName: isRubricsExpanded ? "chevron.up" : "chevron.forward"), for: .normal)
+        delegate?.didToggleRubricsExpansion(splitIndex: splitIndex, expanded: isRubricsExpanded) // new delegate method
+        onHeightChanged?()
+    }
+    
+    private func setupRubrics(_ rubrics: [RubricData]?) {
+
+        // Remove old views (important because UITableViewCell is reused)
+        rubicsStack.arrangedSubviews.forEach {
+            rubicsStack.removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }
+
+        guard let rubrics = rubrics, !rubrics.isEmpty else {
+            rubicsStack.isHidden = true
+            return
+        }
+
+        rubicsStack.isHidden = false
+
+        for (index, rubric) in rubrics.enumerated() {
+
+            let row = UIView()
+
+            let checkBox = UIButton(type: .custom)
+            checkBox.backgroundColor = .clear
+            checkBox.tag = index
+            checkBox.translatesAutoresizingMaskIntoConstraints = false
+
+            let image = rubric.isChecked ?? false
+                ? UIImage(systemName: "checkmark.circle.fill")
+                : UIImage(systemName: "circle")
+
+            checkBox.setImage(image, for: .normal)
+            checkBox.tintColor = rubric.isChecked ?? false ? .staffExamColour : .lightGray
+
+            checkBox.addTarget(self,
+                               action: #selector(rubricCheckboxTapped(_:)),
+                               for: .touchUpInside)
+
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.numberOfLines = 0
+            label.font = UIFont.systemFont(ofSize: 13)
+
+            label.text = "\(rubric.rubric_name ?? "") (Max: \(rubric.max_mark ?? ""))"
+
+            row.addSubview(checkBox)
+            row.addSubview(label)
+
+            NSLayoutConstraint.activate([
+                checkBox.leadingAnchor.constraint(equalTo: row.leadingAnchor),
+                checkBox.centerYAnchor.constraint(equalTo: row.centerYAnchor),
+                checkBox.widthAnchor.constraint(equalToConstant: 24),
+                checkBox.heightAnchor.constraint(equalToConstant: 24),
+
+                label.leadingAnchor.constraint(equalTo: checkBox.trailingAnchor, constant: 10),
+                label.trailingAnchor.constraint(equalTo: row.trailingAnchor),
+                label.topAnchor.constraint(equalTo: row.topAnchor, constant: 8),
+                label.bottomAnchor.constraint(equalTo: row.bottomAnchor, constant: -8)
+            ])
+
+            rubicsStack.addArrangedSubview(row)
+        }
+    }
+    
+    @objc private func rubricCheckboxTapped(_ sender: UIButton) {
+
+        guard var rubrics = rubrics else { return }
+
+        // Treat nil as false, then explicitly flip — avoids the no-op optional .toggle() trap
+        let current = rubrics[sender.tag].isChecked ?? false
+        let checked = !current
+        rubrics[sender.tag].isChecked = checked
+
+        sender.setImage(
+            UIImage(systemName: checked ? "checkmark.circle.fill" : "circle"),
+            for: .normal
+        )
+        sender.tintColor = checked ? .staffExamColour : .lightGray
+
+        self.rubrics = rubrics
+
+        let allRubricsSelected = rubrics.allSatisfy { $0.isChecked == true }
+
+        CheckBoxBtnName.isSelected = allRubricsSelected
+        updateCheckboxUI(isChecked: allRubricsSelected)
+        
+        contentView.backgroundColor = allRubricsSelected
+                ? UIColor.systemOrange.withAlphaComponent(0.07)
+                : .systemBackground
+
+        delegate?.didToggleRubric(
+            subjectIndex: subjectIndex,
+            splitIndex: splitIndex,
+            rubricIndex: sender.tag,
+            isChecked: checked
+        )
     }
 }

@@ -146,7 +146,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
         showActivityLoader()
         
         APIService.shared.makeApi(
-            url: ServiceUrl.exam_api_exam_get_mark_details,
+            url: ServiceUrl.exam_api_new_exam_get_mark_to_upload,
             parameters: parameters,
             type: ApitTypeSringFile.POST,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
@@ -363,7 +363,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
         }
         
         return [
-            "class_id": classId,
+//            "class_id": classId,
             "section_id": sectionId,
             "exam_id": examId,
             "selected_activities": resultSubjects,
@@ -1303,6 +1303,21 @@ struct ActivityMark: Codable {
     let max_mark: String?
     let is_edit: Bool?
     var selected_name: String?
+    var change_mark: String?
+    var isReview: Bool?
+    var reason: String?
+    var rubrics: [RubricMark]?
+}
+
+struct RubricMark: Codable {
+    let id: String?
+    let name: String?
+    var mark: String?
+    let is_edit: Bool?
+    let max_mark: String?
+    var selected_name: String?
+
+    // Local UI properties
     var change_mark: String?
     var isReview: Bool?
     var reason: String?

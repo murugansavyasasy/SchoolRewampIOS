@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="181" id="KGk-i7-Jjw" customClass="SubjectsTVCell" customModule="School_Chimes" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="181" id="KGk-i7-Jjw" customClass="SubjectsTVCell" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="181"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -22,13 +22,13 @@
                         <rect key="frame" x="10" y="10" width="300" height="161"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a4p-lN-FLk">
-                                <rect key="frame" x="0.0" y="0.0" width="300" height="81"/>
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="80"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="nrM-kM-ObC">
-                                        <rect key="frame" x="15" y="15" width="270" height="51"/>
+                                        <rect key="frame" x="15" y="15" width="270" height="50"/>
                                         <subviews>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0A0-o2-Bp2">
-                                                <rect key="frame" x="-35" y="8" width="35" height="35"/>
+                                                <rect key="frame" x="-35" y="7.6666666666666643" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="5TO-M0-iCV"/>
                                                     <constraint firstAttribute="height" constant="35" id="6rw-z9-WLa"/>
@@ -38,7 +38,7 @@
                                                 <state key="normal" image="circle" catalog="system"/>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="FAX-Qd-Erh">
-                                                <rect key="frame" x="0.0" y="14" width="230" height="23"/>
+                                                <rect key="frame" x="0.0" y="13.666666666666664" width="230" height="23"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mathematics" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A09-ag-wPb">
                                                         <rect key="frame" x="0.0" y="0.0" width="230" height="18"/>
@@ -55,7 +55,7 @@
                                                 </subviews>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rru-xa-gZi">
-                                                <rect key="frame" x="235" y="8" width="35" height="35"/>
+                                                <rect key="frame" x="235" y="7.6666666666666643" width="35" height="35"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="3ZL-A3-XLx"/>
                                                     <constraint firstAttribute="height" constant="35" id="C36-kE-ycy"/>
@@ -75,7 +75,14 @@
                                     <constraint firstItem="nrM-kM-ObC" firstAttribute="top" secondItem="a4p-lN-FLk" secondAttribute="top" constant="15" id="bIo-Pk-Uh9"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="FK9-p7-qed" customClass="ContentSizedTableView" customModule="School_Chimes" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Prb-IN-FXE">
+                                <rect key="frame" x="0.0" y="80" width="300" height="1"/>
+                                <color key="backgroundColor" systemColor="secondaryLabelColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="t4R-Vd-a4Q"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="FK9-p7-qed" customClass="ContentSizedTableView" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="81" width="300" height="80"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -85,12 +92,15 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="FK9-p7-qed" firstAttribute="top" secondItem="a4p-lN-FLk" secondAttribute="bottom" id="LTa-Lq-LD6"/>
+                            <constraint firstItem="Prb-IN-FXE" firstAttribute="leading" secondItem="WTh-ut-vRW" secondAttribute="leading" id="8Pj-V3-OVE"/>
+                            <constraint firstItem="FK9-p7-qed" firstAttribute="top" secondItem="Prb-IN-FXE" secondAttribute="bottom" id="BDV-YV-fN7"/>
+                            <constraint firstItem="Prb-IN-FXE" firstAttribute="top" secondItem="a4p-lN-FLk" secondAttribute="bottom" id="BOh-ea-qy5"/>
                             <constraint firstItem="FK9-p7-qed" firstAttribute="leading" secondItem="WTh-ut-vRW" secondAttribute="leading" id="QOK-FS-G0G"/>
                             <constraint firstItem="a4p-lN-FLk" firstAttribute="leading" secondItem="WTh-ut-vRW" secondAttribute="leading" id="UyG-2G-laG"/>
                             <constraint firstAttribute="trailing" secondItem="a4p-lN-FLk" secondAttribute="trailing" id="XLf-RM-B7N"/>
                             <constraint firstItem="a4p-lN-FLk" firstAttribute="top" secondItem="WTh-ut-vRW" secondAttribute="top" id="eM9-I2-viR"/>
                             <constraint firstAttribute="trailing" secondItem="FK9-p7-qed" secondAttribute="trailing" id="hQD-r0-26H"/>
+                            <constraint firstAttribute="trailing" secondItem="Prb-IN-FXE" secondAttribute="trailing" id="iSM-ZQ-Ew5"/>
                             <constraint firstAttribute="bottom" secondItem="FK9-p7-qed" secondAttribute="bottom" id="w7g-Gx-lOw"/>
                         </constraints>
                     </view>
@@ -113,12 +123,15 @@
                 <outlet property="tableview" destination="FK9-p7-qed" id="zXe-Hg-xpQ"/>
                 <outlet property="tableviewHeight" destination="E5v-Qi-zpv" id="jaR-SR-MCA"/>
             </connections>
-            <point key="canvasLocation" x="138.93129770992365" y="148.2394366197183"/>
+            <point key="canvasLocation" x="138.93129770992365" y="147.53521126760563"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="circle" catalog="system" width="128" height="123"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

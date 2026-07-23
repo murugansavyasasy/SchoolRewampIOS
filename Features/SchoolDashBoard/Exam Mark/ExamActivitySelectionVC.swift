@@ -102,13 +102,13 @@ class ExamActivitySelectionVC: UIViewController {
     
     func Get_exam_activities_Api(for examId: String) {
         SubjectList.removeAll()
-        let param:[String:Any] = ["exam_id": examId,"section_id": section_Id]
+        let param:[String:Any] = ["exam_id": examId,/*"section_id": section_Id*/]
 
         APIService.shared.makeApi(
             url: ServiceUrl.exam_get_subject_wise_activities,
             parameters: param,
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? "", isBaseUrl: false
+            token: staffDetails?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<SubjectWiseExamResponse, Error>) in
 
             guard let self = self else { return }
@@ -144,6 +144,7 @@ class ExamActivitySelectionVC: UIViewController {
     @IBAction func continueAct(_ sender: Any) {
         
         if let payload = buildPayload() {
+            print(payload)
             let vc = EnterMarkVC()
             vc.payload = payload
             vc.aiRecords = convertedRecords
@@ -155,39 +156,92 @@ class ExamActivitySelectionVC: UIViewController {
         }
     }
     
+//    func buildPayload() -> [String: Any]? {
+//
+//        let selectedActivities = SubjectList.compactMap { subject -> [String: Any]? in
+//            let selected = subject.activities?.filter { $0.isChecked ?? false} ?? []
+//            guard !selected.isEmpty else { return nil }
+//
+//            return [
+//                "subject_id": subject.subject_id ?? "",
+//                "subject_name": subject.subject_name ?? "",
+//                "activities": selected.map {
+//                    var dict: [String: Any] = [
+//                        "activity_id": $0.activity_id ?? "",
+//                        "activity_name": $0.activity_name ?? "",
+//                        "max_mark": $0.max_mark ?? ""
+//                    ]
+//                    if isAIFlow {
+//                        dict["ai_option"] = $0.selectedAIOption ?? ""
+//                    }
+//                    return dict
+//                }
+//            ]
+//        }
+//
+//        guard !selectedActivities.isEmpty else {
+//            return nil
+//        }
+//
+//        return [
+////            "class_id": SubjectList.first?.class_id ?? "",
+////            "section_id": SubjectList.first?.section_id ?? "",
+//            "exam_id": ExamID,
+//            "academic_year_id": String(academicYearId ?? 0),
+//            "selected_activities": selectedActivities
+//        ]
+//    }
+    
     func buildPayload() -> [String: Any]? {
 
-        let selectedActivities = SubjectList.compactMap { subject -> [String: Any]? in
-            let selected = subject.splitup_details?.filter { $0.isChecked ?? false} ?? []
-            guard !selected.isEmpty else { return nil }
+        let selectedSubjects = SubjectList.compactMap { subject -> [String: Any]? in
+
+            let selectedActivities = subject.activities?.compactMap { activity -> [String: Any]? in
+
+                // Selected rubrics only
+                let selectedRubrics = activity.rubrics?
+                    .filter { $0.isChecked == true }
+                    .map {
+                        [
+                            "id": $0.rubric_id ?? "",
+                            "selected_name": $0.rubric_name ?? ""
+                        ]
+                    } ?? []
+
+                // Include activity if:
+                // 1. Activity checkbox selected
+                // OR
+                // 2. At least one rubric selected
+                let shouldIncludeActivity =
+                    (activity.isChecked == true) || !selectedRubrics.isEmpty
+
+                guard shouldIncludeActivity else { return nil }
+
+                return [
+                    "id": activity.activity_id ?? "",
+                    "selected_name": activity.activity_name ?? "",
+                    "rubrics": selectedRubrics
+                ]
+
+            } ?? []
+
+            guard !selectedActivities.isEmpty else { return nil }
 
             return [
                 "subject_id": subject.subject_id ?? "",
-                "subject_name": subject.subject_name ?? "",
-                "activities": selected.map {
-                    var dict: [String: Any] = [
-                        "activity_id": $0.id ?? "",
-                        "activity_name": $0.name ?? "",
-                        "max_mark": $0.max_mark ?? ""
-                    ]
-                    if isAIFlow {
-                        dict["ai_option"] = $0.selectedAIOption ?? ""
-                    }
-                    return dict
-                }
+                "activities": selectedActivities
             ]
         }
 
-        guard !selectedActivities.isEmpty else {
+        guard !selectedSubjects.isEmpty else {
             return nil
         }
 
         return [
-            "class_id": SubjectList.first?.class_id ?? "",
-            "section_id": SubjectList.first?.section_id ?? "",
             "exam_id": ExamID,
+            "section_id": section_Id,
             "academic_year_id": String(academicYearId ?? 0),
-            "selected_activities": selectedActivities
+            "selected_activities": selectedSubjects
         ]
     }
 
@@ -214,10 +268,10 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
         cell.config(dropDown:selectedColoumns)
             cell.delegate = self
             cell.isExpanded = (expandedIndex == indexPath)
-            cell.splits = data.splitup_details ?? []
+            cell.splits = data.activities ?? []
             cell.updateStatusLabel()
+            cell.statusLbl.text = "• \(data.activities?.count ?? 0) Activities"
             cell.configureExpandState()
-
             cell.onHeightChange = { [weak self] in
                 self?.updateMainHeight()
             }
@@ -260,8 +314,8 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
 
 
 extension ExamActivitySelectionVC: SubjectCellDelegate {
-        func didUpdateSplit(subjectIndex: Int, splitIndex: Int, split: SplitDetail) {
-            SubjectList[subjectIndex].splitup_details?[splitIndex] = split
+        func didUpdateSplit(subjectIndex: Int, splitIndex: Int, split: ActivityData) {
+            SubjectList[subjectIndex].activities?[splitIndex] = split
         }
     }
 

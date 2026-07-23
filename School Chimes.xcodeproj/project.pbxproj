@@ -7071,6 +7071,7 @@
 				FAFB40BB2ED6E75A00783142 /* SubjectsTVCell.swift */,
 				FAFB40BC2ED6E75A00783142 /* SubjectsTVCell.xib */,
 				FAFB40BF2ED6FA2000783142 /* ActivitiesTVCell.swift */,
+				FAFB40C02ED6FA2000783142 /* ActivitiesTVCell.xib */,
 				84CFD7252F10EAFC008ED044 /* EnterMarkVC.swift */,
 				84CFD7262F10EAFC008ED044 /* EnterMarkVC.xib */,
 				84CFD7272F10EAFC008ED044 /* MarkReviewCVC.swift */,
@@ -7079,7 +7080,6 @@
 				84CFD72A2F10EAFC008ED044 /* MarksTableViewCell.xib */,
 				84CFD72B2F10EAFC008ED044 /* MarksCell.swift */,
 				84CFD72C2F10EAFC008ED044 /* MarksCell.xib */,
-				FAFB40C02ED6FA2000783142 /* ActivitiesTVCell.xib */,
 				8489F23A2F1627B500F43589 /* FilterPopover.swift */,
 				8489F23B2F1627B500F43589 /* FilterPopover.xib */,
 			);

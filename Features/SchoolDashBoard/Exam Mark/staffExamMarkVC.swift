@@ -77,6 +77,7 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         AcademicDropdown.selectionAction = { [weak self] index, item in
             guard let self = self else { return }
             academicYearBtn.setTitle(item, for: .normal)
+            selectedAcademicYearId = AcadimicYears[index].id
             Get_standardSection_Api(academicId: AcadimicYears[index].id ?? 0)
         }
     }
