@@ -723,15 +723,15 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                 print(jsonString)
             }
 
-//            CustomAlert().showAlertCancel(
-//                title: AlertstringFile.Confirm,
-//                message: AlertstringFile.uploadMark,
-//                actionLbl1: AlertstringFile.save,
-//                actionLbl2: AlertstringFile.Cancel,
-//                on: self,
-//                onOk: { self.sendMarksToAPI(with: finalPayload) },
-//                onNo: { print("User canceled upload") }
-//            )
+            CustomAlert().showAlertCancel(
+                title: AlertstringFile.Confirm,
+                message: AlertstringFile.uploadMark,
+                actionLbl1: AlertstringFile.save,
+                actionLbl2: AlertstringFile.Cancel,
+                on: self,
+                onOk: { self.sendMarksToAPI(with: finalPayload) },
+                onNo: { print("User canceled upload") }
+            )
         }
     }
     
