@@ -40,7 +40,7 @@ class ExameMarVC: UIViewController {
             showActivityLoader()
         }
         APIService.shared.makeApi(
-            url: ServiceUrl.exam_api_exam_list,
+            url: ServiceUrl.get_report_status,
             parameters: [:],
             type: ApitTypeSringFile.GET,
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: false
@@ -149,11 +149,11 @@ class ExameMarVC: UIViewController {
             self.paketApiCall(params:parms)
         }
         
-        guard let examID = FilteredExamList?[index].id else { return }
+        guard let examID = FilteredExamList?[index].report_id else { return }
         let vc = MarkListVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-        vc.ExamTitle = FilteredExamList?[index].name
-        vc.examId = examID
+        vc.ExamTitle = FilteredExamList?[index].reportName
+        vc.examId = String(examID)
         present(vc, animated: false)
     }
     
@@ -190,14 +190,15 @@ extension ExameMarVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         
         let exam = FilteredExamList?[indexPath.row]
         
-        cell.ExamLbl.text = exam?.name
-        
+        cell.ExamLbl.text = exam?.reportName
+        cell.viewMarksBtn.isHidden = !(exam?.mark_sent ?? false)
+        cell.viewProgressBtn.isHidden = !(exam?.report_sent ?? false)
         cell.onViewMark = { [weak self] in
             self?.View_Marks_Action(index: indexPath.row)
         }
 
         cell.OnViewProgress = { [weak self] in
-            self?.markListApi(exam_id: exam?.id ?? "")
+            self?.markListApi(exam_id: String(exam?.report_id ?? 0))
         }
         
         return cell
@@ -218,7 +219,7 @@ extension ExameMarVC: UISearchBarDelegate {
             FilteredExamList = examList
         } else {
             FilteredExamList = examList?.filter { examItem in
-                examItem.name?.lowercased().contains(query) ?? false
+                examItem.reportName?.lowercased().contains(query) ?? false
             }
         }
         

@@ -9,6 +9,7 @@ import UIKit
 
 class ExamListTV: UITableViewCell {
 
+    @IBOutlet weak var viewDeatils: UIButton!
     @IBOutlet weak var cellView: UIView!
     @IBOutlet weak var SubjectLbl: UILabel!
     @IBOutlet weak var syllabusLbl: UILabel!
@@ -31,10 +32,11 @@ class ExamListTV: UITableViewCell {
         TimeBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         MaxMarkBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         MaxMarkBtn.layer.cornerRadius = 10
+        viewDeatils.layer.cornerRadius = 10
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(AlarmAct))
-        reminder.addGestureRecognizer(tap)
-        reminder.isUserInteractionEnabled = true
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(AlarmAct))
+//        reminder.addGestureRecognizer(tap)
+//        reminder.isUserInteractionEnabled = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

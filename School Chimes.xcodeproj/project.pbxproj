@@ -2931,6 +2931,22 @@
 		18887AB82EFFAAFB008B71FF /* ScheduleCallVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAB2EFFAAFB008B71FF /* ScheduleCallVC.xib */; };
 		18887AB92EFFAAFB008B71FF /* EmergencyVoiceRecordCel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AA92EFFAAFB008B71FF /* EmergencyVoiceRecordCel.xib */; };
 		18887ABA2EFFAAFB008B71FF /* TextMessageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAD2EFFAAFB008B71FF /* TextMessageVC.xib */; };
+		188ABD0A300F784D00708372 /* ViewDetailsVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188ABD09300F784D00708372 /* ViewDetailsVc.xib */; };
+		188ABD0B300F784D00708372 /* ViewDetailsVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188ABD08300F784D00708372 /* ViewDetailsVc.swift */; };
+		188ABD0C300F784D00708372 /* ViewDetailsVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188ABD08300F784D00708372 /* ViewDetailsVc.swift */; };
+		188ABD0D300F784D00708372 /* ViewDetailsVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188ABD09300F784D00708372 /* ViewDetailsVc.xib */; };
+		188ABD0E300F784D00708372 /* ViewDetailsVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188ABD08300F784D00708372 /* ViewDetailsVc.swift */; };
+		188ABD0F300F784D00708372 /* ViewDetailsVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188ABD09300F784D00708372 /* ViewDetailsVc.xib */; };
+		188ABD10300F784D00708372 /* ViewDetailsVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188ABD09300F784D00708372 /* ViewDetailsVc.xib */; };
+		188ABD11300F784D00708372 /* ViewDetailsVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188ABD08300F784D00708372 /* ViewDetailsVc.swift */; };
+		188ABD50300F979D00708372 /* RubricDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188ABD4F300F979D00708372 /* RubricDetailViewController.xib */; };
+		188ABD51300F979D00708372 /* RubricDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188ABD4E300F979D00708372 /* RubricDetailViewController.swift */; };
+		188ABD52300F979D00708372 /* RubricDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188ABD4E300F979D00708372 /* RubricDetailViewController.swift */; };
+		188ABD53300F979D00708372 /* RubricDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188ABD4F300F979D00708372 /* RubricDetailViewController.xib */; };
+		188ABD54300F979D00708372 /* RubricDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188ABD4F300F979D00708372 /* RubricDetailViewController.xib */; };
+		188ABD55300F979D00708372 /* RubricDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188ABD4E300F979D00708372 /* RubricDetailViewController.swift */; };
+		188ABD56300F979D00708372 /* RubricDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188ABD4E300F979D00708372 /* RubricDetailViewController.swift */; };
+		188ABD57300F979D00708372 /* RubricDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188ABD4F300F979D00708372 /* RubricDetailViewController.xib */; };
 		188EBD8E2ED5632F00BEA524 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 188EBD8B2ED5632F00BEA524 /* LICENSE */; };
 		188EBD8F2ED5632F00BEA524 /* DropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188EBD842ED5632F00BEA524 /* DropDownCell.xib */; };
 		188EBD902ED5632F00BEA524 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 188EBD8C2ED5632F00BEA524 /* README.md */; };
@@ -3913,6 +3929,10 @@
 		18887AAD2EFFAAFB008B71FF /* TextMessageVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextMessageVC.xib; sourceTree = "<group>"; };
 		18887AAE2EFFAAFB008B71FF /* VoiceMessageVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMessageVc.swift; sourceTree = "<group>"; };
 		18887AAF2EFFAAFB008B71FF /* VoiceMessageVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoiceMessageVc.xib; sourceTree = "<group>"; };
+		188ABD08300F784D00708372 /* ViewDetailsVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDetailsVc.swift; sourceTree = "<group>"; };
+		188ABD09300F784D00708372 /* ViewDetailsVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewDetailsVc.xib; sourceTree = "<group>"; };
+		188ABD4E300F979D00708372 /* RubricDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubricDetailViewController.swift; sourceTree = "<group>"; };
+		188ABD4F300F979D00708372 /* RubricDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RubricDetailViewController.xib; sourceTree = "<group>"; };
 		188EBD802ED5632F00BEA524 /* DPDConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPDConstants.swift; sourceTree = "<group>"; };
 		188EBD812ED5632F00BEA524 /* DPDKeyboardListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPDKeyboardListener.swift; sourceTree = "<group>"; };
 		188EBD822ED5632F00BEA524 /* DPDUIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DPDUIView+Extension.swift"; sourceTree = "<group>"; };
@@ -4689,6 +4709,10 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		186E62522FEA59E700BAF454 /* Classtest */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Classtest; sourceTree = "<group>"; };
+		188ABD59300F97B400708372 /* Data */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Data; sourceTree = "<group>"; };
+		188ABD5B300F97B400708372 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
+		188ABD60300F97B400708372 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
+		188ABD86300F98EB00708372 /* Cells */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Cells; sourceTree = "<group>"; };
 		FA81631A2F3314B000ADA8F3 /* Flavours */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (1827E91E2F90C1B300B33B20 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 1868A7562FAC797000831144 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 186E624E2FE9206900BAF454 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Flavours; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -5594,6 +5618,14 @@
 		840A7CE62D24FDAA0061EAEA /* ExamMarkVc */ = {
 			isa = PBXGroup;
 			children = (
+				188ABD86300F98EB00708372 /* Cells */,
+				188ABD59300F97B400708372 /* Data */,
+				188ABD5B300F97B400708372 /* Models */,
+				188ABD60300F97B400708372 /* Views */,
+				188ABD08300F784D00708372 /* ViewDetailsVc.swift */,
+				188ABD09300F784D00708372 /* ViewDetailsVc.xib */,
+				188ABD4E300F979D00708372 /* RubricDetailViewController.swift */,
+				188ABD4F300F979D00708372 /* RubricDetailViewController.xib */,
 				84B2C7172E2247F200A69A1B /* MarkListVC.swift */,
 				84B2C7182E2247F200A69A1B /* MarkListVC.xib */,
 				FA3230BC2D9556160070BA51 /* ExameMarVC.swift */,
@@ -7141,6 +7173,10 @@
 			);
 			fileSystemSynchronizedGroups = (
 				186E62522FEA59E700BAF454 /* Classtest */,
+				188ABD59300F97B400708372 /* Data */,
+				188ABD5B300F97B400708372 /* Models */,
+				188ABD60300F97B400708372 /* Views */,
+				188ABD86300F98EB00708372 /* Cells */,
 			);
 			name = "SRI SUDHA DHONE";
 			packageProductDependencies = (
@@ -7179,6 +7215,10 @@
 			);
 			fileSystemSynchronizedGroups = (
 				186E62522FEA59E700BAF454 /* Classtest */,
+				188ABD59300F97B400708372 /* Data */,
+				188ABD5B300F97B400708372 /* Models */,
+				188ABD60300F97B400708372 /* Views */,
+				188ABD86300F98EB00708372 /* Cells */,
 			);
 			name = "SRI KALAIVANI VIDHAYALA";
 			packageProductDependencies = (
@@ -7217,6 +7257,10 @@
 			);
 			fileSystemSynchronizedGroups = (
 				186E62522FEA59E700BAF454 /* Classtest */,
+				188ABD59300F97B400708372 /* Data */,
+				188ABD5B300F97B400708372 /* Models */,
+				188ABD60300F97B400708372 /* Views */,
+				188ABD86300F98EB00708372 /* Cells */,
 			);
 			name = "WISDOM GROUP";
 			packageProductDependencies = (
@@ -7273,6 +7317,10 @@
 			);
 			fileSystemSynchronizedGroups = (
 				186E62522FEA59E700BAF454 /* Classtest */,
+				188ABD59300F97B400708372 /* Data */,
+				188ABD5B300F97B400708372 /* Models */,
+				188ABD60300F97B400708372 /* Views */,
+				188ABD86300F98EB00708372 /* Cells */,
 			);
 			name = "School Chimes";
 			packageProductDependencies = (
@@ -7543,6 +7591,7 @@
 				1827E7F82F90C12000B33B20 /* FAQTableViewCell.xib in Resources */,
 				1827E7F92F90C12000B33B20 /* ForceUpdateVc.xib in Resources */,
 				1827E7FA2F90C12000B33B20 /* loader (2).json in Resources */,
+				188ABD0D300F784D00708372 /* ViewDetailsVc.xib in Resources */,
 				1827E7FB2F90C12000B33B20 /* FAQViewController.xib in Resources */,
 				1827E7FC2F90C12000B33B20 /* RobotoSlab-Regular.ttf in Resources */,
 				1827E7FD2F90C12000B33B20 /* AttachmentHeaderCell.xib in Resources */,
@@ -7637,6 +7686,7 @@
 				1827E8562F90C12000B33B20 /* PopoverTVC.xib in Resources */,
 				1827E8572F90C12000B33B20 /* RecorderTVC.xib in Resources */,
 				1827E8582F90C12000B33B20 /* RobotoSlab-Bold.ttf in Resources */,
+				188ABD50300F979D00708372 /* RubricDetailViewController.xib in Resources */,
 				1827E8592F90C12000B33B20 /* DateCVC.xib in Resources */,
 				1827E85A2F90C12000B33B20 /* PendingFeeReportViewController.xib in Resources */,
 				1827E85B2F90C12000B33B20 /* HistoryTC.xib in Resources */,
@@ -7976,6 +8026,7 @@
 				1868A6232FAC762E00831144 /* FAQTableViewCell.xib in Resources */,
 				1868A6242FAC762E00831144 /* ForceUpdateVc.xib in Resources */,
 				1868A6252FAC762E00831144 /* loader (2).json in Resources */,
+				188ABD0A300F784D00708372 /* ViewDetailsVc.xib in Resources */,
 				1868A6262FAC762E00831144 /* FAQViewController.xib in Resources */,
 				1868A6272FAC762E00831144 /* RobotoSlab-Regular.ttf in Resources */,
 				1868A6282FAC762E00831144 /* AttachmentHeaderCell.xib in Resources */,
@@ -8070,6 +8121,7 @@
 				1868A6812FAC762E00831144 /* PopoverTVC.xib in Resources */,
 				1868A6822FAC762E00831144 /* RecorderTVC.xib in Resources */,
 				1868A6832FAC762E00831144 /* RobotoSlab-Bold.ttf in Resources */,
+				188ABD57300F979D00708372 /* RubricDetailViewController.xib in Resources */,
 				1868A6842FAC762E00831144 /* DateCVC.xib in Resources */,
 				1868A6852FAC762E00831144 /* PendingFeeReportViewController.xib in Resources */,
 				1868A6862FAC762E00831144 /* HistoryTC.xib in Resources */,
@@ -8409,6 +8461,7 @@
 				186E61292FE91EB800BAF454 /* FAQTableViewCell.xib in Resources */,
 				186E612A2FE91EB800BAF454 /* ForceUpdateVc.xib in Resources */,
 				186E612B2FE91EB800BAF454 /* loader (2).json in Resources */,
+				188ABD10300F784D00708372 /* ViewDetailsVc.xib in Resources */,
 				186E612C2FE91EB800BAF454 /* FAQViewController.xib in Resources */,
 				186E612D2FE91EB800BAF454 /* RobotoSlab-Regular.ttf in Resources */,
 				186E612E2FE91EB800BAF454 /* AttachmentHeaderCell.xib in Resources */,
@@ -8503,6 +8556,7 @@
 				186E61872FE91EB800BAF454 /* PopoverTVC.xib in Resources */,
 				186E61882FE91EB800BAF454 /* RecorderTVC.xib in Resources */,
 				186E61892FE91EB800BAF454 /* RobotoSlab-Bold.ttf in Resources */,
+				188ABD54300F979D00708372 /* RubricDetailViewController.xib in Resources */,
 				186E618A2FE91EB800BAF454 /* DateCVC.xib in Resources */,
 				186E618B2FE91EB800BAF454 /* PendingFeeReportViewController.xib in Resources */,
 				186E618C2FE91EB800BAF454 /* HistoryTC.xib in Resources */,
@@ -8815,6 +8869,7 @@
 				8489F23C2F1627B500F43589 /* FilterPopover.xib in Resources */,
 				18926C5E2D02DE81002BBB97 /* LsrwListShowViewController.xib in Resources */,
 				84F9118B2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.xib in Resources */,
+				188ABD0F300F784D00708372 /* ViewDetailsVc.xib in Resources */,
 				FAD5DADB2E3B263F00A3CE97 /* NewAttendanceReportVC.xib in Resources */,
 				847F62B42E12ADAA00EE5180 /* LSRWActivitesVC.xib in Resources */,
 				FAD8BDA82E66CDD100C7CD53 /* BookedSlotTV.xib in Resources */,
@@ -8907,6 +8962,7 @@
 				84AA10D72F4D77B7000B366F /* BusTrakingVC.xib in Resources */,
 				84AA10D82F4D77B7000B366F /* BusDetailsVC.xib in Resources */,
 				849F4C752D24010300C9F4BF /* addCvCell.xib in Resources */,
+				188ABD53300F979D00708372 /* RubricDetailViewController.xib in Resources */,
 				84D32C972D55CE2300A420A9 /* QuizListTvCell.xib in Resources */,
 				18D09A522F02640900D1930D /* SendMsgTvCell.xib in Resources */,
 				84D85FF02DE5815200633784 /* SectionStregnthCVC.xib in Resources */,
@@ -9379,6 +9435,7 @@
 				183E69CE2FADB0840092D411 /* whereismybusVc.swift in Sources */,
 				1827E5E52F90C12000B33B20 /* AudioPlayerTVC.swift in Sources */,
 				1827E5E62F90C12000B33B20 /* EditLessonVC.swift in Sources */,
+				188ABD0C300F784D00708372 /* ViewDetailsVc.swift in Sources */,
 				1827E5E72F90C12000B33B20 /* SuccesseRatusTVC.swift in Sources */,
 				1827E5E82F90C12000B33B20 /* HostelRoomTvCell.swift in Sources */,
 				1827E5E92F90C12000B33B20 /* MarksTableViewCell.swift in Sources */,
@@ -9405,6 +9462,7 @@
 				1827E5FD2F90C12000B33B20 /* BusDetailsTVC.swift in Sources */,
 				1827E5FE2F90C12000B33B20 /* BusTrakingVC.swift in Sources */,
 				1827E5FF2F90C12000B33B20 /* BusDetailsVC.swift in Sources */,
+				188ABD51300F979D00708372 /* RubricDetailViewController.swift in Sources */,
 				1827E6002F90C12000B33B20 /* BusStopTableViewCell.swift in Sources */,
 				1827E6012F90C12000B33B20 /* AssignmentsearchTVC.swift in Sources */,
 				1827E6022F90C12000B33B20 /* ColourManager.swift in Sources */,
@@ -9857,6 +9915,7 @@
 				183E69CD2FADB0840092D411 /* whereismybusVc.swift in Sources */,
 				1868A40F2FAC762E00831144 /* AudioPlayerTVC.swift in Sources */,
 				1868A4102FAC762E00831144 /* EditLessonVC.swift in Sources */,
+				188ABD0B300F784D00708372 /* ViewDetailsVc.swift in Sources */,
 				1868A4112FAC762E00831144 /* SuccesseRatusTVC.swift in Sources */,
 				1868A4122FAC762E00831144 /* HostelRoomTvCell.swift in Sources */,
 				1868A4132FAC762E00831144 /* MarksTableViewCell.swift in Sources */,
@@ -9883,6 +9942,7 @@
 				1868A4272FAC762E00831144 /* BusDetailsTVC.swift in Sources */,
 				1868A4282FAC762E00831144 /* BusTrakingVC.swift in Sources */,
 				1868A4292FAC762E00831144 /* BusDetailsVC.swift in Sources */,
+				188ABD56300F979D00708372 /* RubricDetailViewController.swift in Sources */,
 				1868A42A2FAC762E00831144 /* BusStopTableViewCell.swift in Sources */,
 				1868A42B2FAC762E00831144 /* AssignmentsearchTVC.swift in Sources */,
 				1868A42C2FAC762E00831144 /* ColourManager.swift in Sources */,
@@ -10335,6 +10395,7 @@
 				186E5F0A2FE91EB800BAF454 /* whereismybusVc.swift in Sources */,
 				186E5F0B2FE91EB800BAF454 /* AudioPlayerTVC.swift in Sources */,
 				186E5F0C2FE91EB800BAF454 /* EditLessonVC.swift in Sources */,
+				188ABD11300F784D00708372 /* ViewDetailsVc.swift in Sources */,
 				186E5F0D2FE91EB800BAF454 /* SuccesseRatusTVC.swift in Sources */,
 				186E5F0E2FE91EB800BAF454 /* HostelRoomTvCell.swift in Sources */,
 				186E5F0F2FE91EB800BAF454 /* MarksTableViewCell.swift in Sources */,
@@ -10361,6 +10422,7 @@
 				186E5F232FE91EB800BAF454 /* BusDetailsTVC.swift in Sources */,
 				186E5F242FE91EB800BAF454 /* BusTrakingVC.swift in Sources */,
 				186E5F252FE91EB800BAF454 /* BusDetailsVC.swift in Sources */,
+				188ABD55300F979D00708372 /* RubricDetailViewController.swift in Sources */,
 				186E5F262FE91EB800BAF454 /* BusStopTableViewCell.swift in Sources */,
 				186E5F272FE91EB800BAF454 /* AssignmentsearchTVC.swift in Sources */,
 				186E5F282FE91EB800BAF454 /* ColourManager.swift in Sources */,
@@ -10820,6 +10882,7 @@
 				183E69CB2FADB0840092D411 /* whereismybusVc.swift in Sources */,
 				846E7FAD2E2785CC00BC954B /* AudioPlayerTVC.swift in Sources */,
 				FAF43B642E02A09200F28A16 /* EditLessonVC.swift in Sources */,
+				188ABD0E300F784D00708372 /* ViewDetailsVc.swift in Sources */,
 				845AB8712EC1F89C003C22E1 /* SuccesseRatusTVC.swift in Sources */,
 				1841DE992F56FF1C00B88801 /* HostelRoomTvCell.swift in Sources */,
 				84CFD7312F10EAFC008ED044 /* MarksTableViewCell.swift in Sources */,
@@ -10846,6 +10909,7 @@
 				84AA10D92F4D77B7000B366F /* BusDetailsTVC.swift in Sources */,
 				84AA10DA2F4D77B7000B366F /* BusTrakingVC.swift in Sources */,
 				84AA10DB2F4D77B7000B366F /* BusDetailsVC.swift in Sources */,
+				188ABD52300F979D00708372 /* RubricDetailViewController.swift in Sources */,
 				84AA10DC2F4D77B7000B366F /* BusStopTableViewCell.swift in Sources */,
 				845F21822E4601810078AF69 /* AssignmentsearchTVC.swift in Sources */,
 				84CAE5BB2D5DEF7C0091C671 /* ColourManager.swift in Sources */,

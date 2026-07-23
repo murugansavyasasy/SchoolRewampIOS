@@ -1601,10 +1601,12 @@ struct ExamListResponse: Codable {
 }
 
 struct ExamItem: Codable {
-    var id: String?
-    var name: String?
-    var mark_id: String?
-    var is_unread: Bool?
+    var report_id: Int?
+    var reportName: String?
+    var report_sent: Bool?
+    var mark_sent: Bool?
+    
+  
 }
 //MARK: ExamMarks
 struct ExamMarksResponse: Codable {

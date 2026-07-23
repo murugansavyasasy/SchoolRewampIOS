@@ -1,5 +1,5 @@
 //
-//  MarksCell.swift
+//  MarksTableViewCell.swift
 //  School Chimes
 //
 //  Created by Chandhru on 07/01/26.
@@ -62,17 +62,13 @@ class MarksTableViewCell: UITableViewCell {
         if UIView.userInterfaceLayoutDirection(
             for: contentView.semanticContentAttribute
         ) == .rightToLeft {
-
             studentNameLabel.textAlignment = .right
             rollNoLabel.textAlignment = .right
             admissNoLabel.textAlignment = .right
-
             studentNameLabel.semanticContentAttribute = .forceRightToLeft
             rollNoLabel.semanticContentAttribute = .forceRightToLeft
             admissNoLabel.semanticContentAttribute = .forceRightToLeft
-
         } else {
-
             studentNameLabel.textAlignment = .left
             rollNoLabel.textAlignment = .left
             admissNoLabel.textAlignment = .left
@@ -80,7 +76,6 @@ class MarksTableViewCell: UITableViewCell {
 
         if let rollNo = student.roll_no,
            let admissionNo = student.admission_no {
-
             rollNoLabel.text = "Roll No: \(rollNo)"
             admissNoLabel.text = "Adm No: \(admissionNo)"
             rollNoLabel.isHidden = rollNo.isEmpty
@@ -94,12 +89,7 @@ class MarksTableViewCell: UITableViewCell {
         self.studentIndex = index
         self.parentVC = parentVC
         marksCollectionView.tag = index
-        
-        let newId = student.student_id ?? "\(index)"
-        if configuredStudentId != newId {
-            configuredStudentId = newId
-            marksCollectionView.reloadData()
-        }
+        marksCollectionView.reloadData()
     }
 
     func refreshMarks() {
