@@ -283,7 +283,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
 
         APIService.shared.makeApi(
             url: ServiceUrl.exam_api_new_exam_get_mark_to_upload,
-            parameters: parameters,
+            parameters: payload,
             type: ApitTypeSringFile.POST,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
             isBaseUrl: true
@@ -1459,7 +1459,6 @@ struct RubricActivityMark: Codable {
     var mark: String?
     let max_mark: String?
     let is_edit: Bool?
-    let max_mark: String?
     var selected_name: String?
 
     // Local UI properties

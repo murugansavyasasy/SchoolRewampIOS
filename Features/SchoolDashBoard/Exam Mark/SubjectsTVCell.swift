@@ -266,6 +266,42 @@ extension SubjectsTVCell: ActivityCellDelegate {
         if expanded { expandedRubricRows.insert(splitIndex) }
         else { expandedRubricRows.remove(splitIndex) }
     }
+    
+    func didUpdateAIRubric(
+        subjectIndex: Int,
+        splitIndex: Int,
+        rubricIndex: Int,
+        isChecked: Bool,
+        aiOption: String?
+    ) {
+        guard splitIndex < splits.count,
+              var rubrics = splits[splitIndex].rubrics,
+              rubricIndex < rubrics.count else { return }
+
+        rubrics[rubricIndex].isChecked = isChecked
+        rubrics[rubricIndex].selectedAIOption = aiOption
+        splits[splitIndex].rubrics = rubrics
+
+        // An activity with rubrics only counts as "mapped" once every rubric is mapped
+        let allMapped = rubrics.allSatisfy { $0.selectedAIOption != nil }
+        splits[splitIndex].isChecked = allMapped
+
+        updateStatusLabel()
+
+        delegate?.didUpdateSplit(
+            subjectIndex: subjectIndex,
+            splitIndex: splitIndex,
+            split: splits[splitIndex]
+        )
+
+        tableview.reloadRows(at: [IndexPath(row: splitIndex, section: 0)], with: .none)
+
+        DispatchQueue.main.async {
+            self.tableview.layoutIfNeeded()
+            self.tableviewHeight.constant = self.tableview.contentSize.height
+            self.onHeightChange?()
+        }
+    }
 }
 
 
