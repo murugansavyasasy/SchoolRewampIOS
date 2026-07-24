@@ -58,7 +58,7 @@ class MarksCell: UICollectionViewCell {
         let abButton = createKeyButton(title: "AB", action: #selector(abTapped))
 
         let naButton = createKeyButton(title: "NA", action: #selector(naTapped))
-        naButton.isHidden = !(parentVC?.uploadTest ?? false)
+//        naButton.isHidden = !(parentVC?.uploadTest ?? false)
         self.naButton = naButton
 
         let buttons: [UIButton] = [
@@ -262,11 +262,7 @@ class MarksCell: UICollectionViewCell {
         if let changemark = channgeMark, !changemark.isEmpty {
             tittleLbl.text = "was : \(changemark)"
             tittleLbl.isHidden = false
-
-            applyHighlight(
-                color: .systemGreen,
-                infoColor: .systemGreen
-            )
+            applyHighlight(color: .systemGreen,infoColor: .systemGreen)
             return
         }
         if hasFlaggedIssue {
