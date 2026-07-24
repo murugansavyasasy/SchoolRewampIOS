@@ -31,12 +31,17 @@ protocol ActivityCellDelegate: AnyObject {
         rubrics: [RubricData],
         isChecked: Bool
     )
-    
     func didToggleRubricsExpansion(
         splitIndex: Int,
         expanded: Bool
     )
-    
+    func didUpdateAIRubric(
+        subjectIndex: Int,
+        splitIndex: Int,
+        rubricIndex: Int,
+        isChecked: Bool,
+        aiOption: String?
+    )
 }
 
 class ActivitiesTVCell: UITableViewCell {
@@ -79,6 +84,7 @@ class ActivitiesTVCell: UITableViewCell {
         self.splitIndex = splitIndex
         self.isAIFlow = isAi
         dropdown.dataSource = items
+        self.items = items
         let nameText = split.activity_name ?? ""
         let maxText = " (Max: \(split.max_mark ?? "") marks)"
         print(items)
@@ -121,17 +127,34 @@ class ActivitiesTVCell: UITableViewCell {
            self.rubrics = split.rubrics
            setupRubrics(self.rubrics)
            rubicsStack.isHidden = !isRubricsExpanded
-        
+          ArrowBtn.isHidden = self.rubrics?.isEmpty ?? true
           ArrowBtn.setImage(UIImage(systemName: isRubricsExpanded ? "chevron.up" : "chevron.forward"), for: .normal)
+        
+        if isAi && !(self.rubrics?.isEmpty ?? true){
+            CheckBoxBtnName.alpha = 0
+        }else {
+            CheckBoxBtnName.alpha = 1
+        }
     }
 
     
     @IBAction func CheckBoxBtnAct(_ sender: UIButton) {
 
         if isAIFlow {
-            showDropdown()
-            return
-        }
+               // Activities with rubrics can ONLY be mapped through their rubrics
+               if let rubrics = self.rubrics, !rubrics.isEmpty {
+                   if !isRubricsExpanded {
+                       isRubricsExpanded = true
+                       rubicsStack.isHidden = false
+                       ArrowBtn.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+                       delegate?.didToggleRubricsExpansion(splitIndex: splitIndex, expanded: true)
+                       onHeightChanged?()
+                   }
+                   return
+               }
+               showDropdown()
+               return
+           }
 
         // Activity has rubrics
         if var rubrics = self.rubrics, !rubrics.isEmpty {
@@ -278,42 +301,104 @@ class ActivitiesTVCell: UITableViewCell {
 
             let row = UIView()
 
+            // Checkbox
             let checkBox = UIButton(type: .custom)
-            checkBox.backgroundColor = .clear
             checkBox.tag = index
-            checkBox.translatesAutoresizingMaskIntoConstraints = false
+            checkBox.setImage(
+                UIImage(
+                    systemName: (isAIFlow
+                                 ? rubric.selectedAIOption != nil
+                                 : (rubric.isChecked ?? false))
+                    ? "checkmark.circle.fill"
+                    : "circle"
+                ),
+                for: .normal
+            )
+            checkBox.tintColor = (isAIFlow
+                                  ? rubric.selectedAIOption != nil
+                                  : (rubric.isChecked ?? false))
+            ? .staffExamColour : .lightGray
 
-            let image = rubric.isChecked ?? false
-                ? UIImage(systemName: "checkmark.circle.fill")
-                : UIImage(systemName: "circle")
+            checkBox.widthAnchor.constraint(equalToConstant: 24).isActive = true
+            checkBox.heightAnchor.constraint(equalToConstant: 24).isActive = true
+            checkBox.addTarget(self, action: #selector(rubricCheckboxTapped(_:)), for: .touchUpInside)
 
-            checkBox.setImage(image, for: .normal)
-            checkBox.tintColor = rubric.isChecked ?? false ? .staffExamColour : .lightGray
+            // Rubric Name
+            let nameLabel = UILabel()
+            nameLabel.numberOfLines = 0
+            nameLabel.font = UIFont.systemFont(ofSize: 13)
+            nameLabel.text = "\(rubric.rubric_name ?? "") (Max: \(rubric.max_mark ?? ""))"
 
-            checkBox.addTarget(self,
-                               action: #selector(rubricCheckboxTapped(_:)),
-                               for: .touchUpInside)
+            // Vertical stack for labels
+            let textStack = UIStackView(arrangedSubviews: [nameLabel])
+            textStack.axis = .vertical
+            textStack.spacing = 2
 
-            let label = UILabel()
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.numberOfLines = 0
-            label.font = UIFont.systemFont(ofSize: 13)
+            var clearButton: UIButton?
 
-            label.text = "\(rubric.rubric_name ?? "") (Max: \(rubric.max_mark ?? ""))"
+            if isAIFlow, let option = rubric.selectedAIOption {
 
-            row.addSubview(checkBox)
-            row.addSubview(label)
+                let statusLabel = UILabel()
+                statusLabel.numberOfLines = 1
+                statusLabel.font = UIFont.systemFont(ofSize: 11)
+
+                let prefix = "Mapped to: "
+                let fullText = prefix + option
+
+                let attr = NSMutableAttributedString(string: fullText)
+                attr.addAttributes(
+                    [.foregroundColor: UIColor.darkGray],
+                    range: NSRange(location: 0, length: prefix.count)
+                )
+                attr.addAttributes(
+                    [.foregroundColor: UIColor.staffExamColour],
+                    range: NSRange(location: prefix.count, length: option.count)
+                )
+
+                statusLabel.attributedText = attr
+                textStack.addArrangedSubview(statusLabel)
+
+                let clear = UIButton(type: .custom)
+                clear.tag = index
+                clear.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+                clear.tintColor = .lightGray
+                clear.widthAnchor.constraint(equalToConstant: 20).isActive = true
+                clear.heightAnchor.constraint(equalToConstant: 20).isActive = true
+                clear.addTarget(self, action: #selector(rubricClearTapped(_:)), for: .touchUpInside)
+
+                clearButton = clear
+            }
+
+            // Horizontal stack
+            let hStack = UIStackView()
+            hStack.axis = .horizontal
+            hStack.alignment = .center
+            hStack.spacing = 10
+            hStack.translatesAutoresizingMaskIntoConstraints = false
+
+            hStack.addArrangedSubview(checkBox)
+            hStack.addArrangedSubview(textStack)
+
+            // Let text take available width
+            textStack.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            textStack.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+
+            checkBox.setContentHuggingPriority(.required, for: .horizontal)
+            checkBox.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+            if let clearButton = clearButton {
+                clearButton.setContentHuggingPriority(.required, for: .horizontal)
+                clearButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+                hStack.addArrangedSubview(clearButton)
+            }
+
+            row.addSubview(hStack)
 
             NSLayoutConstraint.activate([
-                checkBox.leadingAnchor.constraint(equalTo: row.leadingAnchor),
-                checkBox.centerYAnchor.constraint(equalTo: row.centerYAnchor),
-                checkBox.widthAnchor.constraint(equalToConstant: 24),
-                checkBox.heightAnchor.constraint(equalToConstant: 24),
-
-                label.leadingAnchor.constraint(equalTo: checkBox.trailingAnchor, constant: 10),
-                label.trailingAnchor.constraint(equalTo: row.trailingAnchor),
-                label.topAnchor.constraint(equalTo: row.topAnchor, constant: 8),
-                label.bottomAnchor.constraint(equalTo: row.bottomAnchor, constant: -8)
+                hStack.leadingAnchor.constraint(equalTo: row.leadingAnchor),
+                hStack.trailingAnchor.constraint(equalTo: row.trailingAnchor),
+                hStack.topAnchor.constraint(equalTo: row.topAnchor, constant: 8),
+                hStack.bottomAnchor.constraint(equalTo: row.bottomAnchor, constant: -8)
             ])
 
             rubicsStack.addArrangedSubview(row)
@@ -321,30 +406,26 @@ class ActivitiesTVCell: UITableViewCell {
     }
     
     @objc private func rubricCheckboxTapped(_ sender: UIButton) {
+        guard let rubrics = rubrics, sender.tag < rubrics.count else { return }
 
-        guard var rubrics = rubrics else { return }
+        if isAIFlow {
+            showRubricDropdown(rubricIndex: sender.tag, anchorView: sender)
+            return
+        }
 
-        // Treat nil as false, then explicitly flip — avoids the no-op optional .toggle() trap
-        let current = rubrics[sender.tag].isChecked ?? false
+        // existing non-AI plain-toggle behavior
+        var updatedRubrics = rubrics
+        let current = updatedRubrics[sender.tag].isChecked ?? false
         let checked = !current
-        rubrics[sender.tag].isChecked = checked
+        updatedRubrics[sender.tag].isChecked = checked
+        self.rubrics = updatedRubrics
 
-        sender.setImage(
-            UIImage(systemName: checked ? "checkmark.circle.fill" : "circle"),
-            for: .normal
-        )
-        sender.tintColor = checked ? .staffExamColour : .lightGray
-
-        self.rubrics = rubrics
-
-        let allRubricsSelected = rubrics.allSatisfy { $0.isChecked == true }
-
+        let allRubricsSelected = updatedRubrics.allSatisfy { $0.isChecked == true }
         CheckBoxBtnName.isSelected = allRubricsSelected
         updateCheckboxUI(isChecked: allRubricsSelected)
-        
         contentView.backgroundColor = allRubricsSelected
-                ? UIColor.systemOrange.withAlphaComponent(0.07)
-                : .systemBackground
+            ? UIColor.systemOrange.withAlphaComponent(0.07)
+            : .systemBackground
 
         delegate?.didToggleRubric(
             subjectIndex: subjectIndex,
@@ -352,5 +433,65 @@ class ActivitiesTVCell: UITableViewCell {
             rubricIndex: sender.tag,
             isChecked: checked
         )
+
+        setupRubrics(updatedRubrics)
+    }
+
+    @objc private func rubricClearTapped(_ sender: UIButton) {
+        guard var rubrics = rubrics, sender.tag < rubrics.count else { return }
+        rubrics[sender.tag].selectedAIOption = nil
+        rubrics[sender.tag].isChecked = false
+        self.rubrics = rubrics
+
+        delegate?.didUpdateAIRubric(
+            subjectIndex: subjectIndex,
+            splitIndex: splitIndex,
+            rubricIndex: sender.tag,
+            isChecked: false,
+            aiOption: nil
+        )
+
+        setupRubrics(rubrics)
+        onHeightChanged?()
+    }
+
+    private func showRubricDropdown(rubricIndex: Int, anchorView: UIView) {
+        guard let window = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .flatMap({ $0.windows })
+            .first(where: { $0.isKeyWindow }) else { return }
+
+        let frame = anchorView.convert(anchorView.bounds, to: window)
+        let screenHeight = UIScreen.main.bounds.height
+
+        let rubricDropdown = DropDown()
+        rubricDropdown.anchorView = anchorView
+        rubricDropdown.dataSource = items ?? []
+        rubricDropdown.backgroundColor = .white
+        rubricDropdown.cornerRadius = 10
+        rubricDropdown.direction = (frame.maxY > screenHeight * 0.7) ? .top : .bottom
+
+        rubricDropdown.selectionAction = { [weak self] (_, item) in
+            guard let self = self else { return }
+
+            self.delegate?.didUpdateAIRubric(
+                subjectIndex: self.subjectIndex,
+                splitIndex: self.splitIndex,
+                rubricIndex: rubricIndex,
+                isChecked: true,
+                aiOption: item
+            )
+
+            if var rubrics = self.rubrics, rubricIndex < rubrics.count {
+                rubrics[rubricIndex].selectedAIOption = item
+                rubrics[rubricIndex].isChecked = true
+                self.rubrics = rubrics
+                self.setupRubrics(rubrics)
+            }
+
+            self.onHeightChanged?()
+        }
+
+        rubricDropdown.show()
     }
 }

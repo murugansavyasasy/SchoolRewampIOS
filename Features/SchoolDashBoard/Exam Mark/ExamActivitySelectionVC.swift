@@ -116,7 +116,94 @@ class ExamActivitySelectionVC: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
-                    self.SubjectList = response.data ?? []
+                    self.SubjectList = [
+                        
+                        SubjectExamData(
+                            subject_id: "1",
+                            institute_subject_id: "103066",
+                            subject_name: "ENGLISH",
+                            activities: [
+
+                                // Activity with rubrics
+                                ActivityData(
+                                    activity_id: "1",
+                                    activity_name: "Notebook",
+                                    max_mark: "100",
+                                    rubrics: [
+                                        RubricData(
+                                            rubric_id: "1",
+                                            rubric_name: "Presentation",
+                                            max_mark: "100",
+                                            isChecked: false,
+                                            selectedAIOption: nil
+                                        ),
+                                        RubricData(
+                                            rubric_id: "2",
+                                            rubric_name: "Content",
+                                            max_mark: "100",
+                                            isChecked: false,
+                                            selectedAIOption: nil
+                                        )
+                                    ],
+                                    isChecked: false,
+                                    selectedAIOption: nil
+                                ),
+
+                                // Activity without rubrics
+                                ActivityData(
+                                    activity_id: "2",
+                                    activity_name: "Submission",
+                                    max_mark: "100",
+                                    rubrics: [],
+                                    isChecked: false,
+                                    selectedAIOption: nil
+                                )
+                            ]
+                        ),
+
+                        SubjectExamData(
+                            subject_id: "2",
+                            institute_subject_id: "103114",
+                            subject_name: "TAMIL",
+                            activities: [
+
+                                // Activity without rubrics
+                                ActivityData(
+                                    activity_id: "3",
+                                    activity_name: "Notebook",
+                                    max_mark: "100",
+                                    rubrics: [],
+                                    isChecked: false,
+                                    selectedAIOption: nil
+                                ),
+
+                                // Activity with rubrics
+                                ActivityData(
+                                    activity_id: "4",
+                                    activity_name: "Submission",
+                                    max_mark: "100",
+                                    rubrics: [
+                                        RubricData(
+                                            rubric_id: "7",
+                                            rubric_name: "Time Management",
+                                            max_mark: "100",
+                                            isChecked: false,
+                                            selectedAIOption: nil
+                                        ),
+                                        RubricData(
+                                            rubric_id: "8",
+                                            rubric_name: "Accuracy",
+                                            max_mark: "100",
+                                            isChecked: false,
+                                            selectedAIOption: nil
+                                        )
+                                    ],
+                                    isChecked: false,
+                                    selectedAIOption: nil
+                                )
+                            ]
+                        )
+                    ]//response.data ?? []
                     self.tableview.reloadData()
                     
                     if !(response.status ?? false) {
@@ -145,6 +232,7 @@ class ExamActivitySelectionVC: UIViewController {
         
         if let payload = buildPayload() {
             print(payload)
+            print(convertedRecords)
             let vc = EnterMarkVC()
             vc.payload = payload
             vc.aiRecords = convertedRecords
@@ -198,30 +286,44 @@ class ExamActivitySelectionVC: UIViewController {
 
             let selectedActivities = subject.activities?.compactMap { activity -> [String: Any]? in
 
-                // Selected rubrics only
+                let hasRubrics = !(activity.rubrics?.isEmpty ?? true)
+
                 let selectedRubrics = activity.rubrics?
-                    .filter { $0.isChecked == true }
-                    .map {
-                        [
-                            "id": $0.rubric_id ?? "",
-                            "selected_name": $0.rubric_name ?? ""
+                    .filter { isAIFlow ? ($0.selectedAIOption != nil) : ($0.isChecked == true) }
+                    .map { rubric -> [String: Any] in
+
+                        let dict: [String: Any] = [
+                            "id": rubric.rubric_id ?? "",
+                            "selected_name": isAIFlow
+                                ? (rubric.selectedAIOption ?? rubric.rubric_name ?? "")
+                                : (rubric.rubric_name ?? "")
                         ]
+
+                        return dict
                     } ?? []
 
-                // Include activity if:
-                // 1. Activity checkbox selected
-                // OR
-                // 2. At least one rubric selected
-                let shouldIncludeActivity =
-                    (activity.isChecked == true) || !selectedRubrics.isEmpty
+                let shouldIncludeActivity: Bool
+                if hasRubrics {
+                    shouldIncludeActivity = !selectedRubrics.isEmpty
+                } else if isAIFlow {
+                    shouldIncludeActivity = activity.selectedAIOption != nil
+                } else {
+                    shouldIncludeActivity = activity.isChecked == true
+                }
 
                 guard shouldIncludeActivity else { return nil }
-
-                return [
+                
+                let activitySelectedName = (isAIFlow && !hasRubrics)
+                    ? (activity.selectedAIOption ?? "")
+                    : (activity.activity_name ?? "")
+                
+                let dict: [String: Any] = [
                     "id": activity.activity_id ?? "",
-                    "selected_name": activity.activity_name ?? "",
+                    "selected_name": activitySelectedName,
                     "rubrics": selectedRubrics
                 ]
+                
+                return dict
 
             } ?? []
 
