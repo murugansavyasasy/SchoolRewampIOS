@@ -21,6 +21,7 @@ class SubjectsTVCell: UITableViewCell {
     @IBOutlet weak var expandIconBtn: UIButton!
     @IBOutlet weak var tableview: ContentSizedTableView!
     @IBOutlet weak var tableviewHeight: NSLayoutConstraint!
+    @IBOutlet weak var separatorLineView: UIView!
     
     var isExpanded = false
     var onHeightChange: (() -> Void)?
@@ -49,6 +50,8 @@ class SubjectsTVCell: UITableViewCell {
         subjectView.layer.borderColor = UIColor.clear.cgColor
         
         expandIconBtn.isUserInteractionEnabled = false
+        
+        separatorLineView.isHidden = true
         
         tableview.isScrollEnabled = false
         tableview.isHidden = true
@@ -94,17 +97,17 @@ class SubjectsTVCell: UITableViewCell {
         
         if isAI{
             if selected == 0{
-                statusLbl.text = ExamMarkUploadString.Not_started.translated()
+               // statusLbl.text = ExamMarkUploadString.Not_started.translated()
                 statusLbl.textColor = .darkGray
                 subjectView.backgroundColor = .systemBackground
                 baseView.layer.borderColor = UIColor.lightGray.cgColor
             }else if selected < splits.count {
-                statusLbl.text = String(format: ExamMarkUploadString.Activities_mapped_count.translated(),selected,splits.count)
+              //  statusLbl.text = String(format: ExamMarkUploadString.Activities_mapped_count.translated(),selected,splits.count)
                 statusLbl.textColor = .systemBrown
                 subjectView.backgroundColor = .systemYellow.withAlphaComponent(0.05)
                 baseView.layer.borderColor = UIColor.systemOrange.cgColor
             }else{
-                statusLbl.text = String(format: ExamMarkUploadString.All_activities_mapped.translated(),splits.count)
+//                statusLbl.text = String(format: ExamMarkUploadString.All_activities_mapped.translated(),splits.count)
                 statusLbl.textColor = .systemGreen
                 subjectView.backgroundColor = .systemGreen.withAlphaComponent(0.05)
                 baseView.layer.borderColor = UIColor.systemGreen.cgColor
@@ -121,6 +124,7 @@ class SubjectsTVCell: UITableViewCell {
             if isExpanded {
                 expandIconBtn.setImage(UIImage(systemName: "chevron.up"), for: .normal)
 
+                separatorLineView.isHidden = false
                 tableview.isHidden = false
                 tableview.reloadData()
 
@@ -132,6 +136,7 @@ class SubjectsTVCell: UITableViewCell {
             } else {
                 expandIconBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
 
+                separatorLineView.isHidden = true
                 tableview.isHidden = true
                 tableviewHeight.constant = 0
 

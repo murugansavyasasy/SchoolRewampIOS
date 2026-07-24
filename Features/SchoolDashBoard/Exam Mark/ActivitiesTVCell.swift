@@ -65,7 +65,6 @@ class ActivitiesTVCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
        
-        ActivitystatusLbl.isHidden = true
         setupDropdown()
     }
     
@@ -97,8 +96,6 @@ class ActivitiesTVCell: UITableViewCell {
         attributedString.addAttributes([.foregroundColor: UIColor.darkGray, .font : UIFont(name: "Poppins-Medium", size: 12) ?? UIFont.systemFont(ofSize: 12)], range: NSRange(location: nameText.count, length: maxText.count))
         
         activityNameLbl.attributedText = attributedString
-        
-        //activityNameLbl.text = (split.name ?? "") + " (Max: " + (split.max_mark ?? "") + ")"
 
         let isSelected = split.isChecked == true
         CheckBoxBtnName.isSelected = isSelected
@@ -135,8 +132,47 @@ class ActivitiesTVCell: UITableViewCell {
         }else {
             CheckBoxBtnName.alpha = 1
         }
+        
+        updateStatusLabel(for: split)
     }
 
+    private func updateStatusLabel(for split: ActivityData) {
+
+        let rubricCount = split.rubrics?.count ?? 0
+
+        // AI mapping takes highest priority
+        if isAIFlow, let selectedOption = split.selectedAIOption {
+
+            let prefix = "Mapped to: "
+            let fullText = prefix + selectedOption
+
+            let attr = NSMutableAttributedString(string: fullText)
+            attr.addAttributes(
+                [.foregroundColor: UIColor.darkGray],
+                range: NSRange(location: 0, length: prefix.count)
+            )
+            attr.addAttributes(
+                [.foregroundColor: UIColor.staffExamColour],
+                range: NSRange(location: prefix.count, length: selectedOption.count)
+            )
+
+            ActivitystatusLbl.attributedText = attr
+            ActivitystatusLbl.isHidden = false
+            clearBtn.isHidden = false
+            return
+        }
+
+        // Show rubric count if rubrics exist
+        if rubricCount > 0 {
+            ActivitystatusLbl.text = "• \(rubricCount) Rubric\(rubricCount > 1 ? "s" : "")"
+            ActivitystatusLbl.textColor = .darkGray
+            ActivitystatusLbl.isHidden = false
+        } else {
+            ActivitystatusLbl.isHidden = true
+        }
+
+        clearBtn.isHidden = true
+    }
     
     @IBAction func CheckBoxBtnAct(_ sender: UIButton) {
 
@@ -232,17 +268,11 @@ class ActivitiesTVCell: UITableViewCell {
     
     @IBAction func showDropdown(){
         
-        guard let window = UIApplication.shared.connectedScenes
-            .compactMap({ $0 as? UIWindowScene })
-            .flatMap({ $0.windows })
-            .first(where: { $0.isKeyWindow }) else { return }
-        
-        // Convert dropdownView frame to window coords
-        let frame = activityNameLbl.convert(activityNameLbl.bounds, to: window)
-        let screenHeight = UIScreen.main.bounds.height
-        
-        // Set direction manually
-        dropdown.direction = (frame.maxY > screenHeight * 0.7) ? .top : .bottom
+           dropdown.anchorView = activityNameLbl
+           dropdown.dataSource = items ?? []
+           dropdown.backgroundColor = .white
+           dropdown.cornerRadius = 10
+           dropdown.direction = .any
         
         dropdown.selectionAction = { [weak self] (_, item) in
             guard let self = self else { return }
@@ -268,7 +298,6 @@ class ActivitiesTVCell: UITableViewCell {
             self.superview?.layoutIfNeeded()
 
         }
-        
         
         dropdown.show()
     }
