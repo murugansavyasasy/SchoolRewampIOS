@@ -199,7 +199,7 @@ struct ServiceUrl{
     static let lms_api_quiz_delete_question = "lms/api/quiz/delete-question"
     static let update_notification_call_log = "comm/api/voice/update-notification-call-log"
     static let exam_api_new_exam_get_mark_to_upload = "exam/api/new-exam/get-mark-to-upload"
-    static let exam_api_exam_upload_marks = "exam/api/exam/upload-marks"
+    static let exam_api_exam_upload_marks = "exam/api/new-exam/upload-mark"
     static let hostel_attendance_hostel_list = "stud-attd/api/hostel-attendance/hostel-list"
     static let hostel_attendance_room_details = "stud-attd/api/hostel-attendance/room-details"
     static let hostel_attendance_students_for_hostel_attd = "stud-attd/api/hostel-attendance/students-for-hostel-attd"

@@ -51,82 +51,14 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
             titleLbl.text = MenuStringFile.selectedMenuName
             setupColumnsFromGetMarksResponse()
         } else {
-//            Get_Marks(parameters: payload ?? [:])
-            Get_Marks(parameters: [
-                "exam_id": "1",
-                "section_id": "68575",
-                "academic_year_id": "7",
-                "selected_activities": [
-                    [
-                        "subject_id": "29",
-                        "activities": [
-                            [
-                                "id": "77",
-                                "selected_name": "Subject Enrichment 1",
-                                "rubrics": [
-                                    [
-                                        "id": "1",
-                                        "selected_name": "Presentation"
-                                    ],
-                                    [
-                                        "id": "2",
-                                        "selected_name": "Content"
-                                    ]
-                                ]
-                            ],
-                            [
-                                "id": "78",
-                                "selected_name": "Notebook Work 1"
-                            ],
-                            [
-                                "id": "76",
-                                "selected_name": "Monthly Assessment 1"
-                            ]
-                        ]
-                    ],
-                    [
-                        "subject_id": "28",
-                        "activities": [
-                            [
-                                "id": "73",
-                                "selected_name": "Monthly Assessment 1"
-                            ],
-                            [
-                                "id": "74",
-                                "selected_name": "Subject Enrichment 1"
-                            ],
-                            [
-                                "id": "75",
-                                "selected_name": "Notebook Work 1"
-                            ]
-                        ]
-                    ],
-                    [
-                        "subject_id": "30",
-                        "activities": [
-                            [
-                                "id": "80",
-                                "selected_name": "Subject Enrichment 1"
-                            ],
-                            [
-                                "id": "81",
-                                "selected_name": "Notebook Work 1"
-                            ],
-                            [
-                                "id": "79",
-                                "selected_name": "Monthly Assessment 1"
-                            ]
-                        ]
-                    ]
-                ]
-            ])
+            Get_Marks(parameters: payload ?? [:])
+
             titleLbl.configureAsBackTitle(
                 firstLine: MenuStringFile.selectedMenuName,
                 secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
             )
         }
-        noteLbl.text = uploadTest
-            ? "Note: Use \("AB") for absent students and \("NA") for marks that are not applicable." : "Note: Use \("AB") for absent students."
+        noteLbl.text =  "Note: Use \("AB") for absent students and \("NA") for marks that are not applicable."
         setupHeaderCollectionView()
         setupTableView()
         setupKeyboardObservers()
@@ -278,12 +210,11 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
 
     
     func Get_Marks(parameters payload: [String: Any]) {
-//        let parameters = buildGetMarksParams(from: payload)
         showActivityLoader()
 
         APIService.shared.makeApi(
             url: ServiceUrl.exam_api_new_exam_get_mark_to_upload,
-            parameters: parameters,
+            parameters: payload,
             type: ApitTypeSringFile.POST,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
             isBaseUrl: true
@@ -306,7 +237,6 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                         self.updateMarksWithAIData()
                     }
 
-                    // 👈 NEW: show empty-state if no activities configured
                     let hasColumns = !self.subjectColumns.isEmpty
                     self.nodataImg.isHidden = hasColumns
                     self.nodataLbl.isHidden = hasColumns
@@ -473,49 +403,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
             .replacingOccurrences(of: ".", with: "")
     }
     
-    func buildGetMarksParams(from payload: [String: Any]) -> [String: Any] {
-//        let classId   = payload["class_id"] as? String ?? ""
-        let sectionId = payload["section_id"] as? String ?? ""
-        let examId    = payload["exam_id"] as? String ?? ""
-        let academicYearId    = payload["academic_year_id"] as? String ?? ""
-        self.sectionId = sectionId
-        var resultSubjects: [[String: Any]] = []
-        
-        guard let selected = payload["selected_activities"] as? [[String: Any]] else {
-            return [:]
-        }
-        
-        for subject in selected {
-            let subjectId = subject["subject_id"] as? String ?? ""
-            var activitiesArray: [[String: Any]] = []
-            
-            if let activities = subject["activities"] as? [[String: Any]] {
-                for act in activities {
-                    let actId = act["activity_id"] as? String ?? ""
-                    let activity_name = act["activity_name"] as? String ?? ""
-                    let selectedName = act["ai_option"] as? String ?? activity_name
-                    
-                    activitiesArray.append([
-                        "id": actId,
-                        "selected_name": selectedName
-                    ])
-                }
-            }
-            
-            resultSubjects.append([
-                "subject_id": subjectId,
-                "activities": activitiesArray
-            ])
-        }
-        
-        return [
-//            "class_id": classId,
-            "section_id": sectionId,
-            "exam_id": examId,
-            "selected_activities": resultSubjects,
-            "academic_year_id" : academicYearId
-        ]
-    }
+
     
     private func setupHeaderCollectionView() {
         let layout = UICollectionViewFlowLayout()
@@ -586,17 +474,11 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                     actionLbl2: AlertstringFile.Cancel.translated(),
                     on: self,
                     onOk: {
-
-                        print("OK button clicked")
-
                         self.showActivityLoader()
 
                         self.viewModel?.createSaveRequest(
                             studentRecords: self.studentRecords, isPublished: sender.tag == 1
                         ) { [weak self] result in
-
-                            print("createSaveRequest called")
-
                             guard let self = self else { return }
 
                             DispatchQueue.main.async {
@@ -716,13 +598,6 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                 "section_id": sectionId ?? "",
                 "upload_details": uploadDetails
             ]
-
-            // 🖨️ print exactly what will be sent
-            print("📤 Final Upload Payload:")
-            if let jsonData = try? JSONSerialization.data(withJSONObject: finalPayload, options: .prettyPrinted),
-               let jsonString = String(data: jsonData, encoding: .utf8) {
-                print(jsonString)
-            }
 
             CustomAlert().showAlertCancel(
                 title: AlertstringFile.Confirm,
@@ -920,6 +795,9 @@ extension EnterMarkVC {
         if editedMarks[rollNo] == nil { editedMarks[rollNo] = [:] }
         editedMarks[rollNo]?[key] = trimmed
 
+        // ✅ studentId ah vachi match pannunga (row index-a nambaama)
+        let studentId = studentRecords[row].student_id
+
         for s in 0..<(studentRecords[row].marks?.count ?? 0) {
             let currentSubject = studentRecords[row].marks?[s].subject_name ?? ""
             guard normalizeName(currentSubject) == normalizeName(subjectName) else { continue }
@@ -936,6 +814,11 @@ extension EnterMarkVC {
                     rubrics[rIndex].isReview = hasError
                     rubrics[rIndex].reason = reson
                     studentRecords[row].marks?[s].activities?[a].rubrics = rubrics
+
+                    // ✅ allStudents la kuda apply pannunga
+                    applyMarkToAllStudents(studentId: studentId, subjectIndex: s, activityIndex: a,
+                                            rubricIndex: rIndex, mark: trimmed, isReview: hasError, reason: reson, isRubric: true)
+
                     errorDeclarationLbl.text = "⚠️ \(getFormattedReasonSummary())"
 
                     if trimmed == original {
@@ -948,6 +831,10 @@ extension EnterMarkVC {
                     studentRecords[row].marks?[s].activities?[a].mark = trimmed
                     studentRecords[row].marks?[s].activities?[a].isReview = hasError
                     studentRecords[row].marks?[s].activities?[a].reason = reson
+
+                    applyMarkToAllStudents(studentId: studentId, subjectIndex: s, activityIndex: a,
+                                            rubricIndex: nil, mark: trimmed, isReview: hasError, reason: reson, isRubric: false)
+
                     errorDeclarationLbl.text = "⚠️ \(getFormattedReasonSummary())"
 
                     if trimmed == original {
@@ -957,6 +844,27 @@ extension EnterMarkVC {
                     return
                 }
             }
+        }
+    }
+    private func applyMarkToAllStudents(studentId: String?, subjectIndex: Int, activityIndex: Int,
+                                         rubricIndex: Int?, mark: String, isReview: Bool, reason: String, isRubric: Bool) {
+        guard let studentId = studentId,
+              let allIndex = allStudents.firstIndex(where: { $0.student_id == studentId }) else { return }
+
+        guard subjectIndex < (allStudents[allIndex].marks?.count ?? 0),
+              activityIndex < (allStudents[allIndex].marks?[subjectIndex].activities?.count ?? 0) else { return }
+
+        if isRubric, let rubricIndex = rubricIndex {
+            guard var rubrics = allStudents[allIndex].marks?[subjectIndex].activities?[activityIndex].rubrics,
+                  rubricIndex < rubrics.count else { return }
+            rubrics[rubricIndex].mark = mark
+            rubrics[rubricIndex].isReview = isReview
+            rubrics[rubricIndex].reason = reason
+            allStudents[allIndex].marks?[subjectIndex].activities?[activityIndex].rubrics = rubrics
+        } else {
+            allStudents[allIndex].marks?[subjectIndex].activities?[activityIndex].mark = mark
+            allStudents[allIndex].marks?[subjectIndex].activities?[activityIndex].isReview = isReview
+            allStudents[allIndex].marks?[subjectIndex].activities?[activityIndex].reason = reason
         }
     }
 
@@ -1459,7 +1367,6 @@ struct RubricActivityMark: Codable {
     var mark: String?
     let max_mark: String?
     let is_edit: Bool?
-    let max_mark: String?
     var selected_name: String?
 
     // Local UI properties
@@ -1519,15 +1426,28 @@ extension EnterMarkVC {
             .map { columnWidth(for: $0) }
     }
     private func calculateHeaderHeight() -> CGFloat {
-        let headerFont  = UIFont.systemFont(ofSize: 13, weight: .semibold)
-        let subjectFont = UIFont.systemFont(ofSize: 12, weight: .regular)
+        let subjectFont     = UIFont.systemFont(ofSize: 12, weight: .regular)
+        let headerFont      = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        let rubricNameFont  = UIFont.systemFont(ofSize: 12, weight: .medium)
+        let rubricMaxFont   = UIFont.systemFont(ofSize: 10, weight: .regular)
+
         var maxHeight: CGFloat = 70
+
         for header in headerColumns {
             let hasRubrics = header.rubrics?.isEmpty == false
-            let topHeight = headerFont.lineHeight + subjectFont.lineHeight
-            let bottomHeight: CGFloat = hasRubrics ? (headerFont.lineHeight * 2 + subjectFont.lineHeight) : subjectFont.lineHeight
-            maxHeight = max(maxHeight, topHeight + bottomHeight + 24)
+            let topHeight = subjectFont.lineHeight + (headerFont.lineHeight * 2)
+
+            let bottomHeight: CGFloat
+            if hasRubrics {
+                bottomHeight = (rubricNameFont.lineHeight * 2) + rubricMaxFont.lineHeight + 8
+            } else {
+                bottomHeight = subjectFont.lineHeight
+            }
+
+            let totalHeight = topHeight + bottomHeight + 24
+            maxHeight = max(maxHeight, totalHeight)
         }
+
         return maxHeight
     }
 }

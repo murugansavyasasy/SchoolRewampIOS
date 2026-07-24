@@ -89,12 +89,15 @@ class MarksTableViewCell: UITableViewCell {
         self.studentIndex = index
         self.parentVC = parentVC
         marksCollectionView.tag = index
-        marksCollectionView.reloadData()
+        
+        let newId = student.student_id ?? "\(index)"
+        if configuredStudentId != newId {
+            configuredStudentId = newId
+            marksCollectionView.reloadData()
+        }
     }
 
-    func refreshMarks() {
-        marksCollectionView.reloadData()
-    }
+
     
     func setStudentNameWithGender(label: UILabel, student: String?, gender: String?) {
 
@@ -162,13 +165,26 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
         var changeMark: String? = nil
         var hasFlaggedIssue = false
         var is_edit: Bool?
+        
         if let subject = student.marks?.first(where: { $0.subject_id == column.subjectId }),
            let activity = subject.activities?.first(where: { $0.id == column.activityId }) {
-            mark = activity.mark ?? ""
-            changeMark = activity.change_mark
-            hasFlaggedIssue = activity.isReview ?? false
+            
             is_edit = activity.is_edit ?? true
+            if column.isRubric, let rubricId = column.rubricId,
+               let rubrics = activity.rubrics, !rubrics.isEmpty,
+               let rubric = rubrics.first(where: { $0.id == rubricId }) {
+                mark = rubric.mark ?? ""
+                changeMark = rubric.change_mark
+                hasFlaggedIssue = rubric.isReview ?? false
+                is_edit = rubric.is_edit ?? is_edit ?? true
+                
+            } else {
+                mark = activity.mark ?? ""
+                changeMark = activity.change_mark
+                hasFlaggedIssue = activity.isReview ?? false
+            }
         }
+        
         cell.configure(
             mark: mark,
             channgeMark: changeMark,
