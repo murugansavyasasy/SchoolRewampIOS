@@ -1377,3 +1377,15 @@ extension UILabel {
         self.frame.origin = CGPoint(x: xOrigin, y: topPadding)
     }
 }
+extension String {
+    func width(usingFont font: UIFont) -> CGFloat {
+        let size = (self as NSString).size(withAttributes: [.font: font])
+        return ceil(size.width)
+    }
+}
+
+extension UIView {
+    func superview<T>(of type: T.Type) -> T? {
+        return superview as? T ?? superview?.superview(of: type)
+    }
+}
