@@ -30,6 +30,7 @@ class ExamListVC: UIViewController, UISearchBarDelegate {
     var selectedExam : StaffExamData?
     var apiCalledForIndex: IndexPath?
     var academicYearId : Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         titleLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
@@ -212,65 +213,64 @@ extension ExamListVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ExamListCell, for: indexPath) as! ExamListCell
-        
+
         let exam = FilteredExamList[indexPath.row]
-        
         cell.examNameLbl.text = exam.name
         cell.examDateLbl.text = monthYear(from: exam.date ?? "")
-        
+
         let isSelected = (selectedRow == indexPath)
-        
-        if isSelected{
+        if isSelected {
             cell.sideColourView.backgroundColor = .staffExamColour
             cell.selectioView.backgroundColor = .staffExamColour.withAlphaComponent(0.05)
-            cell.checkCircleBtn.setImage(UIImage(systemName: "inset.filled.circle"),for: .normal)
+            cell.checkCircleBtn.setImage(UIImage(systemName: "inset.filled.circle"), for: .normal)
             cell.checkCircleBtn.tintColor = .staffExamColour
             cell.examNameLbl.textColor = .staffExamColour
-        }else{
+        } else {
             cell.sideColourView.backgroundColor = .clear
             cell.selectioView.backgroundColor = .clear
-            cell.checkCircleBtn.setImage(UIImage(systemName: "circle"),for: .normal)
+            cell.checkCircleBtn.setImage(UIImage(systemName: "circle"), for: .normal)
             cell.checkCircleBtn.tintColor = .lightGray
             cell.examNameLbl.textColor = .black
         }
-        
+
         let isExpanded = (expandedRow == indexPath)
-        
         if isExpanded {
-            cell.subjectList = self.SubjectList       // <----- ⭐ PLACE IT HERE
-            //cell.tableview.reloadData()
+            cell.subjectList = self.SubjectList
         }
-        
+
+        // Bubble: whenever ExamListCell's own content height changes
+        // (inner table resized), ask the OUTER table view to re-measure
+        // this row without a full reload.
+        cell.onHeightChange = { [weak tableView] in
+            guard let tableView = tableView else { return }
+            DispatchQueue.main.async {
+                UIView.performWithoutAnimation {
+                    tableView.performBatchUpdates(nil)
+                }
+            }
+        }
+
         cell.configureExpansionState(isExpanded)
-        
-        
-        // OUTER expand
+
         cell.onExpand = { [weak self] in
             guard let self = self else { return }
-            
+
             let old = self.expandedRow
             self.expandedRow = (old == indexPath) ? nil : indexPath
-            
+
             if self.expandedRow == indexPath {
                 let examId = self.FilteredExamList[indexPath.row].id ?? ""
                 self.loadSubjectList(for: examId, reloadIndex: indexPath)
             }
-            
+
             var reload: [IndexPath] = [indexPath]
             if let old = old, old != indexPath { reload.append(old) }
-            
+
             self.tv.reloadRows(at: reload, with: .automatic)
         }
-        
-        // INNER height change → refresh outer row
-        cell.onInnerHeightChanged = { [weak self] in
-            guard let self = self else { return }
-            self.tv.beginUpdates()
-            self.tv.endUpdates()
-        }
-        
+
         return cell
     }
     
@@ -294,27 +294,6 @@ extension ExamListVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView,heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
-    }
-    
-    func formatDateString(
-        _ dateString: String,
-        from inputFormat: String = "dd-MM-yyyy hh:mm a",
-        to outputFormat: String = "dd MMM yyyy hh:mm a"
-    ) -> String? {
-        
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = inputFormat
-        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
-        
-        guard let date = inputFormatter.date(from: dateString) else {
-            return nil
-        }
-        
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = outputFormat
-        outputFormatter.locale = Locale(identifier: "en_US_POSIX")
-        
-        return outputFormatter.string(from: date)
     }
     
     func monthYear(from dateString: String) -> String? {

@@ -2867,14 +2867,6 @@ struct RubricData: Codable {
     var selectedAIOption: String? = nil
 }
 
-struct SelectedSplit {
-    let subjectId: String
-    let subjectName: String
-    let splitId: String
-    let splitName: String
-    var aiOption: String?   // nil for Manual
-}
-
 //MARK: mark upload AI Api response
 
 struct MarksAIresponse: Codable {

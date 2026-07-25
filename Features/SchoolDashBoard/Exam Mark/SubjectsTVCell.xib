@@ -117,6 +117,7 @@
                 <outlet property="baseView" destination="WTh-ut-vRW" id="ea9-JM-ZXn"/>
                 <outlet property="checkCircleBtn" destination="0A0-o2-Bp2" id="wkE-dL-9p9"/>
                 <outlet property="expandIconBtn" destination="Rru-xa-gZi" id="Gwi-oN-ZBa"/>
+                <outlet property="separatorLineView" destination="Prb-IN-FXE" id="PFG-gI-sRF"/>
                 <outlet property="statusLbl" destination="NWd-Pt-yrm" id="cZ3-eB-pV0"/>
                 <outlet property="subjectLbl" destination="A09-ag-wPb" id="e3f-MI-OHJ"/>
                 <outlet property="subjectView" destination="a4p-lN-FLk" id="Ra5-pi-coe"/>

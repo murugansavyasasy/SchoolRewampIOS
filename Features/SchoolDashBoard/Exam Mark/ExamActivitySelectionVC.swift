@@ -27,7 +27,6 @@ class ExamActivitySelectionVC: UIViewController {
     var ExamID = ""
     var section_Id = ""
     let staffDetails = UserDefaultFileManager.get_staff_Details()
-    var selectedSplits: [SelectedSplit] = []
     var selectedColoumns:[String] = []
     var convertedRecords:[ConvertedStudentRecord] = []
     var SelectedExam : StaffExamData?
@@ -116,94 +115,7 @@ class ExamActivitySelectionVC: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
-                    self.SubjectList = [
-                        
-                        SubjectExamData(
-                            subject_id: "1",
-                            institute_subject_id: "103066",
-                            subject_name: "ENGLISH",
-                            activities: [
-
-                                // Activity with rubrics
-                                ActivityData(
-                                    activity_id: "1",
-                                    activity_name: "Notebook",
-                                    max_mark: "100",
-                                    rubrics: [
-                                        RubricData(
-                                            rubric_id: "1",
-                                            rubric_name: "Presentation",
-                                            max_mark: "100",
-                                            isChecked: false,
-                                            selectedAIOption: nil
-                                        ),
-                                        RubricData(
-                                            rubric_id: "2",
-                                            rubric_name: "Content",
-                                            max_mark: "100",
-                                            isChecked: false,
-                                            selectedAIOption: nil
-                                        )
-                                    ],
-                                    isChecked: false,
-                                    selectedAIOption: nil
-                                ),
-
-                                // Activity without rubrics
-                                ActivityData(
-                                    activity_id: "2",
-                                    activity_name: "Submission",
-                                    max_mark: "100",
-                                    rubrics: [],
-                                    isChecked: false,
-                                    selectedAIOption: nil
-                                )
-                            ]
-                        ),
-
-                        SubjectExamData(
-                            subject_id: "2",
-                            institute_subject_id: "103114",
-                            subject_name: "TAMIL",
-                            activities: [
-
-                                // Activity without rubrics
-                                ActivityData(
-                                    activity_id: "3",
-                                    activity_name: "Notebook",
-                                    max_mark: "100",
-                                    rubrics: [],
-                                    isChecked: false,
-                                    selectedAIOption: nil
-                                ),
-
-                                // Activity with rubrics
-                                ActivityData(
-                                    activity_id: "4",
-                                    activity_name: "Submission",
-                                    max_mark: "100",
-                                    rubrics: [
-                                        RubricData(
-                                            rubric_id: "7",
-                                            rubric_name: "Time Management",
-                                            max_mark: "100",
-                                            isChecked: false,
-                                            selectedAIOption: nil
-                                        ),
-                                        RubricData(
-                                            rubric_id: "8",
-                                            rubric_name: "Accuracy",
-                                            max_mark: "100",
-                                            isChecked: false,
-                                            selectedAIOption: nil
-                                        )
-                                    ],
-                                    isChecked: false,
-                                    selectedAIOption: nil
-                                )
-                            ]
-                        )
-                    ]//response.data ?? []
+                    self.SubjectList = response.data ?? []
                     self.tableview.reloadData()
                     
                     if !(response.status ?? false) {
