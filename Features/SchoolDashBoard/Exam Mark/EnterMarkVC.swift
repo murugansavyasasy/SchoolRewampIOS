@@ -1,5 +1,5 @@
 //
-//  MarksCell.swift
+//  EnterMarkVC.swift
 //  School Chimes
 //
 //  Created by Chandhru on 07/01/26.
@@ -32,6 +32,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     var studentRecords: [StudentMark] = []
     var allStudents: [StudentMark] = []
     var aiRecords: [ConvertedStudentRecord] = []
+    var headerColumns: [HeaderColumnConfig] = []
     var subjectColumns: [ColumnConfig] = []
     private var isNameWidthCalculated = false
     private var isKeyboardVisible = false
@@ -39,6 +40,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     private var popoverHeight: CGFloat = 400
     var isUpdatingPopover = false
     var uploadTest = false
+    var sectionId:String?
     var viewModel: CreateTestViewModel?
     var selectedFilters: [(type: String, sortValue: String)] = []
     override func viewDidLoad() {
@@ -50,12 +52,13 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
             setupColumnsFromGetMarksResponse()
         } else {
             Get_Marks(parameters: payload ?? [:])
+            
             titleLbl.configureAsBackTitle(
                 firstLine: MenuStringFile.selectedMenuName,
                 secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
             )
         }
-        noteLbl.text = uploadTest ? "Note: Use \("AB") for absent students and \("NA") for marks that are not applicable." : "Note: Use \("AB") for absent students."
+        noteLbl.text =  "Note: Use \("AB") for absent students and \("NA") for marks that are not applicable."
         setupHeaderCollectionView()
         setupTableView()
         setupKeyboardObservers()
@@ -69,7 +72,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
         searchBar.searchTextField.addDoneButton()
         aiIndimationLbl.isHidden = aiRecords.isEmpty
     }
-
+    
     deinit {
         removeKeyboardObservers()
     }
@@ -98,7 +101,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
         }
     }
     @IBAction func filterBtn(_ sender: UIButton) {
-
+        
         let popoverVC = FilterPopover(nibName: "FilterPopover", bundle: nil)
         popoverVC.delegate = self
         popoverVC.previouslyAppliedFilters = selectedFilters
@@ -109,6 +112,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     }
     
     private func setupColumnsFromGetMarksResponse() {
+        headerColumns.removeAll()
         subjectColumns.removeAll()
         var uniqueKeys = Set<String>()
         
@@ -119,38 +123,101 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
         
         for subject in firstStudent.marks ?? [] {
             for activity in subject.activities ?? [] {
-                guard let subjectId = subject.subject_id,
-                      let activityId = activity.id else { continue }
+                guard let subjectId = subject.subject_id, !subjectId.isEmpty,
+                      let activityId = activity.id, !activityId.isEmpty else {
+                    continue
+                }
                 
                 let key = "\(subjectId)_\(activityId)"
                 if uniqueKeys.contains(key) { continue }
                 uniqueKeys.insert(key)
                 
-                subjectColumns.append(
-                    ColumnConfig(
-                        displayName: activity.selected_name ?? activity.name,
-                        subjectName: subject.subject_name,
-                        subjectId: subjectId,
-                        activityId: activityId,
-                        activityName: activity.name,
-                        maxMarks: Int(activity.max_mark ?? "0")
+                if let rubrics = activity.rubrics, !rubrics.isEmpty {
+                    var rubricConfigs: [RubricMark] = []
+                    
+                    for rubric in rubrics {
+                        guard let rubricId = rubric.id, !rubricId.isEmpty else { continue }
+                        
+                        rubricConfigs.append(
+                            RubricMark(
+                                id: rubricId,
+                                name: rubric.name,
+                                max_mark: rubric.max_mark,
+                                subjectName: subject.subject_name,
+                                displayName: rubric.name
+                            )
+                        )
+                        
+                        // flat leaf column for data entry
+                        subjectColumns.append(
+                            ColumnConfig(
+                                displayName: rubric.name,
+                                subjectName: subject.subject_name,
+                                subjectId: subjectId,
+                                activityId: activityId,
+                                activityName: activity.name,
+                                maxMarks: Int(rubric.max_mark ?? "0"),
+                                isRubric: true,
+                                rubricId: rubricId
+                            )
+                        )
+                    }
+                    
+                    // only add a grouped header if at least one valid rubric was found
+                    guard !rubricConfigs.isEmpty else { continue }
+                    
+                    headerColumns.append(
+                        HeaderColumnConfig(
+                            displayName: activity.name,
+                            subjectName: subject.subject_name,
+                            subjectId: subjectId,
+                            activityId: activityId,
+                            activityName: activity.name,
+                            maxMarks: Int(activity.max_mark ?? "0"),
+                            rubrics: rubricConfigs
+                        )
                     )
-                )
+                    
+                } else {
+                    headerColumns.append(
+                        HeaderColumnConfig(
+                            displayName: activity.name,
+                            subjectName: subject.subject_name,
+                            subjectId: subjectId,
+                            activityId: activityId,
+                            activityName: activity.name,
+                            maxMarks: Int(activity.max_mark ?? "0"),
+                            rubrics: nil
+                        )
+                    )
+                    
+                    subjectColumns.append(
+                        ColumnConfig(
+                            displayName: activity.name,
+                            subjectName: subject.subject_name,
+                            subjectId: subjectId,
+                            activityId: activityId,
+                            activityName: activity.name,
+                            maxMarks: Int(activity.max_mark ?? "0"),
+                            isRubric: false,
+                            rubricId: nil
+                        )
+                    )
+                }
             }
         }
     }
-
+    
     
     func Get_Marks(parameters payload: [String: Any]) {
-        let parameters = buildGetMarksParams(from: payload)
         showActivityLoader()
         
         APIService.shared.makeApi(
-            url: ServiceUrl.exam_api_exam_get_mark_details,
-            parameters: parameters,
+            url: ServiceUrl.exam_api_new_exam_get_mark_to_upload,
+            parameters: payload,
             type: ApitTypeSringFile.POST,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
-            isBaseUrl: false
+            isBaseUrl: true
         ) { [weak self] (result: Result<MarkDetailsResponse, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }
@@ -161,22 +228,32 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                     guard let data = response.data?.first else { return }
                     self.studentRecords = data.upload_details ?? []
                     self.allStudents = data.upload_details ?? []
-                    self.examId = data.exam_section_id
+                    self.examId = data.exam_id
+                    self.sectionId = data.exam_section_id
                     self.errorDeclarationLbl.text = "⚠️ \(self.getFormattedReasonSummary())"
                     self.isNameWidthCalculated = false
                     self.setupColumnsFromGetMarksResponse()
+                    
                     if !self.aiRecords.isEmpty {
                         self.updateMarksWithAIData()
                     }
                     
+                    let hasColumns = !self.subjectColumns.isEmpty
+                    self.nodataImg.isHidden = hasColumns
+                    self.nodataLbl.isHidden = hasColumns
+                    if !hasColumns {
+                        self.nodataLbl.text = "No exam activities configured for this section yet."
+                        self.nodataLbl.textAlignment = .center
+                    }
+                    
                     DispatchQueue.main.async {
+                        self.subjectHeight.constant = self.calculateHeaderHeight()
                         self.headerCollectionview.reloadData()
                         self.listLableView.reloadData()
                         self.headerCollectionview.layoutIfNeeded()
                         self.updateNameColumnWidth()
                         self.listLableView.reloadData()
                     }
-
                     
                 case .failure(let error):
                     print("❌ Error:", error.localizedDescription)
@@ -184,106 +261,43 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
             }
         }
     }
-
+    
     private func updateMarksWithAIData() {
         for studentIndex in 0..<studentRecords.count {
-            
+
             guard let studentId = studentRecords[studentIndex].student_id,
                   let aiStudent = aiRecords.first(where: { $0.studentId == studentId }) else {
                 continue
             }
-            
+
             for subjectIndex in 0..<(studentRecords[studentIndex].marks?.count ?? 0) {
-                
+
                 guard let activities = studentRecords[studentIndex].marks?[subjectIndex].activities else {
                     continue
                 }
-                
+
                 for activityIndex in 0..<activities.count {
-                    
-                    let currentMark = studentRecords[studentIndex]
+
+                    let hasRubrics = !(studentRecords[studentIndex]
                         .marks?[subjectIndex]
                         .activities?[activityIndex]
-                        .mark ?? ""
-                    
-                    let selectedName = studentRecords[studentIndex]
-                        .marks?[subjectIndex]
-                        .activities?[activityIndex]
-                        .selected_name ?? ""
-                    
-                    guard let aiMark = aiStudent.marks.first(where: {
-                        normalizeName($0.name) == normalizeName(selectedName)
-                    }) else { continue }
-                    
-                    let aiValue = aiMark.value
-                    let aiReason = aiMark.reason ?? ""
-                    let aiReviewStatus = aiMark.isReview
-                    if !aiValue.isEmpty {
-                        if let _ = Int(aiValue) {
-                            
-                            if !currentMark.isEmpty && currentMark != aiValue {
-                                
-                                studentRecords[studentIndex]
-                                    .marks?[subjectIndex]
-                                    .activities?[activityIndex]
-                                    .change_mark = currentMark
-                                
-                                studentRecords[studentIndex]
-                                    .marks?[subjectIndex]
-                                    .activities?[activityIndex]
-                                    .mark = aiValue
-                                
-                                studentRecords[studentIndex]
-                                    .marks?[subjectIndex]
-                                    .activities?[activityIndex]
-                                    .reason = "Existing marks differ from the newly uploaded data."
-                                
-                            } else if currentMark.isEmpty {
-                                
-                                studentRecords[studentIndex]
-                                    .marks?[subjectIndex]
-                                    .activities?[activityIndex]
-                                    .mark = aiValue
-                            }
-                            
-                        } else {
-                            studentRecords[studentIndex]
-                                .marks?[subjectIndex]
-                                .activities?[activityIndex]
-                                .change_mark = currentMark
-                            
-                            studentRecords[studentIndex]
-                                .marks?[subjectIndex]
-                                .activities?[activityIndex]
-                                .mark = aiValue == "AB" ? "AB" : ""
-                            
-                            studentRecords[studentIndex]
-                                .marks?[subjectIndex]
-                                .activities?[activityIndex]
-                                .reason = aiValue
-                        }
-                        
-                        studentRecords[studentIndex]
-                            .marks?[subjectIndex]
-                            .activities?[activityIndex]
-                            .isReview = aiReviewStatus
-                        
-                    } else if !currentMark.isEmpty, !aiReason.isEmpty {
-                        
-                        studentRecords[studentIndex]
-                            .marks?[subjectIndex]
-                            .activities?[activityIndex]
-                            .isReview = aiReviewStatus
-                        
-                        studentRecords[studentIndex]
-                            .marks?[subjectIndex]
-                            .activities?[activityIndex]
-                            .reason = aiReason
+                        .rubrics?.isEmpty ?? true)
+
+                    if hasRubrics {
+                        compareRubrics(studentIndex: studentIndex,
+                                       subjectIndex: subjectIndex,
+                                       activityIndex: activityIndex,
+                                       aiMarks: aiStudent.marks)
+                    } else {
+                        compareActivity(studentIndex: studentIndex,
+                                         subjectIndex: subjectIndex,
+                                         activityIndex: activityIndex,
+                                         aiMarks: aiStudent.marks)
                     }
                 }
             }
         }
-        
+
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.view.layoutIfNeeded()
@@ -295,9 +309,139 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
             self.headerCollectionview.layoutIfNeeded()
             self.updateNameColumnWidth()
             self.listLableView.reloadData()
+            
+            printAsJSON(studentRecords, label: "studentRecords AFTER compare")
         }
     }
-    
+    private func printAsJSON<T: Encodable>(_ value: T, label: String = "") {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        
+        do {
+            let data = try encoder.encode(value)
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("=== \(label) ===")
+                print(jsonString)
+            }
+        } catch {
+            print("⚠️ Failed to encode \(label) to JSON: \(error)")
+        }
+    }
+
+    private func compareActivity(studentIndex: Int, subjectIndex: Int, activityIndex: Int, aiMarks: [RecordItem]) {
+
+        let selectedName = studentRecords[studentIndex]
+            .marks?[subjectIndex]
+            .activities?[activityIndex]
+            .selected_name ?? ""
+
+        guard let aiMark = aiMarks.first(where: {
+            normalizeName($0.name) == normalizeName(selectedName)
+        }) else { return }
+
+        let currentMark = studentRecords[studentIndex]
+            .marks?[subjectIndex]
+            .activities?[activityIndex]
+            .mark ?? ""
+
+        let aiValue = aiMark.value
+        let aiReason = aiMark.reason ?? ""
+        let aiReviewStatus = aiMark.isReview
+
+        if !aiValue.isEmpty {
+            if let _ = Int(aiValue) {
+
+                if !currentMark.isEmpty && currentMark != aiValue {
+
+                    studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].change_mark = currentMark
+                    studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].mark = aiValue
+                    studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].reason =
+                        "Existing marks differ from the newly uploaded data."
+
+                } else if currentMark.isEmpty {
+                    studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].mark = aiValue
+                }
+
+            } else {
+                studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].change_mark = currentMark
+                studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].mark = aiValue == "AB" ? "AB" : ""
+                studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].reason = aiValue
+            }
+
+            studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].isReview = aiReviewStatus
+
+        } else if !currentMark.isEmpty, !aiReason.isEmpty {
+            studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].isReview = aiReviewStatus
+            studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].reason = aiReason
+        }
+    }
+
+    private func compareRubrics(studentIndex: Int, subjectIndex: Int, activityIndex: Int, aiMarks: [RecordItem]) {
+
+        guard let rubricCount = studentRecords[studentIndex]
+            .marks?[subjectIndex]
+            .activities?[activityIndex]
+            .rubrics?.count else { return }
+
+        for rubricIndex in 0..<rubricCount {
+
+            let rubricSelectedName = studentRecords[studentIndex]
+                .marks?[subjectIndex]
+                .activities?[activityIndex]
+                .rubrics?[rubricIndex]
+                .selected_name ?? ""
+
+            guard let aiMark = aiMarks.first(where: {
+                normalizeName($0.name) == normalizeName(rubricSelectedName)
+            }) else { continue }
+
+            let currentRubricMark = studentRecords[studentIndex]
+                .marks?[subjectIndex]
+                .activities?[activityIndex]
+                .rubrics?[rubricIndex]
+                .mark ?? ""
+
+            let aiValue = aiMark.value
+            let aiReason = aiMark.reason ?? ""
+            let aiReviewStatus = aiMark.isReview
+
+            if !aiValue.isEmpty {
+                if let _ = Int(aiValue) {
+
+                    if !currentRubricMark.isEmpty && currentRubricMark != aiValue {
+
+                        studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                            .rubrics?[rubricIndex].change_mark = currentRubricMark
+                        studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                            .rubrics?[rubricIndex].mark = aiValue
+                        studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                            .rubrics?[rubricIndex].reason = "Existing marks differ from the newly uploaded data."
+
+                    } else if currentRubricMark.isEmpty {
+                        studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                            .rubrics?[rubricIndex].mark = aiValue
+                    }
+
+                } else {
+                    studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                        .rubrics?[rubricIndex].change_mark = currentRubricMark
+                    studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                        .rubrics?[rubricIndex].mark = aiValue == "AB" ? "AB" : ""
+                    studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                        .rubrics?[rubricIndex].reason = aiValue
+                }
+
+                studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                    .rubrics?[rubricIndex].isReview = aiReviewStatus
+
+            } else if !currentRubricMark.isEmpty, !aiReason.isEmpty {
+                studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                    .rubrics?[rubricIndex].isReview = aiReviewStatus
+                studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                    .rubrics?[rubricIndex].reason = aiReason
+            }
+        }
+    }
     private func updateNameColumnWidth() {
         view.layoutIfNeeded()
         headerCollectionview.layoutIfNeeded()
@@ -327,49 +471,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
             .replacingOccurrences(of: ".", with: "")
     }
     
-    func buildGetMarksParams(from payload: [String: Any]) -> [String: Any] {
-        let classId   = payload["class_id"] as? String ?? ""
-        let sectionId = payload["section_id"] as? String ?? ""
-        let examId    = payload["exam_id"] as? String ?? ""
-        let academicYearId    = payload["academic_year_id"] as? String ?? ""
-        
-        var resultSubjects: [[String: Any]] = []
-        
-        guard let selected = payload["selected_activities"] as? [[String: Any]] else {
-            return [:]
-        }
-        
-        for subject in selected {
-            let subjectId = subject["subject_id"] as? String ?? ""
-            var activitiesArray: [[String: Any]] = []
-            
-            if let activities = subject["activities"] as? [[String: Any]] {
-                for act in activities {
-                    let actId = act["activity_id"] as? String ?? ""
-                    let activity_name = act["activity_name"] as? String ?? ""
-                    let selectedName = act["ai_option"] as? String ?? activity_name
-                    
-                    activitiesArray.append([
-                        "id": actId,
-                        "selected_name": selectedName
-                    ])
-                }
-            }
-            
-            resultSubjects.append([
-                "subject_id": subjectId,
-                "activities": activitiesArray
-            ])
-        }
-        
-        return [
-            "class_id": classId,
-            "section_id": sectionId,
-            "exam_id": examId,
-            "selected_activities": resultSubjects,
-            "academic_year_id" : academicYearId
-        ]
-    }
+    
     
     private func setupHeaderCollectionView() {
         let layout = UICollectionViewFlowLayout()
@@ -422,7 +524,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                     }
                 }
             }.count
-
+            
             if emptyStudentCount > 0 {
                 CustomAlert().showAlert(
                     title:"",
@@ -432,62 +534,56 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                 return
             }
         }
-        if uploadTest{
-                CustomAlert().showAlertCancel(
-                    title: AlertstringFile.Confirm.translated(),
-                    message:sender.tag == 1 ? AlertstringFile.publishMark.translated(): AlertstringFile.uploadMark.translated(),
-                    actionLbl1: sender.tag == 1 ? AlertstringFile.puplish.translated(): AlertstringFile.save.translated(),
-                    actionLbl2: AlertstringFile.Cancel.translated(),
-                    on: self,
-                    onOk: {
-
-                        print("OK button clicked")
-
-                        self.showActivityLoader()
-
-                        self.viewModel?.createSaveRequest(
-                            studentRecords: self.studentRecords, isPublished: sender.tag == 1
-                        ) { [weak self] result in
-
-                            print("createSaveRequest called")
-
-                            guard let self = self else { return }
-
-                            DispatchQueue.main.async {
-                                self.hideActivityLoader()
-
-                                switch result {
-
-                                case .success(let response):
-                                    CustomAlert.showAlertWithOkAction(
-                                        title: response.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
-                                        message: response.message,
-                                        on: self
-                                    ) {
-                                        self.dismiss(animated: true)
-                                    }
-
-                                case .failure(let error):
-                                    CustomAlert.showAlertWithOkAction(
-                                        title: AlertstringFile.Alert_title,
-                                        message: "Failed to upload marks. Please try again.",
-                                        on: self
-                                    ) { }
+        if uploadTest {
+            CustomAlert().showAlertCancel(
+                title: AlertstringFile.Confirm.translated(),
+                message:sender.tag == 1 ? AlertstringFile.publishMark.translated(): AlertstringFile.uploadMark.translated(),
+                actionLbl1: sender.tag == 1 ? AlertstringFile.puplish.translated(): AlertstringFile.save.translated(),
+                actionLbl2: AlertstringFile.Cancel.translated(),
+                on: self,
+                onOk: {
+                    self.showActivityLoader()
+                    
+                    self.viewModel?.createSaveRequest(
+                        studentRecords: self.studentRecords, isPublished: sender.tag == 1
+                    ) { [weak self] result in
+                        guard let self = self else { return }
+                        
+                        DispatchQueue.main.async {
+                            self.hideActivityLoader()
+                            
+                            switch result {
+                                
+                            case .success(let response):
+                                CustomAlert.showAlertWithOkAction(
+                                    title: response.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
+                                    message: response.message,
+                                    on: self
+                                ) {
+                                    self.dismiss(animated: true)
                                 }
+                                
+                            case .failure(let error):
+                                CustomAlert.showAlertWithOkAction(
+                                    title: AlertstringFile.Alert_title,
+                                    message: "Failed to upload marks. Please try again.",
+                                    on: self
+                                ) { }
                             }
                         }
-                    },
-                    onNo: {
-                        print("Cancelled")
                     }
-                )
-        }else{
+                },
+                onNo: {
+                    print("Cancelled")
+                }
+            )
+        } else {
             
             var uploadDetails: [[String: Any]] = []
             var invalidMarkCount = 0
             
             for student in studentRecords {
-                let rollNo = student.roll_no ?? ""
+                let studentId = student.student_id ?? ""   // ✅ use student_id, not roll_no
                 var studentMarks: [[String: Any]] = []
                 
                 for subject in student.marks ?? [] {
@@ -496,39 +592,62 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                     
                     for activity in subject.activities ?? [] {
                         let activityId = activity.id ?? ""
-                        let key = "\(subjectId)_\(activityId)"
-                        let editedMark = editedMarks[rollNo]?[key]
+                        let activityKey = "\(subjectId)_\(activityId)"
+                        let editedActivityMark = editedMarks[studentId]?[activityKey]   // ✅ keyed by studentId
                         
-                        let finalMarkStr = editedMark ?? activity.mark ?? ""
-                        let maxMarkStr   = activity.max_mark ?? ""
+                        var rubricsArray: [[String: Any]] = []
                         
-                        let finalMark = Double(finalMarkStr) ?? 0
-                        let maxMark   = Double(maxMarkStr) ?? 0
+                        if let rubrics = activity.rubrics, !rubrics.isEmpty {
+                            for rubric in rubrics {
+                                let rubricId = rubric.id ?? ""
+                                let rubricKey = "RU:\(activityId)_\(rubricId)"
+                                let editedRubricMark = editedMarks[studentId]?[rubricKey]   // ✅ keyed by studentId
+                                
+                                let finalRubricMarkStr = editedRubricMark ?? rubric.mark ?? ""
+                                let maxRubricMarkStr = rubric.max_mark ?? ""
+                                
+                                let finalRubricMark = Double(finalRubricMarkStr) ?? 0
+                                let maxRubricMark = Double(maxRubricMarkStr) ?? 0
+                                
+                                if finalRubricMark > maxRubricMark {
+                                    invalidMarkCount += 1
+                                }
+                                
+                                rubricsArray.append([
+                                    "id": rubricId,
+                                    "mark": finalRubricMarkStr,
+                                    "max_mark": maxRubricMarkStr
+                                ])
+                            }
+                        }
                         
-                        if finalMark > maxMark {
-                            invalidMarkCount += 1
+                        let finalMarkStr = editedActivityMark ?? activity.mark ?? ""
+                        let maxMarkStr = activity.max_mark ?? ""
+                        
+                        if rubricsArray.isEmpty {
+                            let finalMark = Double(finalMarkStr) ?? 0
+                            let maxMark = Double(maxMarkStr) ?? 0
+                            if finalMark > maxMark {
+                                invalidMarkCount += 1
+                            }
                         }
                         
                         activitiesArray.append([
                             "id": activityId,
-                            "name": activity.name ?? "",
                             "mark": finalMarkStr,
-                            "max_mark": maxMarkStr
+                            "max_mark": maxMarkStr,
+                            "rubrics": rubricsArray
                         ])
                     }
                     
                     studentMarks.append([
                         "subject_id": subjectId,
-                        "subject_name": subject.subject_name ?? "",
                         "activities": activitiesArray
                     ])
                 }
                 
                 uploadDetails.append([
-                    "student_id": student.student_id ?? "",
-                    "student_name": student.student_name ?? "",
-                    "roll_no": rollNo,
-                    "admission_no": student.admission_no ?? "",
+                    "student_id": studentId,
                     "marks": studentMarks
                 ])
             }
@@ -543,7 +662,8 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
             }
             
             let finalPayload: [String: Any] = [
-                "exam_section_id": examId ?? "",
+                "exam_id": examId ?? "",
+                "section_id": sectionId ?? "",
                 "upload_details": uploadDetails
             ]
             
@@ -584,7 +704,14 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                             message: response.message,
                             on: self
                         ) {
-                            self.dismiss(animated: true)
+                            if self.uploadTest{
+                                self.dismiss(animated: true)
+                            }else{
+                               
+                                self.presentingViewController?.presentingViewController?.dismiss(animated: true)
+                                    
+                            }
+                            
                         }
                         
                     case .failure(_):
@@ -640,95 +767,36 @@ extension EnterMarkVC {
 // MARK: - Header CollectionView DataSource & Delegate
 extension EnterMarkVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView,
-                        numberOfItemsInSection section: Int) -> Int {
-        return subjectColumns.count
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return headerColumns.count
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: "MarkReviewCVC",
-            for: indexPath
+            withReuseIdentifier: "MarkReviewCVC", for: indexPath
         ) as! MarkReviewCVC
         
-        let column = subjectColumns[indexPath.item]
-        
-        let subject = column.subjectName?.uppercased() ?? ""
-        let activity = column.displayName ?? ""
-        let max = column.maxMarks ?? 0
-        
+        let header = headerColumns[indexPath.item]
         cell.configure(
-            title: activity,
-            subtitle: subject, max_Mark: "Max: \(max)"
+            title: header.displayName ?? "",
+            subtitle: header.subjectName?.uppercased() ?? "",
+            max_Mark: "Max: \(header.maxMarks ?? 0)",
+            rubrics: header.rubrics
         )
-        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        let column = subjectColumns[indexPath.item]
-
-        let minWidth: CGFloat = 110
-        let maxWidth: CGFloat = 120
-        let padding: CGFloat = 16
-
-        let headerFont = UIFont.systemFont(ofSize: 13, weight: .semibold)
-        let subjectFont = UIFont.systemFont(ofSize: 12, weight: .regular)
-        let maxFont = UIFont.systemFont(ofSize: 12, weight: .regular)
-
-        var widths: [CGFloat] = []
-
-        if let title = column.displayName {
-            widths.append(title.width(usingFont: headerFont))
-        }
-
-        if let subject = column.subjectName {
-            widths.append(subject.uppercased().width(usingFont: subjectFont))
-        }
-
-        if let max = column.maxMarks {
-            widths.append("Max: \(max)".width(usingFont: maxFont))
-        }
-
-        let requiredWidth = (widths.max() ?? minWidth) + padding
-        let finalWidth = min(max(requiredWidth, minWidth), maxWidth)
-
-        // Header height (3 lines max)
-        var headerHeight = headerFont.lineHeight
-
-        if let title = column.displayName {
-
-            let rect = (title as NSString).boundingRect(
-                with: CGSize(width: finalWidth - padding,
-                             height: .greatestFiniteMagnitude),
-                options: [.usesLineFragmentOrigin, .usesFontLeading],
-                attributes: [.font: headerFont],
-                context: nil
-            )
-
-            headerHeight = min(ceil(rect.height), headerFont.lineHeight * 3)
-        }
-
-        let height =
-            headerHeight +
-            subjectFont.lineHeight +
-            maxFont.lineHeight +
-            24
-        subjectHeight.constant = height
-
-        return CGSize(width: finalWidth, height: max(70, height))
+        let header = headerColumns[indexPath.item]
+        let width = headerColumnWidth(for: header)
+        return CGSize(width: width, height: subjectHeight.constant)
     }
-
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == headerCollectionview {
-            syncAllCollectionViews(to: scrollView.contentOffset.x,
-                                   excluding: scrollView)
+            syncAllCollectionViews(to: scrollView.contentOffset.x, excluding: scrollView)
         }
     }
 }
@@ -761,7 +829,6 @@ extension EnterMarkVC: UITableViewDataSource, UITableViewDelegate {
         
         let nameFont = UIFont.systemFont(ofSize: 16, weight: .medium)
         let rollFont = UIFont.systemFont(ofSize: 13, weight: .regular)
-        
         let labelWidth: CGFloat = nameWidth.constant - 32
         
         let nameHeight = textHeight(text: name, font: nameFont, width: labelWidth)
@@ -775,152 +842,205 @@ extension EnterMarkVC: UITableViewDataSource, UITableViewDelegate {
     func textHeight(text: String, font: UIFont, width: CGFloat) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         
-        let boundingBox = text.boundingRect(
-            with: constraintRect,
-            options: [.usesLineFragmentOrigin, .usesFontLeading],
-            attributes: [.font: font],
-            context: nil
-        )
+        let boundingBox = text.boundingRect(with: constraintRect,
+                                            options: [.usesLineFragmentOrigin, .usesFontLeading],
+                                            attributes: [.font: font],
+                                            context: nil)
         
         return ceil(boundingBox.height)
     }
 }
 
 extension EnterMarkVC {
-    func updateMark(row: Int,
-                    column: Int,
-                    value: String,
-                    reson: String,
-                    subjectName: String) {
-        
-        guard row < studentRecords.count,
-              column < subjectColumns.count else { return }
+    func updateMark(row: Int, column: Int, value: String, reson: String, subjectName: String) {
+        guard row < studentRecords.count, column < subjectColumns.count else { return }
         
         let col = subjectColumns[column]
-        let rollNo = studentRecords[row].roll_no ?? ""
+        let studentId = studentRecords[row].student_id ?? "unknown_\(row)"   // ✅ unique key instead of roll_no
         let trimmed = value.trimmingCharacters(in: .whitespaces)
         
         var hasError = false
-        if let entered = Int(trimmed) {
-            hasError = entered > col.maxMarks ?? 0
-        }
+        if let entered = Int(trimmed) { hasError = entered > (col.maxMarks ?? 0) }
         
         let key = makeMarkKey(col: col)
-        
-        if editedMarks[rollNo] == nil { editedMarks[rollNo] = [:] }
-        editedMarks[rollNo]?[key] = trimmed
+        if editedMarks[studentId] == nil { editedMarks[studentId] = [:] }
+        editedMarks[studentId]?[key] = trimmed
         
         for s in 0..<(studentRecords[row].marks?.count ?? 0) {
-            
             let currentSubject = studentRecords[row].marks?[s].subject_name ?? ""
             guard normalizeName(currentSubject) == normalizeName(subjectName) else { continue }
             
             for a in 0..<(studentRecords[row].marks?[s].activities?.count ?? 0) {
+                guard studentRecords[row].marks?[s].activities?[a].id == col.activityId else { continue }
                 
-                let activity = studentRecords[row].marks?[s].activities?[a]
-                guard normalizeName(activity?.name ?? "") == normalizeName(col.activityName ?? "") else { continue }
-                
-                let original = activity?.mark ?? ""
-                studentRecords[row].marks?[s].activities?[a].mark = trimmed
-                studentRecords[row].marks?[s].activities?[a].isReview = hasError
-                studentRecords[row].marks?[s].activities?[a].reason = reson
-                errorDeclarationLbl.text = "⚠️ \(getFormattedReasonSummary())"
-                
-                if trimmed == original {
-                    editedMarks[rollNo]?.removeValue(forKey: key)
-                    if editedMarks[rollNo]?.isEmpty == true {
-                        editedMarks.removeValue(forKey: rollNo)
+                if col.isRubric, let rubricId = col.rubricId {
+                    guard var rubrics = studentRecords[row].marks?[s].activities?[a].rubrics,
+                          let rIndex = rubrics.firstIndex(where: { $0.id == rubricId }) else { return }
+                    
+                    let original = rubrics[rIndex].mark ?? ""
+                    rubrics[rIndex].mark = trimmed
+                    rubrics[rIndex].isReview = hasError
+                    rubrics[rIndex].reason = reson
+                    studentRecords[row].marks?[s].activities?[a].rubrics = rubrics
+                    
+                    applyMarkToAllStudents(
+                        studentId: studentRecords[row].student_id,
+                        subjectIndex: s,
+                        activityIndex: a,
+                        rubricIndex: rIndex,
+                        mark: trimmed,
+                        isReview: hasError,
+                        reason: reson,
+                        isRubric: true
+                    )
+                    
+                    errorDeclarationLbl.text = "⚠️ \(getFormattedReasonSummary())"
+                    
+                    if trimmed == original {
+                        editedMarks[studentId]?.removeValue(forKey: key)
+                        if editedMarks[studentId]?.isEmpty == true {
+                            editedMarks.removeValue(forKey: studentId)
+                        }
                     }
+                    return
+                    
+                } else {
+                    let original = studentRecords[row].marks?[s].activities?[a].mark ?? ""
+                    studentRecords[row].marks?[s].activities?[a].mark = trimmed
+                    studentRecords[row].marks?[s].activities?[a].isReview = hasError
+                    studentRecords[row].marks?[s].activities?[a].reason = reson
+                    
+                    applyMarkToAllStudents(
+                        studentId: studentRecords[row].student_id,
+                        subjectIndex: s,
+                        activityIndex: a,
+                        rubricIndex: nil,
+                        mark: trimmed,
+                        isReview: hasError,
+                        reason: reson,
+                        isRubric: false
+                    )
+                    
+                    errorDeclarationLbl.text = "⚠️ \(getFormattedReasonSummary())"
+                    
+                    if trimmed == original {
+                        editedMarks[studentId]?.removeValue(forKey: key)
+                        if editedMarks[studentId]?.isEmpty == true {
+                            editedMarks.removeValue(forKey: studentId)
+                        }
+                    }
+                    return
                 }
-                return
             }
         }
     }
     
+    private func applyMarkToAllStudents(studentId: String?, subjectIndex: Int, activityIndex: Int,
+                                        rubricIndex: Int?, mark: String, isReview: Bool, reason: String, isRubric: Bool) {
+        guard let studentId = studentId,
+              let allIndex = allStudents.firstIndex(where: { $0.student_id == studentId }) else { return }
+        
+        guard subjectIndex < (allStudents[allIndex].marks?.count ?? 0),
+              activityIndex < (allStudents[allIndex].marks?[subjectIndex].activities?.count ?? 0) else { return }
+        
+        if isRubric, let rubricIndex = rubricIndex {
+            guard var rubrics = allStudents[allIndex].marks?[subjectIndex].activities?[activityIndex].rubrics,
+                  rubricIndex < rubrics.count else { return }
+            rubrics[rubricIndex].mark = mark
+            rubrics[rubricIndex].isReview = isReview
+            rubrics[rubricIndex].reason = reason
+            allStudents[allIndex].marks?[subjectIndex].activities?[activityIndex].rubrics = rubrics
+        } else {
+            allStudents[allIndex].marks?[subjectIndex].activities?[activityIndex].mark = mark
+            allStudents[allIndex].marks?[subjectIndex].activities?[activityIndex].isReview = isReview
+            allStudents[allIndex].marks?[subjectIndex].activities?[activityIndex].reason = reason
+        }
+    }
     
     func makeMarkKey(col: ColumnConfig) -> String {
-        return "AN:\(col.activityName ?? UUID().uuidString)"
+        if col.isRubric, let rubricId = col.rubricId {
+            return "RU:\(col.activityId ?? "")_\(rubricId)"
+        }
+        return "AN:\(col.activityId ?? UUID().uuidString)"
     }
 }
 
-// Add to EnterMarkVC
-
 extension EnterMarkVC {
     func moveToCell(row: Int, column: Int) {
-
-            guard row >= 0 && row < studentRecords.count,
-                  column >= 0 && column < subjectColumns.count else { return }
-
-            isNavigatingCells = true
-
-            let indexPath = IndexPath(row: row, section: 0)
-            if !isRowFullyVisible(at: indexPath) {
-                listLableView.scrollToRow(at: indexPath, at: .none, animated: false)
-                listLableView.layoutIfNeeded()
-            }
-
-            guard let cell = listLableView.cellForRow(at: indexPath) as? MarksTableViewCell else {
-                isNavigatingCells = false
-                return
-            }
-
-            let colX = columnX(column)
-            let colWidth = getColumnWidth(column: column)
-
-            let visibleStart = cell.marksCollectionView.contentOffset.x
-            let visibleWidth = cell.marksCollectionView.bounds.width
-            let visibleEnd = visibleStart + visibleWidth
-            var newOffsetX = visibleStart
-
-            if colX < visibleStart {
-                newOffsetX = colX
-            } else if colX + colWidth > visibleEnd {
-                newOffsetX = colX + colWidth - visibleWidth
-            }
-
-            let maxOffsetX = max(0, cell.marksCollectionView.contentSize.width - visibleWidth)
-            newOffsetX = min(max(0, newOffsetX), maxOffsetX)
-
-            let offsetChanged = abs(newOffsetX - visibleStart) > 0.5
-
-            if offsetChanged {
-                cell.marksCollectionView.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
-                headerCollectionview.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
-            }
-
-            let itemPath = IndexPath(item: column, section: 0)
-            if let marksCell = cell.marksCollectionView.cellForItem(at: itemPath) as? MarksCell {
-                marksCell.markTxt.becomeFirstResponder()
-                isNavigatingCells = false
-            } else {
-                cell.marksCollectionView.layoutIfNeeded()
-                focusCell(in: cell.marksCollectionView, at: itemPath)
-            }
+        
+        guard row >= 0 && row < studentRecords.count,
+              column >= 0 && column < subjectColumns.count else { return }
+        
+        isNavigatingCells = true
+        
+        let indexPath = IndexPath(row: row, section: 0)
+        if !isRowFullyVisible(at: indexPath) {
+            listLableView.scrollToRow(at: indexPath, at: .none, animated: false)
+            listLableView.layoutIfNeeded()
         }
-
- 
-        private func isRowFullyVisible(at indexPath: IndexPath) -> Bool {
-            guard listLableView.indexPathsForVisibleRows?.contains(indexPath) == true else {
-                return false
-            }
-
-            let rowRect = listLableView.rectForRow(at: indexPath)
-            let visibleTop = listLableView.contentOffset.y + listLableView.contentInset.top
-            let visibleBottom = listLableView.contentOffset.y
-                + listLableView.bounds.height
-                - listLableView.contentInset.bottom
-
-            return rowRect.minY >= visibleTop && rowRect.maxY <= visibleBottom
+        
+        guard let cell = listLableView.cellForRow(at: indexPath) as? MarksTableViewCell else {
+            isNavigatingCells = false
+            return
         }
-
-        private func focusCell(in collectionView: UICollectionView, at itemPath: IndexPath) {
-            collectionView.scrollToItem(at: itemPath, at: .centeredHorizontally, animated: false)
-            DispatchQueue.main.async {
-                collectionView.layoutIfNeeded()
-                (collectionView.cellForItem(at: itemPath) as? MarksCell)?.markTxt.becomeFirstResponder()
-                self.isNavigatingCells = false
-            }
+        
+        let colX = columnX(column)
+        let colWidth = getColumnWidth(column: column)
+        
+        let visibleStart = cell.marksCollectionView.contentOffset.x
+        let visibleWidth = cell.marksCollectionView.bounds.width
+        let visibleEnd = visibleStart + visibleWidth
+        var newOffsetX = visibleStart
+        
+        if colX < visibleStart {
+            newOffsetX = colX
+        } else if colX + colWidth > visibleEnd {
+            newOffsetX = colX + colWidth - visibleWidth
         }
+        
+        let maxOffsetX = max(0, cell.marksCollectionView.contentSize.width - visibleWidth)
+        newOffsetX = min(max(0, newOffsetX), maxOffsetX)
+        
+        let offsetChanged = abs(newOffsetX - visibleStart) > 0.5
+        
+        if offsetChanged {
+            cell.marksCollectionView.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
+            headerCollectionview.setContentOffset(CGPoint(x: newOffsetX, y: 0), animated: false)
+        }
+        
+        let itemPath = IndexPath(item: column, section: 0)
+        if let marksCell = cell.marksCollectionView.cellForItem(at: itemPath) as? MarksCell {
+            marksCell.markTxt.becomeFirstResponder()
+            isNavigatingCells = false
+        } else {
+            cell.marksCollectionView.layoutIfNeeded()
+            focusCell(in: cell.marksCollectionView, at: itemPath)
+        }
+    }
+    
+    
+    private func isRowFullyVisible(at indexPath: IndexPath) -> Bool {
+        guard listLableView.indexPathsForVisibleRows?.contains(indexPath) == true else {
+            return false
+        }
+        
+        let rowRect = listLableView.rectForRow(at: indexPath)
+        let visibleTop = listLableView.contentOffset.y + listLableView.contentInset.top
+        let visibleBottom = listLableView.contentOffset.y
+        + listLableView.bounds.height
+        - listLableView.contentInset.bottom
+        
+        return rowRect.minY >= visibleTop && rowRect.maxY <= visibleBottom
+    }
+    
+    private func focusCell(in collectionView: UICollectionView, at itemPath: IndexPath) {
+        collectionView.scrollToItem(at: itemPath, at: .centeredHorizontally, animated: false)
+        DispatchQueue.main.async {
+            collectionView.layoutIfNeeded()
+            (collectionView.cellForItem(at: itemPath) as? MarksCell)?.markTxt.becomeFirstResponder()
+            self.isNavigatingCells = false
+        }
+    }
     private func columnX(_ column: Int) -> CGFloat {
         var x: CGFloat = 0
         for i in 0..<column {
@@ -928,7 +1048,7 @@ extension EnterMarkVC {
         }
         return x
     }
-
+    
     func moveToNextRow(row: Int, column: Int) {
         let nextRow = row + 1
         if nextRow < studentRecords.count {
@@ -937,7 +1057,7 @@ extension EnterMarkVC {
             print("⚠️ Already at last row")
         }
     }
-
+    
     func moveToPreviousRow(row: Int, column: Int) {
         let prevRow = row - 1
         if prevRow >= 0 {
@@ -946,7 +1066,7 @@ extension EnterMarkVC {
             print("⚠️ Already at first row")
         }
     }
-
+    
     func moveToNextColumn(row: Int, column: Int) {
         let nextCol = column + 1
         if nextCol < subjectColumns.count {
@@ -955,7 +1075,7 @@ extension EnterMarkVC {
             print("⚠️ Already at last column")
         }
     }
-
+    
     func moveToPreviousColumn(row: Int, column: Int) {
         let prevCol = column - 1
         if prevCol >= 0 {
@@ -964,68 +1084,58 @@ extension EnterMarkVC {
             print("⚠️ Already at first column")
         }
     }
-
+    
     private func getColumnWidth(column: Int) -> CGFloat {
         guard column < subjectColumns.count else { return 110 }
-
+        
         let col = subjectColumns[column]
         var widths: [CGFloat] = []
-
+        
         if let display = col.displayName {
             let font = UIFont.systemFont(ofSize: 13, weight: .medium)
             widths.append(display.width(usingFont: font))
         }
-
+        
         if let max = col.maxMarks {
             let font = UIFont.systemFont(ofSize: 12, weight: .regular)
             widths.append("Max: \(max)".width(usingFont: font))
         }
-
+        
         let padding: CGFloat = 16
         let minWidth: CGFloat = 110
         let maxTextWidth = widths.max() ?? minWidth
         let finalWidth = max(maxTextWidth + padding, minWidth)
-
+        
         return finalWidth
     }
 }
 extension EnterMarkVC: UISearchBarDelegate, UIPopoverPresentationControllerDelegate {
     
     func setupKeyboardObservers() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
+        NotificationCenter.default.addObserver(self,selector: #selector(keyboardWillShow),name:UIResponder.keyboardWillShowNotification,object: nil)
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillHide),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
+        NotificationCenter.default.addObserver(self,selector: #selector(keyboardWillHide),name:UIResponder.keyboardWillHideNotification,object: nil)
     }
-
+    
     @objc func keyboardWillShow(_ notification: Notification) {
         guard !isKeyboardVisible else { return }
         isKeyboardVisible = true
-
+        
         guard let keyboardFrame =
                 notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-
+        
         let keyboardHeight = keyboardFrame.height - 40
-
+        
         UIView.animate(withDuration: 0.25) {
             self.listLableView.contentInset.bottom = keyboardHeight
             self.listLableView.scrollIndicatorInsets.bottom = keyboardHeight
         }
-
+        
         if let indexPath = getActiveTextFieldIndexPath() {
             listLableView.scrollToRow(at: indexPath, at: .middle, animated: false)
         }
     }
-
+    
     @objc func keyboardWillHide(_ notification: Notification) {
         guard !isNavigatingCells else { return }
         
@@ -1077,15 +1187,15 @@ extension EnterMarkVC: UISearchBarDelegate, UIPopoverPresentationControllerDeleg
             listLableView.reloadData()
             return
         }
-
+        
         let key = searchText.lowercased()
-
+        
         studentRecords = allStudents.filter {
             ($0.student_name ?? "").lowercased().contains(key) ||
             ($0.roll_no ?? "").lowercased().contains(key) ||
             ($0.admission_no ?? "").lowercased().contains(key)
         }
-
+        
         if studentRecords.isEmpty {
             nodataImg.isHidden = false
             nodataLbl.isHidden = false
@@ -1095,20 +1205,20 @@ extension EnterMarkVC: UISearchBarDelegate, UIPopoverPresentationControllerDeleg
             nodataImg.isHidden = true
             nodataLbl.isHidden = true
         }
-
+        
         listLableView.reloadData()
     }
-
-
+    
+    
     func showPopover(from sender: UIView, contentVC: FilterPopover) {
-
+        
         let popoverWidth = self.view.frame.width - 40
         let popoverHeight: CGFloat = 170
-
+        
         contentVC.modalPresentationStyle = .popover
         contentVC.preferredContentSize = CGSize(width: popoverWidth,
                                                 height: popoverHeight)
-
+        
         if let pop = contentVC.popoverPresentationController {
             pop.sourceView = self.view
             pop.sourceRect = CGRect(
@@ -1121,10 +1231,10 @@ extension EnterMarkVC: UISearchBarDelegate, UIPopoverPresentationControllerDeleg
             pop.delegate = self
             pop.backgroundColor = .white
         }
-
+        
         present(contentVC, animated: true)
     }
-
+    
     // MARK: - Update Popover Size When Stack Added
     func updatePopoverSizeForStackCount(_ stackCount: Int) {
         guard !isUpdatingPopover else { return }
@@ -1162,23 +1272,18 @@ extension EnterMarkVC: UISearchBarDelegate, UIPopoverPresentationControllerDeleg
             self.isUpdatingPopover = false
         }
     }
-
+    
     // MARK: - Popover Presentation Delegate
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
-   }
+}
 extension EnterMarkVC {
     
     func applyFiltersToStudents(_ filters: [(type: String, sortValue: String)]) {
-        // Start with base student records
         var sortedRecords = studentRecords
         for filter in filters.reversed() {
-            sortedRecords = sortStudentsBy(
-                filter.type,
-                sortOrder: filter.sortValue,
-                students: sortedRecords
-            )
+            sortedRecords = sortStudentsBy(filter.type,sortOrder: filter.sortValue,students: sortedRecords)
         }
         
         studentRecords = sortedRecords
@@ -1188,50 +1293,50 @@ extension EnterMarkVC {
     private func sortStudentsBy(_ filterType: String,
                                 sortOrder: String,
                                 students: [StudentMark]) -> [StudentMark] {
-
+        
         let isAscending = sortOrder == "Ascending"
-
+        
         switch filterType {
-
+            
         case "Student Name":
             return students.sorted {
                 let n1 = $0.student_name ?? ""
                 let n2 = $1.student_name ?? ""
                 return isAscending ? n1 < n2 : n1 > n2
             }
-
+            
         case "Roll Number":
             return students.sorted {
                 let r1 = $0.roll_no ?? ""
                 let r2 = $1.roll_no ?? ""
-
+                
                 if let i1 = Int(r1), let i2 = Int(r2) {
                     return isAscending ? i1 < i2 : i1 > i2
                 }
                 return isAscending ? r1 < r2 : r1 > r2
             }
-
+            
         case "Admission Number":
             return students.sorted {
                 let a1 = $0.admission_no ?? ""
                 let a2 = $1.admission_no ?? ""
-
+                
                 if let i1 = Int(a1), let i2 = Int(a2) {
                     return isAscending ? i1 < i2 : i1 > i2
                 }
                 return isAscending ? a1 < a2 : a1 > a2
             }
-
+            
         case "Gender":
             return students.sorted {
                 func normalizeGender(_ gender: String?) -> String {
                     guard let gender = gender, !gender.isEmpty else { return "" }
                     return gender.prefix(1).uppercased() + gender.dropFirst().lowercased()
                 }
-
+                
                 let g1 = normalizeGender($0.gender)
                 let g2 = normalizeGender($1.gender)
-
+                
                 switch sortOrder.lowercased() {
                 case "male":
                     return g1 == "Male"
@@ -1243,7 +1348,7 @@ extension EnterMarkVC {
                     return true
                 }
             }
-
+            
         default:
             return students
         }
@@ -1263,61 +1368,65 @@ extension EnterMarkVC: FilterPopoverDelegate {
         dismiss(animated: true)
     }
 }
-struct ColumnConfig: Codable {
-    let displayName: String?
-    let subjectName: String?
-    let subjectId: String?
-    let activityId: String?
-    let activityName: String?
-    let maxMarks: Int?
-}
 
-struct MarkDetailsResponse: Codable {
-    let status: Bool?
-    let message: String?
-    let data: [MarkDetails]?
-}
-struct MarkDetails:Codable{
-    let exam_section_id : String?
-    let upload_details:[StudentMark]?
-}
-struct StudentMark: Codable {
-    let student_id: String?
-    let student_name: String?
-    let roll_no: String?
-    let admission_no: String?
-    let gender: String?
-    var marks: [SubjectMarks]?
-}
-
-struct SubjectMarks: Codable {
-    let subject_id: String?
-    let subject_name: String?
-    var activities: [ActivityMark]?
-}
-
-struct ActivityMark: Codable {
-    let id: String?
-    let name: String?
-    var mark: String?
-    let max_mark: String?
-    let is_edit: Bool?
-    var selected_name: String?
-    var change_mark: String?
-    var isReview: Bool?
-    var reason: String?
-}
-
-
-extension String {
-    func width(usingFont font: UIFont) -> CGFloat {
-        let size = (self as NSString).size(withAttributes: [.font: font])
-        return ceil(size.width)
+extension EnterMarkVC {
+    
+    private static let minRubricWidth: CGFloat = 110
+    private static let minActivityWidth: CGFloat = 110
+    private static let maxColumnWidth: CGFloat = 120
+    private static let padding: CGFloat = 16
+    
+    func columnWidth(for column: ColumnConfig) -> CGFloat {
+        let headerFont = UIFont.systemFont(ofSize: 13, weight: .medium)
+        let maxFont = UIFont.systemFont(ofSize: 12, weight: .regular)
+        
+        var widths: [CGFloat] = []
+        if let display = column.displayName {
+            widths.append(display.width(usingFont: headerFont))
+        }
+        if let max = column.maxMarks {
+            widths.append("Max: \(max)".width(usingFont: maxFont))
+        }
+        
+        let minWidth = column.isRubric ? Self.minRubricWidth : Self.minActivityWidth
+        let maxTextWidth = widths.max() ?? minWidth
+        return min(max(maxTextWidth + Self.padding, minWidth), Self.maxColumnWidth)
+    }
+    
+    func headerColumnWidth(for header: HeaderColumnConfig) -> CGFloat {
+        let leaves = subjectColumns.filter {
+            $0.subjectId == header.subjectId && $0.activityId == header.activityId
+        }
+        guard !leaves.isEmpty else { return Self.minActivityWidth }
+        return leaves.reduce(0) { $0 + columnWidth(for: $1) }
+    }
+    
+    func leafWidths(for header: HeaderColumnConfig) -> [CGFloat] {
+        subjectColumns
+            .filter { $0.subjectId == header.subjectId && $0.activityId == header.activityId }
+            .map { columnWidth(for: $0) }
+    }
+    private func calculateHeaderHeight() -> CGFloat {
+        let subjectFont     = UIFont.systemFont(ofSize: 12, weight: .regular)
+        let headerFont      = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        let rubricNameFont  = UIFont.systemFont(ofSize: 12, weight: .medium)
+        let rubricMaxFont   = UIFont.systemFont(ofSize: 10, weight: .regular)
+        var maxHeight: CGFloat = 70
+        
+        for header in headerColumns {
+            let hasRubrics = header.rubrics?.isEmpty == false
+            let topHeight = subjectFont.lineHeight + (headerFont.lineHeight * 2)
+            
+            let bottomHeight: CGFloat
+            if hasRubrics {
+                bottomHeight = (rubricNameFont.lineHeight * 2) + rubricMaxFont.lineHeight + 8
+            } else {
+                bottomHeight = subjectFont.lineHeight
+            }
+            let totalHeight = topHeight + bottomHeight + 24
+            maxHeight = max(maxHeight, totalHeight)
+        }
+        return maxHeight
     }
 }
 
-extension UIView {
-    func superview<T>(of type: T.Type) -> T? {
-        return superview as? T ?? superview?.superview(of: type)
-    }
-}

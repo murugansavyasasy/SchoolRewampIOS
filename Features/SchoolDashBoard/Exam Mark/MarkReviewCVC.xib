@@ -24,7 +24,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oit-B2-wma">
                                 <rect key="frame" x="0.0" y="0.0" width="194" height="63"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Sjj-gb-LnP">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Sjj-gb-LnP">
                                         <rect key="frame" x="3" y="5" width="188" height="55"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tamil" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZUl-1h-sEz">
@@ -37,13 +37,13 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4U-Ld-zex">
-                                                <rect key="frame" x="0.0" y="20" width="188" height="20"/>
+                                                <rect key="frame" x="0.0" y="25" width="188" height="5"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLG-g8-eBX">
-                                                <rect key="frame" x="0.0" y="40" width="188" height="15"/>
+                                                <rect key="frame" x="0.0" y="35" width="188" height="15"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="15" id="CEq-aN-37h"/>
                                                 </constraints>
@@ -51,6 +51,10 @@
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DO0-ib-dDK">
+                                                <rect key="frame" x="0.0" y="55" width="188" height="0.0"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </stackView>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -78,6 +82,8 @@
             <connections>
                 <outlet property="headerLbl" destination="B4U-Ld-zex" id="vkp-pC-0Nl"/>
                 <outlet property="maxMarkLbl" destination="cLG-g8-eBX" id="48n-ye-fGs"/>
+                <outlet property="overallstack" destination="Sjj-gb-LnP" id="vhi-cZ-Tv1"/>
+                <outlet property="subColumnsStack" destination="DO0-ib-dDK" id="ufh-o2-NAB"/>
                 <outlet property="subjectLbl" destination="ZUl-1h-sEz" id="zbP-bg-goi"/>
             </connections>
             <point key="canvasLocation" x="135.87786259541986" y="-119.36619718309859"/>
