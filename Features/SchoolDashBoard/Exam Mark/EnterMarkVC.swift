@@ -144,14 +144,14 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                                 name: rubric.name,
                                 max_mark: rubric.max_mark,
                                 subjectName: subject.subject_name,
-                                displayName: rubric.selected_name ?? rubric.name
+                                displayName: rubric.name
                             )
                         )
                         
                         // flat leaf column for data entry
                         subjectColumns.append(
                             ColumnConfig(
-                                displayName: rubric.selected_name ?? rubric.name,
+                                displayName: rubric.name,
                                 subjectName: subject.subject_name,
                                 subjectId: subjectId,
                                 activityId: activityId,
@@ -168,7 +168,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                     
                     headerColumns.append(
                         HeaderColumnConfig(
-                            displayName: activity.selected_name ?? activity.name,
+                            displayName: activity.name,
                             subjectName: subject.subject_name,
                             subjectId: subjectId,
                             activityId: activityId,
@@ -181,7 +181,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                 } else {
                     headerColumns.append(
                         HeaderColumnConfig(
-                            displayName: activity.selected_name ?? activity.name,
+                            displayName: activity.name,
                             subjectName: subject.subject_name,
                             subjectId: subjectId,
                             activityId: activityId,
@@ -193,7 +193,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                     
                     subjectColumns.append(
                         ColumnConfig(
-                            displayName: activity.selected_name ?? activity.name,
+                            displayName: activity.name,
                             subjectName: subject.subject_name,
                             subjectId: subjectId,
                             activityId: activityId,
@@ -228,7 +228,8 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                     guard let data = response.data?.first else { return }
                     self.studentRecords = data.upload_details ?? []
                     self.allStudents = data.upload_details ?? []
-                    self.examId = data.exam_section_id
+                    self.examId = data.exam_id
+                    self.sectionId = data.exam_section_id
                     self.errorDeclarationLbl.text = "⚠️ \(self.getFormattedReasonSummary())"
                     self.isNameWidthCalculated = false
                     self.setupColumnsFromGetMarksResponse()
@@ -263,103 +264,40 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     
     private func updateMarksWithAIData() {
         for studentIndex in 0..<studentRecords.count {
-            
+
             guard let studentId = studentRecords[studentIndex].student_id,
                   let aiStudent = aiRecords.first(where: { $0.studentId == studentId }) else {
                 continue
             }
-            
+
             for subjectIndex in 0..<(studentRecords[studentIndex].marks?.count ?? 0) {
-                
+
                 guard let activities = studentRecords[studentIndex].marks?[subjectIndex].activities else {
                     continue
                 }
-                
+
                 for activityIndex in 0..<activities.count {
-                    
-                    let currentMark = studentRecords[studentIndex]
+
+                    let hasRubrics = !(studentRecords[studentIndex]
                         .marks?[subjectIndex]
                         .activities?[activityIndex]
-                        .mark ?? ""
-                    
-                    let selectedName = studentRecords[studentIndex]
-                        .marks?[subjectIndex]
-                        .activities?[activityIndex]
-                        .selected_name ?? ""
-                    
-                    guard let aiMark = aiStudent.marks.first(where: {
-                        normalizeName($0.name) == normalizeName(selectedName)
-                    }) else { continue }
-                    
-                    let aiValue = aiMark.value
-                    let aiReason = aiMark.reason ?? ""
-                    let aiReviewStatus = aiMark.isReview
-                    if !aiValue.isEmpty {
-                        if let _ = Int(aiValue) {
-                            
-                            if !currentMark.isEmpty && currentMark != aiValue {
-                                
-                                studentRecords[studentIndex]
-                                    .marks?[subjectIndex]
-                                    .activities?[activityIndex]
-                                    .change_mark = currentMark
-                                
-                                studentRecords[studentIndex]
-                                    .marks?[subjectIndex]
-                                    .activities?[activityIndex]
-                                    .mark = aiValue
-                                
-                                studentRecords[studentIndex]
-                                    .marks?[subjectIndex]
-                                    .activities?[activityIndex]
-                                    .reason = "Existing marks differ from the newly uploaded data."
-                                
-                            } else if currentMark.isEmpty {
-                                
-                                studentRecords[studentIndex]
-                                    .marks?[subjectIndex]
-                                    .activities?[activityIndex]
-                                    .mark = aiValue
-                            }
-                            
-                        } else {
-                            studentRecords[studentIndex]
-                                .marks?[subjectIndex]
-                                .activities?[activityIndex]
-                                .change_mark = currentMark
-                            
-                            studentRecords[studentIndex]
-                                .marks?[subjectIndex]
-                                .activities?[activityIndex]
-                                .mark = aiValue == "AB" ? "AB" : ""
-                            
-                            studentRecords[studentIndex]
-                                .marks?[subjectIndex]
-                                .activities?[activityIndex]
-                                .reason = aiValue
-                        }
-                        
-                        studentRecords[studentIndex]
-                            .marks?[subjectIndex]
-                            .activities?[activityIndex]
-                            .isReview = aiReviewStatus
-                        
-                    } else if !currentMark.isEmpty, !aiReason.isEmpty {
-                        
-                        studentRecords[studentIndex]
-                            .marks?[subjectIndex]
-                            .activities?[activityIndex]
-                            .isReview = aiReviewStatus
-                        
-                        studentRecords[studentIndex]
-                            .marks?[subjectIndex]
-                            .activities?[activityIndex]
-                            .reason = aiReason
+                        .rubrics?.isEmpty ?? true)
+
+                    if hasRubrics {
+                        compareRubrics(studentIndex: studentIndex,
+                                       subjectIndex: subjectIndex,
+                                       activityIndex: activityIndex,
+                                       aiMarks: aiStudent.marks)
+                    } else {
+                        compareActivity(studentIndex: studentIndex,
+                                         subjectIndex: subjectIndex,
+                                         activityIndex: activityIndex,
+                                         aiMarks: aiStudent.marks)
                     }
                 }
             }
         }
-        
+
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.view.layoutIfNeeded()
@@ -371,9 +309,139 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
             self.headerCollectionview.layoutIfNeeded()
             self.updateNameColumnWidth()
             self.listLableView.reloadData()
+            
+            printAsJSON(studentRecords, label: "studentRecords AFTER compare")
         }
     }
-    
+    private func printAsJSON<T: Encodable>(_ value: T, label: String = "") {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        
+        do {
+            let data = try encoder.encode(value)
+            if let jsonString = String(data: data, encoding: .utf8) {
+                print("=== \(label) ===")
+                print(jsonString)
+            }
+        } catch {
+            print("⚠️ Failed to encode \(label) to JSON: \(error)")
+        }
+    }
+
+    private func compareActivity(studentIndex: Int, subjectIndex: Int, activityIndex: Int, aiMarks: [RecordItem]) {
+
+        let selectedName = studentRecords[studentIndex]
+            .marks?[subjectIndex]
+            .activities?[activityIndex]
+            .selected_name ?? ""
+
+        guard let aiMark = aiMarks.first(where: {
+            normalizeName($0.name) == normalizeName(selectedName)
+        }) else { return }
+
+        let currentMark = studentRecords[studentIndex]
+            .marks?[subjectIndex]
+            .activities?[activityIndex]
+            .mark ?? ""
+
+        let aiValue = aiMark.value
+        let aiReason = aiMark.reason ?? ""
+        let aiReviewStatus = aiMark.isReview
+
+        if !aiValue.isEmpty {
+            if let _ = Int(aiValue) {
+
+                if !currentMark.isEmpty && currentMark != aiValue {
+
+                    studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].change_mark = currentMark
+                    studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].mark = aiValue
+                    studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].reason =
+                        "Existing marks differ from the newly uploaded data."
+
+                } else if currentMark.isEmpty {
+                    studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].mark = aiValue
+                }
+
+            } else {
+                studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].change_mark = currentMark
+                studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].mark = aiValue == "AB" ? "AB" : ""
+                studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].reason = aiValue
+            }
+
+            studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].isReview = aiReviewStatus
+
+        } else if !currentMark.isEmpty, !aiReason.isEmpty {
+            studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].isReview = aiReviewStatus
+            studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].reason = aiReason
+        }
+    }
+
+    private func compareRubrics(studentIndex: Int, subjectIndex: Int, activityIndex: Int, aiMarks: [RecordItem]) {
+
+        guard let rubricCount = studentRecords[studentIndex]
+            .marks?[subjectIndex]
+            .activities?[activityIndex]
+            .rubrics?.count else { return }
+
+        for rubricIndex in 0..<rubricCount {
+
+            let rubricSelectedName = studentRecords[studentIndex]
+                .marks?[subjectIndex]
+                .activities?[activityIndex]
+                .rubrics?[rubricIndex]
+                .selected_name ?? ""
+
+            guard let aiMark = aiMarks.first(where: {
+                normalizeName($0.name) == normalizeName(rubricSelectedName)
+            }) else { continue }
+
+            let currentRubricMark = studentRecords[studentIndex]
+                .marks?[subjectIndex]
+                .activities?[activityIndex]
+                .rubrics?[rubricIndex]
+                .mark ?? ""
+
+            let aiValue = aiMark.value
+            let aiReason = aiMark.reason ?? ""
+            let aiReviewStatus = aiMark.isReview
+
+            if !aiValue.isEmpty {
+                if let _ = Int(aiValue) {
+
+                    if !currentRubricMark.isEmpty && currentRubricMark != aiValue {
+
+                        studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                            .rubrics?[rubricIndex].change_mark = currentRubricMark
+                        studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                            .rubrics?[rubricIndex].mark = aiValue
+                        studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                            .rubrics?[rubricIndex].reason = "Existing marks differ from the newly uploaded data."
+
+                    } else if currentRubricMark.isEmpty {
+                        studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                            .rubrics?[rubricIndex].mark = aiValue
+                    }
+
+                } else {
+                    studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                        .rubrics?[rubricIndex].change_mark = currentRubricMark
+                    studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                        .rubrics?[rubricIndex].mark = aiValue == "AB" ? "AB" : ""
+                    studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                        .rubrics?[rubricIndex].reason = aiValue
+                }
+
+                studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                    .rubrics?[rubricIndex].isReview = aiReviewStatus
+
+            } else if !currentRubricMark.isEmpty, !aiReason.isEmpty {
+                studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                    .rubrics?[rubricIndex].isReview = aiReviewStatus
+                studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
+                    .rubrics?[rubricIndex].reason = aiReason
+            }
+        }
+    }
     private func updateNameColumnWidth() {
         view.layoutIfNeeded()
         headerCollectionview.layoutIfNeeded()
@@ -636,7 +704,14 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                             message: response.message,
                             on: self
                         ) {
-                            self.dismiss(animated: true)
+                            if self.uploadTest{
+                                self.dismiss(animated: true)
+                            }else{
+                               
+                                self.presentingViewController?.presentingViewController?.dismiss(animated: true)
+                                    
+                            }
+                            
                         }
                         
                     case .failure(_):

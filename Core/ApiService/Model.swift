@@ -3703,6 +3703,7 @@ struct MarkDetailsResponse: Codable {
 }
 struct MarkDetails:Codable{
     let exam_section_id : String?
+    let exam_id : String?
     let upload_details:[StudentMark]?
 }
 struct StudentMark: Codable {

@@ -71,7 +71,7 @@ class ExamListVC: UIViewController, UISearchBarDelegate {
     
     func Get_staffwise_exam_Api() {
         
-        let param:[String:Any] = ["section_id": standard?.sectionId ?? "", "academic_year_id": "7"/* String(academicYearId ?? 0)*/]
+        let param:[String:Any] = ["section_id": standard?.sectionId ?? "", "academic_year_id": String(academicYearId ?? 0)]
         APIService.shared.makeApi(url: ServiceUrl.exam_api_exam_get_staff_wise_exam, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result: Result<StaffExamListResponse, Error>) in
             
             guard let self = self else{return}

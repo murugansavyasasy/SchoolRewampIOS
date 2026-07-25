@@ -233,9 +233,17 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
         guard columnIndex < parentVC?.subjectColumns.count ?? 0 else { return }
         let column = parentVC?.subjectColumns[columnIndex]
         let student = parentVC?.studentRecords[studentIndex]
+        
         if let subject = student?.marks?.first(where: { $0.subject_id == column?.subjectId }),
            let activity = subject.activities?.first(where: { $0.id == column?.activityId }) {
-            reason = activity.reason ?? "Issue detected"
+            
+            if column?.isRubric == true, let rubricId = column?.rubricId,
+               let rubrics = activity.rubrics, !rubrics.isEmpty,
+               let rubric = rubrics.first(where: { $0.id == rubricId }) {
+                reason = rubric.reason ?? "Issue detected"
+            } else {
+                reason = activity.reason ?? "Issue detected"
+            }
         }
         
         let popoverVC = PopoverViewVC(nibName: nil, bundle: nil)
