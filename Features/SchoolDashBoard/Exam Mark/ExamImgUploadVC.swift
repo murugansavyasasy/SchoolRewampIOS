@@ -56,292 +56,6 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     var selectedColumns: [String] = []
     var reviewFlags : [ReviewFlag] = []
     var convertedRecords: [ConvertedStudentRecord] = []
-    let json = """
-    {
-      "status" : true,
-      "message" : "Extraction successful",
-      "data" : {
-        "column_mapping" : {
-          "7" : "English",
-          "3" : "Student ID",
-          "4" : "Student Name",
-          "5" : "Tamil Paper -I",
-          "1" : "S.No",
-          "6" : "Tamil Paper -II",
-          "2" : "Reg No"
-        },
-        "table_structure" : {
-          "class_info" : "II-A",
-          "school_info" : "SAVYASASY BIOMETRIC TESTING DEMO",
-          "original_total_columns" : 25,
-          "estimated_rows" : 20,
-          "selected_columns" : [
-            "Tamil Paper -I",
-            "Tamil Paper -II",
-            "English"
-          ],
-          "column_headers" : [
-            {
-              "position" : 1,
-              "assessment" : null,
-              "confidence" : "high",
-              "max_marks" : 100,
-              "subject" : null,
-              "type" : "student_info",
-              "name" : "S.No"
-            },
-            {
-              "position" : 2,
-              "assessment" : null,
-              "confidence" : "high",
-              "max_marks" : 100,
-              "subject" : null,
-              "type" : "student_info",
-              "name" : "Reg No"
-            },
-            {
-              "position" : 3,
-              "assessment" : null,
-              "confidence" : "high",
-              "max_marks" : 100,
-              "subject" : null,
-              "type" : "student_info",
-              "name" : "Student ID"
-            },
-            {
-              "position" : 4,
-              "assessment" : null,
-              "confidence" : "high",
-              "max_marks" : 100,
-              "subject" : null,
-              "type" : "student_info",
-              "name" : "Student Name"
-            },
-            {
-              "position" : 5,
-              "assessment" : "Paper I",
-              "confidence" : "high",
-              "max_marks" : 100,
-              "subject" : "Tamil",
-              "type" : "subject",
-              "name" : "Tamil Paper -I"
-            },
-            {
-              "position" : 6,
-              "assessment" : "Paper II",
-              "confidence" : "high",
-              "max_marks" : 100,
-              "subject" : "Tamil",
-              "type" : "subject",
-              "name" : "Tamil Paper -II"
-            },
-            {
-              "position" : 7,
-              "assessment" : null,
-              "confidence" : "high",
-              "max_marks" : 100,
-              "subject" : "English",
-              "type" : "subject",
-              "name" : "English"
-            }
-          ],
-          "extraction_difficulty" : "medium",
-          "table_type" : "filled_marks_table",
-          "handwritten_elements" : [
-            "headers",
-            "marks"
-          ]
-        },
-        "records" : [
-          {
-            "Reg No" : "VS1-1961535",
-            "English" : "64",
-            "Student ID" : "10391350",
-            "S.No" : "1",
-            "Tamil Paper -II" : "78",
-            "Tamil Paper -I" : "72",
-            "Student Name" : "ABC"
-          },
-          {
-            "Reg No" : "VS1-1961552",
-            "English" : "82",
-            "Student ID" : "10391361",
-            "S.No" : "2",
-            "Tamil Paper -II" : "84",
-            "Tamil Paper -I" : "81",
-            "Student Name" : "Aishwariya G"
-          },
-          {
-            "Reg No" : "VS1-1961530",
-            "English" : "73",
-            "Student ID" : "10391355",
-            "S.No" : "3",
-            "Tamil Paper -II" : "68",
-            "Tamil Paper -I" : "62",
-            "Student Name" : "Banumathi R"
-          },
-          {
-            "Reg No" : "VS1-1961543",
-            "English" : "76",
-            "Student ID" : "10391370",
-            "S.No" : "4",
-            "Tamil Paper -II" : "85",
-            "Tamil Paper -I" : "87",
-            "Student Name" : "B Sivamurugan"
-          },
-          {
-            "Reg No" : "VS-3",
-            "English" : "72",
-            "Student ID" : "14401308",
-            "S.No" : "5",
-            "Tamil Paper -II" : "83",
-            "Tamil Paper -I" : "81",
-            "Student Name" : "Chandru"
-          },
-          {
-            "Reg No" : "VS1-1961537",
-            "English" : "62",
-            "Student ID" : "10391376",
-            "S.No" : "6",
-            "Tamil Paper -II" : "84",
-            "Tamil Paper -I" : "84",
-            "Student Name" : "Drakshayini Ghodase"
-          },
-          {
-            "Reg No" : "VS1-1961539",
-            "English" : "",
-            "Student ID" : "10391374",
-            "S.No" : "7",
-            "Tamil Paper -II" : "",
-            "Tamil Paper -I" : "",
-            "Student Name" : "Gayathri"
-          },
-          {
-            "Reg No" : "VS-17",
-            "English" : "",
-            "Student ID" : "15793292",
-            "S.No" : "8",
-            "Tamil Paper -II" : "",
-            "Tamil Paper -I" : "",
-            "Student Name" : "Habeeb"
-          },
-          {
-            "Reg No" : "VS1-1961531",
-            "English" : "",
-            "Student ID" : "10391354",
-            "S.No" : "9",
-            "Tamil Paper -II" : "",
-            "Tamil Paper -I" : "",
-            "Student Name" : "Keerthana J S"
-          },
-          {
-            "Reg No" : "VS-12",
-            "English" : "",
-            "Student ID" : "15064289",
-            "S.No" : "10",
-            "Tamil Paper -II" : "",
-            "Tamil Paper -I" : "",
-            "Student Name" : "kishore kk"
-          },
-          {
-            "Reg No" : "VS1-1961555",
-            "English" : "",
-            "Student ID" : "10391358",
-            "S.No" : "11",
-            "Tamil Paper -II" : "",
-            "Tamil Paper -I" : "",
-            "Student Name" : "Kothandapani"
-          },
-          {
-            "Reg No" : "VS-2",
-            "English" : "",
-            "Student ID" : "14239079",
-            "S.No" : "12",
-            "Tamil Paper -II" : "",
-            "Tamil Paper -I" : "",
-            "Student Name" : "Lakshmi Narayanan"
-          },
-          {
-            "Reg No" : "VS1-1961554",
-            "English" : "",
-            "Student ID" : "10391359",
-            "S.No" : "13",
-            "Tamil Paper -II" : "",
-            "Tamil Paper -I" : "",
-            "Student Name" : "Mahesh"
-          },
-          {
-            "Reg No" : "VS1-1961546",
-            "English" : "",
-            "Student ID" : "10391367",
-            "S.No" : "14",
-            "Tamil Paper -II" : "",
-            "Tamil Paper -I" : "",
-            "Student Name" : "M.A.M Manmohan"
-          },
-          {
-            "Reg No" : "VS1-1961545",
-            "English" : "",
-            "Student ID" : "10391368",
-            "S.No" : "15",
-            "Tamil Paper -II" : "",
-            "Tamil Paper -I" : "",
-            "Student Name" : "M Bharath"
-          },
-          {
-            "Reg No" : "VS1-1961540",
-            "English" : "",
-            "Student ID" : "10391373",
-            "S.No" : "16",
-            "Tamil Paper -II" : "",
-            "Tamil Paper -I" : "",
-            "Student Name" : "Murugan N"
-          },
-          {
-            "Reg No" : "VS1-1961528",
-            "English" : "",
-            "Student ID" : "10391357",
-            "S.No" : "17",
-            "Tamil Paper -II" : "",
-            "Tamil Paper -I" : "",
-            "Student Name" : "Nats"
-          },
-          {
-            "Reg No" : "125678",
-            "English" : "",
-            "Student ID" : "14534066",
-            "S.No" : "18",
-            "Tamil Paper -II" : "",
-            "Tamil Paper -I" : "",
-            "Student Name" : "Only Student Login"
-          },
-          {
-            "Reg No" : "VS1-1961536",
-            "English" : "",
-            "Student ID" : "10391377",
-            "S.No" : "19",
-            "Tamil Paper -II" : "",
-            "Tamil Paper -I" : "",
-            "Student Name" : "Padmapriya"
-          },
-          {
-            "Reg No" : "VS1-1961534",
-            "English" : "",
-            "Student ID" : "10391378",
-            "S.No" : "20",
-            "Tamil Paper -II" : "",
-            "Tamil Paper -I" : "",
-            "Student Name" : "Panneer Roja M"
-          }
-        ],
-        "columns" : 3,
-        "review_flags" : [
-
-        ],
-        "review_flags_count" : 0
-      }
-    }
-    """
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -581,103 +295,63 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         
         guard let image = selectedImage else { return }
         
-        guard let jsonData = json.data(using: .utf8) else { return }
+        APIService.shared.uploadImageApi(url: ServiceUrl.ocr_api_upload_marks, image: image){ [weak self] (result: Result<MarksAIresponse, Error>) in
+            
+            
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .success(let success):
+                    
+                    if success.status == true {
+                        
+                        guard let data = success.data,
+                            let records = data.records
+                        else {
+                            print("Invalid API data")
+                            return
+                        }
 
-        do {
-            let response = try JSONDecoder().decode(MarksAIresponse.self, from: jsonData)
+                        var reviewFlags = data.review_flags ?? []
 
-            if response.status == true {
+                        let converted = self.convertRecordsWithReviews(
+                            records: records,
+                            reviewFlags: reviewFlags
+                        )
 
-                guard let data = response.data,
-                      let records = data.records else {
-                    print("Invalid data")
-                    return
+                        print("Converted:", converted)
+                        print("reviewFlags:", reviewFlags)
+                        print("selected_columns:", data.table_structure?.selected_columns ?? [])
+
+                        self.selectedColumns = data.table_structure?.selected_columns ?? []
+                        self.convertedRecords = converted
+                        
+
+                        let vc = ExamActivitySelectionVC()
+                        vc.ExamID = self.SelectedExam?.id ?? ""
+                        vc.isAIFlow = true
+                        vc.selectedColoumns = self.selectedColumns
+                        vc.section_Id = self.section_id ?? ""
+                        vc.convertedRecords = self.convertedRecords
+                        vc.SelectedExam = self.SelectedExam
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                       
+                    }else{
+                        
+                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) { }
+                    }
+                    
+                case .failure(let failure):
+                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) { }
+                    print("failure",failure.localizedDescription)
                 }
-
-                let reviewFlags = data.review_flags ?? []
-
-                let converted = self.convertRecordsWithReviews(
-                    records: records,
-                    reviewFlags: reviewFlags
-                )
-
-                self.selectedColumns = data.table_structure?.selected_columns ?? []
-                self.convertedRecords = converted
-                print(converted)
-                let vc = ExamActivitySelectionVC()
-                vc.ExamID = self.SelectedExam?.id ?? ""
-                vc.isAIFlow = true
-                vc.selectedColoumns = self.selectedColumns
-                vc.section_Id = self.section_id ?? ""
-                vc.convertedRecords = self.convertedRecords
-                vc.SelectedExam = self.SelectedExam
-                vc.modalPresentationStyle = .fullScreen
-
-                self.present(vc, animated: true)
+                
+                self.hideActivityLoader()
             }
-
-        } catch {
-            print(error)
         }
-        
-//        APIService.shared.uploadImageApi(url: ServiceUrl.ocr_api_upload_marks, image: image){ [weak self] (result: Result<MarksAIresponse, Error>) in
-//            
-//            
-//            guard let self = self else {return}
-//            
-//            DispatchQueue.main.async {
-//                
-//                switch result {
-//                case .success(let success):
-//                    
-//                    if success.status == true {
-//                        
-//                        guard let data = success.data,
-//                            let records = data.records
-//                        else {
-//                            print("Invalid API data")
-//                            return
-//                        }
-//
-//                        var reviewFlags = data.review_flags ?? []
-//
-//                        let converted = self.convertRecordsWithReviews(
-//                            records: records,
-//                            reviewFlags: reviewFlags
-//                        )
-//
-//                        print("Converted:", converted)
-//                        print("reviewFlags:", reviewFlags)
-//                        print("selected_columns:", data.table_structure?.selected_columns ?? [])
-//
-//                        self.selectedColumns = data.table_structure?.selected_columns ?? []
-//                        self.convertedRecords = converted
-//                        
-//
-//                        let vc = ExamActivitySelectionVC()
-//                        vc.ExamID = self.SelectedExam?.id ?? ""
-//                        vc.isAIFlow = true
-//                        vc.selectedColoumns = self.selectedColumns
-//                        vc.section_Id = self.section_id ?? ""
-//                        vc.convertedRecords = self.convertedRecords
-//                        vc.SelectedExam = self.SelectedExam
-//                        vc.modalPresentationStyle = .fullScreen
-//                        self.present(vc, animated: true)
-//                       
-//                    }else{
-//                        
-//                        CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) { }
-//                    }
-//                    
-//                case .failure(let failure):
-//                    CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: failure.localizedDescription, on: self) { }
-//                    print("failure",failure.localizedDescription)
-//                }
-//                
-//                self.hideActivityLoader()
-//            }
-//            
-//        }
     }
     
     // Key format: "studentId|field"
