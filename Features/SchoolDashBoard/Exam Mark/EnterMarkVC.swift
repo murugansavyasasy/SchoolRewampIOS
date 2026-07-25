@@ -534,7 +534,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                 return
             }
         }
-        if uploadTest{
+        if uploadTest {
             CustomAlert().showAlertCancel(
                 title: AlertstringFile.Confirm.translated(),
                 message:sender.tag == 1 ? AlertstringFile.publishMark.translated(): AlertstringFile.uploadMark.translated(),
@@ -577,13 +577,13 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                     print("Cancelled")
                 }
             )
-        }else{
+        } else {
             
             var uploadDetails: [[String: Any]] = []
             var invalidMarkCount = 0
             
             for student in studentRecords {
-                let rollNo = student.roll_no ?? ""
+                let studentId = student.student_id ?? ""   // ✅ use student_id, not roll_no
                 var studentMarks: [[String: Any]] = []
                 
                 for subject in student.marks ?? [] {
@@ -593,7 +593,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                     for activity in subject.activities ?? [] {
                         let activityId = activity.id ?? ""
                         let activityKey = "\(subjectId)_\(activityId)"
-                        let editedActivityMark = editedMarks[rollNo]?[activityKey]
+                        let editedActivityMark = editedMarks[studentId]?[activityKey]   // ✅ keyed by studentId
                         
                         var rubricsArray: [[String: Any]] = []
                         
@@ -601,7 +601,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                             for rubric in rubrics {
                                 let rubricId = rubric.id ?? ""
                                 let rubricKey = "RU:\(activityId)_\(rubricId)"
-                                let editedRubricMark = editedMarks[rollNo]?[rubricKey]
+                                let editedRubricMark = editedMarks[studentId]?[rubricKey]   // ✅ keyed by studentId
                                 
                                 let finalRubricMarkStr = editedRubricMark ?? rubric.mark ?? ""
                                 let maxRubricMarkStr = rubric.max_mark ?? ""
@@ -647,7 +647,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                 }
                 
                 uploadDetails.append([
-                    "student_id": student.student_id ?? "",
+                    "student_id": studentId,
                     "marks": studentMarks
                 ])
             }
@@ -856,17 +856,15 @@ extension EnterMarkVC {
         guard row < studentRecords.count, column < subjectColumns.count else { return }
         
         let col = subjectColumns[column]
-        let rollNo = studentRecords[row].roll_no ?? ""
+        let studentId = studentRecords[row].student_id ?? "unknown_\(row)"   // ✅ unique key instead of roll_no
         let trimmed = value.trimmingCharacters(in: .whitespaces)
         
         var hasError = false
         if let entered = Int(trimmed) { hasError = entered > (col.maxMarks ?? 0) }
         
         let key = makeMarkKey(col: col)
-        if editedMarks[rollNo] == nil { editedMarks[rollNo] = [:] }
-        editedMarks[rollNo]?[key] = trimmed
-        
-        let studentId = studentRecords[row].student_id
+        if editedMarks[studentId] == nil { editedMarks[studentId] = [:] }
+        editedMarks[studentId]?[key] = trimmed
         
         for s in 0..<(studentRecords[row].marks?.count ?? 0) {
             let currentSubject = studentRecords[row].marks?[s].subject_name ?? ""
@@ -884,36 +882,59 @@ extension EnterMarkVC {
                     rubrics[rIndex].isReview = hasError
                     rubrics[rIndex].reason = reson
                     studentRecords[row].marks?[s].activities?[a].rubrics = rubrics
-                    applyMarkToAllStudents(studentId: studentId, subjectIndex: s, activityIndex: a,
-                                           rubricIndex: rIndex, mark: trimmed, isReview: hasError, reason: reson, isRubric: true)
+                    
+                    applyMarkToAllStudents(
+                        studentId: studentRecords[row].student_id,
+                        subjectIndex: s,
+                        activityIndex: a,
+                        rubricIndex: rIndex,
+                        mark: trimmed,
+                        isReview: hasError,
+                        reason: reson,
+                        isRubric: true
+                    )
                     
                     errorDeclarationLbl.text = "⚠️ \(getFormattedReasonSummary())"
                     
                     if trimmed == original {
-                        editedMarks[rollNo]?.removeValue(forKey: key)
-                        if editedMarks[rollNo]?.isEmpty == true { editedMarks.removeValue(forKey: rollNo) }
+                        editedMarks[studentId]?.removeValue(forKey: key)
+                        if editedMarks[studentId]?.isEmpty == true {
+                            editedMarks.removeValue(forKey: studentId)
+                        }
                     }
                     return
+                    
                 } else {
                     let original = studentRecords[row].marks?[s].activities?[a].mark ?? ""
                     studentRecords[row].marks?[s].activities?[a].mark = trimmed
                     studentRecords[row].marks?[s].activities?[a].isReview = hasError
                     studentRecords[row].marks?[s].activities?[a].reason = reson
                     
-                    applyMarkToAllStudents(studentId: studentId, subjectIndex: s, activityIndex: a,
-                                           rubricIndex: nil, mark: trimmed, isReview: hasError, reason: reson, isRubric: false)
+                    applyMarkToAllStudents(
+                        studentId: studentRecords[row].student_id,
+                        subjectIndex: s,
+                        activityIndex: a,
+                        rubricIndex: nil,
+                        mark: trimmed,
+                        isReview: hasError,
+                        reason: reson,
+                        isRubric: false
+                    )
                     
                     errorDeclarationLbl.text = "⚠️ \(getFormattedReasonSummary())"
                     
                     if trimmed == original {
-                        editedMarks[rollNo]?.removeValue(forKey: key)
-                        if editedMarks[rollNo]?.isEmpty == true { editedMarks.removeValue(forKey: rollNo) }
+                        editedMarks[studentId]?.removeValue(forKey: key)
+                        if editedMarks[studentId]?.isEmpty == true {
+                            editedMarks.removeValue(forKey: studentId)
+                        }
                     }
                     return
                 }
             }
         }
     }
+    
     private func applyMarkToAllStudents(studentId: String?, subjectIndex: Int, activityIndex: Int,
                                         rubricIndex: Int?, mark: String, isReview: Bool, reason: String, isRubric: Bool) {
         guard let studentId = studentId,
@@ -942,7 +963,6 @@ extension EnterMarkVC {
         }
         return "AN:\(col.activityId ?? UUID().uuidString)"
     }
-    
 }
 
 extension EnterMarkVC {
