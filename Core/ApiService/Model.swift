@@ -339,6 +339,17 @@ struct CommonApiSuc: Codable {
     let data: [String]?
 }
 
+
+struct examSucApi: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [linkdata]?
+}
+
+struct linkdata: Codable {
+    let link: String?
+}
+
 struct SecondCommonApiSuc: Codable {
     let status: Bool?
     let message: String?
@@ -1605,6 +1616,7 @@ struct ExamItem: Codable {
     var reportName: String?
     var report_sent: Bool?
     var mark_sent: Bool?
+    var type : String?
     
   
 }
@@ -1634,6 +1646,12 @@ struct SplitMark: Codable {
     var name: String?
     var max_mark: String?
     var mark_obtained: String?
+    var rubrics: [RubricMark]?
+}
+struct RubricMark: Codable {
+    var name: String?
+    var max_mark: String?
+    var mark_obtained: String?
 }
 
 struct Assessment: Codable {
@@ -1652,7 +1670,7 @@ struct Assessment: Codable {
 struct Groups: Codable {
     var name: String?
     var mark: String?
-    var sub_groups: [SubGroup]?
+    var subjects: [SubGroup]?
 }
 
 struct SubGroup: Codable {

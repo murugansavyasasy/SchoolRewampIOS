@@ -103,13 +103,13 @@ class ExameMarVC: UIViewController {
             }
         }
     }
-    func markListApi(exam_id: String) {
+    func markListApi(exam_id: String,type: String) {
         APIService.shared.makeApi(
             url: ServiceUrl.exam_api_get_progress_card,
-            parameters: ["exam_id": exam_id],
-            type: ApitTypeSringFile.GET,
+            parameters: ["report_id": exam_id,"type": type],
+            type: ApitTypeSringFile.POST,
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true
-        ) { [weak self] (result: Result<CommonApiSuc, Error>) in
+        ) { [weak self] (result: Result<examSucApi, Error>) in
             
             guard let self = self else {return}
             
@@ -118,7 +118,7 @@ class ExameMarVC: UIViewController {
                 case .success(let success):
                     
                     if success.status == true {
-                        self.view_ProgressCard(url: success.data?.first ?? "")
+                        self.view_ProgressCard(url: success.data?.first?.link ?? "")
                         if user_inputs.clearTempData(){
                                 let parms = [ "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",
                                               "activity": "VIEW_EXAM_MARK",
@@ -198,7 +198,7 @@ extension ExameMarVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         }
 
         cell.OnViewProgress = { [weak self] in
-            self?.markListApi(exam_id: String(exam?.report_id ?? 0))
+            self?.markListApi(exam_id: String(exam?.report_id ?? 0), type: exam?.type ?? "")
         }
         
         return cell

@@ -48,48 +48,7 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
     }
 
     // MARK: - API Call
-//    func examDetailApi() {
-//        if #available(iOS 15.0, *) {
-//            showActivityLoader()
-//        }
-//
-//        APIService.shared.makeApi(
-//            url: ServiceUrl.exam_api_exam_get_exams,
-//            parameters: [:],
-//            type: ApitTypeSringFile.GET,
-//            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: false
-//        ) { [weak self] (result: Result<DetailedExamListResponse, Error>) in
-//            
-//            guard let self = self else {return}
-//            
-//            DispatchQueue.main.async {
-//                if #available(iOS 15.0, *) { self.hideActivityLoader() }
-//                switch result {
-//                case .success(let response):
-//                    self.examDetails = response.data
-//                    self.FilteredExamDetails = self.examDetails
-//                    
-//                    self.subject_details = response.data?.first?.exam_subject_details
-////                    self?.prepareGroupedData()
-//                    self.tv.reloadData()
-//                    let isEmpty = self.examDetails?.isEmpty ?? true
-//                    self.NoDataLbl.isHidden = !isEmpty
-//                    self.NoDataLbl.text = response.message ?? ""
-//                    self.NoDataImage.isHidden = !isEmpty
-//                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: isEmpty)
-//                    
-//                    
-//                case .failure(let error):
-//                    print("API Error:", error.localizedDescription)
-//                    self.NoDataLbl.text = error.localizedDescription
-//                    self.NoDataLbl.isHidden = false
-//                    self.NoDataImage.isHidden = false
-//                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: true)
-//                }
-//            }
-//        }
-//    }
-    
+
     func examDetailApi() {
         if #available(iOS 15.0, *) {
             showActivityLoader()
@@ -169,19 +128,10 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textColor = .primery
         titleLabel.setFont(style: .body, size: 25)
-        titleLabel.text = FilteredExamDetails?[section].examName
+        titleLabel.text = newExam?[section].examName
         
         headerview.addSubview(titleLabel)
         
-        // Body Label
-//        let bodyLabel = UILabel()
-//        bodyLabel.translatesAutoresizingMaskIntoConstraints = false
-//        bodyLabel.textColor = .secondaryLabel
-//        bodyLabel.setFont(style: .body, size: 14)
-//        bodyLabel.numberOfLines = 0
-//        bodyLabel.text = FilteredExamDetails?[section].created_on   // ← உன் dataல இருக்க body text
-//        
-//        headerview.addSubview(bodyLabel)
         
         NSLayoutConstraint.activate([
             // Title label constraints
@@ -189,12 +139,6 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
             titleLabel.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),
             titleLabel.topAnchor.constraint(equalTo: headerview.topAnchor, constant: 5),
             titleLabel.bottomAnchor.constraint(equalTo: headerview.bottomAnchor, constant: -5)
-            
-            // Body label constraints
-//            bodyLabel.leadingAnchor.constraint(equalTo: headerview.leadingAnchor, constant: 15),
-//            bodyLabel.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),
-//            bodyLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-//            bodyLabel.bottomAnchor.constraint(equalTo: headerview.bottomAnchor, constant: -5)
         ])
         
         return headerview
@@ -216,6 +160,7 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
         }
         let data = newExam?[indexPath.section].subjects?[indexPath.row]
         cell.SubjectLbl.text = data?.subjectName
+        cell.MaxMarkBtn.setTitle(" TotalMarks : \(data?.total_mark ?? "") ", for: .normal)
 //        cell.syllabusLbl.text = data?.syllabus
 //        cell.DateBtn.setTitle(data?.exam_date?.convertToTargetDateFormat(), for: .normal)
 //        cell.MaxMarkBtn.setTitle("Marks : " + (data?.max_mark ?? ""), for: .normal)
@@ -229,7 +174,7 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
       
         let vc = ViewDetailsVc()
         vc.examResponse = examResponse
-        vc.currentSubject = currentSubject
+        vc.currentSubject = newExam?[indexPath.section].subjects?[indexPath.row]
         vc.activities = newExam?[indexPath.section].subjects?[indexPath.row].activities ?? []
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)

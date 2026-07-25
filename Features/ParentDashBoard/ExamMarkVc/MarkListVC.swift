@@ -62,7 +62,7 @@ class MarkListVC: UIViewController {
     func markListApi(exam_id: String) {
         APIService.shared.makeApi(
             url: ServiceUrl.exam_api_exam_view_marks,
-            parameters: ["exam_id": exam_id],
+            parameters: ["report_id": exam_id],
             type: ApitTypeSringFile.GET,
             token: studentDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<ExamMarksResponse, Error>) in
@@ -182,8 +182,8 @@ extension MarkListVC: UITableViewDataSource, UITableViewDelegate {
             let data = groups?[indexPath.row]
             cell.subjectLbl.text = data?.mark
             cell.SubjectMarkBtn.setTitle(data?.name, for: .normal)
-            if data?.sub_groups?.count ?? 0 > 1{
-                cell.configureGroup(data: data?.sub_groups ?? [])
+            if data?.subjects?.count ?? 0 > 1{
+                cell.configureGroup(data: data?.subjects ?? [])
             }
             return cell
             

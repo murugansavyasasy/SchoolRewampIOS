@@ -6,6 +6,8 @@ public enum SchedulingType {
     case session(String)
     case venue(String)
     case syllabus(String)
+    case TotalMarks(String)
+    case PassMark(String)
     
     var title: String {
         switch self {
@@ -14,6 +16,8 @@ public enum SchedulingType {
         case .session: return "SESSION"
         case .venue: return "VENUE"
         case .syllabus: return "SYLLABUS"
+        case .TotalMarks: return "TOTAL MARKS"
+        case .PassMark: return "PASS MARKS"
         }
     }
     
@@ -24,6 +28,8 @@ public enum SchedulingType {
         case .session(let val): return val
         case .venue(let val): return val
         case .syllabus(let val): return val
+        case .TotalMarks(let val): return val
+        case .PassMark(let val): return val
         }
     }
     
@@ -33,7 +39,9 @@ public enum SchedulingType {
         case .time: return "clock"
         case .session: return "sun.max"
         case .venue: return "mappin.and.ellipse"
-        case .syllabus: return "book"
+        case .syllabus: return "book" 
+        case .TotalMarks: return "pencil.and.list.clipboard"
+        case .PassMark: return "pencil.and.list.clipboard"
         }
     }
     
@@ -44,6 +52,9 @@ public enum SchedulingType {
         case .session: return UIColor(red: 67/255, green: 160/255, blue: 71/255, alpha: 1.0)
         case .venue: return UIColor(red: 251/255, green: 140/255, blue: 0/255, alpha: 1.0)
         case .syllabus: return UIColor(red: 0/255, green: 137/255, blue: 123/255, alpha: 1.0)
+        case .TotalMarks: return UIColor(red: 142/255, green: 36/255, blue: 170/255, alpha: 1.0)
+            
+        case .PassMark: return UIColor(red: 142/255, green: 36/255, blue: 170/255, alpha: 1.0)
         }
     }
     
@@ -54,6 +65,10 @@ public enum SchedulingType {
         case .session: return UIColor(red: 232/255, green: 245/255, blue: 233/255, alpha: 1.0)
         case .venue: return UIColor(red: 255/255, green: 243/255, blue: 224/255, alpha: 1.0)
         case .syllabus: return UIColor(red: 224/255, green: 242/255, blue: 241/255, alpha: 1.0)
+           
+        case .TotalMarks: return  UIColor(red: 243/255, green: 229/255, blue: 245/255, alpha: 1.0)
+            
+        case .PassMark: return  UIColor(red: 243/255, green: 229/255, blue: 245/255, alpha: 1.0)
         }
     }
 }
