@@ -44,13 +44,7 @@ class ViewDetailsVc: UIViewController {
     }
     
     private func loadData() {
-//        guard let response = ExamDataLoader.loadSampleData(),
-//              let exam = response.data.first,
-//              let subject = exam.subjects.first else { return }
-//        
-//        self.examResponse = response
-//        self.currentSubject = subject
-//        self.activities = subject.activities
+
         self.tableView.reloadData()
     }
     

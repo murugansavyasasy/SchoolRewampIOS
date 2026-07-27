@@ -33,17 +33,13 @@ class ExamListTV: UITableViewCell {
         MaxMarkBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         MaxMarkBtn.layer.cornerRadius = 10
         viewDeatils.layer.cornerRadius = 10
-        
+       
 //        let tap = UITapGestureRecognizer(target: self, action: #selector(AlarmAct))
 //        reminder.addGestureRecognizer(tap)
 //        reminder.isUserInteractionEnabled = true
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+   
     
     @IBAction func AlarmAct(_ sender: Any) {
         
