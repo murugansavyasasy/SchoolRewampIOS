@@ -101,7 +101,7 @@ class ExamActivitySelectionVC: UIViewController {
     
     func Get_exam_activities_Api(for examId: String) {
         SubjectList.removeAll()
-        let param:[String:Any] = ["exam_id": examId,/*"section_id": section_Id*/]
+        let param:[String:Any] = ["exam_id": examId]
 
         APIService.shared.makeApi(
             url: ServiceUrl.exam_get_subject_wise_activities,
@@ -284,7 +284,7 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
             cell.isExpanded = (expandedIndex == indexPath)
             cell.splits = data.activities ?? []
             cell.updateStatusLabel()
-            cell.statusLbl.text = "• \(data.activities?.count ?? 0) Activities"
+            //cell.statusLbl.text = "• \(data.activities?.count ?? 0) Activities"
             cell.configureExpandState()
             cell.onHeightChange = { [weak self] in
                 self?.updateMainHeight()

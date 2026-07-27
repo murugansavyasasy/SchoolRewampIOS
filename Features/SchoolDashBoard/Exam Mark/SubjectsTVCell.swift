@@ -97,26 +97,69 @@ class SubjectsTVCell: UITableViewCell {
         
         if isAI{
             if selected == 0{
-               // statusLbl.text = ExamMarkUploadString.Not_started.translated()
+                statusLbl.text = ExamMarkUploadString.Not_started.translated()
                 statusLbl.textColor = .darkGray
                 subjectView.backgroundColor = .systemBackground
                 baseView.layer.borderColor = UIColor.lightGray.cgColor
             }else if selected < splits.count {
-              //  statusLbl.text = String(format: ExamMarkUploadString.Activities_mapped_count.translated(),selected,splits.count)
+                statusLbl.text = String(format: ExamMarkUploadString.Activities_mapped_count.translated(),selected,splits.count)
                 statusLbl.textColor = .systemBrown
                 subjectView.backgroundColor = .systemYellow.withAlphaComponent(0.05)
                 baseView.layer.borderColor = UIColor.systemOrange.cgColor
             }else{
-//                statusLbl.text = String(format: ExamMarkUploadString.All_activities_mapped.translated(),splits.count)
+                statusLbl.text = String(format: ExamMarkUploadString.All_activities_mapped.translated(),splits.count)
                 statusLbl.textColor = .systemGreen
                 subjectView.backgroundColor = .systemGreen.withAlphaComponent(0.05)
                 baseView.layer.borderColor = UIColor.systemGreen.cgColor
             }
-        }else{
-            //statusLbl.text = String(format: ExamMarkUploadString.Activities_selected_count.translated(),selected,splits.count)
+        }else {
+            
+            let total = splits.count
+            let selected = splits.filter { activity in
+                let rubrics = activity.rubrics ?? []
+
+                if rubrics.isEmpty {
+                    return activity.isChecked == true
+                }
+
+                return rubrics.allSatisfy { $0.isChecked == true }
+            }.count
+
+            let text = selected > 0
+                ? "\(total) Activities   • \(selected) Selected"
+                : "\(total) Activities"
+
+            let attributed = NSMutableAttributedString(string: text)
+
+            if selected > 0,
+               let range = text.range(of: "• \(selected) Selected") {
+                let nsRange = NSRange(range, in: text)
+                attributed.addAttribute(
+                    .foregroundColor,
+                    value: UIColor.staffExamColour,
+                    range: nsRange
+                )
+            }
+
+            statusLbl.attributedText = attributed
+
+            // Update UI based on selection
+            if selected == 0 {
+                statusLbl.textColor = .darkGray
+                subjectView.backgroundColor = .systemBackground
+                baseView.layer.borderColor = UIColor.lightGray.cgColor
+
+            } else if selected < total {
+                statusLbl.textColor = .systemBrown
+                subjectView.backgroundColor = .systemYellow.withAlphaComponent(0.05)
+                baseView.layer.borderColor = UIColor.systemOrange.cgColor
+
+            } else {
+                statusLbl.textColor = .systemGreen
+                subjectView.backgroundColor = .systemGreen.withAlphaComponent(0.05)
+                baseView.layer.borderColor = UIColor.systemGreen.cgColor
+            }
         }
-        
-       // statusLbl.isHidden = !(selected > 0)
     }
     
     func configureExpandState() {
@@ -245,6 +288,8 @@ extension SubjectsTVCell: ActivityCellDelegate {
 
         splits[splitIndex].isChecked = isChecked
         splits[splitIndex].rubrics = rubrics
+        
+        updateStatusLabel()
 
         delegate?.didUpdateSplit(
             subjectIndex: subjectIndex,
@@ -262,6 +307,8 @@ extension SubjectsTVCell: ActivityCellDelegate {
         let hasSelectedRubric = splits[splitIndex].rubrics?.contains { $0.isChecked == true } ?? false
         
         splits[splitIndex].isChecked = hasSelectedRubric
+        
+        updateStatusLabel()
         
         delegate?.didUpdateSplit(subjectIndex: subjectIndex, splitIndex: splitIndex, split: splits[splitIndex])
     }
