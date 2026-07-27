@@ -3,7 +3,7 @@ import Foundation
 // MARK: - Response
 
 class NewExamResponseSuc: Codable {
-    let status: String?
+    let status: Bool?
     let message: String?
     let data: [NewExam]?
 }
@@ -11,11 +11,17 @@ class NewExamResponseSuc: Codable {
 // MARK: - Exam
 
 class NewExam: Codable {
-    
+
     let examId: String?
     let examName: String?
-    let subjects: [NewSubject]?
-    
+    var subjects: [NewSubject]?
+
+    init(examId: String?, examName: String?, subjects: [NewSubject]?) {
+        self.examId = examId
+        self.examName = examName
+        self.subjects = subjects
+    }
+
     enum CodingKeys: String, CodingKey {
         case examId = "exam_id"
         case examName = "exam_name"
@@ -29,11 +35,13 @@ class NewSubject: Codable {
     
     let subjectId: String?
     let subjectName: String?
+    let total_mark: String?
     let activities: [NewActivity]?
     
     enum CodingKeys: String, CodingKey {
         case subjectId = "subject_id"
         case subjectName = "subject_name"
+        case total_mark = "total_mark"
         case activities
     }
 }
@@ -44,6 +52,8 @@ class NewActivity: Codable {
     
     let activityId: String?
     let activityName: String?
+    let max_mark: String?
+    let pass_mark: String?
     let schedulingDetails: SchedulingDetails?
     let rubrics: [Rubric]?
     
@@ -51,6 +61,8 @@ class NewActivity: Codable {
         case activityId = "activity_id"
         case activityName = "activity_name"
         case schedulingDetails = "scheduling_details"
+        case max_mark = "max_mark"
+        case pass_mark = "pass_mark"
         case rubrics
     }
     
@@ -72,12 +84,16 @@ class Rubric: Codable {
     
     let rubricId: String?
     let rubricName: String?
+    let max_mark: String?
+    let pass_mark: String?
     let schedulingDetails: SchedulingDetails?
     
     enum CodingKeys: String, CodingKey {
         case rubricId = "rubric_id"
         case rubricName = "rubric_name"
         case schedulingDetails = "scheduling_details"
+        case max_mark = "max_mark"
+        case pass_mark = "pass_mark"
     }
 }
 
@@ -91,7 +107,6 @@ class SchedulingDetails: Codable {
     let session: String?
     let venue: String?
     let syllabus: String?
-    
     enum CodingKeys: String, CodingKey {
         case date
         case startTime = "start_time"

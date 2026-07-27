@@ -6,18 +6,13 @@
 //
 
 import UIKit
-
 // MARK: - Protocol for communicating mark changes
 protocol MarksCellDelegate: AnyObject {
-    func updateMark(row: Int,
-                    column: Int,
-                    value: String,
-                    reson: String,
-                    subjectName: String)
+    func updateMark(row: Int,column: Int,value: String,reson: String,subjectName: String)
 }
 
 class MarksCell: UICollectionViewCell {
-
+    
     @IBOutlet weak var infoBtn: UIButton!
     @IBOutlet weak var tittleLbl: UILabel!
     @IBOutlet weak var markTxt: UITextField!
@@ -36,31 +31,31 @@ class MarksCell: UICollectionViewCell {
         markTxt.placeholder = "--"
         markTxt.font = .systemFont(ofSize: 15)
         markTxt.keyboardType = .decimalPad
-
+        
         markTxt.inputAccessoryView = buildAccessoryView()
     }
-
+    
     private func buildAccessoryView() -> UIView {
-
+        
         let container = UIView()
         container.frame = CGRect(x: 0,
                                  y: 0,
                                  width: UIScreen.main.bounds.width,
                                  height: 50)
         container.backgroundColor = .systemGray6
-
+        
         let hairline = UIView()
         hairline.backgroundColor = .separator
         hairline.translatesAutoresizingMaskIntoConstraints = false
-
+        
         container.addSubview(hairline)
-
+        
         let abButton = createKeyButton(title: "AB", action: #selector(abTapped))
-
+        
         let naButton = createKeyButton(title: "NA", action: #selector(naTapped))
-//        naButton.isHidden = !(parentVC?.uploadTest ?? false)
+        //        naButton.isHidden = !(parentVC?.uploadTest ?? false)
         self.naButton = naButton
-
+        
         let buttons: [UIButton] = [
             abButton,
             naButton,
@@ -69,53 +64,53 @@ class MarksCell: UICollectionViewCell {
             createKeyButton(imageName: "arrow.left", action: #selector(leftTapped)),
             createKeyButton(imageName: "arrow.right", action: #selector(rightTapped))
         ]
-
+        
         let leftStack = UIStackView(arrangedSubviews: buttons)
         leftStack.axis = .horizontal
         leftStack.spacing = 12
         leftStack.alignment = .center
         leftStack.distribution = .fill
-
+        
         let doneButton = UIButton(type: .system)
         doneButton.setTitle("Done", for: .normal)
         doneButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
         doneButton.addTarget(markTxt,
                              action: #selector(UITextField.resignFirstResponder),
                              for: .touchUpInside)
-
+        
         let spacer = UIView()
-
+        
         let stack = UIStackView(arrangedSubviews: [
             leftStack,
             spacer,
             doneButton
         ])
-
+        
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
         stack.alignment = .center
-
+        
         container.addSubview(stack)
-
+        
         NSLayoutConstraint.activate([
-
+            
             hairline.topAnchor.constraint(equalTo: container.topAnchor),
             hairline.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             hairline.trailingAnchor.constraint(equalTo: container.trailingAnchor),
             hairline.heightAnchor.constraint(equalToConstant: 0.5),
-
+            
             stack.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 12),
             stack.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -12),
             stack.topAnchor.constraint(equalTo: container.topAnchor),
             stack.bottomAnchor.constraint(equalTo: container.bottomAnchor)
-
+            
         ])
-
+        
         return container
     }
-
-
-
+    
+    
+    
     private func space(_ width: CGFloat) -> UIBarButtonItem {
         let sp = UIBarButtonItem(barButtonSystemItem: .fixedSpace,
                                  target: nil,
@@ -123,72 +118,43 @@ class MarksCell: UICollectionViewCell {
         sp.width = width
         return sp
     }
-
+    
     private func createKeyButton(
         title: String? = nil,
         imageName: String? = nil,
         action: Selector
     ) -> UIButton {
-
+        
         var config = UIButton.Configuration.filled()
-
         if let title = title {
-
             config.title = title
             config.baseBackgroundColor = .systemOrange
             config.baseForegroundColor = .white
-
             config.cornerStyle = .medium
-
-            config.contentInsets = NSDirectionalEdgeInsets(
-                top: 8,
-                leading: 14,
-                bottom: 8,
-                trailing: 14
-            )
-
+            config.contentInsets = NSDirectionalEdgeInsets(top: 8,leading: 14,bottom: 8,trailing: 14)
+            
         } else {
-
-            config.image = UIImage(
-                systemName: imageName ?? ""
-            )
-
+            config.image = UIImage(systemName: imageName ?? "")
             config.baseBackgroundColor = .systemBlue
             config.baseForegroundColor = .white
-
             config.cornerStyle = .capsule
-
             config.preferredSymbolConfigurationForImage =
-                UIImage.SymbolConfiguration(
-                    pointSize: 15,
-                    weight: .bold
-                )
-
-            config.contentInsets = NSDirectionalEdgeInsets(
-                top: 8,
-                leading: 8,
-                bottom: 8,
-                trailing: 8
-            )
+            UIImage.SymbolConfiguration(pointSize: 15,weight: .bold)
+            config.contentInsets = NSDirectionalEdgeInsets(top: 8,leading: 8,bottom: 8,trailing: 8)
         }
-
+        
         let button = UIButton(configuration: config)
-
         if title == nil {
-
             NSLayoutConstraint.activate([
                 button.widthAnchor.constraint(equalToConstant: 36),
                 button.heightAnchor.constraint(equalToConstant: 36)
             ])
         }
-
-        button.addTarget(self,
-                         action: action,
-                         for: .touchUpInside)
-
+        button.addTarget(self,action: action,for: .touchUpInside)
+        
         return button
     }
-
+    
     @objc private func keyDown(_ sender: UIButton) {
         UIView.animate(
             withDuration: 0.14,
@@ -203,7 +169,7 @@ class MarksCell: UICollectionViewCell {
             }
         )
     }
-
+    
     @objc private func keyUp(_ sender: UIButton) {
         UIView.animate(
             withDuration: 0.22,
@@ -231,23 +197,15 @@ class MarksCell: UICollectionViewCell {
         tittleLbl.textColor = .label
     }
     
-    func configure(mark: String,
-                   channgeMark: String? = nil,
-                   rowIndex: Int,
-                   columnIndex: Int,
-                   alignment: NSTextAlignment = .center,
-                   parentVC: EnterMarkVC?,
-                   hasFlaggedIssue: Bool = false,
-                   is_edit: Bool,
-                   maxMark: Int = 0) {
-
+    func configure(mark: String,channgeMark: String? = nil,rowIndex: Int,columnIndex: Int,alignment: NSTextAlignment = .center,parentVC: EnterMarkVC?,hasFlaggedIssue: Bool = false,is_edit: Bool,maxMark: Int = 0) {
+        
         self.rowIndex = rowIndex
         self.columnIndex = columnIndex
         self.hasFlaggedIssue = hasFlaggedIssue
         self.parentVC = parentVC
         tittleLbl.isHidden = true
         infoBtn.isHidden = true
-
+        
         markTxt.isHidden = false
         markTxt.text = mark
         markTxt.textAlignment = alignment
@@ -266,26 +224,19 @@ class MarksCell: UICollectionViewCell {
             return
         }
         if hasFlaggedIssue {
-            applyHighlight(
-                color: .orange,
-                infoColor: .orange
-            )
+            applyHighlight(color: .orange,infoColor: .orange)
             return
         }
         
         if let markValue = Int(mark),
            !mark.isEmpty,
            markValue > maxMark {
-
-            applyHighlight(
-                color: .orange,
-                infoColor: .systemRed
-            )
+            applyHighlight(color: .orange,infoColor: .systemRed)
             return
         }
         markTxt.inputAccessoryView = buildAccessoryView()
     }
-
+    
     private func applyHighlight(color: UIColor, infoColor: UIColor) {
         markTxt.textColor = color
         markTxt.backgroundColor = color.withAlphaComponent(0.1)
@@ -296,7 +247,7 @@ class MarksCell: UICollectionViewCell {
         infoBtn.isHidden = false
         infoBtn.tintColor = infoColor
     }
-
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         markTxt.text = ""
@@ -317,7 +268,7 @@ class MarksCell: UICollectionViewCell {
         guard !trimmed.isEmpty else {
             return
         }
-
+        
         let entered = Int(trimmed) ?? 0
         if entered > maxMark {
             showErrorUI()
@@ -351,7 +302,7 @@ extension MarksCell: UITextFieldDelegate {
         let value = textField.text ?? ""
         var reason = ""
         var isValid = true
-
+        
         if let maxStr = parentVC?.subjectColumns[columnIndex].maxMarks,
            let entered = Int(value),
            entered > maxStr {
@@ -378,7 +329,7 @@ extension MarksCell: UITextFieldDelegate {
         
         var reason = ""
         var isValid = true
-
+        
         if let max = parentVC?.subjectColumns[columnIndex].maxMarks,
            let entered = Int(updatedText),
            entered > max {
@@ -389,15 +340,9 @@ extension MarksCell: UITextFieldDelegate {
         if updatedText == "AB" {
             reason = "Absent"
         }
-        
-        applyValidationUI(mark: updatedText,
-                          maxMark: parentVC?.subjectColumns[columnIndex].maxMarks ?? 0)
+        applyValidationUI(mark: updatedText,maxMark: parentVC?.subjectColumns[columnIndex].maxMarks ?? 0)
         let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
-        delegate?.updateMark(row: rowIndex,
-                             column: columnIndex,
-                             value: updatedText,
-                             reson: reason,
-                             subjectName: subjectName)
+        delegate?.updateMark(row: rowIndex,column: columnIndex,value: updatedText,reson: reason,subjectName: subjectName)
         
         return true
     }
@@ -413,38 +358,29 @@ extension MarksCell {
     @objc private func upTapped() {
         parentVC?.moveToPreviousRow(row: rowIndex, column: columnIndex)
     }
-
+    
     @objc private func downTapped() {
         parentVC?.moveToNextRow(row: rowIndex, column: columnIndex)
     }
-
+    
     @objc private func leftTapped() {
         parentVC?.moveToPreviousColumn(row: rowIndex, column: columnIndex)
     }
-
+    
     @objc private func rightTapped() {
         parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex)
     }
-
     
     @objc private func abTapped() {
         markTxt.text = "AB"
         let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
-        delegate?.updateMark(row: rowIndex,
-                             column: columnIndex,
-                             value: "AB",
-                             reson: "Absent",
-                             subjectName: subjectName)
+        delegate?.updateMark(row: rowIndex,column: columnIndex,value: "AB",reson: "Absent",subjectName: subjectName)
         parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex)
     }
     @objc private func naTapped() {
         markTxt.text = "NA"
         let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
-        delegate?.updateMark(row: rowIndex,
-                             column: columnIndex,
-                             value: "NA",
-                             reson: "Not Applicable",
-                             subjectName: subjectName)
+        delegate?.updateMark(row: rowIndex,column: columnIndex,value: "NA",reson: "Not Applicable",subjectName: subjectName)
         parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex)
     }
 }

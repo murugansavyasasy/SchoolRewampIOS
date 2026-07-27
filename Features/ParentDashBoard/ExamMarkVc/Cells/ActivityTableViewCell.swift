@@ -71,6 +71,8 @@ public class ActivityTableViewCell: UITableViewCell {
             if let sessionStr = details.session, !sessionStr.isEmpty { rows.append(.session(sessionStr)) }
             if let venueStr = details.venue, !venueStr.isEmpty { rows.append(.venue(venueStr)) }
             if let syllabusStr = details.syllabus, !syllabusStr.isEmpty { rows.append(.syllabus(syllabusStr)) }
+            if let syllabusStr = activity.max_mark, !syllabusStr.isEmpty { rows.append(.TotalMarks(syllabusStr)) }
+            if let syllabusStr = activity.pass_mark, !syllabusStr.isEmpty { rows.append(.PassMark(syllabusStr)) }
             
             for (index, rowType) in rows.enumerated() {
                 let rowView = SchedulingRowView()
@@ -85,12 +87,12 @@ public class ActivityTableViewCell: UITableViewCell {
         // 2. Configure Rubrics Section
         rubricsListStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
-         if ((activity.rubrics?.isEmpty) != nil) {
+         if ((activity.rubrics?.count == 0)) {
             lblRubricsHeader.text = "RUBRICS"
             emptyRubricsContainerView.isHidden = false
             rubricsListStackView.isHidden = true
         } else {
-            lblRubricsHeader.text = "RUBRICS (\(activity.rubrics?.count))"
+            lblRubricsHeader.text = "RUBRICS (\(activity.rubrics?.count ?? 0))"
             emptyRubricsContainerView.isHidden = true
             rubricsListStackView.isHidden = false
             

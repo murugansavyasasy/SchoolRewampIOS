@@ -103,13 +103,16 @@ class ExameMarVC: UIViewController {
             }
         }
     }
-    func markListApi(exam_id: String) {
+    func markListApi(exam_id: String,type: String) {
+        if #available(iOS 15.0, *) {
+            showActivityLoader()
+        }
         APIService.shared.makeApi(
             url: ServiceUrl.exam_api_get_progress_card,
-            parameters: ["exam_id": exam_id],
-            type: ApitTypeSringFile.GET,
+            parameters: ["report_id": exam_id,"type": type],
+            type: ApitTypeSringFile.POST,
             token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true
-        ) { [weak self] (result: Result<CommonApiSuc, Error>) in
+        ) { [weak self] (result: Result<examSucApi, Error>) in
             
             guard let self = self else {return}
             
@@ -118,7 +121,7 @@ class ExameMarVC: UIViewController {
                 case .success(let success):
                     
                     if success.status == true {
-                        self.view_ProgressCard(url: success.data?.first ?? "")
+                        self.view_ProgressCard(url: success.data?.first?.link ?? "")
                         if user_inputs.clearTempData(){
                                 let parms = [ "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",
                                               "activity": "VIEW_EXAM_MARK",
@@ -129,11 +132,13 @@ class ExameMarVC: UIViewController {
                     }else {
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
                         }
+                        self.hideActivityLoader()
                     }
                     
                 case .failure(let error):
                     print("API Error:", error)
                     CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
+                    self.hideActivityLoader()
                 }
             }
         }
@@ -158,6 +163,7 @@ class ExameMarVC: UIViewController {
     }
     
     func view_ProgressCard(url: String) {
+   
         let vc = ImageShowVc(nibName: nil, bundle: nil)
         
         if let fileURL = URL(string: url) {
@@ -198,7 +204,7 @@ extension ExameMarVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         }
 
         cell.OnViewProgress = { [weak self] in
-            self?.markListApi(exam_id: String(exam?.report_id ?? 0))
+            self?.markListApi(exam_id: String(exam?.report_id ?? 0), type: exam?.type ?? "")
         }
         
         return cell

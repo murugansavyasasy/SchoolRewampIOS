@@ -339,6 +339,17 @@ struct CommonApiSuc: Codable {
     let data: [String]?
 }
 
+
+struct examSucApi: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [linkdata]?
+}
+
+struct linkdata: Codable {
+    let link: String?
+}
+
 struct SecondCommonApiSuc: Codable {
     let status: Bool?
     let message: String?
@@ -1605,6 +1616,7 @@ struct ExamItem: Codable {
     var reportName: String?
     var report_sent: Bool?
     var mark_sent: Bool?
+    var type : String?
     
   
 }
@@ -1630,10 +1642,17 @@ struct SubjectMark: Codable {
     var percentage: String?
 }
 
+struct SplitRubricMark: Codable {
+    var name: String?
+    var max_mark: String?
+    var mark_obtained: String?
+}
+
 struct SplitMark: Codable {
     var name: String?
     var max_mark: String?
     var mark_obtained: String?
+    var rubrics: [SplitRubricMark]?
 }
 
 struct Assessment: Codable {
@@ -1652,7 +1671,7 @@ struct Assessment: Codable {
 struct Groups: Codable {
     var name: String?
     var mark: String?
-    var sub_groups: [SubGroup]?
+    var subjects: [SubGroup]?
 }
 
 struct SubGroup: Codable {
@@ -3669,3 +3688,82 @@ struct MarksActivity: Codable {
         case remarks
     }
 }
+struct HeaderColumnConfig: Codable {
+    let displayName: String?
+    let subjectName: String?
+    let subjectId: String?
+    let activityId: String?
+    let activityName: String?
+    let maxMarks: Int?
+    var rubrics: [RubricMark]?
+}
+struct RubricMark: Codable {
+    let id: String?
+    let name: String?
+    let max_mark: String?
+    let subjectName: String?
+    let displayName: String?
+}
+struct ColumnConfig: Codable {
+    let displayName: String?
+    let subjectName: String?
+    let subjectId: String?
+    let activityId: String?
+    let activityName: String?
+    let maxMarks: Int?
+    let isRubric: Bool
+    let rubricId: String?
+}
+
+struct MarkDetailsResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [MarkDetails]?
+}
+struct MarkDetails:Codable{
+    let exam_section_id : String?
+    let exam_id : String?
+    let upload_details:[StudentMark]?
+}
+struct StudentMark: Codable {
+    let student_id: String?
+    let student_name: String?
+    let roll_no: String?
+    let admission_no: String?
+    let gender: String?
+    var marks: [SubjectMarks]?
+}
+
+struct SubjectMarks: Codable {
+    let subject_id: String?
+    let subject_name: String?
+    var activities: [ActivityMark]?
+}
+
+struct ActivityMark: Codable {
+    let id: String?
+    let name: String?
+    var mark: String?
+    let max_mark: String?
+    let is_edit: Bool?
+    var selected_name: String?
+    var change_mark: String?
+    var isReview: Bool?
+    var reason: String?
+    var rubrics: [RubricActivityMark]?
+}
+
+struct RubricActivityMark: Codable {
+    let id: String?
+    let name: String?
+    var mark: String?
+    let max_mark: String?
+    let is_edit: Bool?
+    var selected_name: String?
+
+    // Local UI properties
+    var change_mark: String?
+    var isReview: Bool?
+    var reason: String?
+}
+

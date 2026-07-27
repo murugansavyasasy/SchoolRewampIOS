@@ -21,6 +21,7 @@ struct NotificationData {
     var retrycount = ""
     var diallist_id = ""
     var url = ""
+    var school_logo = ""
 }
 
 class NotificationCallVC: UIViewController {
@@ -140,6 +141,15 @@ class NotificationCallVC: UIViewController {
         if let receiverurl = userInfo["url"] as? String {
             noti.url = receiverurl
         }
+        if let schoolLogUrl = userInfo["school_logo"] as? String {
+            noti.school_logo = schoolLogUrl
+        }
+        
+        if noti.school_logo != "" {
+            logoImg.sd_setImage(with: URL(string:noti.school_logo), placeholderImage: UIImage(named: "placeholder"))
+        }
+        
+       
     }
     
     @objc private func queueFinished(notification: Notification) {

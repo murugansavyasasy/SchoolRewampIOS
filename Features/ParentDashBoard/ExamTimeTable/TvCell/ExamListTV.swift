@@ -12,10 +12,10 @@ class ExamListTV: UITableViewCell {
     @IBOutlet weak var viewDeatils: UIButton!
     @IBOutlet weak var cellView: UIView!
     @IBOutlet weak var SubjectLbl: UILabel!
-    @IBOutlet weak var syllabusLbl: UILabel!
+    @IBOutlet weak var totalMarksLbl: UILabel!
     @IBOutlet weak var DateBtn: UIButton!
     @IBOutlet weak var TimeBtn: UIButton!
-    @IBOutlet weak var MaxMarkBtn: UIButton!
+ 
     @IBOutlet weak var reminder: UIImageView!
     
     var indexPath: IndexPath!
@@ -25,25 +25,26 @@ class ExamListTV: UITableViewCell {
         super.awakeFromNib()
         
         cellView.layer.cornerRadius = 10
-        cellView.backgroundColor = .systemIndigo.withAlphaComponent(0.2)
+//        cellView.backgroundColor = .systemIndigo.withAlphaComponent(0.2)
+       cellView.layer.cornerRadius = 12
+       cellView.layer.shadowColor = UIColor.black.cgColor
+        cellView.layer.shadowOpacity = 0.08
+        cellView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cellView.layer.shadowRadius = 8
+       cellView.layer.masksToBounds = false
         SubjectLbl.setFont(style: .title, size: FontSize.TitleSize)
-        syllabusLbl.setFont(style: .body, size: FontSize.BodySize)
+        
         DateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         TimeBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        MaxMarkBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        MaxMarkBtn.layer.cornerRadius = 10
+     
         viewDeatils.layer.cornerRadius = 10
-        
+       
 //        let tap = UITapGestureRecognizer(target: self, action: #selector(AlarmAct))
 //        reminder.addGestureRecognizer(tap)
 //        reminder.isUserInteractionEnabled = true
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+   
     
     @IBAction func AlarmAct(_ sender: Any) {
         

@@ -8,14 +8,14 @@
 import UIKit
 import EventKit
 
-class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
+class ExamTmTblVCViewController: UIViewController {
     
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var NoDataImage: UIImageView!
     @IBOutlet weak var NoDataLbl: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    var examDetails: [DetailedExamItem]?
+
     var FilteredExamDetails: [NewExam]?
     var subject_details: [SubjectDetail]?
     let eventStore = EKEventStore()
@@ -24,7 +24,7 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
     private var currentSubject: NewSubject?
     private var activities: [NewActivity] = []
     weak var delegate : Searchable?
-    private var newExam : [NewExam]?
+    var newExam : [NewExam]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,48 +48,7 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
     }
 
     // MARK: - API Call
-//    func examDetailApi() {
-//        if #available(iOS 15.0, *) {
-//            showActivityLoader()
-//        }
-//
-//        APIService.shared.makeApi(
-//            url: ServiceUrl.exam_api_exam_get_exams,
-//            parameters: [:],
-//            type: ApitTypeSringFile.GET,
-//            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: false
-//        ) { [weak self] (result: Result<DetailedExamListResponse, Error>) in
-//            
-//            guard let self = self else {return}
-//            
-//            DispatchQueue.main.async {
-//                if #available(iOS 15.0, *) { self.hideActivityLoader() }
-//                switch result {
-//                case .success(let response):
-//                    self.examDetails = response.data
-//                    self.FilteredExamDetails = self.examDetails
-//                    
-//                    self.subject_details = response.data?.first?.exam_subject_details
-////                    self?.prepareGroupedData()
-//                    self.tv.reloadData()
-//                    let isEmpty = self.examDetails?.isEmpty ?? true
-//                    self.NoDataLbl.isHidden = !isEmpty
-//                    self.NoDataLbl.text = response.message ?? ""
-//                    self.NoDataImage.isHidden = !isEmpty
-//                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: isEmpty)
-//                    
-//                    
-//                case .failure(let error):
-//                    print("API Error:", error.localizedDescription)
-//                    self.NoDataLbl.text = error.localizedDescription
-//                    self.NoDataLbl.isHidden = false
-//                    self.NoDataImage.isHidden = false
-//                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: true)
-//                }
-//            }
-//        }
-//    }
-    
+
     func examDetailApi() {
         if #available(iOS 15.0, *) {
             showActivityLoader()
@@ -114,28 +73,37 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
                 switch result {
                     
                 case .success(let response):
-                    
-                    self.examResponse = response
-                    self.newExam = response.data
-                    // First Exam
-                    guard let exam = response.data?.first else {
-                        self.activities = []
+                   
+                        self.examResponse = response
+                        self.newExam = response.data
+                        self.FilteredExamDetails = self.newExam
+                        // First Exam
+                        guard let exam = response.data?.first else {
+                            self.activities = []
+                            self.tv.reloadData()
+                            return
+                        }
+                        
+                        // First Subject
+                        guard let subject = exam.subjects?.first else {
+                            self.activities = []
+                            self.tv.reloadData()
+                            return
+                        }
+                        
+                        self.currentSubject = subject
+                        self.activities = subject.activities ?? []
+                        
                         self.tv.reloadData()
-                        return
-                    }
+                        
+                        
+                    let isEmpty = self.newExam?.isEmpty ?? true
+                    self.NoDataLbl.isHidden = !isEmpty
+                    self.NoDataLbl.text = response.message ?? ""
+                    self.NoDataImage.isHidden = !isEmpty
+                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: isEmpty)
                     
-                    // First Subject
-                    guard let subject = exam.subjects?.first else {
-                        self.activities = []
-                        self.tv.reloadData()
-                        return
-                    }
-                    
-                    self.currentSubject = subject
-                    self.activities = subject.activities ?? []
-                    
-                    self.tv.reloadData()
-                    
+                  
                 case .failure(let error):
                     
                     print(error.localizedDescription)
@@ -146,6 +114,7 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
                     self.NoDataLbl.text = error.localizedDescription
                     self.NoDataLbl.isHidden = false
                     self.NoDataImage.isHidden = false
+                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: true)
                 }
             }
         }
@@ -156,7 +125,7 @@ class ExamTmTblVCViewController: UIViewController, ReminderCellDelegate {
 extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return newExam?.count ?? 0
+        return FilteredExamDetails?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -173,15 +142,6 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
         
         headerview.addSubview(titleLabel)
         
-        // Body Label
-//        let bodyLabel = UILabel()
-//        bodyLabel.translatesAutoresizingMaskIntoConstraints = false
-//        bodyLabel.textColor = .secondaryLabel
-//        bodyLabel.setFont(style: .body, size: 14)
-//        bodyLabel.numberOfLines = 0
-//        bodyLabel.text = FilteredExamDetails?[section].created_on   // ← உன் dataல இருக்க body text
-//        
-//        headerview.addSubview(bodyLabel)
         
         NSLayoutConstraint.activate([
             // Title label constraints
@@ -189,12 +149,6 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
             titleLabel.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),
             titleLabel.topAnchor.constraint(equalTo: headerview.topAnchor, constant: 5),
             titleLabel.bottomAnchor.constraint(equalTo: headerview.bottomAnchor, constant: -5)
-            
-            // Body label constraints
-//            bodyLabel.leadingAnchor.constraint(equalTo: headerview.leadingAnchor, constant: 15),
-//            bodyLabel.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),
-//            bodyLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-//            bodyLabel.bottomAnchor.constraint(equalTo: headerview.bottomAnchor, constant: -5)
         ])
         
         return headerview
@@ -203,25 +157,18 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return newExam?[section].subjects?.count ?? 0
+        return FilteredExamDetails?[section].subjects?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tv.dequeueReusableCell(withIdentifier: "ExamListTV", for: indexPath) as! ExamListTV
-        if (indexPath.row % 2) == 0 {
-            cell.cellView.backgroundColor = UIColor(hex: "#DEECFD")
-        }else {
-            cell.cellView.backgroundColor = UIColor(hex: "#F1EBFC")
-        }
-        let data = newExam?[indexPath.section].subjects?[indexPath.row]
+
+        let data = FilteredExamDetails?[indexPath.section].subjects?[indexPath.row]
         cell.SubjectLbl.text = data?.subjectName
-//        cell.syllabusLbl.text = data?.syllabus
-//        cell.DateBtn.setTitle(data?.exam_date?.convertToTargetDateFormat(), for: .normal)
-//        cell.MaxMarkBtn.setTitle("Marks : " + (data?.max_mark ?? ""), for: .normal)
-//        cell.TimeBtn.setTitle(data?.start_time, for: .normal)
+        cell.totalMarksLbl.text = ("TotalMarks : \(data?.total_mark ?? "") ")
         cell.indexPath = indexPath
-        cell.delegate = self
+    
         return cell
     }
 
@@ -229,33 +176,12 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
       
         let vc = ViewDetailsVc()
         vc.examResponse = examResponse
-        vc.currentSubject = currentSubject
-        vc.activities = newExam?[indexPath.section].subjects?[indexPath.row].activities ?? []
+        vc.currentSubject = FilteredExamDetails?[indexPath.section].subjects?[indexPath.row]
+        vc.activities = FilteredExamDetails?[indexPath.section].subjects?[indexPath.row].activities ?? []
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
-    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tv.dequeueReusableCell(withIdentifier: "ExamListTV", for: indexPath) as! ExamListTV
-//        
-//        let data = groupedExamDetails[indexPath.section].exams[indexPath.row]
-//        
-//        if (indexPath.row % 2) == 0 {
-//            cell.cellView.backgroundColor = UIColor(hex: "#DEECFD")
-//        } else {
-//            cell.cellView.backgroundColor = UIColor(hex: "#F1EBFC")
-//        }
-//        
-//        cell.SubjectLbl.text = data.subject_name
-//        cell.syllabusLbl.text = data.syllabus
-//        cell.DateBtn.setTitle(data.exam_date?.convertToHeaderDate(), for: .normal)
-//        cell.MaxMarkBtn.setTitle("Marks : " + (data.max_mark ?? ""), for: .normal)
-//        cell.TimeBtn.setTitle("\(data.start_time ?? "") - \(data.end_time ?? "")", for: .normal)
-//        cell.indexPath = indexPath
-//        cell.delegate = self
-//        
-//        return cell
-//    }
+
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -323,97 +249,68 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
         }
     }
     
-    func didTapCreateReminder(at indexPath: IndexPath) {
-        let taskName = examDetails?[indexPath.section].exam_subject_details?[indexPath.row].subject_name
-        
-        // Show confirmation alert
-        let alert = UIAlertController(
-            title: "Set Reminder",
-            message: "Do you want to set a reminder for \(taskName ?? "")?",
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
-            self.createReminder(for: taskName ?? "")
-        }))
-        alert.addAction(UIAlertAction(title: AlertstringFile.No, style: .cancel, handler: nil))
-        
-        self.present(alert, animated: true, completion: nil)
-    }
+//    func didTapCreateReminder(at indexPath: IndexPath) {
+//        let taskName = examDetails?[indexPath.section].exam_subject_details?[indexPath.row].subject_name
+//        
+//        // Show confirmation alert
+//        let alert = UIAlertController(
+//            title: "Set Reminder",
+//            message: "Do you want to set a reminder for \(taskName ?? "")?",
+//            preferredStyle: .alert
+//        )
+//        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+//            self.createReminder(for: taskName ?? "")
+//        }))
+//        alert.addAction(UIAlertAction(title: AlertstringFile.No, style: .cancel, handler: nil))
+//        
+//        self.present(alert, animated: true, completion: nil)
+//    }
 }
 
 extension ExamTmTblVCViewController: UISearchBarDelegate {
     
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        let query = searchText.lowercased()
-//        
-//        if query.isEmpty {
-//            FilteredExamDetails = newExam
-//        } else {
-//            FilteredExamDetails = newExam?.compactMap { exam in
-//                
-//                // 🔹 Exam name check
-//                let examMatches = exam.examName?.lowercased().contains(query) ?? false
-//                
-//                // 🔹 Subject-level filtering
-//                let matchedSubjects = exam.exam_subject_details?.filter {
-//                    let subjectMatch = $0.subject_name?.lowercased().contains(query) ?? false
-//                    let syllabusMatch = $0.syllabus?.lowercased().contains(query) ?? false
-//                    
-//                    // 🔹 Date conversion and check
-//                    let dateString = $0.exam_date?.convertToTargetDateFormat()?.lowercased() ?? ""
-//                    let dateMatch = dateString.contains(query)
-//                    
-//                    return subjectMatch || syllabusMatch || dateMatch
-//                }
-//                
-//                if examMatches {
-//                    return exam
-//                } else if let matchedSubjects, !matchedSubjects.isEmpty {
-//                    var newExam = exam
-//                    newExam.exam_subject_details = matchedSubjects
-//                    return newExam
-//                } else {
-//                    return nil
-//                }
-//            }
-//        }
-//        
-//        NoDataLbl.text = CommonStringFile.No_data_found
-//        NoDataLbl.isHidden = !(FilteredExamDetails?.isEmpty ?? false)
-//        NoDataImage.isHidden = !(FilteredExamDetails?.isEmpty ?? false)
-//        tv.reloadData()
-//    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let query = searchText.lowercased()
+        
+        if query.isEmpty {
+            FilteredExamDetails = newExam
+        } else {
+            FilteredExamDetails = newExam?.compactMap { exam in
+                
+                // 🔹 Exam name check
+                let examMatches = exam.examName?.lowercased().contains(query) ?? false
+                
+                // 🔹 Subject-level filtering
+                let matchedSubjects = exam.subjects?.filter {
+                    let subjectMatch = $0.subjectName?.lowercased().contains(query) ?? false
+                   
+                    return subjectMatch
+                }
+                
+                if examMatches {
+                    return exam
+                } else if let matchedSubjects, !matchedSubjects.isEmpty {
+                    let copiedExam = NewExam(
+                        examId: exam.examId,
+                        examName: exam.examName,
+                        subjects: matchedSubjects
+                    )
+                    return copiedExam
+                } else {
+                    return nil
+                }
+                
+              
+            }
+        }
+        
+        NoDataLbl.text = CommonStringFile.No_data_found
+        NoDataLbl.isHidden = !(FilteredExamDetails?.isEmpty ?? false)
+        NoDataImage.isHidden = !(FilteredExamDetails?.isEmpty ?? false)
+        tv.reloadData()
+    }
     
-//    func prepareGroupedData() {
-//        guard let exams = examDetails else { return }
-//        
-//        var tempGrouped: [GroupedExam] = []
-//        
-//        for exam in exams {
-//            if let subjects = exam.exam_subject_details {
-//                
-//                // Group subjects by date
-//                let dict = Dictionary(grouping: subjects, by: { $0.exam_date ?? "" })
-//                
-//                for (date, subs) in dict {
-//                    let grouped = GroupedExam(
-//                        examName: exam.name ?? "",         // Same for all subjects
-//                        createdOn: exam.created_on ?? "",  // Same for all subjects
-//                        date: date,
-//                        exams: subs
-//                    )
-//                    tempGrouped.append(grouped)
-//                }
-//            }
-//        }
-//        
-//        // Sort by date
-//        groupedExamDetails = tempGrouped.sorted {
-//            $0.date.convertToDate() ?? Date() < $1.date.convertToDate() ?? Date()
-//        }
-//        
-//        tv.reloadData()
-//    }
+       
 
 
 }

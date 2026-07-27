@@ -450,27 +450,26 @@ class FilterPopover: UIViewController {
             return
         }
         
-        // Always show button for visible stacks
         btn.isHidden = false
         
         if index == lastVisibleIndex {
-            // Last visible stack
             let nextStackCanBeAdded = !availableFilters.isEmpty && (index + 1) < (horizontalstackViews?.count ?? 0)
             
-            if nextStackCanBeAdded && hasSelectedSort {
-                // Show plus to add next stack (only if sort is selected)
+            if index == 0 {
+                if nextStackCanBeAdded {
+                    btn.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+                    btn.tintColor = .systemGreen
+                } else {
+                    btn.isHidden = true
+                }
+            } else if nextStackCanBeAdded && hasSelectedSort {
                 btn.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
                 btn.tintColor = .systemGreen
-            } else if index > 0 {
-                // Show minus to remove this stack (if not first stack)
+            } else {
                 btn.setImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
                 btn.tintColor = .systemRed
-            } else {
-                // First stack - hide button
-                btn.isHidden = true
             }
         } else {
-            // Not the last stack - always show minus
             btn.setImage(UIImage(systemName: "minus.circle.fill"), for: .normal)
             btn.tintColor = .systemRed
         }

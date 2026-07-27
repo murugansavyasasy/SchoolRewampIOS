@@ -15,18 +15,33 @@ class MarkReviewCVC: UICollectionViewCell {
     @IBOutlet weak var headerLbl: UILabel!
     @IBOutlet weak var subColumnsStack: UIStackView!
 
+    private var leftBorderView: UIView?
+
     override func awakeFromNib() {
         super.awakeFromNib()
+        setupLeftBorder()
+    }
+
+    private func setupLeftBorder() {
+        let border = UIView()
+        border.backgroundColor = .separator
+        border.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(border)
+
+        NSLayoutConstraint.activate([
+            border.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            border.topAnchor.constraint(equalTo: contentView.topAnchor),
+            border.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            border.widthAnchor.constraint(equalToConstant: 1)
+        ])
+        leftBorderView = border
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
         clearRubricBoxes()
     }
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        addLeftBorder()
-    }
+
 
     func configure(title: String, subtitle: String = "", max_Mark: String) {
         configure(title: title, subtitle: subtitle, max_Mark: max_Mark, rubrics: nil)
@@ -110,22 +125,5 @@ class MarkReviewCVC: UICollectionViewCell {
         ])
 
         return container
-    }
-    private func addLeftBorder() {
-
-        // Remove old border if reused
-        overallstack.layer.sublayers?.removeAll(where: { $0.name == "leftBorder" })
-
-        let border = CALayer()
-        border.name = "leftBorder"
-        border.backgroundColor = UIColor.separator.cgColor
-        border.frame = CGRect(
-            x: 0,
-            y: 0,
-            width: 1,
-            height: overallstack.bounds.height
-        )
-
-        overallstack.layer.addSublayer(border)
     }
 }
