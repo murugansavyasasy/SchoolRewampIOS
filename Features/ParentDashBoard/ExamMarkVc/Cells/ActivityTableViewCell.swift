@@ -87,7 +87,7 @@ public class ActivityTableViewCell: UITableViewCell {
         // 2. Configure Rubrics Section
         rubricsListStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
-         if ((activity.rubrics?.isEmpty) == nil) {
+         if ((activity.rubrics?.count == 0)) {
             lblRubricsHeader.text = "RUBRICS"
             emptyRubricsContainerView.isHidden = false
             rubricsListStackView.isHidden = true

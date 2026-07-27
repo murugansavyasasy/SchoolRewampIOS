@@ -180,6 +180,7 @@ extension ImageShowVc: UICollectionViewDelegate, UICollectionViewDataSource, UIC
                 }
                 cell.imageView.isHidden = true
                 cell.WebView.isHidden = false
+               
                 return cell
             }
         } else {
@@ -218,6 +219,7 @@ extension ImageShowVc: UICollectionViewDelegate, UICollectionViewDataSource, UIC
 //                cell.WebView.navigationDelegate = self
                 cell.imageView.isHidden = true
                 cell.WebView.isHidden = false
+                hideActivityLoader()
                 return cell
             }
         }

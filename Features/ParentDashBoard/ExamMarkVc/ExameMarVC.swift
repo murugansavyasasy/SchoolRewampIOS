@@ -104,6 +104,9 @@ class ExameMarVC: UIViewController {
         }
     }
     func markListApi(exam_id: String,type: String) {
+        if #available(iOS 15.0, *) {
+            showActivityLoader()
+        }
         APIService.shared.makeApi(
             url: ServiceUrl.exam_api_get_progress_card,
             parameters: ["report_id": exam_id,"type": type],
@@ -129,11 +132,13 @@ class ExameMarVC: UIViewController {
                     }else {
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
                         }
+                        self.hideActivityLoader()
                     }
                     
                 case .failure(let error):
                     print("API Error:", error)
                     CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: error.localizedDescription, on: self)
+                    self.hideActivityLoader()
                 }
             }
         }
@@ -158,6 +163,7 @@ class ExameMarVC: UIViewController {
     }
     
     func view_ProgressCard(url: String) {
+   
         let vc = ImageShowVc(nibName: nil, bundle: nil)
         
         if let fileURL = URL(string: url) {

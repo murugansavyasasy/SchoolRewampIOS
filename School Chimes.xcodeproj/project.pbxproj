@@ -4709,7 +4709,6 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		186E62522FEA59E700BAF454 /* Classtest */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Classtest; sourceTree = "<group>"; };
-		188ABD59300F97B400708372 /* Data */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Data; sourceTree = "<group>"; };
 		188ABD5B300F97B400708372 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
 		188ABD60300F97B400708372 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
 		188ABD86300F98EB00708372 /* Cells */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Cells; sourceTree = "<group>"; };
@@ -5619,7 +5618,6 @@
 			isa = PBXGroup;
 			children = (
 				188ABD86300F98EB00708372 /* Cells */,
-				188ABD59300F97B400708372 /* Data */,
 				188ABD5B300F97B400708372 /* Models */,
 				188ABD60300F97B400708372 /* Views */,
 				188ABD08300F784D00708372 /* ViewDetailsVc.swift */,
@@ -7173,7 +7171,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				186E62522FEA59E700BAF454 /* Classtest */,
-				188ABD59300F97B400708372 /* Data */,
 				188ABD5B300F97B400708372 /* Models */,
 				188ABD60300F97B400708372 /* Views */,
 				188ABD86300F98EB00708372 /* Cells */,
@@ -7215,7 +7212,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				186E62522FEA59E700BAF454 /* Classtest */,
-				188ABD59300F97B400708372 /* Data */,
 				188ABD5B300F97B400708372 /* Models */,
 				188ABD60300F97B400708372 /* Views */,
 				188ABD86300F98EB00708372 /* Cells */,
@@ -7257,7 +7253,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				186E62522FEA59E700BAF454 /* Classtest */,
-				188ABD59300F97B400708372 /* Data */,
 				188ABD5B300F97B400708372 /* Models */,
 				188ABD60300F97B400708372 /* Views */,
 				188ABD86300F98EB00708372 /* Cells */,
@@ -7317,7 +7312,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				186E62522FEA59E700BAF454 /* Classtest */,
-				188ABD59300F97B400708372 /* Data */,
 				188ABD5B300F97B400708372 /* Models */,
 				188ABD60300F97B400708372 /* Views */,
 				188ABD86300F98EB00708372 /* Cells */,

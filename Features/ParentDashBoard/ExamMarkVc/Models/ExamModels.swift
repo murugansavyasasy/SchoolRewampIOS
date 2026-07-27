@@ -11,11 +11,17 @@ class NewExamResponseSuc: Codable {
 // MARK: - Exam
 
 class NewExam: Codable {
-    
+
     let examId: String?
     let examName: String?
-    let subjects: [NewSubject]?
-    
+    var subjects: [NewSubject]?
+
+    init(examId: String?, examName: String?, subjects: [NewSubject]?) {
+        self.examId = examId
+        self.examName = examName
+        self.subjects = subjects
+    }
+
     enum CodingKeys: String, CodingKey {
         case examId = "exam_id"
         case examName = "exam_name"

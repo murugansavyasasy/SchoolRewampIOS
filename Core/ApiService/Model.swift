@@ -1642,16 +1642,17 @@ struct SubjectMark: Codable {
     var percentage: String?
 }
 
+struct SplitRubricMark: Codable {
+    var name: String?
+    var max_mark: String?
+    var mark_obtained: String?
+}
+
 struct SplitMark: Codable {
     var name: String?
     var max_mark: String?
     var mark_obtained: String?
-    var rubrics: [RubricMark]?
-}
-struct RubricMark: Codable {
-    var name: String?
-    var max_mark: String?
-    var mark_obtained: String?
+    var rubrics: [SplitRubricMark]?
 }
 
 struct Assessment: Codable {

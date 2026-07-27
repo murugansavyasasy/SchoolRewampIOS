@@ -155,7 +155,7 @@ class ExamDetailsVC: UIViewController, Searchable {
 
         // Update empty state
         if let vc = newVC as? ExamTmTblVCViewController {
-            childViewController(vc, didUpdateDataIsEmpty: vc.examDetails?.isEmpty ?? true)
+            childViewController(vc, didUpdateDataIsEmpty: vc.newExam?.isEmpty ?? true)
         } else if let vc = newVC as? ExameMarVC {
             childViewController(vc, didUpdateDataIsEmpty: vc.examList?.isEmpty ?? true)
         }
