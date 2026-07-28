@@ -52,6 +52,8 @@ class ActivitiesTVCell: UITableViewCell {
     @IBOutlet weak var clearBtn: UIButton!
     @IBOutlet weak var rubicsStack: UIStackView!
     @IBOutlet weak var ArrowBtn: UIButton!
+    @IBOutlet weak var activityStack: UIStackView!
+    
     let dropdown = DropDown()
     weak var delegate: ActivityCellDelegate?
     private var subjectIndex = 0
@@ -66,6 +68,10 @@ class ActivitiesTVCell: UITableViewCell {
         super.awakeFromNib()
        
         setupDropdown()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(activityStackTapped))
+            activityStack.isUserInteractionEnabled = true
+            activityStack.addGestureRecognizer(tap)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -175,24 +181,34 @@ class ActivitiesTVCell: UITableViewCell {
     }
     
     @IBAction func CheckBoxBtnAct(_ sender: UIButton) {
+      handleSelection()
+    }
+    
+    @objc private func activityStackTapped(_ gesture: UITapGestureRecognizer) {
+        handleSelection()
+    }
+
+    func handleSelection() {
 
         if isAIFlow {
-               // Activities with rubrics can ONLY be mapped through their rubrics
-               if let rubrics = self.rubrics, !rubrics.isEmpty {
-                   if !isRubricsExpanded {
-                       isRubricsExpanded = true
-                       rubicsStack.isHidden = false
-                       ArrowBtn.setImage(UIImage(systemName: "chevron.up"), for: .normal)
-                       delegate?.didToggleRubricsExpansion(splitIndex: splitIndex, expanded: true)
-                       onHeightChanged?()
-                   }
-                   return
-               }
-               showDropdown()
-               return
-           }
 
-        // Activity has rubrics
+            if let rubrics = rubrics, !rubrics.isEmpty {
+
+                if !isRubricsExpanded {
+                    isRubricsExpanded = true
+                    rubicsStack.isHidden = false
+                    ArrowBtn.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+                    delegate?.didToggleRubricsExpansion(splitIndex: splitIndex, expanded: true)
+                    onHeightChanged?()
+                }
+
+                return
+            }
+
+            showDropdown()
+            return
+        }
+
         if var rubrics = self.rubrics, !rubrics.isEmpty {
 
             let shouldSelect = !(rubrics.allSatisfy { $0.isChecked == true })
@@ -217,17 +233,15 @@ class ActivitiesTVCell: UITableViewCell {
             return
         }
 
-        // No rubrics
-        sender.isSelected.toggle()
-        updateCheckboxUI(isChecked: sender.isSelected)
+        CheckBoxBtnName.isSelected.toggle()
+        updateCheckboxUI(isChecked: CheckBoxBtnName.isSelected)
 
         delegate?.didToggleSplit(
             subjectIndex: subjectIndex,
             splitIndex: splitIndex,
-            isChecked: sender.isSelected
+            isChecked: CheckBoxBtnName.isSelected
         )
     }
-
 
     @IBAction func clearSelection() {
 
@@ -329,6 +343,11 @@ class ActivitiesTVCell: UITableViewCell {
         for (index, rubric) in rubrics.enumerated() {
 
             let row = UIView()
+            row.tag = index
+            row.isUserInteractionEnabled = true
+
+            let tap = UITapGestureRecognizer(target: self, action: #selector(rubricRowTapped(_:)))
+            row.addGestureRecognizer(tap)
 
             // Checkbox
             let checkBox = UIButton(type: .custom)
@@ -435,34 +454,49 @@ class ActivitiesTVCell: UITableViewCell {
     }
     
     @objc private func rubricCheckboxTapped(_ sender: UIButton) {
-        guard let rubrics = rubrics, sender.tag < rubrics.count else { return }
+        handleRubricSelection(at: sender.tag, anchorView: sender)
+    }
+    
+    @objc private func rubricRowTapped(_ gesture: UITapGestureRecognizer) {
+        guard let row = gesture.view else { return }
+        handleRubricSelection(at: row.tag, anchorView: row)
+    }
+    
+    private func handleRubricSelection(at index: Int, anchorView: UIView) {
 
+        guard var updatedRubrics = rubrics,
+              index < updatedRubrics.count else { return }
+
+        // AI Flow
         if isAIFlow {
-            showRubricDropdown(rubricIndex: sender.tag, anchorView: sender)
+            showRubricDropdown(rubricIndex: index, anchorView: anchorView)
             return
         }
 
-        // existing non-AI plain-toggle behavior
-        var updatedRubrics = rubrics
-        let current = updatedRubrics[sender.tag].isChecked ?? false
-        let checked = !current
-        updatedRubrics[sender.tag].isChecked = checked
-        self.rubrics = updatedRubrics
+        // Toggle selected rubric
+        let checked = !(updatedRubrics[index].isChecked ?? false)
+        updatedRubrics[index].isChecked = checked
+        rubrics = updatedRubrics
 
+        // Update activity checkbox
         let allRubricsSelected = updatedRubrics.allSatisfy { $0.isChecked == true }
+
         CheckBoxBtnName.isSelected = allRubricsSelected
         updateCheckboxUI(isChecked: allRubricsSelected)
+
         contentView.backgroundColor = allRubricsSelected
             ? UIColor.systemOrange.withAlphaComponent(0.07)
             : .systemBackground
 
+        // Notify parent
         delegate?.didToggleRubric(
             subjectIndex: subjectIndex,
             splitIndex: splitIndex,
-            rubricIndex: sender.tag,
+            rubricIndex: index,
             isChecked: checked
         )
 
+        // Refresh UI
         setupRubrics(updatedRubrics)
     }
 
