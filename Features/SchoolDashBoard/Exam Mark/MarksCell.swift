@@ -218,7 +218,7 @@ class MarksCell: UICollectionViewCell {
         markTxt.layer.borderWidth = 0
         markTxt.layer.borderColor = nil
         if let changemark = channgeMark, !changemark.isEmpty {
-            tittleLbl.text = "was : \(changemark)"
+            tittleLbl.text = "prev : \(changemark)"
             tittleLbl.isHidden = false
             applyHighlight(color: .systemGreen,infoColor: .systemGreen)
             return
