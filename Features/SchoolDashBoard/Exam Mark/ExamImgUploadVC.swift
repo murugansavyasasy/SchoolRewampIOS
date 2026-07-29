@@ -420,33 +420,6 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         }
     }
 
-
-    
-    func loadSubjectList(for examId: String,completion: @escaping (Bool)->Void) {
-        SubjectList.removeAll()
-        let param:[String:Any] = ["exam_id": examId]
-
-        APIService.shared.makeApi(
-            url: ServiceUrl.exam_get_subject_wise_activities,
-            parameters: param,
-            type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? "", isBaseUrl: true
-        ) { [weak self] (result: Result<SubjectWiseExamResponse, Error>) in
-
-            guard let self = self else { return }
-
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let response):
-                    self.SubjectList = response.data ?? []
-                    completion(true)
-                case .failure(let error):
-                    print("Error loading subjects: \(error)")
-                    completion(false)
-                }
-            }
-        }
-    }
     @IBAction func BackAct(_ sender: Any) {
         dismiss(animated: true)
     }

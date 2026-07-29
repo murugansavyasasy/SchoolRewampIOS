@@ -72,7 +72,7 @@ class ExamListVC: UIViewController, UISearchBarDelegate {
     func Get_staffwise_exam_Api() {
         
         let param:[String:Any] = ["section_id": standard?.sectionId ?? "", "academic_year_id": String(academicYearId ?? 0)]
-        APIService.shared.makeApi(url: ServiceUrl.exam_api_exam_get_staff_wise_exam, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: true) { [weak self] (result: Result<StaffExamListResponse, Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.exam_api_exam_get_staff_wise_exam, parameters: param, type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<StaffExamListResponse, Error>) in
             
             guard let self = self else{return}
             
@@ -114,7 +114,7 @@ class ExamListVC: UIViewController, UISearchBarDelegate {
             url: ServiceUrl.exam_get_subject_wise_activities,
             parameters: param,
             type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? "", isBaseUrl: true
+            token: staffDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<SubjectWiseExamResponse, Error>) in
             
             guard let self = self else { return }

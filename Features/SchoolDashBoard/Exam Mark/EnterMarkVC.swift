@@ -217,7 +217,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
             parameters: payload,
             type: ApitTypeSringFile.POST,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
-            isBaseUrl: true
+            isBaseUrl: false
         ) { [weak self] (result: Result<MarkDetailsResponse, Error>) in
             DispatchQueue.main.async {
                 guard let self = self else { return }
