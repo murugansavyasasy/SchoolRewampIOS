@@ -2974,6 +2974,14 @@
 		189AFD462F258C4900BDF3A0 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 189AFD452F258C4900BDF3A0 /* FirebaseMessaging */; };
 		18B190902F713A84007E4F6F /* GatePassTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B1908E2F713A84007E4F6F /* GatePassTvcell.swift */; };
 		18B190912F713A84007E4F6F /* GatePassTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18B1908F2F713A84007E4F6F /* GatePassTvcell.xib */; };
+		18B19ABF3019C0C600FAAD9A /* SubjectCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18B19ABE3019C0C600FAAD9A /* SubjectCardTableViewCell.xib */; };
+		18B19AC03019C0C600FAAD9A /* SubjectCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B19ABD3019C0C600FAAD9A /* SubjectCardTableViewCell.swift */; };
+		18B19AC13019C0C600FAAD9A /* SubjectCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B19ABD3019C0C600FAAD9A /* SubjectCardTableViewCell.swift */; };
+		18B19AC23019C0C600FAAD9A /* SubjectCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18B19ABE3019C0C600FAAD9A /* SubjectCardTableViewCell.xib */; };
+		18B19AC33019C0C600FAAD9A /* SubjectCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B19ABD3019C0C600FAAD9A /* SubjectCardTableViewCell.swift */; };
+		18B19AC43019C0C600FAAD9A /* SubjectCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18B19ABE3019C0C600FAAD9A /* SubjectCardTableViewCell.xib */; };
+		18B19AC53019C0C600FAAD9A /* SubjectCardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18B19ABE3019C0C600FAAD9A /* SubjectCardTableViewCell.xib */; };
+		18B19AC63019C0C600FAAD9A /* SubjectCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B19ABD3019C0C600FAAD9A /* SubjectCardTableViewCell.swift */; };
 		18D09A3E2EFFECF700D1930D /* VoiceCellTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D09A3D2EFFECF700D1930D /* VoiceCellTV.xib */; };
 		18D09A3F2EFFECF700D1930D /* VoiceCellTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D09A3C2EFFECF700D1930D /* VoiceCellTV.swift */; };
 		18D09A422F00055E00D1930D /* VoiceMessagesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D09A412F00055E00D1930D /* VoiceMessagesVC.xib */; };
@@ -3956,6 +3964,8 @@
 		189E991D2CE3286600FE98A5 /* VsSchoolChimes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VsSchoolChimes.entitlements; sourceTree = "<group>"; };
 		18B1908E2F713A84007E4F6F /* GatePassTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GatePassTvcell.swift; sourceTree = "<group>"; };
 		18B1908F2F713A84007E4F6F /* GatePassTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GatePassTvcell.xib; sourceTree = "<group>"; };
+		18B19ABD3019C0C600FAAD9A /* SubjectCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectCardTableViewCell.swift; sourceTree = "<group>"; };
+		18B19ABE3019C0C600FAAD9A /* SubjectCardTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubjectCardTableViewCell.xib; sourceTree = "<group>"; };
 		18D09A3C2EFFECF700D1930D /* VoiceCellTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCellTV.swift; sourceTree = "<group>"; };
 		18D09A3D2EFFECF700D1930D /* VoiceCellTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoiceCellTV.xib; sourceTree = "<group>"; };
 		18D09A402F00055E00D1930D /* VoiceMessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMessagesVC.swift; sourceTree = "<group>"; };
@@ -5966,6 +5976,8 @@
 			children = (
 				846D83E22D02D91000B69344 /* TvCell */,
 				846D83E32D02D91000B69344 /* ExamTmTblVCViewController.swift */,
+				18B19ABD3019C0C600FAAD9A /* SubjectCardTableViewCell.swift */,
+				18B19ABE3019C0C600FAAD9A /* SubjectCardTableViewCell.xib */,
 				846D83E42D02D91000B69344 /* ExamTmTblVCViewController.xib */,
 			);
 			path = ExamTimeTable;
@@ -7782,6 +7794,7 @@
 				1827E8BB2F90C12000B33B20 /* VoiceCellTV.xib in Resources */,
 				1827E8BC2F90C12000B33B20 /* OnlineMeetingVC.xib in Resources */,
 				1827E8BD2F90C12000B33B20 /* PreviewCell.xib in Resources */,
+				18B19AC23019C0C600FAAD9A /* SubjectCardTableViewCell.xib in Resources */,
 				1827E8BE2F90C12000B33B20 /* PtmCV.xib in Resources */,
 				1827E8BF2F90C12000B33B20 /* MeetingsTVcell.xib in Resources */,
 				1827E8C02F90C12000B33B20 /* NotificationCallVC.xib in Resources */,
@@ -8217,6 +8230,7 @@
 				1868A6E62FAC762E00831144 /* VoiceCellTV.xib in Resources */,
 				1868A6E72FAC762E00831144 /* OnlineMeetingVC.xib in Resources */,
 				1868A6E82FAC762E00831144 /* PreviewCell.xib in Resources */,
+				18B19AC53019C0C600FAAD9A /* SubjectCardTableViewCell.xib in Resources */,
 				1868A6E92FAC762E00831144 /* PtmCV.xib in Resources */,
 				1868A6EA2FAC762E00831144 /* MeetingsTVcell.xib in Resources */,
 				1868A6EB2FAC762E00831144 /* NotificationCallVC.xib in Resources */,
@@ -8652,6 +8666,7 @@
 				186E61EB2FE91EB800BAF454 /* VoiceCellTV.xib in Resources */,
 				186E61EC2FE91EB800BAF454 /* OnlineMeetingVC.xib in Resources */,
 				186E61ED2FE91EB800BAF454 /* PreviewCell.xib in Resources */,
+				18B19AC43019C0C600FAAD9A /* SubjectCardTableViewCell.xib in Resources */,
 				186E61EE2FE91EB800BAF454 /* PtmCV.xib in Resources */,
 				186E61EF2FE91EB800BAF454 /* MeetingsTVcell.xib in Resources */,
 				186E61F02FE91EB800BAF454 /* NotificationCallVC.xib in Resources */,
@@ -9163,6 +9178,7 @@
 				84235A162E1E287F002F2E1D /* LSWTaskTVC.xib in Resources */,
 				84127AFB2E03C8F00092159D /* ReedimHistoryCell.xib in Resources */,
 				845F21812E4601810078AF69 /* AssignmentsearchTVC.xib in Resources */,
+				18B19ABF3019C0C600FAAD9A /* SubjectCardTableViewCell.xib in Resources */,
 				840177DF2E3A224F006CB477 /* FooterCvCell.xib in Resources */,
 				842ACE002F569F1400954404 /* StudentReportDashboardVC.xib in Resources */,
 				84ADF9582EF2AD96007C3374 /* NewPlayQuizVC.xib in Resources */,
@@ -9637,6 +9653,7 @@
 				1827E6A62F90C12000B33B20 /* AssignmentReport.swift in Sources */,
 				1827E6A72F90C12000B33B20 /* PaymentHistoryTVC.swift in Sources */,
 				1827E6A82F90C12000B33B20 /* ClassTableViewCell.swift in Sources */,
+				18B19AC13019C0C600FAAD9A /* SubjectCardTableViewCell.swift in Sources */,
 				1827E6A92F90C12000B33B20 /* scetionCvcell.swift in Sources */,
 				1827E6AA2F90C12000B33B20 /* LessonDashboardTv.swift in Sources */,
 				1827E6AB2F90C12000B33B20 /* PtmCV.swift in Sources */,
@@ -10117,6 +10134,7 @@
 				1868A4D02FAC762E00831144 /* AssignmentReport.swift in Sources */,
 				1868A4D12FAC762E00831144 /* PaymentHistoryTVC.swift in Sources */,
 				1868A4D22FAC762E00831144 /* ClassTableViewCell.swift in Sources */,
+				18B19AC63019C0C600FAAD9A /* SubjectCardTableViewCell.swift in Sources */,
 				1868A4D32FAC762E00831144 /* scetionCvcell.swift in Sources */,
 				1868A4D42FAC762E00831144 /* LessonDashboardTv.swift in Sources */,
 				1868A4D52FAC762E00831144 /* PtmCV.swift in Sources */,
@@ -10597,6 +10615,7 @@
 				186E5FCE2FE91EB800BAF454 /* AssignmentReport.swift in Sources */,
 				186E5FCF2FE91EB800BAF454 /* PaymentHistoryTVC.swift in Sources */,
 				186E5FD02FE91EB800BAF454 /* ClassTableViewCell.swift in Sources */,
+				18B19AC33019C0C600FAAD9A /* SubjectCardTableViewCell.swift in Sources */,
 				186E5FD12FE91EB800BAF454 /* scetionCvcell.swift in Sources */,
 				186E5FD22FE91EB800BAF454 /* LessonDashboardTv.swift in Sources */,
 				186E5FD32FE91EB800BAF454 /* PtmCV.swift in Sources */,
@@ -11084,6 +11103,7 @@
 				848047712E02A7D90042BC5D /* AssignmentReport.swift in Sources */,
 				842ACE232F56A0C000954404 /* PaymentHistoryTVC.swift in Sources */,
 				FA43D0DF2F322D510046B966 /* ClassTableViewCell.swift in Sources */,
+				18B19AC03019C0C600FAAD9A /* SubjectCardTableViewCell.swift in Sources */,
 				FA43D0E02F322D510046B966 /* scetionCvcell.swift in Sources */,
 				FA7A64122D64995900D43031 /* LessonDashboardTv.swift in Sources */,
 				FAAC9F482E4B006600203F04 /* PtmCV.swift in Sources */,

@@ -2,6 +2,7 @@ import UIKit
 
  protocol NewActivityCellDelegate: AnyObject {
     func didSelectRubric(_ rubric: Rubric)
+     func didSelectActivity(_ activity: NewActivity)
 }
 
 public class ActivityTableViewCell: UITableViewCell {
@@ -54,55 +55,55 @@ public class ActivityTableViewCell: UITableViewCell {
     }
     
      func configure(with activity: NewActivity, delegate: NewActivityCellDelegate?) {
-        self.currentActivity = activity
-        self.delegate = delegate
-        
-        lblActivityTitle.text = activity.activityName
-        
-        // 1. Configure Scheduling Rows
-        schedulingContainerStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        
-        if activity.hasSchedulingDetails, let details = activity.schedulingDetails {
-            schedulingContainerStackView.isHidden = false
-            
-            var rows: [SchedulingType] = []
-            if let dateStr = details.formattedDate { rows.append(.date(dateStr)) }
-            if let timeStr = details.formattedTimeRange { rows.append(.time(timeStr)) }
-            if let sessionStr = details.session, !sessionStr.isEmpty { rows.append(.session(sessionStr)) }
-            if let venueStr = details.venue, !venueStr.isEmpty { rows.append(.venue(venueStr)) }
-            if let syllabusStr = details.syllabus, !syllabusStr.isEmpty { rows.append(.syllabus(syllabusStr)) }
-            if let syllabusStr = activity.max_mark, !syllabusStr.isEmpty { rows.append(.TotalMarks(syllabusStr)) }
-            if let syllabusStr = activity.pass_mark, !syllabusStr.isEmpty { rows.append(.PassMark(syllabusStr)) }
-            
-            for (index, rowType) in rows.enumerated() {
-                let rowView = SchedulingRowView()
-                let isLast = index == rows.count - 1
-                rowView.configure(type: rowType, showSeparator: !isLast)
-                schedulingContainerStackView.addArrangedSubview(rowView)
-            }
-        } else {
-            schedulingContainerStackView.isHidden = true
-        }
-        
-        // 2. Configure Rubrics Section
-        rubricsListStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        
-         if ((activity.rubrics?.count == 0)) {
-            lblRubricsHeader.text = "RUBRICS"
-            emptyRubricsContainerView.isHidden = false
-            rubricsListStackView.isHidden = true
-        } else {
-            lblRubricsHeader.text = "RUBRICS (\(activity.rubrics?.count ?? 0))"
-            emptyRubricsContainerView.isHidden = true
-            rubricsListStackView.isHidden = false
-            
-            for rubric in activity.rubrics ?? [] {
-                let item = RubricItemView()
-                item.configure(rubricName: rubric.rubricName ?? "") { [weak self] in
-                    self?.delegate?.didSelectRubric(rubric)
-                }
-                rubricsListStackView.addArrangedSubview(item)
-            }
-        }
+//        self.currentActivity = activity
+//        self.delegate = delegate
+//        
+//        lblActivityTitle.text = activity.activityName
+//        
+//        // 1. Configure Scheduling Rows
+//        schedulingContainerStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+//        
+//        if activity.hasSchedulingDetails, let details = activity.schedulingDetails {
+//            schedulingContainerStackView.isHidden = false
+//            
+//            var rows: [SchedulingType] = []
+//            if let dateStr = details.formattedDate { rows.append(.date(dateStr)) }
+//            if let timeStr = details.formattedTimeRange { rows.append(.time(timeStr)) }
+//            if let sessionStr = details.session, !sessionStr.isEmpty { rows.append(.session(sessionStr)) }
+//            if let venueStr = details.venue, !venueStr.isEmpty { rows.append(.venue(venueStr)) }
+//            if let syllabusStr = details.syllabus, !syllabusStr.isEmpty { rows.append(.syllabus(syllabusStr)) }
+//            if let syllabusStr = activity.max_mark, !syllabusStr.isEmpty { rows.append(.TotalMarks(syllabusStr)) }
+//            if let syllabusStr = activity.pass_mark, !syllabusStr.isEmpty { rows.append(.PassMark(syllabusStr)) }
+//            
+//            for (index, rowType) in rows.enumerated() {
+//                let rowView = SchedulingRowView()
+//                let isLast = index == rows.count - 1
+//                rowView.configure(type: rowType, showSeparator: !isLast)
+//                schedulingContainerStackView.addArrangedSubview(rowView)
+//            }
+//        } else {
+//            schedulingContainerStackView.isHidden = true
+//        }
+//        
+//        // 2. Configure Rubrics Section
+//        rubricsListStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+//        
+//         if ((activity.rubrics?.count == 0)) {
+//            lblRubricsHeader.text = "RUBRICS"
+//            emptyRubricsContainerView.isHidden = false
+//            rubricsListStackView.isHidden = true
+//        } else {
+//            lblRubricsHeader.text = "RUBRICS (\(activity.rubrics?.count ?? 0))"
+//            emptyRubricsContainerView.isHidden = true
+//            rubricsListStackView.isHidden = false
+//            
+//            for rubric in activity.rubrics ?? [] {
+//                let item = RubricItemView()
+//                item.configure(rubricName: rubric.rubricName ?? "",rubricSession: rubric.schedulingDetails?.session ?? "",rubricDate: rubric.schedulingDetails?.date?.convertToTargetDateFormat() ?? "") { [weak self] in
+//                    self?.delegate?.didSelectRubric(rubric)
+//                }
+//                rubricsListStackView.addArrangedSubview(item)
+//            }
+//        }
     }
 }

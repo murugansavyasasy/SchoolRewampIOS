@@ -83,7 +83,7 @@ public class SchedulingRowView: UIView {
     @IBOutlet public weak var separatorView: UIView!
     
     private var contentView: UIView?
-    
+    public var onTap: (() -> Void)?
     override public var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: 60)
     }
