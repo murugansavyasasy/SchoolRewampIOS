@@ -21,6 +21,7 @@ class ExamMarkTvCell: UITableViewCell {
         
         headerLbl.setFont(style: .title, size: FontSize.TitleSize)
         subjectLbl.setFont(style: .body, size: FontSize.TitleSize)
+        SubjectMarkBtn.titleLabel?.numberOfLines = 2
         SubjectMarkBtn.setTitleFont(style: .body, size: FontSize.BodySize)
     }
 
