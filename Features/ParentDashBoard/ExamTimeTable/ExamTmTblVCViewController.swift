@@ -124,50 +124,50 @@ class ExamTmTblVCViewController: UIViewController {
 // MARK: - UITableView Delegate & DataSource
 extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource {
 
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return FilteredExamDetails?.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let headerview = UIView()
-        headerview.backgroundColor = .clear
-        
-        // Title Label
-        let titleLabel = UILabel()
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.textColor = .primery
-        titleLabel.setFont(style: .body, size: 25)
-        titleLabel.text = FilteredExamDetails?[section].examName
-        
-        headerview.addSubview(titleLabel)
-        
-        
-        NSLayoutConstraint.activate([
-            // Title label constraints
-            titleLabel.leadingAnchor.constraint(equalTo: headerview.leadingAnchor, constant: 15),
-            titleLabel.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),
-            titleLabel.topAnchor.constraint(equalTo: headerview.topAnchor, constant: 5),
-            titleLabel.bottomAnchor.constraint(equalTo: headerview.bottomAnchor, constant: -5)
-        ])
-        
-        return headerview
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return FilteredExamDetails?.count ?? 0
+//    }
+//    
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        
+//        let headerview = UIView()
+//        headerview.backgroundColor = .clear
+//        
+//        // Title Label
+//        let titleLabel = UILabel()
+//        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+//        titleLabel.textColor = .primery
+//        titleLabel.setFont(style: .body, size: 25)
+//        titleLabel.text = FilteredExamDetails?[section].examName
+//        
+//        headerview.addSubview(titleLabel)
+//        
+//        
+//        NSLayoutConstraint.activate([
+//            // Title label constraints
+//            titleLabel.leadingAnchor.constraint(equalTo: headerview.leadingAnchor, constant: 15),
+//            titleLabel.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),
+//            titleLabel.topAnchor.constraint(equalTo: headerview.topAnchor, constant: 5),
+//            titleLabel.bottomAnchor.constraint(equalTo: headerview.bottomAnchor, constant: -5)
+//        ])
+//        
+//        return headerview
+//    }
 
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return FilteredExamDetails?[section].subjects?.count ?? 0
+        return FilteredExamDetails?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tv.dequeueReusableCell(withIdentifier: "ExamListTV", for: indexPath) as! ExamListTV
-
-        let data = FilteredExamDetails?[indexPath.section].subjects?[indexPath.row]
-        cell.SubjectLbl.text = data?.subjectName
-        cell.totalMarksLbl.text = ("TotalMarks : \(data?.total_mark ?? "") ")
-        cell.indexPath = indexPath
+        
+        let data = FilteredExamDetails?[indexPath.row]
+        cell.SubjectLbl.text = data?.examName
+//        cell.totalMarksLbl.text = ("TotalMarks : \(data?.total_mark ?? "") ")
+//        cell.indexPath = indexPath
     
         return cell
     }
@@ -175,9 +175,7 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       
         let vc = ViewDetailsVc()
-        vc.examResponse = examResponse
-        vc.currentSubject = FilteredExamDetails?[indexPath.section].subjects?[indexPath.row]
-        vc.activities = FilteredExamDetails?[indexPath.section].subjects?[indexPath.row].activities ?? []
+        vc.subjects = FilteredExamDetails?[indexPath.row].subjects ?? []
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -187,9 +185,9 @@ extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource 
         return UITableView.automaticDimension
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return UITableView.automaticDimension
-    }
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
     
     
     func createReminder(for task: String) {

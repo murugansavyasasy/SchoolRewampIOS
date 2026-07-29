@@ -596,7 +596,7 @@ struct ExamStringFile {
     static var subjectAndMarks = "Subject & Marks"
     static var otherActivities = "Other Activities"
     static var examTimetable = "Exam Timetable"
-    static var examMarks = "Exam Marks"
+    static var examMarks = "Published Marks"
 }
 
 struct AttendanceString {

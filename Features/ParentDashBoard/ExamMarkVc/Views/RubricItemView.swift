@@ -3,6 +3,8 @@ import UIKit
 @IBDesignable
 public class RubricItemView: UIView {
 
+    @IBOutlet public weak var date: UILabel!
+    @IBOutlet public weak var session: UILabel!
     @IBOutlet public weak var cardContainerView: UIView!
     @IBOutlet public weak var iconCheckmark: UIImageView!
     @IBOutlet public weak var lblRubricName: UILabel!
@@ -55,8 +57,10 @@ public class RubricItemView: UIView {
         return nib.instantiate(withOwner: self, options: nil).first as? UIView
     }
     
-    public func configure(rubricName: String, onTap: (() -> Void)?) {
-        lblRubricName.text = rubricName
+    public func configure(rubricName: String, rubricSession:String,rubricDate:String, onTap: (() -> Void)?) {
+        lblRubricName.text = rubricName.capitalized
+        session.text = "Date : \(rubricDate)"
+        date.text = "Session : \(rubricSession)"
         self.onTap = onTap
         invalidateIntrinsicContentSize()
     }
