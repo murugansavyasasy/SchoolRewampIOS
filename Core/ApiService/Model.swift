@@ -3359,16 +3359,16 @@ struct HostelRoomDetails: Codable {
 
 // MARK: - Fee Summary
 struct hostelFeeSummary: Codable {
-    let total_amount: Int?
-    let paid_amount: Int?
-    let pending_amount: Int?
-    let discount: Int?
+    let total_amount: String?
+    let paid_amount: String?
+    let pending_amount: String?
+    let discount: String?
     let status: String?
 }
 
 // MARK: - Payment
 struct Payment: Codable {
-    let paid_amount: Int?
+    let paid_amount: String?
     let paid_date: String?
     let payment_mode: String?
 }

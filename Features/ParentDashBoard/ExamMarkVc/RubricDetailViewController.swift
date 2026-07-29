@@ -49,9 +49,21 @@ public class RubricDetailViewController: UIViewController {
         if let sessionStr = details.session, !sessionStr.isEmpty { rows.append(.session(sessionStr)) }
         if let venueStr = details.venue, !venueStr.isEmpty { rows.append(.venue(venueStr)) }
         if let syllabusStr = details.syllabus, !syllabusStr.isEmpty { rows.append(.syllabus(syllabusStr)) }
-        if let max_marks = rubric?.max_mark, !max_marks.isEmpty { rows.append(.TotalMarks(max_marks)) }
-               
-        if let pass_mark = rubric?.pass_mark, !pass_mark.isEmpty { rows.append(.PassMark(pass_mark)) }
+        
+        // Total Marks
+        if let maxMarks = rubric?.max_mark, !maxMarks.isEmpty {
+            rows.append(.TotalMarks(maxMarks))
+        } else if let maxMarks = activity?.max_mark, !maxMarks.isEmpty {
+            rows.append(.TotalMarks(maxMarks))
+        }
+
+        // Pass Marks
+        if let passMark = rubric?.pass_mark, !passMark.isEmpty {
+            rows.append(.PassMark(passMark))
+        } else if let passMark = activity?.pass_mark, !passMark.isEmpty {
+            rows.append(.PassMark(passMark))
+        }
+        
         for (index, rowType) in rows.enumerated() {
             let rowView = SchedulingRowView()
             let isLast = index == rows.count - 1
