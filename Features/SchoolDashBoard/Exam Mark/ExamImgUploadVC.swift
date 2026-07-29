@@ -291,7 +291,7 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     
     func uploadImageForAI(){
         
-      showActivityLoader()
+        showActivityLoader(maxDuration: 50.0)
         
         guard let image = selectedImage else { return }
         

@@ -1221,12 +1221,7 @@ extension EnterMarkVC: UISearchBarDelegate, UIPopoverPresentationControllerDeleg
         
         if let pop = contentVC.popoverPresentationController {
             pop.sourceView = self.view
-            pop.sourceRect = CGRect(
-                x: self.view.bounds.midX,
-                y: self.view.bounds.midY,
-                width: 1,
-                height: 1
-            )
+            pop.sourceRect = CGRect(x: self.view.bounds.midX,y: self.view.bounds.midY,width: 1,height: 1)
             pop.permittedArrowDirections = []
             pop.delegate = self
             pop.backgroundColor = .white
@@ -1343,7 +1338,7 @@ extension EnterMarkVC {
                 case "female":
                     return g1 == "Female"
                 case "others":
-                    return g1 == "Others"
+                    return g1 != "Male" && g1 != "Female"
                 default:
                     return true
                 }

@@ -37,6 +37,9 @@ class Exam_ExamListTV: UITableViewCell {
         
         activitiesStack.isHidden = true
         activitiesLbl.isHidden = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(SubjectTapped(_:)))
+        subjectView.addGestureRecognizer(tap)
     }
     
     override func prepareForReuse() {
@@ -113,9 +116,12 @@ class Exam_ExamListTV: UITableViewCell {
             $0.removeFromSuperview()
         }
     }
-
     
     @IBAction func expandAct(_ sender: UIButton) {
+        onExpand?()
+    }
+    
+    @objc func SubjectTapped(_ gesture: UITapGestureRecognizer){
         onExpand?()
     }
 }

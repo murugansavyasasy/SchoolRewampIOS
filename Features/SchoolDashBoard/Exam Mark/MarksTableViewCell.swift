@@ -102,11 +102,23 @@ class MarksTableViewCell: UITableViewCell {
     func setStudentNameWithGender(label: UILabel, student: String?, gender: String?) {
         
         let name = student ?? ""
-        let gender = gender?.first?.uppercased()
+        let genderRaw = gender?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() ?? ""
+        
+        // Male/Female mattum identify pannunga, illatha ellame nil
+        var genderLabel: String? = nil
+        var genderColor: UIColor = .label
+        
+        if genderRaw == "male" || genderRaw == "m" {
+            genderLabel = "M"
+            genderColor = .systemBlue
+        } else if genderRaw == "female" || genderRaw == "f" {
+            genderLabel = "F"
+            genderColor = .systemPink
+        }
         
         let fullText: String
-        if let gender = gender, !gender.isEmpty {
-            fullText = "\(name) (\(gender))"
+        if let genderLabel = genderLabel {
+            fullText = "\(name) (\(genderLabel))"
         } else {
             fullText = name
         }
@@ -114,15 +126,14 @@ class MarksTableViewCell: UITableViewCell {
         let attr = NSMutableAttributedString(string: fullText)
         
         let nameRange = (fullText as NSString).range(of: name)
-        attr.addAttribute(.foregroundColor,value: UIColor.label,range: nameRange)
+        attr.addAttribute(.foregroundColor, value: UIColor.label, range: nameRange)
         
-        if let gender = gender {
-            let genderText = "(\(gender))"
+        if let genderLabel = genderLabel {
+            let genderText = "(\(genderLabel))"
             let genderRange = (fullText as NSString).range(of: genderText)
-            attr.addAttribute(.foregroundColor,value: UIColor.systemPink,range: genderRange)
+            attr.addAttribute(.foregroundColor, value: genderColor, range: genderRange)
         }
         
-        // RTL Support
         if UIView.userInterfaceLayoutDirection(for: label.semanticContentAttribute) == .rightToLeft {
             label.textAlignment = .right
             label.semanticContentAttribute = .forceRightToLeft

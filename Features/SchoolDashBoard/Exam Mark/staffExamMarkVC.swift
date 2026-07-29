@@ -99,7 +99,7 @@ class staffExamMarkVC: UIViewController, UITableViewDelegate, UITableViewDataSou
                     for standard in standardData{
                         for section in standard.sections ?? [] {
                             
-                            let displayName = "\(CommonStringFile.Standard.translated()) \(standard.name ?? "") - \(CommonStringFile.Section.translated()) \(section.name ?? "")"
+                            let displayName = "\(standard.name ?? "") - \(section.name ?? "")"
                             classList.append(ClassDisplayItem(displayName: displayName, standardId: standard.id ?? "", sectionId: section.id ?? ""))
                         }
                     }
