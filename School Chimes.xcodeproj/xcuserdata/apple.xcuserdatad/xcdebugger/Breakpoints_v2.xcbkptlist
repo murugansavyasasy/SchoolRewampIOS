@@ -302,9 +302,9 @@
             filePath = "Features/ParentDashBoard/ExamTimeTable/ExamTmTblVCViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
-            landmarkName = "searchBar(_:textDidChange:)"
+            startingLineNumber = "246"
+            endingLineNumber = "246"
+            landmarkName = "addReminder(task:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -368,8 +368,24 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "152"
             endingLineNumber = "152"
-            landmarkName = "ActivityCardView"
-            landmarkType = "3">
+            landmarkName = "didTapCard()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F054CAD0-D758-409B-BA83-D634C7C3A01C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Features/ParentDashBoard/ExamTimeTable/ExamTmTblVCViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
+            landmarkName = "examDetailApi()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

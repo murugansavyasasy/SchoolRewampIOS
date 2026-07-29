@@ -78,6 +78,11 @@ class ExamTmTblVCViewController: UIViewController {
                         self.newExam = response.data
                         self.FilteredExamDetails = self.newExam
                         // First Exam
+                    let isEmpty = self.newExam?.isEmpty ?? true
+                    self.NoDataLbl.isHidden = !isEmpty
+                    self.NoDataLbl.text = response.message ?? ""
+                    self.NoDataImage.isHidden = !isEmpty
+                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: isEmpty)
                         guard let exam = response.data?.first else {
                             self.activities = []
                             self.tv.reloadData()
@@ -97,11 +102,7 @@ class ExamTmTblVCViewController: UIViewController {
                         self.tv.reloadData()
                         
                         
-                    let isEmpty = self.newExam?.isEmpty ?? true
-                    self.NoDataLbl.isHidden = !isEmpty
-                    self.NoDataLbl.text = response.message ?? ""
-                    self.NoDataImage.isHidden = !isEmpty
-                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: isEmpty)
+                 
                     
                   
                 case .failure(let error):
@@ -114,7 +115,7 @@ class ExamTmTblVCViewController: UIViewController {
                     self.NoDataLbl.text = error.localizedDescription
                     self.NoDataLbl.isHidden = false
                     self.NoDataImage.isHidden = false
-                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: true)
+                    self.delegate?.childViewController(self, didUpdateDataIsEmpty: false)
                 }
             }
         }
@@ -124,35 +125,6 @@ class ExamTmTblVCViewController: UIViewController {
 // MARK: - UITableView Delegate & DataSource
 extension ExamTmTblVCViewController: UITableViewDelegate, UITableViewDataSource {
 
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return FilteredExamDetails?.count ?? 0
-//    }
-//    
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        
-//        let headerview = UIView()
-//        headerview.backgroundColor = .clear
-//        
-//        // Title Label
-//        let titleLabel = UILabel()
-//        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-//        titleLabel.textColor = .primery
-//        titleLabel.setFont(style: .body, size: 25)
-//        titleLabel.text = FilteredExamDetails?[section].examName
-//        
-//        headerview.addSubview(titleLabel)
-//        
-//        
-//        NSLayoutConstraint.activate([
-//            // Title label constraints
-//            titleLabel.leadingAnchor.constraint(equalTo: headerview.leadingAnchor, constant: 15),
-//            titleLabel.trailingAnchor.constraint(equalTo: headerview.trailingAnchor, constant: -15),
-//            titleLabel.topAnchor.constraint(equalTo: headerview.topAnchor, constant: 5),
-//            titleLabel.bottomAnchor.constraint(equalTo: headerview.bottomAnchor, constant: -5)
-//        ])
-//        
-//        return headerview
-//    }
 
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

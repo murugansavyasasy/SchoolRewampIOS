@@ -89,15 +89,15 @@ class PendingFeeCell: UITableViewCell {
         
         // --- 3. Summary Block ---
         if let summary = data.summary {
-            let total = summary.total_amount ?? 0
-            let paid = summary.paid_amount ?? 0
-            let pending =  summary.pending_amount ?? 0
+            let total = summary.total_amount ?? "0"
+            let paid = summary.paid_amount ?? "0"
+            let pending =  summary.pending_amount ?? "0"
             let sts = summary.status ?? "PENDING"
             
-            totalAmountLabel.text = formatCurrency(Double(total))
-            paidAmountLabel.text = formatCurrency(Double(paid))
-            pendingAmountLabel.text = formatCurrency(Double(pending))
-            payButtonLabel.text = "Pay Now \(formatCurrency(Double(pending)))"
+            totalAmountLabel.text = total
+            paidAmountLabel.text = paid
+            pendingAmountLabel.text = pending
+            payButtonLabel.text = "Pay Now \(pending)"
             
             // --- 4. Payment PENDING Badge Styling ---
             statusLabel.text = sts.uppercased()
@@ -138,19 +138,7 @@ class PendingFeeCell: UITableViewCell {
         label.attributedText = attrStr
     }
     
-    // Formats integer amount into Indian Rupees format e.g 8500 -> ₹8,500
-    private func formatCurrency(_ amount: Double) -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencySymbol = "₹"
-        formatter.maximumFractionDigits = 2
-        formatter.minimumFractionDigits = 0
-        
-        if let formattedValue = formatter.string(from: NSNumber(value: amount)) {
-            return formattedValue
-        }
-        return "₹\(amount)"
-    }
+
     
     @IBAction func PayButtonTapped(_ sender: Any) {
         onPayButtonTapped?()

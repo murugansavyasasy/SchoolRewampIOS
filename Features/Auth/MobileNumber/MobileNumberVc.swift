@@ -90,6 +90,24 @@ class MobileNumberVc: UIViewController{
         continueBtnName.setTitleFont(style: .primary, size: FontSize.TitleSize)
         addPadding(to: MobilTextFld, amount: 10)
         WelcomeLbl.text = NSLocalizedString("WELCOME_STRING", comment: "") + "!"//"WELCOME_STRING".translated()
+        let countryName = "\\ " + (country_data?.name ?? "")
+        let fullText = "Log in to stay connected With \(countryName)"
+        let attributedText = NSMutableAttributedString(
+            string: fullText,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 21, weight: .semibold),
+                .foregroundColor: UIColor.label
+            ]
+        )
+        if let range = fullText.range(of: countryName) {
+            let nsRange = NSRange(range, in: fullText)
+            attributedText.addAttribute(
+                .font,
+                value: UIFont.systemFont(ofSize: 14, weight: .regular), // Smaller font
+                range: nsRange
+            )
+        }
+        LoginTitleLbl.attributedText = attributedText
     }
     
     func addPadding(to textField: UITextField, amount: CGFloat) {

@@ -290,7 +290,8 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
             parameters: [
                 "hostel_id": hostelId,
                 "year_id": yearId,
-                "month_id": monthId
+                "month_id": monthId,
+                "country_id": UserDefaultFileManager.getCountryDetails()?.id ?? ""
             ],
             type: ApitTypeSringFile.GET,
             token: studentDetails?.access_token ?? "",
