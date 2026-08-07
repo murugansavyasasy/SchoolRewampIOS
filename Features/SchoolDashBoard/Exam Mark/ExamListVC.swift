@@ -108,7 +108,7 @@ class ExamListVC: UIViewController, UISearchBarDelegate {
     
     func loadSubjectList(for examId: String, reloadIndex: IndexPath) {
         SubjectList.removeAll()
-        let param:[String:Any] = ["exam_id": examId]
+        let param:[String:Any] = ["exam_id": examId , "section_id":standard?.sectionId ?? ""]
         
         APIService.shared.makeApi(
             url: ServiceUrl.exam_get_subject_wise_activities,
