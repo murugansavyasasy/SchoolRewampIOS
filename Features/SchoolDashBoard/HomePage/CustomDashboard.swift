@@ -234,9 +234,9 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                     if response.status == true, let details = response.data?.first {
                         self.menu_details = details.menus
                     
-//                        self.menu_details?.append(
-//                            MenuDetail(id: 206, name: "Create Test for class", description: "Used to apply leave")
-//                        )
+                        self.menu_details?.append(
+                            MenuDetail(id: 208, name: "Exam Analysis", description: "Used to trak student performance")
+                        )
                         self.refreshCount = true
                         self.get_MenuCount()
                         self.recentMenuItems = details.frequently_used
@@ -678,7 +678,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         MenuStringFile.selectedMenuName = menuName
         // MENU IDs that need navigateOrSchoolList check
         let needSchoolCheck: Set<Int> = [
-            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 18, 41,202,203,204,205,206
+            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 18, 41,202,203,204,205,206,208
         ]
         Menu_id.staffSelectedMenuId = menuId
         // All actions with explicit self
@@ -721,7 +721,8 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             204: { self.MenuRedirect.StaffLeaveRequest(from: self) },
             205: { self.MenuRedirect.buslist(from: self, loginasType: self.loginAsType ?? 0, is_ownbustraking: self.staffDetails?.gps_type == "dhundhoo" ? false : true) },
             
-            206 : { self.MenuRedirect.createClasstestVc(from: self) }
+            206 : { self.MenuRedirect.createClasstestVc(from: self) },
+            208:{self.MenuRedirect.senderExamAnalise(from: self)}
             
         ]
  

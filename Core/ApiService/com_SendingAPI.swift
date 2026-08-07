@@ -100,14 +100,38 @@ class  commonApi_forSending {
                 uploadNextVideo()
                 // 📷 Upload other files (images, PDFs, etc.)
                 dispatchGroup.enter()
-                uploadAWSMedia(file: user_inputs.SelectedUrls) {
+                uploadAWSMedia(file: user_inputs.SelectedUrls) { [weak self] in
+                    guard let self = self else { return }
+//                    let fileEntries: [[String: String]] = uploadedURLs.compactMap { urlString in
+//                        guard let url = URL(string: urlString) else { return nil }
+//                        let ext = url.pathExtension.lowercased()
+//                        let resolvedType = (ext == "jpg" || ext == "png") ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
+//                        return [
+//                            CommonStringFile.url: urlString,
+//                            CommonStringFile.type: resolvedType
+//                        ]
+//                    }
                     let fileEntries: [[String: String]] = uploadedURLs.compactMap { urlString in
                         guard let url = URL(string: urlString) else { return nil }
+
                         let ext = url.pathExtension.lowercased()
-                        let resolvedType = (ext == "jpg" || ext == "png") ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
+
+                        let type: String
+
+                        switch ext {
+                        case "jpg", "jpeg", "png":
+                            type = "IMAGE"
+
+                        case "mp3", "wav", "m4a", "aac", "amr", "ogg":
+                            type = "AUDIO"
+
+                        default:
+                            type = ext.uppercased()
+                        }
+
                         return [
                             CommonStringFile.url: urlString,
-                            CommonStringFile.type: resolvedType
+                            CommonStringFile.type: type
                         ]
                     }
                     uploadedFiles.append(contentsOf: fileEntries)

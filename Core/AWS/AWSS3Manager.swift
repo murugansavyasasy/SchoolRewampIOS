@@ -75,7 +75,24 @@ class AWSUploadManager {
                     contentType = getContentType(from: fileName)
                     fileURL = url
                 }
-            }else{
+            }
+            
+            else if Menu_id.staffSelectedMenuId == Menu_id.homeWorkMenuId{
+              
+                if isAudioFile(url: url) {
+                    let timestamp = Int(Date().timeIntervalSince1970 * 1000)
+                    fileName = "original_\(timestamp).\(url.pathExtension)"
+                    contentType = "audio/\(url.pathExtension)"
+                    fileURL = url
+                }else {
+                    let time = Int(Date().timeIntervalSince1970 * 1000)
+                    fileName = "file_\(time).\(url.pathExtension)"
+                    contentType = getContentType(from: fileName)
+                    fileURL = url
+                }
+                
+            }
+            else{
                 if isAudioFile(url: url) {
                     let timestamp = Int(Date().timeIntervalSince1970 * 1000)
                     fileName = "original_\(timestamp).\(url.pathExtension)"

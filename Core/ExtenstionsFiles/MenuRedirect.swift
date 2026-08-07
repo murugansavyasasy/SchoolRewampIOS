@@ -263,6 +263,14 @@ class MenuRedirectHandler {
     }
     
     
+    func senderExamAnalise(from viewController: UIViewController) {
+        let vc = ExamAnaylzeSelectionVc(nibName: nil, bundle: nil)
+//        let vc = EnterMarkVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
+    
+    
     //MARK: ResiverSideMenuViewContoller Starts
     func receiverCommunicationNavigate(from viewController: UIViewController,PushNotiMsgId:String) {
         if #available(iOS 15.0, *) {

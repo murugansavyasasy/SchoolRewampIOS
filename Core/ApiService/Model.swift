@@ -428,6 +428,7 @@ struct HomeworkList: Codable {
 struct FilePath: Codable {
     let url: String?
     let type: String?
+    var playbackSeconds: Double?
     var isBase64: Bool {
            return !(url?.lowercased().hasPrefix("http") ?? false)
        }
@@ -3767,3 +3768,20 @@ struct RubricActivityMark: Codable {
     var reason: String?
 }
 
+struct analysisRespSuc : Codable{
+    
+    let status: Bool?
+    let message: String?
+    let data: [analysisData]?
+}
+
+struct analysisData : Codable{
+    let id: String?
+    let setName: String?
+    let class_tests: [analysisClass_tests]?
+}
+
+struct analysisClass_tests: Codable{
+    let id: String?
+    let examName: String?
+}

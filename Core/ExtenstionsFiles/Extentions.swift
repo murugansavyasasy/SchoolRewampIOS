@@ -616,6 +616,8 @@ func getFileIconName(for fileURL: URL) -> String {
         return "exel"
     case "ppt", "pptx":
         return "ppt"
+    case "mp3", "wav", "m4a", "aac", "amr", "3ga", "caf", "flac", "ogg", "opus", "wma", "aiff", "aif", "pcm":
+        return "audio"
     default:
         return "video (1)"
     }

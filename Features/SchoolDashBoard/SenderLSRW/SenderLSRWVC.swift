@@ -158,11 +158,7 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         placeholderLabel.numberOfLines = 0
         placeholderLabel.positionAsPlaceholder(in: DetailsTxtview,topPadding: 8, sidePadding: 8)
         DetailsTxtview.addSubview(placeholderLabel)
-//        NSLayoutConstraint.activate([
-//            placeholderLabel.leadingAnchor.constraint(equalTo: DetailsTxtview.leadingAnchor, constant: 8),
-//            placeholderLabel.trailingAnchor.constraint(equalTo: DetailsTxtview.trailingAnchor, constant: -8),
-//            placeholderLabel.topAnchor.constraint(equalTo: DetailsTxtview.topAnchor, constant: 8)
-//        ])
+
         let isEmptyContent = (DetailsTxtview.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || DetailsTxtview.text == CommonStringFile.Description
         placeholderLabel.isHidden = !isEmptyContent ? true : false
         if DetailsTxtview.text == CommonStringFile.Description {

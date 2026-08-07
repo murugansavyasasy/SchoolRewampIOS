@@ -328,6 +328,8 @@ struct CommonStringFile {
     static let Cancel = "Cancel"
     static let Camera = "Camera"
     static let Document = "Document"
+    static let Recording = "Recording"
+    static let AudioFile = "Audio File"
     static let Video = "Video"
     static let Photos = "Photos"
     static let VIDEO = "VIDEO"
