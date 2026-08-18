@@ -9,6 +9,8 @@ import UIKit
 
 class ExamAnaylzeSelectionVc: UIViewController,UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var defaultLblStack: UIStackView!
+    @IBOutlet weak var menuNameTitleLbl: UILabel!
     @IBOutlet weak var standarFullView: UIView!
     @IBOutlet weak var studentListFullView: UIView!
     @IBOutlet weak var nodataStack: UIStackView!
@@ -37,6 +39,9 @@ class ExamAnaylzeSelectionVc: UIViewController,UITableViewDataSource, UITableVie
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var studentsDetails: [StudentDetails]?
     var selectedAcademicYearId: Int?
+    var selectedStandardId: String?
+    var selectedSectionId: String?
+    var loginType: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -51,7 +56,7 @@ class ExamAnaylzeSelectionVc: UIViewController,UITableViewDataSource, UITableVie
     
     private func setupUI() {
         view.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.97, alpha: 1.0)
-        
+//        menuNameTitleLbl.text =  MenuStringFile.selectedMenuName
         dropdownView.layer.cornerRadius = 8
         dropdownView.layer.borderWidth = 1
         dropdownView.layer.borderColor = UIColor(red: 0.11, green: 0.44, blue: 0.95, alpha: 1.0).cgColor
@@ -72,7 +77,6 @@ class ExamAnaylzeSelectionVc: UIViewController,UITableViewDataSource, UITableVie
         
         // Button style
         viewAnalysisButton.layer.cornerRadius = 10
-//        viewAnalysisButton.backgroundColor = UIColor(red: 0.05, green: 0.14, blue: 0.23, alpha: 1.0)
         viewAnalysisButton.setTitleColor(.white, for: .normal)
         viewAnalysisButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
     }
@@ -97,6 +101,7 @@ class ExamAnaylzeSelectionVc: UIViewController,UITableViewDataSource, UITableVie
             guard let self = self else { return }
             
             academicYearBtn.setTitle(item, for: .normal)
+            selectedAcademicYearId = AcadimicYears[index].id ?? 0
             Get_standardSection_Api(academicId :AcadimicYears[index].id ?? 0 )
         }
     }
@@ -111,7 +116,9 @@ class ExamAnaylzeSelectionVc: UIViewController,UITableViewDataSource, UITableVie
             guard let self = self else { return }
 
             self.dropdownLabel.text = item
-
+            self.selectedSectionId = classList[index].sectionId
+            self.selectedStandardId = classList[index].standardId
+            
             self.recipient_get_student_list(
                 selected_sectionId: self.classList[index].sectionId,
                 academic_year_id: self.selectedAcademicYearId ?? 0
@@ -128,7 +135,7 @@ class ExamAnaylzeSelectionVc: UIViewController,UITableViewDataSource, UITableVie
         Get_standardSection_Api(academicId: currentYear?.id ?? 0)
     }
     func Get_standardSection_Api(academicId : Int){
-        
+        showActivityLoader()
         APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id: academicId], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<GetStandardsSuc , Error>) in
             
             DispatchQueue.main.sync { [weak self] in
@@ -148,16 +155,21 @@ class ExamAnaylzeSelectionVc: UIViewController,UITableViewDataSource, UITableVie
                                 classList.append(ClassDisplayItem(displayName: displayName, standardId: standard.id ?? "", sectionId: section.id ?? ""))
                             }
                         }
+                        selectedSectionId = classList.first?.sectionId
+                        selectedStandardId = classList.first?.standardId
                         dropdownLabel.text = classList.first?.displayName
                         recipient_get_student_list(selected_sectionId:classList.first?.sectionId ?? "" , academic_year_id: selectedAcademicYearId ?? 0)
                         nodata(isShow: true, message:success.message ?? "" )
+                        hideActivityLoader()
                     }else{
                         nodata(isShow: false, message:success.message ?? "" )
+                        hideActivityLoader()
                     }
                     
                 case .failure(let failure):
 
                     nodata(isShow: false, message:failure.localizedDescription )
+                    hideActivityLoader()
                 }
             }
             
@@ -166,6 +178,7 @@ class ExamAnaylzeSelectionVc: UIViewController,UITableViewDataSource, UITableVie
     
     
     func recipient_get_student_list(selected_sectionId: String,academic_year_id:Int){
+        showActivityLoader()
         APIService.shared
             .makeApi(url: ServiceUrl.recipient_get_student_list, parameters: [
                 speficStudentStringFile.section_id : selected_sectionId
@@ -179,22 +192,16 @@ class ExamAnaylzeSelectionVc: UIViewController,UITableViewDataSource, UITableVie
                     if successMessage.status == true{
                         DispatchQueue.main.async { [self] in
                             studentsDetails = successMessage.data
-                            if var students = studentsDetails {
-                                for i in students.indices {
-                                    students[i].isSelect = false
-                                    students[i].isAbsent = true
-                                }
-                                studentsDetails = students
-                            }
-                            
+                         
                             studentTableView.reloadData()
                             nodata(isShow: true, message:successMessage.message ?? "" )
-                            
+                            hideActivityLoader()
                         }
                         
                     }else{
                         DispatchQueue.main.async { [self] in
                             nodata(isShow: false, message:successMessage.message ?? "" )
+                            hideActivityLoader()
                         }
                     }
                     
@@ -202,6 +209,7 @@ class ExamAnaylzeSelectionVc: UIViewController,UITableViewDataSource, UITableVie
                     DispatchQueue.main.async { [self] in
                         print(error.localizedDescription)
                         nodata(isShow: false, message:error.localizedDescription)
+                        hideActivityLoader()
                     }
                 }
             }
@@ -214,6 +222,7 @@ class ExamAnaylzeSelectionVc: UIViewController,UITableViewDataSource, UITableVie
         nodataStack.isHidden = isShow
         nodataFoundLbl.text = message
         footerView.isHidden = !isShow
+        defaultLblStack.isHidden = !isShow
     }
 
     
@@ -225,6 +234,9 @@ class ExamAnaylzeSelectionVc: UIViewController,UITableViewDataSource, UITableVie
         
         let examVC = selectExamVc()
         examVC.student = student
+        examVC.loginType = 1
+        examVC.classId = selectedStandardId ?? ""
+        examVC.sectionId = selectedSectionId ?? ""
         examVC.classAndSectionText = dropdownLabel.text ?? ""
         examVC.modalPresentationStyle = .fullScreen
         present(examVC, animated: true, completion: nil)

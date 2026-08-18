@@ -9,6 +9,7 @@ import UIKit
 
 class CreateClassTestVc: UIViewController {
 
+    @IBOutlet weak var backTitleLbl: UILabel!
     // MARK: - IBOutlets
     @IBOutlet public weak var headerBackgroundView: UIView!
     @IBOutlet weak var BackDismissImg: UIImageView!
@@ -93,6 +94,7 @@ class CreateClassTestVc: UIViewController {
             self?.acadmicYrBtnName.contentHorizontalAlignment = .fill
             self?.acadmicYrBtnName.tintColor = .white
             self?.viewModel.getStandardsAPI(academic_year_id: self?.academicId ?? 0)
+            self?.viewModel.viewcontroller = self
         }
     }
 
@@ -100,6 +102,7 @@ class CreateClassTestVc: UIViewController {
     private func setupUI() {
         // Rounded bottom corners of header background view
         headerBackgroundView.clipsToBounds = true
+        backTitleLbl.text = MenuStringFile.selectedMenuName
 //        headerBackgroundView.layer.cornerRadius = 24
         headerBackgroundView.clipsToBounds = true
         maincardView.layer.cornerRadius = 20
@@ -411,6 +414,13 @@ class CreateClassTestVc: UIViewController {
         _ = viewModel.nextStep()
     }
     
+    @IBAction func viewMarkAnalisBtnName(_ sender: UIButton) {
+        let vc = ExamAnaylzeSelectionVc(nibName: nil, bundle: nil)
+        vc.loginType = 1
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+        
+    }
     @IBAction func viewHistoryAct(_ sender: Any) {
         let vc = ExamReportsVC()
         vc.viewModel = viewModel

@@ -263,14 +263,6 @@ class MenuRedirectHandler {
     }
     
     
-    func senderExamAnalise(from viewController: UIViewController) {
-        let vc = ExamAnaylzeSelectionVc(nibName: nil, bundle: nil)
-//        let vc = EnterMarkVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
-    }
-    
-    
     //MARK: ResiverSideMenuViewContoller Starts
     func receiverCommunicationNavigate(from viewController: UIViewController,PushNotiMsgId:String) {
         if #available(iOS 15.0, *) {
@@ -392,17 +384,7 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
-//    func parantMapVC(from viewController: UIViewController){
-//        let vc = BusTrakingVC(nibName: nil, bundle: nil)
-//        vc.modalPresentationStyle = .fullScreen
-//        viewController.present(vc, animated: true)
-//    }
-//    func privateBusTracker(from viewController: UIViewController){
-//        let vc = BusTrakingVC(nibName: nil, bundle: nil)
-//        vc.modalPresentationStyle = .fullScreen
-//        viewController.present(vc, animated: true)
-//    }
-    
+
     func staffApplyLeave(from viewContorller: UIViewController){
         let vc = ApplyLeaveReqVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen

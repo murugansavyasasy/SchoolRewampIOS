@@ -9,6 +9,10 @@ import UIKit
 
 class selectExamVc: UIViewController ,UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var defaultLblStack: UIStackView!
+    @IBOutlet weak var noRecLabel: UILabel!
+    @IBOutlet weak var noRecStack: UIStackView!
+    @IBOutlet weak var studentInfoView: UIView!
     @IBOutlet weak var standardAndSec: UILabel!
     @IBOutlet weak var admissinNoLbl: UILabel!
     @IBOutlet weak var rollnumberLbl: UILabel!
@@ -16,9 +20,9 @@ class selectExamVc: UIViewController ,UITableViewDataSource, UITableViewDelegate
     @IBOutlet weak var selectedStudentInitialsLabel: UILabel!
     @IBOutlet weak var selectedStudentNameLabel: UILabel!
    
+    @IBOutlet weak var topBackBtnName: UIButton!
+    @IBOutlet weak var examsTableView: SelfSizingTableView!
     
-    @IBOutlet weak var examsTableView: UITableView!
-    @IBOutlet weak var examsTableViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var selectedExamsCountLabel: UILabel!
     
     @IBOutlet weak var viewAnalysisButton: UIButton!
@@ -27,31 +31,34 @@ class selectExamVc: UIViewController ,UITableViewDataSource, UITableViewDelegate
     @IBOutlet weak var changeButton: UIButton!
     
     // MARK: - Injected Properties
-
     var student: StudentDetails?
     var classAndSectionText: String = ""
-    
+    var classId :String?
+    var sectionId:String?
+    var setId: String?
     // MARK: - Private Properties
     private var exams: [Exam] = []
-    private var selectedExams: Set<String> = []
+    var selectedExamId: String?
     var staffDetails = UserDefaultFileManager.get_staff_Details()
+    var childDetails = UserDefaultFileManager.get_child_Details()
+    var loginType: Int?
+    var examAnalsyist: [analysisData] = []
+    private var selectedSetId: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        loadExams()
+
+        getAnaylisExam(classid: classId ?? "" , sectionid: sectionId ?? "")
     }
     
     @IBAction func backBtnAct(_ sender: UIButton) {
         dismiss(animated: true)
     }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateTableViewHeight()
-    }
+   
     
     private func setupUI() {
         view.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.97, alpha: 1.0)
-        
+//        topBackBtnName.setTitle(MenuStringFile.selectedMenuName, for: .normal)
         // 1. Configure Header Card
         selectedStudentAvatarView.layer.cornerRadius = 20
         selectedStudentAvatarView.clipsToBounds = true
@@ -59,7 +66,7 @@ class selectExamVc: UIViewController ,UITableViewDataSource, UITableViewDelegate
         changeButton.layer.cornerRadius = 15
         changeButton.backgroundColor = UIColor(red: 0.94, green: 0.95, blue: 0.96, alpha: 1.0)
         changeButton.setTitleColor(UIColor(red: 0.35, green: 0.45, blue: 0.56, alpha: 1.0), for: .normal)
-        
+        studentInfoView.isHidden = loginType == 2 ? true : false
         if let student = student {
             selectedStudentNameLabel.text = student.name
             let rollText = student.roll_no?.isEmpty == nil ? "--" : "\(student.roll_no ?? "")"
@@ -73,7 +80,7 @@ class selectExamVc: UIViewController ,UITableViewDataSource, UITableViewDelegate
         // 2. Configure TableView
         examsTableView.dataSource = self
         examsTableView.delegate = self
-        examsTableView.register(UINib(nibName: "ExamTableViewCell", bundle: nil), forCellReuseIdentifier: "ExamTableViewCell")
+        examsTableView.register(UINib(nibName: "SetTableViewCell", bundle: nil), forCellReuseIdentifier: "SetTableViewCell")
         examsTableView.isScrollEnabled = false
         examsTableView.separatorStyle = .none
         examsTableView.backgroundColor = .clear
@@ -84,32 +91,18 @@ class selectExamVc: UIViewController ,UITableViewDataSource, UITableViewDelegate
         backButton.layer.borderColor = UIColor(red: 0.88, green: 0.90, blue: 0.93, alpha: 1.0).cgColor
         backButton.backgroundColor = .white
         backButton.setTitleColor(UIColor(red: 0.05, green: 0.14, blue: 0.23, alpha: 1.0), for: .normal)
-        
         viewAnalysisButton.layer.cornerRadius = 10
-//        viewAnalysisButton.backgroundColor = UIColor(red: 0.05, green: 0.14, blue: 0.23, alpha: 1.0)
         viewAnalysisButton.setTitleColor(.white, for: .normal)
         
-        updateFooterStatus()
+        updateButtonState()
     }
-    
-    private func loadExams() {
-        exams = MockData.loadExams()
-        
-        // No exams selected by default as requested
-        
-        examsTableView.reloadData()
-        updateFooterStatus()
-        
-        DispatchQueue.main.async {
-            self.updateTableViewHeight()
-        }
-    }
+
     
 
     
     func getAnaylisExam(classid: String,sectionid : String){
-        
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: ["class_id" : "" ,"section_id" : ""], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<analysisRespSuc , Error>) in
+        showActivityLoader()
+        APIService.shared.makeApi(url: ServiceUrl.exam_api_exam_test_analysis_sets_list, parameters: ["class_id" : loginType == 2 ? "" : classid ,"section_id" : loginType == 2 ? "" : sectionid ], type: ApitTypeSringFile.GET, token: loginType == 2 ? childDetails?.access_token ?? "" : staffDetails?.access_token ?? "", isBaseUrl: false) { [weak self] (result: Result<analysisRespSuc , Error>) in
             
             DispatchQueue.main.sync { [weak self] in
                 
@@ -118,35 +111,40 @@ class selectExamVc: UIViewController ,UITableViewDataSource, UITableViewDelegate
                 switch result {
                 case .success(let success):
                     if success.status ?? false{
-                       
+                        noRecStack.isHidden = true
+                        examsTableView.isHidden = false
+                        examAnalsyist = success.data ?? []
+                        viewAnalysisButton.isHidden = false
+                        defaultLblStack.isHidden = false
+                        examsTableView.reloadData()
+                        hideActivityLoader()
                     }else{
-                        
+                        examAnalsyist = []
+                        examsTableView.reloadData()
+                        examsTableView.isHidden = true
+                        viewAnalysisButton.isHidden = true
+                        noRecStack.isHidden = false
+                        defaultLblStack.isHidden = true
+                        noRecLabel.text = success.message
+                        hideActivityLoader()
                     }
                     
                 case .failure(let failure):
-                    
+                    examsTableView.isHidden = true
+                    viewAnalysisButton.isHidden = true
+                    noRecStack.isHidden = false
+                    defaultLblStack.isHidden = true
+                    noRecLabel.text = failure.localizedDescription
+                    hideActivityLoader()
                 }
             }
             
         }
     }
     
-    private func updateTableViewHeight() {
-        examsTableViewHeightConstraint.constant = examsTableView.contentSize.height
-        view.layoutIfNeeded()
-    }
+  
     
-    private func updateFooterStatus() {
-        let count = selectedExams.count
-        selectedExamsCountLabel.text = "\(count) exams selected"
-        
-        // Select All button toggle text
-        if count == exams.count {
-            selectAllButton.setTitle("Deselect all", for: .normal)
-        } else {
-            selectAllButton.setTitle("Select all", for: .normal)
-        }
-    }
+
     
     // MARK: - Actions
     @IBAction func didTapChange(_ sender: UIButton) {
@@ -157,39 +155,29 @@ class selectExamVc: UIViewController ,UITableViewDataSource, UITableViewDelegate
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func didTapSelectAll(_ sender: UIButton) {
-        if selectedExams.count == exams.count {
-            selectedExams.removeAll()
-        } else {
-            selectedExams = Set(exams.map { $0.id })
-        }
-        examsTableView.reloadData()
-        updateFooterStatus()
-    }
+//    @IBAction func didTapSelectAll(_ sender: UIButton) {
+////        if selectedExams.count == examAnalsyist.count {
+////            selectedExams.removeAll()
+////        } else {
+////            selectedExams = Set(examAnalsyist.map { $0.id ?? "" })
+////        }
+////        examsTableView.reloadData()
+////        updateFooterStatus()
+//    }
     
     @IBAction func didTapViewAnalysis(_ sender: UIButton) {
-        guard let student = student else { return }
-        
-        if selectedExams.isEmpty {
-            showAlert(title: "Selection Required", message: "Please select at least one exam to include in the analysis.")
-            return
-        }
-        
-        let selectedLabels = exams.filter { selectedExams.contains($0.id) }.map { $0.label }
-        let message = """
-        Student: \(student.name)
-        Class Details: \(classAndSectionText)
-        Selected Exams: \(selectedLabels.joined(separator: ", "))
-        """
-        
-        showAlert(title: "Mark Analysis Ready", message: message)
+
+       
+        let vc = anaylizesVc()
+        vc.student = student
+        vc.loginType = loginType
+        vc.SetId = selectedSetId
+        vc.classAndSectionText = classAndSectionText
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
-    private func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
+   
     
     // MARK: - Helper Formatting
     private func getInitials(from name: String) -> String {
@@ -219,31 +207,33 @@ class selectExamVc: UIViewController ,UITableViewDataSource, UITableViewDelegate
     
     // MARK: - UITableView DataSource & Delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return exams.count
+        return examAnalsyist.count
     }
     
+   
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ExamTableViewCell", for: indexPath) as? ExamTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SetTableViewCell", for: indexPath) as? SetTableViewCell else {
             return UITableViewCell()
         }
-        let exam = exams[indexPath.row]
-        let isSelected = selectedExams.contains(exam.id)
-        cell.configure(with: exam, isSelected: isSelected, index: indexPath.row)
+        let set = examAnalsyist[indexPath.row]
+        let isSelected = (set.id == selectedSetId)
+        cell.configure(with: set, isSelected: isSelected)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let exam = exams[indexPath.row]
-        if selectedExams.contains(exam.id) {
-            selectedExams.remove(exam.id)
-        } else {
-            selectedExams.insert(exam.id)
-        }
+        let set = examAnalsyist[indexPath.row]
+        selectedSetId = set.id ?? ""
         tableView.reloadData()
-        updateFooterStatus()
+        updateButtonState()
     }
     
+    private func updateButtonState() {
+        let isEnabled = !selectedSetId.isEmpty
+        viewAnalysisButton.isEnabled = isEnabled
+        viewAnalysisButton.alpha = isEnabled ? 1.0 : 0.5
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 82
+        return UITableView.automaticDimension
     }
 }

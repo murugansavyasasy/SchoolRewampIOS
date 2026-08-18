@@ -14,8 +14,10 @@
                 <outlet property="admissinNoLbl" destination="Q2A-6m-kxj" id="YyX-N6-WoZ"/>
                 <outlet property="backButton" destination="00f-n0-2yh" id="9lk-Ig-0IC"/>
                 <outlet property="changeButton" destination="3Pf-V5-6jF" id="2XH-5z-SZs"/>
-                <outlet property="examsTableView" destination="9dp-OT-YiI" id="H6X-lc-2Kp"/>
-                <outlet property="examsTableViewHeightConstraint" destination="aa6-AT-tff" id="tUN-1a-o2m"/>
+                <outlet property="defaultLblStack" destination="I4c-3L-6Ud" id="ndL-RJ-KSP"/>
+                <outlet property="examsTableView" destination="9dp-OT-YiI" id="egE-Dx-Bw3"/>
+                <outlet property="noRecLabel" destination="tYc-kG-DsQ" id="zlG-CK-xcv"/>
+                <outlet property="noRecStack" destination="jmt-JW-9LC" id="6Un-Uo-CeV"/>
                 <outlet property="rollnumberLbl" destination="vJN-eF-V8f" id="bzk-1p-Ww4"/>
                 <outlet property="selectAllButton" destination="D4Z-jO-TPC" id="y0n-35-G94"/>
                 <outlet property="selectedExamsCountLabel" destination="Ihl-gD-5EE" id="KOo-sB-8gi"/>
@@ -23,6 +25,8 @@
                 <outlet property="selectedStudentInitialsLabel" destination="Dmj-Tk-ypX" id="Fkt-kQ-Dsu"/>
                 <outlet property="selectedStudentNameLabel" destination="5Dm-3y-gle" id="rWc-yd-NxV"/>
                 <outlet property="standardAndSec" destination="JQ3-gR-30y" id="saK-gf-Xma"/>
+                <outlet property="studentInfoView" destination="O6o-ae-zYN" id="eEw-KZ-NtI"/>
+                <outlet property="topBackBtnName" destination="8s3-So-SJJ" id="PL0-6Y-2q7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewAnalysisButton" destination="hZ6-ke-yCX" id="IdY-1i-3o0"/>
             </connections>
@@ -46,7 +50,7 @@
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" title="Select Exams" image="chevron.backward" catalog="system">
+                                            <state key="normal" title="Class set analysis" image="chevron.backward" catalog="system">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                             </state>
@@ -70,14 +74,14 @@
                     <rect key="frame" x="0.0" y="171.33333333333331" width="393" height="532.66666666666674"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oNl-1f-N3C">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oNl-1f-N3C">
                     <rect key="frame" x="0.0" y="171.33333333333331" width="393" height="532.66666666666674"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cjU-o0-XUH">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="631.66666666666663"/>
+                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cjU-o0-XUH">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="585.66666666666663"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="xlE-Nd-peA">
-                                    <rect key="frame" x="16" y="16" width="361" height="599.66666666666663"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="xlE-Nd-peA">
+                                    <rect key="frame" x="16" y="16" width="361" height="553.66666666666663"/>
                                     <subviews>
                                         <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="A35-pU-p9p">
                                             <rect key="frame" x="0.0" y="-20" width="361" height="20"/>
@@ -191,13 +195,13 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="I4c-3L-6Ud">
                                             <rect key="frame" x="0.0" y="95.999999999999972" width="361" height="51.666666666666657"/>
                                             <subviews>
-                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Exams" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5w-mT-eYV" userLabel="Select Exams Title">
+                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select set analysis" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5w-mT-eYV" userLabel="Select Exams Title">
                                                     <rect key="frame" x="0.0" y="0.0" width="361" height="31.333333333333332"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                                                     <color key="textColor" name="ParentClr"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick one or more exam series to include in the analysis." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UIe-ZA-PmU" userLabel="Select Exams Subtitle">
+                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick a set to view analysis" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UIe-ZA-PmU" userLabel="Select Exams Subtitle">
                                                     <rect key="frame" x="0.0" y="37.333333333333371" width="361" height="14.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.35294117650000001" green="0.45098039220000002" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
@@ -205,18 +209,15 @@
                                                 </label>
                                             </subviews>
                                         </stackView>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OG3-gW-ZpJ">
-                                            <rect key="frame" x="0.0" y="163.66666666666666" width="361" height="30"/>
+                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OG3-gW-ZpJ">
+                                            <rect key="frame" x="0.0" y="155.66666666666666" width="361" height="30"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D4Z-jO-TPC">
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D4Z-jO-TPC">
                                                     <rect key="frame" x="303" y="0.0" width="58" height="28"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                                     <state key="normal" title="Select all">
                                                         <color key="titleColor" red="0.1137254902" green="0.43921568630000002" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
-                                                    <connections>
-                                                        <action selector="didTapSelectAll:" destination="-1" eventType="touchUpInside" id="2js-tG-Hw0"/>
-                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -226,13 +227,28 @@
                                                 <constraint firstAttribute="height" constant="30" id="fbT-Td-JeP"/>
                                             </constraints>
                                         </view>
-                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9dp-OT-YiI">
-                                            <rect key="frame" x="0.0" y="209.66666666666663" width="361" height="390"/>
+                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9dp-OT-YiI" customClass="SelfSizingTableView" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="163.66666666666663" width="361" height="390"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="390" id="aa6-AT-tff"/>
-                                            </constraints>
                                         </tableView>
+                                        <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="jmt-JW-9LC">
+                                            <rect key="frame" x="0.0" y="553.66666666666663" width="361" height="311"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NohomeWork" translatesAutoresizingMaskIntoConstraints="NO" id="bLb-hc-507">
+                                                    <rect key="frame" x="0.0" y="0.0" width="361" height="300"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="300" id="hzH-wo-7bz"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tYc-kG-DsQ">
+                                                    <rect key="frame" x="0.0" y="311" width="361" height="0.0"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </stackView>
                                     </subviews>
                                 </stackView>
                             </subviews>
@@ -274,8 +290,8 @@
                                         <action selector="didTapBack:" destination="-1" eventType="touchUpInside" id="HMe-Uj-btm"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 exams selected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ihl-gD-5EE" userLabel="Count Label">
-                                    <rect key="frame" x="90" y="18" width="131" height="14.333333333333336"/>
+                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ihl-gD-5EE" userLabel="Count Label">
+                                    <rect key="frame" x="90" y="0.0" width="131" height="50"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                                     <color key="textColor" red="0.35294117650000001" green="0.45098039220000002" blue="0.5568627451" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -333,12 +349,13 @@
         </view>
     </objects>
     <resources>
+        <image name="NohomeWork" width="1024" height="768"/>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <namedColor name="BackGroundClr">
             <color red="0.41999998688697815" green="0.70999997854232788" blue="0.3449999988079071" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="ParentClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.41899999976158142" green="0.70800000429153442" blue="0.34599998593330383" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>

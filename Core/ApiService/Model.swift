@@ -3785,3 +3785,119 @@ struct analysisClass_tests: Codable{
     let id: String?
     let examName: String?
 }
+
+// MARK: - New Student Analysis Response Model (Latest)
+
+public struct AnalysisResponse: Codable {
+    public let status: Bool
+    public let message: String
+    public let data: [StudentAnalysisData]
+}
+
+public struct StudentAnalysisData: Codable {
+    public let examSeries: [String]
+    public let subjects: [AnalysisSubject]
+    public let trend: [AnalysisTrendPoint]
+    public let summary: AnalysisSummary
+
+    enum CodingKeys: String, CodingKey {
+        case examSeries = "exam_series"
+        case subjects
+        case trend
+        case summary
+    }
+}
+
+public struct AnalysisSummary: Codable {
+    public let examsAnalysed: String
+    public let averageTotal: String
+    public let averagePercentage: String
+    public let bestExam: AnalysisSummaryExam
+    public let worstExam: AnalysisSummaryExam
+
+    enum CodingKeys: String, CodingKey {
+        case examsAnalysed = "exams_analysed"
+        case averageTotal = "average_total"
+        case averagePercentage = "average_percentage"
+        case bestExam = "best_exam"
+        case worstExam = "worst_exam"
+    }
+}
+
+public struct AnalysisSummaryExam: Codable {
+    public let examId: String
+    public let label: String
+    public let total: String
+    public let percentage: String
+
+    enum CodingKeys: String, CodingKey {
+        case examId = "exam_id"
+        case label
+        case total
+        case percentage
+    }
+}
+
+public struct AnalysisSubject: Codable {
+    public let subjectId: String
+    public let subjectName: String
+    public let totalMarks: String
+    public let obtainedMarks: String
+    public let percentage: String
+    public let marks: [AnalysisSubjectMark]
+
+    enum CodingKeys: String, CodingKey {
+        case subjectId = "subject_id"
+        case subjectName = "subject_name"
+        case totalMarks = "total_marks"
+        case obtainedMarks = "obtained_marks"
+        case percentage
+        case marks
+    }
+}
+
+public struct AnalysisSubjectMark: Codable {
+    public let id: String
+    public let examName: String
+    public let obtainedMark: String
+    public let maxMark: String
+    public let attendance: String
+    public let remarks: String
+    public let activityName: String?
+    public let examDate: String
+    public let session: String
+    public let minMark: String
+    public let syllabus: String
+    public let isPublish: String
+    public let colorCode: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case examName = "exam_name"
+        case obtainedMark = "obtained_mark"
+        case maxMark = "max_mark"
+        case attendance
+        case remarks
+        case activityName = "activity_name"
+        case examDate = "exam_date"
+        case session
+        case minMark = "min_mark"
+        case syllabus
+        case isPublish = "is_publish"
+        case colorCode = "color_code"
+    }
+}
+
+public struct AnalysisTrendPoint: Codable {
+    public let examName: String
+    public let total: String
+    public let max: String
+    public let percentage: String
+
+    enum CodingKeys: String, CodingKey {
+        case examName = "exam_name"
+        case total
+        case max
+        case percentage
+    }
+}

@@ -233,7 +233,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 
             case 206 :  MenuRedirect.createClasstestVc(from: self)
                 
-            case 208 : MenuRedirect.senderExamAnalise(from: self)
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }
