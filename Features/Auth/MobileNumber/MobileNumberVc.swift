@@ -86,6 +86,27 @@ class MobileNumberVc: UIViewController{
         WelcomeLbl.setFont(style: .title, size: 16)
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         LoginTitleLbl.setFont(style: .header, size: 16)
+        let countryName = country_data?.name ?? ""
+
+        let fullText = "Log in to stay connected With \(countryName)"
+        let attributedText = NSMutableAttributedString(
+            string: fullText,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 21, weight: .semibold),
+                .foregroundColor: UIColor.label
+            ]
+        )
+
+        if let range = fullText.range(of: countryName) {
+            let nsRange = NSRange(range, in: fullText)
+            attributedText.addAttribute(
+                .font,
+                value: UIFont.systemFont(ofSize: 14, weight: .regular), // Smaller font
+                range: nsRange
+            )
+        }
+
+        LoginTitleLbl.attributedText = attributedText
         MobilenumLabel.setFont(style: .body, size: 13)
         continueBtnName.setTitleFont(style: .primary, size: FontSize.TitleSize)
         addPadding(to: MobilTextFld, amount: 10)

@@ -217,13 +217,16 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
     
     // MARK: - API Calls
     func get_dashboard_details(token:String) {
+        
+        let languageCode = Locale.current.language.languageCode?.identifier
+        
         if #available(iOS 15.0, *) {
             showActivityLoader()
         }
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         APIService.shared.makeApi(
             url: ServiceUrl.get_dashboard_details,
-            parameters: [COMMON_PARAMETER.member_type: API_PARAMS_HOTCODE.staff, COMMON_PARAMETER.mobile_number: mobile_num ?? ""],
+            parameters: [COMMON_PARAMETER.member_type: API_PARAMS_HOTCODE.staff, COMMON_PARAMETER.mobile_number: mobile_num ?? "","language_code":languageCode ?? "en"],
             type: ApitTypeSringFile.GET,
             token:token, isBaseUrl: false
         ) { [weak self] (result: Result<MenuResponse, Error>) in

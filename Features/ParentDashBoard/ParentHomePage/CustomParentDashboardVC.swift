@@ -199,11 +199,11 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         if #available(iOS 15.0, *) {
             showActivityLoader()
         }
-        
+        let languageCode = Locale.current.language.languageCode?.identifier
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         APIService.shared.makeApi(
             url: ServiceUrl.get_dashboard_details,
-            parameters: ["member_type": "parent", "mobile_number": mobile_num ?? ""],
+            parameters: ["member_type": "parent", "mobile_number": mobile_num ?? "","language_code": languageCode ?? "en"],
             type: ApitTypeSringFile.GET,
             token: childDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<MenuResponse, Error>) in
