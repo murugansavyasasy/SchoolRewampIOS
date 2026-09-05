@@ -681,7 +681,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         MenuStringFile.selectedMenuName = menuName
         // MENU IDs that need navigateOrSchoolList check
         let needSchoolCheck: Set<Int> = [
-            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 18, 41,202,203,204,205,206
+            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 18, 41,202,203,204,205,206,208
         ]
         Menu_id.staffSelectedMenuId = menuId
         // All actions with explicit self
@@ -724,7 +724,8 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             204: { self.MenuRedirect.StaffLeaveRequest(from: self) },
             205: { self.MenuRedirect.buslist(from: self, loginasType: self.loginAsType ?? 0, is_ownbustraking: self.staffDetails?.gps_type == "dhundhoo" ? false : true) },
             
-            206 : { self.MenuRedirect.createClasstestVc(from: self) }
+            206 : { self.MenuRedirect.createClasstestVc(from: self) },
+//            208:{self.MenuRedirect.senderExamAnalise(from: self)}
             
         ]
  

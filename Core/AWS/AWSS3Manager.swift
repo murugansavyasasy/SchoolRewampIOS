@@ -1,3 +1,8 @@
+////
+////  AWSS3Manager.swift
+////  VsSchoolChimes
+////  Created by chandhru on 12/04/24.
+//
 
 import UIKit
 import AWSS3
@@ -70,7 +75,24 @@ class AWSUploadManager {
                     contentType = getContentType(from: fileName)
                     fileURL = url
                 }
-            }else{
+            }
+            
+            else if Menu_id.staffSelectedMenuId == Menu_id.homeWorkMenuId{
+              
+                if isAudioFile(url: url) {
+                    let timestamp = Int(Date().timeIntervalSince1970 * 1000)
+                    fileName = "original_\(timestamp).\(url.pathExtension)"
+                    contentType = "audio/\(url.pathExtension)"
+                    fileURL = url
+                }else {
+                    let time = Int(Date().timeIntervalSince1970 * 1000)
+                    fileName = "file_\(time).\(url.pathExtension)"
+                    contentType = getContentType(from: fileName)
+                    fileURL = url
+                }
+                
+            }
+            else{
                 if isAudioFile(url: url) {
                     let timestamp = Int(Date().timeIntervalSince1970 * 1000)
                     fileName = "original_\(timestamp).\(url.pathExtension)"
@@ -358,3 +380,4 @@ class AWSPreSignedURL {
  https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/files/7044/01-12-2025/D9A58808-726D-4C62-9915-374310C81170.jpj  https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/homework/7044/01-12-2025/8D059096-2149-44B8-9E25-03342241A568.jpg  https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/noticeboard/7044/01-12-2025/BCCF9B7C-34CD-4947-9D99-061606B7B703.jpg  https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/assignment/7044/01-12-2025/8199229E-D095-4501-9076-9400EC2A903A.jpg  https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/skills/7044/01-12-2025/audio_1764566311.wav  https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/events/7044/01-12-2025/1B8E8F7B-A566-4DF6-9DB4-C71F725F58CE.jpg
   https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/events/7044/01-12-2025/C88E8321-FECD-46C0-B7A7-146A2AF5A0ED.jpg
  */
+

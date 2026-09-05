@@ -8,6 +8,8 @@ import LocalAuthentication
 class LocationViewController: UIViewController {
     
     
+    @IBOutlet weak var selectedStaffLbl: UILabel!
+    @IBOutlet weak var selectStafDropDownView: UIView!
     @IBOutlet weak var addlocationbtnName: UIButton!
     @IBOutlet weak var TaptoPunchBtn: UIButton!
     @IBOutlet weak var PunchDescriptionLbl: UILabel!
@@ -29,6 +31,7 @@ class LocationViewController: UIViewController {
     var RefrenceAddress = ""
     var years: [String] = []
     let dropDown = DropDown()
+    let staffDrop = DropDown()
     var selectedDictionary = NSDictionary()
     var monthNames: [String] = []
     var device = UIDevice.current.name
@@ -48,7 +51,8 @@ class LocationViewController: UIViewController {
     private var lastIsInsideAllowedArea: Bool?
     var staff = "staff"
     var urlss : String?
-    
+    var staffDetails: [GetStaffDetails]?
+    var staffId : Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         let segments = ["Punch".translated(), "My Attendance".translated()]
@@ -67,6 +71,9 @@ class LocationViewController: UIViewController {
         SegmentControl.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
         SegmentControl.selectedSegmentTintColor = .primery
         StyleAndTranslate()
+//        let staffClick = UITapGestureRecognizer(target: self, action: #selector(staffDropDownList))
+//        selectStafDropDownView.addGestureRecognizer(staffClick)
+//        getStaffListAPI()
     }
     
     func StyleAndTranslate(){
@@ -93,6 +100,45 @@ class LocationViewController: UIViewController {
         
     }
     
+    @IBAction func staffDropDownList() {
+        var staffName: [String] = []
+        for staff in staffDetails ?? [] {
+            staffName.append(staff.name ?? "")
+        }
+        staffDrop.dataSource = staffName
+        dropDown.anchorView = selectStafDropDownView
+        dropDown.bottomOffset = CGPoint(x: 0, y: dropDown.anchorView!.plainView.bounds.height)
+        dropDown.direction = .bottom
+        DropDown.appearance().backgroundColor = UIColor.white
+        dropDown.show()
+        
+        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            staffId = Int(staffDetails?[index].id ?? "")
+            selectedStaffLbl.text = item
+           
+        }
+    }
+//    func getStaffListAPI() {
+//        APIService.shared.makeApi(
+//            url: ServiceUrl.recipient_get_staff_list,
+//            parameters: [:],
+//            type: ApitTypeSringFile.GET,
+//            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
+//        ) { (result: Result<GetStafflistSuc, Error>) in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(let successMessage):
+//                    if successMessage.status == true {
+//                      
+//                    } else {
+//                        
+//                    }
+//                case .failure(let error):
+//                   
+//                }
+//            }
+//        }
+//    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addLocationEnabel(Show: add_location_enabel ?? false )

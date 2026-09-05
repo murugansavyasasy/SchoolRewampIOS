@@ -180,6 +180,7 @@ extension ImageShowVc: UICollectionViewDelegate, UICollectionViewDataSource, UIC
                 }
                 cell.imageView.isHidden = true
                 cell.WebView.isHidden = false
+               
                 return cell
             }
         } else {
@@ -212,17 +213,41 @@ extension ImageShowVc: UICollectionViewDelegate, UICollectionViewDataSource, UIC
                 if let urlStr = item.url,
                    let url = safeURL(from: urlStr) {
                     cell.WebView.load(URLRequest(url: url))
+                    cell.WebView.pauseAllMediaPlayback {
+                        print("Audio paused")
+                    }
                 } else {
                     print("Invalid URL: \(item.url ?? "")")
                 }
 //                cell.WebView.navigationDelegate = self
                 cell.imageView.isHidden = true
                 cell.WebView.isHidden = false
+                hideActivityLoader()
                 return cell
             }
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView,
+                        didEndDisplaying cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
+
+        guard let cell = cell as? ImageShowCVCell else { return }
+
+        cell.WebView.stopLoading()
+
+        if #available(iOS 15.0, *) {
+            cell.WebView.pauseAllMediaPlayback {
+                print("Paused")
+            }
+        }
+
+        cell.WebView.loadHTMLString("", baseURL: nil)
+    }
+    
+    
+    
+
     func safeURL(from string: String) -> URL? {
         if let url = URLComponents(string: string)?.url {
             return url
@@ -301,7 +326,7 @@ extension ImageShowVc: WKNavigationDelegate {
 //
 //        decisionHandler(.allow)
 //    }
-//    
+//
 //    func openPDFManually(url: URL) {
 //
 //        URLSession.shared.downloadTask(with: url) { localURL, response, error in

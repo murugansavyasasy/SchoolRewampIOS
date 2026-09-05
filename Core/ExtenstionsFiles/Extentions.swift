@@ -616,6 +616,8 @@ func getFileIconName(for fileURL: URL) -> String {
         return "exel"
     case "ppt", "pptx":
         return "ppt"
+    case "mp3", "wav", "m4a", "aac", "amr", "3ga", "caf", "flac", "ogg", "opus", "wma", "aiff", "aif", "pcm":
+            return "audio"
     default:
         return "video (1)"
     }
@@ -1375,5 +1377,17 @@ extension UILabel {
         let xOrigin = isRTL ? container.bounds.width - self.frame.width - sidePadding : sidePadding
         
         self.frame.origin = CGPoint(x: xOrigin, y: topPadding)
+    }
+}
+extension String {
+    func width(usingFont font: UIFont) -> CGFloat {
+        let size = (self as NSString).size(withAttributes: [.font: font])
+        return ceil(size.width)
+    }
+}
+
+extension UIView {
+    func superview<T>(of type: T.Type) -> T? {
+        return superview as? T ?? superview?.superview(of: type)
     }
 }

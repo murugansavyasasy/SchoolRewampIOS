@@ -21,10 +21,12 @@ class ExamListCell: UITableViewCell {
     
     
     var onExpand: (() -> Void)?
-    var onInnerHeightChanged: (() -> Void)?
+    var onHeightChange: (() -> Void)?
     var expandedRow: IndexPath?
     var isExpanded = false
-    var subjectList: [SubjectExamData] = []
+    var subjectList: [SubjectExamData] = [] {
+           didSet { tableview.reloadData() }
+       }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -58,70 +60,48 @@ class ExamListCell: UITableViewCell {
         
         tableview.dataSource = self
         tableview.delegate = self
-        
-        innerTableHeight.constant = 0
     }
     
     override func prepareForReuse() {
-        super.prepareForReuse()
-        isExpanded = false
-        expandedRow = nil
-        tableview.isHidden = true
-        innerTableHeight.constant = 0
-    }
-    
-    func configureExpansionState(_ expanded: Bool) {
-        isExpanded = expanded
-        ArrowBtn.setImage(UIImage(systemName: expanded ? "chevron.up" : "chevron.down"),for: .normal)
-        
-        if expanded {
-            tableview.isHidden = false
-            tableview.reloadData()
-            tableview.layoutIfNeeded()
-            
-            DispatchQueue.main.async {
-                self.tableview.layoutIfNeeded()
-                let height = self.tableview.contentSize.height
-                if height > 0 {
-                    self.innerTableHeight.constant = height
-                    // 🔑 Force parent table to recalc row height
-                    if let parentTable = self.superview as? UITableView {
-                        parentTable.beginUpdates()
-                        parentTable.endUpdates()
-                    }
-                }
-            }
-            
-        } else {
+            super.prepareForReuse()
+            isExpanded = false
+            expandedRow = nil
             tableview.isHidden = true
             innerTableHeight.constant = 0
-            expandedRow = nil
+            onExpand = nil
+            onHeightChange = nil
+        }
+    
+    func configureExpansionState(_ expanded: Bool) {
+           isExpanded = expanded
+
+           ArrowBtn.setImage(UIImage(systemName: expanded ? "chevron.up" : "chevron.down"), for: .normal)
+           tableview.isHidden = !expanded
+
+           if expanded {
+               tableview.reloadData()
+               updateInnerHeight()          // synchronous now
+           } else {
+               expandedRow = nil
+               innerTableHeight.constant = 0
+           }
+       }
+    
+    func updateInnerHeight() {
+        tableview.layoutIfNeeded()
+        let newHeight = tableview.contentSize.height
+        if innerTableHeight.constant != newHeight {
+            innerTableHeight.constant = newHeight
+        }
+        setNeedsLayout()
+        layoutIfNeeded()
+        DispatchQueue.main.async { [weak self] in
+            self?.onHeightChange?()
         }
     }
     
     @IBAction func expandAct(_ sender: UIButton) {
         onExpand?()
-    }
-    
-    func updateInnerHeight(animated: Bool) {
-        DispatchQueue.main.async {
-            self.tableview.layoutIfNeeded()
-            let height = self.tableview.contentSize.height
-            
-            if height > 0 {
-                self.innerTableHeight.constant = height
-                
-                if animated {
-                    UIView.animate(withDuration: 0.25) {
-                        self.layoutIfNeeded()
-                    }
-                } else {
-                    self.layoutIfNeeded()
-                }
-                
-                self.onInnerHeightChanged?()
-            }
-        }
     }
 }
 
@@ -131,46 +111,40 @@ extension ExamListCell: UITableViewDataSource, UITableViewDelegate {
         return subjectList.count
     }
     
-    func tableView(_ tableView: UITableView,cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.Exam_ExamListTV,for: indexPath) as! Exam_ExamListTV
-        
-        cell.separatorview.isHidden = indexPath.row == subjectList.count - 1
-        cell.subjectNameLbl.text = subjectList[indexPath.row].subject_name
-        cell.Activities = subjectList[indexPath.row].splitup_details ?? []
-        cell.configureExpansionState(expandedRow == indexPath, animated: false)
-        
-        // INNER EXPAND
-        cell.onExpand = { [weak self, weak tableView] in
-            guard let self = self, let tableView = tableView else { return }
-            
-            let old = self.expandedRow
-            self.expandedRow = (old == indexPath) ? nil : indexPath
-            
-            var reload = [indexPath]
-            if let old = old, old != indexPath { reload.append(old) }
-            
-            tableView.reloadRows(at: reload, with: .automatic)
-            
-            DispatchQueue.main.async {
-                self.tableview.layoutIfNeeded()
-                self.innerTableHeight.constant = self.tableview.contentSize.height
-                self.onInnerHeightChanged?()
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.Exam_ExamListTV, for: indexPath) as! Exam_ExamListTV
+
+            cell.separatorview.isHidden = indexPath.row == subjectList.count - 1
+            cell.subjectNameLbl.text = subjectList[indexPath.row].subject_name
+            cell.Activities = subjectList[indexPath.row].activities ?? []
+            cell.configureExpansionState(expandedRow == indexPath)
+
+            // INNER EXPAND: toggle just the affected cells directly, then
+            // ask the table view to re-measure (no reloadRows, no dequeue).
+            cell.onExpand = { [weak self, weak tableView] in
+                guard let self = self, let tableView = tableView else { return }
+
+                let old = self.expandedRow
+                self.expandedRow = (old == indexPath) ? nil : indexPath
+
+                if let tapped = tableView.cellForRow(at: indexPath) as? Exam_ExamListTV {
+                    tapped.configureExpansionState(self.expandedRow == indexPath)
+                }
+                if let old = old, old != indexPath,
+                   let oldCell = tableView.cellForRow(at: old) as? Exam_ExamListTV {
+                    oldCell.configureExpansionState(false)
+                }
+
+                tableView.performBatchUpdates(nil) { _ in
+                    // Only after the batch update settles do we know the
+                    // inner table's real contentSize.
+                    self.updateInnerHeight()
+                }
             }
+
+            return cell
         }
-        
-        // INNER CONTENT HEIGHT CHANGE
-        cell.onHeightChanged = { [weak self] in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.tableview.layoutIfNeeded()
-                self.innerTableHeight.constant = self.tableview.contentSize.height
-                self.onInnerHeightChanged?()
-            }
-        }
-        
-        return cell
-    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension

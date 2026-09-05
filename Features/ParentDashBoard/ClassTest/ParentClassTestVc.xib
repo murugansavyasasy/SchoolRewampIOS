@@ -27,13 +27,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pCu-aG-pb8" customClass="BottomRoundedView" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="198"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="183"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="i9e-5w-xOD">
-                            <rect key="frame" x="10" y="128" width="373" height="50"/>
+                            <rect key="frame" x="10" y="128" width="373" height="35"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tBF-Bv-xOx">
-                                    <rect key="frame" x="0.0" y="7.6666666666666572" width="35" height="35"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="35" id="PeK-uz-iQU"/>
                                         <constraint firstAttribute="width" constant="35" id="VTr-VM-sy5"/>
@@ -51,13 +51,13 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SaranRaj" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x8G-vt-AS6">
-                                    <rect key="frame" x="35" y="14.999999999999998" width="303" height="20.333333333333329"/>
+                                    <rect key="frame" x="35" y="7.333333333333341" width="303" height="20.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nxj-Hn-5EE">
-                                    <rect key="frame" x="338" y="7.6666666666666572" width="35" height="35"/>
+                                    <rect key="frame" x="338" y="0.0" width="35" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="35" id="R7a-Wb-1PM"/>
                                         <constraint firstAttribute="width" constant="35" id="uyp-AO-43g"/>
@@ -82,10 +82,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ffq-IF-A1N">
-                    <rect key="frame" x="0.0" y="198" width="393" height="586"/>
+                    <rect key="frame" x="0.0" y="183" width="393" height="541"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="3mI-a6-zc8">
-                            <rect key="frame" x="0.0" y="10" width="393" height="576"/>
+                            <rect key="frame" x="0.0" y="10" width="393" height="531"/>
                             <subviews>
                                 <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="V3D-Wq-UnO">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="64"/>
@@ -95,19 +95,19 @@
                                     </connections>
                                 </searchBar>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ShZ-ZS-vGD">
-                                    <rect key="frame" x="0.0" y="79" width="393" height="497"/>
+                                    <rect key="frame" x="0.0" y="79" width="393" height="452"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
                             </subviews>
                         </stackView>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="examTimeTable" translatesAutoresizingMaskIntoConstraints="NO" id="Hcx-Mn-Ala">
-                            <rect key="frame" x="30" y="193" width="333" height="200"/>
+                            <rect key="frame" x="30" y="170.66666666666669" width="333" height="200"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="200" id="ifu-ZC-q3S"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data Found!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="toR-QD-Avl">
-                            <rect key="frame" x="30" y="408" width="333" height="20.333333333333314"/>
+                            <rect key="frame" x="30" y="385.66666666666663" width="333" height="20.333333333333314"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -127,12 +127,23 @@
                         <constraint firstAttribute="bottom" secondItem="3mI-a6-zc8" secondAttribute="bottom" id="zNB-j4-piW"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vD0-TJ-aso" customClass="AnalysisButton" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                    <rect key="frame" x="359" y="734" width="24" height="45"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain"/>
+                    <connections>
+                        <action selector="analisesBtn:" destination="-1" eventType="touchUpInside" id="3mD-f6-oAv"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" red="0.94901960784313721" green="0.96078431372549022" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ffq-IF-A1N" secondAttribute="trailing" id="0fe-8o-dkE"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ffq-IF-A1N" secondAttribute="bottom" id="6fw-BB-nch"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ffq-IF-A1N" secondAttribute="bottom" constant="60" id="6fw-BB-nch"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="vD0-TJ-aso" secondAttribute="bottom" constant="5" id="770-Pu-J4W"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vD0-TJ-aso" secondAttribute="trailing" constant="10" id="7hQ-Z2-TeZ"/>
+                <constraint firstItem="vD0-TJ-aso" firstAttribute="top" secondItem="ffq-IF-A1N" secondAttribute="bottom" constant="10" id="8mj-WI-eyq"/>
                 <constraint firstItem="ffq-IF-A1N" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="MzU-NN-oSg"/>
                 <constraint firstItem="ffq-IF-A1N" firstAttribute="top" secondItem="pCu-aG-pb8" secondAttribute="bottom" id="SI2-xL-sXR"/>
                 <constraint firstItem="i9e-5w-xOD" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="WrS-Xq-Lrt"/>
@@ -140,7 +151,7 @@
                 <constraint firstItem="pCu-aG-pb8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="uBG-98-ecW"/>
                 <constraint firstItem="pCu-aG-pb8" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="uCg-40-cnB"/>
             </constraints>
-            <point key="canvasLocation" x="-161" y="135"/>
+            <point key="canvasLocation" x="-161.06870229007632" y="133.80281690140845"/>
         </view>
     </objects>
     <resources>
@@ -148,7 +159,7 @@
         <image name="examTimeTable" width="1500" height="1500"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <namedColor name="BackGroundClr">
-            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.41999998688697815" green="0.70999997854232788" blue="0.3449999988079071" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
