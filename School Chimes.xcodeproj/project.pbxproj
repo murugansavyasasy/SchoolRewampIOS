@@ -4702,7 +4702,6 @@
 		842FE3CB304B0078006C5D12 /* Cells */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Cells; sourceTree = "<group>"; };
 		842FE3CD304B0078006C5D12 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
 		842FE3D4304B0078006C5D12 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
-		842FE4CA304BD696006C5D12 /* ExamAnaylze */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ExamAnaylze; sourceTree = "<group>"; };
 		FA81631A2F3314B000ADA8F3 /* Flavours */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (1827E91E2F90C1B300B33B20 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 1868A7562FAC797000831144 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 186E624E2FE9206900BAF454 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Flavours; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -6431,7 +6430,6 @@
 		84A5BE812C19776600E32496 /* SchoolDashBoard */ = {
 			isa = PBXGroup;
 			children = (
-				842FE4CA304BD696006C5D12 /* ExamAnaylze */,
 				186E62522FEA59E700BAF454 /* Classtest */,
 				185CC0FE2F75473A002640CE /* StaffWiseAttendace */,
 				1841DE902F56F8B700B88801 /* HostelAttendace */,
@@ -7164,7 +7162,6 @@
 				842FE3CB304B0078006C5D12 /* Cells */,
 				842FE3CD304B0078006C5D12 /* Models */,
 				842FE3D4304B0078006C5D12 /* Views */,
-				842FE4CA304BD696006C5D12 /* ExamAnaylze */,
 			);
 			name = "SRI SUDHA DHONE";
 			packageProductDependencies = (
@@ -7206,7 +7203,6 @@
 				842FE3CB304B0078006C5D12 /* Cells */,
 				842FE3CD304B0078006C5D12 /* Models */,
 				842FE3D4304B0078006C5D12 /* Views */,
-				842FE4CA304BD696006C5D12 /* ExamAnaylze */,
 			);
 			name = "SRI KALAIVANI VIDHAYALA";
 			packageProductDependencies = (
@@ -7248,7 +7244,6 @@
 				842FE3CB304B0078006C5D12 /* Cells */,
 				842FE3CD304B0078006C5D12 /* Models */,
 				842FE3D4304B0078006C5D12 /* Views */,
-				842FE4CA304BD696006C5D12 /* ExamAnaylze */,
 			);
 			name = "WISDOM GROUP";
 			packageProductDependencies = (
@@ -7308,7 +7303,6 @@
 				842FE3CB304B0078006C5D12 /* Cells */,
 				842FE3CD304B0078006C5D12 /* Models */,
 				842FE3D4304B0078006C5D12 /* Views */,
-				842FE4CA304BD696006C5D12 /* ExamAnaylze */,
 			);
 			name = "School Chimes";
 			packageProductDependencies = (
