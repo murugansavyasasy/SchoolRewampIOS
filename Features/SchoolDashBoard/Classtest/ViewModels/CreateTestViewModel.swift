@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public final class CreateTestViewModel {
     
@@ -44,6 +45,7 @@ public final class CreateTestViewModel {
     public var exameName = ""
     var class_test_id:String?
     var section_id:String?
+    weak var viewcontroller:UIViewController?
     // MARK: - Initializer
     public init() {}
     
@@ -63,14 +65,29 @@ public final class CreateTestViewModel {
                         onDataLoaded?()
                     }
                 }else{
-                    DispatchQueue.main.async { [self] in
-                        
+                    DispatchQueue.main.async { [weak self] in
+                        guard let viewcontroller = self?.viewcontroller else { return }
+
+                        CustomAlert.showAlertWithOkAction(
+                            title: AlertstringFile.Failed,
+                            message: successMessage.message,
+                            on: viewcontroller
+                        ) {
+                            viewcontroller.dismiss(animated: true)
+                        }
                     }
                 }
             case .failure(let error):
-                DispatchQueue.main.async { [self] in
-                    print(error.localizedDescription)
-                    
+                DispatchQueue.main.async { [weak self] in
+                    guard let viewcontroller = self?.viewcontroller else { return }
+
+                    CustomAlert.showAlertWithOkAction(
+                        title: AlertstringFile.Failed,
+                        message: error.localizedDescription,
+                        on: viewcontroller
+                    ) {
+                        viewcontroller.dismiss(animated: true)
+                    }
                 }
                 
             }
@@ -593,3 +610,4 @@ public final class CreateTestViewModel {
             }
     }
 }
+

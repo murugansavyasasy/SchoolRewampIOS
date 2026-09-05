@@ -30,8 +30,6 @@ class ImageShowCVCell: UICollectionViewCell, UIScrollViewDelegate {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         
-//        imageView.contentMode = .scaleAspectFill
-//        imageView.clipsToBounds = true
 
         // Double tap gesture
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))

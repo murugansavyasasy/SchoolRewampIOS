@@ -26,16 +26,42 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         print("Button tapped with title: \(title)")
     }
     
+//    func deleteImage(index: Int) {
+//        guard index < attachments.count else { return }
+//        // Stop audio if it's an audio file being deleted
+//        if attachments[index].fileType.lowercased() == "audio" {
+//            stopAllAudioPlayback()
+//        }
+//        let fileURL = URL(fileURLWithPath: attachments[index].imageURL ?? "")
+//            fileURL.stopAccessingSecurityScopedResource()
+//        attachments.remove(at: index)
+//        uploadAttachmentView.imageCollectionview.reloadData()
+//    }
+    
     func deleteImage(index: Int) {
-        guard index < attachments.count else { return }
-        // Stop audio if it's an audio file being deleted
-        if attachments[index].fileType.lowercased() == "audio" {
+
+        guard attachments.indices.contains(index) else { return }
+
+        let item = attachments[index]
+
+        if item.fileType.lowercased() == CommonStringFile.audio.lowercased() {
             stopAllAudioPlayback()
         }
-        let fileURL = URL(fileURLWithPath: attachments[index].imageURL ?? "")
-            fileURL.stopAccessingSecurityScopedResource()
+
+        if let urlString = item.imageURL,
+           urlString.hasPrefix("file://"),
+           let fileURL = URL(string: urlString) {
+
+            try? FileManager.default.removeItem(at: fileURL)
+        }
+
         attachments.remove(at: index)
+
         uploadAttachmentView.imageCollectionview.reloadData()
+        uploadAttachmentView.imageCollectionview.layoutIfNeeded()
+
+        collectionViewHeight.constant =
+            uploadAttachmentView.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
     }
     
     // MARK: - Audio Playback Delegate Methods
@@ -93,10 +119,10 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
     private var isRemoteAudio = false
     var editReport:LSRWTask?
     let taskTypes = [
-        ("Listening", "headphones"),
-        ("Speaking", "mic"),
-        ("Reading", "book"),
-        ("Writing", "pencil")
+        ("Listening".translated(), "headphones"),
+        ("Speaking".translated(), "mic"),
+        ("Reading".translated(), "book"),
+        ("Writing".translated(), "pencil")
     ]
     private let tempKey = "TempRecordings"
     var selectedTaskIndex: Int = 0
@@ -106,7 +132,7 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         super.viewDidLoad()
         setupInitialConfiguration()
         setupPlaceholderIfNeeded()
-        tittleLbl.text = MenuStringFile.selectedMenuName
+        titleLbl.text = MenuStringFile.selectedMenuName
         dateView.isUserInteractionEnabled = true
         uploadAttachmentView.imageCollectionview.backgroundColor = .clear
         // Add tap gesture
@@ -158,11 +184,7 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         placeholderLabel.numberOfLines = 0
         placeholderLabel.positionAsPlaceholder(in: DetailsTxtview,topPadding: 8, sidePadding: 8)
         DetailsTxtview.addSubview(placeholderLabel)
-//        NSLayoutConstraint.activate([
-//            placeholderLabel.leadingAnchor.constraint(equalTo: DetailsTxtview.leadingAnchor, constant: 8),
-//            placeholderLabel.trailingAnchor.constraint(equalTo: DetailsTxtview.trailingAnchor, constant: -8),
-//            placeholderLabel.topAnchor.constraint(equalTo: DetailsTxtview.topAnchor, constant: 8)
-//        ])
+
         let isEmptyContent = (DetailsTxtview.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || DetailsTxtview.text == CommonStringFile.Description
         placeholderLabel.isHidden = !isEmptyContent ? true : false
         if DetailsTxtview.text == CommonStringFile.Description {
@@ -754,33 +776,78 @@ extension SenderLSRWVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
     
     // MARK: - Audio Cell Configuration
+//    private func configureAudioCell(_ cell: AudioCVC, at indexPath: IndexPath) {
+//        let audioFiles = attachments.filter { $0.fileType.lowercased() == "audio" }
+//        let file = audioFiles[indexPath.item]
+//        if let urlString = file.imageURL {
+//            let url: URL
+//
+//            if urlString.hasPrefix("http://") || urlString.hasPrefix("https://") {
+//                guard let remoteURL = URL(string: urlString) else { return }
+//                url = remoteURL
+//            } else {
+//                let cleanPath = urlString
+//                    .replacingOccurrences(of: "file://", with: "")
+//                    .removingPercentEncoding ?? urlString
+//
+//                url = URL(fileURLWithPath: cleanPath)
+//            }
+//
+//            cell.audioURL = url
+//            cell.TrashIcon.isHidden = false
+//            cell.TrashIcon.isUserInteractionEnabled = true
+//        }
+//
+//        cell.audioDelegate = self
+//        cell.cellIndex = indexPath.item
+//        cell.TrashIcon.tag = indexPath.item
+//        cell.delegate = self
+//        cell.waveView.setParentCell(cell)
+//        collectionViewHeight.constant = uploadAttachmentView.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
+//    }
+    
     private func configureAudioCell(_ cell: AudioCVC, at indexPath: IndexPath) {
-        let audioFiles = attachments.filter { $0.fileType.lowercased() == "audio" }
-        let file = audioFiles[indexPath.item]
+
+        let audioItems = attachments.enumerated()
+            .filter { $0.element.fileType.lowercased() == CommonStringFile.audio.lowercased() }
+
+        let item = audioItems[indexPath.item]
+
+        let originalIndex = item.offset
+        let file = item.element
+
         if let urlString = file.imageURL {
+
             let url: URL
-            
+
             if urlString.hasPrefix("http://") || urlString.hasPrefix("https://") {
+
                 guard let remoteURL = URL(string: urlString) else { return }
                 url = remoteURL
+
             } else {
+
                 let cleanPath = urlString
                     .replacingOccurrences(of: "file://", with: "")
                     .removingPercentEncoding ?? urlString
-                
+
                 url = URL(fileURLWithPath: cleanPath)
             }
-            
+
             cell.audioURL = url
-            cell.TrashIcon.isHidden = false
-            cell.TrashIcon.isUserInteractionEnabled = true
         }
-        
+
+        cell.TrashIcon.isHidden = false
+        cell.TrashIcon.isUserInteractionEnabled = true
+
+        // ORIGINAL attachment index
+        cell.TrashIcon.tag = originalIndex
+        cell.cellIndex = originalIndex
+
         cell.audioDelegate = self
-        cell.cellIndex = indexPath.item
-        cell.TrashIcon.tag = indexPath.item
         cell.delegate = self
         cell.waveView.setParentCell(cell)
+
         collectionViewHeight.constant = uploadAttachmentView.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
     }
     
@@ -800,9 +867,11 @@ extension SenderLSRWVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        stopAllAudioPlayback()
         if collectionView == typeSectionCV {
             selectedTaskIndex = indexPath.item
             collectionView.reloadData()
+            print("Selected Task: \(taskTypes[selectedTaskIndex].0)")
         } else {
             if indexPath.section == 0 {
                 if indexPath.row == 0 {

@@ -257,7 +257,7 @@ class MenuRedirectHandler {
     
     func senderExamMarkNavigate(from viewController: UIViewController) {
         let vc = staffExamMarkVC(nibName: nil, bundle: nil)
-//        let vc = MarkReviewVC(nibName: nil, bundle: nil)
+//        let vc = EnterMarkVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
@@ -384,17 +384,7 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
-//    func parantMapVC(from viewController: UIViewController){
-//        let vc = BusTrakingVC(nibName: nil, bundle: nil)
-//        vc.modalPresentationStyle = .fullScreen
-//        viewController.present(vc, animated: true)
-//    }
-//    func privateBusTracker(from viewController: UIViewController){
-//        let vc = BusTrakingVC(nibName: nil, bundle: nil)
-//        vc.modalPresentationStyle = .fullScreen
-//        viewController.present(vc, animated: true)
-//    }
-    
+
     func staffApplyLeave(from viewContorller: UIViewController){
         let vc = ApplyLeaveReqVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
@@ -463,3 +453,4 @@ struct MenuImage{
     let id:Int
     let name:String
 }
+

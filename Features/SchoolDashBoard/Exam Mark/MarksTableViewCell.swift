@@ -1,5 +1,5 @@
 //
-//  MarksCell.swift
+//  MarksTableViewCell.swift
 //  School Chimes
 //
 //  Created by Chandhru on 07/01/26.
@@ -54,33 +54,28 @@ class MarksTableViewCell: UITableViewCell {
     }
     
     func configure(student: StudentMark, index: Int, parentVC: EnterMarkVC, nameWidth: CGFloat) {
-
+        
         setStudentNameWithGender(label: studentNameLabel,
                                  student: student.student_name,
                                  gender: student.gender)
-
+        
         if UIView.userInterfaceLayoutDirection(
             for: contentView.semanticContentAttribute
         ) == .rightToLeft {
-
             studentNameLabel.textAlignment = .right
             rollNoLabel.textAlignment = .right
             admissNoLabel.textAlignment = .right
-
             studentNameLabel.semanticContentAttribute = .forceRightToLeft
             rollNoLabel.semanticContentAttribute = .forceRightToLeft
             admissNoLabel.semanticContentAttribute = .forceRightToLeft
-
         } else {
-
             studentNameLabel.textAlignment = .left
             rollNoLabel.textAlignment = .left
             admissNoLabel.textAlignment = .left
         }
-
+        
         if let rollNo = student.roll_no,
            let admissionNo = student.admission_no {
-
             rollNoLabel.text = "Roll No: \(rollNo)"
             admissNoLabel.text = "Adm No: \(admissionNo)"
             rollNoLabel.isHidden = rollNo.isEmpty
@@ -89,7 +84,7 @@ class MarksTableViewCell: UITableViewCell {
             rollNoLabel.isHidden = true
             admissNoLabel.isHidden = true
         }
-
+        
         self.nameWidth.constant = nameWidth
         self.studentIndex = index
         self.parentVC = parentVC
@@ -101,39 +96,44 @@ class MarksTableViewCell: UITableViewCell {
             marksCollectionView.reloadData()
         }
     }
-
-    func refreshMarks() {
-        marksCollectionView.reloadData()
-    }
+    
+    
     
     func setStudentNameWithGender(label: UILabel, student: String?, gender: String?) {
-
+        
         let name = student ?? ""
-        let gender = gender?.first?.uppercased()
-
+        let genderRaw = gender?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() ?? ""
+        
+        // Male/Female mattum identify pannunga, illatha ellame nil
+        var genderLabel: String? = nil
+        var genderColor: UIColor = .label
+        
+        if genderRaw == "male" || genderRaw == "m" {
+            genderLabel = "M"
+            genderColor = .systemBlue
+        } else if genderRaw == "female" || genderRaw == "f" {
+            genderLabel = "F"
+            genderColor = .systemPink
+        }
+        
         let fullText: String
-        if let gender = gender, !gender.isEmpty {
-            fullText = "\(name) (\(gender))"
+        if let genderLabel = genderLabel {
+            fullText = "\(name) (\(genderLabel))"
         } else {
             fullText = name
         }
-
+        
         let attr = NSMutableAttributedString(string: fullText)
-
+        
         let nameRange = (fullText as NSString).range(of: name)
-        attr.addAttribute(.foregroundColor,
-                          value: UIColor.label,
-                          range: nameRange)
-
-        if let gender = gender {
-            let genderText = "(\(gender))"
+        attr.addAttribute(.foregroundColor, value: UIColor.label, range: nameRange)
+        
+        if let genderLabel = genderLabel {
+            let genderText = "(\(genderLabel))"
             let genderRange = (fullText as NSString).range(of: genderText)
-            attr.addAttribute(.foregroundColor,
-                              value: UIColor.systemPink,
-                              range: genderRange)
+            attr.addAttribute(.foregroundColor, value: genderColor, range: genderRange)
         }
-
-        // RTL Support
+        
         if UIView.userInterfaceLayoutDirection(for: label.semanticContentAttribute) == .rightToLeft {
             label.textAlignment = .right
             label.semanticContentAttribute = .forceRightToLeft
@@ -141,10 +141,10 @@ class MarksTableViewCell: UITableViewCell {
             label.textAlignment = .left
             label.semanticContentAttribute = .forceLeftToRight
         }
-
+        
         label.attributedText = attr
     }
-
+    
     func syncScroll(to offset: CGFloat) {
         isScrolling = true
         marksCollectionView.setContentOffset(CGPoint(x: offset, y: 0), animated: false)
@@ -172,13 +172,26 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
         var changeMark: String? = nil
         var hasFlaggedIssue = false
         var is_edit: Bool?
+        
         if let subject = student.marks?.first(where: { $0.subject_id == column.subjectId }),
            let activity = subject.activities?.first(where: { $0.id == column.activityId }) {
-            mark = activity.mark ?? ""
-            changeMark = activity.change_mark
-            hasFlaggedIssue = activity.isReview ?? false
+            
             is_edit = activity.is_edit ?? true
+            if column.isRubric, let rubricId = column.rubricId,
+               let rubrics = activity.rubrics, !rubrics.isEmpty,
+               let rubric = rubrics.first(where: { $0.id == rubricId }) {
+                mark = rubric.mark ?? ""
+                changeMark = rubric.change_mark
+                hasFlaggedIssue = rubric.isReview ?? false
+                is_edit = rubric.is_edit ?? is_edit ?? true
+                
+            } else {
+                mark = activity.mark ?? ""
+                changeMark = activity.change_mark
+                hasFlaggedIssue = activity.isReview ?? false
+            }
         }
+        
         cell.configure(
             mark: mark,
             channgeMark: changeMark,
@@ -201,48 +214,47 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        guard let parentVC = parentVC else {
-            return CGSize(width: 120, height: 74)
-        }
-
+        
+        guard let parentVC = parentVC else {return CGSize(width: 120, height: 74)}
         let column = parentVC.subjectColumns[indexPath.item]
-
         var widths: [CGFloat] = []
-
+        
         if let display = column.displayName {
             let font = UIFont.systemFont(ofSize: 13, weight: .medium)
             widths.append(display.width(usingFont: font))
         }
-
+        
         if let max = column.maxMarks {
             let font = UIFont.systemFont(ofSize: 12, weight: .regular)
             widths.append("Max: \(max)".width(usingFont: font))
         }
-
+        
         let padding: CGFloat = 16
         let minWidth: CGFloat = 110
         let maxWidth: CGFloat = 120
-
         let maxTextWidth = widths.max() ?? minWidth
-
         let finalWidth = min(max(maxTextWidth + padding, minWidth), maxWidth)
-
+        
         return CGSize(width: finalWidth, height: 74)
     }
     
     @objc func infoBtnTapped(_ sender: UIButton) {
         let columnIndex = sender.tag
         var reason = "Issue detected"
-        
         guard columnIndex < parentVC?.subjectColumns.count ?? 0 else { return }
-        
         let column = parentVC?.subjectColumns[columnIndex]
         let student = parentVC?.studentRecords[studentIndex]
         
         if let subject = student?.marks?.first(where: { $0.subject_id == column?.subjectId }),
            let activity = subject.activities?.first(where: { $0.id == column?.activityId }) {
-            reason = activity.reason ?? "Issue detected"
+            
+            if column?.isRubric == true, let rubricId = column?.rubricId,
+               let rubrics = activity.rubrics, !rubrics.isEmpty,
+               let rubric = rubrics.first(where: { $0.id == rubricId }) {
+                reason = rubric.reason ?? "Issue detected"
+            } else {
+                reason = activity.reason ?? "Issue detected"
+            }
         }
         
         let popoverVC = PopoverViewVC(nibName: nil, bundle: nil)
@@ -305,15 +317,7 @@ extension MarksTableViewCell: UIPopoverPresentationControllerDelegate {
 }
 
 extension MarksTableViewCell: MarksCellDelegate {
-    func updateMark(row: Int,
-                   column: Int,
-                   value: String,
-                   reson: String,
-                   subjectName: String) {
-        delegate?.updateMark(row: row,
-                                 column: column,
-                                 value: value,
-                                 reson: reson,
-                                 subjectName: subjectName)
+    func updateMark(row: Int,column: Int,value: String,reson: String,subjectName: String) {
+        delegate?.updateMark(row: row,column: column,value: value,reson: reson,subjectName: subjectName)
     }
 }

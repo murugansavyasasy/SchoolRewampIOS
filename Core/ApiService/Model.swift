@@ -339,6 +339,17 @@ struct CommonApiSuc: Codable {
     let data: [String]?
 }
 
+
+struct examSucApi: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [linkdata]?
+}
+
+struct linkdata: Codable {
+    let link: String?
+}
+
 struct SecondCommonApiSuc: Codable {
     let status: Bool?
     let message: String?
@@ -417,6 +428,7 @@ struct HomeworkList: Codable {
 struct FilePath: Codable {
     let url: String?
     let type: String?
+    var playbackSeconds: Double?
     var isBase64: Bool {
            return !(url?.lowercased().hasPrefix("http") ?? false)
        }
@@ -1601,10 +1613,13 @@ struct ExamListResponse: Codable {
 }
 
 struct ExamItem: Codable {
-    var id: String?
-    var name: String?
-    var mark_id: String?
-    var is_unread: Bool?
+    var report_id: Int?
+    var reportName: String?
+    var report_sent: Bool?
+    var mark_sent: Bool?
+    var type : String?
+    
+  
 }
 //MARK: ExamMarks
 struct ExamMarksResponse: Codable {
@@ -1628,10 +1643,17 @@ struct SubjectMark: Codable {
     var percentage: String?
 }
 
+struct SplitRubricMark: Codable {
+    var name: String?
+    var max_mark: String?
+    var mark_obtained: String?
+}
+
 struct SplitMark: Codable {
     var name: String?
     var max_mark: String?
     var mark_obtained: String?
+    var rubrics: [SplitRubricMark]?
 }
 
 struct Assessment: Codable {
@@ -1650,7 +1672,7 @@ struct Assessment: Codable {
 struct Groups: Codable {
     var name: String?
     var mark: String?
-    var sub_groups: [SubGroup]?
+    var subjects: [SubGroup]?
 }
 
 struct SubGroup: Codable {
@@ -2011,35 +2033,28 @@ enum LSRWType: Codable {
         
         // Normalize translated values back to English
         let mapToEnglish: [String: LSRWType] = [
-            // English
             "listening": .listening,
             "speaking": .speaking,
             "reading": .reading,
             "writing": .writing,
-
+            
             // Tamil
             "கேட்குதல்": .listening,
             "பேசுதல்": .speaking,
             "படித்தல்": .reading,
             "எழுதுதல்": .writing,
-
+            
             // Hindi
             "सुनना": .listening,
             "बोलना": .speaking,
             "पढ़ना": .reading,
             "लिखना": .writing,
-
+            
             // Thai
             "การฟัง": .listening,
             "การพูด": .speaking,
             "การอ่าน": .reading,
-            "การเขียน": .writing,
-
-            // Arabic
-            "الاستماع": .listening,
-            "التحدث": .speaking,
-            "القراءة": .reading,
-            "الكتابة": .writing
+            "การเขียน": .writing
         ]
         
         if let mapped = mapToEnglish[value] {
@@ -2499,7 +2514,7 @@ struct UserDetailItem: Codable {
     var is_editable: Bool?
     var optional: Bool?
     var options: [String]?
-    var file_path: [DocumentFile]? 
+    var file_path: [DocumentFile]?
     var node: String?
     
 }
@@ -2812,6 +2827,32 @@ struct StaffExamData: Codable {
     let ai_mark_entry: Bool?
 }
 
+//struct SubjectWiseExamResponse: Codable {
+//    let status: Bool?
+//    let message: String?
+//    let data: [SubjectExamData]?
+//}
+//
+//struct SubjectExamData: Codable {
+//    let section_id: String?
+//    let section_name: String?
+//    let class_id: String?
+//    let class_name: String?
+//    let subject_id: String?
+//    let subject_name: String?
+//    var splitup_details: [SplitDetail]?
+//}
+//
+//struct SplitDetail: Codable {
+//    let id: String?
+//    let name: String?
+//    let max_mark: String?
+//
+//    // UI STATE
+//    var isChecked: Bool? = false
+//    var selectedAIOption: String? = nil
+//}
+
 struct SubjectWiseExamResponse: Codable {
     let status: Bool?
     let message: String?
@@ -2819,31 +2860,31 @@ struct SubjectWiseExamResponse: Codable {
 }
 
 struct SubjectExamData: Codable {
-    let section_id: String?
-    let section_name: String?
-    let class_id: String?
-    let class_name: String?
     let subject_id: String?
+    let institute_subject_id: String?
     let subject_name: String?
-    var splitup_details: [SplitDetail]?
+    var activities: [ActivityData]?
 }
 
-struct SplitDetail: Codable {
-    let id: String?
-    let name: String?
+struct ActivityData: Codable {
+    let activity_id: String?
+    let activity_name: String?
     let max_mark: String?
+    var rubrics: [RubricData]?
     
-    // UI STATE
+    // UI State
     var isChecked: Bool? = false
     var selectedAIOption: String? = nil
 }
 
-struct SelectedSplit {
-    let subjectId: String
-    let subjectName: String
-    let splitId: String
-    let splitName: String
-    var aiOption: String?   // nil for Manual
+struct RubricData: Codable {
+    let rubric_id: String?
+    let rubric_name: String?
+    let max_mark: String?
+    
+    // UI State
+    var isChecked: Bool? = false
+    var selectedAIOption: String? = nil
 }
 
 //MARK: mark upload AI Api response
@@ -3319,16 +3360,16 @@ struct HostelRoomDetails: Codable {
 
 // MARK: - Fee Summary
 struct hostelFeeSummary: Codable {
-    let total_amount: Int?
-    let paid_amount: Int?
-    let pending_amount: Int?
-    let discount: Int?
+    let total_amount: String?
+    let paid_amount: String?
+    let pending_amount: String?
+    let discount: String?
     let status: String?
 }
 
 // MARK: - Payment
 struct Payment: Codable {
-    let paid_amount: Int?
+    let paid_amount: String?
     let paid_date: String?
     let payment_mode: String?
 }
@@ -3646,5 +3687,217 @@ struct MarksActivity: Codable {
         case attendance
         case mark
         case remarks
+    }
+}
+struct HeaderColumnConfig: Codable {
+    let displayName: String?
+    let subjectName: String?
+    let subjectId: String?
+    let activityId: String?
+    let activityName: String?
+    let maxMarks: Int?
+    var rubrics: [RubricMark]?
+}
+struct RubricMark: Codable {
+    let id: String?
+    let name: String?
+    let max_mark: String?
+    let subjectName: String?
+    let displayName: String?
+}
+struct ColumnConfig: Codable {
+    let displayName: String?
+    let subjectName: String?
+    let subjectId: String?
+    let activityId: String?
+    let activityName: String?
+    let maxMarks: Int?
+    let isRubric: Bool
+    let rubricId: String?
+}
+
+struct MarkDetailsResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [MarkDetails]?
+}
+struct MarkDetails:Codable{
+    let exam_section_id : String?
+    let exam_id : String?
+    let upload_details:[StudentMark]?
+}
+struct StudentMark: Codable {
+    let student_id: String?
+    let student_name: String?
+    let roll_no: String?
+    let admission_no: String?
+    let gender: String?
+    var marks: [SubjectMarks]?
+}
+
+struct SubjectMarks: Codable {
+    let subject_id: String?
+    let subject_name: String?
+    var activities: [ActivityMark]?
+}
+
+struct ActivityMark: Codable {
+    let id: String?
+    let name: String?
+    var mark: String?
+    let max_mark: String?
+    let is_edit: Bool?
+    var selected_name: String?
+    var change_mark: String?
+    var isReview: Bool?
+    var reason: String?
+    var rubrics: [RubricActivityMark]?
+}
+
+struct RubricActivityMark: Codable {
+    let id: String?
+    let name: String?
+    var mark: String?
+    let max_mark: String?
+    let is_edit: Bool?
+    var selected_name: String?
+
+    // Local UI properties
+    var change_mark: String?
+    var isReview: Bool?
+    var reason: String?
+}
+
+struct analysisRespSuc : Codable{
+    
+    let status: Bool?
+    let message: String?
+    let data: [analysisData]?
+}
+
+struct analysisData : Codable{
+    let id: String?
+    let setName: String?
+    let class_tests: [analysisClass_tests]?
+}
+
+struct analysisClass_tests: Codable{
+    let id: String?
+    let examName: String?
+}
+
+// MARK: - New Student Analysis Response Model (Latest)
+
+public struct AnalysisResponse: Codable {
+    public let status: Bool
+    public let message: String
+    public let data: [StudentAnalysisData]
+}
+
+public struct StudentAnalysisData: Codable {
+    public let examSeries: [String]
+    public let subjects: [AnalysisSubject]
+    public let trend: [AnalysisTrendPoint]
+    public let summary: AnalysisSummary
+
+    enum CodingKeys: String, CodingKey {
+        case examSeries = "exam_series"
+        case subjects
+        case trend
+        case summary
+    }
+}
+
+public struct AnalysisSummary: Codable {
+    public let examsAnalysed: String
+    public let averageTotal: String
+    public let averagePercentage: String
+    public let bestExam: AnalysisSummaryExam
+    public let worstExam: AnalysisSummaryExam
+
+    enum CodingKeys: String, CodingKey {
+        case examsAnalysed = "exams_analysed"
+        case averageTotal = "average_total"
+        case averagePercentage = "average_percentage"
+        case bestExam = "best_exam"
+        case worstExam = "worst_exam"
+    }
+}
+
+public struct AnalysisSummaryExam: Codable {
+    public let examId: String
+    public let label: String
+    public let total: String
+    public let percentage: String
+
+    enum CodingKeys: String, CodingKey {
+        case examId = "exam_id"
+        case label
+        case total
+        case percentage
+    }
+}
+
+public struct AnalysisSubject: Codable {
+    public let subjectId: String
+    public let subjectName: String
+    public let totalMarks: String
+    public let obtainedMarks: String
+    public let percentage: String
+    public let marks: [AnalysisSubjectMark]
+
+    enum CodingKeys: String, CodingKey {
+        case subjectId = "subject_id"
+        case subjectName = "subject_name"
+        case totalMarks = "total_marks"
+        case obtainedMarks = "obtained_marks"
+        case percentage
+        case marks
+    }
+}
+
+public struct AnalysisSubjectMark: Codable {
+    public let id: String
+    public let examName: String
+    public let obtainedMark: String
+    public let maxMark: String
+    public let attendance: String
+    public let remarks: String
+    public let activityName: String?
+    public let examDate: String
+    public let session: String
+    public let minMark: String
+    public let syllabus: String
+    public let isPublish: String
+    public let colorCode: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case examName = "exam_name"
+        case obtainedMark = "obtained_mark"
+        case maxMark = "max_mark"
+        case attendance
+        case remarks
+        case activityName = "activity_name"
+        case examDate = "exam_date"
+        case session
+        case minMark = "min_mark"
+        case syllabus
+        case isPublish = "is_publish"
+        case colorCode = "color_code"
+    }
+}
+
+public struct AnalysisTrendPoint: Codable {
+    public let examName: String
+    public let total: String
+    public let max: String
+    public let percentage: String
+
+    enum CodingKeys: String, CodingKey {
+        case examName = "exam_name"
+        case total
+        case max
+        case percentage
     }
 }

@@ -45,6 +45,10 @@ class homeWorkVc: UIViewController, UICollectionViewDataSource, UICollectionView
             
             let detailVC = PrivewVc()
             detailVC.attachmetList = FilterHomeWorkList[indexPath.row].file_path
+//            var attachmetList: [FilePath] = [FilePath(url: " https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/voice/7044/01-12-2025/audio_1764565674.wav", type: "VOICE", playbackSeconds: 12.5)]
+          
+           
+//            detailVC.attachmetList = attachmetList
             detailVC.isCompleted = FilterHomeWorkList[indexPath.row].is_completed ?? false
             
             detailVC.selectedDate  = FilterHomeWorkList[indexPath.row].date ?? ""

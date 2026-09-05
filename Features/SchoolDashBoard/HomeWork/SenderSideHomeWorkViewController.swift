@@ -16,13 +16,73 @@ protocol HistorySelectDelegate {
     func select(Title: String, Description: String, Images: [UIImage], pdf: String)
 }
 @available(iOS 14.0, *)
-class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNotice, UITextFieldDelegate {
-    func didTapButton(title: String, content: String, items: [FilePath],editId:String) {
+class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNotice, UITextFieldDelegate, AudioPlaybackDelegate, UIDocumentPickerDelegate {
+ 
+    // MARK: - Protocol Methods
+    func date(date: String) {
+       ""
     }
+    
+    func didTapButton(
+        title: String,
+        content: String,
+        items: [FilePath],
+        editId: String
+    ) {
+        print("Button tapped with title: \(title)")
+    }
+    
+//    func deleteImage(index: Int) {
+//        guard index < attachments.count else { return }
+//        // Stop audio if it's an audio file being deleted
+//        if attachments[index].fileType.lowercased() == "audio" {
+//            stopAllAudioPlayback()
+//        }
+//        let fileURL = URL(fileURLWithPath: attachments[index].imageURL ?? "")
+//            fileURL.stopAccessingSecurityScopedResource()
+//        attachments.remove(at: index)
+//        uploadAttachmentView.imageCollectionview.reloadData()
+//    }
+//
+    
     func deleteImage(index: Int) {
+
+        guard attachments.indices.contains(index) else { return }
+
+        let item = attachments[index]
+
+        if item.fileType.lowercased() == CommonStringFile.audio.lowercased() {
+            stopAllAudioPlayback()
+        }
+
+        if let urlString = item.imageURL,
+           urlString.hasPrefix("file://"),
+           let fileURL = URL(string: urlString) {
+
+            try? FileManager.default.removeItem(at: fileURL)
+        }
+
         attachments.remove(at: index)
+
         uploadAttachmentView.imageCollectionview.reloadData()
+        uploadAttachmentView.imageCollectionview.layoutIfNeeded()
+
+        collectionViewHeight.constant =
+            uploadAttachmentView.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
     }
+    // MARK: - Audio Playback Delegate Methods
+    func audioCell(_ cell: AudioCVC, willStartPlayingAtIndex index: Int) {
+        print("Audio started playing at index: \(index)")
+        stopAllOtherAudioCells(except: index)
+    }
+    
+    func audioCell(_ cell: AudioCVC, didStopPlayingAtIndex index: Int) {
+        print("Audio stopped playing at index: \(index)")
+    }
+//    func deleteImage(index: Int) {
+//        attachments.remove(at: index)
+//        uploadAttachmentView.imageCollectionview.reloadData()
+//    }
     
     @IBOutlet weak var HistoryArrowBtn: UIButton!
     @IBOutlet weak var showHistoryBtnName: UIButton!
@@ -31,7 +91,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var ToStdOrSecBtnBottom: NSLayoutConstraint!
     @IBOutlet weak var outerView: UIView!
-    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var recordingView: UIView!
+    @IBOutlet weak var voiceImg: UIImageView!
+    @IBOutlet weak var audioFile: UIView!
+    @IBOutlet weak var recorderTime: UILabel!
     @IBOutlet weak var ComposeHomeworkView: UIView!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var TitleTxtfield: UITextField!
@@ -39,11 +102,12 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBOutlet weak var DetailsTxtview: UITextView!
     @IBOutlet weak var wordsCountLbl: UILabel!
     @IBOutlet weak var titleCountLbl: UILabel!
-    @IBOutlet weak var uploadattachmentLbl: UILabel!
-    @IBOutlet weak var uploadAttachmentView: ImageSelection!
+    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var RecipientBtn: UIButton!
     @IBOutlet weak var TextViewheight: NSLayoutConstraint!
-    @IBOutlet weak var VideoView: UIView!
+    @IBOutlet weak var uploadAttachmentView: ImageSelection!
+    @IBOutlet weak var uploadattachmentLbl: UILabel!
+    
     var attachments: [AttachmentItem] = []
 
     let photoPickManager = PhotoPickerManager.shared
@@ -62,6 +126,13 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     var selectNotice: EditObjectDelegate?
     var EditHomeWork = Homework()
     let  video = "video"
+    private var audioURL: URL?
+    private var isRemoteAudio = false
+    private var recordingTimer: Timer?
+    private var recordingStartTime: Date?
+    private var isRecording = false
+    private let audioManager = AudioManager()
+    private let tempKey = "TempRecordings"
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtnNm
@@ -83,7 +154,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         uploadAttachmentView.imageCollectionview.backgroundColor = .clear
         DetailsTxtview.delegate = self
         TitleTxtfield.delegate = self
-        VideoView.isHidden = true
         ComposeHomeworkView.isHidden = false
         ComposeHomeworkView.alpha = 1
     }
@@ -93,7 +163,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    
+    @IBAction func recording(_ sender: UIButton) {
+        recordingView.isHidden = false
+        isRecording ? stopRecording() : startRecording()
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         imageSelection()
@@ -135,7 +208,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         DetailsTxtview.textColor = content != "" ? .black:.lightGray
         TitleTxtfield.text = title
         self.editId = editId
-        RecipientBtn.setTitle(CommonStringFile.Update.translated(), for: .normal)
+        RecipientBtn.setTitle(CommonStringFile.UPDATE.translated(), for: .normal)
         let imageItems: [AttachmentItem] = imageUrls.map { file in
             let type = file.type?.lowercased() ?? ""
             return AttachmentItem(
@@ -175,6 +248,138 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         TitleTxtfield.placeholder  = CommonStringFile.Title.translated()
     }
     
+    
+    private func startRecording() {
+        audioManager.checkRecordPermission { [weak self] granted in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                granted ? self.beginRecording() : self.showMicPermissionAlert()
+            }
+        }
+    }
+    
+    private func beginRecording() {
+        recordingStartTime = Date()
+        recordingTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            self?.updateRecordingTime()
+        }
+        
+        audioManager.startRecording()
+        isRecording = true
+        voiceImg.image = UIImage.gifImageWithName("Mic")
+        UIApplication.shared.isIdleTimerDisabled = true
+    }
+    
+    private func stopRecording() {
+        recordingTimer?.invalidate()
+        recordingTimer = nil
+        
+        audioManager.stopRecording { [weak self] url, duration in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.isRecording = false
+                self.recordingView.isHidden = true
+                self.voiceImg.image = UIImage(named: "mic 1")
+                
+                if let url = url {
+                    self.audioURL = url
+                    self.isRemoteAudio = false
+                    self.attachments.append(AttachmentItem(image: nil, imageURL: url.absoluteString, fileType: CommonStringFile.audio))
+                    self.uploadAttachmentView.imageCollectionview.reloadData()
+                    self.uploadAttachmentView.imageCollectionview.layoutIfNeeded()
+                    self.collectionViewHeight.constant = self.uploadAttachmentView.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
+                }
+                UIApplication.shared.isIdleTimerDisabled = false
+            }
+        }
+    }
+    func deleteAllLocalRecordingsFromAttachments() {
+        for item in attachments {
+            guard let urlString = item.imageURL else { continue }
+            if urlString.starts(with: "file://") {
+                if let fileURL = URL(string: urlString),
+                   FileManager.default.fileExists(atPath: fileURL.path) {
+
+                    do {
+                        try FileManager.default.removeItem(at: fileURL)
+                        var list = UserDefaults.standard.stringArray(forKey: tempKey) ?? []
+                            list.removeAll { $0 == urlString }
+                            UserDefaults.standard.set(list, forKey: tempKey)
+                    } catch {
+                        print("❌ Delete failed:", error.localizedDescription)
+                    }
+                }
+            }
+        }
+        
+        attachments.removeAll()
+    }
+    @objc private func updateRecordingTime() {
+        guard let startTime = recordingStartTime, isRecording else { return }
+        let elapsed = Date().timeIntervalSince(startTime)
+        DispatchQueue.main.async {
+            self.recorderTime.text = self.formatTime(elapsed)
+        }
+    }
+    
+    private func formatTime(_ seconds: Double) -> String {
+        let mins = Int(seconds) / 60
+        let secs = Int(seconds) % 60
+        return String(format: CommonStringFile.Time_formate, mins, secs)
+    }
+    
+    // MARK: - Alert Methods
+    private func showMicPermissionAlert() {
+        let alert = UIAlertController(
+            title: "Microphone Access Required",
+            message: "Please allow microphone access in Settings to record audio",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { _ in
+            if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(settingsURL)
+            }
+        })
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
+    }
+    
+    private func showErrorAlert(message: String) {
+        let alert = UIAlertController(title: "Audio Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+    
+    // MARK: - Public Audio Methods
+    func setRemoteAudioURL(_ url: URL) {
+        audioURL = url
+        isRemoteAudio = true
+    }
+    
+    func setLocalAudioURL(_ url: URL) {
+        audioURL = url
+        isRemoteAudio = false
+    }
+    
+    // MARK: - Audio Management Methods
+    func stopAllAudioPlayback() {
+        for visibleCell in uploadAttachmentView.imageCollectionview.visibleCells {
+            if let audioCell = visibleCell as? AudioCVC {
+                audioCell.stopPlayback()
+            }
+        }
+    }
+    
+    private func stopAllOtherAudioCells(except playingIndex: Int) {
+        for visibleCell in uploadAttachmentView.imageCollectionview.visibleCells {
+            if let audioCell = visibleCell as? AudioCVC,
+               audioCell.cellIndex != playingIndex {
+                audioCell.stopPlayback()
+            }
+        }
+    }
     func imageSelection(){
         
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
@@ -219,7 +424,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             var params: [String: Any] = [
                 assignmentResquestStringKey.title: TitleTxtfield.text ?? "",
                 assignmentResquestStringKey.description: DetailsTxtview.text ?? "",]
-            if (sender as AnyObject).titleLabel.text == CommonStringFile.Update.translated(){
+            if (sender as AnyObject).titleLabel.text == CommonStringFile.UPDATE{
                 let com = commonApi_forSending()
                 params[SendAttachmentStringFile.id] = editId
                 com.SendingAttachmentFlow(
@@ -241,7 +446,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                             on: self
                         ) { [self] in
                             editId = ""
-                            RecipientBtn.setTitle(CommonStringFile.NEXT.translated(), for: .normal)
+                            RecipientBtn.setTitle(CommonStringFile.NEXT, for: .normal)
                             TitleTxtfield.text = ""
                             DetailsTxtview.text = ""
                             attachments.removeAll()
@@ -328,68 +533,213 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
 @available(iOS 14.0, *)
 extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return 2
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1 + attachments.count /*selectedImages.count + selectedImgUrl.count*/
+        if section == 0 {
+            let nonAudioCount = attachments.filter { $0.fileType.lowercased() != "audio" }.count
+            return 1 + nonAudioCount
+        } else {
+            return attachments.filter { $0.fileType.lowercased() == "audio" }.count
+        }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        // First cell is the "Add Attachment" button cell
-        if indexPath.item == 0 {
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: CellConfingName.AttachmentCVCell,
-                for: indexPath
-            ) as! AttachmentCVCell
-            cell.layer.cornerRadius = 20
-            return cell
-        } else {
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+////        // First cell is the "Add Attachment" button cell
+////        if indexPath.item == 0 {
+////            let cell = collectionView.dequeueReusableCell(
+////                withReuseIdentifier: CellConfingName.AttachmentCVCell,
+////                for: indexPath
+////            ) as! AttachmentCVCell
+////            cell.layer.cornerRadius = 20
+////            return cell
+////        } else {
+//            if indexPath.section == 0 {
+//                if indexPath.item == 0 {
+//                    let cell = collectionView.dequeueReusableCell(
+//                        withReuseIdentifier: CellConfingName.AttachmentCVCell,
+//                        for: indexPath
+//                    ) as! AttachmentCVCell
+//                    cell.layer.cornerRadius = 20
+//                    
+//                    return cell
+//                } else {
+//                    let nonAudioFiles = attachments.filter { $0.fileType.lowercased() != "audio" }
+//                    let file = nonAudioFiles[indexPath.item - 1]
+//                    
+//                    let cell = collectionView.dequeueReusableCell(
+//                        withReuseIdentifier: CellConfingName.ImageCvCell,
+//                        for: indexPath
+//                    ) as! ImageCvCell
+//                    cell.delegate = self
+//                    cell.deleteBtn.tag = indexPath.item - 1
+//                    if let image = file.image {
+//                        cell.imageViews.image = image
+//                    } else if let urlStr = file.imageURL, let url = URL(string: urlStr) {
+//                        if file.fileType.uppercased() != CommonStringFile.IMAGE {
+//                            let iconName = getFileIconName(for: url)
+//                            cell.imageViews.image = UIImage(named: iconName)
+//                        } else {
+//                            cell.imageViews.kf.setImage(with: url)
+//                        }
+//                    } else if let video = file.VideoURl {
+//                        let iconName = getFileIconName(for: video)
+//                        cell.imageViews.image = UIImage(named: iconName)
+//                        
+//                    } else {
+//                        cell.imageViews.image = nil
+//                    }
+//                    collectionViewHeight.constant = collectionView.collectionViewLayout.collectionViewContentSize.height
+//                    return cell
+//                }
+//            } else {
+//                let cell = collectionView.dequeueReusableCell(
+//                    withReuseIdentifier: "AudioCVC",
+//                    for: indexPath
+//                ) as! AudioCVC
+//                configureAudioCell(cell, at: indexPath)
+//                
+//                return cell
+//            }
+////        }
+//    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        if indexPath.section == 0 {
+
+            // Add Attachment Cell
+            if indexPath.item == 0 {
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: CellConfingName.AttachmentCVCell,
+                    for: indexPath
+                ) as! AttachmentCVCell
+
+                cell.layer.cornerRadius = 20
+                return cell
+            }
+
+            // Keep original indexes
+            let nonAudioItems = attachments.enumerated()
+                .filter { $0.element.fileType.lowercased() != CommonStringFile.audio.lowercased() }
+
+            let item = nonAudioItems[indexPath.item - 1]
+            let originalIndex = item.offset
+            let file = item.element
+
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: CellConfingName.ImageCvCell,
                 for: indexPath
             ) as! ImageCvCell
-            let adjustedIndex = indexPath.item - 1
-            let item = attachments[adjustedIndex]
+
             cell.delegate = self
-            cell.deleteBtn.tag = adjustedIndex
-            cell.imageViews.tintColor = .clear
-            if let image = item.image {
+            cell.deleteBtn.tag = originalIndex
+
+            if let image = file.image {
+
                 cell.imageViews.image = image
-            } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
-                if item.fileType.uppercased() != CommonStringFile.IMAGE {
-                    let iconName = getFileIconName(for: url)
-                    cell.imageViews.image = UIImage(named: iconName)
+
+            } else if let urlStr = file.imageURL,
+                      let url = URL(string: urlStr) {
+
+                if file.fileType.uppercased() != CommonStringFile.IMAGE {
+                    cell.imageViews.image = UIImage(named: getFileIconName(for: url))
                 } else {
                     cell.imageViews.kf.setImage(with: url)
                 }
-            } else if let vido = item.VideoURl{
-                let iconName = getFileIconName(for: vido)
-                cell.imageViews.image = UIImage(named: iconName)
-                cell.imageViews.tintColor = .black
-            }
-            else if let vido = URL(string: item.VimeoVideoURL ?? ""){
-                let iconName = getFileIconName(for: vido)
-                cell.imageViews.image = UIImage(named: iconName)
-                cell.imageViews.tintColor = .black
-            }
-            else{
+
+            } else if let video = file.VideoURl {
+
+                cell.imageViews.image = UIImage(named: getFileIconName(for: video))
+
+            } else {
+
                 cell.imageViews.image = nil
             }
-            let totalItems = attachments.count
-            collectionViewHeight.constant = totalItems <= 2 ? 120 : collectionView.collectionViewLayout.collectionViewContentSize.height
+
+            collectionViewHeight.constant = collectionView.collectionViewLayout.collectionViewContentSize.height
+
+            return cell
+
+        } else {
+
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "AudioCVC",
+                for: indexPath
+            ) as! AudioCVC
+
+            configureAudioCell(cell, at: indexPath)
+
             return cell
         }
     }
+    // MARK: - Audio Cell Configuration
     
+    private func configureAudioCell(_ cell: AudioCVC, at indexPath: IndexPath) {
+
+        let audioItems = attachments.enumerated()
+            .filter { $0.element.fileType.lowercased() == CommonStringFile.audio.lowercased() }
+
+        let item = audioItems[indexPath.item]
+
+        let originalIndex = item.offset
+        let file = item.element
+
+        if let urlString = file.imageURL {
+
+            let url: URL
+
+            if urlString.hasPrefix("http://") || urlString.hasPrefix("https://") {
+
+                guard let remoteURL = URL(string: urlString) else { return }
+                url = remoteURL
+
+            } else {
+
+                let cleanPath = urlString
+                    .replacingOccurrences(of: "file://", with: "")
+                    .removingPercentEncoding ?? urlString
+
+                url = URL(fileURLWithPath: cleanPath)
+            }
+
+            cell.audioURL = url
+        }
+
+        cell.TrashIcon.isHidden = false
+        cell.TrashIcon.isUserInteractionEnabled = true
+
+        // ORIGINAL attachment index
+        cell.TrashIcon.tag = originalIndex
+        cell.cellIndex = originalIndex
+
+        cell.audioDelegate = self
+        cell.delegate = self
+        cell.waveView.setParentCell(cell)
+
+        collectionViewHeight.constant = uploadAttachmentView.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
+    }
+    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (uploadAttachmentView.imageCollectionview.frame.width - 30) / 3
-        return CGSize(width: width, height: 100)
+        if indexPath.section == 0 {
+            return CGSize(width: width, height: 100)
+        } else {
+            return CGSize(width: collectionView.frame.width - 20, height: 70)
+        }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        stopAllAudioPlayback()
         if indexPath.row == 0{
             let remaining = Filecount.SelectImageAndDocumetCount - attachments.count
             if remaining > 0 {
                 let alertController = UIAlertController(title: AlertstringFile.Select.translated(), message: AlertstringFile.Chooseanoption.translated(), preferredStyle: .actionSheet)
+                let hasAudio = attachments.contains {
+                    $0.fileType.lowercased() == CommonStringFile.audio.lowercased()
+                }
                 // Camera option
                 let cameraAction = UIAlertAction(title: CommonStringFile.Camera.translated(), style: .default) { [self] _ in
                     openCamera()
@@ -405,6 +755,30 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                     selectDocuments()
                 }
                 alertController.addAction(pdfAction)
+                
+
+//                if !hasAudio {
+
+                    // Recording
+                    let recordingAction = UIAlertAction(
+                        title: hasAudio ? "Recording (Already added)".translated() : CommonStringFile.Recording.translated(),
+                        style: hasAudio ? .destructive : .default
+                    ) { [weak self] _ in
+                        self?.recording()
+                    }
+                    recordingAction.isEnabled = !hasAudio
+                    alertController.addAction(recordingAction)
+
+                    // Audio File
+                    let audioAction = UIAlertAction(
+                        title: hasAudio ? "Audio File (Already added)".translated() : CommonStringFile.AudioFile.translated(),
+                        style: hasAudio ? .destructive : .default
+                    ) { [weak self] _ in
+                        self?.audio()
+                    }
+                    audioAction.isEnabled = !hasAudio
+                    alertController.addAction(audioAction)
+//                }
                 //   VIDEO option
                 let VideoAction = UIAlertAction(title:
                                                     CommonStringFile.Video.translated(), style: .default) { [self] _ in
@@ -413,12 +787,12 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                     let videoCount = attachments.filter { $0.fileType.lowercased() == video }.count
                     let videoRemaining = Filecount.SelectVideoCount - videoCount
                     if totalRemaining <= 0 {
-                        CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+                        CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit.translated(), on: self)
                     } else if videoRemaining <= 0 {
                         CustomAlert()
                             .showAlert(
                                 title: "",
-                                message: CommonStringFile.You_can_only_select_up_to2_video_files,
+                                message: CommonStringFile.You_can_only_select_up_to2_video_files.translated(),
                                 on: self)
                     }else{
                         VideoPick()
@@ -434,7 +808,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                 alertController.addAction(cancelAction)
                 self.present(alertController, animated: true, completion: nil)
             }else{
-                CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on:self)
+                CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit.translated(), on:self)
             }
         }else{
             let attachment = attachments[indexPath.item - 1]
@@ -449,6 +823,48 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
         }
     }
     
+
+
+    func recording() {
+        recordingView.isHidden = false
+    }
+    
+    func audio() {
+        let supportedTypes: [UTType] = [.audio]
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes)
+        documentPicker.delegate = self
+        documentPicker.allowsMultipleSelection = false
+        present(documentPicker, animated: true, completion: nil)
+    }
+    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard let selectedFileURL = urls.first else {
+            print("No file selected.")
+            return
+        }
+
+        // Start security access for external file
+        guard selectedFileURL.startAccessingSecurityScopedResource() else {
+            print("❌ Cannot access file")
+            return
+        }
+        if attachments.contains(where: { $0.imageURL == selectedFileURL.path }) {
+            print("⚠️ File already added")
+            return
+        }
+        attachments.append(AttachmentItem(
+            image: nil,
+            imageURL: selectedFileURL.path,
+            fileType: CommonStringFile.audio
+        ))
+
+        // Reload UI
+        self.uploadAttachmentView.imageCollectionview.reloadData()
+        self.uploadAttachmentView.imageCollectionview.layoutIfNeeded()
+        collectionViewHeight.constant = self.uploadAttachmentView.imageCollectionview.collectionViewLayout.collectionViewContentSize.height
+        recordingView.isHidden = true
+    }
+  
 }
 
 

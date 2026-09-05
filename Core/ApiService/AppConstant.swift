@@ -127,9 +127,13 @@ struct ServiceUrl{
     static let comm_api_certificate_types = "comm/api/certificate/types"
     static let comm_api_certificate_send_request = "comm/api/certificate/send-request"
     static let exam_api_exam_get_exams = "exam/api/exam/get-exams"
+    
+    static let exam_api_exam_get_new_exams = "exam/api/new-exam/get-exams"
+    
     static let exam_api_exam_list = "exam/api/exam/list"
-    static let exam_api_exam_view_marks = "exam/api/exam/view-marks"
-    static let exam_api_get_progress_card = "exam/api/exam/get-progress-card"
+    static let get_report_status = "exam/api/new-exam/get-report-status"
+    static let exam_api_exam_view_marks = "exam/api/new-exam/get-mark-details"
+    static let exam_api_get_progress_card = "exam/api/new-exam/get-student-progresscard"
     static let interaction_classes_for_chat = "comm/api/interaction/classes-for-chat"
     static let comm_api_leave_req_delete = "comm/api/leave-req/delete"
     static let comm_api_leave_req_update = "comm/api/leave-req/update"
@@ -187,15 +191,15 @@ struct ServiceUrl{
     static let dashboard_api_reviews_list = "dashboard/api/reviews/list"
     static let dashboard_api_reviews_add = "dashboard/api/reviews/add"
     static let ptm_api_ptm_schedule_datewise_booked_slots = "ptm/api/ptm-schedule/datewise-booked-slots"
-    static let exam_api_exam_get_staff_wise_exam = "exam/api/exam/get-staff-wise-exam"
-    static let exam_get_subject_wise_activities = "exam/api/exam/get-subject-wise-activities"
+    static let exam_api_exam_get_staff_wise_exam = "exam/api/new-exam/get-staffwise-exam"
+    static let exam_get_subject_wise_activities = "exam/api/new-exam/get-subjectwise-activities"
     static let ocr_api_upload_marks = "ocr/api/upload-marks"
     static let lms_api_quiz_delete = "lms/api/quiz/delete"
     static let lms_api_quiz_update = "lms/api/quiz/update"
     static let lms_api_quiz_delete_question = "lms/api/quiz/delete-question"
     static let update_notification_call_log = "comm/api/voice/update-notification-call-log"
-    static let exam_api_exam_get_mark_details = "exam/api/exam/get-mark-details"
-    static let exam_api_exam_upload_marks = "exam/api/exam/upload-marks"
+    static let exam_api_new_exam_get_mark_to_upload = "exam/api/new-exam/get-mark-to-upload"
+    static let exam_api_exam_upload_marks = "exam/api/new-exam/upload-mark"
     static let hostel_attendance_hostel_list = "stud-attd/api/hostel-attendance/hostel-list"
     static let hostel_attendance_room_details = "stud-attd/api/hostel-attendance/room-details"
     static let hostel_attendance_students_for_hostel_attd = "stud-attd/api/hostel-attendance/students-for-hostel-attd"
@@ -205,17 +209,17 @@ struct ServiceUrl{
     static let hostel_attendance_apply_outpass = "stud-attd/api/hostel-attendance/apply-outpass"
     static let comm_api_hostel_attendance_attendance_report = "stud-attd/api/hostel-attendance/attendance-report"
     static let comm_api_homework_submissions_list = "comm/api/homework/submissions-list"
-    static let hostel_attendance_parent_dashboard = "stud-attd/api/hostel-attendance/parent-dashboard"
+    static let hostel_attendance_parent_dashboard = "stud-attd/api/hostel-attendance/parent-dashboard-new"
     static let hostel_attendance_hostel_info = "stud-attd/api/hostel-attendance/hostel-info"
     static let comm_api_leave_req_for_staff_delete = "comm/api/leave-req-for-staff/delete"
     static let comm_api_leave_req_for_staff_update = "comm/api/leave-req-for-staff/update"
-    static let hostel_attendance_update_status = "stud-attd/api/hostel-attendance/update-status" 
+    static let hostel_attendance_update_status = "stud-attd/api/hostel-attendance/update-status"
     
     static let online_payment_details_for_student = "dashboard/api/reconcile/online-payment-details-for-student"
     static let update_unreceived_for_student = "dashboard/api/reconcile/update-unreceived-payment-status-for-student"
     static let get_student_route_list = "transport/api/get-student-route-list"
     static let get_vehicle_live_tracking_details = "transport/api/get-vehicle-live-tracking-details"
-    static let get_latest_geo_location = "transport/api/get-latest-geo-location" 
+    static let get_latest_geo_location = "transport/api/get-latest-geo-location"
     static let exam_section_wise_subjects = "exam/api/exam-test/section-wise-subjects"
     static let exam_create_class_test = "exam/api/exam-test/create-class-test"
     static let exam_test_mark_details = "exam/api/exam-test/mark-details"
@@ -227,6 +231,9 @@ struct ServiceUrl{
     static let exam_api_exam_test_delete_class_test_subject = "exam/api/exam-test/delete-class-test-subject"
     static let exam_api_exam_test_delete = "exam/api/exam-test/delete"
     static let exam_api_exam_test_publish_marks = "exam/api/exam-test/publish-marks"
+    static let exam_api_exam_test_analysis_sets_list = "exam/api/exam-test/analysis-sets-list"
+    
+    static let exam_api_exam_test_student_analysis = "exam/api/exam-test/student-analysis"
 
 }
 
@@ -306,11 +313,11 @@ struct PriorityType{
 }
 
 struct recipeint_tabBarName{
-    static let Standard = "Standards".translated()
-    static let Group = "Groups".translated()
-    static let Section_Student = "Section/Students".translated()
-    static let Staff = "Staff".translated()
-    static let Entier_School = "Entire School".translated()
+    static let Standard = "Standards"
+    static let Group = "Groups"
+    static let Section_Student = "Section/Students"
+    static let Staff = "Staff"
+    static let Entier_School = "Entire School"
 }
 
 struct Filecount{
@@ -588,5 +595,6 @@ func formattedDateStatus(from selectedDateString: String, isTimeNeeded: Bool = f
     ? "\(dateFormatter.string(from: date)), \(timeFormatter.string(from: date))"
     : dateFormatter.string(from: date)
 }
+
 
 

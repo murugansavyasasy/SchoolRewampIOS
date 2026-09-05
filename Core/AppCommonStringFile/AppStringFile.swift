@@ -316,6 +316,7 @@ class QuizListStringFile{
 
 struct CommonStringFile {
     //MARK:
+    static let UPDATE = "UPDATE"
     static let Update = "Update"
     static let You_can_access_this_after_30_minutes = "This video will be available in 30 minutes."
     static let NEXT = "NEXT"
@@ -328,6 +329,8 @@ struct CommonStringFile {
     static let Cancel = "Cancel"
     static let Camera = "Camera"
     static let Document = "Document"
+    static let Recording = "Audio Recording"
+    static let AudioFile = "Audio File"
     static let Video = "Video"
     static let Photos = "Photos"
     static let VIDEO = "VIDEO"
@@ -596,7 +599,7 @@ struct ExamStringFile {
     static var subjectAndMarks = "Subject & Marks"
     static var otherActivities = "Other Activities"
     static var examTimetable = "Exam Timetable"
-    static var examMarks = "Exam Marks"
+    static var examMarks = "Published Marks"
 }
 
 struct AttendanceString {

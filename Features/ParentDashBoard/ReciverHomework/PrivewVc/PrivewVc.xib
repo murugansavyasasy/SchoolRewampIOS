@@ -22,6 +22,7 @@
                 <outlet property="dateLbl" destination="rqb-ID-Dku" id="7y4-rr-org"/>
                 <outlet property="discreption" destination="8Aw-JV-DEw" id="Rom-cC-4Sp"/>
                 <outlet property="doneHomeWorkBtnName" destination="kD4-W4-AwV" id="8u8-9H-JrH"/>
+                <outlet property="homeWorkVoiceTv" destination="31j-mK-GJS" id="AMx-Xp-rcg"/>
                 <outlet property="postedByLbl" destination="J8y-jM-dKY" id="gFu-rI-b4M"/>
                 <outlet property="sendToInnerView" destination="kwG-qH-ZP4" id="1z9-8d-ZXL"/>
                 <outlet property="tableviewHeight" destination="eZl-us-QUS" id="9Ir-Zm-wqY"/>
@@ -73,11 +74,11 @@
                         <constraint firstAttribute="trailing" secondItem="wap-p0-c50" secondAttribute="trailing" constant="10" id="eGL-xm-Y4C"/>
                     </constraints>
                 </view>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kdq-su-jJh">
-                    <rect key="frame" x="0.0" y="179.33333333333331" width="393" height="604.66666666666674"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kdq-su-jJh">
+                    <rect key="frame" x="0.0" y="179.33333333333331" width="393" height="604.66666666666652"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DGk-in-s5r">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="2101.3333333333335"/>
+                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DGk-in-s5r">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="2463.3333333333335"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="vY5-2a-zDi">
                                     <rect key="frame" x="15" y="10" width="363" height="533.66666666666663"/>
@@ -136,14 +137,14 @@ Understand Trends and Properties of Elements</string>
                                         </stackView>
                                     </subviews>
                                 </stackView>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="QQk-Mr-lQ2">
-                                    <rect key="frame" x="10" y="558.66666666666663" width="373" height="1532.666666666667"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="QQk-Mr-lQ2">
+                                    <rect key="frame" x="10" y="558.66666666666652" width="373" height="1894.666666666667"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iVr-JA-IlT">
-                                            <rect key="frame" x="0.0" y="0.0" width="373" height="382.33333333333331"/>
+                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iVr-JA-IlT">
+                                            <rect key="frame" x="0.0" y="0.0" width="373" height="744.33333333333337"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="4IA-y2-lOe">
-                                                    <rect key="frame" x="0.0" y="0.0" width="373" height="382.33333333333331"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="4IA-y2-lOe">
+                                                    <rect key="frame" x="0.0" y="0.0" width="373" height="744.33333333333337"/>
                                                     <subviews>
                                                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="📎Attachments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCa-CS-cbe">
                                                             <rect key="frame" x="0.0" y="0.0" width="373" height="0.0"/>
@@ -152,20 +153,20 @@ Understand Trends and Properties of Elements</string>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IwZ-fm-aoN">
-                                                            <rect key="frame" x="0.0" y="0.0" width="373" height="176.33333333333334"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="373" height="382.33333333333331"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="azB-Ka-OwS">
-                                                                    <rect key="frame" x="5" y="15" width="363" height="146.33333333333334"/>
+                                                                    <rect key="frame" x="5" y="15" width="363" height="352.33333333333331"/>
                                                                     <subviews>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="paperclip" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="otQ-cH-GbB">
-                                                                            <rect key="frame" x="0.0" y="58.333333333333385" width="30" height="30.666666666666657"/>
+                                                                            <rect key="frame" x="0.0" y="161.33333333333337" width="30" height="30.666666666666686"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="30" id="EAn-g4-TTB"/>
                                                                                 <constraint firstAttribute="height" constant="30" id="i3F-TR-65t"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Attachment's" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ut-re-eZN" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
-                                                                            <rect key="frame" x="32" y="60.666666666666636" width="331" height="25.333333333333336"/>
+                                                                            <rect key="frame" x="32" y="163.66666666666663" width="331" height="25.333333333333343"/>
                                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -182,7 +183,7 @@ Understand Trends and Properties of Elements</string>
                                                             </constraints>
                                                         </view>
                                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Jwm-C8-nZk">
-                                                            <rect key="frame" x="0.0" y="182.33333333333337" width="373" height="200"/>
+                                                            <rect key="frame" x="0.0" y="388.33333333333326" width="373" height="200"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="200" id="lkJ-R9-vDZ"/>
@@ -194,6 +195,10 @@ Understand Trends and Properties of Elements</string>
                                                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                             </collectionViewFlowLayout>
                                                         </collectionView>
+                                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="31j-mK-GJS" customClass="SelfSizingTableView" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="594.33333333333326" width="373" height="150"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        </tableView>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
@@ -205,8 +210,8 @@ Understand Trends and Properties of Elements</string>
                                                 <constraint firstItem="4IA-y2-lOe" firstAttribute="top" secondItem="iVr-JA-IlT" secondAttribute="top" id="vcu-vH-lFW"/>
                                             </constraints>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CM8-D1-koi">
-                                            <rect key="frame" x="0.0" y="397.33333333333326" width="373" height="498.66666666666674"/>
+                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CM8-D1-koi">
+                                            <rect key="frame" x="0.0" y="759.33333333333326" width="373" height="498.66666666666674"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="KO0-GX-ali">
                                                     <rect key="frame" x="10" y="10" width="353" height="478.66666666666669"/>
@@ -271,14 +276,14 @@ Understand Trends and Properties of Elements</string>
                                                 <constraint firstItem="KO0-GX-ali" firstAttribute="leading" secondItem="CM8-D1-koi" secondAttribute="leading" constant="10" id="wV5-3K-sRn"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attachments" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J8y-jM-dKY">
-                                            <rect key="frame" x="0.0" y="911" width="373" height="15.666666666666629"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Attachments" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J8y-jM-dKY">
+                                            <rect key="frame" x="0.0" y="1273" width="373" height="15.666666666666742"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <color key="textColor" systemColor="systemGray2Color"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Rys-Rx-JDt">
-                                            <rect key="frame" x="0.0" y="941.66666666666674" width="373" height="591"/>
+                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Rys-Rx-JDt">
+                                            <rect key="frame" x="0.0" y="1303.6666666666667" width="373" height="591"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="591" id="eZl-us-QUS"/>
@@ -330,7 +335,7 @@ Understand Trends and Properties of Elements</string>
         <image name="paperclip" catalog="system" width="121" height="128"/>
         <image name="person.2.fill" catalog="system" width="128" height="86"/>
         <namedColor name="BackGroundClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

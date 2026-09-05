@@ -13,6 +13,7 @@ protocol readStatusUpdate{
 }
 class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var homeWorkVoiceTv: UITableView!
     @IBOutlet weak var yourTargetImageView: UIImageView!
     @IBOutlet weak var sendToInnerView: UIView!
     @IBOutlet weak var attachmentInnerView: UIView!
@@ -62,16 +63,27 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
     let id = "id"
     let HOMEWORK = "HOMEWORK"
     var dateAndTimeForVideo : String = ""
+    var playIndex: Int?
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        cv.reloadData()
-        assignmentTable.rowHeight = UITableView.automaticDimension
-        assignmentTable.estimatedRowHeight = 80
-        reloadCollectionAndUpdateHeight()
+        
+        print("attachmetList",attachmetList?.count)
+//        if attachmetList?.first?.type == "VOICE"{
+//            homeWorkVoiceTv.isHidden = false
+//            cv.isHidden = true
+//        }else{
+            homeWorkVoiceTv.isHidden = true
+            cv.isHidden = false
+            cv.reloadData()
+            assignmentTable.rowHeight = UITableView.automaticDimension
+            assignmentTable.estimatedRowHeight = 80
+            reloadCollectionAndUpdateHeight()
+//        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         assignmentTable.isHidden = !isShomework
+        
     }
     func PrivewHomeWork() {
         
@@ -188,6 +200,13 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         assignmentTable.tableFooterView = UIView()
             PrivewHomeWork()
         }
+        
+////        if attachmetList?.first?.type == "VOICE"{
+//            homeWorkVoiceTv.register(UINib(nibName: "CommunicationTVC", bundle: nil), forCellReuseIdentifier: "CommunicationTVC")
+//            homeWorkVoiceTv.dataSource = self
+//            homeWorkVoiceTv.delegate = self
+//            homeWorkVoiceTv.reloadData()
+//        }
         
     }
     
@@ -529,7 +548,27 @@ class PrivewVc: UIViewController, UICollectionViewDataSource, UICollectionViewDe
         }
     }
 }
-extension PrivewVc:UITableViewDataSource, UITableViewDelegate, SearchDelegate{
+extension PrivewVc:UITableViewDataSource, UITableViewDelegate, SearchDelegate,AudioPlaybackDelegate1{
+    
+    func audioCell(_ cell: CommunicationTVC, willStartPlayingAtIndex index: Int) {
+        
+        playIndex = index
+        // Safety check
+        guard ((attachmetList?.indices.contains(index)) != nil) else { return }
+        
+    
+        // Stop playback for reused cells
+        if cell.cellIndex != index {
+            cell.stopPlayback()
+        }
+    }
+    
+    
+    func audioCell(_ cell: CommunicationTVC, didStopPlayingAtIndex index: Int) {
+        if playIndex == index {
+            playIndex = nil
+        }
+    }
     func searchText(_ searchText: String) {
         guard let list = homeworkDetails else { return }
         if searchText == "All" {
@@ -559,54 +598,80 @@ extension PrivewVc:UITableViewDataSource, UITableViewDelegate, SearchDelegate{
         }
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+//        if tableView == homeWorkVoiceTv{
+//            return 1
+//        }else{
+            return 2
+//        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0 :
-            return 1
-        default:
-            let count = filterhomeworkDetails?.count ?? 0
-            return count == 0 ? 1 : count
-        }
+//        if tableView == homeWorkVoiceTv{
+//            return attachmetList?.count ?? 0
+//        }else{
+            switch section {
+            case 0 :
+                return 1
+            default:
+                let count = filterhomeworkDetails?.count ?? 0
+                return count == 0 ? 1 : count
+            }
+//        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        switch indexPath.section {
-            
-        case 0:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentsearchTVC", for: indexPath) as? AssignmentsearchTVC else {
-                return UITableViewCell()
-            }
-            
-            let totalCount = filterhomeworkDetails?.count ?? 0
-            let submittedCount = filterhomeworkDetails?.filter { $0.status == "Completed" }.count ?? 0
-            let pendingCount = filterhomeworkDetails?.filter { $0.status == "Not Complete" }.count ?? 0
-            
-            let allStudentText = "All Students".translated()
-            let SubmittedText = "Submitted".translated()
-            let PendingText = "Pending".translated()
-            cell.allBtn.setTitle("\(allStudentText)(\(totalCount))", for: .normal)
-            cell.submitedBtn.setTitle("\(SubmittedText)(\(submittedCount))", for: .normal)
-            cell.pendingBtn.setTitle("\(PendingText)(\(pendingCount))", for: .normal)
-            cell.delegate = self
-            
-            return cell
-
-        case 1:
-            
-            if filterhomeworkDetails?.isEmpty ?? true {
-                let noDataCell = UITableViewCell(style: .default, reuseIdentifier: "NoDataCell")
+        
+//        if tableView == homeWorkVoiceTv{
+//            
+//            let cell = homeWorkVoiceTv.dequeueReusableCell(withIdentifier: "CommunicationTVC", for: indexPath) as! CommunicationTVC
+//    
+//            cell.emergencyBtnName.isHidden = true
+//           
+//            cell.waveView.durationLabel.isHidden = true
+//            cell.PostedByLbl.isHidden = true
+//           
+//          
+//            cell.newImageView.isHidden = true
+//            configureAudioCell(cell, at: indexPath)
+//          
+//            
+//            return cell
+//            
+//        }else{
+            switch indexPath.section {
+                
+            case 0:
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "AssignmentsearchTVC", for: indexPath) as? AssignmentsearchTVC else {
+                    return UITableViewCell()
+                }
+                
+                let totalCount = filterhomeworkDetails?.count ?? 0
+                let submittedCount = filterhomeworkDetails?.filter { $0.status == "Completed" }.count ?? 0
+                let pendingCount = filterhomeworkDetails?.filter { $0.status == "Not Complete" }.count ?? 0
+                
+                let allStudentText = "All Students".translated()
+                let SubmittedText = "Submitted".translated()
+                let PendingText = "Pending".translated()
+                cell.allBtn.setTitle("\(allStudentText)(\(totalCount))", for: .normal)
+                cell.submitedBtn.setTitle("\(SubmittedText)(\(submittedCount))", for: .normal)
+                cell.pendingBtn.setTitle("\(PendingText)(\(pendingCount))", for: .normal)
+                cell.delegate = self
+                
+                return cell
+                
+            case 1:
+                
+                if filterhomeworkDetails?.isEmpty ?? true {
+                    let noDataCell = UITableViewCell(style: .default, reuseIdentifier: "NoDataCell")
                     noDataCell.selectionStyle = .none
                     noDataCell.backgroundColor = .clear
-
+                    
                     // Image
                     let imageView = UIImageView(image: UIImage(named: "noSearchData"))
                     imageView.contentMode = .scaleAspectFit
                     imageView.translatesAutoresizingMaskIntoConstraints = false
-
+                    
                     // Label
                     let label = UILabel()
                     label.text = "No Data Found!".translated()
@@ -615,17 +680,17 @@ extension PrivewVc:UITableViewDataSource, UITableViewDelegate, SearchDelegate{
                     label.textAlignment = .center
                     label.numberOfLines = 0
                     label.translatesAutoresizingMaskIntoConstraints = false
-
+                    
                     noDataCell.contentView.addSubview(imageView)
                     noDataCell.contentView.addSubview(label)
-
+                    
                     NSLayoutConstraint.activate([
                         // Image constraints
                         imageView.topAnchor.constraint(equalTo: noDataCell.contentView.topAnchor, constant: 40),
                         imageView.centerXAnchor.constraint(equalTo: noDataCell.contentView.centerXAnchor),
                         imageView.widthAnchor.constraint(equalToConstant: 150),
                         imageView.heightAnchor.constraint(equalToConstant: 150),
-
+                        
                         // Label constraints
                         label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
                         label.leadingAnchor.constraint(equalTo: noDataCell.contentView.leadingAnchor, constant: 20),
@@ -633,63 +698,76 @@ extension PrivewVc:UITableViewDataSource, UITableViewDelegate, SearchDelegate{
                         label.bottomAnchor.constraint(lessThanOrEqualTo: noDataCell.contentView.bottomAnchor, constant: -40)
                     ])
                     return noDataCell
-                    }
-            guard let student = filterhomeworkDetails?[indexPath.row],
-                  let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitedStudentTVC", for: indexPath) as? SubmitedStudentTVC else {
+                }
+                guard let student = filterhomeworkDetails?[indexPath.row],
+                      let cell = tableView.dequeueReusableCell(withIdentifier: "SubmitedStudentTVC", for: indexPath) as? SubmitedStudentTVC else {
+                    return UITableViewCell()
+                }
+                
+                cell.studentNameLbl.text = student.name?.isEmpty == false ? student.name : nil
+                if let name = student.name, !name.isEmpty {
+                    let firstLetter = String(name.prefix(1)).uppercased()
+                    cell.initialBtn.setTitle(firstLetter, for: .normal)
+                    cell.initialBtn.isHidden = false
+                } else {
+                    cell.initialBtn.isHidden = true
+                }
+                
+                // Roll No
+                if let roll = student.roll_no, !roll.isEmpty {
+                    cell.standerdScection?.text = "RoleNo : \(roll)"
+                    cell.standerdScection?.isHidden = false
+                } else {
+                    cell.standerdScection?.isHidden = true
+                }
+                
+                if let status = student.status, !status.isEmpty {
+                    
+                    let isNotSubmitted = status == "Not Complete"
+                    let statusText = isNotSubmitted ? "Pending" : "Submitted"
+                    let statusColor = isNotSubmitted ? UIColor.brown : UIColor.systemGreen
+                    
+                    cell.statusView.isHidden = false
+                    cell.statusView.backgroundColor = isNotSubmitted ? UIColor.systemGray5 : UIColor.systemGray6
+                    cell.statusView.layer.cornerRadius = 8
+                    
+                    let fullText = NSAttributedString(
+                        string: statusText,
+                        attributes: [
+                            .font: UIFont.systemFont(ofSize: 13, weight: .medium),
+                            .foregroundColor: statusColor
+                        ]
+                    )
+                    
+                    cell.statusView.setAttributedTitle(fullText, for: .normal)
+                    let iconConfig = UIImage.SymbolConfiguration(pointSize: 13, weight: .medium)
+                    let icon = UIImage(systemName: isNotSubmitted ? "arrowshape.down.circle" : "checkmark.circle.fill", withConfiguration: iconConfig)
+                    
+                    cell.statusView.setImage(icon, for: .normal)
+                    cell.statusView.tintColor = statusColor
+                    
+                } else {
+                    cell.statusView.isHidden = true
+                }
+                cell.submitDate.isHidden = true
+                
+                return cell
+                
+            default:
                 return UITableViewCell()
             }
-            
-            cell.studentNameLbl.text = student.name?.isEmpty == false ? student.name : nil
-            if let name = student.name, !name.isEmpty {
-                let firstLetter = String(name.prefix(1)).uppercased()
-                cell.initialBtn.setTitle(firstLetter, for: .normal)
-                cell.initialBtn.isHidden = false
-            } else {
-                cell.initialBtn.isHidden = true
+//        }
+    }
+    
+    func configureAudioCell(_ cell: CommunicationTVC, at indexPath: IndexPath) {
+        let file = attachmetList?[indexPath.item]
+        if let urlString = URL(string: file?.url ?? "") {
+            cell.waveView.setupAudioUrl(urlString,file?.playbackSeconds ?? 0)
+            cell.waveView.playDurationUpdate = { [weak self] currentTime in                self?.attachmetList?[indexPath.item].playbackSeconds = currentTime
             }
-
-            // Roll No
-            if let roll = student.roll_no, !roll.isEmpty {
-                cell.standerdScection?.text = "RoleNo : \(roll)"
-                cell.standerdScection?.isHidden = false
-            } else {
-                cell.standerdScection?.isHidden = true
-            }
-
-            if let status = student.status, !status.isEmpty {
-                
-                let isNotSubmitted = status == "Not Complete"
-                let statusText = isNotSubmitted ? "Pending" : "Submitted"
-                let statusColor = isNotSubmitted ? UIColor.brown : UIColor.systemGreen
-                
-                cell.statusView.isHidden = false
-                cell.statusView.backgroundColor = isNotSubmitted ? UIColor.systemGray5 : UIColor.systemGray6
-                cell.statusView.layer.cornerRadius = 8
-                
-                let fullText = NSAttributedString(
-                    string: statusText,
-                    attributes: [
-                        .font: UIFont.systemFont(ofSize: 13, weight: .medium),
-                        .foregroundColor: statusColor
-                    ]
-                )
-                
-                cell.statusView.setAttributedTitle(fullText, for: .normal)
-                let iconConfig = UIImage.SymbolConfiguration(pointSize: 13, weight: .medium)
-                let icon = UIImage(systemName: isNotSubmitted ? "arrowshape.down.circle" : "checkmark.circle.fill", withConfiguration: iconConfig)
-                
-                cell.statusView.setImage(icon, for: .normal)
-                cell.statusView.tintColor = statusColor
-                
-            } else {
-                cell.statusView.isHidden = true
-            }
-            cell.submitDate.isHidden = true
-            
-            return cell
-            
-        default:
-            return UITableViewCell()
+            cell.audioDelegate = self
+            cell.cellIndex = indexPath.item
+            cell.waveView.setParentCell(cell)
         }
     }
 
@@ -726,40 +804,21 @@ extension PrivewVc:UITableViewDataSource, UITableViewDelegate, SearchDelegate{
     }
 }
 class LeftAlignedFlowLayout: UICollectionViewFlowLayout {
-
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-
-        guard let collectionView = collectionView,
-              let attributes = super.layoutAttributesForElements(in: rect)?
-                .map({ $0.copy() as! UICollectionViewLayoutAttributes }) else {
-            return nil
-        }
-
-        let isRTL = collectionView.effectiveUserInterfaceLayoutDirection == .rightToLeft
-
+        let attributes = super.layoutAttributesForElements(in: rect)
         var leftMargin = sectionInset.left
-        var rightMargin = collectionView.bounds.width - sectionInset.right
-        var maxY: CGFloat = -1
-
-        for attribute in attributes where attribute.representedElementCategory == .cell {
-
-            if attribute.frame.origin.y >= maxY {
-                leftMargin = sectionInset.left
-                rightMargin = collectionView.bounds.width - sectionInset.right
+        var maxY: CGFloat = -1.0
+        
+        attributes?.forEach { layoutAttribute in
+            if layoutAttribute.representedElementCategory == .cell {
+                if layoutAttribute.frame.origin.y >= maxY {
+                    leftMargin = sectionInset.left
+                }
+                layoutAttribute.frame.origin.x = leftMargin
+                leftMargin += layoutAttribute.frame.width + minimumInteritemSpacing
+                maxY = max(layoutAttribute.frame.maxY, maxY)
             }
-
-            if isRTL {
-                rightMargin -= attribute.frame.width
-                attribute.frame.origin.x = rightMargin
-                rightMargin -= minimumInteritemSpacing
-            } else {
-                attribute.frame.origin.x = leftMargin
-                leftMargin += attribute.frame.width + minimumInteritemSpacing
-            }
-
-            maxY = max(attribute.frame.maxY, maxY)
         }
-
         return attributes
     }
 }

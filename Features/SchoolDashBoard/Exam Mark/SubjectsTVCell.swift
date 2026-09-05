@@ -6,7 +6,7 @@
 //
 
 protocol SubjectCellDelegate: AnyObject {
-    func didUpdateSplit(subjectIndex: Int, splitIndex: Int, split: SplitDetail)
+    func didUpdateSplit(subjectIndex: Int, splitIndex: Int, split: ActivityData)
 }
 
 import UIKit
@@ -21,15 +21,17 @@ class SubjectsTVCell: UITableViewCell {
     @IBOutlet weak var expandIconBtn: UIButton!
     @IBOutlet weak var tableview: ContentSizedTableView!
     @IBOutlet weak var tableviewHeight: NSLayoutConstraint!
+    @IBOutlet weak var separatorLineView: UIView!
     
     var isExpanded = false
     var onHeightChange: (() -> Void)?
     var subjectIndex:Int = 0
-    var splits: [SplitDetail] = []
+    var splits: [ActivityData] = []
     var isAI : Bool = false
     weak var delegate: SubjectCellDelegate?
     var selectionHandler: ((Int, Bool) -> Void)?
     var DropdownData : [String]?
+    var expandedRubricRows: Set<Int> = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -48,6 +50,8 @@ class SubjectsTVCell: UITableViewCell {
         subjectView.layer.borderColor = UIColor.clear.cgColor
         
         expandIconBtn.isUserInteractionEnabled = false
+        
+        separatorLineView.isHidden = true
         
         tableview.isScrollEnabled = false
         tableview.isHidden = true
@@ -108,11 +112,54 @@ class SubjectsTVCell: UITableViewCell {
                 subjectView.backgroundColor = .systemGreen.withAlphaComponent(0.05)
                 baseView.layer.borderColor = UIColor.systemGreen.cgColor
             }
-        }else{
-            statusLbl.text = String(format: ExamMarkUploadString.Activities_selected_count.translated(),selected,splits.count)
+        }else {
+            
+            let total = splits.count
+            let selected = splits.filter { activity in
+                let rubrics = activity.rubrics ?? []
+
+                if rubrics.isEmpty {
+                    return activity.isChecked == true
+                }
+
+                return rubrics.allSatisfy { $0.isChecked == true }
+            }.count
+
+            let text = selected > 0
+                ? "\(total) Activities   • \(selected) Selected"
+                : "\(total) Activities"
+
+            let attributed = NSMutableAttributedString(string: text)
+
+            if selected > 0,
+               let range = text.range(of: "• \(selected) Selected") {
+                let nsRange = NSRange(range, in: text)
+                attributed.addAttribute(
+                    .foregroundColor,
+                    value: UIColor.staffExamColour,
+                    range: nsRange
+                )
+            }
+
+            statusLbl.attributedText = attributed
+
+            // Update UI based on selection
+            if selected == 0 {
+                statusLbl.textColor = .darkGray
+                subjectView.backgroundColor = .systemBackground
+                baseView.layer.borderColor = UIColor.lightGray.cgColor
+
+            } else if selected < total {
+                statusLbl.textColor = .systemBrown
+                subjectView.backgroundColor = .systemYellow.withAlphaComponent(0.05)
+                baseView.layer.borderColor = UIColor.systemOrange.cgColor
+
+            } else {
+                statusLbl.textColor = .systemGreen
+                subjectView.backgroundColor = .systemGreen.withAlphaComponent(0.05)
+                baseView.layer.borderColor = UIColor.systemGreen.cgColor
+            }
         }
-        
-        statusLbl.isHidden = !(selected > 0)
     }
     
     func configureExpandState() {
@@ -120,6 +167,7 @@ class SubjectsTVCell: UITableViewCell {
             if isExpanded {
                 expandIconBtn.setImage(UIImage(systemName: "chevron.up"), for: .normal)
 
+                separatorLineView.isHidden = false
                 tableview.isHidden = false
                 tableview.reloadData()
 
@@ -131,6 +179,7 @@ class SubjectsTVCell: UITableViewCell {
             } else {
                 expandIconBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
 
+                separatorLineView.isHidden = true
                 tableview.isHidden = true
                 tableviewHeight.constant = 0
 
@@ -148,8 +197,21 @@ extension SubjectsTVCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ActivitiesTVCell, for: indexPath) as! ActivitiesTVCell
         
-        cell.configure(subjectIndex: subjectIndex, splitIndex: indexPath.row, split: splits[indexPath.row], isAi: isAI, items: DropdownData ?? [])
+        cell.configure(subjectIndex: subjectIndex, splitIndex: indexPath.row, split: splits[indexPath.row], isAi: isAI, items: DropdownData ?? [],isRubricsExpanded: expandedRubricRows.contains(indexPath.row))
         cell.delegate = self
+        
+        cell.onHeightChanged = { [weak self] in
+            guard let self = self else { return }
+
+            self.tableview.beginUpdates()
+            self.tableview.endUpdates()
+
+            DispatchQueue.main.async {
+                self.tableviewHeight.constant = self.tableview.contentSize.height
+                self.onHeightChange?()
+            }
+        }
+        
         return cell
     }
     
@@ -215,6 +277,82 @@ extension SubjectsTVCell: ActivityCellDelegate {
         )
 
         tableview.reloadRows(at: [IndexPath(row: splitIndex, section: 0)], with: .none)
+    }
+    
+    func didToggleActivityWithRubrics(
+        subjectIndex: Int,
+        splitIndex: Int,
+        rubrics: [RubricData],
+        isChecked: Bool
+    ) {
+
+        splits[splitIndex].isChecked = isChecked
+        splits[splitIndex].rubrics = rubrics
+        
+        updateStatusLabel()
+
+        delegate?.didUpdateSplit(
+            subjectIndex: subjectIndex,
+            splitIndex: splitIndex,
+            split: splits[splitIndex]
+        )
+
+        tableview.reloadRows(at: [IndexPath(row: splitIndex, section: 0)], with: .none)
+    }
+    
+    func didToggleRubric(subjectIndex: Int, splitIndex: Int, rubricIndex: Int, isChecked: Bool) {
+        
+        splits[splitIndex].rubrics?[rubricIndex].isChecked = isChecked
+        
+        let hasSelectedRubric = splits[splitIndex].rubrics?.contains { $0.isChecked == true } ?? false
+        
+        splits[splitIndex].isChecked = hasSelectedRubric
+        
+        updateStatusLabel()
+        
+        delegate?.didUpdateSplit(subjectIndex: subjectIndex, splitIndex: splitIndex, split: splits[splitIndex])
+    }
+    
+    // SubjectsTVCell
+    func didToggleRubricsExpansion(splitIndex: Int, expanded: Bool) {
+        if expanded { expandedRubricRows.insert(splitIndex) }
+        else { expandedRubricRows.remove(splitIndex) }
+    }
+    
+    func didUpdateAIRubric(
+        subjectIndex: Int,
+        splitIndex: Int,
+        rubricIndex: Int,
+        isChecked: Bool,
+        aiOption: String?
+    ) {
+        guard splitIndex < splits.count,
+              var rubrics = splits[splitIndex].rubrics,
+              rubricIndex < rubrics.count else { return }
+
+        rubrics[rubricIndex].isChecked = isChecked
+        rubrics[rubricIndex].selectedAIOption = aiOption
+        splits[splitIndex].rubrics = rubrics
+
+        // An activity with rubrics only counts as "mapped" once every rubric is mapped
+        let allMapped = rubrics.allSatisfy { $0.selectedAIOption != nil }
+        splits[splitIndex].isChecked = allMapped
+
+        updateStatusLabel()
+
+        delegate?.didUpdateSplit(
+            subjectIndex: subjectIndex,
+            splitIndex: splitIndex,
+            split: splits[splitIndex]
+        )
+
+        tableview.reloadRows(at: [IndexPath(row: splitIndex, section: 0)], with: .none)
+
+        DispatchQueue.main.async {
+            self.tableview.layoutIfNeeded()
+            self.tableviewHeight.constant = self.tableview.contentSize.height
+            self.onHeightChange?()
+        }
     }
 }
 
