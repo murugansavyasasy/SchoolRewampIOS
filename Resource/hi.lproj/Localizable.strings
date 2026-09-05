@@ -1498,6 +1498,27 @@
 "apply" = "लागू करें";
 "skip" = "छोड़ें";
 "lets_go" = "चलिए शुरू करें";
+
+//MARK: Exame Mark Any
+"lowest_exam" = "सबसे कम अंक वाली परीक्षा";
+"average_score" = "औसत अंक";
+"exams_taken" = "परीक्षाएँ दी गईं";
+"best_exam" = "सर्वश्रेष्ठ परीक्षा";
+
+"subject_wise_performance_breakdown" = "विषयवार प्रदर्शन विवरण";
+"total_performance_trend" = "समग्र प्रदर्शन प्रवृत्ति";
+"performance_percentage" = "प्रदर्शन प्रतिशत के रूप में दिखाया गया है (0 - 100%)";
+
+"class_set_analysis" = "कक्षा सेट विश्लेषण";
+"select_class_and_student" = "शुरू करने के लिए कक्षा और छात्र चुनें।";
+
+"select_standard_section" = "कक्षा और अनुभाग चुनें";
+"select_student" = "छात्र चुनें";
+
+"select_set" = "सेट चुनें →";
+"select_set_analysis" = "सेट विश्लेषण चुनें";
+"pick_set_to_view_analysis" = "विश्लेषण देखने के लिए एक सेट चुनें";
+"view_analysis" = "विश्लेषण देखें →";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";

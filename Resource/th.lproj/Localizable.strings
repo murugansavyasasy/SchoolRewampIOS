@@ -1493,7 +1493,26 @@
 "skip" = "ข้าม";
 "lets_go" = "เริ่มกันเลย";
 "todays_event" = "กิจกรรมของวันนี้";
+//MARK: Exame Mark Any
+"lowest_exam" = "คะแนนสอบต่ำสุด";
+"average_score" = "คะแนนเฉลี่ย";
+"exams_taken" = "จำนวนการสอบ";
+"best_exam" = "การสอบที่ดีที่สุด";
 
+"subject_wise_performance_breakdown" = "รายละเอียดผลการเรียนตามรายวิชา";
+"total_performance_trend" = "แนวโน้มผลการเรียนโดยรวม";
+"performance_percentage" = "แสดงผลการเรียนเป็นเปอร์เซ็นต์ (0 - 100%)";
+
+"class_set_analysis" = "การวิเคราะห์ชุดข้อมูลชั้นเรียน";
+"select_class_and_student" = "เลือกชั้นเรียนและนักเรียนเพื่อเริ่มต้น";
+
+"select_standard_section" = "เลือกระดับชั้นและห้องเรียน";
+"select_student" = "เลือกนักเรียน";
+
+"select_set" = "เลือกชุด →";
+"select_set_analysis" = "เลือกการวิเคราะห์ชุดข้อมูล";
+"pick_set_to_view_analysis" = "เลือกชุดเพื่อดูการวิเคราะห์";
+"view_analysis" = "ดูการวิเคราะห์ →";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";
