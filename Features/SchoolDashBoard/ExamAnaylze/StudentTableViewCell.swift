@@ -40,15 +40,15 @@ class StudentTableViewCell: UITableViewCell {
         nameLabel.text = student.name
         
         if student.roll_no?.isEmpty == nil {
-            rollNoLabel.text = "Roll No: --"
+            rollNoLabel.text = "Roll No: --".translated()
         } else {
-            rollNoLabel.text = "Roll No: \(student.roll_no ?? "")"
+            rollNoLabel.text = "\("Roll No:".translated()) \(student.roll_no ?? "")"
         }
         
         if student.admission_no?.isEmpty == nil {
-            adminNoLbl.text = "Admin No: --"
+            adminNoLbl.text = "Admin No: --".translated()
         } else {
-            adminNoLbl.text = "Admin No: \(student.admission_no ?? "")"
+            adminNoLbl.text = "\("Admin No:".translated()) \(student.admission_no ?? "")"
         }
         
         // Set initials

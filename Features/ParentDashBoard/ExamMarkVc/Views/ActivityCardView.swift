@@ -95,11 +95,11 @@ public class ActivityCardView: UIView {
             var rows: [SchedulingType] = []
 
             if let dateStr = details.formattedDate { rows.append(.date(dateStr))
-                dateLbl.text = "Date : \(dateStr)"
+                dateLbl.text = "\("Date :".translated()) \(dateStr)"
             }
             if let timeStr = details.formattedTimeRange { rows.append(.time(timeStr)) }
             if let sessionStr = details.session, !sessionStr.isEmpty { rows.append(.session(sessionStr))
-                sessionLbl.text = "Session :  \(sessionStr)"
+                sessionLbl.text = "\("Session :".translated())  \(sessionStr)"
             }
           
             if let venueStr = details.venue, !venueStr.isEmpty { rows.append(.venue(venueStr)) }

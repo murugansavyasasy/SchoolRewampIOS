@@ -76,6 +76,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         SearchStack.isHidden = true
         selectAllBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        selectAllBtn.setTitle("Select All".translated(), for: .normal)
         sendbtnName.setTitleFont(style: .body, size: FontSize.BodySize)
         let firstline = (StandardString ?? "") + "-" + (SectionString ?? "")
         BackBtn.configureAsBackButton(firstLine: firstline, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")

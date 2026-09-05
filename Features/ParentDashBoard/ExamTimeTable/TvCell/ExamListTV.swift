@@ -38,6 +38,7 @@ class ExamListTV: UITableViewCell {
         TimeBtn.setTitleFont(style: .body, size: FontSize.BodySize)
      
         viewDeatils.layer.cornerRadius = 10
+        viewDeatils.setTitle("View Schedule".translated(), for: .normal)
        
 //        let tap = UITapGestureRecognizer(target: self, action: #selector(AlarmAct))
 //        reminder.addGestureRecognizer(tap)

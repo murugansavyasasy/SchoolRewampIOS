@@ -11,13 +11,13 @@ public enum SchedulingType {
     
     var title: String {
         switch self {
-        case .date: return "DATE"
-        case .time: return "TIME"
-        case .session: return "SESSION"
-        case .venue: return "VENUE"
-        case .syllabus: return "SYLLABUS"
-        case .TotalMarks: return "TOTAL MARKS"
-        case .PassMark: return "PASS MARKS"
+        case .date: return "DATE".translated()
+        case .time: return "TIME".translated()
+        case .session: return "SESSION".translated()
+        case .venue: return "VENUE".translated()
+        case .syllabus: return "SYLLABUS".translated()
+        case .TotalMarks: return "TOTAL MARKS".translated()
+        case .PassMark: return "PASS MARKS".translated()
         }
     }
     

@@ -1446,6 +1446,81 @@
 "view_analysis" = "View Analysis →";
 "Edit Lesson Plan" = "Edit Lesson Plan";
 "Create Lesson Plan" = "Create Lesson Plan";
+"LOWEST EXAM" = "LOWEST EXAM";
+
+"AVERAGE SCORE" = "AVERAGE SCORE";
+
+"EXAMS TAKEN" = "EXAMS TAKEN";
+
+"BEST EXAM" = "BEST EXAM";
+
+"Subject-wise Performance Breakdown" = "Subject-wise Performance Breakdown";
+
+"Total Performance Trend" = "Total Performance Trend";
+
+"Performance shown as percentage (0 - 100%)" = "Performance shown as percentage (0 - 100%)";
+
+"Class set analysis" = "Class set analysis";
+
+"Select the class and student to get started." = "Select the class and student to get started.";
+
+"Select Standard & Section" = "Select Standard & Section";
+
+"Select Student" = "Select Student";
+
+"Select set →" = "Select set →";
+
+"Select set analysis" = "Select set analysis";
+
+"Pick a set to view analysis" = "Pick a set to view analysis";
+
+"View Analysis →" = "View Analysis →";
+"Recording (Already added)" = "Recording (Already added)";
+"Audio Recording" = "Audio Recording";
+"Audio File (Already added)" = "Audio File (Already added)";
+"Audio File" = "Audio File";
+"View Mark Analysis ❭" = "View Mark Analysis ❭";
+"Select set  →" = "Select set  →";
+"Roll No: --" = "Roll No: --";
+"Roll No:" = "Roll No:";
+"Admin No: --" = "Admin No: --";
+"Admin No:" = "Admin No:";
+"Change" = "Change";
+"View Analysis →" = "View Analysis →";
+"← Back" = "← Back";
+"Published Marks" = "Published Marks";
+"View Schedule" = "View Schedule";
+"Total marks :" = "Total marks :";
+"Date :" = "Date :";
+"Session :" = "Session :";
+"DATE" = "DATE";
+"TIME" = "TIME";
+"SESSION" = "SESSION";
+"VENUE" = "VENUE";
+"SYLLABUS" = "SYLLABUS";
+"TOTAL MARKS" = "TOTAL MARKS";
+"PASS MARKS" = "PASS MARKS";
+"VIEW" = "VIEW";
+"Mark Analysis" = "Mark Analysis";
+"MARKS" = "MARKS";
+"Minimum Mark : " = "Minimum Mark : ";
+"Privacy Policy" = "Privacy Policy";
+"About the App" = "About the App";
+"How to Use?" = "How to Use?";
+"Contact Us" = "Contact Us";
+"Notifications" = "Notifications";
+"Report Bug" = "Report Bug";
+"PRODUCT UPDATES" = "PRODUCT UPDATES";
+"WHAT'S NEW?" = "WHAT'S NEW?";
+"Explore" = "Explore";
+"Next" = "Next";
+"Previous" = "Previous";
+"Terms & Conditions" = "Terms & Conditions";
+"Standards" = "Standards";
+"Groups" = "Groups";
+"Section/Students" = "Section/Students";
+"Staff" = "Staff";
+"Entire School" = "Entire School";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";

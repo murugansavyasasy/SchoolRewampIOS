@@ -58,11 +58,12 @@ class selectExamVc: UIViewController ,UITableViewDataSource, UITableViewDelegate
     
     private func setupUI() {
         view.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.97, alpha: 1.0)
-//        topBackBtnName.setTitle(MenuStringFile.selectedMenuName, for: .normal)
+        topBackBtnName.setTitle("Class set analysis".translated(), for: .normal)
         // 1. Configure Header Card
         selectedStudentAvatarView.layer.cornerRadius = 20
         selectedStudentAvatarView.clipsToBounds = true
         
+        changeButton.setTitle("Change".translated(), for: .normal)
         changeButton.layer.cornerRadius = 15
         changeButton.backgroundColor = UIColor(red: 0.94, green: 0.95, blue: 0.96, alpha: 1.0)
         changeButton.setTitleColor(UIColor(red: 0.35, green: 0.45, blue: 0.56, alpha: 1.0), for: .normal)
@@ -70,8 +71,8 @@ class selectExamVc: UIViewController ,UITableViewDataSource, UITableViewDelegate
         if let student = student {
             selectedStudentNameLabel.text = student.name
             let rollText = student.roll_no?.isEmpty == nil ? "--" : "\(student.roll_no ?? "")"
-            rollnumberLbl.text = "Roll No: \(rollText)"
-            admissinNoLbl.text = "Admin No: \(student.admission_no ?? "--")"
+            rollnumberLbl.text = "\("Roll No:".translated()) \(rollText)"
+            admissinNoLbl.text = "\("Admin No:".translated()) \(student.admission_no ?? "--")"
             standardAndSec.text = classAndSectionText
             selectedStudentInitialsLabel.text = getInitials(from: student.name ?? "")
             selectedStudentAvatarView.backgroundColor = getAvatarColor(from: student.name ?? "")
@@ -86,6 +87,7 @@ class selectExamVc: UIViewController ,UITableViewDataSource, UITableViewDelegate
         examsTableView.backgroundColor = .clear
         
         // 3. Configure Footer Area
+        backButton.setTitle("← Back".translated(), for: .normal)
         backButton.layer.cornerRadius = 10
         backButton.layer.borderWidth = 1
         backButton.layer.borderColor = UIColor(red: 0.88, green: 0.90, blue: 0.93, alpha: 1.0).cgColor
@@ -93,6 +95,7 @@ class selectExamVc: UIViewController ,UITableViewDataSource, UITableViewDelegate
         backButton.setTitleColor(UIColor(red: 0.05, green: 0.14, blue: 0.23, alpha: 1.0), for: .normal)
         viewAnalysisButton.layer.cornerRadius = 10
         viewAnalysisButton.setTitleColor(.white, for: .normal)
+        viewAnalysisButton.setTitle("View Analysis →".translated(), for: .normal)
         
         updateButtonState()
     }

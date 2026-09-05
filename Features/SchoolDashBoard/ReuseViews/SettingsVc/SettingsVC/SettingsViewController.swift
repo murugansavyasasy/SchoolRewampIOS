@@ -124,7 +124,7 @@ class SettingsViewController: UIViewController, BaktoHome, ViewAttachments {
         backBtn.isHidden = hideBack
         Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         section = sections
-        SettingspageHeading.text = MenuTapbar.shared.Settings
+        SettingspageHeading.text = MenuTapbar.shared.Settings.translated()
         SettingspageHeading.setFont(style: .body, size: 20)
         
         for imageCategory in Images {
@@ -271,7 +271,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         case menuname.privacyPolicy.translated():
             let vc = TermsAndCondVC()
             vc.modalPresentationStyle = .overFullScreen
-            vc.tittleString = "Privacy Policy"
+            vc.tittleString = "Privacy Policy".translated()
             if Bundle.main.bundleIdentifier == CommonStringFile.Base_bundle_id {
                 vc.url = UserDefaultFileManager.get_globalSelection()?.privacy_policy
             }else{
@@ -283,14 +283,14 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             let vc = TermsAndCondVC()
             vc.modalPresentationStyle = .overFullScreen
             vc.isSetCorner = false
-            vc.tittleString = "About the App"
+            vc.tittleString = "About the App".translated()
             vc.url = UserDefaultFileManager.get_globalSelection()?.about_the_app
             present(vc, animated: true)
         case menuname.howToUse.translated():
             let vc = TermsAndCondVC()
             vc.modalPresentationStyle = .overFullScreen
             vc.isSetCorner = false
-            vc.tittleString = "How to Use?"
+            vc.tittleString = "How to Use?".translated()
             vc.url = UserDefaultFileManager.get_globalSelection()?.how_to_use
             present(vc, animated: true)
         case menuname.notifications.translated():
@@ -337,7 +337,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         case menuname.termsAndConditions.translated():
             let vc = TermsAndCondVC()
             vc.modalPresentationStyle = .overFullScreen
-            vc.tittleString = "Terms & Conditions"
+            vc.tittleString = "Terms & Conditions".translated()
             if Bundle.main.bundleIdentifier == CommonStringFile.Base_bundle_id {
                 vc.url = "https://schoolchimes.com/vs_web/terms_conditions/"
             }else{

@@ -52,7 +52,7 @@ class CreateClassTestVc: UIViewController {
     @IBOutlet public weak var line4To5: UIView!
     @IBOutlet weak var noteLabel: UILabel!
     @IBOutlet weak var viewHistoryBtn: UIButton!
-    
+    @IBOutlet weak var viewMarkAnalisisBtn: UIButton!
     
     private let acidamicdrops = DropDown()
     private var accadimYr: [String] = []
@@ -136,6 +136,7 @@ class CreateClassTestVc: UIViewController {
             "view_created_test".translated(),
             for: .normal
         )
+        viewMarkAnalisisBtn.setTitle("View Mark Analysis ❭".translated(), for: .normal)
         // Customize action buttons
         backButton.layer.cornerRadius = 16
         backButton.layer.borderWidth = 1.0

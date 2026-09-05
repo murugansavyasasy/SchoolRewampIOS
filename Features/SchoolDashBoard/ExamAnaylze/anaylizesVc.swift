@@ -63,7 +63,7 @@ class anaylizesVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         studentInfoView.isHidden = loginType == 2 ? true : false
-//        topBackBtnName.setTitle(MenuStringFile.selectedMenuName, for: .normal)
+        topBackBtnName.setTitle("Class set analysis".translated(), for: .normal)
         setupLineChartScroll()
         setupBarTapCallback()
         getAnaylisExam(setId: SetId)
@@ -212,8 +212,8 @@ class anaylizesVc: UIViewController {
         StudentLbl.text = student.name
 
         let rollText = (student.roll_no?.isEmpty ?? true) ? "--" : student.roll_no!
-        rollNumberLbl.text = "Roll No: \(rollText)"
-        admissinNumberLbl.text = "Admin No: \(student.admission_no ?? "--")"
+        rollNumberLbl.text = "\("Roll No:".translated()) \(rollText)"
+        admissinNumberLbl.text = "\("Admin No:".translated()) \(student.admission_no ?? "--")"
         standardSecLbl.text = classAndSectionText
         selectedStudentInitialsLabel.text = getInitials(from: student.name ?? "")
         selectedStudentAvatarView.backgroundColor = getAvatarColor(from: student.name ?? "")
@@ -251,6 +251,7 @@ class anaylizesVc: UIViewController {
         selectedStudentAvatarView.layer.cornerRadius = 20
         selectedStudentAvatarView.clipsToBounds = true
         
+        changeButton.setTitle("Change".translated(), for: .normal)
         changeButton.layer.cornerRadius = 15
         changeButton.backgroundColor = UIColor(red: 0.94, green: 0.95, blue: 0.96, alpha: 1.0)
         changeButton.setTitleColor(UIColor(red: 0.35, green: 0.45, blue: 0.56, alpha: 1.0), for: .normal)

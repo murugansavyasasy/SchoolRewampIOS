@@ -49,6 +49,7 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate, MFMailCom
     
     // MARK: - UI Setup
     func setupUI() {
+        BackBtn.setTitle("Report Bug".translated(), for: .normal)
         BugsTextview.delegate = self
         BugsTextview.layer.cornerRadius = 8
         BugsTextview.layer.borderWidth = 0.5

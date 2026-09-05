@@ -125,7 +125,7 @@ class CountryListVC: UIViewController {
     
     private func openTermsVC() {
         let vc = TermsAndCondVC()
-        vc.tittleString = "Terms & Conditions"
+        vc.tittleString = "Terms & Conditions".translated()
         let urlString = NSLocalizedString("TERMS_URL", comment: "")
         vc.url = urlString
         vc.modalPresentationStyle = .fullScreen
