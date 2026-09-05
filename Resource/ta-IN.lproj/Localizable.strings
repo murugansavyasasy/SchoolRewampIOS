@@ -1502,7 +1502,27 @@
 "apply" = "பயன்படுத்து";
 "skip" = "தவிர்";
 "lets_go" = "தொடங்கலாம்";
+//MARK: Exame Mark Any
 
+"lowest_exam" = "குறைந்தபட்ச தேர்வு";
+"average_score" = "சராசரி மதிப்பெண்";
+"exams_taken" = "எழுதப்பட்ட தேர்வுகள்";
+"best_exam" = "சிறந்த தேர்வு";
+
+"subject_wise_performance_breakdown" = "பாட வாரியான செயல்திறன் விவரம்";
+"total_performance_trend" = "மொத்த செயல்திறன் போக்கு";
+"performance_percentage" = "செயல்திறன் சதவீதமாக காட்டப்படுகிறது (0 - 100%)";
+
+"class_set_analysis" = "வகுப்பு தொகுப்பு பகுப்பாய்வு";
+"select_class_and_student" = "தொடங்க வகுப்பு மற்றும் மாணவரைத் தேர்ந்தெடுக்கவும்.";
+
+"select_standard_section" = "வகுப்பு மற்றும் பிரிவைத் தேர்ந்தெடுக்கவும்";
+"select_student" = "மாணவரைத் தேர்ந்தெடுக்கவும்";
+
+"select_set" = "தொகுப்பைத் தேர்ந்தெடுக்கவும் →";
+"select_set_analysis" = "தொகுப்பு பகுப்பாய்வைத் தேர்ந்தெடுக்கவும்";
+"pick_set_to_view_analysis" = "பகுப்பாய்வைப் பார்க்க ஒரு தொகுப்பைத் தேர்ந்தெடுக்கவும்";
+"view_analysis" = "பகுப்பாய்வைப் பார்க்கவும் →";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";

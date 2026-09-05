@@ -1435,6 +1435,27 @@
 "Drop Bus" = "حافلة الإنزال";
 "Pickup Bus" = "حافلة الاستلام";
 "Track route in real time" = "تتبع المسار في الوقت الفعلي";
+
+//MARK: Exame Mark Any
+"lowest_exam" = "أقل اختبار";
+"average_score" = "متوسط الدرجة";
+"exams_taken" = "الاختبارات التي تم إجراؤها";
+"best_exam" = "أفضل اختبار";
+
+"subject_wise_performance_breakdown" = "تحليل الأداء حسب المادة";
+"total_performance_trend" = "اتجاه الأداء الإجمالي";
+"performance_percentage" = "يتم عرض الأداء كنسبة مئوية (0 - 100٪)";
+
+"class_set_analysis" = "تحليل مجموعة الفصل";
+"select_class_and_student" = "اختر الفصل والطالب للبدء.";
+
+"select_standard_section" = "اختر الصف والقسم";
+"select_student" = "اختر الطالب";
+
+"select_set" = "اختر المجموعة ←";
+"select_set_analysis" = "اختر تحليل المجموعة";
+"pick_set_to_view_analysis" = "اختر مجموعة لعرض التحليل";
+"view_analysis" = "عرض التحليل ←";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";

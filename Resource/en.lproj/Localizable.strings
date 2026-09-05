@@ -1424,7 +1424,26 @@
 "skip" = "Skip";
 "lets_go" = "Let's Go";
 "todays_event" = "Today's Event";
+//MARK: Exame Mark Any
+"lowest_exam" = "LOWEST EXAM";
+"average_score" = "AVERAGE SCORE";
+"exams_taken" = "EXAMS TAKEN";
+"best_exam" = "BEST EXAM";
 
+"subject_wise_performance_breakdown" = "Subject-wise Performance Breakdown";
+"total_performance_trend" = "Total Performance Trend";
+"performance_percentage" = "Performance shown as percentage (0 - 100%)";
+
+"class_set_analysis" = "Class set analysis";
+"select_class_and_student" = "Select the class and student to get started.";
+
+"select_standard_section" = "Select Standard & Section";
+"select_student" = "Select Student";
+
+"select_set" = "Select set →";
+"select_set_analysis" = "Select set analysis";
+"pick_set_to_view_analysis" = "Pick a set to view analysis";
+"view_analysis" = "View Analysis →";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";

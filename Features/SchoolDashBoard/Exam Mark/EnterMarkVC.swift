@@ -52,14 +52,13 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
             setupColumnsFromGetMarksResponse()
         } else {
             Get_Marks(parameters: payload ?? [:])
+            
             titleLbl.configureAsBackTitle(
                 firstLine: MenuStringFile.selectedMenuName,
                 secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
             )
         }
-        noteLbl.text = uploadTest
-            ? "note_ab_na".translated()
-            : "note_ab".translated()
+        noteLbl.text =  "Note: Use \("AB") for absent students and \("NA") for marks that are not applicable."
         setupHeaderCollectionView()
         setupTableView()
         setupKeyboardObservers()

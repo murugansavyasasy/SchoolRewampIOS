@@ -4699,6 +4699,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		186E62522FEA59E700BAF454 /* Classtest */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Classtest; sourceTree = "<group>"; };
+		186F4AD5304BE22700AC7E58 /* ExamAnaylze */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ExamAnaylze; sourceTree = "<group>"; };
 		842FE3CB304B0078006C5D12 /* Cells */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Cells; sourceTree = "<group>"; };
 		842FE3CD304B0078006C5D12 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
 		842FE3D4304B0078006C5D12 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
@@ -6430,6 +6431,7 @@
 		84A5BE812C19776600E32496 /* SchoolDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186E62522FEA59E700BAF454 /* Classtest */,
 				185CC0FE2F75473A002640CE /* StaffWiseAttendace */,
 				1841DE902F56F8B700B88801 /* HostelAttendace */,
@@ -7159,6 +7161,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				186E62522FEA59E700BAF454 /* Classtest */,
+				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				842FE3CB304B0078006C5D12 /* Cells */,
 				842FE3CD304B0078006C5D12 /* Models */,
 				842FE3D4304B0078006C5D12 /* Views */,
@@ -7200,6 +7203,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				186E62522FEA59E700BAF454 /* Classtest */,
+				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				842FE3CB304B0078006C5D12 /* Cells */,
 				842FE3CD304B0078006C5D12 /* Models */,
 				842FE3D4304B0078006C5D12 /* Views */,
@@ -7241,6 +7245,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				186E62522FEA59E700BAF454 /* Classtest */,
+				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				842FE3CB304B0078006C5D12 /* Cells */,
 				842FE3CD304B0078006C5D12 /* Models */,
 				842FE3D4304B0078006C5D12 /* Views */,
@@ -7300,6 +7305,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				186E62522FEA59E700BAF454 /* Classtest */,
+				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				842FE3CB304B0078006C5D12 /* Cells */,
 				842FE3CD304B0078006C5D12 /* Models */,
 				842FE3D4304B0078006C5D12 /* Views */,
