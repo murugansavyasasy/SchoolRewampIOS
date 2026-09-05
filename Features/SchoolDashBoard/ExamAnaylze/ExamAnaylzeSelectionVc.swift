@@ -56,7 +56,7 @@ class ExamAnaylzeSelectionVc: UIViewController,UITableViewDataSource, UITableVie
     
     private func setupUI() {
         view.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.97, alpha: 1.0)
-//        menuNameTitleLbl.text =  MenuStringFile.selectedMenuName
+        menuNameTitleLbl.text = "Class set analysis".translated()
         dropdownView.layer.cornerRadius = 8
         dropdownView.layer.borderWidth = 1
         dropdownView.layer.borderColor = UIColor(red: 0.11, green: 0.44, blue: 0.95, alpha: 1.0).cgColor
@@ -79,6 +79,7 @@ class ExamAnaylzeSelectionVc: UIViewController,UITableViewDataSource, UITableVie
         viewAnalysisButton.layer.cornerRadius = 10
         viewAnalysisButton.setTitleColor(.white, for: .normal)
         viewAnalysisButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        viewAnalysisButton.setTitle("Select set  →".translated(), for: .normal)
     }
     
     private func setupBadge(_ badgeView: UIView) {

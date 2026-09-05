@@ -28,6 +28,7 @@ class SetTableViewCell: UITableViewCell {
         cardView.layer.shadowRadius = 4
         cardView.layer.shadowOpacity = 0.02
         cardView.layer.masksToBounds = false
+        selectedBadgeLabel.text = "Selected".translated()
     }
     
     func configure(with set: analysisData, isSelected: Bool) {

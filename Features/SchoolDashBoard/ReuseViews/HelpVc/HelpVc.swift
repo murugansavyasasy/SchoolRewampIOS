@@ -21,7 +21,7 @@ class HelpVc: UIViewController, WKNavigationDelegate {
         super.viewDidLoad()
         backBtn.isHidden = hideBack
         webview.navigationDelegate = self
-        HelppageHeader.text = MenuTapbar.shared.Help
+        HelppageHeader.text = MenuTapbar.shared.Help.translated()
         HelppageHeader.setFont(style: .header, size: FontSize.HeaderSize+3)
         
         webkitLoading()

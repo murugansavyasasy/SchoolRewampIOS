@@ -30,7 +30,7 @@ public class SubjectCardTableViewCell: UITableViewCell {
         self.currentSubject = subject
         
         lblSubjectName.text = subject.subjectName?.uppercased()
-         lblTotalMarks.text = "Total marks : \(subject.total_mark ?? "")" //
+         lblTotalMarks.text = "\("Total marks :".translated()) \(subject.total_mark ?? "")" //
         
         // Clear old nested activity cards
         activitiesStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }

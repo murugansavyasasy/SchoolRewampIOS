@@ -1437,25 +1437,67 @@
 "Track route in real time" = "تتبع المسار في الوقت الفعلي";
 
 //MARK: Exame Mark Any
-"lowest_exam" = "أقل اختبار";
-"average_score" = "متوسط الدرجة";
-"exams_taken" = "الاختبارات التي تم إجراؤها";
-"best_exam" = "أفضل اختبار";
-
-"subject_wise_performance_breakdown" = "تحليل الأداء حسب المادة";
-"total_performance_trend" = "اتجاه الأداء الإجمالي";
-"performance_percentage" = "يتم عرض الأداء كنسبة مئوية (0 - 100٪)";
-
-"class_set_analysis" = "تحليل مجموعة الفصل";
-"select_class_and_student" = "اختر الفصل والطالب للبدء.";
-
-"select_standard_section" = "اختر الصف والقسم";
-"select_student" = "اختر الطالب";
-
-"select_set" = "اختر المجموعة ←";
-"select_set_analysis" = "اختر تحليل المجموعة";
-"pick_set_to_view_analysis" = "اختر مجموعة لعرض التحليل";
-"view_analysis" = "عرض التحليل ←";
+"LOWEST EXAM" = "أقل اختبار";
+"AVERAGE SCORE" = "متوسط الدرجة";
+"EXAMS TAKEN" = "الاختبارات التي تم إجراؤها";
+"BEST EXAM" = "أفضل اختبار";
+"Subject-wise Performance Breakdown" = "تحليل الأداء حسب المادة";
+"Total Performance Trend" = "اتجاه الأداء الإجمالي";
+"Performance shown as percentage (0 - 100%)" = "يتم عرض الأداء كنسبة مئوية (0 - 100٪)";
+"Class set analysis" = "تحليل مجموعة الفصل";
+"Select the class and student to get started." = "اختر الفصل والطالب للبدء.";
+"Select Standard & Section" = "اختر الصف والقسم";
+"Select Student" = "اختر الطالب";
+"Select set →" = "اختر المجموعة ←";
+"Select set analysis" = "اختر تحليل المجموعة";
+"Pick a set to view analysis" = "اختر مجموعة لعرض التحليل";
+"View Analysis →" = "عرض التحليل ←";
+"Recording (Already added)" = "التسجيل (تمت إضافته بالفعل)";
+"Audio Recording" = "تسجيل صوتي";
+"Audio File (Already added)" = "الملف الصوتي (تمت إضافته بالفعل)";
+"Audio File" = "ملف صوتي";
+"View Mark Analysis ❭" = "عرض تحليل الدرجات ❭";
+"Select set  →" = "اختر المجموعة  →";
+"Roll No: --" = "رقم الجلوس: --";
+"Roll No:" = "رقم الجلوس:";
+"Admin No: --" = "الرقم الإداري: --";
+"Admin No:" = "الرقم الإداري:";
+"Change" = "تغيير";
+"View Analysis →" = "عرض التحليل →";
+"← Back" = "← رجوع";
+"Published Marks" = "الدرجات المنشورة";
+"View Schedule" = "عرض الجدول";
+"Total marks :" = "إجمالي الدرجات :";
+"Date :" = "التاريخ :";
+"Session :" = "الجلسة :";
+"DATE" = "التاريخ";
+"TIME" = "الوقت";
+"SESSION" = "الجلسة";
+"VENUE" = "المكان";
+"SYLLABUS" = "المنهج الدراسي";
+"TOTAL MARKS" = "إجمالي الدرجات";
+"PASS MARKS" = "درجة النجاح";
+"VIEW" = "عرض";
+"Mark Analysis" = "تحليل الدرجات";
+"MARKS" = "الدرجات";
+"Minimum Mark : " = "الحد الأدنى للدرجة : ";
+"Privacy Policy" = "سياسة الخصوصية";
+"About the App" = "حول التطبيق";
+"How to Use?" = "كيفية الاستخدام؟";
+"Contact Us" = "اتصل بنا";
+"Notifications" = "الإشعارات";
+"Report Bug" = "الإبلاغ عن خطأ";
+"PRODUCT UPDATES" = "تحديثات المنتج";
+"WHAT'S NEW?" = "ما الجديد؟";
+"Explore" = "استكشف";
+"Next" = "التالي";
+"Previous" = "السابق";
+"Terms & Conditions" = "الشروط والأحكام";
+"Standards" = "الصفوف الدراسية";
+"Groups" = "المجموعات";
+"Section/Students" = "الشُعب/الطلاب";
+"Staff" = "الموظفون";
+"Entire School" = "المدرسة بأكملها";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";

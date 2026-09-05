@@ -1500,25 +1500,67 @@
 "lets_go" = "चलिए शुरू करें";
 
 //MARK: Exame Mark Any
-"lowest_exam" = "सबसे कम अंक वाली परीक्षा";
-"average_score" = "औसत अंक";
-"exams_taken" = "परीक्षाएँ दी गईं";
-"best_exam" = "सर्वश्रेष्ठ परीक्षा";
-
-"subject_wise_performance_breakdown" = "विषयवार प्रदर्शन विवरण";
-"total_performance_trend" = "समग्र प्रदर्शन प्रवृत्ति";
-"performance_percentage" = "प्रदर्शन प्रतिशत के रूप में दिखाया गया है (0 - 100%)";
-
-"class_set_analysis" = "कक्षा सेट विश्लेषण";
-"select_class_and_student" = "शुरू करने के लिए कक्षा और छात्र चुनें।";
-
-"select_standard_section" = "कक्षा और अनुभाग चुनें";
-"select_student" = "छात्र चुनें";
-
-"select_set" = "सेट चुनें →";
-"select_set_analysis" = "सेट विश्लेषण चुनें";
-"pick_set_to_view_analysis" = "विश्लेषण देखने के लिए एक सेट चुनें";
-"view_analysis" = "विश्लेषण देखें →";
+"LOWEST EXAM" = "सबसे कम अंक वाली परीक्षा";
+"AVERAGE SCORE" = "औसत अंक";
+"EXAMS TAKEN" = "परीक्षाएँ दी गईं";
+"BEST EXAM" = "सर्वश्रेष्ठ परीक्षा";
+"Subject-wise Performance Breakdown" = "विषयवार प्रदर्शन विवरण";
+"Total Performance Trend" = "समग्र प्रदर्शन प्रवृत्ति";
+"Performance shown as percentage (0 - 100%)" = "प्रदर्शन प्रतिशत के रूप में दिखाया गया है (0 - 100%)";
+"Class set analysis" = "कक्षा सेट विश्लेषण";
+"Select the class and student to get started." = "शुरू करने के लिए कक्षा और छात्र चुनें।";
+"Select Standard & Section" = "कक्षा और अनुभाग चुनें";
+"Select Student" = "छात्र चुनें";
+"Select set →" = "सेट चुनें →";
+"Select set analysis" = "सेट विश्लेषण चुनें";
+"Pick a set to view analysis" = "विश्लेषण देखने के लिए एक सेट चुनें";
+"View Analysis →" = "विश्लेषण देखें →";
+"Recording (Already added)" = "रिकॉर्डिंग (पहले से जोड़ी गई)";
+"Audio Recording" = "ऑडियो रिकॉर्डिंग";
+"Audio File (Already added)" = "ऑडियो फ़ाइल (पहले से जोड़ी गई)";
+"Audio File" = "ऑडियो फ़ाइल";
+"View Mark Analysis ❭" = "अंक विश्लेषण देखें ❭";
+"Select set  →" = "सेट चुनें  →";
+"Roll No: --" = "रोल नंबर: --";
+"Roll No:" = "रोल नंबर:";
+"Admin No: --" = "प्रशासन संख्या: --";
+"Admin No:" = "प्रशासन संख्या:";
+"Change" = "बदलें";
+"View Analysis →" = "विश्लेषण देखें →";
+"← Back" = "← वापस";
+"Published Marks" = "प्रकाशित अंक";
+"View Schedule" = "समय-सारणी देखें";
+"Total marks :" = "कुल अंक :";
+"Date :" = "तिथि :";
+"Session :" = "सत्र :";
+"DATE" = "तिथि";
+"TIME" = "समय";
+"SESSION" = "सत्र";
+"VENUE" = "स्थान";
+"SYLLABUS" = "पाठ्यक्रम";
+"TOTAL MARKS" = "कुल अंक";
+"PASS MARKS" = "उत्तीर्ण अंक";
+"VIEW" = "देखें";
+"Mark Analysis" = "अंक विश्लेषण";
+"MARKS" = "अंक";
+"Minimum Mark : " = "न्यूनतम अंक : ";
+"Privacy Policy" = "गोपनीयता नीति";
+"About the App" = "ऐप के बारे में";
+"How to Use?" = "कैसे उपयोग करें?";
+"Contact Us" = "हमसे संपर्क करें";
+"Notifications" = "सूचनाएँ";
+"Report Bug" = "बग की रिपोर्ट करें";
+"PRODUCT UPDATES" = "उत्पाद अपडेट";
+"WHAT'S NEW?" = "नया क्या है?";
+"Explore" = "जानें";
+"Next" = "आगे";
+"Previous" = "पिछला";
+"Terms & Conditions" = "नियम एवं शर्तें";
+"Standards" = "कक्षाएँ";
+"Groups" = "समूह";
+"Section/Students" = "अनुभाग/छात्र";
+"Staff" = "कर्मचारी";
+"Entire School" = "पूरा विद्यालय";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";

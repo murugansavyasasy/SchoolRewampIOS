@@ -243,8 +243,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         DetailsLbl.setRequiredText(CommonStringFile.Description)
         wordsCountLbl.setFont(style: .body, size: FontSize.BodySize)
         titleCountLbl.setFont(style: .body, size: FontSize.BodySize)
-//        uploadattachmentLbl.setFont(style: .title, size: FontSize.TitleSize)
-//        setAttributedText(for: uploadattachmentLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
+        uploadattachmentLbl.setFont(style: .title, size: FontSize.TitleSize)
+        setAttributedText(for: uploadattachmentLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
         TitleTxtfield.placeholder  = CommonStringFile.Title.translated()
     }
     
@@ -741,17 +741,17 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                     $0.fileType.lowercased() == CommonStringFile.audio.lowercased()
                 }
                 // Camera option
-                let cameraAction = UIAlertAction(title: CommonStringFile.Camera, style: .default) { [self] _ in
+                let cameraAction = UIAlertAction(title: CommonStringFile.Camera.translated(), style: .default) { [self] _ in
                     openCamera()
                 }
                 alertController.addAction(cameraAction)
                 // Gallery option
-                let galleryAction = UIAlertAction(title: CommonStringFile.Photos, style: .default) { [self] _ in
+                let galleryAction = UIAlertAction(title: CommonStringFile.Photos.translated(), style: .default) { [self] _ in
                     selectImages()//
                 }
                 alertController.addAction(galleryAction)
                 
-                let pdfAction = UIAlertAction(title: CommonStringFile.Document, style: .default) { [self] _ in
+                let pdfAction = UIAlertAction(title: CommonStringFile.Document.translated(), style: .default) { [self] _ in
                     selectDocuments()
                 }
                 alertController.addAction(pdfAction)
@@ -781,7 +781,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
 //                }
                 //   VIDEO option
                 let VideoAction = UIAlertAction(title:
-                                                    CommonStringFile.Video, style: .default) { [self] _ in
+                                                    CommonStringFile.Video.translated(), style: .default) { [self] _ in
                     
                     let totalRemaining = Filecount.SelectImageAndDocumetCount - attachments.count
                     let videoCount = attachments.filter { $0.fileType.lowercased() == video }.count
@@ -801,7 +801,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                 alertController.addAction(VideoAction)
                 // Cancel action
                 let cancelAction = UIAlertAction(
-                    title: CommonStringFile.Cancel,
+                    title: CommonStringFile.Cancel.translated(),
                     style: .cancel,
                     handler: nil
                 )

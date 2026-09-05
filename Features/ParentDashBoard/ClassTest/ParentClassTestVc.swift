@@ -343,14 +343,14 @@ final class AnalysisButton: UIButton {
 
         // VIEW Label
         viewLabel.translatesAutoresizingMaskIntoConstraints = false
-        viewLabel.text = "VIEW"
+        viewLabel.text = "VIEW".translated()
         viewLabel.font = .systemFont(ofSize: 9, weight: .semibold)
         viewLabel.textColor = .white
         addSubview(viewLabel)
 
         // Title
         titleLabelView.translatesAutoresizingMaskIntoConstraints = false
-        titleLabelView.text = "Mark Analysis"
+        titleLabelView.text = "Mark Analysis".translated()
         titleLabelView.font = .systemFont(ofSize: 13, weight: .bold)
         titleLabelView.textColor = .white
         addSubview(titleLabelView)

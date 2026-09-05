@@ -23,7 +23,7 @@ class ContactUsVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        BackBtn.setTitle(MenuTapbar.shared.Contact_Us, for: .normal)
+        BackBtn.setTitle(MenuTapbar.shared.Contact_Us.translated(), for: .normal)
         BackBtn.setTitleFont(style: .primary, size:FontSize.HeaderSize)
         
         tv.dataSource = self
