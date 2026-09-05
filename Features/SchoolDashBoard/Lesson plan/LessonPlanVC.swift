@@ -41,8 +41,8 @@ class LessonPlanVC: UIViewController {
         searchBar.searchTextField.layer.masksToBounds = true
         searchBar.delegate = self
         
-        let menuName = MenuStringFile.LessonPlan.translated()
-        MenuNameLbl.configureAsBackTitle(firstLine: menuName.translated(), secondLine: staffDetails?.school_name?.translated() ?? "")
+        let menuName = MenuStringFile.selectedMenuName
+        MenuNameLbl.configureAsBackTitle(firstLine: menuName, secondLine: staffDetails?.school_name?.translated() ?? "")
         searchBar.isHidden = true
         MyClassBtn.setTitle(LessonplanStringFile.myClasses.translated(), for: .normal)
         AllClassBtn.setTitle(LessonplanStringFile.allClasses.translated(), for: .normal)

@@ -120,7 +120,7 @@ struct ReceiverMenuItems {
 }
 
 struct AlertstringFile{
-    
+    static let Enter_description = "Enter description"
     static let title = "Confirm Action"
     static let Are_you_sure_want_to_submit = "Are you sure want to submit ?"
     static let toapprovethisleaverequest   = "Are you sure you want to approve this leave request?"

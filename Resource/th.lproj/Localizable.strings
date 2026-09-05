@@ -1513,8 +1513,11 @@
 "select_set_analysis" = "เลือกการวิเคราะห์ชุดข้อมูล";
 "pick_set_to_view_analysis" = "เลือกชุดเพื่อดูการวิเคราะห์";
 "view_analysis" = "ดูการวิเคราะห์ →";
+"Edit Lesson Plan" = "แก้ไขแผนการสอน";
+"Create Lesson Plan" = "สร้างแผนการสอน";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";
 "TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
 "APP_STORE_ID" = "6758079127";
+"School_Id" = "0";

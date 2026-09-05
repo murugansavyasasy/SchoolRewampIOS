@@ -48,7 +48,7 @@ class TimetableVC: UIViewController {
         let Name = studentDetails?.name ?? ""
         let Standard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
         studentNameLbl.configureAsBackTitle(firstLine: Name, secondLine: Standard)
-        
+        MenuTitleLbl.text = MenuStringFile.selectedMenuName
         // Collection view setup
         cv.register(UINib(nibName: CellConfingName.WeekDaysNameCollectionViewCell, bundle: nil),
                     forCellWithReuseIdentifier: CellConfingName.WeekDaysNameCollectionViewCell)

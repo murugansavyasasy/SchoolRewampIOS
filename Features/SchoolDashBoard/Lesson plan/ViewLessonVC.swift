@@ -48,8 +48,9 @@ class ViewLessonVC: UIViewController, SelectedId {
     var LesonPlanReport : LessonPlanStaffReport?
     override func viewDidLoad() {
         super.viewDidLoad()
+        let menuName = MenuStringFile.selectedMenuName
         menuNameLbl.configureAsBackTitle(
-            firstLine: MenuStringFile.LessonPlan,
+            firstLine: menuName,
             secondLine: staffDetails?.school_name ?? ""
         )
         creteBtn.setShadow(cornerRadius: creteBtn.frame.width/2)

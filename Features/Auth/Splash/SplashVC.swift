@@ -612,13 +612,15 @@ class SplashVC: UIViewController, ViewAttachments, DismissDelegate {
     }
     
     private func versionCheck() {
+        let school_id = NSLocalizedString("School_Id", comment: "")
         ServiceUrl.baseurl = UserDefaultFileManager.getCountryDetails()?.base_url ?? ""
         ServiceUrl.Reporting_baseurl = UserDefaultFileManager.getCountryDetails()?.reporting_url ?? ""
         let params: [String: Any] = [
             COMMON_PARAMETER.device_type: API_PARAMS_HOTCODE.device_type,
             COMMON_PARAMETER.version_code: API_PARAMS_HOTCODE.Version_Code,
             COMMON_PARAMETER.country_id: countryId ?? 0,
-            COMMON_PARAMETER.mobile_number: UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? ""]
+            COMMON_PARAMETER.mobile_number: UserDefaultFileManager.getLoginCredentials()?.mobile_number ?? "",
+            COMMON_PARAMETER.school_id: school_id ]
         
         APIService.shared.makeApi(
             url: ServiceUrl.version_check,

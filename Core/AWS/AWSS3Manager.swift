@@ -254,6 +254,10 @@ class AWSUploadManager {
             Bucket = BucketName.schoolchimes_activities
             Path = "\(Awsmenu.homework)/\(school_id)/\(today_date)"
             
+        case Menu_id.Raiseconcern:
+            Bucket = BucketName.schoolchimes_communication
+            Path = "\(Awsmenu.files)/\(school_id)/\(today_date)"
+            
         case Menu_id.isAssaignment:
             Bucket = BucketName.schoolchimes_activities
             Path = "\(Awsmenu.assignment)/\(school_id)/\(today_date)"

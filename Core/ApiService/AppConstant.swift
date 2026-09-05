@@ -234,6 +234,14 @@ struct ServiceUrl{
     static let exam_api_exam_test_analysis_sets_list = "exam/api/exam-test/analysis-sets-list"
     
     static let exam_api_exam_test_student_analysis = "exam/api/exam-test/student-analysis"
+    static let admin_api_parent_concern_get_concerns = "admin/api/parent-concern/get-concerns"
+    static let admin_api_parent_concern_get_concern_types = "admin/api/parent-concern/get-concern-types"
+    
+    static let admin_api_parent_concern_raise_concern = "admin/api/parent-concern/raise-concern"
+    
+    static let admin_api_parent_concern_delete = "admin/api/parent-concern/delete"
+    static let admin_api_parent_concern_action_taken = "admin/api/parent-concern/action-taken"
+   
 
 }
 
@@ -291,6 +299,7 @@ struct Menu_id{
     static let  Alert = 36
     static let leaveReq = 18
     static let Upload_Marks = 41
+    static let Raiseconcern = 207
 }
 
 struct TargetTypes{
@@ -595,6 +604,5 @@ func formattedDateStatus(from selectedDateString: String, isTimeNeeded: Bool = f
     ? "\(dateFormatter.string(from: date)), \(timeFormatter.string(from: date))"
     : dateFormatter.string(from: date)
 }
-
 
 

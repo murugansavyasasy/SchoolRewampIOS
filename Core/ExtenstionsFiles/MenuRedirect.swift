@@ -447,10 +447,25 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewContorller.present(vc, animated: true)
     }
+    
+    func resiverconcernListVc(from viewContorller: UIViewController){
+        let vc = commonConcernVc(nibName: nil, bundle: nil)
+        vc.page1 = addConcernVc()
+        vc.page2 = concernListVc()
+        vc.modalPresentationStyle = .fullScreen
+        viewContorller.present(vc, animated: true)
+        
+       
+    }
+    func senderconcernListVc(from viewContorller: UIViewController){
+        let vc = concernListVc()
+        vc.loginAsType = 1
+        vc.modalPresentationStyle = .fullScreen
+        viewContorller.present(vc, animated: true)
+    }
 }
 
 struct MenuImage{
     let id:Int
     let name:String
 }
-

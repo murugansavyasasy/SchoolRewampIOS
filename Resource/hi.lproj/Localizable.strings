@@ -1519,9 +1519,12 @@
 "select_set_analysis" = "सेट विश्लेषण चुनें";
 "pick_set_to_view_analysis" = "विश्लेषण देखने के लिए एक सेट चुनें";
 "view_analysis" = "विश्लेषण देखें →";
+"Edit Lesson Plan" = "पाठ योजना संपादित करें";
+"Create Lesson Plan" = "पाठ योजना बनाएं";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";
 "TERMS_URL" = "https://schoolchimes.com/vs_web/terms_conditions/";
 "APP_STORE_ID" = "6758079127";
+"School_Id" = "0";
 

@@ -48,6 +48,7 @@ class ReciverNoticeBoardVC: UIViewController, UISearchBarDelegate {
     private func setupView() {
         tabView.layer.borderWidth = 0.5
         tabView.layer.borderColor = UIColor.lightGray.cgColor
+        titleLbl.text = MenuStringFile.selectedMenuName
         nameLbl.setFont(style: .title, size: FontSize.TitleSize)
         let name = childDetails?.name ?? ""
         let standard = "\(childDetails?.standard_name ?? "") - \(childDetails?.section_name ?? "")"

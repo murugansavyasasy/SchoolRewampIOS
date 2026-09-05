@@ -2514,7 +2514,7 @@ struct UserDetailItem: Codable {
     var is_editable: Bool?
     var optional: Bool?
     var options: [String]?
-    var file_path: [DocumentFile]?
+    var file_path: [DocumentFile]? 
     var node: String?
     
 }
@@ -2847,7 +2847,7 @@ struct StaffExamData: Codable {
 //    let id: String?
 //    let name: String?
 //    let max_mark: String?
-//
+//    
 //    // UI STATE
 //    var isChecked: Bool? = false
 //    var selectedAIOption: String? = nil
@@ -3901,3 +3901,15 @@ public struct AnalysisTrendPoint: Codable {
         case percentage
     }
 }
+
+
+struct concernRespSuc : Codable {
+    let status: Bool?
+    let message: String?
+    let data: [concernData]?
+    
+    }
+struct  concernData : Codable{
+        let id: String?
+        let name: String?
+    }

@@ -132,7 +132,7 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         super.viewDidLoad()
         setupInitialConfiguration()
         setupPlaceholderIfNeeded()
-        titleLbl.text = MenuStringFile.selectedMenuName
+        tittleLbl.text = MenuStringFile.selectedMenuName
         dateView.isUserInteractionEnabled = true
         uploadAttachmentView.imageCollectionview.backgroundColor = .clear
         // Add tap gesture

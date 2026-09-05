@@ -81,7 +81,7 @@ class LSRWVC: UIViewController, FilterDelegate, SelectedId {
         lsrwTable.separatorStyle = .none
         lsrwTable.showsVerticalScrollIndicator = false
 
-        BackBtn.configureAsBackButton(firstLine: "LSRW", secondLine: "Listening, Speaking, Reading, Writing")
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.selectedMenuName, secondLine: "Listening, Speaking, Reading, Writing")
     }
     func deleteEvent(id: String?) {
         guard let targetID = id, !targetID.isEmpty else {

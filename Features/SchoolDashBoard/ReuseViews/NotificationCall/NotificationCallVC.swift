@@ -148,7 +148,7 @@ class NotificationCallVC: UIViewController {
         if noti.school_logo != "" {
             logoImg.sd_setImage(with: URL(string:noti.school_logo), placeholderImage: UIImage(named: "AppIcon"))
         }
-        
+        logoImg.layer.cornerRadius = logoImg.frame.height/2
        
     }
     
