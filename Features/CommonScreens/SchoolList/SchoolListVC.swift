@@ -69,6 +69,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         schoolBtn.layer.cornerRadius = 8
         chooseUrSchoolLbl.setFont(style: .header, size: 13)
         headerSchoolLbl.setFont(style: .header, size: 16)
+        headerSchoolLbl.text = "School Selection".translated()
         if come_fromLogin{
             ViewAnimator.hideFade(segmentName)
             ViewAnimator.hideFade(chooseDefaultLbl)

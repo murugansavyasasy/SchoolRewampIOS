@@ -1519,6 +1519,8 @@
 "Section/Students" = "الشُعب/الطلاب";
 "Staff" = "الموظفون";
 "Entire School" = "المدرسة بأكملها";
+"View Created Test List" = "عرض قائمة الاختبارات المُنشأة";
+"School Selection" = "اختيار المدرسة";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";

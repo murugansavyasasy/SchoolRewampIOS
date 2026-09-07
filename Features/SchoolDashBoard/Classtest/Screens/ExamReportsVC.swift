@@ -74,7 +74,7 @@ class ExamReportsVC: UIViewController, Datepicker {
        
     }
     private func setupUI() {
-        tittleLbl.text = "View Created Test List"
+        tittleLbl.text = "View Created Test List".translated()
         dateLbl.text = "Select a Date".translated()
         todayLbl.text = Today.translated()
         acodomicdropDown.setShadow()

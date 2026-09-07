@@ -612,11 +612,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         case 205:
                 MenuRedirect.buslist(from: self, loginasType: loginAsType ?? 0, is_ownbustraking: childDetails?.gps_type == "dhundhoo" ? false : true)
         case 206 :
-            
             MenuRedirect.resiverClassTestVc(from: self)
-            
-            //        case 208 :
-            //            MenuRedirect.resivereExamAnalizeVc(from: self)
             
         default:
             let alert = UIAlertController(
