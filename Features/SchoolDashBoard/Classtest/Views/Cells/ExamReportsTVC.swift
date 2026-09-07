@@ -84,8 +84,8 @@ class ExamReportsTVC: UITableViewCell {
         self.sections = sections
 
         tittleLbl.text = examName
-        sendbyLbl.text = "Sent by: \(sentBy)"
-        standerdLbl.text = "Standard: \(sections.first?.class_name ?? "")"
+        sendbyLbl.text = "\("Sent by".translated()): \(sentBy)"
+        standerdLbl.text = "\("Standard".translated()): \(sections.first?.class_name ?? "")"
 
         iconBtn.backgroundColor = iconTint.withAlphaComponent(0.15)
         iconBtn.setImage(UIImage(systemName: "doc.text.fill"), for: .normal)
@@ -103,7 +103,7 @@ class ExamReportsTVC: UITableViewCell {
     private func makeChipButton(title: String, tint: UIColor) -> UIButton {
         var config = UIButton.Configuration.plain()
 
-        config.title = "Section \(title)"
+        config.title = "\("Section".translated()) \(title)"
         config.baseForegroundColor = tint
         config.baseBackgroundColor = .gray.withAlphaComponent(0.05)
         config.cornerStyle = .capsule

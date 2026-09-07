@@ -46,7 +46,7 @@ class NotificationViewController: UIViewController {
         //BackBtn.setTitle(MenuTapbar.shared.Notifications, for: .normal)
        
 //        BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
-        menuNameLbl.text = MenuTapbar.shared.Notifications
+        menuNameLbl.text = MenuTapbar.shared.Notifications.translated()
         menuNameLbl.setFont(style: .header, size: FontSize.HeaderSize)
         
         

@@ -17,6 +17,7 @@ class COMMON_PARAMETER{
     static var old_password = "old_password"
     static var member_type = "member_type"
     static var secure_id = "secure_id"
+    static var school_id = "school_id"
 }
 
 class mobileNumber{

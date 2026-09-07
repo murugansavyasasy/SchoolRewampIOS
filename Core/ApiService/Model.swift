@@ -3901,3 +3901,15 @@ public struct AnalysisTrendPoint: Codable {
         case percentage
     }
 }
+
+
+struct concernRespSuc : Codable {
+    let status: Bool?
+    let message: String?
+    let data: [concernData]?
+    
+    }
+struct  concernData : Codable{
+        let id: String?
+        let name: String?
+    }

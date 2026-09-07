@@ -205,7 +205,7 @@ class OutpassRequestsViewController: UIViewController, UITableViewDataSource, UI
         if section == 0 {
             iconView.image = UIImage(systemName: "clock")
             iconView.tintColor = UIColor(red: 0.94, green: 0.55, blue: 0.03, alpha: 1.0)
-            titleLabel.text = "Pending Approval (\(count))"
+            titleLabel.text = "\("Pending Approval".translated()) (\(count))"
             titleLabel.textColor = UIColor(red: 0.94, green: 0.55, blue: 0.03, alpha: 1.0)
         } else if section == 1 {
             iconView.image = UIImage(systemName: "checkmark.circle")

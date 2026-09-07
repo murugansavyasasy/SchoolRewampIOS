@@ -213,13 +213,13 @@ struct ServiceUrl{
     static let hostel_attendance_hostel_info = "stud-attd/api/hostel-attendance/hostel-info"
     static let comm_api_leave_req_for_staff_delete = "comm/api/leave-req-for-staff/delete"
     static let comm_api_leave_req_for_staff_update = "comm/api/leave-req-for-staff/update"
-    static let hostel_attendance_update_status = "stud-attd/api/hostel-attendance/update-status" 
+    static let hostel_attendance_update_status = "stud-attd/api/hostel-attendance/update-status"
     
     static let online_payment_details_for_student = "dashboard/api/reconcile/online-payment-details-for-student"
     static let update_unreceived_for_student = "dashboard/api/reconcile/update-unreceived-payment-status-for-student"
     static let get_student_route_list = "transport/api/get-student-route-list"
     static let get_vehicle_live_tracking_details = "transport/api/get-vehicle-live-tracking-details"
-    static let get_latest_geo_location = "transport/api/get-latest-geo-location" 
+    static let get_latest_geo_location = "transport/api/get-latest-geo-location"
     static let exam_section_wise_subjects = "exam/api/exam-test/section-wise-subjects"
     static let exam_create_class_test = "exam/api/exam-test/create-class-test"
     static let exam_test_mark_details = "exam/api/exam-test/mark-details"
@@ -230,10 +230,18 @@ struct ServiceUrl{
     static let exam_view_marks_for_student = "exam/api/exam-test/view-marks-for-student"
     static let exam_api_exam_test_delete_class_test_subject = "exam/api/exam-test/delete-class-test-subject"
     static let exam_api_exam_test_delete = "exam/api/exam-test/delete"
-    static let exam_api_exam_test_publish_marks = "exam/api/exam-test/publish-marks" 
+    static let exam_api_exam_test_publish_marks = "exam/api/exam-test/publish-marks"
     static let exam_api_exam_test_analysis_sets_list = "exam/api/exam-test/analysis-sets-list"
     
     static let exam_api_exam_test_student_analysis = "exam/api/exam-test/student-analysis"
+    static let admin_api_parent_concern_get_concerns = "admin/api/parent-concern/get-concerns"
+    static let admin_api_parent_concern_get_concern_types = "admin/api/parent-concern/get-concern-types"
+    
+    static let admin_api_parent_concern_raise_concern = "admin/api/parent-concern/raise-concern"
+    
+    static let admin_api_parent_concern_delete = "admin/api/parent-concern/delete"
+    static let admin_api_parent_concern_action_taken = "admin/api/parent-concern/action-taken"
+   
 
 }
 
@@ -291,6 +299,7 @@ struct Menu_id{
     static let  Alert = 36
     static let leaveReq = 18
     static let Upload_Marks = 41
+    static let Raiseconcern = 207
 }
 
 struct TargetTypes{

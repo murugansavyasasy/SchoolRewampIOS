@@ -326,7 +326,7 @@ extension ImageShowVc: WKNavigationDelegate {
 //
 //        decisionHandler(.allow)
 //    }
-//    
+//
 //    func openPDFManually(url: URL) {
 //
 //        URLSession.shared.downloadTask(with: url) { localURL, response, error in

@@ -41,13 +41,13 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="jYR-5L-yae">
                                                         <rect key="frame" x="28" y="0.0" width="161.33333333333334" height="30"/>
                                                         <subviews>
-                                                            <label opaque="NO" contentMode="left" text="Tamil (Sec A) is filled" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3BX-l3-ZJ2" userLabel="BannerTitleLabel">
+                                                            <label opaque="NO" contentMode="left" text="Tamil (Sec A) is filled" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3BX-l3-ZJ2" userLabel="BannerTitleLabel">
                                                                 <rect key="frame" x="0.0" y="0.0" width="161.33333333333334" height="15.666666666666666"/>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                                 <color key="textColor" red="0.70588235290000001" green="0.44705882349999998" blue="0.08235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" contentMode="left" text="Fills all tests from that subject into this section" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sjl-wK-jwH" userLabel="BannerSubtitleLabel">
+                                                            <label opaque="NO" contentMode="left" text="Fills all tests from that subject into this section" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sjl-wK-jwH" userLabel="BannerSubtitleLabel">
                                                                 <rect key="frame" x="0.0" y="17.666666666666664" width="161.33333333333334" height="12.333333333333336"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                 <color key="textColor" red="0.70588235290000001" green="0.44705882349999998" blue="0.08235294118" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
@@ -123,13 +123,13 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="c6R-oM-d8H">
                                                         <rect key="frame" x="52" y="3" width="94" height="34.333333333333336"/>
                                                         <subviews>
-                                                            <label opaque="NO" contentMode="left" text="MATHS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V6y-x2-qq9" userLabel="TitleLabel">
+                                                            <label opaque="NO" contentMode="left" text="MATHS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V6y-x2-qq9" userLabel="TitleLabel">
                                                                 <rect key="frame" x="0.0" y="0.0" width="94" height="18"/>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                                 <color key="textColor" red="0.1019607843" green="0.10980392160000001" blue="0.16078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" contentMode="left" text="Section C" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ehw-fG-7nq" userLabel="SubtitleLabel">
+                                                            <label opaque="NO" contentMode="left" text="Section C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ehw-fG-7nq" userLabel="SubtitleLabel">
                                                                 <rect key="frame" x="0.0" y="20" width="94" height="14.333333333333336"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                 <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -276,7 +276,7 @@
         <image name="chevron.forward" catalog="system" width="97" height="128"/>
         <image name="exclamationmark.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="PrimeryColor">
-            <color red="0.49799999594688416" green="0.10199999809265137" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

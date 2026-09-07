@@ -132,7 +132,7 @@ class SenderLSRWVC: UIViewController, DeleteImge, SelectNotice, UITextFieldDeleg
         super.viewDidLoad()
         setupInitialConfiguration()
         setupPlaceholderIfNeeded()
-        titleLbl.text = MenuStringFile.selectedMenuName
+        tittleLbl.text = MenuStringFile.selectedMenuName
         dateView.isUserInteractionEnabled = true
         uploadAttachmentView.imageCollectionview.backgroundColor = .clear
         // Add tap gesture
@@ -722,7 +722,7 @@ extension SenderLSRWVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
         if collectionView == typeSectionCV {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TaskTypeCell.identifier, for: indexPath) as! TaskTypeCell
             let (title, icon) = taskTypes[indexPath.item]
-            cell.configure(title: title, icon: icon, isSelected: indexPath.item == selectedTaskIndex)
+            cell.configure(title: title.translated(), icon: icon, isSelected: indexPath.item == selectedTaskIndex)
             return cell
         } else {
             if indexPath.section == 0 {
@@ -781,7 +781,7 @@ extension SenderLSRWVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
 //        let file = audioFiles[indexPath.item]
 //        if let urlString = file.imageURL {
 //            let url: URL
-//            
+//
 //            if urlString.hasPrefix("http://") || urlString.hasPrefix("https://") {
 //                guard let remoteURL = URL(string: urlString) else { return }
 //                url = remoteURL
@@ -789,15 +789,15 @@ extension SenderLSRWVC: UICollectionViewDelegate, UICollectionViewDataSource, UI
 //                let cleanPath = urlString
 //                    .replacingOccurrences(of: "file://", with: "")
 //                    .removingPercentEncoding ?? urlString
-//                
+//
 //                url = URL(fileURLWithPath: cleanPath)
 //            }
-//            
+//
 //            cell.audioURL = url
 //            cell.TrashIcon.isHidden = false
 //            cell.TrashIcon.isUserInteractionEnabled = true
 //        }
-//        
+//
 //        cell.audioDelegate = self
 //        cell.cellIndex = indexPath.item
 //        cell.TrashIcon.tag = indexPath.item

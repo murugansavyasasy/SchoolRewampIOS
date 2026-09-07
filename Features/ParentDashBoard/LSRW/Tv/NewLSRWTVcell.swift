@@ -17,6 +17,7 @@ class NewLSRWTVcell: UITableViewCell {
     @IBOutlet weak var startBtn: UIButton!
     @IBOutlet weak var starticon: UIButton!
     @IBOutlet weak var cellView: UIView!
+    @IBOutlet weak var newImg: UIImageView!
     @IBOutlet weak var iconBtn: UIButton!
     
     override func awakeFromNib() {
@@ -36,6 +37,10 @@ class NewLSRWTVcell: UITableViewCell {
         // Icon button
         iconBtn.tintColor = .white
         iconBtn.layer.cornerRadius = 8
+        let isRTL = UIView.userInterfaceLayoutDirection(for: contentView.semanticContentAttribute) == .rightToLeft
+        
+        newImg.transform = isRTL ? CGAffineTransform(rotationAngle: -.pi / 2) :.identity
+        
     }
     
     func configure(with task: LSRWTask) {

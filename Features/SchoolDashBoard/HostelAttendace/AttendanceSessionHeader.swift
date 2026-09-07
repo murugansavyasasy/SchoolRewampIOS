@@ -98,7 +98,7 @@ class AttendanceSessionHeader: UITableViewHeaderFooterView {
             sessionTitleLabel.text = "\(session.sectionName.capitalized)"
         }
      
-        studentsSubtitleLabel.text = "\(session.students.count) students"
+        studentsSubtitleLabel.text = "\(session.students.count) \("students".translated())"
         
         // Calculate percentage natively
         let t = Double(session.students.count)
@@ -115,7 +115,7 @@ class AttendanceSessionHeader: UITableViewHeaderFooterView {
         absentLabel.text = session.absentStudent
         
         if isExpanded {
-            toggleButton.setTitle("Hide Students", for: .normal)
+            toggleButton.setTitle("Hide Students".translated(), for: .normal)
             toggleButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
             toggleButton.tintColor = .darkGray
             toggleButton.layer.borderColor = UIColor.darkGray.cgColor
@@ -123,7 +123,7 @@ class AttendanceSessionHeader: UITableViewHeaderFooterView {
             // Alter corner radius depending on expansion
             cardView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         } else {
-            toggleButton.setTitle("View Students", for: .normal)
+            toggleButton.setTitle("View Students".translated(), for: .normal)
             toggleButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
             toggleButton.tintColor = .darkGray
             toggleButton.layer.borderColor = UIColor.darkGray.cgColor

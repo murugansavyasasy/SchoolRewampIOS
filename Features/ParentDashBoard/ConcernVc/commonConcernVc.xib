@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="commonConcernVc" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+            <connections>
+                <outlet property="BackBtn" destination="57E-ct-rcb" id="Eiv-ra-Wb8"/>
+                <outlet property="presentView" destination="vML-j9-21o" id="Tmn-oB-No0"/>
+                <outlet property="racieConcernBtn" destination="D3T-Hh-fb5" id="sjI-iU-ShW"/>
+                <outlet property="racieConcernLbl" destination="2w6-jj-deY" id="jQO-Un-heh"/>
+                <outlet property="raciedConcernLbl" destination="mqW-Dv-cmW" id="Fvf-gy-NFG"/>
+                <outlet property="raciedConcernListBtn" destination="8LX-PG-d80" id="ph4-IE-Pl7"/>
+                <outlet property="toolbarTitle" destination="j4a-7A-eTQ" id="vOc-gz-bOt"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EHB-56-r3a" customClass="BottomRoundedView" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="169"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JBU-0Z-Emc">
+                            <rect key="frame" x="5" y="125.66666666666667" width="383" height="23.333333333333329"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="57E-ct-rcb">
+                                    <rect key="frame" x="0.0" y="0.0" width="35" height="23.333333333333332"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="35" id="Eec-K3-04o"/>
+                                    </constraints>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="chevron.backward" catalog="system">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="back:" destination="-1" eventType="touchUpInside" id="4Xl-r5-fZL"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j4a-7A-eTQ">
+                                    <rect key="frame" x="35" y="1.6666666666666572" width="348" height="20.333333333333332"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" name="BackGroundClr"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="JBU-0Z-Emc" secondAttribute="trailing" constant="5" id="8Jv-1J-OUW"/>
+                        <constraint firstAttribute="bottom" secondItem="JBU-0Z-Emc" secondAttribute="bottom" constant="20" id="BzZ-X1-rgg"/>
+                        <constraint firstItem="JBU-0Z-Emc" firstAttribute="leading" secondItem="EHB-56-r3a" secondAttribute="leading" constant="5" id="lCQ-jN-ghu"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="svh-X2-dGO">
+                    <rect key="frame" x="0.0" y="169" width="393" height="615"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vML-j9-21o">
+                            <rect key="frame" x="0.0" y="42" width="393" height="573"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="QtK-9s-gpd">
+                            <rect key="frame" x="8" y="10" width="377" height="32"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="W4E-y4-KSZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="188.66666666666666" height="32"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D3T-Hh-fb5" customClass="LocalizationButton" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="188.66666666666666" height="30"/>
+                                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" title="Raise Concern">
+                                                <color key="titleColor" name="BackGroundClr"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="segment:" destination="-1" eventType="touchUpInside" id="ZLY-VX-kOH"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2w6-jj-deY">
+                                            <rect key="frame" x="0.0" y="30" width="188.66666666666666" height="2"/>
+                                            <color key="backgroundColor" name="BackGroundClr"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="2" id="OfF-8Z-7bp"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="CDW-Xd-HtN">
+                                    <rect key="frame" x="188.66666666666663" y="0.0" width="188.33333333333337" height="32"/>
+                                    <subviews>
+                                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8LX-PG-d80" customClass="LocalizationButton" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="188.33333333333334" height="30"/>
+                                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" title="Raised Concern List"/>
+                                            <connections>
+                                                <action selector="segment:" destination="-1" eventType="touchUpInside" id="aQ4-SO-xcf"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqW-Dv-cmW">
+                                            <rect key="frame" x="0.0" y="30" width="188.33333333333334" height="2"/>
+                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="2" id="dMD-hZ-w8L"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="32" id="oYf-6o-H8i"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="vML-j9-21o" secondAttribute="bottom" id="1nY-xu-WoS"/>
+                        <constraint firstItem="QtK-9s-gpd" firstAttribute="top" secondItem="svh-X2-dGO" secondAttribute="top" constant="10" id="6qn-Nl-XKu"/>
+                        <constraint firstItem="QtK-9s-gpd" firstAttribute="leading" secondItem="svh-X2-dGO" secondAttribute="leading" constant="8" id="FSD-k6-fC4"/>
+                        <constraint firstItem="vML-j9-21o" firstAttribute="top" secondItem="QtK-9s-gpd" secondAttribute="bottom" id="FSG-1f-2Sq"/>
+                        <constraint firstAttribute="trailing" secondItem="QtK-9s-gpd" secondAttribute="trailing" constant="8" id="GHt-94-0ZA"/>
+                        <constraint firstItem="vML-j9-21o" firstAttribute="leading" secondItem="svh-X2-dGO" secondAttribute="leading" id="PF1-y4-kns"/>
+                        <constraint firstAttribute="trailing" secondItem="vML-j9-21o" secondAttribute="trailing" id="Uzi-yG-4Sb"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" red="0.94901960784313721" green="0.95686274509803915" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="EHB-56-r3a" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="2UN-RY-S9M"/>
+                <constraint firstItem="svh-X2-dGO" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4C1-fI-uLy"/>
+                <constraint firstItem="EHB-56-r3a" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="AYy-4e-TuF"/>
+                <constraint firstItem="EHB-56-r3a" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="D0G-oF-ouu"/>
+                <constraint firstItem="EHB-56-r3a" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="K6a-wU-GrP"/>
+                <constraint firstItem="EHB-56-r3a" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Lth-d7-b8r"/>
+                <constraint firstItem="EHB-56-r3a" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="P4p-2D-7U8"/>
+                <constraint firstItem="svh-X2-dGO" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="XS2-Ue-QJH"/>
+                <constraint firstItem="svh-X2-dGO" firstAttribute="top" secondItem="EHB-56-r3a" secondAttribute="bottom" id="cFw-eF-Y6U"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="svh-X2-dGO" secondAttribute="bottom" id="dUi-N8-4O5"/>
+                <constraint firstItem="JBU-0Z-Emc" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="7.6666666666666856" id="iH9-JA-0Gm"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="154"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
+        <namedColor name="BackGroundClr">
+            <color red="0.41999998688697815" green="0.70999997854232788" blue="0.3449999988079071" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

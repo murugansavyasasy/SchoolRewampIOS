@@ -100,7 +100,7 @@ class LSRWSubmissionVC: UIViewController {
         let hasData = !(filterReport?.isEmpty ?? true)
         noDataImg.isHidden = hasData
         noDataLbl.isHidden = hasData
-        noDataLbl.text = "No Data found."
+        noDataLbl.text = "No Data Found!".translated()
     }
 }
 

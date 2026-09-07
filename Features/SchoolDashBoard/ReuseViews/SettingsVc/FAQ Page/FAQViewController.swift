@@ -20,7 +20,7 @@ class FAQViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        BackBtn.setTitle(MenuTapbar.shared.FAQ, for: .normal)
+        BackBtn.setTitle("faq".translated(), for: .normal)
         BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         
         // Register tableview cell

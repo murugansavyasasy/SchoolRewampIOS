@@ -168,6 +168,7 @@
                 <outlet property="cellView" destination="ecU-cd-bJR" id="9pQ-uD-rCr"/>
                 <outlet property="descriptionLbl" destination="WaU-5A-f32" id="M9v-Ar-Rxf"/>
                 <outlet property="iconBtn" destination="Oum-XY-AAZ" id="Aak-6l-Q4e"/>
+                <outlet property="newImg" destination="aeH-m3-itm" id="3pc-fh-2JD"/>
                 <outlet property="readVieaw" destination="8yY-Nr-sn5" id="R40-h0-AoH"/>
                 <outlet property="sendedByLbl" destination="33L-6p-lSL" id="Die-Or-RDz"/>
                 <outlet property="startBtn" destination="ptM-XM-OiG" id="cQ8-lL-uhb"/>

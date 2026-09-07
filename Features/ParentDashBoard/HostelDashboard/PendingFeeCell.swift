@@ -76,15 +76,28 @@ class PendingFeeCell: UITableViewCell {
         // --- 1. Top Section ---
 //        feeNameLabel.text =  "Hostel fee"
         // --- 2. Hostel Details Bar ---
+        
         if let hDetails = data.hostel_details {
             let hName = hDetails.hostel_name ?? "-"
-            setupAttributedText(for: hostelNameLabel, title: "Hostel: ", value: hName)
-            
+            setupAttributedText(
+                for: hostelNameLabel,
+                title: "Hostel".translated() + ": ",
+                value: hName
+            )
+
             let rNum = hDetails.room_no ?? "-"
-            setupAttributedText(for: roomLabel, title: "Room: ", value: rNum)
-            
+            setupAttributedText(
+                for: roomLabel,
+                title: "Room".translated() + ": ",
+                value: rNum
+            )
+
             let bNum = hDetails.bed_no ?? "-"
-            setupAttributedText(for: bedLabel, title: "Bed: ", value: bNum)
+            setupAttributedText(
+                for: bedLabel,
+                title: "Bed".translated() + ": ",
+                value: bNum
+            )
         }
         
         // --- 3. Summary Block ---
@@ -138,7 +151,6 @@ class PendingFeeCell: UITableViewCell {
         label.attributedText = attrStr
     }
     
-
     
     @IBAction func PayButtonTapped(_ sender: Any) {
         onPayButtonTapped?()

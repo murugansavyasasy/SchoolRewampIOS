@@ -159,7 +159,7 @@ class PunchHistoryListVC: UIViewController, UITableViewDelegate, UITableViewData
         headerView.backgroundColor = .clear
         // Title
         let titleLabel = UILabel()
-        titleLabel.text = "History"
+        titleLabel.text = "History".translated()
         titleLabel.font = UIFont.boldSystemFont(ofSize: 18)
         titleLabel.textColor = .black
         let dateLabel = UILabel()

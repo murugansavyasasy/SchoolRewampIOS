@@ -114,7 +114,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             
             BiometricAuthentication.shared.showEnableBiometricPopup(
                 from: self,
-                message: "Would you like to enable Face ID / Touch ID for this app?"
+                message: "enable_face_id_touch_id_message"
             ){[weak self] _ in
                 guard let self = self else { return }
                 self.presentAppTourIfNeeded()
@@ -217,13 +217,16 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
     
     // MARK: - API Calls
     func get_dashboard_details(token:String) {
+        
+        let languageCode = Locale.current.language.languageCode?.identifier
+        
         if #available(iOS 15.0, *) {
             showActivityLoader()
         }
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         APIService.shared.makeApi(
             url: ServiceUrl.get_dashboard_details,
-            parameters: [COMMON_PARAMETER.member_type: API_PARAMS_HOTCODE.staff, COMMON_PARAMETER.mobile_number: mobile_num ?? ""],
+            parameters: [COMMON_PARAMETER.member_type: API_PARAMS_HOTCODE.staff, COMMON_PARAMETER.mobile_number: mobile_num ?? "","language_code":languageCode ?? "en"],
             type: ApitTypeSringFile.GET,
             token:token, isBaseUrl: false
         ) { [weak self] (result: Result<MenuResponse, Error>) in
@@ -235,7 +238,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                         self.menu_details = details.menus
                     
 //                        self.menu_details?.append(
-//                            MenuDetail(id: 208, name: "Class Test Analysis", description: "Used to trak student performance")
+//                            MenuDetail(id: 206, name: "Create Test for class", description: "Used to apply leave")
 //                        )
                         self.refreshCount = true
                         self.get_MenuCount()
@@ -720,9 +723,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             202: { self.MenuRedirect.HostelManagment(from: self) },
             204: { self.MenuRedirect.StaffLeaveRequest(from: self) },
             205: { self.MenuRedirect.buslist(from: self, loginasType: self.loginAsType ?? 0, is_ownbustraking: self.staffDetails?.gps_type == "dhundhoo" ? false : true) },
-            
-            206 : { self.MenuRedirect.createClasstestVc(from: self) },
-          
+            206 : { self.MenuRedirect.createClasstestVc(from: self) }
             
         ]
  

@@ -73,6 +73,8 @@ class StaffLeaveReqTvCell: UITableViewCell,UIPopoverPresentationControllerDelega
         StatusView.layer.cornerRadius = 10
         
         reasonDefaultLbl.text = "REASON FOR LEAVE".translated()
+        RejectBtnName.setTitle("Reject".translated(), for: .normal)
+        aproveBtn.setTitle("Approve".translated(), for: .normal)
     }
     
     @IBAction func threeDotBtnName(_ sender: UIButton) {
@@ -85,7 +87,7 @@ class StaffLeaveReqTvCell: UITableViewCell,UIPopoverPresentationControllerDelega
         if let popoverController = popoverContentVC.popoverPresentationController {
             popoverController.sourceView = sender
             popoverController.sourceRect = sender.bounds
-            popoverController.permittedArrowDirections = .right
+            popoverController.permittedArrowDirections = .any
             popoverController.delegate = self
         }
         

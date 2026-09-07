@@ -144,10 +144,9 @@ class EditLessonVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         let LessonPlanid = isCreate ? LessonPlanStringFile.section_subject_id : LessonPlanStringFile.particular_id
         let type = isCreate ? ApitTypeSringFile.POST : ApitTypeSringFile.PUT
         let baseUrl = isCreate ? ServiceUrl.lms_api_lesson_plan_add : ServiceUrl.lms_api_lesson_plan_update
-        let isBaseUrl = isCreate ? false : true
         let param : [String: Any] = [LessonPlanid: particular_Id ?? "",LessonPlanStringFile.key_value_data:converted]
         APIService.shared
-            .makeApi(url:baseUrl, parameters: param, type: type, token: staffDetails?.access_token ?? "", isBaseUrl: isBaseUrl) {[weak self] (
+            .makeApi(url:baseUrl, parameters: param, type: type, token: staffDetails?.access_token ?? "", isBaseUrl: true) {[weak self] (
                 result: Result<CommonApiSuc,
                 Error>
             ) in

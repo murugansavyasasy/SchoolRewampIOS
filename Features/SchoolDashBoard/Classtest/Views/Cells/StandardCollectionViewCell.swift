@@ -32,7 +32,8 @@ public final class StandardCollectionViewCell: UICollectionViewCell {
         titleLabel.text = standard.name
         
         let count = standard.sections.count
-        subtitleLabel.text = "\(count) section" + (count == 1 ? "" : "s")
+        let sectionText = (count == 1 ? "SECTION" : "SECTIONS").translated()
+        subtitleLabel.text = "\(count) \(sectionText)"
         
 //        badgeImageView.isHidden = !isSelected
         badgeImageView.image = isSelected ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "circle")

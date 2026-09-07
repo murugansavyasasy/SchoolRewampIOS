@@ -52,7 +52,11 @@ class StudentAttendanceCell: UITableViewCell {
         outPassRequestFullView.layer.cornerRadius = 10
         outpassApproveBtnName.layer.cornerRadius = 10
         OutPassRejectBtnName.layer.cornerRadius = 10
-        
+        OutPassRejectBtnName.setTitle("Reject".translated(), for: .normal)
+        outpassApproveBtnName.setTitle("Approve".translated(), for: .normal)
+        presentButton.setTitle("Present".translated(), for: .normal)
+        absentButton.setTitle("Absent".translated(), for: .normal)
+      
         statusView.layer.cornerRadius = 12
     }
 
@@ -63,7 +67,7 @@ class StudentAttendanceCell: UITableViewCell {
            
         }else{
             outPassRequestFullView.isHidden  = false
-            OutPassReasonLbl.text = "Reason : \(reason)"
+            OutPassReasonLbl.text = "\("Reason :".translated()) \(reason)"
             OutPassTimmingLbl.text = outDateInDate
             statusLbl.text = out_pass_status
             if out_pass_status == "APPROVED"{
@@ -82,8 +86,8 @@ class StudentAttendanceCell: UITableViewCell {
             }
         }
         nameLabel.text = name
-        detailsLabel.text = "Class: \(standard)"
-        parentPhnNumber.text =  "Parent mobile no: \(parentNum)"
+        detailsLabel.text = "\("Class:".translated()) \(standard)"
+        parentPhnNumber.text =  "\("Parent mobile no:".translated()) \(parentNum)"
         avatarLabel.text = shortName(from: name)
        
         // Randomly set colors for avatar

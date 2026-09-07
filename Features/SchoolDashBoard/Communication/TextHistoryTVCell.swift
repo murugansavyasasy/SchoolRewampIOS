@@ -43,6 +43,10 @@ class TextHistoryTVCell: UITableViewCell {
         descriptContent.isScrollEnabled = false
         descriptContent.dataDetectorTypes = [.link]   // 🔥 REQUIRED
         
+        let isRTL = UIView.userInterfaceLayoutDirection(for: contentView.semanticContentAttribute) == .rightToLeft
+        
+        NewImageView.transform = isRTL ? CGAffineTransform(rotationAngle: -.pi / 2) :.identity
+        
         descriptContent.textContainerInset = .zero
         descriptContent.textContainer.lineFragmentPadding = 0
         

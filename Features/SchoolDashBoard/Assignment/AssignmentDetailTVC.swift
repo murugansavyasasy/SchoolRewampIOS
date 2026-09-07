@@ -40,7 +40,8 @@ class AssignmentDetailTVC: UITableViewCell {
         descriptionLbl.text = assignment.description ?? ""
         dateAndTimeForVideo = (assignment.date ?? "") + " " + (assignment.time ?? "")
         attachmentList = attachments
-        attachmentLbl.text = "𓄲 Attachments (\(attachments.count))"
+        let attachmentText = "𓄲 Attachments".translated()
+        attachmentLbl.text = "\(attachmentText) (\(attachments.count))"
         attachmentLbl.isHidden = attachments.count == 0
         
         reloadCollectionAndUpdateHeight()

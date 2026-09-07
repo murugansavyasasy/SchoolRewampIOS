@@ -106,6 +106,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBOutlet weak var RecipientBtn: UIButton!
     @IBOutlet weak var TextViewheight: NSLayoutConstraint!
     @IBOutlet weak var uploadAttachmentView: ImageSelection!
+    @IBOutlet weak var uploadattachmentLbl: UILabel!
+    
     var attachments: [AttachmentItem] = []
 
     let photoPickManager = PhotoPickerManager.shared
@@ -206,7 +208,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         DetailsTxtview.textColor = content != "" ? .black:.lightGray
         TitleTxtfield.text = title
         self.editId = editId
-        RecipientBtn.setTitle(CommonStringFile.UPDATE, for: .normal)
+        RecipientBtn.setTitle(CommonStringFile.UPDATE.translated(), for: .normal)
         let imageItems: [AttachmentItem] = imageUrls.map { file in
             let type = file.type?.lowercased() ?? ""
             return AttachmentItem(
@@ -241,8 +243,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         DetailsLbl.setRequiredText(CommonStringFile.Description)
         wordsCountLbl.setFont(style: .body, size: FontSize.BodySize)
         titleCountLbl.setFont(style: .body, size: FontSize.BodySize)
-//        uploadattachmentLbl.setFont(style: .title, size: FontSize.TitleSize)
-//        setAttributedText(for: uploadattachmentLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
+        uploadattachmentLbl.setFont(style: .title, size: FontSize.TitleSize)
+        setAttributedText(for: uploadattachmentLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
         TitleTxtfield.placeholder  = CommonStringFile.Title.translated()
     }
     
@@ -739,17 +741,17 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                     $0.fileType.lowercased() == CommonStringFile.audio.lowercased()
                 }
                 // Camera option
-                let cameraAction = UIAlertAction(title: CommonStringFile.Camera, style: .default) { [self] _ in
+                let cameraAction = UIAlertAction(title: CommonStringFile.Camera.translated(), style: .default) { [self] _ in
                     openCamera()
                 }
                 alertController.addAction(cameraAction)
                 // Gallery option
-                let galleryAction = UIAlertAction(title: CommonStringFile.Photos, style: .default) { [self] _ in
+                let galleryAction = UIAlertAction(title: CommonStringFile.Photos.translated(), style: .default) { [self] _ in
                     selectImages()//
                 }
                 alertController.addAction(galleryAction)
                 
-                let pdfAction = UIAlertAction(title: CommonStringFile.Document, style: .default) { [self] _ in
+                let pdfAction = UIAlertAction(title: CommonStringFile.Document.translated(), style: .default) { [self] _ in
                     selectDocuments()
                 }
                 alertController.addAction(pdfAction)
@@ -759,7 +761,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
 
                     // Recording
                     let recordingAction = UIAlertAction(
-                        title: hasAudio ? "Recording (Already added)" : CommonStringFile.Recording,
+                        title: hasAudio ? "Recording (Already added)".translated() : CommonStringFile.Recording.translated(),
                         style: hasAudio ? .destructive : .default
                     ) { [weak self] _ in
                         self?.recording()
@@ -769,7 +771,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
 
                     // Audio File
                     let audioAction = UIAlertAction(
-                        title: hasAudio ? "Audio File (Already added)" : CommonStringFile.AudioFile,
+                        title: hasAudio ? "Audio File (Already added)".translated() : CommonStringFile.AudioFile.translated(),
                         style: hasAudio ? .destructive : .default
                     ) { [weak self] _ in
                         self?.audio()
@@ -779,18 +781,18 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
 //                }
                 //   VIDEO option
                 let VideoAction = UIAlertAction(title:
-                                                    CommonStringFile.Video, style: .default) { [self] _ in
+                                                    CommonStringFile.Video.translated(), style: .default) { [self] _ in
                     
                     let totalRemaining = Filecount.SelectImageAndDocumetCount - attachments.count
                     let videoCount = attachments.filter { $0.fileType.lowercased() == video }.count
                     let videoRemaining = Filecount.SelectVideoCount - videoCount
                     if totalRemaining <= 0 {
-                        CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+                        CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit.translated(), on: self)
                     } else if videoRemaining <= 0 {
                         CustomAlert()
                             .showAlert(
                                 title: "",
-                                message: CommonStringFile.You_can_only_select_up_to2_video_files,
+                                message: CommonStringFile.You_can_only_select_up_to2_video_files.translated(),
                                 on: self)
                     }else{
                         VideoPick()
@@ -799,14 +801,14 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                 alertController.addAction(VideoAction)
                 // Cancel action
                 let cancelAction = UIAlertAction(
-                    title: CommonStringFile.Cancel,
+                    title: CommonStringFile.Cancel.translated(),
                     style: .cancel,
                     handler: nil
                 )
                 alertController.addAction(cancelAction)
                 self.present(alertController, animated: true, completion: nil)
             }else{
-                CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on:self)
+                CustomAlert().showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit.translated(), on:self)
             }
         }else{
             let attachment = attachments[indexPath.item - 1]

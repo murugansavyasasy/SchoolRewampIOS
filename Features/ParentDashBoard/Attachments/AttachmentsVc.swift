@@ -426,12 +426,13 @@ extension AttachmentsVc :  UITableViewDataSource,UITableViewDelegate,UISearchBar
             return UITableViewCell()
         }
         let displayText = filteredAttachments?[indexPath.row].date?.convertToTargetDateFormat() ?? ""//formattedDateStatus(from: filteredAttachments?[indexPath.row].date ?? "")
+        let ltr = "\u{200E}"
         cell
             .configureCell(
                 with: filteredAttachments?[indexPath.row].file_path ?? [],
                 title: filteredAttachments?[indexPath.row].title ?? "",
                 description: filteredAttachments?[indexPath.row].description ?? "",
-                date: MenuStringFile.posted_on.translated() + " - " + displayText,
+                date: "\(MenuStringFile.posted_on.translated()): \(ltr)\(displayText)\(ltr)",
                 sendBy:  MenuStringFile.Posted_By.translated() + " - " + (filteredAttachments?[indexPath.row].sent_by ?? ""),
                 isunread: filteredAttachments?[indexPath.row].is_unread ?? false, dateAndTimeForVideo:   filteredAttachments?[indexPath.row].date ?? "",
                 parentTableView: tv

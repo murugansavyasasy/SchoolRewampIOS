@@ -48,8 +48,9 @@ class ViewLessonVC: UIViewController, SelectedId {
     var LesonPlanReport : LessonPlanStaffReport?
     override func viewDidLoad() {
         super.viewDidLoad()
+        let menuName = MenuStringFile.selectedMenuName
         menuNameLbl.configureAsBackTitle(
-            firstLine: MenuStringFile.LessonPlan,
+            firstLine: menuName,
             secondLine: staffDetails?.school_name ?? ""
         )
         creteBtn.setShadow(cornerRadius: creteBtn.frame.width/2)
@@ -76,6 +77,9 @@ class ViewLessonVC: UIViewController, SelectedId {
         FilterCV.register(cvnib, forCellWithReuseIdentifier: CellConfingName.FiltersCvCell)
         FilterCV.delegate = self
         FilterCV.dataSource = self
+        if UIView.userInterfaceLayoutDirection(for: view.semanticContentAttribute) == .rightToLeft {
+            FilterCV.transform = CGAffineTransform(scaleX: -1, y: 1)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -217,6 +221,7 @@ class ViewLessonVC: UIViewController, SelectedId {
         dismiss(animated: true)
     }
     @IBAction func createLessonPlan(_ sender: UIButton) {
+        
         let param: [String: Any] = [
             LessonPlanStringFile.request_type: Reqest_Type ?? ""]
         

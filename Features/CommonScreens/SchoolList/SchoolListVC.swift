@@ -11,7 +11,8 @@ import SDWebImage
 @available(iOS 14.0, *)
 class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
-    @IBOutlet weak var chooseUrSchoolLbl: UILabel!
+    @IBOutlet weak var chooseUrSchoolLbl: LocalizationLabel!
+    
     @IBOutlet weak var schoolBtn: UIButton!
     @IBOutlet weak var headerSchoolLbl: UILabel!
     @IBOutlet weak var radioBtnStack: UIStackView!
@@ -19,7 +20,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     @IBOutlet weak var staffBtnName: UIButton!
     @IBOutlet weak var allbtnName: UIButton!
     @IBOutlet weak var noRecordLbl: UILabel!
-    @IBOutlet weak var chooseDefaultLbl: UILabel!
+   
+    @IBOutlet weak var chooseDefaultLbl: LocalizationLabel!
     @IBOutlet weak var acidmicYrLbl: UILabel!
     @IBOutlet weak var acidamicYrDropView: UIView!
     @IBOutlet weak var sendBtnName: UIButton!
@@ -56,9 +58,18 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         setupRadioButton(button: allbtnName)
         setupRadioButton(button: studentBtnName)
         setupRadioButton(button: staffBtnName)
+        allbtnName.setTitle("All".translated(), for: .normal)
+        staffBtnName.setTitle("Staff".translated(), for: .normal)
+        studentBtnName.setTitle("Student".translated(), for: .normal)
+
+        segmentName.setTitle("Send to multiple school".translated(), forSegmentAt: 0)
+        segmentName.setTitle("Select recipient".translated(), forSegmentAt: 1)
+
+        sendBtnName.setTitle("Send".translated(), for: .normal)
         schoolBtn.layer.cornerRadius = 8
         chooseUrSchoolLbl.setFont(style: .header, size: 13)
         headerSchoolLbl.setFont(style: .header, size: 16)
+        headerSchoolLbl.text = "School Selection".translated()
         if come_fromLogin{
             ViewAnimator.hideFade(segmentName)
             ViewAnimator.hideFade(chooseDefaultLbl)
@@ -233,6 +244,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 
             case 206 :  MenuRedirect.createClasstestVc(from: self)
                 
+  //          case 208 : MenuRedirect.senderExamAnalise(from: self)
+                
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }
@@ -297,8 +310,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     @IBAction func selectedSchool(_ sender: Any) {
         guard !array_selectedSchoolId.isEmpty else {
             alert.showAlert(
-                title: AlertstringFile.Alert_title,
-                message: AlertstringFile.Choose_any_target,
+                title: AlertstringFile.Alert_title.translated(),
+                message: AlertstringFile.Choose_any_target.translated(),
                 on: self
             )
             return
@@ -335,10 +348,10 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     ) {
         var message : String?
         if accadmicDefaultYrName == acidmicYrLbl.text{
-            message = AlertstringFile.Selected_target + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+            message = AlertstringFile.Selected_target.translated() + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed.translated()
         }else{
-            message = AlertstringFile.Selected_target + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.Change_academic_year + " " + (
-                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+            message = AlertstringFile.Selected_target.translated() + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.Change_academic_year.translated() + " " + (
+                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1.translated() +   "\n" + AlertstringFile.Change_academic_year2.translated()
         }
         comm.SendingAttachmentFlow(
             selectedAcadimicYearId: selectedAcadimicYearId ?? 0,
@@ -367,18 +380,18 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     private func SendingCommunicationFlow() {
         var message : String?
         if accadmicDefaultYrName == acidmicYrLbl.text{
-            message = AlertstringFile.Selected_target + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+            message = AlertstringFile.Selected_target.translated() + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed.translated()
         }else{
             
-            message = AlertstringFile.Selected_target + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.Change_academic_year + " " + (
-                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+            message = AlertstringFile.Selected_target.translated() + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.Change_academic_year.translated() + " " + (
+                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1.translated() +   "\n" + AlertstringFile.Change_academic_year2.translated()
         }
         let title = AlertstringFile.Alert_title
         alert.showAlertCancel(
             title: title,
             message: message ?? "",
-            actionLbl1: AlertstringFile.OK,
-            actionLbl2: AlertstringFile.Cancel,
+            actionLbl1: AlertstringFile.OK.translated(),
+            actionLbl2: AlertstringFile.Cancel.translated(),
             on: self,
             onOk: { [self] in
                 switch screen_type {
@@ -615,7 +628,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                     norecordImg.isHidden = false
                     noRecordLbl.isHidden = false
                     acidamicYrDropView.isUserInteractionEnabled = false
-                    let fullText = "Your academic year configuration are incorrect. Please contact your School Chimes at support@savyasasy.com"
+                    let fullText = "The academic year configuration for your school are incorrect. Please contact School Chimes at support@savyasasy.com".translated()
                     let attributedString = NSMutableAttributedString(string: fullText)
                     let email = "support@savyasasy.com"
                     if let range = fullText.range(of: email) {
@@ -640,7 +653,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             DispatchQueue.main.async {
                 self.alert
                     .showAlert(
-                        title: "Error",
+                        title: "Error".translated(),
                         message: localData.accidamic_year_data?.message ?? "" ,
                         on: self
                     )
@@ -707,7 +720,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: "Success",
+                                    title: "Success".translated(),
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
@@ -772,7 +785,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: "Success",
+                                    title: "Success".translated(),
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {

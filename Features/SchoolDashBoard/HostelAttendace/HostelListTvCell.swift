@@ -42,7 +42,7 @@ class HostelListTvCell: UITableViewCell {
    
     func configureGenderButton(type: String) {
         
-        genderBtn.setTitle(type.capitalized, for: .normal)
+        genderBtn.setTitle(type, for: .normal)
         genderBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
         
         genderBtn.layer.cornerRadius = genderBtn.frame.height / 2
@@ -51,13 +51,13 @@ class HostelListTvCell: UITableViewCell {
         
         switch type.lowercased() {
             
-        case "male" , "boys":
+        case "male".translated() , "boys".translated():
             genderBtn.backgroundColor = UIColor(red: 0.85, green: 0.92, blue: 1.0, alpha: 1.0) // light blue
             genderBtn.setTitleColor(UIColor(red: 0.10, green: 0.35, blue: 0.85, alpha: 1.0), for: .normal)
             profileBtn.tintColor = (UIColor(red: 0.10, green: 0.35, blue: 0.85, alpha: 1.0)) // dark blue text
             profileBtn.backgroundColor = UIColor(red: 0.85, green: 0.92, blue: 1.0, alpha: 1.0)
             
-        case "female","girls":
+        case "female".translated(),"girls".translated():
             genderBtn.backgroundColor = UIColor(red: 1.0, green: 0.88, blue: 0.92, alpha: 1.0) // light
             profileBtn.backgroundColor = UIColor(red: 1.0, green: 0.88, blue: 0.92, alpha: 1.0) // light pink
             genderBtn.setTitleColor(UIColor(red: 0.80, green: 0.20, blue: 0.45, alpha: 1.0), for: .normal) // dark pink text

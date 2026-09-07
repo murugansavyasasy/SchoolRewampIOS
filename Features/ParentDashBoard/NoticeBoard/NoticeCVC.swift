@@ -69,6 +69,7 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, 
 
         descriptionLbl.setContentHuggingPriority(.defaultLow, for: .vertical)
         descriptionLbl.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        
     }
     @IBAction func edit(_ sender: UIButton) {
         
@@ -80,7 +81,7 @@ class NoticeCVC: UICollectionViewCell, UIPopoverPresentationControllerDelegate, 
         if let popoverController = popoverContentVC.popoverPresentationController {
             popoverController.sourceView = sender
             popoverController.sourceRect = sender.bounds
-            popoverController.permittedArrowDirections = .right
+            popoverController.permittedArrowDirections = .any
             popoverController.delegate = self
         }
         

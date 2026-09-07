@@ -641,28 +641,28 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
                 let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
                 
                 // Camera option
-                let cameraAction = UIAlertAction(title: CommonStringFile.Camera, style: .default) { [self] _ in
+                let cameraAction = UIAlertAction(title: CommonStringFile.Camera.translated(), style: .default) { [self] _ in
                     //
                     openCamera()
                 }
                 alertController.addAction(cameraAction)
                 
                 // Gallery option
-                let galleryAction = UIAlertAction(title: CommonStringFile.Photos, style: .default) { [self] _ in
+                let galleryAction = UIAlertAction(title: CommonStringFile.Photos.translated(), style: .default) { [self] _ in
                     selectImages()
                     //
                 }
                 alertController.addAction(galleryAction)
                 
                 //             PDF option
-                let pdfAction = UIAlertAction(title: CommonStringFile.Document, style: .default) { [self] _ in
+                let pdfAction = UIAlertAction(title: CommonStringFile.Document.translated(), style: .default) { [self] _ in
                     selectPDF()
                 }
                 alertController.addAction(pdfAction)
                 
                 //   VIDEO option
                 let VideoAction = UIAlertAction(title:
-                                                    CommonStringFile.Video, style: .default) { [self] _ in
+                                                    CommonStringFile.Video.translated(), style: .default) { [self] _ in
                     
                     let totalRemaining = Filecount.SelectImageAndDocumetCount - attachments.count
                     let videoCount = attachments.filter { $0.fileType.lowercased() == "video" }.count
@@ -686,7 +686,7 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
                 alertController.addAction(VideoAction)
                 // Cancel action
                 let cancelAction = UIAlertAction(
-                    title: CommonStringFile.Cancel,
+                    title: CommonStringFile.Cancel.translated(),
                     style: .cancel,
                     handler: nil
                 )

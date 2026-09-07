@@ -260,8 +260,14 @@ extension MsgViewVC :  UICollectionViewDelegate, UICollectionViewDataSource,UICo
         return CGSize(width: collectionView.layer.frame.width, height: 180)
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let pageIndex = round(scrollView.contentOffset.x / scrollView.frame.width)
-        pageControls.currentPage = Int(pageIndex)
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let visibleRect = CGRect(origin: cv.contentOffset, size: cv.bounds.size)
+        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+
+        guard let indexPath = cv.indexPathForItem(at: visiblePoint) else {
+            return
+        }
+
+        pageControls.currentPage = indexPath.item
     }
 }

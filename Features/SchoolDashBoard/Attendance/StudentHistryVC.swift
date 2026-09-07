@@ -76,6 +76,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         TopView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         SearchStack.isHidden = true
         selectAllBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        selectAllBtn.setTitle("Select All".translated(), for: .normal)
         sendbtnName.setTitleFont(style: .body, size: FontSize.BodySize)
         let firstline = (StandardString ?? "") + "-" + (SectionString ?? "")
         BackBtn.configureAsBackButton(firstLine: firstline, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
@@ -89,7 +90,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             academic_year_id: selectedAcadimicYearId ?? 0
         )
         search.delegate = self
-        
+        sendbtnName.setTitle("Send".translated(), for: .normal)
     }
     
     func StyleAndTranslater() {
@@ -280,8 +281,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         
         guard !selected_student.isEmpty else {
             alert.showAlert(
-                title: AlertstringFile.Alert_title,
-                message: AlertstringFile.Choose_any_target,
+                title: AlertstringFile.Alert_title.translated(),
+                message: AlertstringFile.Choose_any_target.translated(),
                 on: self
             )
             return
@@ -318,11 +319,11 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     ) {
         let message : String?
         if AlertMessageContent ?? false{
-            message = AlertstringFile.Selected_target + "\(selected_student.count) " + Student_s + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+            message = AlertstringFile.Selected_target.translated() + "\(selected_student.count) " + Student_s + "\n" + AlertstringFile.AreYouSureYouWantToProceed.translated()
             
         }else{
-            message = AlertstringFile.Selected_target + "\(selected_student.count) " + Student_s + "\n" + AlertstringFile.Change_academic_year + " " + (
-                accidmaticNAme ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+            message = AlertstringFile.Selected_target.translated() + "\(selected_student.count) " + Student_s + "\n" + AlertstringFile.Change_academic_year.translated() + " " + (
+                accidmaticNAme ?? "") + AlertstringFile.Change_academic_year1.translated() +   "\n" + AlertstringFile.Change_academic_year2.translated()
         }
         comm.SendingAttachmentFlow(
             selectedAcadimicYearId: selectedAcadimicYearId ?? 0,
@@ -354,12 +355,12 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         let title = AlertstringFile.Confirm_title
         
         if AlertMessageContent ?? false{
-            message = AlertstringFile.Selected_target + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+            message = AlertstringFile.Selected_target.translated() + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed.translated()
             
         }else{
             
-            message = AlertstringFile.Selected_target + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
-                accidmaticNAme ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+            message = AlertstringFile.Selected_target.translated() + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.Change_academic_year.translated() + " " + (
+                accidmaticNAme ?? "") + AlertstringFile.Change_academic_year1.translated() +   "\n" + AlertstringFile.Change_academic_year2.translated()
         }
         
         alert.showAlertCancel(
@@ -662,7 +663,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: AlertstringFile.Success,
+                                    title: AlertstringFile.Success.translated(),
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
@@ -676,7 +677,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                         DispatchQueue.main.async {
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: AlertstringFile.Success,
+                                    title: AlertstringFile.Oops.translated(),
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {

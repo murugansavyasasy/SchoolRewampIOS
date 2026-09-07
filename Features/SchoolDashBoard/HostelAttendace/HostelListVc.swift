@@ -62,7 +62,10 @@ class HostelListVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
                     
                     if Success.status ?? false{
                         hostelData = Success.data ?? []
-                        hostelAviabelCountLbl.text = "\(Success.data?.count ?? 0) HOSTELS AVAILABLE"
+                        hostelAviabelCountLbl.text = String(
+                            format:"%d HOSTELS AVAILABLE".translated(),
+                            hostelData.count
+                        )
                         tv.reloadData()
                     }else{
                         hostelAviabelCountLbl.isHidden = true

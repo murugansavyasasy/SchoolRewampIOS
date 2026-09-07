@@ -35,6 +35,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
     // MARK: - IBOutlets
     @IBOutlet weak var editBtn: UIButton!
     @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var newImg: UIImageView!
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var assignmentProgressLbl: UILabel!
     @IBOutlet weak var readVieaw: UIView!
@@ -137,7 +138,9 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         outerView.setShadow()
         outerView.backgroundColor = .systemBackground
         outerView.layer.cornerRadius = 12
+        let isRTL = UIView.userInterfaceLayoutDirection(for: contentView.semanticContentAttribute) == .rightToLeft
         
+        newImg.transform = isRTL ? CGAffineTransform(rotationAngle: -.pi / 2):.identity
         titleLbl.font = .systemFont(ofSize: 16, weight: .semibold)
         titleLbl.textColor = .label
         
@@ -167,7 +170,8 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
             let generatedStack = createSubCategoriesStack(with: categories)
             subCatogoriesStack.addArrangedSubview(generatedStack)
         }
-        assignmentProgressLbl.text = "Submission Progress (\(assignment.submitted_count ?? 0)/\(assignment.total_count ?? 0))"
+        let submissionProgressText = "Submission Progress".translated()
+        assignmentProgressLbl.text = "\(submissionProgressText) (\(assignment.submitted_count ?? 0)/\(assignment.total_count ?? 0))"
         let progress = calculateProgressPercentage(submitted: assignment.submitted_count, total: assignment.total_count)
         configureProgress(progress)
     }
@@ -204,7 +208,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         var cats: [SubCategories] = []
         if let created = assignment.created_date {
             cats.append(SubCategories(
-                name: "Assigned : \(created.convertToTargetDateFormat() ?? "")",
+                name: "\("ASSIGNED".translated()) : \(created.convertToTargetDateFormat() ?? "")",
                 icon: "calendar",
                 backgroundColor: .systemBlue.withAlphaComponent(0.15),
                 textColor: .systemBlue
@@ -223,7 +227,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         }
         if let endDate = assignment.end_date {
             cats.append(SubCategories(
-                name: "Deadline \(endDate.convertToTargetDateFormat() ?? "")",
+                name: "\("DEADLINE".translated()) \(endDate.convertToTargetDateFormat() ?? "")",
                 icon: "calendar",
                 backgroundColor: .systemOrange.withAlphaComponent(0.15),
                 textColor: .systemOrange
@@ -241,7 +245,7 @@ class AssignmentTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         if let popoverController = popoverContentVC.popoverPresentationController {
             popoverController.sourceView = sender
             popoverController.sourceRect = sender.bounds
-            popoverController.permittedArrowDirections = .right
+            popoverController.permittedArrowDirections = .any
             popoverController.delegate = self
         }
         

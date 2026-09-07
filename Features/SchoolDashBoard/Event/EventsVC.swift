@@ -134,6 +134,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         let dateTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectDateTapped))
         dateSelectionView.isUserInteractionEnabled = true
         dateSelectionView.addGestureRecognizer(dateTapGesture)
+        let isRTL = UIView.userInterfaceLayoutDirection(
+            for: view.semanticContentAttribute
+        ) == .rightToLeft
     }
     @objc private func selectDateTapped() {
         dateSelection = true
@@ -304,35 +307,59 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         }
     }
     
-    func setInitialButtonTitles(date dateString: String?, inputFormat: String = "dd MMM yyyy") {
-        
+    func setInitialButtonTitles(date dateString: String?,
+                                inputFormat: String = "dd MMM yyyy") {
+
         let locale = LocaleManager.shared.displayLocale
+
         let parser = DateFormatter()
         parser.locale = Locale(identifier: "en_US_POSIX")
         parser.dateFormat = inputFormat
-        
-        let dateToUse: Date
-        if let dateString = dateString, let parsed = parser.date(from: dateString) {
-            dateToUse = parsed
-        } else {
-            dateToUse = Date()
+
+        var dateToUse = Date()
+
+        if let dateString = dateString,
+           let parsedDate = parser.date(from: dateString) {
+
+            // Input format-la time illa na current time add pannum
+            if !inputFormat.contains("H") &&
+                !inputFormat.contains("h") &&
+                !inputFormat.contains("m") {
+
+                let calendar = Calendar.current
+
+                let dateComponents = calendar.dateComponents([.year, .month, .day], from: parsedDate)
+                let timeComponents = calendar.dateComponents([.hour, .minute], from: Date())
+
+                var components = DateComponents()
+                components.year = dateComponents.year
+                components.month = dateComponents.month
+                components.day = dateComponents.day
+                components.hour = timeComponents.hour
+                components.minute = timeComponents.minute
+
+                dateToUse = calendar.date(from: components) ?? parsedDate
+            } else {
+                // API date + time iruntha athaye use pannum
+                dateToUse = parsedDate
+            }
         }
+
         let displayDateFormatter = DateFormatter()
         displayDateFormatter.locale = locale
         displayDateFormatter.dateFormat = "dd MMM yyyy"
-        
+
         let displayTimeFormatter = DateFormatter()
         displayTimeFormatter.locale = locale
-        //displayTimeFormatter.timeStyle = .short
         displayTimeFormatter.dateFormat = "h:mm a"
-        
+
         let dayFormatter = DateFormatter()
         dayFormatter.locale = locale
         dayFormatter.dateFormat = "EEEE"
+
         dateLbl.text = displayDateFormatter.string(from: dateToUse)
         timeBtn.setTitle(displayTimeFormatter.string(from: dateToUse), for: .normal)
         dayLbl.text = dayFormatter.string(from: dateToUse)
-        
     }
     
     func StyleAndTranslate(){
@@ -591,21 +618,21 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
                 let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
                 
                 // Camera option
-                let cameraAction = UIAlertAction(title: CommonStringFile.Camera, style: .default) { [self] _ in
+                let cameraAction = UIAlertAction(title: CommonStringFile.Camera.translated(), style: .default) { [self] _ in
                     openCamera()
                 }
                 alertController.addAction(cameraAction)
-                let galleryAction = UIAlertAction(title: CommonStringFile.Photos, style: .default) { [self] _ in
+                let galleryAction = UIAlertAction(title: CommonStringFile.Photos.translated(), style: .default) { [self] _ in
                     selectImages()
                     //
                 }
                 alertController.addAction(galleryAction)
-                let pdfAction = UIAlertAction(title: CommonStringFile.Document, style: .default) { [self] _ in
+                let pdfAction = UIAlertAction(title: CommonStringFile.Document.translated(), style: .default) { [self] _ in
                     selectPDF()
                 }
                 alertController.addAction(pdfAction)
                 let VideoAction = UIAlertAction(title:
-                                                    CommonStringFile.Video, style: .default) { [self] _ in
+                                                    CommonStringFile.Video.translated(), style: .default) { [self] _ in
                     
                     let totalRemaining = Filecount.SelectImageAndDocumetCount - attachments.count
                     let videoCount = attachments.filter { $0.fileType.lowercased() == "video" }.count
@@ -628,7 +655,7 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
                 }
                 alertController.addAction(VideoAction)
                 let cancelAction = UIAlertAction(
-                    title: CommonStringFile.Cancel,
+                    title: CommonStringFile.Cancel.translated(),
                     style: .cancel,
                     handler: nil
                 )

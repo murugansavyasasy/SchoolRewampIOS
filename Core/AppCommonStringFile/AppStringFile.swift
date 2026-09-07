@@ -88,7 +88,7 @@ struct MenuStringFile{
     static let  End_time_must_be_greater_than_start_time   = "End time must be greater than start time."
     static let  ChaptersCompleted   = "Chapters Completed"
     static let  Create   = "Create"
-    static let  CreateOn   = "Created On "
+    static let  CreateOn   = "Created On"
     static let  Update   = "Update"
     static let  DaysApplication   = " Days Application"
     static let  Taptoviewlocationhistory   = "Tap to view location history"
@@ -120,7 +120,7 @@ struct ReceiverMenuItems {
 }
 
 struct AlertstringFile{
-    
+    static let Enter_description = "Enter description"
     static let title = "Confirm Action"
     static let Are_you_sure_want_to_submit = "Are you sure want to submit ?"
     static let toapprovethisleaverequest   = "Are you sure you want to approve this leave request?"
@@ -165,7 +165,7 @@ struct AlertstringFile{
     static let deletemessage = "Are you sure you want to Delete?"
     static let uploadMark = "Are you sure you want to Save?"
     static let fillAllMarksBeforePublish = "fillAllMarksBeforePublish"
-    static let publishMark = "Are you sure you want to publish the marks?"
+    static let publishMark = "Are you sure you want to publish?"
     static let are_yousure_youWant_to_send_Notice = "Are you sure you want to send this Notice?"
     static let are_yousure_youWant_to_send_emergency_voiceMessage = "Are you sure you want to send this Emergency voice message? note: this will send to all your contacts"
     static let ConfirmLeave = "Are you sure want to "
@@ -317,6 +317,7 @@ class QuizListStringFile{
 struct CommonStringFile {
     //MARK:
     static let UPDATE = "UPDATE"
+    static let Update = "Update"
     static let You_can_access_this_after_30_minutes = "This video will be available in 30 minutes."
     static let NEXT = "NEXT"
     static let ReplyingTo = "Replying To "

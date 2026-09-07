@@ -496,7 +496,7 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         let label = UILabel()
-        label.text = "No Data Found"
+        label.text = "No Data Found!".translated()
         label.textColor = .gray
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         label.textAlignment = .center
@@ -568,10 +568,10 @@ extension EventHistoryVC: UITableViewDelegate, UITableViewDataSource {
         label.translatesAutoresizingMaskIntoConstraints = false
         
         switch filteredSections[section] {
-        case .featured: label.text = "Ongoing Events"
-        case .categories: label.text = "Event Categories"
-        case .upcoming: label.text = "Upcoming Events"
-        case .completed: label.text = "Completed Events"
+        case .featured: label.text = "Ongoing Events".translated()
+        case .categories: label.text = "Event Categories".translated()
+        case .upcoming: label.text = "Upcoming Events".translated()
+        case .completed: label.text = "Completed Events".translated()
         case .nodata:label.text = ""
             
         }

@@ -154,7 +154,7 @@ class OTPVc: UIViewController {
             textField.delegate = self
             textField.tag = index
             textField.textAlignment = .center
-            textField.keyboardType = .numberPad
+            textField.keyboardType = .asciiCapableNumberPad
             textField.font = UIFont.systemFont(ofSize: 24)
             textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
             textField.layer.borderColor = UIColor.systemGray4.cgColor

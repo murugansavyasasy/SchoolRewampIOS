@@ -65,53 +65,57 @@ class yearAndMonthCalenderVc: UIViewController, UICollectionViewDelegate, UIColl
         generateMonths(for: selectdMonth?.year ?? Calendar.current.component(.year, from: Date()))
     }
     
-    func generateMonths(for year: Int){
-        let calendar = Calendar.current
-        let fullNames = calendar.monthSymbols
-        let shortNames = calendar.shortMonthSymbols
-        
+    func generateMonths(for year: Int) {
+
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = LocaleManager.shared.displayLocale
+
+        let formatter = DateFormatter()
+        formatter.calendar = calendar
+        formatter.locale = LocaleManager.shared.displayLocale
+
+        let fullNames = formatter.monthSymbols
+        let shortNames = formatter.shortMonthSymbols
+
         var tempMonths: [MonthItem] = []
-        
+
         let currentYear = calendar.component(.year, from: Date())
         let currentMonth = calendar.component(.month, from: Date())
-        
+
         let maxMonth = (year == currentYear) ? currentMonth : 12
-        
+
         for i in 0..<maxMonth {
-            
+
             let monthNumber = i + 1
-            
+
             let isSelected = (
                 selectdMonth?.year == year &&
                 selectdMonth?.monthNumber == monthNumber
             )
-            
-            let month = MonthItem(
-                id: monthNumber,
-                name: fullNames[i],
-                shortName: shortNames[i],
-                monthNumber: monthNumber,
-                year: year,
-                isSelected: isSelected
+
+            tempMonths.append(
+                MonthItem(
+                    id: monthNumber,
+                    name: fullNames?[i] ?? "",
+                    shortName: shortNames?[i] ?? "",
+                    monthNumber: monthNumber,
+                    year: year,
+                    isSelected: isSelected
+                )
             )
-            
-            tempMonths.append(month)
         }
-        
-        self.months = tempMonths
+
+        months = tempMonths
+
         let rows = ceil(Double(months.count) / 3.0)
-        let height = rows * 45.0
-        monthCVHeight.constant = CGFloat(height)
+        monthCVHeight.constant = CGFloat(rows * 45)
+
         UIView.animate(withDuration: 0.25) {
             self.view.layoutIfNeeded()
         }
-        
+
         monthCollectionView.reloadData()
-        monthCollectionView.layoutIfNeeded()
-
         yearCollectionView.reloadData()
-        yearCollectionView.layoutIfNeeded()
-
     }
     
     override func viewDidLayoutSubviews() {

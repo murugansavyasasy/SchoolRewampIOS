@@ -25,6 +25,7 @@ class StaffDetailsPreviewVc: UIViewController {
     @IBOutlet weak var staffNameLbl: UILabel!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var RejectBtnName: UIButton!
+    @IBOutlet weak var ApproveBtnName: UIButton!
     @IBOutlet weak var locationBackView: UIView!
     @IBOutlet weak var mailBackView: UIView!
     @IBOutlet weak var phnBackView: UIView!
@@ -70,6 +71,10 @@ class StaffDetailsPreviewVc: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        RejectBtnName.setTitle("Reject".translated(), for: .normal)
+        ApproveBtnName.setTitle("Approve".translated(), for: .normal)
+        
         tv.register(UINib(nibName: "LeaveReqDateTvCell", bundle: nil), forCellReuseIdentifier: "LeaveReqDateTvCell")
         tv.dataSource = self
         tv.delegate = self
@@ -269,7 +274,7 @@ extension StaffDetailsPreviewVc : UITableViewDataSource, UITableViewDelegate{
         let result = splitDateMonth(data?.applied_on ?? "")
         cell.dateLbl.text = result.day
         cell.monthLbl.text = result.month
-        cell.detailLbl.text =  (data?.no_of_days ?? "") + " Day"
+        cell.detailLbl.text =  (data?.no_of_days ?? "") + " " + "Day".translated()
         cell.fromdateAndTodateLbl.text = " \(data?.from_date?.convertToTargetDateFormat() ?? "")" + " , \(data?.to_date?.convertToTargetDateFormat() ?? "")"
         cell.statusView.layer.cornerRadius = 10
         if data?.status == leave_type[0] {

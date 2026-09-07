@@ -11,6 +11,7 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
     func selectId(id: String?, edit: Bool?) {
         delegate?.selectId(id:id, edit: edit)
     }
+    @IBOutlet weak var LevelDefaultLbl: UILabel!
     @IBOutlet weak var ThreeDot: UIButton!
     @IBOutlet weak var iconBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
@@ -31,6 +32,7 @@ class LessonPlanTVC: UITableViewCell, SelectedId, UIPopoverPresentationControlle
         outerView.setShadow()
         levelBtn.layer.cornerRadius = levelBtn.layer.frame.width/2
         iconBtn.layer.cornerRadius = 4
+        LevelDefaultLbl.text = "Level".translated()
     }
     func edit(edit:Bool,delete:Bool,selectedId:String){
         self.selectedId = selectedId

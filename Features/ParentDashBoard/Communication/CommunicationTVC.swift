@@ -96,6 +96,10 @@ class CommunicationTVC: UITableViewCell {
         selectBtnName.setTitle(AlertstringFile.Select.translated(), for: .normal)
         emergencyBtnName.setTitle("EMERGENCY MESSAGE".translated(), for: .normal)
         emergencyBtnName.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        let isRTL = UIView.userInterfaceLayoutDirection(for: contentView.semanticContentAttribute) == .rightToLeft
+        
+        newImageView.transform = isRTL ? CGAffineTransform(rotationAngle: -.pi / 2) :.identity
     }
     
     @IBAction func selectBtnAct(_ sender: UIButton) {

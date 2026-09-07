@@ -318,6 +318,9 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
             abesentCountLbl.text =  Absentees + "\(data.total_absentees)"
             totalLbl.text = Total_students + "\(data.student_counts)"
             cell.absentFullview.backgroundColor = UIColor.attendence.lighter(by: 20)
+            updateProgress(
+                absentees: data.total_absentees,
+                total: data.student_counts)
         } else {
             cell.fullview.backgroundColor = .systemGray6
             cell.fullview.layer.cornerRadius = 10
@@ -340,9 +343,9 @@ extension NewAbsenteesViewController: UICollectionViewDelegate, UICollectionView
         classNameLbl.text =  data.class_name
         sectionLbl.text =  data.section_name
         cvIcon.reloadData()
-        updateProgress(
-            absentees: data.total_absentees,
-            total: data.student_counts)
+//        updateProgress(
+//            absentees: data.total_absentees,
+//            total: data.student_counts)
         self.AbsentStudent(
             sectionId:data.section_id ,
             date: selectedDate ?? "",

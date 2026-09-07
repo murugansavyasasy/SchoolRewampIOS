@@ -79,7 +79,7 @@ class LSRWTaskTVC: UITableViewCell, SelectedId, UIPopoverPresentationControllerD
             if let popoverController = popoverVC.popoverPresentationController {
                 popoverController.sourceView = sender
                 popoverController.sourceRect = sender.bounds
-                popoverController.permittedArrowDirections = .right
+                popoverController.permittedArrowDirections = .any
                 popoverController.delegate = self
                 popoverController.backgroundColor = .white
             }

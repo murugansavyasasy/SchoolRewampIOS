@@ -68,13 +68,15 @@ public final class ReviewSubjectTableViewCell: UITableViewCell {
         self.config = config
         
         titleLabel.text = config.subjectName
-        subtitleLabel.text = "Section \(config.sectionName.uppercased())"
+        let Section = "Section".translated()
+        subtitleLabel.text = "\(Section) \(config.sectionName.uppercased())"
         
         let initial = String(config.subjectName.prefix(1)).uppercased()
         avatarLabel.text = initial
-        
+        let activityDefault = "Activity".translated()
+        let Activities = "Activities".translated()
         let count = config.tests.count
-        testCountLabel.text = count == 1 ? "1 Activity" : "\(count) Activities"
+        testCountLabel.text = count == 1 ? "1 \(activityDefault)" : "\(count) \(Activities)"
         
         // Compute height constraint synchronously so parent table view sizes correctly during reloadData
         testsTableViewHeightConstraint.constant = CGFloat(count) * 185.0

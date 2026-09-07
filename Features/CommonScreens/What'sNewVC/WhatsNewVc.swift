@@ -40,6 +40,13 @@ class WhatsNewVc: UIViewController {
     }
 
     private func setupUI() {
+        
+        updateLbl.text = "PRODUCT UPDATES".translated()
+        whatsnewLbl.text = "WHAT'S NEW?".translated()
+        tryItnowBtn.setTitle("Explore".translated(), for: .normal)
+        skipNextBtn.setTitle("Next".translated(), for: .normal)
+        skipPreviousBtn.setTitle("Previous".translated(), for: .normal)
+        
         // CollectionView Setup
         collectionView.register(UINib(nibName: "WhatsNewCVC", bundle: nil), forCellWithReuseIdentifier: "WhatsNewCVC")
         collectionView.delegate = self
@@ -48,7 +55,7 @@ class WhatsNewVc: UIViewController {
         // Back Button Setup
         backBtn.layer.cornerRadius = backBtn.frame.width / 2
         updateLbl.layer.cornerRadius = updateLbl.frame.height / 2
-            updateLbl.layer.masksToBounds = true
+        updateLbl.layer.masksToBounds = true
         // Header View Setup - Animated Gradient Banner
         headerView.layer.cornerRadius = 20
         headerView.layer.shadowColor = UIColor.black.cgColor

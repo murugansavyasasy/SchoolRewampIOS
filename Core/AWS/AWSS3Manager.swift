@@ -254,6 +254,10 @@ class AWSUploadManager {
             Bucket = BucketName.schoolchimes_activities
             Path = "\(Awsmenu.homework)/\(school_id)/\(today_date)"
             
+        case Menu_id.Raiseconcern:
+            Bucket = BucketName.schoolchimes_communication
+            Path = "\(Awsmenu.files)/\(school_id)/\(today_date)"
+            
         case Menu_id.isAssaignment:
             Bucket = BucketName.schoolchimes_activities
             Path = "\(Awsmenu.assignment)/\(school_id)/\(today_date)"
@@ -380,3 +384,4 @@ class AWSPreSignedURL {
  https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/files/7044/01-12-2025/D9A58808-726D-4C62-9915-374310C81170.jpj  https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/homework/7044/01-12-2025/8D059096-2149-44B8-9E25-03342241A568.jpg  https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/noticeboard/7044/01-12-2025/BCCF9B7C-34CD-4947-9D99-061606B7B703.jpg  https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/assignment/7044/01-12-2025/8199229E-D095-4501-9076-9400EC2A903A.jpg  https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/skills/7044/01-12-2025/audio_1764566311.wav  https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/events/7044/01-12-2025/1B8E8F7B-A566-4DF6-9DB4-C71F725F58CE.jpg
   https://schoolchimes-activities.s3.ap-south-1.amazonaws.com/events/7044/01-12-2025/C88E8321-FECD-46C0-B7A7-146A2AF5A0ED.jpg
  */
+

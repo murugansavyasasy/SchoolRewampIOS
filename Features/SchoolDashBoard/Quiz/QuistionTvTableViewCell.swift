@@ -226,6 +226,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         optDDefaultLbl.setRequiredText(QuizListStringFile.Option_D)
         CorretDefaultLbl.setRequiredText(QuizListStringFile.Correct_Ans)
         markDefaultLbl.setRequiredText(QuizListStringFile.Mark)
+        addFileBtnName.setTitle("Add files to Question".translated(), for: .normal)
         markTxtFild.placeholder = MenuStringFile.dropYourMarkHere.translated()
         ChapterTxtFld.placeholder = "Enter Chapter here".translated()
         markTxtFild.delegate = self
@@ -235,7 +236,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         opBTxtView.delegate = self
         opATxtView.delegate = self
         questionTxtView.delegate = self
-        markTxtFild.keyboardType = .numberPad
+        markTxtFild.keyboardType = .asciiCapableNumberPad
         opATxtView.addDoneButton()
         markTxtFild.addDoneButton()
         ChapterTxtFld.addDoneButton()
@@ -261,6 +262,11 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         QuestionImageCv.imageCollectionview.delegate = self
         QuestionImageCv.imageCollectionview.dataSource = self
         QuestionImageCv.imageCollectionview.backgroundColor = .clear
+        
+        OptionAImgBtn.setTitle("Add Image".translated(), for: .normal)
+        OptionBImgBtn.setTitle("Add Image".translated(), for: .normal)
+        OptionCImgBtn.setTitle("Add Image".translated(), for: .normal)
+        OptionDImgBtn.setTitle("Add Image".translated(), for: .normal)
     }
     
     func setPlaceholder(_ placeholder: String, for textView: UITextView) {
@@ -585,23 +591,23 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
         if remaining > 0 {
             let alertController = UIAlertController(title: AlertstringFile.Select.translated(), message: AlertstringFile.Chooseanoption.translated(), preferredStyle: .actionSheet)
             // Camera option
-            let cameraAction = UIAlertAction(title: CommonStringFile.Camera, style: .default) { [self] _ in
+            let cameraAction = UIAlertAction(title: CommonStringFile.Camera.translated(), style: .default) { [self] _ in
                 openCamera()
             }
             alertController.addAction(cameraAction)
             // Gallery option
-            let galleryAction = UIAlertAction(title: CommonStringFile.Photos, style: .default) { [self] _ in
+            let galleryAction = UIAlertAction(title: CommonStringFile.Photos.translated(), style: .default) { [self] _ in
                 selectImages()//
             }
             alertController.addAction(galleryAction)
             
-            let pdfAction = UIAlertAction(title: CommonStringFile.Document, style: .default) { [self] _ in
+            let pdfAction = UIAlertAction(title: CommonStringFile.Document.translated(), style: .default) { [self] _ in
                 selectDocuments()
             }
             alertController.addAction(pdfAction)
             //   VIDEO option
             let VideoAction = UIAlertAction(title:
-                                                CommonStringFile.Video, style: .default) { [self] _ in
+                                                CommonStringFile.Video.translated(), style: .default) { [self] _ in
                 
                 let totalRemaining = Filecount.SelectImageAndDocumetCount - file_path.count
                 let videoCount = file_path.filter { $0.type?.lowercased() == video }.count
@@ -621,7 +627,7 @@ class QuistionTvTableViewCell: UITableViewCell,UITextViewDelegate, UITextFieldDe
             alertController.addAction(VideoAction)
             // Cancel action
             let cancelAction = UIAlertAction(
-                title: CommonStringFile.Cancel,
+                title: CommonStringFile.Cancel.translated(),
                 style: .cancel,
                 handler: nil
             )

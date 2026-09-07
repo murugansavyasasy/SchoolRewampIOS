@@ -12,6 +12,7 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
         delegate?.selectId(id:id, edit: edit)
     }
     
+    @IBOutlet weak var newImg: UIImageView!
     @IBOutlet weak var roundView: UIView!
     @IBOutlet weak var editAndDeleteBtnName: UIButton!
     @IBOutlet weak var descriptionLbl: UILabel!
@@ -42,6 +43,10 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
                    layout.estimatedItemSize = .zero
                }
                cv.isScrollEnabled = false
+        
+        let isRTL = UIView.userInterfaceLayoutDirection(for: contentView.semanticContentAttribute) == .rightToLeft
+        
+        newImg.transform = isRTL ? CGAffineTransform(rotationAngle: -.pi / 2) :.identity
     }
     
     
@@ -56,7 +61,7 @@ class ContentCell: UITableViewCell,UICollectionViewDelegate,UICollectionViewData
         if let popoverController = popoverContentVC.popoverPresentationController {
             popoverController.sourceView = sender
             popoverController.sourceRect = sender.bounds
-            popoverController.permittedArrowDirections = .right
+            popoverController.permittedArrowDirections = .any
             popoverController.delegate = self
         }
         

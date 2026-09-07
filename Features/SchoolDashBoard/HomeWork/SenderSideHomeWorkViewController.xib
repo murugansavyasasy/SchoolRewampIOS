@@ -32,6 +32,7 @@
                 <outlet property="titleCountLbl" destination="tzb-Ws-QuV" id="vf8-bC-PDt"/>
                 <outlet property="titleLbl" destination="kni-Fc-z9J" id="dwc-b8-uMx"/>
                 <outlet property="uploadAttachmentView" destination="SZa-AU-ot2" id="956-2q-nb5"/>
+                <outlet property="uploadattachmentLbl" destination="9yS-pM-cRG" id="kzI-91-7zD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="voiceImg" destination="Vdx-mK-sr0" id="K3M-B7-Y4V"/>
                 <outlet property="wordsCountLbl" destination="Ph2-Ju-2H3" id="Q0e-Ih-sXP"/>
@@ -350,10 +351,10 @@
         <image name="list.bullet.clipboard" catalog="system" width="98" height="128"/>
         <image name="mic 1" width="26" height="26"/>
         <namedColor name="BackGroundClr">
-            <color red="0.9649999737739563" green="0.16899999976158142" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.41999998688697815" green="0.70999997854232788" blue="0.3449999988079071" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="PrimeryColor">
-            <color red="0.49799999594688416" green="0.10199999809265137" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

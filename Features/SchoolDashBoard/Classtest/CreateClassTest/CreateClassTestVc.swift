@@ -50,7 +50,9 @@ class CreateClassTestVc: UIViewController {
     @IBOutlet public weak var line2To3: UIView!
     @IBOutlet public weak var line3To4: UIView!
     @IBOutlet public weak var line4To5: UIView!
+    @IBOutlet weak var noteLabel: UILabel!
     @IBOutlet weak var viewHistoryBtn: UIButton!
+    @IBOutlet weak var viewMarkAnalisisBtn: UIButton!
     
     private let acidamicdrops = DropDown()
     private var accadimYr: [String] = []
@@ -118,7 +120,23 @@ class CreateClassTestVc: UIViewController {
         configureCircle(step3Circle)
         configureCircle(step4Circle)
         configureCircle(step5Circle)
-        
+        noteLabel.text = "class_test_note".translated()
+        step1Title.text = "Standard".translated()
+        step2Title.text = "Sections".translated()
+        step3Title.text = "Subjects".translated()
+        step4Title.text = "Details".translated()
+        step5Title.text = "Review".translated()
+        continueButton.setTitle("continue".translated(), for: .normal)
+        backButton.setTitle("back".translated(), for: .normal)
+        addTestMarksBtnName.setTitle(
+            "add_test_marks".translated(),
+            for: .normal
+        )
+        viewHistoryBtn.setTitle(
+            "view_created_test".translated(),
+            for: .normal
+        )
+        viewMarkAnalisisBtn.setTitle("View Mark Analysis ❭".translated(), for: .normal)
         // Customize action buttons
         backButton.layer.cornerRadius = 16
         backButton.layer.borderWidth = 1.0
@@ -145,14 +163,14 @@ class CreateClassTestVc: UIViewController {
     
     private func showDiscardAlert() {
         let alert = UIAlertController(
-            title: "Discard Changes?",
-            message: "Are you sure you want to discard your changes?",
+            title: "Discard Changes?".translated(),
+            message: "Are you sure you want to discard your changes?".translated(),
             preferredStyle: .alert
         )
 
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel))
 
-        alert.addAction(UIAlertAction(title: "Discard", style: .destructive) { _ in
+        alert.addAction(UIAlertAction(title: "Discard".translated(), style: .destructive) { _ in
             self.dismiss(animated: true)
         })
 
@@ -182,12 +200,15 @@ class CreateClassTestVc: UIViewController {
     
     private func updateStepView(for step: Int) {
         // 1. Update text content
-        stepProgressLabel.text = "Step \(step) of 5"
+        stepProgressLabel.text = String(
+            format: "step_progress".translated(),
+            step
+        )
         
         switch step {
         case 1:
-            stepTitleLabel.text = "Select Standard"
-            stepSubtitleLabel.text = "Choose the class for which you want to create a test"
+            stepTitleLabel.text = "step1_title".translated()
+            stepSubtitleLabel.text = "step1_subtitle".translated()
             backButton.isHidden = true
             continueButton.isHidden = false
             addTestMarksBtnName.isHidden = false
@@ -196,8 +217,11 @@ class CreateClassTestVc: UIViewController {
             transition(to: vc)
             
         case 2:
-            stepTitleLabel.text = "Select Sections"
-            stepSubtitleLabel.text = "Standard \(viewModel.selectedStandard?.name ?? "") — select one or more"
+            stepTitleLabel.text = "step2_title".translated()
+            stepSubtitleLabel.text = String(
+                format: "step2_subtitle".translated(),
+                viewModel.selectedStandard?.name ?? ""
+            )
             backButton.isHidden = false
             continueButton.isHidden = false
             addTestMarksBtnName.isHidden = true
@@ -206,8 +230,8 @@ class CreateClassTestVc: UIViewController {
             transition(to: vc)
             
         case 3:
-            stepTitleLabel.text = "Create Class Test"
-            stepSubtitleLabel.text = "Choose subjects to include in the test"
+            stepTitleLabel.text = "step3_title".translated()
+            stepSubtitleLabel.text = "step3_subtitle".translated()
             backButton.isHidden = false
             continueButton.isHidden = false
             addTestMarksBtnName.isHidden = true
@@ -216,8 +240,8 @@ class CreateClassTestVc: UIViewController {
             transition(to: vc)
             
         case 4:
-            stepTitleLabel.text = "Create Class Test"
-            stepSubtitleLabel.text = "Configure  Test"
+            stepTitleLabel.text = "step4_title".translated()
+            stepSubtitleLabel.text = "step4_subtitle".translated()
             backButton.isHidden = false
             continueButton.isHidden = false
             addTestMarksBtnName.isHidden = true
@@ -226,8 +250,8 @@ class CreateClassTestVc: UIViewController {
             transition(to: vc)
             
         case 5:
-            stepTitleLabel.text = "Create Class Test"
-            stepSubtitleLabel.text = "Confirm your entries"
+            stepTitleLabel.text = "step5_title".translated()
+            stepSubtitleLabel.text = "step5_subtitle".translated()
             
             
 //            if viewModel.exameName == "" {

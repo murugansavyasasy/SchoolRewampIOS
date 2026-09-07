@@ -199,11 +199,11 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         if #available(iOS 15.0, *) {
             showActivityLoader()
         }
-        
+        let languageCode = Locale.current.language.languageCode?.identifier
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         APIService.shared.makeApi(
             url: ServiceUrl.get_dashboard_details,
-            parameters: ["member_type": "parent", "mobile_number": mobile_num ?? ""],
+            parameters: ["member_type": "parent", "mobile_number": mobile_num ?? "","language_code": languageCode ?? "en"],
             type: ApitTypeSringFile.GET,
             token: childDetails?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<MenuResponse, Error>) in
@@ -222,6 +222,9 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         
                         self.pagecontroller.numberOfPages = details.frequently_used?.count ?? 0
                         self.filteredMenu = details.menus ?? []
+//                        self.filteredMenu.append(
+//                            MenuDetail(id: 206, name: "Class test", description: "Used to apply leave")
+//                        )
                         self.recentActiveMenuCollection.reloadData()
                         self.get_MenuCount()
                         user_inputs.menuList = self.menu_details.compactMap{$0.name}
@@ -610,8 +613,6 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                 MenuRedirect.buslist(from: self, loginasType: loginAsType ?? 0, is_ownbustraking: childDetails?.gps_type == "dhundhoo" ? false : true)
         case 206 :
             MenuRedirect.resiverClassTestVc(from: self)
-//        case 208 :
-//            MenuRedirect.resivereExamAnalizeVc(from: self)
             
         default:
             let alert = UIAlertController(

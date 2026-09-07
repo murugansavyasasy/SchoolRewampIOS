@@ -98,17 +98,17 @@ class BiometricAuthentication {
         completion: @escaping (Bool) -> Void
     ) {
         let alert = UIAlertController(
-            title: "Enable Face ID / Touch ID",
-            message: message,
+            title: "enable_face_id_touch_id".translated(),
+            message: message.translated(),
             preferredStyle: .alert
         )
 
-        alert.addAction(UIAlertAction(title: "Enable", style: .default) { _ in
+        alert.addAction(UIAlertAction(title: "enable".translated(), style: .default) { _ in
             self.enableBiometric(true)
             completion(true)
         })
 
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
+        alert.addAction(UIAlertAction(title: "Cancel".translated(), style: .cancel) { _ in
             self.enableBiometric(false)
             self.DeclineBiometric(true)
             completion(false)
