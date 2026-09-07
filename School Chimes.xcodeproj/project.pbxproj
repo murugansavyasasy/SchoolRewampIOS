@@ -4692,6 +4692,7 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		18364E31304EB699003AED35 /* paymentProof */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = paymentProof; sourceTree = "<group>"; };
 		186E62522FEA59E700BAF454 /* Classtest */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Classtest; sourceTree = "<group>"; };
 		186F4AD5304BE22700AC7E58 /* ExamAnaylze */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ExamAnaylze; sourceTree = "<group>"; };
 		186F4B22304BE46000AC7E58 /* ConcernVc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ConcernVc; sourceTree = "<group>"; };
@@ -5056,6 +5057,7 @@
 		187A0B452F10E9AA008CF5B7 /* FeeDetail */ = {
 			isa = PBXGroup;
 			children = (
+				18364E31304EB699003AED35 /* paymentProof */,
 				1868A8112FACA13700831144 /* PaymentHistoryCell.swift */,
 				1868A8122FACA13700831144 /* PaymentHistoryCell.xib */,
 				187A0B3F2F10E9AA008CF5B7 /* FeeDetails.swift */,
@@ -7156,6 +7158,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				18364E31304EB699003AED35 /* paymentProof */,
 				186E62522FEA59E700BAF454 /* Classtest */,
 				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186F4B22304BE46000AC7E58 /* ConcernVc */,
@@ -7199,6 +7202,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				18364E31304EB699003AED35 /* paymentProof */,
 				186E62522FEA59E700BAF454 /* Classtest */,
 				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186F4B22304BE46000AC7E58 /* ConcernVc */,
@@ -7242,6 +7246,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				18364E31304EB699003AED35 /* paymentProof */,
 				186E62522FEA59E700BAF454 /* Classtest */,
 				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186F4B22304BE46000AC7E58 /* ConcernVc */,
@@ -7303,6 +7308,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				18364E31304EB699003AED35 /* paymentProof */,
 				186E62522FEA59E700BAF454 /* Classtest */,
 				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186F4B22304BE46000AC7E58 /* ConcernVc */,
