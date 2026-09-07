@@ -87,17 +87,17 @@ class TodayAttendanceCell: UITableViewCell {
             pillView.layer.borderColor = UIColor.systemGreen.withAlphaComponent(0.5).cgColor
             pillView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.1)
             statusLabel.textColor = .systemGreen
-            statusLabel.text = "Present"
+            statusLabel.text = "Present".translated()
         } else if status.contains("absent") {
             pillView.layer.borderColor = UIColor.systemRed.withAlphaComponent(0.5).cgColor
             pillView.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
             statusLabel.textColor = .systemRed
-            statusLabel.text = "Absent"
+            statusLabel.text = "Absent".translated()
         } else {
             pillView.layer.borderColor = UIColor.systemGray.withAlphaComponent(0.5).cgColor
             pillView.backgroundColor = UIColor.systemGray.withAlphaComponent(0.1)
             statusLabel.textColor = .darkGray
-            statusLabel.text = "Not Marked"
+            statusLabel.text = "Not Marked".translated()
         }
         
         pillView.addSubview(statusLabel)

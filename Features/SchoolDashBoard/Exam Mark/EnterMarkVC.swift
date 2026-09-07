@@ -58,7 +58,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                 secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? ""
             )
         }
-        noteLbl.text =  "Note: Use \("AB") for absent students and \("NA") for marks that are not applicable."
+        noteLbl.text =  "Note: Use AB for absent students and NA for marks that are not applicable.".translated()
         setupHeaderCollectionView()
         setupTableView()
         setupKeyboardObservers()
@@ -356,7 +356,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                     studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].change_mark = currentMark
                     studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].mark = aiValue
                     studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].reason =
-                        "Existing marks differ from the newly uploaded data."
+                    "Existing marks differ from the newly uploaded data.".translated()
 
                 } else if currentMark.isEmpty {
                     studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex].mark = aiValue
@@ -415,7 +415,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                         studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
                             .rubrics?[rubricIndex].mark = aiValue
                         studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
-                            .rubrics?[rubricIndex].reason = "Existing marks differ from the newly uploaded data."
+                            .rubrics?[rubricIndex].reason = "Existing marks differ from the newly uploaded data.".translated()
 
                     } else if currentRubricMark.isEmpty {
                         studentRecords[studentIndex].marks?[subjectIndex].activities?[activityIndex]
@@ -566,7 +566,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                             case .failure(let error):
                                 CustomAlert.showAlertWithOkAction(
                                     title: AlertstringFile.Alert_title,
-                                    message: "Failed to upload marks. Please try again.",
+                                    message: "Failed to upload marks. Please try again.".translated(),
                                     on: self
                                 ) { }
                             }
@@ -654,8 +654,8 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
             
             if invalidMarkCount > 0 {
                 CustomAlert().showAlert(
-                    title: "Invalid Marks",
-                    message: "\(invalidMarkCount) marks are greater than Max Mark. Please correct them before saving.",
+                    title: "Invalid Marks".translated(),
+                    message: "\(invalidMarkCount) \("marks are greater than Max Mark. Please correct them before saving.".translated())",
                     on: self
                 )
                 return
@@ -717,7 +717,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                     case .failure(_):
                         CustomAlert.showAlertWithOkAction(
                             title: AlertstringFile.Alert_title,
-                            message: "Failed to upload marks. Please try again.",
+                            message: "Failed to upload marks. Please try again.".translated(),
                             on: self
                         ) { }
                     }
@@ -761,7 +761,7 @@ extension EnterMarkVC {
             .map { "\($0.value) \($0.key)" }
             .joined(separator: ", ")
         
-        return "Found \(total) issue(s): " + details.translated()
+        return "\("Found".translated()) \(total) \("issue(s):".translated()) " + details.translated()
     }
 }
 // MARK: - Header CollectionView DataSource & Delegate
@@ -780,7 +780,7 @@ extension EnterMarkVC: UICollectionViewDataSource, UICollectionViewDelegateFlowL
         cell.configure(
             title: header.displayName ?? "",
             subtitle: header.subjectName?.uppercased() ?? "",
-            max_Mark: "Max: \(header.maxMarks ?? 0)",
+            max_Mark: "\("Max:".translated()) \(header.maxMarks ?? 0)",
             rubrics: header.rubrics
         )
         return cell
@@ -1289,18 +1289,18 @@ extension EnterMarkVC {
                                 sortOrder: String,
                                 students: [StudentMark]) -> [StudentMark] {
         
-        let isAscending = sortOrder == "Ascending"
+        let isAscending = sortOrder == "Ascending".translated()
         
         switch filterType {
             
-        case "Student Name":
+        case "Student Name".translated():
             return students.sorted {
                 let n1 = $0.student_name ?? ""
                 let n2 = $1.student_name ?? ""
                 return isAscending ? n1 < n2 : n1 > n2
             }
             
-        case "Roll Number":
+        case "Roll Number".translated():
             return students.sorted {
                 let r1 = $0.roll_no ?? ""
                 let r2 = $1.roll_no ?? ""
@@ -1311,7 +1311,7 @@ extension EnterMarkVC {
                 return isAscending ? r1 < r2 : r1 > r2
             }
             
-        case "Admission Number":
+        case "Admission Number".translated():
             return students.sorted {
                 let a1 = $0.admission_no ?? ""
                 let a2 = $1.admission_no ?? ""
@@ -1322,7 +1322,7 @@ extension EnterMarkVC {
                 return isAscending ? a1 < a2 : a1 > a2
             }
             
-        case "Gender":
+        case "Gender".translated():
             return students.sorted {
                 func normalizeGender(_ gender: String?) -> String {
                     guard let gender = gender, !gender.isEmpty else { return "" }
@@ -1333,11 +1333,11 @@ extension EnterMarkVC {
                 let g2 = normalizeGender($1.gender)
                 
                 switch sortOrder.lowercased() {
-                case "male":
+                case "male".translated():
                     return g1 == "Male"
-                case "female":
+                case "female".translated():
                     return g1 == "Female"
-                case "others":
+                case "others".translated():
                     return g1 != "Male" && g1 != "Female"
                 default:
                     return true

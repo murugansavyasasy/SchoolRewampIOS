@@ -307,7 +307,7 @@ extension MarksCell: UITextFieldDelegate {
            let entered = Int(value),
            entered > maxStr {
             isValid = false
-            reason = "Maximum mark exceeded"
+            reason = "Maximum mark exceeded".translated()
         }
         
         let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
@@ -334,11 +334,11 @@ extension MarksCell: UITextFieldDelegate {
            let entered = Int(updatedText),
            entered > max {
             isValid = false
-            reason = "Maximum mark exceeded"
+            reason = "Maximum mark exceeded".translated()
         }
         
         if updatedText == "AB" {
-            reason = "Absent"
+            reason = "Absent".translated()
         }
         applyValidationUI(mark: updatedText,maxMark: parentVC?.subjectColumns[columnIndex].maxMarks ?? 0)
         let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
@@ -374,13 +374,13 @@ extension MarksCell {
     @objc private func abTapped() {
         markTxt.text = "AB"
         let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
-        delegate?.updateMark(row: rowIndex,column: columnIndex,value: "AB",reson: "Absent",subjectName: subjectName)
+        delegate?.updateMark(row: rowIndex,column: columnIndex,value: "AB",reson: "Absent".translated(),subjectName: subjectName)
         parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex)
     }
     @objc private func naTapped() {
         markTxt.text = "NA"
         let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
-        delegate?.updateMark(row: rowIndex,column: columnIndex,value: "NA",reson: "Not Applicable",subjectName: subjectName)
+        delegate?.updateMark(row: rowIndex,column: columnIndex,value: "NA",reson: "Not Applicable".translated(),subjectName: subjectName)
         parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex)
     }
 }

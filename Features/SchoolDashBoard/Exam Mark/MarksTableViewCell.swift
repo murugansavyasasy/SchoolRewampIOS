@@ -76,8 +76,8 @@ class MarksTableViewCell: UITableViewCell {
         
         if let rollNo = student.roll_no,
            let admissionNo = student.admission_no {
-            rollNoLabel.text = "Roll No: \(rollNo)"
-            admissNoLabel.text = "Adm No: \(admissionNo)"
+            rollNoLabel.text = "\("Roll No:".translated()) \(rollNo)"
+            admissNoLabel.text = "\("Adm No:".translated()) \(admissionNo)"
             rollNoLabel.isHidden = rollNo.isEmpty
             admissNoLabel.isHidden = admissionNo.isEmpty
         } else {
@@ -240,7 +240,7 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
     
     @objc func infoBtnTapped(_ sender: UIButton) {
         let columnIndex = sender.tag
-        var reason = "Issue detected"
+        var reason = "Issue detected".translated()
         guard columnIndex < parentVC?.subjectColumns.count ?? 0 else { return }
         let column = parentVC?.subjectColumns[columnIndex]
         let student = parentVC?.studentRecords[studentIndex]
@@ -251,9 +251,9 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
             if column?.isRubric == true, let rubricId = column?.rubricId,
                let rubrics = activity.rubrics, !rubrics.isEmpty,
                let rubric = rubrics.first(where: { $0.id == rubricId }) {
-                reason = rubric.reason ?? "Issue detected"
+                reason = rubric.reason ?? "Issue detected".translated()
             } else {
-                reason = activity.reason ?? "Issue detected"
+                reason = activity.reason ?? "Issue detected".translated()
             }
         }
         

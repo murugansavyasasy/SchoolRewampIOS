@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewDetailsVc" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
             <connections>
                 <outlet property="btnBack" destination="mdv-kL-YJL" id="DCB-bU-7zh"/>
+                <outlet property="headerLbl" destination="Pze-on-ges" id="gDg-Fe-yjw"/>
                 <outlet property="tableView" destination="z5a-Sm-Kew" id="FQA-TI-Ubg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -97,7 +98,7 @@
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <namedColor name="BackGroundClr">
-            <color red="0.49799999594688416" green="0.10199999809265137" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

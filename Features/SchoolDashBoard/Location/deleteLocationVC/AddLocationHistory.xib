@@ -114,7 +114,7 @@
             </constraints>
             <point key="canvasLocation" x="130.53435114503816" y="-12.67605633802817"/>
         </view>
-        <view contentMode="scaleToFill" id="ot9-VM-xI6">
+        <view contentMode="scaleToFill" ambiguous="YES" id="ot9-VM-xI6">
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
