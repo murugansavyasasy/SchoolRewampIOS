@@ -126,13 +126,13 @@ class SubjectsTVCell: UITableViewCell {
             }.count
 
             let text = selected > 0
-                ? "\(total) Activities   • \(selected) Selected"
-                : "\(total) Activities"
+            ? "\(total) \("Activities".translated())   • \(selected) \("Selected".translated())"
+                : "\(total) \("Activities".translated())"
 
             let attributed = NSMutableAttributedString(string: text)
 
             if selected > 0,
-               let range = text.range(of: "• \(selected) Selected") {
+               let range = text.range(of: "• \(selected) \("Selected".translated())") {
                 let nsRange = NSRange(range, in: text)
                 attributed.addAttribute(
                     .foregroundColor,
