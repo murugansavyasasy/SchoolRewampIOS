@@ -23,6 +23,7 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="○" textAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CmR-fR-Va5" userLabel="statusIconLabel">
                                 <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                <color key="tintColor" systemColor="systemGrayColor"/>
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="O9V-R7-Owo" secondAttribute="centerX" id="icon-cx"/>
                                     <constraint firstAttribute="centerY" secondItem="O9V-R7-Owo" secondAttribute="centerY" id="icon-cy"/>

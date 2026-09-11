@@ -24,7 +24,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     var stops: [Stops] = []
     var stopCoordinates: [CLLocationCoordinate2D] {
         stops.compactMap {
-            guard let lat = Double($0.latitude ?? ""), let lon = Double($0.longitude ?? "") else { return nil }
+            guard let lat = Double($0.latitude?.replacingOccurrences(of: "° N", with: "").trimmingCharacters(in: .whitespacesAndNewlines) ?? ""), let lon = Double($0.longitude?.replacingOccurrences(of: "° E", with: "").trimmingCharacters(in: .whitespacesAndNewlines) ?? "") else { return nil }
             return CLLocationCoordinate2D(latitude: lat, longitude: lon)
         }
     }
@@ -75,7 +75,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         
         setupMap()
         addStopPins()
-        showUserPin()
+       // showUserPin()
         fetchRoadRoute()
         
     }
@@ -132,8 +132,8 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
                         self.latestGeoLocation = latest
 
                         guard
-                            let latString = latest.latitude,
-                            let lonString = latest.longitude,
+                            let latString = latest.latitude?.replacingOccurrences(of: "° N", with: "").trimmingCharacters(in: .whitespacesAndNewlines),
+                            let lonString = latest.longitude?.replacingOccurrences(of: "° E", with: "").trimmingCharacters(in: .whitespacesAndNewlines),
                             let latitude = Double(latString),
                             let longitude = Double(lonString)
                         else {
@@ -657,17 +657,36 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     }
     
     // MARK: — Fetch Road Route
-    
     func fetchRoadRoute() {
+    
         guard !stops.isEmpty else { return }
-        
+
         let path = stops.compactMap { stop -> String? in
-            if let lon = stop.longitude, let lat = stop.latitude {
-                return "\(lon),\(lat)"
+
+            guard let lon = stop.longitude,
+                  let lat = stop.latitude else {
+                return nil
             }
-            return nil
-        }.joined(separator: ";")
-        
+
+            let cleanLon = lon
+                .replacingOccurrences(of: "° E", with: "")
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+
+            let cleanLat = lat
+                .replacingOccurrences(of: "° N", with: "")
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+
+            guard !cleanLon.isEmpty,
+                  !cleanLat.isEmpty,
+                  cleanLon != "--",
+                  cleanLat != "--" else {
+                return nil
+            }
+
+            return "\(cleanLon),\(cleanLat)"
+        }
+        .joined(separator: ";")
+
         guard !path.isEmpty else { return }
         
 //        let urlString = "https://router.project-osrm.org/route/v1/driving/\(path)?overview=full&geometries=geojson"
@@ -676,6 +695,7 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
         
     
         guard let url = URL(string: urlString) else { return }
+        print("url",url)
         URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
                 print("❌ Route fetch error: \(error.localizedDescription)")
@@ -1024,13 +1044,19 @@ extension BusTrakingVC: UIAdaptivePresentationControllerDelegate {
     
 }
 
-
-
 extension Stops {
     var coordinate: CLLocationCoordinate2D {
+        let cleanLatitude = latitude?
+            .replacingOccurrences(of: "° N", with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+
+        let cleanLongitude = longitude?
+            .replacingOccurrences(of: "° E", with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+
         return CLLocationCoordinate2D(
-            latitude: Double(latitude ?? "") ?? 0,
-            longitude:  Double(longitude ?? "" ) ?? 0
+            latitude: Double(cleanLatitude ?? "") ?? 0,
+            longitude: Double(cleanLongitude ?? "") ?? 0
         )
     }
 }
