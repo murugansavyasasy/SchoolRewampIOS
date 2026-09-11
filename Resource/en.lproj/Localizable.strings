@@ -1587,7 +1587,7 @@
 "Skip" = "Skip";
 "Let's Go" = "Let's Go";
 "Today's Event" = "Today's Event";
-
+"Close" = "Close";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";

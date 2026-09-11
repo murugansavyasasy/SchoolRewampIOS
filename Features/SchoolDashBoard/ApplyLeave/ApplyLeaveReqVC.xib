@@ -39,6 +39,7 @@
                 <outlet property="ToSessionDefLbl" destination="1It-1d-zvE" id="mFL-Ga-JfM"/>
                 <outlet property="TypeDefLbl" destination="wB3-bN-hOn" id="R1P-Wd-2Z3"/>
                 <outlet property="TypeImage" destination="2gt-Aq-5Oe" id="Jyx-MM-sC8"/>
+                <outlet property="backLbl" destination="uex-NA-RRI" id="AEu-On-xrS"/>
                 <outlet property="errorLbl" destination="KDS-a6-u0w" id="BSC-zv-bVA"/>
                 <outlet property="scrollView" destination="w10-rn-DiL" id="P03-2P-U9P"/>
                 <outlet property="toDatePicker" destination="XwR-MC-ia7" id="LRK-Vs-7Gn"/>
@@ -632,7 +633,7 @@
         <image name="pencil.line" catalog="system" width="128" height="117"/>
         <image name="window.ceiling.closed" catalog="system" width="128" height="105"/>
         <namedColor name="BackGroundClr">
-            <color red="0.41999998688697815" green="0.70999997854232788" blue="0.3449999988079071" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.49799999594688416" green="0.10199999809265137" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="ClickClr">
             <color red="0.76099997758865356" green="0.90600001811981201" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

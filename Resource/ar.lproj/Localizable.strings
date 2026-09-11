@@ -1585,7 +1585,7 @@
 "Skip" = "تخطي";
 "Let's Go" = "هيا بنا";
 "Today's Event" = "فعالية اليوم";
-
+"Close" = "إغلاق";
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";
