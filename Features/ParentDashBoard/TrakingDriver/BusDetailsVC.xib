@@ -89,7 +89,7 @@
         <image name="location.north.circle.fill" catalog="system" width="128" height="123"/>
         <image name="phone.fill" catalog="system" width="128" height="114"/>
         <namedColor name="BackGroundClr">
-            <color red="0.21568627450980393" green="0.49019607843137253" blue="0.95686274509803915" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.41999998688697815" green="0.70999997854232788" blue="0.3449999988079071" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

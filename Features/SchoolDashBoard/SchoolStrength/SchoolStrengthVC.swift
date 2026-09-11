@@ -61,46 +61,71 @@ class SchoolStrengthVC: UIViewController {
     }
     
     func createStrengthList(from data: SchoolStrength) -> [StrengthDisplayModel] {
+
         var list: [StrengthDisplayModel] = []
+
+        // MARK: - Current Year
+
         let totalStudent = Int(data.total_student_strength ?? "0") ?? 0
         let totalStaff = Int(data.total_staff_strength ?? "0") ?? 0
+
         let total = totalStudent + totalStaff
-        let totalPreviousYear = Int(previousData?.total_student_strength ?? "0") ?? 0 + (
+
+        // MARK: - Previous Year
+
+        let previousStudent =
+            Int(previousData?.total_student_strength ?? "0") ?? 0
+
+        let previousStaff =
             Int(previousData?.total_staff_strength ?? "0") ?? 0
-        )
+
+        let totalPreviousYear = previousStudent + previousStaff
+
+        // MARK: - Total
+
         list.append(
             StrengthDisplayModel(
                 Total: total,
                 name: Total,
                 previousYear: totalPreviousYear,
-                Girl:Int(data.total_student_strength ?? "0") ?? 0,
-                boys:  Int(data.total_staff_strength ?? "0") ?? 0,
-                others: 0,
-                message: previousData?.message ?? ""))
-        list.append(
-            StrengthDisplayModel(
-                Total: totalStudent,
-                name: Students,
-                previousYear: Int(previousData?.total_student_strength ?? "") ?? 0,
                 Girl: Int(data.total_girls_strength ?? "0") ?? 0,
                 boys: Int(data.total_boys_strength ?? "0") ?? 0,
                 others: Int(data.total_others_strength ?? "0") ?? 0,
                 message: previousData?.message ?? ""
             )
         )
+
+        // MARK: - Students
+
+        list.append(
+            StrengthDisplayModel(
+                Total: totalStudent,
+                name: Students,
+                previousYear: previousStudent,
+                Girl: Int(data.total_girls_strength ?? "0") ?? 0,
+                boys: Int(data.total_boys_strength ?? "0") ?? 0,
+                others: Int(data.total_others_strength ?? "0") ?? 0,
+                message: previousData?.message ?? ""
+            )
+        )
+
+        // MARK: - Staff
+
         list.append(
             StrengthDisplayModel(
                 Total: totalStaff,
                 name: Staff,
-                previousYear: Int(previousData?.total_staff_strength ?? "") ?? 0,
+                previousYear: previousStaff,
                 Girl: Int(data.total_female_staffs_strength ?? "0") ?? 0,
                 boys: Int(data.total_male_staffs_strength ?? "0") ?? 0,
                 others: Int(data.total_other_staffs_strength ?? "0") ?? 0,
                 message: previousData?.message ?? ""
             )
         )
+
         return list
     }
+    
     
     func UIupdate() {
         academicyearDrp.setShadow()

@@ -260,7 +260,7 @@ extension BusDetailsVC: UITableViewDelegate {
         let alert = UIAlertController(
             title: stop.stop_name,
             message: """
-            Arrival: \(stop.stop_time)
+            Arrival: \(stop.stop_time ?? "")
             Status: \(statusText)
             """,
             preferredStyle: .alert
