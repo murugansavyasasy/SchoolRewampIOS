@@ -333,6 +333,7 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
                         vc.ExamID = self.SelectedExam?.id ?? ""
                         vc.isAIFlow = true
                         vc.selectedColoumns = self.selectedColumns
+                        vc.academicYearId = self.academicYearId
                         vc.section_Id = self.section_id ?? ""
                         vc.convertedRecords = self.convertedRecords
                         vc.SelectedExam = self.SelectedExam

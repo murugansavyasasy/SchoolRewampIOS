@@ -32,6 +32,7 @@ class SubjectsTVCell: UITableViewCell {
     var selectionHandler: ((Int, Bool) -> Void)?
     var DropdownData : [String]?
     var expandedRubricRows: Set<Int> = []
+    let dropdown = DropDown()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -63,6 +64,28 @@ class SubjectsTVCell: UITableViewCell {
         tableview.dataSource = self
         
         tableview.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
+    }
+    func showDropdown(
+        items: [String],
+        selectedValue: String?,
+        onSelect: @escaping (String) -> Void
+    ) {
+
+        dropdown.dataSource = items
+
+        dropdown.anchorView = baseView
+        dropdown.direction = .bottom
+
+        dropdown.selectionAction = { [weak self] index, item in
+
+            guard self != nil else {
+                return
+            }
+
+            onSelect(item)
+        }
+
+        dropdown.show()
     }
     
     deinit {

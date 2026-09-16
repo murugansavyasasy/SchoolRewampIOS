@@ -50,6 +50,7 @@ class AttendenceTVC: UITableViewCell, Attendence {
     var studentId: String?
     weak var delegate: studentAttenance?
     weak var leaveApplied : viewLeaveApplied?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         fromDateView.layer.cornerRadius = 10
@@ -60,6 +61,11 @@ class AttendenceTVC: UITableViewCell, Attendence {
         custSwitch = CustomSwitch1()
         custSwitch.delegate = self
         outerView.layer.cornerRadius = 10
+        outerView.layer.shadowColor = UIColor.black.cgColor
+        outerView.layer.shadowOpacity = 0.05
+        outerView.layer.shadowOffset = CGSize(width: 0, height: 0.3)
+        outerView.layer.shadowRadius = 1
+        outerView.layer.masksToBounds = false
         nameLbl.setFont(style: .body, size: FontSize.BodySize)
         admissionlbl.setFont(style: .body, size: FontSize.BodySize)
         rollNoLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -105,7 +111,7 @@ class AttendenceTVC: UITableViewCell, Attendence {
     }
     
     @IBAction func phnBtn(_ sender: UIButton) {
-        let phoneNumber = sender.titleLabel?.text ?? "1234567890" // Replace with
+        let phoneNumber = sender.titleLabel?.text ?? "" // Replace with
         if let phoneURL = URL(string: "tel://\(phoneNumber)"),
            UIApplication.shared.canOpenURL(phoneURL) {
             UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
