@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProofThumbnailCell" id="gTV-IL-0wX" customClass="ProofThumbnailCell" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="260" height="64"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="260" height="64"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cnt-vw" userLabel="Container View">
+                        <rect key="frame" x="0.0" y="0.0" width="260" height="64"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bdg-vw" userLabel="Badge Container View">
+                                <rect key="frame" x="10" y="10" width="44" height="44"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IMG" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bdg-lbl" userLabel="Badge Label">
+                                        <rect key="frame" x="9.3333333333333304" y="14.333333333333332" width="25.666666666666671" height="15.666666666666668"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                        <color key="textColor" red="0.14509803921568626" green="0.38823529411764707" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.85882352941176465" green="0.91764705882352937" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="bdg-lbl" firstAttribute="centerX" secondItem="bdg-vw" secondAttribute="centerX" id="bdg-cx"/>
+                                    <constraint firstItem="bdg-lbl" firstAttribute="centerY" secondItem="bdg-vw" secondAttribute="centerY" id="bdg-cy"/>
+                                    <constraint firstAttribute="height" constant="44" id="bdg-hgt"/>
+                                    <constraint firstAttribute="width" constant="44" id="bdg-wdt"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="stk-txt">
+                                <rect key="frame" x="64" y="23" width="184" height="18"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IMG_1784358826076..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fn-lbl" userLabel="File Name Label">
+                                        <rect key="frame" x="0.0" y="0.0" width="184" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <color key="textColor" red="0.058823529411764705" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="14 KB.IMAGE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fi-lbl" userLabel="File Info Label">
+                                        <rect key="frame" x="0.0" y="0.0" width="184" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                        <color key="textColor" red="0.39215686274509803" green="0.45490196078431372" blue="0.54509803921568623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tap-btn">
+                                <rect key="frame" x="0.0" y="0.0" width="260" height="64"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title=""/>
+                                <connections>
+                                    <action selector="cardTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="act-tap"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.94509803921568625" green="0.96078431372549022" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="bdg-vw" firstAttribute="centerY" secondItem="cnt-vw" secondAttribute="centerY" id="bdg-cy2"/>
+                            <constraint firstItem="bdg-vw" firstAttribute="leading" secondItem="cnt-vw" secondAttribute="leading" constant="10" id="bdg-lea"/>
+                            <constraint firstAttribute="bottom" secondItem="tap-btn" secondAttribute="bottom" id="btn-bot"/>
+                            <constraint firstItem="tap-btn" firstAttribute="leading" secondItem="cnt-vw" secondAttribute="leading" id="btn-lea"/>
+                            <constraint firstItem="tap-btn" firstAttribute="top" secondItem="cnt-vw" secondAttribute="top" id="btn-top"/>
+                            <constraint firstAttribute="trailing" secondItem="tap-btn" secondAttribute="trailing" id="btn-tra"/>
+                            <constraint firstItem="stk-txt" firstAttribute="centerY" secondItem="cnt-vw" secondAttribute="centerY" id="stk-cy"/>
+                            <constraint firstItem="stk-txt" firstAttribute="leading" secondItem="bdg-vw" secondAttribute="trailing" constant="10" id="stk-lea"/>
+                            <constraint firstAttribute="trailing" secondItem="stk-txt" secondAttribute="trailing" constant="12" id="stk-tra"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="cnt-vw" secondAttribute="bottom" id="cnt-bot"/>
+                <constraint firstItem="cnt-vw" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="cnt-lea"/>
+                <constraint firstItem="cnt-vw" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="cnt-top"/>
+                <constraint firstAttribute="trailing" secondItem="cnt-vw" secondAttribute="trailing" id="cnt-tra"/>
+            </constraints>
+            <size key="customSize" width="260" height="64"/>
+            <connections>
+                <outlet property="badgeContainerView" destination="bdg-vw" id="bdg-out"/>
+                <outlet property="badgeLabel" destination="bdg-lbl" id="bdg-lbl-out"/>
+                <outlet property="containerView" destination="cnt-vw" id="cnt-out"/>
+                <outlet property="fileInfoLabel" destination="fi-lbl" id="fi-out"/>
+                <outlet property="fileNameLabel" destination="fn-lbl" id="fn-out"/>
+                <outlet property="tapOverlayButton" destination="tap-btn" id="tap-out"/>
+            </connections>
+            <point key="canvasLocation" x="129.7709923664122" y="19.718309859154932"/>
+        </collectionViewCell>
+    </objects>
+</document>

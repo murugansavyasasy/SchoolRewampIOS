@@ -47,7 +47,16 @@ class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge, UITextFieldDelega
     var node: String?
     var updateParams: [String: Any]?
     var onValueChanged: ((String, Any?) -> Void)?
-    
+    var isStudents: Bool? {
+        didSet {
+        
+        }
+    }
+    var isEditClicked: Bool?{
+        didSet{
+            applyBorders()
+        }
+    }
     // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -70,7 +79,7 @@ class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge, UITextFieldDelega
         addTapToDropDown()
         countryDropDown()
         addTapToDateButton()
-        applyBorders()
+//        applyBorders()
         setupCollectionView()
     }
     
@@ -131,17 +140,54 @@ class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge, UITextFieldDelega
     // MARK: - Configure Cell
     func configure(with item: UserDetailItem?,attachments: [AttachmentItem]?) {
         resetViews()
+       
         guard let item = item else {
             titleLable.isHidden = true
             updateview.isHidden = false
             return
         }
         node = item.node
-        if item.optional ?? false{
-            titleLable.profilesetRequiredText(item.title,asteriskColor: nil, editableText:item.is_editable ?? false ? "(Editable)":"(Non Editable)")
-        }else{
-            titleLable.profilesetRequiredText(item.title,asteriskColor: .red,editableText:item.is_editable ?? false ? "(Editable)":"(Non Editable)")
-        }
+        
+        if isStudents ?? false {
+
+            if isEditClicked ?? false{
+                let editableText = (item.is_editable ?? false)
+                    ? "(Editable)"
+                    : "(Non Editable)"
+
+                if item.optional ?? false {
+
+                    titleLable.profilesetRequiredText(
+                        item.title,
+                        asteriskColor: nil,
+                        editableText: editableText
+                    )
+
+                } else {
+
+                    titleLable.profilesetRequiredText(
+                        item.title,
+                        asteriskColor: .red,
+                        editableText: editableText
+                    )
+                }
+            }else{
+               
+                titleLable.profilesetRequiredText(
+                    item.title,
+                    asteriskColor: nil,
+                    editableText: ""
+                )
+            }
+            
+
+        } else {
+            // Non-student → Editable / Non Editable text காட்டாது
+                titleLable.profilesetRequiredText(
+                    item.title,
+                    asteriskColor: nil,
+                    editableText: ""
+                )}
        
         titleLable.isHidden = false
         
@@ -150,19 +196,33 @@ class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge, UITextFieldDelega
             txtField.isHidden = false
             txtField.placeholder = item.title
             txtField.text = item.value
-            txtField.isEnabled = item.is_editable ?? false
+            if isEditClicked ?? false{
+                txtField.isEnabled = item.is_editable ?? false
+            }else{
+                txtField.isEnabled = false
+            }
+            
         case .address:
             txtView.isHidden = false
             txtViewHeight.constant = 100
             txtView.text = item.value ?? ""
-            txtView.isEditable = item.is_editable ?? false
-            
+            if isEditClicked ?? false{
+                txtView.isEditable = item.is_editable ?? false
+            }else{
+                txtView.isEditable = false
+            }
+           
         case .mobile:
             txtField.isHidden = false
             contryDropDownView.isHidden = false
             txtField.placeholder = item.title
             txtField.text = item.value
-            txtField.isEnabled = item.is_editable ?? false
+            if isEditClicked ?? false{
+                txtField.isEnabled = item.is_editable ?? false
+            }else{
+                txtField.isEnabled = false
+            }
+           
             contryCode.text = "+91"
             let countries = getCountryListWithDialingCodes()
             sectionList = countries.map { $0.code }
@@ -170,21 +230,43 @@ class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge, UITextFieldDelega
         case .calendar:
             dateView.isHidden = false
             dateLbl.text = item.value ?? "Select \(item.title)"
-            dateBtn.isEnabled = item.is_editable ?? false
+            if isEditClicked ?? false{
+                dateBtn.isEnabled = item.is_editable ?? false
+            }
+            else{
+                dateBtn.isEnabled = false
+            }
+           
             
         case .gender:
             genderStack.isHidden = false
             updateGenderSelection(selected: item.value ?? "")
-            enableGenderButtons(item.is_editable ?? false)
+            if isEditClicked ?? false{
+                enableGenderButtons(item.is_editable ?? false)
+            }
+            else{
+                enableGenderButtons(false)
+            }
+          
             
         case .dropdown:
             dropDownView.isHidden = false
             dropDownLbl.text = item.options?.first ?? "Select \(item.title)"
             sectionList = item.options ?? []
+            if isEditClicked ?? false{
+                dropDownView.isUserInteractionEnabled = (item.is_editable ?? false)
+            }else{
+                dropDownView.isUserInteractionEnabled = false
+            }
             
         case .document:
             attachmentView.isHidden = false
-            addAttachmentBtn.isHidden = !(item.is_editable ?? false)
+            if isEditClicked ?? false{
+                addAttachmentBtn.isHidden = !(item.is_editable ?? false)
+            }else{
+                addAttachmentBtn.isHidden = true
+            }
+            
             self.attachments = attachments ?? []
             reloadCollectionAndUpdateHeight()
         case .image:
@@ -323,26 +405,35 @@ class UserDetailsTVC: UITableViewCell, Datepicker, DeleteImge, UITextFieldDelega
             .first?.rootViewController?.topMostViewController()
     }
     
-    // MARK: - Borders & Corner Radius
+    // MARK: - Borders & Corner Radiupos
     private func applyBorders() {
-        let allViews = [txtField, txtView, contryDropDownView, dateView, dropDownView]
-        allViews.forEach { view in
-            view?.layer.cornerRadius = 8
-            view?.layer.borderWidth = 1
-            view?.layer.borderColor = UIColor.systemGray5.cgColor
-            view?.clipsToBounds = true
-        }
         
-        genderButtons.forEach { btn in
-            btn.layer.cornerRadius = 6
-            btn.layer.borderWidth = 1
-            btn.layer.borderColor = UIColor.systemGray5.cgColor
-            btn.clipsToBounds = true
+        if isEditClicked ?? false{
+//            if isStudents ?? false{
+                let allViews = [txtField, txtView, contryDropDownView, dateView, dropDownView]
+                allViews.forEach { view in
+                    view?.layer.cornerRadius = 8
+                    view?.layer.borderWidth = 1
+                    view?.layer.borderColor = UIColor.systemGray5.cgColor
+                    view?.clipsToBounds = true
+                }
+                
+                genderButtons.forEach { btn in
+                    btn.layer.cornerRadius = 6
+                    btn.layer.borderWidth = 1
+                    btn.layer.borderColor = UIColor.systemGray5.cgColor
+                    btn.clipsToBounds = true
+                }
+                
+                dateBtn.layer.cornerRadius = 8
+                dateBtn.layer.borderWidth = 1
+                dateBtn.layer.borderColor = UIColor.systemGray5.cgColor
+//            }
         }
-        
-        dateBtn.layer.cornerRadius = 8
-        dateBtn.layer.borderWidth = 1
-        dateBtn.layer.borderColor = UIColor.systemGray5.cgColor
+        else{
+            txtField.borderStyle = .none
+        }
+        print("CEllllllIsStudent", isStudents)
     }
     
     // MARK: - Attachments

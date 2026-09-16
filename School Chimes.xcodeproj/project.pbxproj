@@ -155,7 +155,6 @@
 		1827E5E62F90C12000B33B20 /* EditLessonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF43B612E02A09200F28A16 /* EditLessonVC.swift */; };
 		1827E5E72F90C12000B33B20 /* SuccesseRatusTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845AB86E2EC1F89C003C22E1 /* SuccesseRatusTVC.swift */; };
 		1827E5E82F90C12000B33B20 /* HostelRoomTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1841DE952F56FF1C00B88801 /* HostelRoomTvCell.swift */; };
-		1827E5ED2F90C12000B33B20 /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */; };
 		1827E5EE2F90C12000B33B20 /* LSRWSubmisionListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845CAC862E54B06C000FA540 /* LSRWSubmisionListVC.swift */; };
 		1827E5EF2F90C12000B33B20 /* QuizSubmisionTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48A6962E754AA7004E10C7 /* QuizSubmisionTvCell.swift */; };
 		1827E5F02F90C12000B33B20 /* SchoolStrengthCvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCE90D2E9E3AB6002C8068 /* SchoolStrengthCvcell.swift */; };
@@ -180,7 +179,6 @@
 		1827E6042F90C12000B33B20 /* CertificateCv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA861C342E38ABA900859726 /* CertificateCv.swift */; };
 		1827E6052F90C12000B33B20 /* ScheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB5EA52D11330E00AD0C87 /* ScheduleExamVC.swift */; };
 		1827E6062F90C12000B33B20 /* SubmitedStudentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8480477B2E02DF6E0042BC5D /* SubmitedStudentTVC.swift */; };
-		1827E6072F90C12000B33B20 /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C502E66D3FF00B4B8EB /* UserDetailsTVC.swift */; };
 		1827E6082F90C12000B33B20 /* SenderAssignmentTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849AD0402D1A858D002DEC07 /* SenderAssignmentTextViewController.swift */; };
 		1827E6092F90C12000B33B20 /* CompletedTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB97D02D3E31FF00EBF9F4 /* CompletedTVcell.swift */; };
 		1827E60A2F90C12000B33B20 /* PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466E83C2D6ED0CB004F4EFC /* PopupVC.swift */; };
@@ -526,7 +524,6 @@
 		1827E77B2F90C12000B33B20 /* AdminRequestsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1841DF1D2F584C5200B88801 /* AdminRequestsViewController.xib */; };
 		1827E77C2F90C12000B33B20 /* quizCellTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84174DEE2E6B5F6A00AC7092 /* quizCellTv.xib */; };
 		1827E77D2F90C12000B33B20 /* ReportBugVcViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EFFAE92CCFA4A100C11C26 /* ReportBugVcViewController.xib */; };
-		1827E77E2F90C12000B33B20 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */; };
 		1827E77F2F90C12000B33B20 /* VoiceMessageVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAF2EFFAAFB008B71FF /* VoiceMessageVc.xib */; };
 		1827E7812F90C12000B33B20 /* CommonPagenationVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AA72EFFAAFB008B71FF /* CommonPagenationVc.xib */; };
 		1827E7822F90C12000B33B20 /* ScheduleCallVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAB2EFFAAFB008B71FF /* ScheduleCallVC.xib */; };
@@ -599,7 +596,6 @@
 		1827E7CC2F90C12000B33B20 /* outpassRequestTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185CC0C62F74EB49002640CE /* outpassRequestTVcell.xib */; };
 		1827E7CD2F90C12000B33B20 /* VideoPlayerCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0C92F322CFE0046B966 /* VideoPlayerCVC.xib */; };
 		1827E7CE2F90C12000B33B20 /* PtmNavigationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAE495892E89AF960099DF24 /* PtmNavigationVC.xib */; };
-		1827E7CF2F90C12000B33B20 /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C512E66D3FF00B4B8EB /* UserDetailsTVC.xib */; };
 		1827E7D02F90C12000B33B20 /* StatsticTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B09C12F6C25A0002C81A0 /* StatsticTvCell.xib */; };
 		1827E7D12F90C12000B33B20 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8442A9502CDE83C80006068E /* Localizable.strings */; };
 		1827E7D22F90C12000B33B20 /* PopoverViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C08C672EB396E9009F657B /* PopoverViewVC.xib */; };
@@ -927,6 +923,22 @@
 		182B0B232F6E5A0B002C81A0 /* AttendanceSessionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B0B1D2F6E5A0B002C81A0 /* AttendanceSessionHeader.swift */; };
 		182B0B242F6E5A0B002C81A0 /* AttendanceStudentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B0B1F2F6E5A0B002C81A0 /* AttendanceStudentCell.swift */; };
 		1834ED2F2F483B3C0006969F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1834ED2E2F483B3C0006969F /* GoogleService-Info.plist */; };
+		18365761304FCBE0003AED35 /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836575C304FCBE0003AED35 /* UserDetailsTVC.swift */; };
+		18365762304FCBE0003AED35 /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836575E304FCBE0003AED35 /* UpdateProfileVC.swift */; };
+		18365763304FCBE0003AED35 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836575F304FCBE0003AED35 /* UpdateProfileVC.xib */; };
+		18365764304FCBE0003AED35 /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836575D304FCBE0003AED35 /* UserDetailsTVC.xib */; };
+		18365765304FCBE0003AED35 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836575F304FCBE0003AED35 /* UpdateProfileVC.xib */; };
+		18365766304FCBE0003AED35 /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836575D304FCBE0003AED35 /* UserDetailsTVC.xib */; };
+		18365767304FCBE0003AED35 /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836575C304FCBE0003AED35 /* UserDetailsTVC.swift */; };
+		18365768304FCBE0003AED35 /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836575E304FCBE0003AED35 /* UpdateProfileVC.swift */; };
+		18365769304FCBE0003AED35 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836575F304FCBE0003AED35 /* UpdateProfileVC.xib */; };
+		1836576A304FCBE0003AED35 /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836575D304FCBE0003AED35 /* UserDetailsTVC.xib */; };
+		1836576B304FCBE0003AED35 /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836575C304FCBE0003AED35 /* UserDetailsTVC.swift */; };
+		1836576C304FCBE0003AED35 /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836575E304FCBE0003AED35 /* UpdateProfileVC.swift */; };
+		1836576D304FCBE0003AED35 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836575F304FCBE0003AED35 /* UpdateProfileVC.xib */; };
+		1836576E304FCBE0003AED35 /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836575D304FCBE0003AED35 /* UserDetailsTVC.xib */; };
+		1836576F304FCBE0003AED35 /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836575C304FCBE0003AED35 /* UserDetailsTVC.swift */; };
+		18365770304FCBE0003AED35 /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836575E304FCBE0003AED35 /* UpdateProfileVC.swift */; };
 		1837C7F12F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1837C7EE2F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.xib */; };
 		1837C7F22F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1837C7ED2F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.swift */; };
 		183E69CA2FADB0840092D411 /* whereismybusVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183E69C92FADB0840092D411 /* whereismybusVc.xib */; };
@@ -1055,7 +1067,6 @@
 		1868A4102FAC762E00831144 /* EditLessonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF43B612E02A09200F28A16 /* EditLessonVC.swift */; };
 		1868A4112FAC762E00831144 /* SuccesseRatusTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845AB86E2EC1F89C003C22E1 /* SuccesseRatusTVC.swift */; };
 		1868A4122FAC762E00831144 /* HostelRoomTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1841DE952F56FF1C00B88801 /* HostelRoomTvCell.swift */; };
-		1868A4172FAC762E00831144 /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */; };
 		1868A4182FAC762E00831144 /* LSRWSubmisionListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845CAC862E54B06C000FA540 /* LSRWSubmisionListVC.swift */; };
 		1868A4192FAC762E00831144 /* QuizSubmisionTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48A6962E754AA7004E10C7 /* QuizSubmisionTvCell.swift */; };
 		1868A41A2FAC762E00831144 /* SchoolStrengthCvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCE90D2E9E3AB6002C8068 /* SchoolStrengthCvcell.swift */; };
@@ -1080,7 +1091,6 @@
 		1868A42E2FAC762E00831144 /* CertificateCv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA861C342E38ABA900859726 /* CertificateCv.swift */; };
 		1868A42F2FAC762E00831144 /* ScheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB5EA52D11330E00AD0C87 /* ScheduleExamVC.swift */; };
 		1868A4302FAC762E00831144 /* SubmitedStudentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8480477B2E02DF6E0042BC5D /* SubmitedStudentTVC.swift */; };
-		1868A4312FAC762E00831144 /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C502E66D3FF00B4B8EB /* UserDetailsTVC.swift */; };
 		1868A4322FAC762E00831144 /* SenderAssignmentTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849AD0402D1A858D002DEC07 /* SenderAssignmentTextViewController.swift */; };
 		1868A4332FAC762E00831144 /* CompletedTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB97D02D3E31FF00EBF9F4 /* CompletedTVcell.swift */; };
 		1868A4342FAC762E00831144 /* PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466E83C2D6ED0CB004F4EFC /* PopupVC.swift */; };
@@ -1427,7 +1437,6 @@
 		1868A5A62FAC762E00831144 /* AdminRequestsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1841DF1D2F584C5200B88801 /* AdminRequestsViewController.xib */; };
 		1868A5A72FAC762E00831144 /* quizCellTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84174DEE2E6B5F6A00AC7092 /* quizCellTv.xib */; };
 		1868A5A82FAC762E00831144 /* ReportBugVcViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EFFAE92CCFA4A100C11C26 /* ReportBugVcViewController.xib */; };
-		1868A5A92FAC762E00831144 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */; };
 		1868A5AA2FAC762E00831144 /* VoiceMessageVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAF2EFFAAFB008B71FF /* VoiceMessageVc.xib */; };
 		1868A5AC2FAC762E00831144 /* CommonPagenationVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AA72EFFAAFB008B71FF /* CommonPagenationVc.xib */; };
 		1868A5AD2FAC762E00831144 /* ScheduleCallVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAB2EFFAAFB008B71FF /* ScheduleCallVC.xib */; };
@@ -1500,7 +1509,6 @@
 		1868A5F72FAC762E00831144 /* outpassRequestTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185CC0C62F74EB49002640CE /* outpassRequestTVcell.xib */; };
 		1868A5F82FAC762E00831144 /* VideoPlayerCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0C92F322CFE0046B966 /* VideoPlayerCVC.xib */; };
 		1868A5F92FAC762E00831144 /* PtmNavigationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAE495892E89AF960099DF24 /* PtmNavigationVC.xib */; };
-		1868A5FA2FAC762E00831144 /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C512E66D3FF00B4B8EB /* UserDetailsTVC.xib */; };
 		1868A5FB2FAC762E00831144 /* StatsticTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B09C12F6C25A0002C81A0 /* StatsticTvCell.xib */; };
 		1868A5FC2FAC762E00831144 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8442A9502CDE83C80006068E /* Localizable.strings */; };
 		1868A5FD2FAC762E00831144 /* PopoverViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C08C672EB396E9009F657B /* PopoverViewVC.xib */; };
@@ -1869,7 +1877,6 @@
 		186E5F0C2FE91EB800BAF454 /* EditLessonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF43B612E02A09200F28A16 /* EditLessonVC.swift */; };
 		186E5F0D2FE91EB800BAF454 /* SuccesseRatusTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845AB86E2EC1F89C003C22E1 /* SuccesseRatusTVC.swift */; };
 		186E5F0E2FE91EB800BAF454 /* HostelRoomTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1841DE952F56FF1C00B88801 /* HostelRoomTvCell.swift */; };
-		186E5F132FE91EB800BAF454 /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */; };
 		186E5F142FE91EB800BAF454 /* LSRWSubmisionListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845CAC862E54B06C000FA540 /* LSRWSubmisionListVC.swift */; };
 		186E5F152FE91EB800BAF454 /* QuizSubmisionTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48A6962E754AA7004E10C7 /* QuizSubmisionTvCell.swift */; };
 		186E5F162FE91EB800BAF454 /* SchoolStrengthCvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCE90D2E9E3AB6002C8068 /* SchoolStrengthCvcell.swift */; };
@@ -1894,7 +1901,6 @@
 		186E5F2A2FE91EB800BAF454 /* CertificateCv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA861C342E38ABA900859726 /* CertificateCv.swift */; };
 		186E5F2B2FE91EB800BAF454 /* ScheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB5EA52D11330E00AD0C87 /* ScheduleExamVC.swift */; };
 		186E5F2C2FE91EB800BAF454 /* SubmitedStudentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8480477B2E02DF6E0042BC5D /* SubmitedStudentTVC.swift */; };
-		186E5F2D2FE91EB800BAF454 /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C502E66D3FF00B4B8EB /* UserDetailsTVC.swift */; };
 		186E5F2E2FE91EB800BAF454 /* SenderAssignmentTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849AD0402D1A858D002DEC07 /* SenderAssignmentTextViewController.swift */; };
 		186E5F2F2FE91EB800BAF454 /* CompletedTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB97D02D3E31FF00EBF9F4 /* CompletedTVcell.swift */; };
 		186E5F302FE91EB800BAF454 /* PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466E83C2D6ED0CB004F4EFC /* PopupVC.swift */; };
@@ -2247,7 +2253,6 @@
 		186E60A82FE91EB800BAF454 /* AdminRequestsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1841DF1D2F584C5200B88801 /* AdminRequestsViewController.xib */; };
 		186E60A92FE91EB800BAF454 /* quizCellTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84174DEE2E6B5F6A00AC7092 /* quizCellTv.xib */; };
 		186E60AA2FE91EB800BAF454 /* ReportBugVcViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EFFAE92CCFA4A100C11C26 /* ReportBugVcViewController.xib */; };
-		186E60AB2FE91EB800BAF454 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */; };
 		186E60AC2FE91EB800BAF454 /* VoiceMessageVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAF2EFFAAFB008B71FF /* VoiceMessageVc.xib */; };
 		186E60AE2FE91EB800BAF454 /* StopTimelineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1880E9EE2FD14BF40025EB96 /* StopTimelineCell.xib */; };
 		186E60AF2FE91EB800BAF454 /* CommonPagenationVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AA72EFFAAFB008B71FF /* CommonPagenationVc.xib */; };
@@ -2324,7 +2329,6 @@
 		186E60FC2FE91EB800BAF454 /* outpassRequestTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185CC0C62F74EB49002640CE /* outpassRequestTVcell.xib */; };
 		186E60FD2FE91EB800BAF454 /* VideoPlayerCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0C92F322CFE0046B966 /* VideoPlayerCVC.xib */; };
 		186E60FE2FE91EB800BAF454 /* PtmNavigationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAE495892E89AF960099DF24 /* PtmNavigationVC.xib */; };
-		186E60FF2FE91EB800BAF454 /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C512E66D3FF00B4B8EB /* UserDetailsTVC.xib */; };
 		186E61002FE91EB800BAF454 /* StatsticTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B09C12F6C25A0002C81A0 /* StatsticTvCell.xib */; };
 		186E61012FE91EB800BAF454 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8442A9502CDE83C80006068E /* Localizable.strings */; };
 		186E61022FE91EB800BAF454 /* PopoverViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C08C672EB396E9009F657B /* PopoverViewVC.xib */; };
@@ -3068,10 +3072,6 @@
 		8442A9702CDE8B2C0006068E /* LangTvCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A96D2CDE8B2C0006068E /* LangTvCellTableViewCell.swift */; };
 		84443FA82F76542800DC70F1 /* OutpassRequestsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84443FA62F76542800DC70F1 /* OutpassRequestsVC.swift */; };
 		84443FA92F76542800DC70F1 /* OutpassRequestsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84443FA72F76542800DC70F1 /* OutpassRequestsVC.xib */; };
-		84444C522E66D3FF00B4B8EB /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C512E66D3FF00B4B8EB /* UserDetailsTVC.xib */; };
-		84444C532E66D3FF00B4B8EB /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C502E66D3FF00B4B8EB /* UserDetailsTVC.swift */; };
-		84444C562E66EE3B00B4B8EB /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */; };
-		84444C572E66EE3B00B4B8EB /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */; };
 		8449D8D42ED4647300822FAC /* normal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8449D8D32ED4647300822FAC /* normal.mp3 */; };
 		844DEDE42E549A0B0016A347 /* CreateQuizQutionVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844DEDE22E549A0B0016A347 /* CreateQuizQutionVc.swift */; };
 		844DEDE52E549A0B0016A347 /* CreateQuizQutionVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844DEDE32E549A0B0016A347 /* CreateQuizQutionVc.xib */; };
@@ -3796,6 +3796,10 @@
 		182B0B1F2F6E5A0B002C81A0 /* AttendanceStudentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceStudentCell.swift; sourceTree = "<group>"; };
 		182B0B202F6E5A0B002C81A0 /* AttendanceStudentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceStudentCell.xib; sourceTree = "<group>"; };
 		1834ED2E2F483B3C0006969F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1836575C304FCBE0003AED35 /* UserDetailsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsTVC.swift; sourceTree = "<group>"; };
+		1836575D304FCBE0003AED35 /* UserDetailsTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDetailsTVC.xib; sourceTree = "<group>"; };
+		1836575E304FCBE0003AED35 /* UpdateProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileVC.swift; sourceTree = "<group>"; };
+		1836575F304FCBE0003AED35 /* UpdateProfileVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateProfileVC.xib; sourceTree = "<group>"; };
 		1837C7ED2F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dailyAttendaceDateTvCell.swift; sourceTree = "<group>"; };
 		1837C7EE2F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = dailyAttendaceDateTvCell.xib; sourceTree = "<group>"; };
 		183E69C82FADB0840092D411 /* whereismybusVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = whereismybusVc.swift; sourceTree = "<group>"; };
@@ -4170,10 +4174,6 @@
 		8442AA732CDF6B220006068E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		84443FA62F76542800DC70F1 /* OutpassRequestsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutpassRequestsVC.swift; sourceTree = "<group>"; };
 		84443FA72F76542800DC70F1 /* OutpassRequestsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OutpassRequestsVC.xib; sourceTree = "<group>"; };
-		84444C502E66D3FF00B4B8EB /* UserDetailsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsTVC.swift; sourceTree = "<group>"; };
-		84444C512E66D3FF00B4B8EB /* UserDetailsTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDetailsTVC.xib; sourceTree = "<group>"; };
-		84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileVC.swift; sourceTree = "<group>"; };
-		84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateProfileVC.xib; sourceTree = "<group>"; };
 		8449D8D32ED4647300822FAC /* normal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = normal.mp3; sourceTree = "<group>"; };
 		844DEDE22E549A0B0016A347 /* CreateQuizQutionVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQuizQutionVc.swift; sourceTree = "<group>"; };
 		844DEDE32E549A0B0016A347 /* CreateQuizQutionVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQuizQutionVc.xib; sourceTree = "<group>"; };
@@ -4702,6 +4702,7 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		183658FC30500CF3003AED35 /* paymentProof */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = paymentProof; sourceTree = "<group>"; };
 		186E62522FEA59E700BAF454 /* Classtest */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Classtest; sourceTree = "<group>"; };
 		186F4AD5304BE22700AC7E58 /* ExamAnaylze */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ExamAnaylze; sourceTree = "<group>"; };
 		186F4B22304BE46000AC7E58 /* ConcernVc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ConcernVc; sourceTree = "<group>"; };
@@ -4952,6 +4953,17 @@
 			path = NetworkMoniter;
 			sourceTree = "<group>";
 		};
+		18365760304FCBE0003AED35 /* ProfilepageVc */ = {
+			isa = PBXGroup;
+			children = (
+				1836575C304FCBE0003AED35 /* UserDetailsTVC.swift */,
+				1836575D304FCBE0003AED35 /* UserDetailsTVC.xib */,
+				1836575E304FCBE0003AED35 /* UpdateProfileVC.swift */,
+				1836575F304FCBE0003AED35 /* UpdateProfileVC.xib */,
+			);
+			path = ProfilepageVc;
+			sourceTree = "<group>";
+		};
 		183E69C72FADB0580092D411 /* WhereIsBus */ = {
 			isa = PBXGroup;
 			children = (
@@ -5066,6 +5078,7 @@
 		187A0B452F10E9AA008CF5B7 /* FeeDetail */ = {
 			isa = PBXGroup;
 			children = (
+				183658FC30500CF3003AED35 /* paymentProof */,
 				1868A8112FACA13700831144 /* PaymentHistoryCell.swift */,
 				1868A8122FACA13700831144 /* PaymentHistoryCell.xib */,
 				187A0B3F2F10E9AA008CF5B7 /* FeeDetails.swift */,
@@ -6749,17 +6762,6 @@
 			path = DatePicker;
 			sourceTree = "<group>";
 		};
-		84EFF4942CE388B800E39BEA /* ProfilepageVc */ = {
-			isa = PBXGroup;
-			children = (
-				84444C502E66D3FF00B4B8EB /* UserDetailsTVC.swift */,
-				84444C512E66D3FF00B4B8EB /* UserDetailsTVC.xib */,
-				84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */,
-				84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */,
-			);
-			path = ProfilepageVc;
-			sourceTree = "<group>";
-		};
 		84EFF9CB2CCBBC8B00C11C26 /* CreatePassword */ = {
 			isa = PBXGroup;
 			children = (
@@ -6794,7 +6796,6 @@
 			children = (
 				FA43D0E32F322D5A0046B966 /* NotificationCall */,
 				84EFF9EA2CCCAF3000C11C26 /* SettingsVc */,
-				84EFF4942CE388B800E39BEA /* ProfilepageVc */,
 				8494B6622CD1EC47004B0746 /* TapBarVc */,
 				84EFF9EF2CCCAFDD00C11C26 /* HelpVc */,
 			);
@@ -6804,6 +6805,7 @@
 		84EFF9EA2CCCAF3000C11C26 /* SettingsVc */ = {
 			isa = PBXGroup;
 			children = (
+				18365760304FCBE0003AED35 /* ProfilepageVc */,
 				8442A8F32CDC83860006068E /* Rate Us */,
 				8442A9692CDE8AE80006068E /* LanguageVC */,
 				8442A90B2CDC8B2D0006068E /* FAQ Page */,
@@ -7168,6 +7170,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				183658FC30500CF3003AED35 /* paymentProof */,
 				186E62522FEA59E700BAF454 /* Classtest */,
 				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186F4B22304BE46000AC7E58 /* ConcernVc */,
@@ -7211,6 +7214,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				183658FC30500CF3003AED35 /* paymentProof */,
 				186E62522FEA59E700BAF454 /* Classtest */,
 				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186F4B22304BE46000AC7E58 /* ConcernVc */,
@@ -7254,6 +7258,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				183658FC30500CF3003AED35 /* paymentProof */,
 				186E62522FEA59E700BAF454 /* Classtest */,
 				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186F4B22304BE46000AC7E58 /* ConcernVc */,
@@ -7315,6 +7320,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				183658FC30500CF3003AED35 /* paymentProof */,
 				186E62522FEA59E700BAF454 /* Classtest */,
 				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186F4B22304BE46000AC7E58 /* ConcernVc */,
@@ -7455,7 +7461,6 @@
 				1827E77B2F90C12000B33B20 /* AdminRequestsViewController.xib in Resources */,
 				1827E77C2F90C12000B33B20 /* quizCellTv.xib in Resources */,
 				1827E77D2F90C12000B33B20 /* ReportBugVcViewController.xib in Resources */,
-				1827E77E2F90C12000B33B20 /* UpdateProfileVC.xib in Resources */,
 				1827E77F2F90C12000B33B20 /* VoiceMessageVc.xib in Resources */,
 				1880E9EF2FD14BF40025EB96 /* StopTimelineCell.xib in Resources */,
 				1827E7812F90C12000B33B20 /* CommonPagenationVc.xib in Resources */,
@@ -7537,7 +7542,6 @@
 				1827E7CC2F90C12000B33B20 /* outpassRequestTVcell.xib in Resources */,
 				1827E7CD2F90C12000B33B20 /* VideoPlayerCVC.xib in Resources */,
 				1827E7CE2F90C12000B33B20 /* PtmNavigationVC.xib in Resources */,
-				1827E7CF2F90C12000B33B20 /* UserDetailsTVC.xib in Resources */,
 				1827E7D02F90C12000B33B20 /* StatsticTvCell.xib in Resources */,
 				1827E7D12F90C12000B33B20 /* Localizable.strings in Resources */,
 				1827E7D22F90C12000B33B20 /* PopoverViewVC.xib in Resources */,
@@ -7842,6 +7846,8 @@
 				1827E8EF2F90C12000B33B20 /* AttendanceHeaderView.xib in Resources */,
 				1827E8F02F90C12000B33B20 /* OverallSummaryCell.xib in Resources */,
 				1827E8F12F90C12000B33B20 /* IntractwithStudentVc.xib in Resources */,
+				18365763304FCBE0003AED35 /* UpdateProfileVC.xib in Resources */,
+				18365764304FCBE0003AED35 /* UserDetailsTVC.xib in Resources */,
 				1827E8F22F90C12000B33B20 /* ActivateCoupenTVC.xib in Resources */,
 				1827E8F32F90C12000B33B20 /* QuizCompletedVc.xib in Resources */,
 				1827E8F42F90C12000B33B20 /* CoupenDetailTVC.xib in Resources */,
@@ -7890,7 +7896,6 @@
 				1868A5A62FAC762E00831144 /* AdminRequestsViewController.xib in Resources */,
 				1868A5A72FAC762E00831144 /* quizCellTv.xib in Resources */,
 				1868A5A82FAC762E00831144 /* ReportBugVcViewController.xib in Resources */,
-				1868A5A92FAC762E00831144 /* UpdateProfileVC.xib in Resources */,
 				1868A5AA2FAC762E00831144 /* VoiceMessageVc.xib in Resources */,
 				1880E9F32FD14BF40025EB96 /* StopTimelineCell.xib in Resources */,
 				1868A5AC2FAC762E00831144 /* CommonPagenationVc.xib in Resources */,
@@ -7972,7 +7977,6 @@
 				1868A5F72FAC762E00831144 /* outpassRequestTVcell.xib in Resources */,
 				1868A5F82FAC762E00831144 /* VideoPlayerCVC.xib in Resources */,
 				1868A5F92FAC762E00831144 /* PtmNavigationVC.xib in Resources */,
-				1868A5FA2FAC762E00831144 /* UserDetailsTVC.xib in Resources */,
 				1868A5FB2FAC762E00831144 /* StatsticTvCell.xib in Resources */,
 				1868A5FC2FAC762E00831144 /* Localizable.strings in Resources */,
 				1868A5FD2FAC762E00831144 /* PopoverViewVC.xib in Resources */,
@@ -8277,6 +8281,8 @@
 				1868A71A2FAC762E00831144 /* AttendanceHeaderView.xib in Resources */,
 				1868A71B2FAC762E00831144 /* OverallSummaryCell.xib in Resources */,
 				1868A71C2FAC762E00831144 /* IntractwithStudentVc.xib in Resources */,
+				1836576D304FCBE0003AED35 /* UpdateProfileVC.xib in Resources */,
+				1836576E304FCBE0003AED35 /* UserDetailsTVC.xib in Resources */,
 				1868A71D2FAC762E00831144 /* ActivateCoupenTVC.xib in Resources */,
 				1868A71E2FAC762E00831144 /* QuizCompletedVc.xib in Resources */,
 				1868A71F2FAC762E00831144 /* CoupenDetailTVC.xib in Resources */,
@@ -8325,7 +8331,6 @@
 				186E60A82FE91EB800BAF454 /* AdminRequestsViewController.xib in Resources */,
 				186E60A92FE91EB800BAF454 /* quizCellTv.xib in Resources */,
 				186E60AA2FE91EB800BAF454 /* ReportBugVcViewController.xib in Resources */,
-				186E60AB2FE91EB800BAF454 /* UpdateProfileVC.xib in Resources */,
 				186E60AC2FE91EB800BAF454 /* VoiceMessageVc.xib in Resources */,
 				186E60AE2FE91EB800BAF454 /* StopTimelineCell.xib in Resources */,
 				186E60AF2FE91EB800BAF454 /* CommonPagenationVc.xib in Resources */,
@@ -8407,7 +8412,6 @@
 				186E60FC2FE91EB800BAF454 /* outpassRequestTVcell.xib in Resources */,
 				186E60FD2FE91EB800BAF454 /* VideoPlayerCVC.xib in Resources */,
 				186E60FE2FE91EB800BAF454 /* PtmNavigationVC.xib in Resources */,
-				186E60FF2FE91EB800BAF454 /* UserDetailsTVC.xib in Resources */,
 				186E61002FE91EB800BAF454 /* StatsticTvCell.xib in Resources */,
 				186E61012FE91EB800BAF454 /* Localizable.strings in Resources */,
 				186E61022FE91EB800BAF454 /* PopoverViewVC.xib in Resources */,
@@ -8712,6 +8716,8 @@
 				186E621F2FE91EB800BAF454 /* AttendanceHeaderView.xib in Resources */,
 				186E62202FE91EB800BAF454 /* OverallSummaryCell.xib in Resources */,
 				186E62212FE91EB800BAF454 /* IntractwithStudentVc.xib in Resources */,
+				18365765304FCBE0003AED35 /* UpdateProfileVC.xib in Resources */,
+				18365766304FCBE0003AED35 /* UserDetailsTVC.xib in Resources */,
 				186E62222FE91EB800BAF454 /* ActivateCoupenTVC.xib in Resources */,
 				186E62232FE91EB800BAF454 /* QuizCompletedVc.xib in Resources */,
 				186E62242FE91EB800BAF454 /* CoupenDetailTVC.xib in Resources */,
@@ -8767,7 +8773,6 @@
 				1841DF272F584C5200B88801 /* AdminRequestsViewController.xib in Resources */,
 				84174DEF2E6B5F6A00AC7092 /* quizCellTv.xib in Resources */,
 				84EFFAEA2CCFA4A100C11C26 /* ReportBugVcViewController.xib in Resources */,
-				84444C562E66EE3B00B4B8EB /* UpdateProfileVC.xib in Resources */,
 				18887AB62EFFAAFB008B71FF /* VoiceMessageVc.xib in Resources */,
 				18887AB72EFFAAFB008B71FF /* CommonPagenationVc.xib in Resources */,
 				18887AB82EFFAAFB008B71FF /* ScheduleCallVC.xib in Resources */,
@@ -8859,7 +8864,6 @@
 				185CC0C92F74EB49002640CE /* outpassRequestTVcell.xib in Resources */,
 				FA43D0CE2F322CFE0046B966 /* VideoPlayerCVC.xib in Resources */,
 				FAE4958A2E89AF960099DF24 /* PtmNavigationVC.xib in Resources */,
-				84444C522E66D3FF00B4B8EB /* UserDetailsTVC.xib in Resources */,
 				182B09C22F6C25A0002C81A0 /* StatsticTvCell.xib in Resources */,
 				8442A9522CDE83C80006068E /* Localizable.strings in Resources */,
 				84C08C692EB396E9009F657B /* PopoverViewVC.xib in Resources */,
@@ -9134,6 +9138,8 @@
 				84127AEA2E03C8F00092159D /* CaterogyCvCell.xib in Resources */,
 				84127AEC2E03C8F00092159D /* ReedimHistoryVc.xib in Resources */,
 				FA43D0AA2F322CDB0046B966 /* WhatsNewCVC.xib in Resources */,
+				18365769304FCBE0003AED35 /* UpdateProfileVC.xib in Resources */,
+				1836576A304FCBE0003AED35 /* UserDetailsTVC.xib in Resources */,
 				FA43D0B82F322CE30046B966 /* SchoolListTVC.xib in Resources */,
 				FA43D0B92F322CE30046B966 /* SchoolListVC.xib in Resources */,
 				842ACE122F56A00000954404 /* ExamPermamenceTVC.xib in Resources */,
@@ -9431,7 +9437,6 @@
 				1827E5E62F90C12000B33B20 /* EditLessonVC.swift in Sources */,
 				1827E5E72F90C12000B33B20 /* SuccesseRatusTVC.swift in Sources */,
 				1827E5E82F90C12000B33B20 /* HostelRoomTvCell.swift in Sources */,
-				1827E5ED2F90C12000B33B20 /* UpdateProfileVC.swift in Sources */,
 				1827E5EE2F90C12000B33B20 /* LSRWSubmisionListVC.swift in Sources */,
 				1827E5EF2F90C12000B33B20 /* QuizSubmisionTvCell.swift in Sources */,
 				1827E5F02F90C12000B33B20 /* SchoolStrengthCvcell.swift in Sources */,
@@ -9456,7 +9461,6 @@
 				1827E6042F90C12000B33B20 /* CertificateCv.swift in Sources */,
 				1827E6052F90C12000B33B20 /* ScheduleExamVC.swift in Sources */,
 				1827E6062F90C12000B33B20 /* SubmitedStudentTVC.swift in Sources */,
-				1827E6072F90C12000B33B20 /* UserDetailsTVC.swift in Sources */,
 				1827E6082F90C12000B33B20 /* SenderAssignmentTextViewController.swift in Sources */,
 				1827E6092F90C12000B33B20 /* CompletedTVcell.swift in Sources */,
 				1827E60A2F90C12000B33B20 /* PopupVC.swift in Sources */,
@@ -9748,6 +9752,8 @@
 				1827E70B2F90C12000B33B20 /* SparkView.swift in Sources */,
 				1827E70D2F90C12000B33B20 /* TimetableVC.swift in Sources */,
 				1827E70E2F90C12000B33B20 /* SparkViewAnimator.swift in Sources */,
+				18365761304FCBE0003AED35 /* UserDetailsTVC.swift in Sources */,
+				18365762304FCBE0003AED35 /* UpdateProfileVC.swift in Sources */,
 				1827E70F2F90C12000B33B20 /* DPDUIView+Extension.swift in Sources */,
 				1827E7102F90C12000B33B20 /* DropDown.swift in Sources */,
 				1827E7112F90C12000B33B20 /* StudentFinancialTVC.swift in Sources */,
@@ -9911,7 +9917,6 @@
 				1868A4102FAC762E00831144 /* EditLessonVC.swift in Sources */,
 				1868A4112FAC762E00831144 /* SuccesseRatusTVC.swift in Sources */,
 				1868A4122FAC762E00831144 /* HostelRoomTvCell.swift in Sources */,
-				1868A4172FAC762E00831144 /* UpdateProfileVC.swift in Sources */,
 				1868A4182FAC762E00831144 /* LSRWSubmisionListVC.swift in Sources */,
 				1868A4192FAC762E00831144 /* QuizSubmisionTvCell.swift in Sources */,
 				1868A41A2FAC762E00831144 /* SchoolStrengthCvcell.swift in Sources */,
@@ -9936,7 +9941,6 @@
 				1868A42E2FAC762E00831144 /* CertificateCv.swift in Sources */,
 				1868A42F2FAC762E00831144 /* ScheduleExamVC.swift in Sources */,
 				1868A4302FAC762E00831144 /* SubmitedStudentTVC.swift in Sources */,
-				1868A4312FAC762E00831144 /* UserDetailsTVC.swift in Sources */,
 				1868A4322FAC762E00831144 /* SenderAssignmentTextViewController.swift in Sources */,
 				1868A4332FAC762E00831144 /* CompletedTVcell.swift in Sources */,
 				1868A4342FAC762E00831144 /* PopupVC.swift in Sources */,
@@ -10228,6 +10232,8 @@
 				1868A5352FAC762E00831144 /* SparkView.swift in Sources */,
 				1868A5372FAC762E00831144 /* TimetableVC.swift in Sources */,
 				1868A5382FAC762E00831144 /* SparkViewAnimator.swift in Sources */,
+				1836576F304FCBE0003AED35 /* UserDetailsTVC.swift in Sources */,
+				18365770304FCBE0003AED35 /* UpdateProfileVC.swift in Sources */,
 				1868A5392FAC762E00831144 /* DPDUIView+Extension.swift in Sources */,
 				1868A53A2FAC762E00831144 /* DropDown.swift in Sources */,
 				1868A53B2FAC762E00831144 /* StudentFinancialTVC.swift in Sources */,
@@ -10391,7 +10397,6 @@
 				186E5F0C2FE91EB800BAF454 /* EditLessonVC.swift in Sources */,
 				186E5F0D2FE91EB800BAF454 /* SuccesseRatusTVC.swift in Sources */,
 				186E5F0E2FE91EB800BAF454 /* HostelRoomTvCell.swift in Sources */,
-				186E5F132FE91EB800BAF454 /* UpdateProfileVC.swift in Sources */,
 				186E5F142FE91EB800BAF454 /* LSRWSubmisionListVC.swift in Sources */,
 				186E5F152FE91EB800BAF454 /* QuizSubmisionTvCell.swift in Sources */,
 				186E5F162FE91EB800BAF454 /* SchoolStrengthCvcell.swift in Sources */,
@@ -10416,7 +10421,6 @@
 				186E5F2A2FE91EB800BAF454 /* CertificateCv.swift in Sources */,
 				186E5F2B2FE91EB800BAF454 /* ScheduleExamVC.swift in Sources */,
 				186E5F2C2FE91EB800BAF454 /* SubmitedStudentTVC.swift in Sources */,
-				186E5F2D2FE91EB800BAF454 /* UserDetailsTVC.swift in Sources */,
 				186E5F2E2FE91EB800BAF454 /* SenderAssignmentTextViewController.swift in Sources */,
 				186E5F2F2FE91EB800BAF454 /* CompletedTVcell.swift in Sources */,
 				186E5F302FE91EB800BAF454 /* PopupVC.swift in Sources */,
@@ -10708,6 +10712,8 @@
 				186E60342FE91EB800BAF454 /* SparkView.swift in Sources */,
 				186E60362FE91EB800BAF454 /* TimetableVC.swift in Sources */,
 				186E60372FE91EB800BAF454 /* SparkViewAnimator.swift in Sources */,
+				18365767304FCBE0003AED35 /* UserDetailsTVC.swift in Sources */,
+				18365768304FCBE0003AED35 /* UpdateProfileVC.swift in Sources */,
 				186E60382FE91EB800BAF454 /* DPDUIView+Extension.swift in Sources */,
 				186E60392FE91EB800BAF454 /* DropDown.swift in Sources */,
 				186E603A2FE91EB800BAF454 /* StudentFinancialTVC.swift in Sources */,
@@ -10878,7 +10884,6 @@
 				FAF43B642E02A09200F28A16 /* EditLessonVC.swift in Sources */,
 				845AB8712EC1F89C003C22E1 /* SuccesseRatusTVC.swift in Sources */,
 				1841DE992F56FF1C00B88801 /* HostelRoomTvCell.swift in Sources */,
-				84444C572E66EE3B00B4B8EB /* UpdateProfileVC.swift in Sources */,
 				845CAC892E54B06C000FA540 /* LSRWSubmisionListVC.swift in Sources */,
 				FA48A6992E754AA7004E10C7 /* QuizSubmisionTvCell.swift in Sources */,
 				84BCE90F2E9E3AB6002C8068 /* SchoolStrengthCvcell.swift in Sources */,
@@ -10903,7 +10908,6 @@
 				FA861C362E38ABA900859726 /* CertificateCv.swift in Sources */,
 				84BB5EA82D11330E00AD0C87 /* ScheduleExamVC.swift in Sources */,
 				8480477D2E02DF6E0042BC5D /* SubmitedStudentTVC.swift in Sources */,
-				84444C532E66D3FF00B4B8EB /* UserDetailsTVC.swift in Sources */,
 				849AD0522D1A858D002DEC07 /* SenderAssignmentTextViewController.swift in Sources */,
 				84FB97D22D3E31FF00EBF9F4 /* CompletedTVcell.swift in Sources */,
 				8466E83F2D6ED0CB004F4EFC /* PopupVC.swift in Sources */,
@@ -11195,6 +11199,8 @@
 				84C82A062D086A490024A46A /* SparkView.swift in Sources */,
 				8420316E2D390CED003C4076 /* TimetableVC.swift in Sources */,
 				84C82A072D086A490024A46A /* SparkViewAnimator.swift in Sources */,
+				1836576B304FCBE0003AED35 /* UserDetailsTVC.swift in Sources */,
+				1836576C304FCBE0003AED35 /* UpdateProfileVC.swift in Sources */,
 				188EBD912ED5632F00BEA524 /* DPDUIView+Extension.swift in Sources */,
 				188EBD922ED5632F00BEA524 /* DropDown.swift in Sources */,
 				842ACE0B2F569F6500954404 /* StudentFinancialTVC.swift in Sources */,

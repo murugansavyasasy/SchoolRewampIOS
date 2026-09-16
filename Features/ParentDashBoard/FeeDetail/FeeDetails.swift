@@ -95,6 +95,12 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate, refrech {
     }
 
 
+    @IBAction func paymentProofBtnAct(_ sender: UIButton) {
+        
+        let vc = paymentProofVc()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
     func setupWebView() {
 
                webView.navigationDelegate = self

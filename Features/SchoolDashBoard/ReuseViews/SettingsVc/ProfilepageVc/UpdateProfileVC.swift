@@ -19,12 +19,13 @@ class UpdateProfileVC: UIViewController, reloadDelegate {
         detailTable.reloadData()
     }
     
+    @IBOutlet weak var editBtnName: UIButton!
     
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var editBtn: UIButton!
+    @IBOutlet weak var tableContainerView: UIView!
     @IBOutlet weak var profileImg: UIImageView!
-    @IBOutlet weak var outerView: UIView!
-    @IBOutlet weak var detailTable: UITableView!
+    var detailTable: UITableView!
     
     var profileSections: [ProfileSection] = []
     var attachments: [AttachmentItem] = []
@@ -37,6 +38,7 @@ class UpdateProfileVC: UIViewController, reloadDelegate {
     var profileNode: String = "photoPath"
     var isStudent = false
     var hideBack = false
+    var isEditClicked: Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         backBtn.isHidden = hideBack
@@ -53,6 +55,98 @@ class UpdateProfileVC: UIViewController, reloadDelegate {
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    @IBAction func editProfileBtnAct(_ sender: UIButton) {
+        
+        if detailTable != nil {
+               detailTable.removeFromSuperview()
+               detailTable = nil
+           }
+        let newTitle: String
+
+        if sender.configuration?.title == "Edit Profile" {
+            newTitle = "Back to profile"
+            
+            isEditClicked = true
+                    let tableStyle: UITableView.Style = .plain
+                        detailTable = UITableView(
+                            frame: .zero,
+                            style: tableStyle
+                        )
+            detailTable.separatorStyle = .none
+            detailTable.register(UINib(nibName: "UserDetailsTVC", bundle: nil), forCellReuseIdentifier: "UserDetailsTVC")
+                    detailTable.dataSource = self
+                    detailTable.delegate = self
+                    detailTable.tableFooterView = UIView()
+            
+                    tableContainerView.addSubview(detailTable)
+            
+                       detailTable.translatesAutoresizingMaskIntoConstraints = false
+            
+                       NSLayoutConstraint.activate([
+                           detailTable.topAnchor.constraint(
+                               equalTo: tableContainerView.topAnchor
+                           ),
+            
+                           detailTable.bottomAnchor.constraint(
+                               equalTo: tableContainerView.bottomAnchor
+                           ),
+            
+                           detailTable.leadingAnchor.constraint(
+                               equalTo: tableContainerView.leadingAnchor
+                           ),
+            
+                           detailTable.trailingAnchor.constraint(
+                               equalTo: tableContainerView.trailingAnchor
+                           )
+                       ])
+            
+                    setupUserDetails(isStudent: isStudent)
+        } else {
+            newTitle = "Edit Profile"
+            isEditClicked = false
+            let tableStyle: UITableView.Style = .insetGrouped
+                detailTable = UITableView(
+                    frame: .zero,
+                    style: tableStyle
+                )
+            detailTable.separatorStyle = .singleLine
+    detailTable.register(UINib(nibName: "UserDetailsTVC", bundle: nil), forCellReuseIdentifier: "UserDetailsTVC")
+            detailTable.dataSource = self
+            detailTable.delegate = self
+            detailTable.tableFooterView = UIView()
+    
+            tableContainerView.addSubview(detailTable)
+               detailTable.translatesAutoresizingMaskIntoConstraints = false
+               NSLayoutConstraint.activate([
+                   detailTable.topAnchor.constraint(
+                       equalTo: tableContainerView.topAnchor
+                   ),
+                   detailTable.bottomAnchor.constraint(
+                       equalTo: tableContainerView.bottomAnchor
+                   ),
+                   detailTable.leadingAnchor.constraint(
+                       equalTo: tableContainerView.leadingAnchor
+                   ),
+                   detailTable.trailingAnchor.constraint(
+                       equalTo: tableContainerView.trailingAnchor
+                   )
+               ])
+            setupUserDetails(isStudent: isStudent)
+        }
+
+        sender.configuration?.title = newTitle
+        sender.configuration?.titleTextAttributesTransformer =
+            UIConfigurationTextAttributesTransformer { incoming in
+
+                var outgoing = incoming
+                outgoing.font = UIFont.systemFont(
+                    ofSize: 13,
+                    weight: .regular
+                )
+                return outgoing
+            }
     }
     // MARK: - Image Selection
     private func imageSelection() {
@@ -106,6 +200,8 @@ class UpdateProfileVC: UIViewController, reloadDelegate {
     }
     
     private func setupUI() {
+      
+        editBtnName.isHidden = !isStudent
         profileImg.layer.cornerRadius = profileImg.frame.width / 2
         profileImg.contentMode = .scaleAspectFit
         profileImg.clipsToBounds = true
@@ -113,12 +209,40 @@ class UpdateProfileVC: UIViewController, reloadDelegate {
         profileImg.layer.borderColor = UIColor.white.cgColor
         editBtn.layer.cornerRadius = editBtn.frame.width / 2
         editBtn.clipsToBounds = true
-        
+        let tableStyle: UITableView.Style = .insetGrouped
+            detailTable = UITableView(
+                frame: .zero,
+                style: tableStyle
+            )
         detailTable.register(UINib(nibName: "UserDetailsTVC", bundle: nil), forCellReuseIdentifier: "UserDetailsTVC")
         detailTable.dataSource = self
         detailTable.delegate = self
         detailTable.tableFooterView = UIView()
+        
+        tableContainerView.addSubview(detailTable)
+
+           detailTable.translatesAutoresizingMaskIntoConstraints = false
+
+           NSLayoutConstraint.activate([
+               detailTable.topAnchor.constraint(
+                   equalTo: tableContainerView.topAnchor
+               ),
+
+               detailTable.bottomAnchor.constraint(
+                   equalTo: tableContainerView.bottomAnchor
+               ),
+
+               detailTable.leadingAnchor.constraint(
+                   equalTo: tableContainerView.leadingAnchor
+               ),
+
+               detailTable.trailingAnchor.constraint(
+                   equalTo: tableContainerView.trailingAnchor
+               )
+           ])
+
     }
+    
     
     @IBAction func back(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
@@ -156,7 +280,12 @@ class UpdateProfileVC: UIViewController, reloadDelegate {
                         }
 
                         self.profileNode = firstProfileData.photoPath?.first?.node ?? "photoPath"
-                        self.editBtn.isHidden = !(firstProfileData.photoPath?.first?.is_editable == true)
+                        if !self.isEditClicked {
+                            self.editBtn.isHidden = true
+                        }else{
+                            self.editBtn.isHidden = !(firstProfileData.photoPath?.first?.is_editable == true)
+                        }
+                        
                         if let documentSection = self.profileSections.first(where: { section in
                             section.items.contains(where: { $0.node == "documents" })
                         }), let documentItem = documentSection.items.first(where: { $0.node == "documents" }) {
@@ -388,13 +517,16 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
         
         let section = profileSections[indexPath.section]
         let items = section.items
-        
         let isLastSection = indexPath.section == profileSections.count - 1
         let isLastRow = indexPath.row == items.count
-        
+        print("Before assign:", isStudent)
+
+        cell.isStudents = isStudent
+        cell.isEditClicked = isEditClicked
         cell.addAttachmentBtn.addTarget(self, action: #selector(addDocs(_:)), for: .touchUpInside)
         if isLastSection && isLastRow && isStudent {
             cell.configure(with: nil, attachments: nil)
+           cell.updateBtn.isHidden = !isEditClicked
             cell.updateBtn.addTarget(self, action: #selector(updateButtonTapped(_:)), for: .touchUpInside)
         } else {
             let item = items[indexPath.row]
@@ -420,9 +552,11 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
                 }
             }
         }
+       
         return cell
     }
     
+
     // MARK: Section Header
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let sectionData = profileSections[section]

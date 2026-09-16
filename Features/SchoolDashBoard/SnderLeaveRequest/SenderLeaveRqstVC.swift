@@ -454,8 +454,39 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
             guard let  cell = leaveRequestTable.dequeueReusableCell(withIdentifier: "StaffLeaveReqTvCell", for: indexPath) as? StaffLeaveReqTvCell else { return UITableViewCell() }
             
             guard let leaveData = filteredLeaveRecords?[indexPath.section].details?[indexPath.row] else { return cell }
-            
-            cell.nameLbl.text = leaveData.staff_name
+            if isStaff{
+                cell.nameLbl.text = leaveData.staff_name
+            }else{
+                
+                if leaveData.created_by_own ?? false {
+                    let staffName = leaveData.staff_name ?? ""
+                       let text = "\(staffName) (You)"
+                       
+                       let attributedText = NSMutableAttributedString(string: text)
+                       
+                       // Normal staff name
+                       attributedText.addAttribute(
+                           .foregroundColor,
+                           value: UIColor.label,
+                           range: NSRange(location: 0, length: staffName.count)
+                       )
+                       
+                       // "(You)" only gray
+                       attributedText.addAttribute(
+                           .foregroundColor,
+                           value: UIColor.systemGray,
+                           range: NSRange(
+                               location: staffName.count + 1,
+                               length: 5
+                           )
+                       )
+                       
+                    cell.nameLbl.attributedText = attributedText
+                }else{
+                    cell.nameLbl.text = leaveData.staff_name
+                }
+            }
+           
             cell.nameProfileLbl.text = shortName(from: leaveData.staff_name ?? "")
 //            cell.nameLbl.numberOfLines = 1
             cell.priorityLbl.text = leaveData.role
@@ -515,10 +546,18 @@ extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
                     cell.RejectBtnName.isHidden = true
                     cell.threeDotBtnName.isHidden = false
                 } else  if isPrincipal{
-                    cell.StatusView.isHidden = true
-                    cell.aproveBtn.isHidden = false
-                    cell.RejectBtnName.isHidden = false
-                    cell.threeDotBtnName.isHidden = true
+                    if leaveData.created_by_own ?? false{
+                        cell.StatusView.isHidden = true
+                        cell.aproveBtn.isHidden = true
+                        cell.RejectBtnName.isHidden = true
+                        cell.threeDotBtnName.isHidden = true
+                    }else{
+                        cell.StatusView.isHidden = true
+                        cell.aproveBtn.isHidden = false
+                        cell.RejectBtnName.isHidden = false
+                        cell.threeDotBtnName.isHidden = true
+                    }
+                   
                 }
             }
             
