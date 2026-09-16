@@ -158,7 +158,9 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                                 activityName: activity.name,
                                 maxMarks: Int(rubric.max_mark ?? "0"),
                                 isRubric: true,
-                                rubricId: rubricId
+                                rubricId: rubricId,
+                                isCo_scholastic: false,
+                                isRemarks: false
                             )
                         )
                     }
@@ -174,7 +176,9 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                             activityId: activityId,
                             activityName: activity.name,
                             maxMarks: Int(activity.max_mark ?? "0"),
-                            rubrics: rubricConfigs
+                            rubrics: rubricConfigs,
+                            isCo_scholastic: false,
+                            isRemarks: false
                         )
                     )
                     
@@ -187,7 +191,9 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                             activityId: activityId,
                             activityName: activity.name,
                             maxMarks: Int(activity.max_mark ?? "0"),
-                            rubrics: nil
+                            rubrics: nil,
+                            isCo_scholastic: false,
+                            isRemarks: false
                         )
                     )
                     
@@ -200,12 +206,98 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                             activityName: activity.name,
                             maxMarks: Int(activity.max_mark ?? "0"),
                             isRubric: false,
-                            rubricId: nil
+                            rubricId: nil,
+                            isCo_scholastic: false,
+                            isRemarks: false
                         )
                     )
                 }
             }
         }
+        
+        // MARK: - Co-Scholastic
+
+        for item in firstStudent.co_scholastic ?? [] {
+
+            guard let id = item.id,
+                  !id.isEmpty else {
+                continue
+            }
+
+            // Header column
+            headerColumns.append(
+                HeaderColumnConfig(
+                    displayName: item.name,
+                    subjectName: "Co-Scholastic",
+                    subjectId: nil,
+                    activityId: id,
+                    activityName: item.name,
+                    maxMarks: nil,
+                    rubrics: nil,
+                    isCo_scholastic: true,
+                    isRemarks: false
+                )
+            )
+
+            // Data column
+            subjectColumns.append(
+                ColumnConfig(
+                    displayName: item.name,
+                    subjectName: "Co-Scholastic",
+                    subjectId: nil,
+                    activityId: id,
+                    activityName: item.name,
+                    maxMarks: nil,
+                    isRubric: false,
+                    rubricId: nil,
+                    isCo_scholastic: true,
+                    isRemarks: false
+                )
+            )
+        }
+
+
+        // MARK: - Remarks
+
+        for item in firstStudent.remarks ?? [] {
+
+            guard let referenceType = item.reference_type,
+                  !referenceType.isEmpty else {
+                continue
+            }
+
+            // Header column
+            headerColumns.append(
+                HeaderColumnConfig(
+                    displayName: referenceType,
+                    subjectName: "Remarks",
+                    subjectId: nil,
+                    activityId: nil,
+                    activityName: referenceType,
+                    maxMarks: nil,
+                    rubrics: nil,
+                    isCo_scholastic: false,
+                    isRemarks: true
+                )
+            )
+
+            // Data column
+            subjectColumns.append(
+                ColumnConfig(
+                    displayName: referenceType,
+                    subjectName: "Remarks",
+                    subjectId: nil,
+                    activityId: nil,
+                    activityName: referenceType,
+                    maxMarks: nil,
+                    isRubric: false,
+                    rubricId: nil,
+                    isCo_scholastic: false,
+                    isRemarks: true
+                )
+            )
+        }
+        
     }
     
     
@@ -213,7 +305,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
         showActivityLoader()
         
         APIService.shared.makeApi(
-            url: ServiceUrl.exam_api_new_exam_get_mark_to_upload,
+            url: ServiceUrl.exam_api_new_exam_get_marks_to_upload_details,
             parameters: payload,
             type: ApitTypeSringFile.POST,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "",
@@ -1372,6 +1464,11 @@ extension EnterMarkVC {
     private static let padding: CGFloat = 16
     
     func columnWidth(for column: ColumnConfig) -> CGFloat {
+        
+        if column.isRemarks == true {
+            return 180
+        }
+        
         let headerFont = UIFont.systemFont(ofSize: 13, weight: .medium)
         let maxFont = UIFont.systemFont(ofSize: 12, weight: .regular)
         
@@ -1389,11 +1486,30 @@ extension EnterMarkVC {
     }
     
     func headerColumnWidth(for header: HeaderColumnConfig) -> CGFloat {
-        let leaves = subjectColumns.filter {
-            $0.subjectId == header.subjectId && $0.activityId == header.activityId
+
+        let leaves = subjectColumns.filter { column in
+
+            // Co-Scholastic / Remarks
+            if header.isCo_scholastic == true ||
+               header.isRemarks == true {
+
+                return column.isCo_scholastic == header.isCo_scholastic &&
+                       column.isRemarks == header.isRemarks &&
+                       column.displayName == header.displayName
+            }
+
+            // Normal Subject / Activity / Rubric
+            return column.subjectId == header.subjectId &&
+                   column.activityId == header.activityId
         }
-        guard !leaves.isEmpty else { return Self.minActivityWidth }
-        return leaves.reduce(0) { $0 + columnWidth(for: $1) }
+
+        guard !leaves.isEmpty else {
+            return Self.minActivityWidth
+        }
+
+        return leaves.reduce(0) {
+            $0 + columnWidth(for: $1)
+        }
     }
     
     func leafWidths(for header: HeaderColumnConfig) -> [CGFloat] {

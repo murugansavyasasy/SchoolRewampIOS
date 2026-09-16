@@ -42,12 +42,15 @@ class AttendanceMarkingVC: UIViewController, UISearchBarDelegate, markeAsAbsent,
     @IBOutlet weak var statusLbl: UILabel!
     @IBOutlet weak var rollNoLbl: UILabel!
     @IBOutlet weak var nameLbl: UILabel!
+    @IBOutlet weak var TotalCountView: UIView!
     @IBOutlet weak var PresentCountView: UIView!
     @IBOutlet weak var AbsentCountView: UIView!
     @IBOutlet weak var OdCountView: UIView!
+    @IBOutlet weak var TotalCountLbl: UILabel!
     @IBOutlet weak var PresentCountLbl: UILabel!
     @IBOutlet weak var AbsentCountLbl: UILabel!
     @IBOutlet weak var OdCountLbl: UILabel!
+    @IBOutlet weak var TotalDefLbl: UILabel!
     @IBOutlet weak var PresentDefLbl: UILabel!
     @IBOutlet weak var OdDefLbl: UILabel!
     @IBOutlet weak var AbsentDefLbl: UILabel!
@@ -77,6 +80,7 @@ class AttendanceMarkingVC: UIViewController, UISearchBarDelegate, markeAsAbsent,
     var isAllAbsent = false
     var MARK_ATTENDANCE = "MARK_ATTENDANCE"
     var expandedIndex: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -86,21 +90,16 @@ class AttendanceMarkingVC: UIViewController, UISearchBarDelegate, markeAsAbsent,
         
         confirmBtn.layer.cornerRadius = 10
         
-        PresentCountView.layer.cornerRadius = 5
-        PresentCountView.layer.borderWidth = 0.3
-        PresentCountView.layer.borderColor = UIColor.systemGray4.cgColor
+        configCountView(view: TotalCountView)
+        configCountView(view: PresentCountView)
+        configCountView(view: AbsentCountView)
+        configCountView(view: OdCountView)
         
-        AbsentCountView.layer.cornerRadius = 5
-        AbsentCountView.layer.borderWidth = 0.3
-        AbsentCountView.layer.borderColor = UIColor.systemGray4.cgColor
-        
-        OdCountView.layer.cornerRadius = 5
-        OdCountView.layer.borderWidth = 0.3
-        OdCountView.layer.borderColor = UIColor.systemGray4.cgColor
-        
-        PresentCountLbl.setFont(style: .title, size: 25)
-        AbsentCountLbl.setFont(style: .title, size: 25)
-        OdCountLbl.setFont(style: .title, size: 25)
+        TotalCountLbl.setFont(style: .title, size: 20)
+        PresentCountLbl.setFont(style: .title, size: 20)
+        AbsentCountLbl.setFont(style: .title, size: 20)
+        OdCountLbl.setFont(style: .title, size: 20)
+        TotalDefLbl.setFont(style: .body, size: FontSize.BodySize)
         PresentDefLbl.setFont(style: .body, size: FontSize.BodySize)
         AbsentDefLbl.setFont(style: .body, size: FontSize.BodySize)
         OdDefLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -148,6 +147,17 @@ class AttendanceMarkingVC: UIViewController, UISearchBarDelegate, markeAsAbsent,
         selectAllBtn.setTitle(AttendanceString.Mark_all_as_absent.translated(), for: .normal)
     }
     
+    func configCountView(view : UIView) {
+        view.layer.cornerRadius = 8
+        view.layer.borderWidth = 0.3
+        view.layer.borderColor = UIColor.systemGray4.cgColor
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.2
+        view.layer.shadowOffset = CGSize(width: 0, height: 1)
+        view.layer.shadowRadius = 2
+        view.layer.masksToBounds = false
+    }
+    
     func Get_student_List_Api(){
         
         showActivityLoader()
@@ -180,6 +190,9 @@ class AttendanceMarkingVC: UIViewController, UISearchBarDelegate, markeAsAbsent,
                         self.applyFilterAndSort()
                         self.getAttendanceCounts()
                         self.updateSelectAllCheckbox()
+                        let total_strength = Int(success.data?.first?.total_strength ?? "0")
+                        
+                        self.TotalCountLbl.text = self.formatCount(total_strength ?? 0)
                         
                     }else {
                         CustomAlert.showAlertWithOkAction(title: AlertstringFile.Failed, message: success.message ?? "", on: self) {
@@ -607,10 +620,12 @@ extension AttendanceMarkingVC: UITableViewDelegate, UITableViewDataSource {
         cell.LeaveAppliedBtnName.tag = indexPath.row
         
         if expandedIndex == indexPath.row {
+            cell.LeaveAppliedFullView.isHidden = false
             cell.reasonView.isHidden = false
             cell.fromdateAndTodateStack.isHidden = false
             cell.LeaveAppliedFullView.backgroundColor = .expandAttendaceClr
         } else {
+            cell.LeaveAppliedFullView.isHidden = true
             cell.reasonView.isHidden = true
             cell.fromdateAndTodateStack.isHidden = true
             cell.LeaveAppliedFullView.backgroundColor = .clear

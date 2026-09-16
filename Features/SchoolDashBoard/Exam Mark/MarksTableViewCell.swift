@@ -41,6 +41,7 @@ class MarksTableViewCell: UITableViewCell {
         
         marksCollectionView.collectionViewLayout = layout
         marksCollectionView.register(UINib(nibName: "MarksCell", bundle: nil), forCellWithReuseIdentifier: "MarksCell")
+        marksCollectionView.register(UINib(nibName: "RemarksCell", bundle: nil), forCellWithReuseIdentifier: "RemarksCell")
         marksCollectionView.showsHorizontalScrollIndicator = false
         marksCollectionView.backgroundColor = .white
         marksCollectionView.bounces = true
@@ -161,12 +162,20 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MarksCell", for: indexPath) as! MarksCell
         
-        guard let parentVC = parentVC else { return cell }
+        
+        guard let parentVC = parentVC else { return UICollectionViewCell() }
         
         let student = parentVC.studentRecords[studentIndex]
         let column = parentVC.subjectColumns[indexPath.item]
+        
+        if column.isRemarks == true {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RemarksCell", for: indexPath) as! RemarksCell
+            
+            return cell
+        }
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MarksCell", for: indexPath) as! MarksCell
         
         var mark = ""
         var changeMark: String? = nil
@@ -218,6 +227,13 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
         guard let parentVC = parentVC else {return CGSize(width: 120, height: 74)}
         let column = parentVC.subjectColumns[indexPath.item]
         var widths: [CGFloat] = []
+        
+        if column.isRemarks == true {
+               return CGSize(
+                   width: 170,
+                   height: 74
+               )
+           }
         
         if let display = column.displayName {
             let font = UIFont.systemFont(ofSize: 13, weight: .medium)

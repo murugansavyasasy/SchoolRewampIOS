@@ -23,6 +23,7 @@ class ExamActivitySelectionVC: UIViewController {
     var expandedIndex: IndexPath?
     var didInitialHeightSet = false
     var SubjectList : [SubjectExamData] = []
+    var coscholasticList : [coscholastic] = []
     var isAIFlow: Bool = false
     var ExamID = ""
     var section_Id = ""
@@ -101,10 +102,11 @@ class ExamActivitySelectionVC: UIViewController {
     
     func Get_exam_activities_Api(for examId: String) {
         SubjectList.removeAll()
+        coscholasticList.removeAll()
         let param:[String:Any] = ["exam_id": examId,"section_id": section_Id]
 
         APIService.shared.makeApi(
-            url: ServiceUrl.exam_get_subject_wise_activities,
+            url: ServiceUrl.new_exam_get_subject_activities,
             parameters: param,
             type: ApitTypeSringFile.GET,
             token: staffDetails?.access_token ?? "", isBaseUrl: false
@@ -115,7 +117,8 @@ class ExamActivitySelectionVC: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
-                    self.SubjectList = response.data ?? []
+                    self.SubjectList = response.data?.first?.subjects ?? []
+                    self.coscholasticList = response.data?.first?.co_scholastic ?? []
                     self.tableview.reloadData()
                     
                     if !(response.status ?? false) {
@@ -155,42 +158,6 @@ class ExamActivitySelectionVC: UIViewController {
             CustomAlert.showAlertWithOkAction(title: AlertstringFile.Missing_Information, message: message, on: self)
         }
     }
-    
-//    func buildPayload() -> [String: Any]? {
-//
-//        let selectedActivities = SubjectList.compactMap { subject -> [String: Any]? in
-//            let selected = subject.activities?.filter { $0.isChecked ?? false} ?? []
-//            guard !selected.isEmpty else { return nil }
-//
-//            return [
-//                "subject_id": subject.subject_id ?? "",
-//                "subject_name": subject.subject_name ?? "",
-//                "activities": selected.map {
-//                    var dict: [String: Any] = [
-//                        "activity_id": $0.activity_id ?? "",
-//                        "activity_name": $0.activity_name ?? "",
-//                        "max_mark": $0.max_mark ?? ""
-//                    ]
-//                    if isAIFlow {
-//                        dict["ai_option"] = $0.selectedAIOption ?? ""
-//                    }
-//                    return dict
-//                }
-//            ]
-//        }
-//
-//        guard !selectedActivities.isEmpty else {
-//            return nil
-//        }
-//
-//        return [
-////            "class_id": SubjectList.first?.class_id ?? "",
-////            "section_id": SubjectList.first?.section_id ?? "",
-//            "exam_id": ExamID,
-//            "academic_year_id": String(academicYearId ?? 0),
-//            "selected_activities": selectedActivities
-//        ]
-//    }
     
     func buildPayload() -> [String: Any]? {
 
@@ -246,16 +213,25 @@ class ExamActivitySelectionVC: UIViewController {
                 "activities": selectedActivities
             ]
         }
-
-        guard !selectedSubjects.isEmpty else {
-            return nil
+        
+        let coScholasticIds = coscholasticList.filter{ $0.isChecked == true}.map {
+           [
+            "id": $0.id ?? "",
+            "name": $0.name ?? ""
+           ]
         }
 
+
+        guard !selectedSubjects.isEmpty || !coScholasticIds.isEmpty  else {
+            return nil
+        }
+        
         return [
             "exam_id": ExamID,
             "section_id": section_Id,
             "academic_year_id": String(academicYearId ?? 0),
-            "selected_activities": selectedSubjects
+            "selected_activities": selectedSubjects,
+            "co_scholastic_ids" : coScholasticIds
         ]
     }
 
@@ -265,53 +241,172 @@ class ExamActivitySelectionVC: UIViewController {
 }
 
 extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? "Subjects" : "Coscholastic"
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SubjectList.count
+        return section == 0 ? SubjectList.count : coscholasticList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SubjectsTVCell, for: indexPath) as! SubjectsTVCell
-
-        let data = SubjectList[indexPath.row]
-
-        cell.subjectLbl.text = data.subject_name
+        
+        if indexPath.section == 0 {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SubjectsTVCell, for: indexPath) as! SubjectsTVCell
+            
+            let data = SubjectList[indexPath.row]
+            
+            cell.expandIconBtn.isHidden = false
+            cell.checkCircleBtn.isHidden = true
+            
+            cell.subjectLbl.text = data.subject_name
             cell.subjectIndex = indexPath.row
             cell.isAI = isAIFlow
-        cell.config(dropDown:selectedColoumns)
+            cell.config(dropDown:selectedColoumns)
             cell.delegate = self
             cell.isExpanded = (expandedIndex == indexPath)
             cell.splits = data.activities ?? []
             cell.updateStatusLabel()
+            cell.statusLbl.isHidden = false
             //cell.statusLbl.text = "• \(data.activities?.count ?? 0) Activities"
             cell.configureExpandState()
             cell.onHeightChange = { [weak self] in
                 self?.updateMainHeight()
             }
-
+            
             return cell
+        }else {
+            
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: CellConfingName.SubjectsTVCell,
+                for: indexPath
+            ) as! SubjectsTVCell
+            
+            let data = coscholasticList[indexPath.row]
+            
+            cell.expandIconBtn.isHidden = true
+            cell.tableview.isHidden = true
+            cell.tableviewHeight.constant = 0
+            cell.separatorLineView.isHidden = true
+            cell.isExpanded = false
+            cell.splits = []
+            
+            cell.subjectLbl.text = data.name
+            
+            cell.checkCircleBtn.isHidden = false
+            
+            
+            if data.isChecked == true {
+                cell.checkCircleBtn.setImage(
+                    UIImage(systemName: "checkmark.circle.fill"),
+                    for: .normal
+                )
+                cell.checkCircleBtn.tintColor = .staffExamColour
+                cell.statusLbl.textColor = .systemGreen
+                cell.subjectView.backgroundColor = .systemGreen.withAlphaComponent(0.05)
+                cell.baseView.layer.borderColor = UIColor.systemGreen.cgColor
+                
+                if isAIFlow {
+                    cell.statusLbl.isHidden = false
+                    cell.statusLbl.text = "Mapped to: \(data.selectedAIOption ?? "")"
+                }else {
+                    cell.statusLbl.isHidden = true
+                }
+                
+            }else {
+                cell.checkCircleBtn.setImage(
+                    UIImage(systemName: "circle"),
+                    for: .normal
+                )
+                cell.checkCircleBtn.tintColor = .lightGray
+                cell.statusLbl.textColor = .darkGray
+                cell.subjectView.backgroundColor = .systemBackground
+                cell.baseView.layer.borderColor = UIColor.lightGray.cgColor
+                cell.statusLbl.isHidden = true
+            }
+            
+            return cell
+        }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if indexPath.section == 0 {
+            
+            let previous = expandedIndex
+            
+            if previous == indexPath {
+                expandedIndex = nil
+            } else {
+                expandedIndex = indexPath
+            }
+            
+            var rows = [indexPath]
+            if let previous = previous, previous != indexPath {
+                rows.append(previous)
+            }
+            
+            tableView.reloadRows(at: rows, with: .automatic)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.updateMainHeight()
+            }
+        }else {
+            
 
-        let previous = expandedIndex
+            if isAIFlow {
+                
+                guard let cell = tableView.cellForRow(
+                    at: indexPath
+                ) as? SubjectsTVCell else {
+                    return
+                }
 
-        if previous == indexPath {
-            expandedIndex = nil
-        } else {
-            expandedIndex = indexPath
-        }
+                let currentValue =
+                    coscholasticList[indexPath.row].selectedAIOption
 
-        var rows = [indexPath]
-        if let previous = previous, previous != indexPath {
-            rows.append(previous)
-        }
+                cell.showDropdown(
+                    items: selectedColoumns,
+                    selectedValue: currentValue
+                ) { [weak self] selectedItem in
 
-        tableView.reloadRows(at: rows, with: .automatic)
+                    guard let self = self else {
+                        return
+                    }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-            self.updateMainHeight()
+                    self.coscholasticList[indexPath.row].selectedAIOption =
+                        selectedItem
+
+                    self.coscholasticList[indexPath.row].isChecked = true
+
+                    print(
+                        "Coscholastic \(indexPath.row): \(selectedItem)"
+                    )
+                    tableView.reloadRows(
+                        at: [indexPath],
+                        with: .automatic
+                    )
+                }
+
+            } else {
+
+                let currentValue =
+                    coscholasticList[indexPath.row].isChecked ?? false
+
+                coscholasticList[indexPath.row].isChecked =
+                    !currentValue
+
+                tableView.reloadRows(
+                    at: [indexPath],
+                    with: .automatic
+                )
+            }
         }
     }
 
