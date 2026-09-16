@@ -77,8 +77,8 @@ class MarksTableViewCell: UITableViewCell {
         
         if let rollNo = student.roll_no,
            let admissionNo = student.admission_no {
-            rollNoLabel.text = "Roll No: \(rollNo)"
-            admissNoLabel.text = "Adm No: \(admissionNo)"
+            rollNoLabel.text = "\("Roll No:".translated()) \(rollNo)"
+            admissNoLabel.text = "\("Adm No:".translated()) \(admissionNo)"
             rollNoLabel.isHidden = rollNo.isEmpty
             admissNoLabel.isHidden = admissionNo.isEmpty
         } else {
@@ -169,12 +169,68 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
         let student = parentVC.studentRecords[studentIndex]
         let column = parentVC.subjectColumns[indexPath.item]
         
+        // MARK: - Remarks
         if column.isRemarks == true {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RemarksCell", for: indexPath) as! RemarksCell
             
+            let referenceType = column.activityId ?? ""
+            
+            let remark = student.remarks?.first {
+                    $0.reference_type == referenceType
+                }
+
+            cell.configure(
+                    Remark: remark?.mark ?? "",
+                    rowIndex: studentIndex,
+                    columnIndex: indexPath.item,
+                    parentVC: parentVC,
+                    is_edit: remark?.is_edit ?? true,
+                    commonRemarks: parentVC.commonRemarks
+                )
+            
+            cell.delegate = self
+
             return cell
         }
         
+        // MARK: - Co-Scholastic
+        if column.isCo_scholastic == true {
+
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "MarksCell",
+                for: indexPath
+            ) as! MarksCell
+
+            let coScholasticId = column.activityId ?? ""
+
+            let item = student.co_scholastic?.first {
+                $0.id == coScholasticId
+            }
+
+            cell.configure(
+                mark: item?.mark ?? "",
+                channgeMark: item?.change_mark,
+                rowIndex: studentIndex,
+                columnIndex: indexPath.item,
+                alignment: .center,
+                parentVC: parentVC,
+                hasFlaggedIssue: item?.isReview ?? false,
+                is_edit: item?.is_edit ?? true,
+                maxMark: 0,
+                isCoScholastic: true
+            )
+            cell.markTxt.tag = (studentIndex * 1000) + indexPath.item
+            cell.infoBtn.removeTarget(nil, action: nil, for: .allEvents)
+            cell.infoBtn.tag = indexPath.item
+            cell.infoBtn.addTarget(self,
+                                   action: #selector(infoBtnTapped(_:)),
+                                   for: .touchUpInside)
+            cell.delegate = self
+
+            return cell
+        }
+        
+        // MARK: - Normal Activity / Rubric
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MarksCell", for: indexPath) as! MarksCell
         
         var mark = ""
@@ -230,7 +286,7 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
         
         if column.isRemarks == true {
                return CGSize(
-                   width: 170,
+                   width: 190,
                    height: 74
                )
            }
@@ -255,34 +311,72 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     @objc func infoBtnTapped(_ sender: UIButton) {
+
         let columnIndex = sender.tag
-        var reason = "Issue detected"
-        guard columnIndex < parentVC?.subjectColumns.count ?? 0 else { return }
-        let column = parentVC?.subjectColumns[columnIndex]
-        let student = parentVC?.studentRecords[studentIndex]
-        
-        if let subject = student?.marks?.first(where: { $0.subject_id == column?.subjectId }),
-           let activity = subject.activities?.first(where: { $0.id == column?.activityId }) {
-            
-            if column?.isRubric == true, let rubricId = column?.rubricId,
-               let rubrics = activity.rubrics, !rubrics.isEmpty,
-               let rubric = rubrics.first(where: { $0.id == rubricId }) {
-                reason = rubric.reason ?? "Issue detected"
-            } else {
-                reason = activity.reason ?? "Issue detected"
+        var reason = "Issue detected".translated()
+
+        guard columnIndex < parentVC?.subjectColumns.count ?? 0 else {
+            return
+        }
+
+        guard let column = parentVC?.subjectColumns[columnIndex],
+              let student = parentVC?.studentRecords[studentIndex] else {
+            return
+        }
+
+        // MARK: - Co-Scholastic
+        if column.isCo_scholastic == true {
+
+            let coScholasticId = column.activityId ?? ""
+
+            if let item = student.co_scholastic?.first(
+                where: { $0.id == coScholasticId }
+            ) {
+                reason = item.reason ?? "Issue detected".translated()
             }
         }
-        
+
+        // MARK: - Normal Activity / Rubric
+        else if let subject = student.marks?.first(
+            where: { $0.subject_id == column.subjectId }
+        ),
+        let activity = subject.activities?.first(
+            where: { $0.id == column.activityId }
+        ) {
+
+            if column.isRubric == true,
+               let rubricId = column.rubricId,
+               let rubrics = activity.rubrics,
+               !rubrics.isEmpty,
+               let rubric = rubrics.first(where: { $0.id == rubricId }) {
+
+                reason = rubric.reason ?? "Issue detected".translated()
+
+            } else {
+                reason = activity.reason ?? "Issue detected".translated()
+            }
+        }
+
         let popoverVC = PopoverViewVC(nibName: nil, bundle: nil)
+
         popoverVC.configureButtons(
-            with: [("exclamationmark.circle.fill", reason, .systemRed)],
+            with: [
+                ("exclamationmark.circle.fill", reason, .systemRed)
+            ],
             type: .symbol
         )
-        
+
         let (width, height) = calculatePopoverSize(for: reason)
-        popoverVC.preferredContentSize = CGSize(width: width, height: height)
-        
-        showPopover(from: sender, contentVC: popoverVC)
+
+        popoverVC.preferredContentSize = CGSize(
+            width: width,
+            height: height
+        )
+
+        showPopover(
+            from: sender,
+            contentVC: popoverVC
+        )
     }
     
     private func calculatePopoverSize(for text: String) -> (width: CGFloat, height: CGFloat) {

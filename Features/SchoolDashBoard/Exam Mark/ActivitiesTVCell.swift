@@ -91,7 +91,7 @@ class ActivitiesTVCell: UITableViewCell {
         dropdown.dataSource = items
         self.items = items
         let nameText = split.activity_name ?? ""
-        let maxText = " (Max: \(split.max_mark ?? "") marks)"
+        let maxText = " (\("Max:".translated()) \(split.max_mark ?? "") \("marks".translated())"
         print(items)
         let fullText = nameText + maxText
         
@@ -108,7 +108,7 @@ class ActivitiesTVCell: UITableViewCell {
         updateCheckboxUI(isChecked: isSelected)
 
         // ✅ STATUS
-        let mapped = "Mapped to: "
+        let mapped = "Mapped to: ".translated()
         let selectedOption = split.selectedAIOption.map {$0} ?? ""
         let ActivityfullText = mapped + selectedOption
         let ActivityattributedString = NSMutableAttributedString(string: ActivityfullText)
@@ -149,7 +149,7 @@ class ActivitiesTVCell: UITableViewCell {
         // AI mapping takes highest priority
         if isAIFlow, let selectedOption = split.selectedAIOption {
 
-            let prefix = "Mapped to: "
+            let prefix = "Mapped to: ".translated()
             let fullText = prefix + selectedOption
 
             let attr = NSMutableAttributedString(string: fullText)
@@ -170,7 +170,8 @@ class ActivitiesTVCell: UITableViewCell {
 
         // Show rubric count if rubrics exist
         if rubricCount > 0 {
-            ActivitystatusLbl.text = "• \(rubricCount) Rubric\(rubricCount > 1 ? "s" : "")"
+            let rubricText = rubricCount > 1 ? "Rubrics".translated() : "Rubric".translated()
+            ActivitystatusLbl.text = "• \(rubricCount) \(rubricText)"
             ActivitystatusLbl.textColor = .darkGray
             ActivitystatusLbl.isHidden = false
         } else {
@@ -294,7 +295,7 @@ class ActivitiesTVCell: UITableViewCell {
             // UI
             self.CheckBoxBtnName.isSelected = true
             self.updateCheckboxUI(isChecked: true)
-            self.ActivitystatusLbl.text = "Mapped to: \(item)"
+            self.ActivitystatusLbl.text = "\("Mapped to:".translated()) \(item)"
             self.ActivitystatusLbl.isHidden = false
             self.clearBtn.isHidden = false
             
@@ -375,7 +376,7 @@ class ActivitiesTVCell: UITableViewCell {
             let nameLabel = UILabel()
             nameLabel.numberOfLines = 0
             nameLabel.font = UIFont.systemFont(ofSize: 13)
-            nameLabel.text = "\(rubric.rubric_name ?? "") (Max: \(rubric.max_mark ?? ""))"
+            nameLabel.text = "\(rubric.rubric_name ?? "") (\("Max:".translated()) \(rubric.max_mark ?? ""))"
 
             // Vertical stack for labels
             let textStack = UIStackView(arrangedSubviews: [nameLabel])
@@ -390,7 +391,7 @@ class ActivitiesTVCell: UITableViewCell {
                 statusLabel.numberOfLines = 1
                 statusLabel.font = UIFont.systemFont(ofSize: 11)
 
-                let prefix = "Mapped to: "
+                let prefix = "Mapped to: ".translated()
                 let fullText = prefix + option
 
                 let attr = NSMutableAttributedString(string: fullText)

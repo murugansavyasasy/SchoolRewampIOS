@@ -30,7 +30,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="cuq-JT-RRi">
                                                 <rect key="frame" x="3" y="0.0" width="200.66666666666666" height="39"/>
                                                 <subviews>
-                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="--" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="p2w-rq-9m3">
+                                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="--" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="p2w-rq-9m3">
                                                         <rect key="frame" x="0.0" y="2" width="170" height="35"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="4v7-p0-Vv3"/>
@@ -86,7 +86,7 @@
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" image="info.circle" catalog="system"/>
                                         <connections>
-                                            <action selector="dropDownBtn:" destination="gTV-IL-0wX" eventType="touchUpInside" id="rfi-B0-an8"/>
+                                            <action selector="infoBtn:" destination="gTV-IL-0wX" eventType="touchUpInside" id="eE4-cd-kL4"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fU-Gb-7RI">
@@ -118,6 +118,8 @@
             <size key="customSize" width="251" height="49"/>
             <connections>
                 <outlet property="dropDownBtn" destination="Lge-S5-XlD" id="wBf-55-aCW"/>
+                <outlet property="infoBtn" destination="ow2-3f-VHn" id="lMW-VG-CmR"/>
+                <outlet property="sepratorLbl" destination="7vM-pO-QxJ" id="9s1-7f-QJw"/>
                 <outlet property="textBaseView" destination="DK2-6G-A6i" id="2tS-0d-FFg"/>
                 <outlet property="textField" destination="p2w-rq-9m3" id="S63-jF-PG0"/>
             </connections>

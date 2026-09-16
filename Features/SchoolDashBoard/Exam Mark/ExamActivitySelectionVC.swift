@@ -5,6 +5,11 @@
 //  Created by Lakshmanan on 26/11/25.
 //
 
+enum ExamSection {
+    case subjects
+    case coscholastic
+}
+
 import UIKit
 
 class ExamActivitySelectionVC: UIViewController {
@@ -27,11 +32,25 @@ class ExamActivitySelectionVC: UIViewController {
     var isAIFlow: Bool = false
     var ExamID = ""
     var section_Id = ""
+    var standard_Id = ""
     let staffDetails = UserDefaultFileManager.get_staff_Details()
     var selectedColoumns:[String] = []
     var convertedRecords:[ConvertedStudentRecord] = []
     var SelectedExam : StaffExamData?
     var academicYearId: Int?
+    var sections: [ExamSection] {
+        var result: [ExamSection] = []
+
+        if !SubjectList.isEmpty {
+            result.append(.subjects)
+        }
+
+        if !coscholasticList.isEmpty {
+            result.append(.coscholastic)
+        }
+
+        return result
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,8 +136,11 @@ class ExamActivitySelectionVC: UIViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
+                    
+                    
                     self.SubjectList = response.data?.first?.subjects ?? []
                     self.coscholasticList = response.data?.first?.co_scholastic ?? []
+                    self.expandedIndex = nil
                     self.tableview.reloadData()
                     
                     if !(response.status ?? false) {
@@ -149,6 +171,7 @@ class ExamActivitySelectionVC: UIViewController {
             print(payload)
             print(convertedRecords)
             let vc = EnterMarkVC()
+            vc.standard_id = standard_Id
             vc.payload = payload
             vc.aiRecords = convertedRecords
             vc.modalPresentationStyle = .fullScreen
@@ -214,13 +237,17 @@ class ExamActivitySelectionVC: UIViewController {
             ]
         }
         
-        let coScholasticIds = coscholasticList.filter{ $0.isChecked == true}.map {
-           [
-            "id": $0.id ?? "",
-            "name": $0.name ?? ""
-           ]
-        }
-
+        let coScholasticIds: [[String: Any]] = coscholasticList
+            .filter { $0.isChecked == true }
+            .map { item in
+                [
+                    "id": item.id ?? "",
+                    "name": item.name ?? "",
+                    "selected_name": isAIFlow
+                        ? (item.selectedAIOption ?? item.name ?? "")
+                        : (item.name ?? "")
+                ]
+            }
 
         guard !selectedSubjects.isEmpty || !coScholasticIds.isEmpty  else {
             return nil
@@ -243,20 +270,36 @@ class ExamActivitySelectionVC: UIViewController {
 extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return sections.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "Subjects" : "Coscholastic"
+        
+        switch sections[section] {
+            
+        case .subjects:
+            return "Subjects"
+        case .coscholastic:
+            return "Coscholastic"
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? SubjectList.count : coscholasticList.count
+        
+        switch sections[section] {
+            
+        case .subjects:
+            return SubjectList.count
+        case .coscholastic:
+            return coscholasticList.count
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.section == 0 {
+        switch sections[indexPath.section] {
+            
+        case .subjects:
             
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SubjectsTVCell, for: indexPath) as! SubjectsTVCell
             
@@ -281,7 +324,8 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
             }
             
             return cell
-        }else {
+            
+        case .coscholastic:
             
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: CellConfingName.SubjectsTVCell,
@@ -337,7 +381,9 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if indexPath.section == 0 {
+        switch sections[indexPath.section] {
+            
+        case .subjects:
             
             let previous = expandedIndex
             
@@ -357,9 +403,9 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                 self.updateMainHeight()
             }
-        }else {
             
-
+        case .coscholastic:
+            
             if isAIFlow {
                 
                 guard let cell = tableView.cellForRow(

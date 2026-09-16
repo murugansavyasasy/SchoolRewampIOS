@@ -344,6 +344,7 @@ struct CommonStringFile {
     static let AdmissionNoASC = "Admission No ASC"
     static let NameASC = "Name A-Z"
     static let NameDESC = "Name Z-A"
+    static let Total = "Total"
     static let Present = "Present"
     static let Absent = "Absent"
     static let getAllStudent = "Get All Student"

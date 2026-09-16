@@ -72,7 +72,7 @@ class MarksCell: UICollectionViewCell {
         leftStack.distribution = .fill
         
         let doneButton = UIButton(type: .system)
-        doneButton.setTitle("Done", for: .normal)
+        doneButton.setTitle("Done".translated(), for: .normal)
         doneButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
         doneButton.addTarget(markTxt,
                              action: #selector(UITextField.resignFirstResponder),
@@ -197,7 +197,18 @@ class MarksCell: UICollectionViewCell {
         tittleLbl.textColor = .label
     }
     
-    func configure(mark: String,channgeMark: String? = nil,rowIndex: Int,columnIndex: Int,alignment: NSTextAlignment = .center,parentVC: EnterMarkVC?,hasFlaggedIssue: Bool = false,is_edit: Bool,maxMark: Int = 0) {
+    func configure(
+        mark: String,
+        channgeMark: String? = nil,
+        rowIndex: Int,
+        columnIndex: Int,
+        alignment: NSTextAlignment = .center,
+        parentVC: EnterMarkVC?,
+        hasFlaggedIssue: Bool = false,
+        is_edit: Bool,
+        maxMark: Int = 0,
+        isCoScholastic: Bool = false
+    ) {
         
         self.rowIndex = rowIndex
         self.columnIndex = columnIndex
@@ -228,12 +239,14 @@ class MarksCell: UICollectionViewCell {
             return
         }
         
-        if let markValue = Int(mark),
+        if !isCoScholastic,
+           let markValue = Int(mark),
            !mark.isEmpty,
            markValue > maxMark {
             applyHighlight(color: .orange,infoColor: .systemRed)
             return
         }
+        
         markTxt.inputAccessoryView = buildAccessoryView()
     }
     
@@ -307,7 +320,7 @@ extension MarksCell: UITextFieldDelegate {
            let entered = Int(value),
            entered > maxStr {
             isValid = false
-            reason = "Maximum mark exceeded"
+            reason = "Maximum mark exceeded".translated()
         }
         
         let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
@@ -334,13 +347,20 @@ extension MarksCell: UITextFieldDelegate {
            let entered = Int(updatedText),
            entered > max {
             isValid = false
-            reason = "Maximum mark exceeded"
+            reason = "Maximum mark exceeded".translated()
         }
         
         if updatedText == "AB" {
-            reason = "Absent"
+            reason = "Absent".translated()
         }
-        applyValidationUI(mark: updatedText,maxMark: parentVC?.subjectColumns[columnIndex].maxMarks ?? 0)
+       
+        if parentVC?.subjectColumns[columnIndex].isCo_scholastic != true {
+            applyValidationUI(
+                mark: updatedText,
+                maxMark: parentVC?.subjectColumns[columnIndex].maxMarks ?? 0
+            )
+        }
+        
         let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
         delegate?.updateMark(row: rowIndex,column: columnIndex,value: updatedText,reson: reason,subjectName: subjectName)
         
@@ -374,13 +394,13 @@ extension MarksCell {
     @objc private func abTapped() {
         markTxt.text = "AB"
         let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
-        delegate?.updateMark(row: rowIndex,column: columnIndex,value: "AB",reson: "Absent",subjectName: subjectName)
+        delegate?.updateMark(row: rowIndex,column: columnIndex,value: "AB",reson: "Absent".translated(),subjectName: subjectName)
         parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex)
     }
     @objc private func naTapped() {
         markTxt.text = "NA"
         let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
-        delegate?.updateMark(row: rowIndex,column: columnIndex,value: "NA",reson: "Not Applicable",subjectName: subjectName)
+        delegate?.updateMark(row: rowIndex,column: columnIndex,value: "NA",reson: "Not Applicable".translated(),subjectName: subjectName)
         parentVC?.moveToNextColumn(row: rowIndex, column: columnIndex)
     }
 }

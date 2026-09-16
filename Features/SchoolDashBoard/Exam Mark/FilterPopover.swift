@@ -20,16 +20,18 @@ class FilterPopover: UIViewController {
     @IBOutlet var typeViews: [UIView]!
     @IBOutlet var sortViews: [UIView]!
     @IBOutlet var addBtns: [UIButton]!
+    @IBOutlet weak var clearBtn: UIButton!
+    @IBOutlet weak var applyBtn: UIButton!
     
     // MARK: - Properties
     weak var delegate: FilterPopoverDelegate?
     var stackViewReferences: [Int: (typeView: UIView, sortView: UIView, innerStack: UIStackView)] = [:]
     
     var filterSection: [FilterSection]? = [
-        FilterSection(type: "Student Name", section: ["Ascending", "Descending"]),
-        FilterSection(type: "Admission Number", section: ["Ascending", "Descending"]),
-        FilterSection(type: "Roll Number", section: ["Ascending", "Descending"]),
-        FilterSection(type: "Gender", section: ["Male", "Female", "Others"])
+        FilterSection(type: "Student Name".translated(), section: ["Ascending".translated(), "Descending".translated()]),
+        FilterSection(type: "Admission Number".translated(), section: ["Ascending".translated(), "Descending".translated()]),
+        FilterSection(type: "Roll Number".translated(), section: ["Ascending".translated(), "Descending".translated()]),
+        FilterSection(type: "Gender".translated(), section: ["Male".translated(), "Female".translated(), "Others".translated()])
     ]
     
     var availableFilters: [FilterSection] = []
@@ -43,6 +45,8 @@ class FilterPopover: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        clearBtn.setTitle("Clear".translated(), for: .normal)
+        applyBtn.setTitle("Apply".translated(), for: .normal)
         availableFilters = filterSection ?? []
         setupButtonTags()
         setupStackReferences()
@@ -140,7 +144,7 @@ class FilterPopover: UIViewController {
         
         let btn = UIButton(type: .system)
         btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle("Select Type", for: .normal)
+        btn.setTitle("Select Type".translated(), for: .normal)
         btn.contentHorizontalAlignment = .left
         btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         btn.backgroundColor = .systemGray6
@@ -304,7 +308,7 @@ class FilterPopover: UIViewController {
         
         let btn = UIButton(type: .system)
         btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.setTitle("Sort", for: .normal)
+        btn.setTitle("Sort".translated(), for: .normal)
         btn.contentHorizontalAlignment = .center
         btn.backgroundColor = .systemGray6
         btn.layer.cornerRadius = 8

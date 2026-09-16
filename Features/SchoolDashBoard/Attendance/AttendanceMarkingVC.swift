@@ -140,6 +140,7 @@ class AttendanceMarkingVC: UIViewController, UISearchBarDelegate, markeAsAbsent,
         nameLbl.text = CommonStringFile.Name.translated()
         statusLbl.text = CommonStringFile.Status.translated()
         searchBar.placeholder = CommonStringFile.Search.translated()
+        TotalDefLbl.text = CommonStringFile.Total.translated()
         PresentDefLbl.text = CommonStringFile.Present.translated()
         AbsentDefLbl.text = CommonStringFile.Absent.translated()
         OdDefLbl.text = AttendanceString.on_duty.translated()

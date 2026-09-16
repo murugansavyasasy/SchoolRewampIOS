@@ -66,8 +66,10 @@ class busListVC: UIViewController {
                         if let route = routeDataList.first,
                            let location = getLatLong(for: route) {
 
-                            myLates = location.lat ?? ""
-                            myLongs = location.long ?? ""
+                            myLates = location.lat?.replacingOccurrences(of: "° N", with: "")
+                                .trimmingCharacters(in: .whitespaces) ?? ""
+                            myLongs = location.long?.replacingOccurrences(of: "° ER", with: "")
+                                .trimmingCharacters(in: .whitespaces) ?? ""
                         }
                         tv.reloadData()
                     }else{
@@ -91,17 +93,28 @@ class busListVC: UIViewController {
     }
 
     func getLatLong(for route: StudentRouteData) -> (lat: String?, long: String?)? {
-        
+
         for stoppingPoint in route.stopping_points ?? [] {
+
             if let stop = stoppingPoint.stops?.first(where: {
                 $0.stop_id == route.stop_id
             }) {
-                return (stop.latitude, stop.longitude)
+
+                let latitude = stop.latitude?
+                    .replacingOccurrences(of: "° N", with: "")
+                    .trimmingCharacters(in: .whitespaces)
+
+                let longitude = stop.longitude?
+                    .replacingOccurrences(of: "° E", with: "")
+                    .trimmingCharacters(in: .whitespaces)
+
+                return (latitude, longitude)
             }
         }
-        
+
         return nil
     }
+
 }
 
 
