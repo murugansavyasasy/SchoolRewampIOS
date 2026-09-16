@@ -958,6 +958,7 @@ struct LeaveInfo: Codable {
     var mobile_no: String?
     var email: String?
     var address: String?
+    var created_by_own: Bool?
 }
 
 struct FlexibleString: Codable {

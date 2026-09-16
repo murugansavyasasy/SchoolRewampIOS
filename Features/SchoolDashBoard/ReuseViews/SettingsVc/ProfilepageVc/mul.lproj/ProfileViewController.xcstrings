@@ -1,0 +1,282 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "6as-Bs-BFo.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Mothername\"; ObjectID = \"6as-Bs-BFo\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mothername"
+          }
+        }
+      }
+    },
+    "BE0-pC-GBZ.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Contact details\"; ObjectID = \"BE0-pC-GBZ\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Contact details"
+          }
+        }
+      }
+    },
+    "eAt-AD-9bj.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Section : A\"; ObjectID = \"eAt-AD-9bj\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Section : A"
+          }
+        }
+      }
+    },
+    "EtU-tU-UH7.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Standard : IIX\"; ObjectID = \"EtU-tU-UH7\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Standard : IIX"
+          }
+        }
+      }
+    },
+    "GSp-nA-pbd.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Fathername\"; ObjectID = \"GSp-nA-pbd\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Fathername"
+          }
+        }
+      }
+    },
+    "HJP-dp-VF9.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Family Details\"; ObjectID = \"HJP-dp-VF9\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Family Details"
+          }
+        }
+      }
+    },
+    "idm-8y-Db7.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Hostel\"; ObjectID = \"idm-8y-Db7\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Hostel"
+          }
+        }
+      }
+    },
+    "JxA-NW-lsP.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Housewife\"; ObjectID = \"JxA-NW-lsP\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Housewife"
+          }
+        }
+      }
+    },
+    "MIc-PY-owv.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Secondary Phone no\"; ObjectID = \"MIc-PY-owv\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Secondary Phone no"
+          }
+        }
+      }
+    },
+    "MVs-VJ-n0d.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"sathish@savayasasy.com\"; ObjectID = \"MVs-VJ-n0d\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "sathish@savayasasy.com"
+          }
+        }
+      }
+    },
+    "mZd-d6-c6N.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Sathish\"; ObjectID = \"mZd-d6-c6N\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Sathish"
+          }
+        }
+      }
+    },
+    "OCh-iw-ZsF.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Father occupation\"; ObjectID = \"OCh-iw-ZsF\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Father occupation"
+          }
+        }
+      }
+    },
+    "QKK-cm-b1d.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"O+\"; ObjectID = \"QKK-cm-b1d\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "O+"
+          }
+        }
+      }
+    },
+    "sBV-tv-PiR.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"9876543210\"; ObjectID = \"sBV-tv-PiR\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "9876543210"
+          }
+        }
+      }
+    },
+    "sdY-kb-C3z.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"profile\"; ObjectID = \"sdY-kb-C3z\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "profile"
+          }
+        }
+      }
+    },
+    "toz-ZA-3xH.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Kodambakkam,Chennai - 600028\"; ObjectID = \"toz-ZA-3xH\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Kodambakkam,Chennai - 600028"
+          }
+        }
+      }
+    },
+    "udt-cv-h3g.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"shanmuga sundaram\"; ObjectID = \"udt-cv-h3g\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "shanmuga sundaram"
+          }
+        }
+      }
+    },
+    "uJV-4k-BL3.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Farmer\"; ObjectID = \"uJV-4k-BL3\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Farmer"
+          }
+        }
+      }
+    },
+    "VAu-Qc-QtG.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"+91 799884433865\"; ObjectID = \"VAu-Qc-QtG\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "+91 799884433865"
+          }
+        }
+      }
+    },
+    "Y7B-iN-86S.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Mother occupation\"; ObjectID = \"Y7B-iN-86S\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mother occupation"
+          }
+        }
+      }
+    },
+    "y8K-jZ-ByO.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Saraswathi\"; ObjectID = \"y8K-jZ-ByO\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Saraswathi"
+          }
+        }
+      }
+    },
+    "YBR-Hc-HKF.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Register no : 14734567\"; ObjectID = \"YBR-Hc-HKF\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Register no : 14734567"
+          }
+        }
+      }
+    },
+    "ZMQ-hB-GhB.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"About Student\"; ObjectID = \"ZMQ-hB-GhB\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "About Student"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

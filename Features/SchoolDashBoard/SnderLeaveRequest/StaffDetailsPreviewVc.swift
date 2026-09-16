@@ -196,9 +196,16 @@ class StaffDetailsPreviewVc: UIViewController {
         let toformatted = formatDate(todate)
        EndDateLbl.text = toformatted
         leaveTypeLbl.text = passedData?.leave_type
-        staffNameLbl.text = passedData?.staff_name
+      
         RollLabel.text = passedData?.role
-        currentLeaveReqFullView.isHidden = passedData?.status != "Waiting for approval"
+        if passedData?.created_by_own ?? false{
+            currentLeaveReqFullView.isHidden = true
+            staffNameLbl.text = "\(passedData?.staff_name ?? "") (You)"
+        }else{
+            currentLeaveReqFullView.isHidden = passedData?.status != "Waiting for approval"
+            staffNameLbl.text = passedData?.staff_name
+        }
+        
         
     }
     

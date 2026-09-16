@@ -14,6 +14,7 @@ class addConcernVc: UIViewController, DeleteImge {
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
+    @IBOutlet weak var submitBtnName: UIButton!
     @IBOutlet weak var toolBarHeight: NSLayoutConstraint!
     
     @IBOutlet weak var RaiseFullStackView: UIStackView!
@@ -50,37 +51,47 @@ class addConcernVc: UIViewController, DeleteImge {
     }
     @IBAction func checkBtnUpdate(_ sender: UIButton) {
         
-        // Select only the tapped button
-        if sender == managmentBtnName {
-                selectedRole = "management"
-            } else if sender == principalBtnName {
-                selectedRole = "principal"
-            } else if sender == classteacherBtnName {
-                selectedRole = "class_teacher"
-            }
+        // Update selected role
+           if sender == managmentBtnName {
+               selectedRole = "management"
+               
+           } else if sender == principalBtnName {
+               selectedRole = "principal"
+               
+           } else if sender == classteacherBtnName {
+               selectedRole = "class_teacher"
+           }
+
+           // Select only the tapped button
+           managmentBtnName.isSelected = (sender == managmentBtnName)
+           principalBtnName.isSelected = (sender == principalBtnName)
+           classteacherBtnName.isSelected = (sender == classteacherBtnName)
+
+           // Update radio button images
            updateRadioButtons()
-    }
-    
-  
-    func updateRadioButtons() {
-        let selectedImage = UIImage(systemName: "largecircle.fill.circle")
-        let unselectedImage = UIImage(systemName: "circle")
-        
-        classteacherBtnName.setImage(
-            classteacherBtnName.isSelected ? selectedImage : unselectedImage,
-            for: .normal
-        )
-        
-        principalBtnName.setImage(
-            principalBtnName.isSelected ? selectedImage : unselectedImage,
-            for: .normal
-        )
-        
-        managmentBtnName.setImage(
-            managmentBtnName.isSelected ? selectedImage : unselectedImage,
-            for: .normal
-        )
-    }
+       }
+
+
+       func updateRadioButtons() {
+
+           let selectedImage = UIImage(systemName: "largecircle.fill.circle")
+           let unselectedImage = UIImage(systemName: "circle")
+
+           managmentBtnName.setImage(
+               managmentBtnName.isSelected ? selectedImage : unselectedImage,
+               for: .normal
+           )
+
+           principalBtnName.setImage(
+               principalBtnName.isSelected ? selectedImage : unselectedImage,
+               for: .normal
+           )
+
+           classteacherBtnName.setImage(
+               classteacherBtnName.isSelected ? selectedImage : unselectedImage,
+               for: .normal
+           )
+       }
     func setupUi(){
         // Management selected by default
         if loginAsType == 1{
@@ -101,6 +112,7 @@ class addConcernVc: UIViewController, DeleteImge {
         let concernTap = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
         concernDropdownView.addGestureRecognizer(concernTap)
         imageSelection()
+        submitBtnName.setTitle("Submit".translated(), for: .normal)
         
     }
     func imageSelection(){
@@ -204,10 +216,10 @@ class addConcernVc: UIViewController, DeleteImge {
         } else {
             
             alert.showAlertCancel(
-                title: "Raise concern",
-                message: "Are you sure you want to raise this concern?",
-                actionLbl1: "Raise",
-                actionLbl2: "Cancel",
+                title: "Raise concern".translated(),
+                message: "Are you sure you want to raise this concern?".translated(),
+                actionLbl1: "Raise".translated(),
+                actionLbl2: "Cancel".translated(),
                 on: self,
                 onOk: { [weak self] in
                     

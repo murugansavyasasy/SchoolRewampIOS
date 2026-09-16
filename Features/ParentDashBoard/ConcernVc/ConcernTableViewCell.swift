@@ -7,7 +7,7 @@ protocol DeleteConcerndata: AnyObject{
     
     func addactionconcerndata(index: Int,Is_viewAction : Bool)
 }
-class ConcernTableViewCell: UITableViewCell{
+class ConcernTableViewCell: UITableViewCell, UITextViewDelegate{
     
     
     @IBOutlet weak var actionTakenDescreptionLbl: UILabel!
@@ -62,6 +62,7 @@ class ConcernTableViewCell: UITableViewCell{
     weak var viewController: UIViewController?
     weak var deleteDelegate: DeleteConcerndata?
     var AknowledgeDiscription : String?
+    private let acknowledgementPlaceholder = "Enter acknowledgement description"
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
@@ -119,53 +120,109 @@ class ConcernTableViewCell: UITableViewCell{
     }
     
     
-    func aknowlegeFlow(index:Index){
-        
+ 
+
+    private func aknowlegeFlow(index: Int) {
+
         guard let viewController = viewController else {
             return
         }
-        
+
         let alert = UIAlertController(
-            title: "Add aknowledgement discreption",
+            title: "Add acknowledgement",
             message: "\n\n\n",
             preferredStyle: .alert
         )
-        
+
         let textView = UITextView(
-            frame: CGRect(x: 15, y: 50, width: 240, height: 80)
+            frame: CGRect(
+                x: 15,
+                y: 55,
+                width: 240,
+                height: 90
+            )
         )
-        
+
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.layer.borderWidth = 1
         textView.layer.cornerRadius = 8
         textView.layer.borderColor = UIColor.lightGray.cgColor
-        
+
+        // Placeholder
+        textView.text = acknowledgementPlaceholder
+        textView.textColor = .lightGray
+
+        textView.delegate = self
+
         alert.view.addSubview(textView)
-        
-        // Cancel
-        alert.addAction(UIAlertAction(
-            title: "Cancel",
-            style: .cancel
-        ))
-        
-        // OK
-        alert.addAction(UIAlertAction(
-            title: "Confirm",
-            style: .default
-        ) { _ in
-            
-            let actionText = textView.text ?? ""
-            
-            print("Action Taken:", actionText)
-            self.AknowledgeDiscription = actionText
-            
-            self.deleteDelegate?.AknowledgeConcernData(index:index, Aknowledgediscreption: actionText, Is_viewAknowledgemeny: false)
-            // API call here
-        })
-        
-        viewController.present(alert, animated: true)
+
+        // MARK: - Cancel
+
+        alert.addAction(
+            UIAlertAction(
+                title: "Cancel",
+                style: .cancel
+            )
+        )
+
+        // MARK: - Confirm
+
+        alert.addAction(
+            UIAlertAction(
+                title: "Confirm",
+                style: .default
+            ) { [weak self] _ in
+
+                guard let self = self else {
+                    return
+                }
+
+                // Get actual text
+                let actionText = textView.text == self.acknowledgementPlaceholder
+                    ? ""
+                    : textView.text.trimmingCharacters(
+                        in: .whitespacesAndNewlines
+                    )
+
+                print("Action Taken: \(actionText)")
+
+                self.AknowledgeDiscription = actionText
+
+                self.deleteDelegate?.AknowledgeConcernData(
+                    index: index,
+                    Aknowledgediscreption: actionText,
+                    Is_viewAknowledgemeny: false
+                )
+            }
+        )
+
+        viewController.present(
+            alert,
+            animated: true
+        ) {
+            textView.becomeFirstResponder()
+        }
     }
     
+    func textViewDidBeginEditing(_ textView: UITextView) {
+
+        if textView.text == acknowledgementPlaceholder {
+
+            textView.text = ""
+            textView.textColor = .label
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+
+        if textView.text.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        ).isEmpty {
+
+            textView.text = acknowledgementPlaceholder
+            textView.textColor = .lightGray
+        }
+    }
     
     @IBAction func acknowledgeBtnAct(_ sender: UIButton) {
         if sender.currentTitle == "Acknowledged"{
@@ -347,7 +404,7 @@ class ConcernTableViewCell: UITableViewCell{
         parentAttachments = concern.filePath
         actionAttachments = concern.actionFilePath
         configureButtons(isAcknowledged: concern.is_acknowledged,isAction: concern.is_action)
-        actionTakenDescreptionLbl.text = concern.acknowledgement
+        actionTakenDescreptionLbl.text = concern.actionTaken
         if loginasTye == 1 {
             removeButton.isHidden = true
         } else {
