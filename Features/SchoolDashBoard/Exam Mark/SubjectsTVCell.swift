@@ -22,8 +22,10 @@ class SubjectsTVCell: UITableViewCell {
     @IBOutlet weak var tableview: ContentSizedTableView!
     @IBOutlet weak var tableviewHeight: NSLayoutConstraint!
     @IBOutlet weak var separatorLineView: UIView!
+    @IBOutlet weak var closeBtn: UIButton!
     
     var isExpanded = false
+    var onCloseTapped: (() -> Void)?
     var onHeightChange: (() -> Void)?
     var subjectIndex:Int = 0
     var splits: [ActivityData] = []
@@ -37,6 +39,7 @@ class SubjectsTVCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        closeBtn.isHidden = true
         baseView.layer.cornerRadius = 10
         baseView.layer.shadowColor = UIColor.black.cgColor
         baseView.layer.shadowOpacity = 0.15
@@ -65,6 +68,13 @@ class SubjectsTVCell: UITableViewCell {
         
         tableview.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
+    
+    @IBAction func closeAct(_ sender: Any) {
+        
+        onCloseTapped?()
+    }
+    
+    
     func showDropdown(
         items: [String],
         selectedValue: String?,
