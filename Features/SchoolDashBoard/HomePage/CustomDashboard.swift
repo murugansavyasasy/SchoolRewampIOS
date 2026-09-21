@@ -238,7 +238,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                         self.menu_details = details.menus
                     
                         self.menu_details?.append(
-                            MenuDetail(id: 207, name: "RaiseConcern", description: "Used to apply leave")
+                            MenuDetail(id: 207, name: "Parent Concerns", description: "Used to apply leave")
                         )
                         self.refreshCount = true
                         self.get_MenuCount()

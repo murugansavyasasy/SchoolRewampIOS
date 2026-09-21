@@ -9,6 +9,7 @@ import UIKit
 
 class commonConcernVc: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
 
+    @IBOutlet weak var menuNameLbl: UILabel!
     @IBOutlet weak var racieConcernBtn: UIButton!
     @IBOutlet weak var raciedConcernListBtn: UIButton!
     @IBOutlet weak var raciedConcernLbl: UILabel!
@@ -24,8 +25,8 @@ class commonConcernVc: UIViewController, UIPageViewControllerDelegate, UIPageVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        toolbarTitle.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName,secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
-
+        toolbarTitle.configureAsBackTitle(firstLine: UserDefaultFileManager.get_child_Details()?.name ?? "",secondLine: "\(UserDefaultFileManager.get_child_Details()?.standard_name ?? "") - \(UserDefaultFileManager.get_child_Details()?.section_name ?? "")")
+        menuNameLbl.text = MenuStringFile.selectedMenuName
         setupPageViewController()
         loadPages([page1, page2])
         if let firstPage = pages.first {
@@ -84,7 +85,7 @@ class commonConcernVc: UIViewController, UIPageViewControllerDelegate, UIPageVie
 
             }
         }else if index == 1{
-            racieConcernBtn.setTitle("Raise Concern".translated(), for: .normal)
+            racieConcernBtn.setTitle("Raise concern".translated(), for: .normal)
         }
         let direction: UIPageViewController.NavigationDirection = index > currentIndex ? .forward : .reverse
         pageViewController.setViewControllers([pages[index]], direction: direction, animated: true, completion: nil)
@@ -92,7 +93,7 @@ class commonConcernVc: UIViewController, UIPageViewControllerDelegate, UIPageVie
     
     func updateTabUI(for index: Int) {
         UIView.animate(withDuration: 0.25) {
-            self.racieConcernLbl.backgroundColor = index == 0 ? .backGroundClr : .systemGray5
+            self.racieConcernLbl.backgroundColor = index == 0 ? .systemGray5 : .backGroundClr
             self.raciedConcernLbl.backgroundColor = index == 0 ? .systemGray5 : .backGroundClr
             self.raciedConcernListBtn.tintColor = index == 0 ? .black : .backGroundClr
             self.racieConcernBtn.tintColor = index == 1 ? .black : .backGroundClr

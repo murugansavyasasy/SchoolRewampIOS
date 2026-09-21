@@ -69,6 +69,7 @@ struct ServiceUrl{
     static let api_fee_report_detailed_pending_report = "fee/api/fee-report/detailed-pending-report"
     static let api_fee_report_detailed_class_wise_pending_report = "fee/api/fee-report/detailed-class-wise-pending-report"
     static let  api_get_student_report = "admin/api/get-student-report"
+    static let  admin_api_student_profile_update_profile = "admin/api/student-profile/update-profile"
     static let  api_school_event_get_event = "admin/api/school-event/get-event"
     static let admin_api_school_event_report = "admin/api/school-event/report"
     static let  admin_api_school_event_categories = "admin/api/school-event/categories"
@@ -302,6 +303,8 @@ struct Menu_id{
     static let leaveReq = 18
     static let Upload_Marks = 41
     static let Raiseconcern = 207
+    static let student_report = 35
+    
 }
 
 struct TargetTypes{

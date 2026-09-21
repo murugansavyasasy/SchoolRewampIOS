@@ -9,10 +9,11 @@ import UIKit
 
 class paymentProofDetailVc: UIViewController {
 
+    @IBOutlet weak var studentNameLbl: UILabel!
     @IBOutlet weak var tableView: UITableView!
 
     var paymentItem: PaymentDetailItem!
-
+    var studentDetails = UserDefaultFileManager.get_child_Details()
     private enum DetailSectionType {
         case feeBreakdown
         case amountBreakdown
@@ -26,6 +27,7 @@ class paymentProofDetailVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        setupNavigationBar()
+        studentNameLbl.configureAsBackTitle(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
         setupTableView()
         buildSections()
     }

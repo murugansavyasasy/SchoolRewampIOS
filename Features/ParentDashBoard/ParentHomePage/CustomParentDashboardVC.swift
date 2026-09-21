@@ -223,7 +223,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         self.pagecontroller.numberOfPages = details.frequently_used?.count ?? 0
                         self.filteredMenu = details.menus ?? []
                         self.filteredMenu.append(
-                            MenuDetail(id: 207, name: "Raise Concern", description: "Used to apply leave")
+                            MenuDetail(id: 207, name: "Parent Concerns", description: "Used to apply leave")
                         )
                         self.recentActiveMenuCollection.reloadData()
                         self.get_MenuCount()
