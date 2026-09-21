@@ -110,7 +110,7 @@ class PendingFeeCell: UITableViewCell {
             totalAmountLabel.text = total
             paidAmountLabel.text = paid
             pendingAmountLabel.text = pending
-            payButtonLabel.text = "Pay Now \(pending)"
+            payButtonLabel.text = "\("Pay Now".translated()) \(pending)"
             
             // --- 4. Payment PENDING Badge Styling ---
             statusLabel.text = sts.uppercased()

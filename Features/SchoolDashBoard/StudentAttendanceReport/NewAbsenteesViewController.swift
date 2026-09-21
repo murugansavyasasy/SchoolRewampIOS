@@ -166,6 +166,7 @@ class NewAbsenteesViewController: UIViewController, UIGestureRecognizerDelegate,
                         formatter.locale = LocaleManager.shared.apiLocale
                         formatter.dateFormat = DateInputs.dd_MM_yyyy
                         let currentDateString = formatter.string(from: Date())
+                        self.selectedDate = currentDateString
                         if let ids = self.getClassAndSectionID(
                             for: currentDateString) {
                             self.AbsentStudent(

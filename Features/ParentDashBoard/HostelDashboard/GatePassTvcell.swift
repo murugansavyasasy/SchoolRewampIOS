@@ -227,7 +227,7 @@ class GatePassTvcell: UITableViewCell {
             statusIcon.tintColor = .systemGreen
             statusLbl.textColor = .systemGreen
             statusContainer.layer.borderColor = UIColor.systemGreen.cgColor
-            statusLbl.text = "APPROVED & ACTIVE"
+            statusLbl.text = "APPROVED & ACTIVE".translated()
 
         } else if status.contains("rejected") {
             statusContainer.backgroundColor = UIColor.systemRed.withAlphaComponent(0.2)

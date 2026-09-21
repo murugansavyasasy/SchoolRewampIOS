@@ -24,30 +24,30 @@ class HostelInfoCell: UITableViewCell {
         
         var blocks = [HostelInfoData]()
         if let institute = data.institute_name {
-            blocks.append(HostelInfoData(title: "Institute", value: institute))
+            blocks.append(HostelInfoData(title: "Institute".translated(), value: institute))
         }
         if let hostelName = data.hostel_name {
-            blocks.append(HostelInfoData(title: "Hostel Name", value: hostelName))
+            blocks.append(HostelInfoData(title: "Hostel Name".translated(), value: hostelName))
         }
         if let hType = data.hostel_type {
-            blocks.append(HostelInfoData(title: "Type", value: hType.capitalized))
+            blocks.append(HostelInfoData(title: "Type".translated(), value: hType.capitalized))
         }
         if let capacity = data.max_capacity {
-            blocks.append(HostelInfoData(title: "Capacity", value: "\(capacity) Students"))
+            blocks.append(HostelInfoData(title: "Capacity".translated(), value: "\(capacity) \("Students".translated())"))
         }
         if let floors = data.no_of_floors, let rooms = data.no_of_rooms {
-            blocks.append(HostelInfoData(title: "Layout", value: "\(floors) Floors, \(rooms) Rooms"))
+            blocks.append(HostelInfoData(title: "Layout".translated(), value: "\(floors) \("Floors".translated()), \(rooms) \("Rooms".translated())"))
         }
         if let wardens = data.warden_name {
             var uniqueWardens = [String]()
             for w in wardens where !uniqueWardens.contains(w) { uniqueWardens.append(w) }
-            blocks.append(HostelInfoData(title: "Wardens", value: uniqueWardens.joined(separator: ", ")))
+            blocks.append(HostelInfoData(title: "Wardens".translated(), value: uniqueWardens.joined(separator: ", ")))
         }
         if let wType = data.warden_type {
-            blocks.append(HostelInfoData(title: "Warden Type", value: wType))
+            blocks.append(HostelInfoData(title: "Warden Type".translated(), value: wType))
         }
         if let address = data.institute_address {
-            blocks.append(HostelInfoData(title: "Address", value: address.trimmingCharacters(in: .whitespacesAndNewlines)))
+            blocks.append(HostelInfoData(title: "Address".translated(), value: address.trimmingCharacters(in: .whitespacesAndNewlines)))
         }
         
         for (index, info) in blocks.enumerated() {

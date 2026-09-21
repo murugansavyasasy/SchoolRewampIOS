@@ -47,6 +47,10 @@ class yearAndMonthCalenderVc: UIViewController, UICollectionViewDelegate, UIColl
         selectMonthDefLbl.setFont(style: .body, size: 17)
         closeBtn.setTitleFont(style: .body, size: 15)
         
+        selectYearDefLbl.text = "Select Year".translated()
+        selectMonthDefLbl.text = "Select Month".translated()
+        closeBtn.setTitle("Close".translated(), for: .normal)
+        
         monthCollectionView.delegate = self
         monthCollectionView.dataSource = self
         yearCollectionView.delegate = self

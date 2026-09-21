@@ -29,6 +29,8 @@ class FeedetailTVC: UITableViewCell {
         dowloadBtn.layer.borderWidth = 1
         dowloadBtn.layer.borderColor = UIColor.systemBlue.cgColor
         timeLbl.isHidden = true
+        
+        dowloadBtn.setTitle("View".translated(), for: .normal)
 
     }
 

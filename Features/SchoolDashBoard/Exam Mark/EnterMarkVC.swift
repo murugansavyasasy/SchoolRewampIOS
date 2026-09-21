@@ -972,7 +972,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                     case .failure(_):
                         CustomAlert.showAlertWithOkAction(
                             title: AlertstringFile.Alert_title,
-                            message: "Failed to upload marks. Please try again.",
+                            message: "Failed to upload marks. Please try again.".translated(),
                             on: self
                         ) { }
                     }

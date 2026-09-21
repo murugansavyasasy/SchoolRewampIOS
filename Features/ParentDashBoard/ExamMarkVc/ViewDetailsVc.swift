@@ -11,6 +11,7 @@ class ViewDetailsVc: UIViewController {
 
 
 
+    @IBOutlet weak var headerLbl: UILabel!
     @IBOutlet public weak var btnBack: UIButton!
    
     @IBOutlet public weak var tableView: UITableView!
@@ -21,7 +22,7 @@ class ViewDetailsVc: UIViewController {
     var subjects: [NewSubject]?
     override public func viewDidLoad() {
         super.viewDidLoad()
-       
+        headerLbl.text = MenuStringFile.selectedMenuName
         setupTableView()
         loadData()
     }
