@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="addConcernVc" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
             <connections>
                 <outlet property="RaiseFullStackView" destination="EdB-ot-3ad" id="Q8Z-5K-Q6b"/>
+                <outlet property="addPhotoLbl" destination="2Yw-un-EUW" id="OTY-6n-Li5"/>
                 <outlet property="classteacherBtnName" destination="DQz-46-Q2c" id="GMZ-hz-3Yj"/>
                 <outlet property="collectionViewHeght" destination="e5h-CQ-hSp" id="fV1-7z-8x4"/>
                 <outlet property="concernDropdownView" destination="Liw-lM-TPa" id="rC1-7m-3u0"/>
@@ -154,7 +155,7 @@
                                                                                 <constraint firstAttribute="height" constant="25" id="5zb-s9-aHE"/>
                                                                                 <constraint firstAttribute="width" constant="25" id="u9D-R3-gJf"/>
                                                                             </constraints>
-                                                                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <color key="tintColor" name="PrimeryColor"/>
                                                                             <state key="normal" title="Button"/>
                                                                             <buttonConfiguration key="configuration" style="plain" image="largecircle.fill.circle" catalog="system"/>
                                                                             <connections>
@@ -178,6 +179,7 @@
                                                                                 <constraint firstAttribute="width" constant="25" id="US7-9F-N44"/>
                                                                                 <constraint firstAttribute="height" constant="25" id="zvZ-nH-c5M"/>
                                                                             </constraints>
+                                                                            <color key="tintColor" name="PrimeryColor"/>
                                                                             <state key="normal" title="Button"/>
                                                                             <buttonConfiguration key="configuration" style="plain" image="circle" catalog="system"/>
                                                                             <connections>
@@ -201,6 +203,7 @@
                                                                                 <constraint firstAttribute="width" constant="25" id="FA8-0d-CBV"/>
                                                                                 <constraint firstAttribute="height" constant="25" id="RKc-6M-2gE"/>
                                                                             </constraints>
+                                                                            <color key="tintColor" name="PrimeryColor"/>
                                                                             <state key="normal" title="Button"/>
                                                                             <buttonConfiguration key="configuration" style="plain" image="circle" catalog="system"/>
                                                                             <connections>
@@ -252,7 +255,7 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SLg-6A-1iS">
                                                             <rect key="frame" x="0.0" y="0.0" width="373" height="20"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Photos (Optional?)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Yw-un-EUW" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Attachments (Optional?)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Yw-un-EUW" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="373" height="20"/>
                                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                                     <nil key="textColor"/>
@@ -344,7 +347,7 @@
         <image name="down-arrow" width="512" height="512"/>
         <image name="largecircle.fill.circle" catalog="system" width="128" height="123"/>
         <namedColor name="BackGroundClr">
-            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.41999998688697815" green="0.70999997854232788" blue="0.3449999988079071" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="PrimeryColor">
             <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -356,10 +359,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

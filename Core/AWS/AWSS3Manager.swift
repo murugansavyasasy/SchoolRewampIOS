@@ -273,6 +273,14 @@ class AWSUploadManager {
         case Menu_id.Upload_Marks:
             Bucket = BucketName.schoolchimes_activities
             Path = "\(Awsmenu.marksheets)/\(school_id)/\(today_date)"
+        case Menu_id.student_report:
+            if AWSUploadManager.iSprofile{
+                Bucket = BucketName.schoolchimes_studentphotos
+            }else{
+                Bucket = BucketName.schoolchimes_schooldocs
+            }
+            
+            Path = "\(school_id)/\(today_date)"
         case -1:
             if AWSUploadManager.iSprofile{
                 Bucket = BucketName.schoolchimes_studentphotos

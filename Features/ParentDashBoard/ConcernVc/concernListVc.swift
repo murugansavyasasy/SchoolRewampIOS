@@ -45,7 +45,7 @@ class concernListVc: UIViewController, DeleteConcerndata {
             
             let vc = addConcernVc()
             vc.loginAsType = 1
-            vc.selectedConcernListId = filteredConcerns[index].id
+            vc.selectedActionId = filteredConcerns[index].id
             vc.selectedStudentID = filteredConcerns[index].studentId
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
@@ -59,7 +59,7 @@ class concernListVc: UIViewController, DeleteConcerndata {
     func deleteConcernData(index: Int) {
         alert.showAlertCancel(
             title: "Concern Deletion".translated(),
-            message: "Are you sure you want to delete?".translated(),
+            message: "Are you sure you want to delete this concern? This action cannnot be undone".translated(),
             actionLbl1: "OK".translated(),
             actionLbl2: "Cancel".translated(),
             on: self,
@@ -90,14 +90,15 @@ class concernListVc: UIViewController, DeleteConcerndata {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         setupTableView()
         getConcernList()
-      
         if loginAsType == 2{
             toolbarHeight.constant = 0
         }
     }
-    
 
     @IBAction func backBtnAct(_ sender: UIButton) {
         
@@ -123,7 +124,7 @@ class concernListVc: UIViewController, DeleteConcerndata {
     private func ActionDetailsInfo(mark: Concern) {
        
         let actionTaken_by = mark.actionTakenBy
-        let action_taken_on = mark.actionTakenOn
+        let action_taken_on = mark.formattedACtOn
         let description = mark.actionTaken
       
         let message = """
@@ -144,7 +145,7 @@ class concernListVc: UIViewController, DeleteConcerndata {
     private func AknowledgeDetailsInfo(mark: Concern) {
         
         let ACKNOWLEDGED_by = mark.acknowledgedBy
-        let ACKNOWLEDGED_on = mark.acknowledgedOn
+        let ACKNOWLEDGED_on = mark.formattedAcknowledgedOn
         let acknowledgement = mark.acknowledgement
       
         let message = """

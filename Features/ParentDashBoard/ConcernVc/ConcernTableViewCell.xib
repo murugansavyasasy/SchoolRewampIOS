@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -36,7 +37,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.48627450980392156" green="0.22745098039215686" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" name="PrimeryColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="initials" secondAttribute="trailing" id="e-av1"/>
                                                     <constraint firstItem="initials" firstAttribute="leading" secondItem="avatarContainer" secondAttribute="leading" id="e-av2"/>
@@ -119,7 +120,7 @@
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Academic Performance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="categoryLabel">
                                                                         <rect key="frame" x="22" y="3" width="140.5" height="14.5"/>
                                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                                                                        <nil key="textColor"/>
+                                                                        <color key="textColor" name="PrimeryColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                 </subviews>
@@ -159,7 +160,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="📎 PARENT ATTACHMENTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="parentTitle">
                                                         <rect key="frame" x="0.0" y="75" width="311" height="14.5"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                                                        <color key="textColor" red="0.14509803921568626" green="0.38823529411764707" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="textColor" name="PrimeryColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
@@ -174,30 +175,30 @@
                                                 <rect key="frame" x="0.0" y="196.5" width="311" height="40"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-10" translatesAutoresizingMaskIntoConstraints="NO" id="MST-Cc-hR4">
-                                                        <rect key="frame" x="10" y="5" width="122" height="30"/>
+                                                        <rect key="frame" x="10" y="5" width="90" height="30"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ImagePdf" translatesAutoresizingMaskIntoConstraints="NO" id="z2r-Ed-PBY">
-                                                                <rect key="frame" x="0.0" y="0.0" width="38" height="30"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="38" id="lJK-w2-ssC"/>
+                                                                    <constraint firstAttribute="width" constant="30" id="zZH-tp-EOa"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ImagePdf" translatesAutoresizingMaskIntoConstraints="NO" id="kiQ-Bm-yEc">
-                                                                <rect key="frame" x="28" y="0.0" width="38" height="30"/>
+                                                                <rect key="frame" x="20" y="0.0" width="30" height="30"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </imageView>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ImagePdf" translatesAutoresizingMaskIntoConstraints="NO" id="pOS-U3-9Rd">
-                                                                <rect key="frame" x="56" y="0.0" width="38" height="30"/>
+                                                                <rect key="frame" x="40" y="0.0" width="30" height="30"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="7yZ-4S-dht"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8kK-ot-DST">
-                                                                <rect key="frame" x="84" y="0.0" width="38" height="30"/>
+                                                                <rect key="frame" x="60" y="0.0" width="30" height="30"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" title="+100"/>
@@ -264,30 +265,30 @@
                                                 <rect key="frame" x="0.0" y="46.5" width="311" height="40"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-10" translatesAutoresizingMaskIntoConstraints="NO" id="t0G-2C-Jgv">
-                                                        <rect key="frame" x="10" y="5" width="122" height="30"/>
+                                                        <rect key="frame" x="10" y="5" width="90" height="30"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ImagePdf" translatesAutoresizingMaskIntoConstraints="NO" id="0cs-cC-6Uj">
-                                                                <rect key="frame" x="0.0" y="0.0" width="38" height="30"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="38" id="cSM-2c-MXv"/>
+                                                                    <constraint firstAttribute="width" constant="30" id="0ny-Cj-6F1"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ImagePdf" translatesAutoresizingMaskIntoConstraints="NO" id="DcE-6d-VMs">
-                                                                <rect key="frame" x="28" y="0.0" width="38" height="30"/>
+                                                                <rect key="frame" x="20" y="0.0" width="30" height="30"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </imageView>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ImagePdf" translatesAutoresizingMaskIntoConstraints="NO" id="8cN-QD-4vL">
-                                                                <rect key="frame" x="56" y="0.0" width="38" height="30"/>
+                                                                <rect key="frame" x="40" y="0.0" width="30" height="30"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="Smh-0Z-K15"/>
                                                                 </constraints>
                                                             </imageView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o8L-Zh-zdE">
-                                                                <rect key="frame" x="84" y="0.0" width="38" height="30"/>
+                                                                <rect key="frame" x="60" y="0.0" width="30" height="30"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" title="+100"/>
@@ -442,7 +443,7 @@
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MEU-Jf-6s7" userLabel="Action Taken Button">
                                                 <rect key="frame" x="161.5" y="0.0" width="149.5" height="44"/>
-                                                <color key="backgroundColor" red="0.019607843140000001" green="0.58823529409999997" blue="0.41176470590000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="1" green="0.55294117649999996" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="8" maxY="0.0"/>
@@ -523,6 +524,9 @@
     </objects>
     <resources>
         <image name="ImagePdf" width="32" height="32"/>
+        <namedColor name="PrimeryColor">
+            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

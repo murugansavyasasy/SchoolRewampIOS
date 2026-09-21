@@ -7,7 +7,58 @@
 
 import UIKit
 
-class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataSource, ProfileUpdateDelegate {
+    func updateProfile(index: Int) {
+        uploadStudentId = filterStudent?[index].id ?? ""
+        let alert = UIAlertController(title: "Select", message: "Choose an option", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Camera", style: .default) { [weak self] _ in
+            self?.openCameraForProfile()
+        })
+        alert.addAction(UIAlertAction(title: "Gallery", style: .default) { [weak self] _ in
+            self?.openGalleryForProfile()
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        // iPad support
+        if let popover = alert.popoverPresentationController {
+            popover.sourceView = view
+            popover.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
+            popover.permittedArrowDirections = []
+        }
+        
+        present(alert, animated: true)
+    }
+    
+        func openGalleryForProfile() {
+            guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+                showAlert(message: "Photo Library not available")
+                return
+            }
+    
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.sourceType = .photoLibrary
+            picker.allowsEditing = true
+            present(picker, animated: true)
+        }
+    
+        func openCameraForProfile() {
+            guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+                showAlert(message: "Camera not available")
+                return
+            }
+    
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.sourceType = .camera
+            picker.allowsEditing = true
+            present(picker, animated: true)
+        }
+        
+        private func showAlert(message: String) {
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: message, on: self)
+        }
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var nodataImg: UIImageView!
@@ -69,6 +120,8 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var academicId = 0
     var noRecord:Bool = false
     var Allstudents  = "All students".translated()
+    var changeProfileImg: UIImage? = UIImage(systemName: "person.fill")
+    var uploadStudentId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -154,6 +207,90 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
 //        reportTable.reloadData()
 //    }
     
+    
+    func updateProfileimage(imageview : UIImage?) {
+        let group = DispatchGroup()
+        var file = ""
+//         Handle profile image upload if changed
+        if let profileImage = imageview {
+            group.enter()
+            uploadProfileImage(profileImage) { [weak self] uploadedURL in
+                if let self = self, let url = uploadedURL {
+                    file = url
+                }
+                group.leave()
+            }
+        }
+      
+
+
+        // Once all uploads complete, call updateProfile
+        group.notify(queue: .main) { [weak self] in
+            guard let self = self else { return }
+            self.uploadProfileImage(studentId:uploadStudentId ?? "" ,file: file)
+        }
+    }
+    
+    
+    
+    private func uploadProfileImage(_ image: UIImage, completion: @escaping (String?) -> Void) {
+        AWSUploadManager.iSprofile = true
+        AWSUploadManager.shared.uploadFileToAWS(
+            file: image,
+            progressHandler: nil
+        ) { url in
+            completion(url)
+        }
+    }
+    
+    
+    func uploadProfileImage(studentId : String, file : String){
+        showActivityLoader()
+        APIService.shared.makeApi(url: ServiceUrl.admin_api_student_profile_update_profile, parameters: ["file_path" : file,"student_id": studentId], type: ApitTypeSringFile.POST, token:UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false) { [self] (result:Result <GetStandardsSuc,Error>) in
+            switch result {
+            case .success(let successMessage):
+                if successMessage.status == true{
+                    DispatchQueue.main.async { [self] in
+                        if classId == "" && sectionId == "" {
+                            getStudentAPI()
+                            return
+                        }
+                        if sectionId != "" && classId != "" {
+                            getStudentAPI(class_id: classId,section_id: sectionId)
+                            return
+                        }
+                        
+                        if classId != "" {
+                            getStudentAPI(class_id: classId)
+                            return
+                        }
+                    }
+                }else{
+                    DispatchQueue.main.async { [self] in
+                        hideActivityLoader()
+                        CustomAlert.showAlertWithOkAction(
+                            title: AlertstringFile.Oops,
+                            message: successMessage.message ?? "",
+                            on: self
+                        ) {self.dismiss(animated: true) }
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async { [self] in
+                    print(error.localizedDescription)
+                    hideActivityLoader()
+                    CustomAlert.showAlertWithOkAction(
+                        title: AlertstringFile.Oops,
+                        message: error.localizedDescription,
+                        on: self
+                    ) {self.dismiss(animated: true) }
+                    
+                }
+                
+            }
+        }
+    }
+    
     @IBAction func sortArray(_ sender: UISegmentedControl) {
         guard let sortedStudent = sortedStudent else { return }
         switch sender.selectedSegmentIndex {
@@ -189,6 +326,8 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                 switch index{
                 case 0:
                     getStanderd.isHidden = true
+                    classId = ""
+                    sectionId = ""
                     getStudentAPI()
                 case 1:
                     if sectionArray.first != "All".translated() {
@@ -206,8 +345,8 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                 reportTable.reloadData()
             }
         }
-        
     }
+    
     @IBAction func selectCatagory(_ sender: UIButton) {
         AcodemicDropdown.dataSource = accadimYr
         AcodemicDropdown.anchorView = selectedType
@@ -248,6 +387,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         }
     }
     @IBAction func classSelection(_ sender: UIButton) {
+        sectionId = ""
         classDropdown.dataSource = standerdArray
         classDropdown.anchorView = classView
         classDropdown.bottomOffset = CGPoint(x: 0, y: classView.bounds.height)
@@ -264,7 +404,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             self.clsBtn.setTitle(item.translated(), for: .normal)
             self.sectionBtn.setTitle(sectionArray.first, for: .normal)
             classId = standardDetails?[index].id ?? ""
-            sectionId = standardDetails?[index].sections?.first?.id ?? ""
+//            sectionId = standardDetails?[index].sections?.first?.id ?? ""
             getStudentAPI(class_id:standardDetails?[index].id ?? "")
         }
     }
@@ -330,8 +470,8 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         standerdArray = standardDetails?.compactMap { $0.name } ?? []
                         sectionArray = sectionsDetails?.compactMap { $0.name } ?? []
                         clsBtn.setTitle(standardDetails?.first?.name, for: .normal)
-                        classId = standardDetails?.first?.id
-                        sectionId = sectionsDetails?.first?.id
+//                        classId = standardDetails?.first?.id
+//                        sectionId = sectionsDetails?.first?.id
                         searchBtn.isHidden = false
                         getStanderd.isHidden = true
                         noRecord = false
@@ -368,6 +508,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         
     }
     func getStudentAPI(class_id: String? = nil, section_id: String? = nil) {
+        showActivityLoader()
         var param: [String: Any] = [:]
         param[COMMON_PARAMETER.academic_year_id] = academicId
         if let classID = class_id {
@@ -376,7 +517,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         if let sectionID = section_id {
             param[GetStudentReport.section_id] = sectionID
         }
-        
         APIService.shared.makeApi(
             url: ServiceUrl.api_get_student_report,
             parameters: param,
@@ -407,6 +547,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         self.GenderBtn.isHidden = (self.filterStudent?.isEmpty ?? false)
                         self.searchBtn.isHidden = false
                         self.FilterCV.reloadData()
+                        self.hideActivityLoader()
                     } else {
                         self.studentList = response.data
                         self.sortedStudent = response.data
@@ -418,6 +559,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         self.FilterCV.isHidden = true
                         self.GenderBtn.isHidden = true
                         self.searchBtn.isHidden = true
+                        self.hideActivityLoader()
                     }
                     self.reportTable.reloadData()
                     
@@ -430,6 +572,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                     self.studentList = []
                     self.searchBtn.isHidden = true
                     self.reportTable.reloadData()
+                    self.hideActivityLoader()
                 }
             }
         }
@@ -494,6 +637,11 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             cell.standerdLbl.text = studentDetail.class_name + " - " + studentDetail.section_name
             cell.genderLbl.text = studentDetail.gender
             cell.fatherName.text = studentDetail.father_name
+                cell.profileBtnName.isHidden = !studentDetail.is_profile_edit
+                cell.profileCamerBtnName.isHidden = !studentDetail.is_profile_edit
+            cell.profileBtnName.tag = indexPath.row
+            cell.profileCamerBtnName.tag = indexPath.row
+            cell.delegate = self
             cell.imgView.contentMode = .scaleAspectFill
             if let img = URL(string: studentDetail.profile){
                 cell.imgView.kf.setImage(with:img)
@@ -664,3 +812,16 @@ struct StudentList{
 }
 
 
+extension ReportStudentListVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true)
+        if let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
+//            profileImg.image = image
+//            changeProfileImg = image
+            updateProfileimage(imageview: image)
+        }
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+}

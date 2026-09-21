@@ -771,6 +771,7 @@ struct StudentData: Codable {
     let section_name: String
     let father_name: String
     let class_teacher: String
+    let is_profile_edit: Bool
 }
 // MARK:  Event Holiday
 
@@ -2503,7 +2504,7 @@ struct ProfileData: Codable {
         case bankDetails = "Bank Details"
         case photoPath = "PhotoPath"
         case documents = "Documents"
-        case transportDetails = "Transport Details"
+        case transportDetails = "TransportDetails"
     }
 }
 
