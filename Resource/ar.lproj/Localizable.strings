@@ -1642,6 +1642,9 @@
 "Let's Go" = "هيا بنا";
 "Today's Event" = "فعالية اليوم";
 "Close" = "إغلاق";
+"Coscholastic" = "الأنشطة المصاحبة للمناهج الدراسية";
+"Co-Scholastic" = "الأنشطة المصاحبة للمناهج الدراسية";
+
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";
