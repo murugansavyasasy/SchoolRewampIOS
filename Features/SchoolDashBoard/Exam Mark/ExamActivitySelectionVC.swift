@@ -278,9 +278,9 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
         switch sections[section] {
             
         case .subjects:
-            return "Subjects"
+            return "Subjects".translated()
         case .coscholastic:
-            return "Coscholastic"
+            return "Coscholastic".translated()
         }
     }
 
@@ -358,9 +358,26 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
                 
                 if isAIFlow {
                     cell.statusLbl.isHidden = false
-                    cell.statusLbl.text = "Mapped to: \(data.selectedAIOption ?? "")"
+                    cell.closeBtn.isHidden = false
+                    
+                    let prefix = "Mapped to: ".translated()
+                    let selectedOption = data.selectedAIOption ?? ""
+                    let fullText = prefix + selectedOption
+
+                    let attr = NSMutableAttributedString(string: fullText)
+                    attr.addAttributes(
+                        [.foregroundColor: UIColor.darkGray],
+                        range: NSRange(location: 0, length: prefix.count)
+                    )
+                    attr.addAttributes(
+                        [.foregroundColor: UIColor.staffExamColour],
+                        range: NSRange(location: prefix.count, length: selectedOption.count)
+                    )
+                    cell.statusLbl.attributedText = attr
+                    //cell.statusLbl.text = "Mapped to: \(data.selectedAIOption ?? "")"
                 }else {
                     cell.statusLbl.isHidden = true
+                    cell.closeBtn.isHidden = true
                 }
                 
             }else {
@@ -373,6 +390,22 @@ extension ExamActivitySelectionVC: UITableViewDelegate, UITableViewDataSource {
                 cell.subjectView.backgroundColor = .systemBackground
                 cell.baseView.layer.borderColor = UIColor.lightGray.cgColor
                 cell.statusLbl.isHidden = true
+            }
+            
+            cell.onCloseTapped = { [weak self] in
+                
+                self?.coscholasticList[indexPath.row].selectedAIOption = nil
+                self?.coscholasticList[indexPath.row].isChecked = false
+                cell.statusLbl.isHidden = true
+                cell.closeBtn.isHidden = true
+                cell.checkCircleBtn.setImage(
+                    UIImage(systemName: "circle"),
+                    for: .normal
+                )
+                cell.checkCircleBtn.tintColor = .lightGray
+                cell.statusLbl.textColor = .darkGray
+                cell.subjectView.backgroundColor = .systemBackground
+                cell.baseView.layer.borderColor = UIColor.lightGray.cgColor
             }
             
             return cell
