@@ -174,7 +174,7 @@ extension paymentProofVc: UICollectionViewDataSource, UICollectionViewDelegateFl
         }
 
         let option = filterOptions[indexPath.item]
-        let pillTitle = "\(option.title) \(option.count)"
+        let pillTitle = "\(option.title) (\(option.count))"
         let isSelected = (indexPath.item == selectedFilterIndex)
         cell.configure(title: pillTitle, isSelected: isSelected)
         return cell
@@ -215,7 +215,7 @@ extension paymentProofVc: UICollectionViewDataSource, UICollectionViewDelegateFl
         let text = "\(option.title) \(option.count)"
         let font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         let textWidth = (text as NSString).size(withAttributes: [.font: font]).width
-        let cellWidth = max(textWidth + 36.0, 72.0)
+        let cellWidth = max(textWidth + 45.0, 72.0)
         return CGSize(width: cellWidth, height: 36.0)
     }
 }

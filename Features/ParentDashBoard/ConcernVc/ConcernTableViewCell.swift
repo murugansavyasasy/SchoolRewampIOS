@@ -109,7 +109,6 @@ class ConcernTableViewCell: UITableViewCell, UITextViewDelegate{
     
     @IBAction func actionTakenBtn(_ sender: UIButton) {
         if sender.currentTitle == "Action Taken" {
-            print("Action Taken button clicked")
             deleteDelegate?.addactionconcerndata(index: sender.tag, Is_viewAction: false)
         }
         
@@ -147,7 +146,7 @@ class ConcernTableViewCell: UITableViewCell, UITextViewDelegate{
         textView.layer.borderWidth = 1
         textView.layer.cornerRadius = 8
         textView.layer.borderColor = UIColor.lightGray.cgColor
-
+        textView.addDoneButton()
         // Placeholder
         textView.text = acknowledgementPlaceholder
         textView.textColor = .lightGray
@@ -260,7 +259,7 @@ class ConcernTableViewCell: UITableViewCell, UITextViewDelegate{
         // Avatar circle
         avatarContainerView.layer.cornerRadius = 24
         avatarContainerView.layer.masksToBounds = true
-        avatarContainerView.backgroundColor = UIColor(red: 124/255, green: 58/255, blue: 237/255, alpha: 1.0) // Violet
+        avatarContainerView.backgroundColor = UIColor.primery
         
         // Status badge pill
         statusPillView.layer.cornerRadius = 12
@@ -334,56 +333,105 @@ class ConcernTableViewCell: UITableViewCell, UITextViewDelegate{
         isAcknowledged: Bool,
         isAction: Bool
     ) {
-
+        
+        // MARK: - Acknowledge Button
+        
+        if loginasTye == 2 {
+            
+            // Always show Acknowledge button
+            acknowledgeButton.isHidden = false
+            
+            if isAcknowledged{
+                acknowledgeButton.setTitle(
+                    "View Acknowledge",
+                    for: .normal
+                )
+                
+                acknowledgeButton.backgroundColor = .white
+                acknowledgeButton.setTitleColor(.systemBlue, for: .normal)
+                acknowledgeButton.layer.borderWidth = 1
+                acknowledgeButton.layer.borderColor = UIColor.systemBlue.cgColor
+                
+            }else{
+                
+                acknowledgeButton.isHidden = true
+            }
+            if isAction{
+                // MARK: - Action Taken Button
+                
+                // Always show Action Taken button
+                actionTakenButton.isHidden = false
+                
+                
+                actionTakenButton.setTitle(
+                    "View Action Taken",
+                    for: .normal
+                )
+                
+                actionTakenButton.backgroundColor = .white
+                actionTakenButton.setTitleColor(.systemOrange, for: .normal)
+                actionTakenButton.layer.borderWidth = 1
+                actionTakenButton.layer.borderColor = UIColor.systemOrange.cgColor
+                
+                
+                return
+            }
+            else{
+                
+                actionTakenButton.isHidden = true
+                return
+            }
+        }
+        
+        
+        // MARK: - Other Login Types
+        
         if isAcknowledged {
-
             acknowledgeButton.setTitle(
                 "Acknowledged",
                 for: .normal
             )
-
+            
             acknowledgeButton.backgroundColor = .systemGreen
             acknowledgeButton.setTitleColor(.white, for: .normal)
             acknowledgeButton.layer.borderWidth = 0
-
+            
         } else {
-
             acknowledgeButton.setTitle(
                 "View Acknowledge",
                 for: .normal
             )
-
+            
             acknowledgeButton.backgroundColor = .white
             acknowledgeButton.setTitleColor(.systemBlue, for: .normal)
             acknowledgeButton.layer.borderWidth = 1
             acknowledgeButton.layer.borderColor = UIColor.systemBlue.cgColor
         }
-
-
+        
+        
         if isAction {
-
             actionTakenButton.setTitle(
                 "Action Taken",
                 for: .normal
             )
-
+            
             actionTakenButton.backgroundColor = .systemOrange
             actionTakenButton.setTitleColor(.white, for: .normal)
             actionTakenButton.layer.borderWidth = 0
-
+            
         } else {
-
             actionTakenButton.setTitle(
                 "View Action Taken",
                 for: .normal
             )
-
+            
             actionTakenButton.backgroundColor = .white
             actionTakenButton.setTitleColor(.systemOrange, for: .normal)
             actionTakenButton.layer.borderWidth = 1
             actionTakenButton.layer.borderColor = UIColor.systemOrange.cgColor
         }
     }
+    
     func setBorderAndCornerRadius(for view: UIView, cornerRadius: CGFloat = 8.0, borderWidth: CGFloat = 1.0, borderColor: UIColor = .lightGray) {
         view.layer.cornerRadius = cornerRadius
         view.layer.borderWidth = borderWidth

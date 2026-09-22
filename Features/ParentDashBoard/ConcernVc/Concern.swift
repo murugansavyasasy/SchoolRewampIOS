@@ -65,7 +65,7 @@ struct Concern: Codable {
     }
     
     var classAndSection: String {
-        return "Class \(className)-\(sectionName) · ID: \(studentId)"
+        return "Class \(className)-\(sectionName)"
     }
     
     var formattedAcknowledgedOn: String {
@@ -92,6 +92,12 @@ struct Concern: Codable {
     
     var formattedRaisedOn: String {
         return ConcernDateFormatter.formatDateTimeString(raisedOn)
+    }
+    var formattedAkOn: String {
+        return ConcernDateFormatter.formatDateTimeString(acknowledgedOn)
+    }
+    var formattedACtOn: String {
+        return ConcernDateFormatter.formatDateTimeString(actionTakenOn)
     }
     
     private enum CodingKeys: String, CodingKey {

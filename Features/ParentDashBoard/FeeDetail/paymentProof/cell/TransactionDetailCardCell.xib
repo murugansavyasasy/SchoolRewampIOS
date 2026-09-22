@@ -109,7 +109,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="c4-stk">
                                                 <rect key="frame" x="170.66666666666663" y="0.0" width="158.33333333333337" height="34.666666666666664"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REF NUMBER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c4-hdr">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REF NUMBER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c4-hdr" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="158.33333333333334" height="13.333333333333334"/>
                                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="11"/>
                                                         <color key="textColor" red="0.60392156862745094" green="0.6588235294117647" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -131,7 +131,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="c5-stk">
                                                 <rect key="frame" x="0.0" y="0.0" width="158.66666666666666" height="34.666666666666664"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PAYER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c5-hdr">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PAYER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c5-hdr" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="158.66666666666666" height="13.333333333333334"/>
                                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="11"/>
                                                         <color key="textColor" red="0.60392156862745094" green="0.6588235294117647" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -148,7 +148,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="c6-stk">
                                                 <rect key="frame" x="170.66666666666663" y="0.0" width="158.33333333333337" height="51.333333333333336"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PAYEE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c6-hdr">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PAYEE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c6-hdr" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="158.33333333333334" height="13.333333333333334"/>
                                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="11"/>
                                                         <color key="textColor" red="0.60392156862745094" green="0.6588235294117647" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -170,7 +170,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="c7-stk">
                                                 <rect key="frame" x="0.0" y="0.0" width="158.66666666666666" height="34.666666666666664"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PAYMENT STATUS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7-hdr">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PAYMENT STATUS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7-hdr" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="158.66666666666666" height="13.333333333333334"/>
                                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="11"/>
                                                         <color key="textColor" red="0.60392156862745094" green="0.6588235294117647" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -187,7 +187,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="c8-stk">
                                                 <rect key="frame" x="170.66666666666663" y="0.0" width="158.33333333333337" height="34.666666666666664"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TIME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8-hdr">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TIME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8-hdr" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="158.33333333333334" height="13.333333333333334"/>
                                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="11"/>
                                                         <color key="textColor" red="0.60392156862745094" green="0.6588235294117647" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

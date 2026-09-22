@@ -7,13 +7,14 @@
 
 import UIKit
 
-class addConcernVc: UIViewController, DeleteImge {
+class addConcernVc: UIViewController, DeleteImge,UITextViewDelegate {
     func deleteImage(index: Int) {
         attachments.remove(at: index)
         
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
+    @IBOutlet weak var addPhotoLbl: LocalizationLabel!
     @IBOutlet weak var submitBtnName: UIButton!
     @IBOutlet weak var toolBarHeight: NSLayoutConstraint!
     
@@ -34,11 +35,13 @@ class addConcernVc: UIViewController, DeleteImge {
     var dropDownData : [concernData]?
     var dropDownList = [String]()
     var selectedConcernListId : String?
+    var selectedActionId : String?
     var selectedRole: String = "management"
     var vimeoUploader: VimeoUploader?
     var alert = CustomAlert()
     var loginAsType : Int?
     var selectedStudentID :String?
+    var placeholderLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUi()
@@ -70,7 +73,17 @@ class addConcernVc: UIViewController, DeleteImge {
            // Update radio button images
            updateRadioButtons()
        }
-
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        
+        placeholderLabel.isHidden = !textView.text.isEmpty
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
+    }
+    
+ 
 
        func updateRadioButtons() {
 
@@ -92,6 +105,16 @@ class addConcernVc: UIViewController, DeleteImge {
                for: .normal
            )
        }
+    
+    func setupPlaceholder() {
+        placeholderLabel = UILabel()
+        placeholderLabel.text = "Description your concern".translated()
+        placeholderLabel.font = descrptionTextView.font
+        placeholderLabel.textColor = .lightGray
+        placeholderLabel.positionAsPlaceholder(in: descrptionTextView)
+        descrptionTextView.addSubview(placeholderLabel)
+        placeholderLabel.isHidden = !descrptionTextView.text.isEmpty
+    }
     func setupUi(){
         // Management selected by default
         if loginAsType == 1{
@@ -99,9 +122,12 @@ class addConcernVc: UIViewController, DeleteImge {
             concernTypeFulStack.isHidden = true
             toolBarHeight.constant = 169
         }
+        setAttributedText(for: addPhotoLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
+        setupPlaceholder()
          managmentBtnName.isSelected = true
          classteacherBtnName.isSelected = false
          principalBtnName.isSelected = false
+        descrptionTextView.delegate = self
         descrptionTextView.layer.cornerRadius = 10
         descrptionTextView.layer.borderWidth = 1
         descrptionTextView.layer.borderColor = UIColor.gray.cgColor
@@ -113,7 +139,7 @@ class addConcernVc: UIViewController, DeleteImge {
         concernDropdownView.addGestureRecognizer(concernTap)
         imageSelection()
         submitBtnName.setTitle("Submit".translated(), for: .normal)
-        
+        descrptionTextView.addDoneButton()
     }
     func imageSelection(){
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
@@ -272,7 +298,7 @@ class addConcernVc: UIViewController, DeleteImge {
                             DispatchQueue.main.async {
                                 
                                 if self.loginAsType == 1 {
-                                    self.ActionTaken_api(with: uploadedFiles, concern_type_id: self.selectedConcernListId ?? "", student_id: self.selectedStudentID ?? "", descrptionTextView: description)
+                                    self.ActionTaken_api(with: uploadedFiles, concern_type_id: self.selectedActionId ?? "", student_id: self.selectedStudentID ?? "", descrptionTextView: description)
                                 }else{
                                     self.submit_concern_api(
                                         with: uploadedFiles,

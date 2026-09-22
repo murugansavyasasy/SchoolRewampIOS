@@ -626,32 +626,6 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
         }
 
 
-//        // Handle attachments upload if present
-//        if !attachments.isEmpty {
-//            group.enter()
-//            uploadMedia(file: attachments) { [weak self] urls, iframe, fileSize, embedUrl in
-//                if let self = self {
-//                    let uploadedFiles: [[String: Any]] = urls.compactMap { urlString in
-//                        guard let path = URL(string: urlString) else { return nil }
-//                        
-//                        let fullFileName = path.lastPathComponent
-//                        let fileName = fullFileName.components(separatedBy: "-").last ?? fullFileName
-//                        
-//                        return [
-//                            "documentPath": urlString,
-//                            "documentName": fullFileName,
-//                            "documentDisplayName": fileName
-//                        ]
-//                    }
-//                    
-//                    if let attachmentNode = self.attachmentNode {
-//                        self.changedParams[attachmentNode] = uploadedFiles
-//                    }
-//                }
-//                group.leave()
-//            }
-//        }
-        
         // Once all uploads complete, call updateProfile
         group.notify(queue: .main) { [weak self] in
             guard let self = self else { return }
@@ -670,32 +644,7 @@ extension UpdateProfileVC: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-//    private func processAttachmentsAndUpdate() {
-//        if !attachments.isEmpty {
-//            uploadMedia(file: attachments) { [weak self] urls, iframe, fileSize, embedUrl in
-//                guard let self = self else { return }
-//                let uploadedFiles: [[String: String]] = urls.compactMap { urlString in
-//                    guard let url = URL(string: urlString) else { return nil }
-//                    
-//                    let fileType = url.pathExtension.lowercased()
-//                    let type = fileType == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
-//                    
-//                    return [
-//                        CommonStringFile.url: urlString,
-//                        CommonStringFile.type: type
-//                    ]
-//                }
-//                
-//                if let attachmentNode = self.attachmentNode {
-//                    self.changedParams[attachmentNode] = uploadedFiles
-//                }
-//                
-//                self.updateProfile(with: self.changedParams)
-//            }
-//        } else {
-//            updateProfile(with: changedParams)
-//        }
-//    }
+
     
     func updateProfile(with parameters: [String: Any]) {
         guard !parameters.isEmpty else {
