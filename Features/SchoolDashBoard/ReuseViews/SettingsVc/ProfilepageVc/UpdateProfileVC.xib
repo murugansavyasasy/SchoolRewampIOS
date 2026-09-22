@@ -106,9 +106,9 @@
                             </constraints>
                         </view>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZF-Zd-ctZ">
-                            <rect key="frame" x="281" y="20" width="90" height="29.666666666666671"/>
+                            <rect key="frame" x="250.33333333333334" y="20" width="120.66666666666666" height="29.666666666666671"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="tinted" title="Edit Profile">
+                            <buttonConfiguration key="configuration" style="tinted" title="Request for edit">
                                 <fontDescription key="titleFontDescription" type="system" pointSize="13"/>
                             </buttonConfiguration>
                             <connections>
@@ -151,7 +151,7 @@
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <namedColor name="BackGroundClr">
-            <color red="0.41999998688697815" green="0.70999997854232788" blue="0.3449999988079071" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemCyanColor">
             <color red="0.0" green="0.75294117650000003" blue="0.90980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
