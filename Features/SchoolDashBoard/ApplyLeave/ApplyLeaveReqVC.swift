@@ -25,6 +25,7 @@ struct editLeaves{
 import UIKit
 @available(iOS 14.0, *)
 class ApplyLeaveReqVC: UIViewController{
+    @IBOutlet weak var backLbl: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var OutlineView: UIView!
     @IBOutlet weak var TypeImage: UIImageView!
@@ -160,7 +161,7 @@ class ApplyLeaveReqVC: UIViewController{
         OutlineView.layer.cornerRadius = 12
         OutlineView.layer.borderWidth = 1
         OutlineView.layer.borderColor = UIColor.systemGray4.cgColor
-        
+        backLbl.text = MenuStringFile.selectedMenuName
         LeaveTypeBtn.semanticContentAttribute = .forceRightToLeft
         FromDateBtn.semanticContentAttribute = .forceRightToLeft
         ToDateBtn.semanticContentAttribute = .forceRightToLeft

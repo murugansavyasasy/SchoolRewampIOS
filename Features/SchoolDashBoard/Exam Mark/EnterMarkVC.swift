@@ -31,28 +31,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
     var payload: [String: Any]?
     var standard_id : String?
     private var horizontalOffset: CGFloat = 0
-    var commonRemarks: [CommonRemarks] = [
-        CommonRemarks(
-            id: "27",
-            academic_remarks: "Always asking interesting question",
-            behavioural_remarks: "helping people to understand the concepts"
-        ),
-        CommonRemarks(
-            id: "26",
-            academic_remarks: "Needs improvement in science.",
-            behavioural_remarks: "Talks too much during lectures."
-        ),
-        CommonRemarks(
-            id: "25",
-            academic_remarks: "Sample Academic Remark - Student excels in math.",
-            behavioural_remarks: "Sample Behavioral Remark - Very respectful."
-        ),
-        CommonRemarks(
-            id: "22",
-            academic_remarks: "vvbbb",
-            behavioural_remarks: "vvv"
-        )
-    ]
+    var commonRemarks: [CommonRemarks] = []
     var studentRecords: [StudentMark] = []
     var allStudents: [StudentMark] = []
     var aiRecords: [ConvertedStudentRecord] = []
@@ -252,7 +231,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                 id: id,
                 name: item.name,
                 max_mark: nil,
-                subjectName: "Co-Scholastic",
+                subjectName: "Co-Scholastic".translated(),
                 displayName: item.name
             )
         }
@@ -262,7 +241,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
             // Parent header
             headerColumns.append(
                 HeaderColumnConfig(
-                    displayName: "Co-Scholastic",
+                    displayName: "Co-Scholastic".translated(),
                     subjectName: nil,
                     subjectId: nil,
                     activityId: nil,
@@ -280,7 +259,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                 subjectColumns.append(
                     ColumnConfig(
                         displayName: rubric.displayName,
-                        subjectName: "Co-Scholastic",
+                        subjectName: "Co-Scholastic".translated(),
                         subjectId: nil,
                         activityId: rubric.id,
                         activityName: rubric.name,
@@ -308,7 +287,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                 id: referenceType,
                 name: referenceType,
                 max_mark: nil,
-                subjectName: "Remarks",
+                subjectName: "Remarks".translated(),
                 displayName: referenceType
             )
         }
@@ -318,7 +297,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
             // Parent header
             headerColumns.append(
                 HeaderColumnConfig(
-                    displayName: "Remarks",
+                    displayName: "Remarks".translated(),
                     subjectName: nil,
                     subjectId: nil,
                     activityId: nil,
@@ -336,7 +315,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                 subjectColumns.append(
                     ColumnConfig(
                         displayName: rubric.displayName,
-                        subjectName: "Remarks",
+                        subjectName: "Remarks".translated(),
                         subjectId: nil,
                         activityId: rubric.id,
                         activityName: rubric.name,
@@ -993,7 +972,7 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                     case .failure(_):
                         CustomAlert.showAlertWithOkAction(
                             title: AlertstringFile.Alert_title,
-                            message: "Failed to upload marks. Please try again.",
+                            message: "Failed to upload marks. Please try again.".translated(),
                             on: self
                         ) { }
                     }

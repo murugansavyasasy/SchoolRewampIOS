@@ -1083,8 +1083,6 @@ extension BusTrakingVC: UIAdaptivePresentationControllerDelegate {
     
 }
 
-
-
 extension Stops {
     var coordinate: CLLocationCoordinate2D {
         let cleanLatitude = latitude?

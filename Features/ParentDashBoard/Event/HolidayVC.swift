@@ -43,7 +43,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         if passValue == 1 || passValue == 2{
             BackBtn.isHidden = true
             titleLbl.isHidden = true
-            studentNameLbl.text = "  " + AttendanceString.holidays
+            studentNameLbl.text = "  " + AttendanceString.holidays.translated()
             studentNameLbl.setFont(style: .title, size: FontSize.TitleSize)
         }else{
             BackBtn.isHidden = false
@@ -51,7 +51,7 @@ class HolidayVC: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             let name = studentDetails?.name ?? ""
             let stanard = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
             studentNameLbl.configureAsBackTitle(firstLine: name, secondLine: stanard)
-            titleLbl.text = AttendanceString.holidays
+            titleLbl.text = AttendanceString.holidays.translated()
         }
         
         noHolidayLbl.isHidden = true

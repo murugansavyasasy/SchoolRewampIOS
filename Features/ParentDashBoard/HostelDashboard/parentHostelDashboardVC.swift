@@ -180,7 +180,7 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
             cell.config(data: data.fee_details ?? [])
             cell.onPaybuttonTapped = {[weak self] in
                 let vc = FeeDetails()
-                MenuStringFile.selectedMenuName = "Fees"
+                MenuStringFile.selectedMenuName = "Fees".translated()
                 vc.modalPresentationStyle = .fullScreen
                 self?.present(vc, animated: true)
             }
@@ -263,7 +263,7 @@ extension parentHostelDashboardVC : UITableViewDelegate, UITableViewDataSource,n
                         schoolNameLbl.text = datadetails?.first?.hostel_name
                         let classname = (studentDetails?.standard_name ?? "") + " - " + (studentDetails?.section_name ?? "")
                         let roomNo = (datadetails?.first?.floor_name ?? "") +
-                        " - " + "Room No:" + (datadetails?.first?.room_no ?? "")
+                        " - " + "Room No:".translated() + (datadetails?.first?.room_no ?? "")
                         classNameLbl.text = classname + " , " + roomNo
 //
                         let year = String(selectedMonth?.year ?? 0)
