@@ -207,6 +207,7 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
                 $0.id == coScholasticId
             }
 
+            cell.isCoScholastic = true
             cell.configure(
                 mark: item?.mark ?? "",
                 channgeMark: item?.change_mark,
