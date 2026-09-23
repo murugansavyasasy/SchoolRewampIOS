@@ -14,9 +14,10 @@ class addConcernVc: UIViewController, DeleteImge,UITextViewDelegate {
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
+    @IBOutlet weak var headerview: BottomRoundedView!
     @IBOutlet weak var addPhotoLbl: LocalizationLabel!
     @IBOutlet weak var submitBtnName: UIButton!
-    @IBOutlet weak var toolBarHeight: NSLayoutConstraint!
+  
     
     @IBOutlet weak var RaiseFullStackView: UIStackView!
     @IBOutlet weak var concernTypeFulStack: UIStackView!
@@ -120,7 +121,7 @@ class addConcernVc: UIViewController, DeleteImge,UITextViewDelegate {
         if loginAsType == 1{
             RaiseFullStackView.isHidden = true
             concernTypeFulStack.isHidden = true
-            toolBarHeight.constant = 169
+            headerview.isHidden = false
         }
         setAttributedText(for: addPhotoLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
         setupPlaceholder()
@@ -231,15 +232,15 @@ class addConcernVc: UIViewController, DeleteImge,UITextViewDelegate {
         
         let description = descrptionTextView.text ?? ""
 
-//        if description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-//            
-//            CustomAlert().showAlert(
-//                title: "",
-//                message: AlertstringFile.Enter_description,
-//                on: self
-//            )
-//            
-//        } else {
+        if description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            
+            CustomAlert().showAlert(
+                title: "",
+                message: AlertstringFile.Enter_description,
+                on: self
+            )
+            
+        } else {
             
             alert.showAlertCancel(
                 title: "Raise concern".translated(),
@@ -317,7 +318,7 @@ class addConcernVc: UIViewController, DeleteImge,UITextViewDelegate {
                     print("Cancelled")
                 }
             )
-//        }
+        }
 
         
     }

@@ -108,7 +108,7 @@ class ConcernTableViewCell: UITableViewCell, UITextViewDelegate{
     
     
     @IBAction func actionTakenBtn(_ sender: UIButton) {
-        if sender.currentTitle == "Action Taken" {
+        if sender.currentTitle == "Take Action" {
             deleteDelegate?.addactionconcerndata(index: sender.tag, Is_viewAction: false)
         }
         
@@ -411,7 +411,7 @@ class ConcernTableViewCell: UITableViewCell, UITextViewDelegate{
         
         if isAction {
             actionTakenButton.setTitle(
-                "Action Taken",
+                "Take Action",
                 for: .normal
             )
             

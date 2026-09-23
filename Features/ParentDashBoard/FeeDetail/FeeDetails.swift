@@ -13,6 +13,7 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate, refrech {
         Refresh(id: transData[index].id ?? "")
     }
     
+    @IBOutlet weak var viewPaymentProofView: UIView!
     @IBOutlet weak var transLabel: UILabel!
     @IBOutlet weak var transBtnName: UIButton!
     @IBOutlet weak var createBtn: UIButton!
@@ -89,13 +90,14 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate, refrech {
         tableOuterView.isHidden = true
         NodataImage.isHidden = true
         NoDataLbl.isHidden = true
+      viewPaymentProofView.isHidden = true
         popupWebViews = []
         setupWebView()
         loadFeeURL()
     }
 
 
-    @IBAction func paymentProofBtnAct(_ sender: UIButton) {
+    @IBAction func paymentProofBtnAct(_ sender: proofButton) {
         
         let vc = paymentProofVc()
         vc.modalPresentationStyle = .fullScreen
@@ -181,6 +183,7 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate, refrech {
             case 0:
                 isreceptSelect = false
                 self.refreshBtn.isHidden = false
+                self.viewPaymentProofView.isHidden = true
                 self.webOuterView.isHidden = false
                 self.tableOuterView.isHidden = true
             case 1:
@@ -189,6 +192,7 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate, refrech {
                 self.webOuterView.isHidden = true
                 self.tableOuterView.isHidden = false
                 LoadingView.isHidden = true
+                self.viewPaymentProofView.isHidden = true
                 ActivityIndicator.stopAnimating()
                 Get_Fee_Invoice_Api()
             case 2:
@@ -196,6 +200,7 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate, refrech {
                 self.refreshBtn.isHidden = true
                 self.webOuterView.isHidden = true
                 self.tableOuterView.isHidden = false
+                self.viewPaymentProofView.isHidden = false
                 LoadingView.isHidden = true
                 ActivityIndicator.stopAnimating()
                 //                       feeDetailTableView.reloadData()
@@ -532,14 +537,15 @@ final class proofButton: UIButton {
         addSubview(iconContainer)
 
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
-        iconImageView.image = UIImage(systemName: "chart.line.uptrend.xyaxis.circle.fill")
+        iconImageView.image = UIImage(named: "Daily Collection")
         iconImageView.tintColor = .white
         iconImageView.contentMode = .scaleAspectFit
         iconContainer.addSubview(iconImageView)
 
         // VIEW Label
         viewLabel.translatesAutoresizingMaskIntoConstraints = false
-        viewLabel.text = "VIEW".translated()
+        viewLabel.text = "View".translated()
+        viewLabel.textAlignment = .center
         viewLabel.font = .systemFont(ofSize: 9, weight: .semibold)
         viewLabel.textColor = .white
         addSubview(viewLabel)

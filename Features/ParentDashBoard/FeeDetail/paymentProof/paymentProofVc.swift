@@ -36,6 +36,7 @@ class paymentProofVc: UIViewController {
         Get_paymentProof()
         setupCollectionView()
         setupTableView()
+       studentNameLbl.configureAsBackTitle(firstLine: studentDetails?.name ?? "", secondLine: "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")")
       
     }
 
