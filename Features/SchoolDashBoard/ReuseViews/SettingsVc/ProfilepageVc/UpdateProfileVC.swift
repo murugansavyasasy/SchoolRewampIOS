@@ -65,7 +65,7 @@ class UpdateProfileVC: UIViewController, reloadDelegate {
            }
         let newTitle: String
 
-        if sender.configuration?.title == "Edit Profile" {
+        if sender.configuration?.title == "Request for edit" {
             newTitle = "Back to profile"
             
             isEditClicked = true
@@ -104,7 +104,7 @@ class UpdateProfileVC: UIViewController, reloadDelegate {
             
                     setupUserDetails(isStudent: isStudent)
         } else {
-            newTitle = "Edit Profile"
+            newTitle = "Request for edit"
             isEditClicked = false
             let tableStyle: UITableView.Style = .insetGrouped
                 detailTable = UITableView(

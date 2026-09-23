@@ -93,7 +93,7 @@ class commonConcernVc: UIViewController, UIPageViewControllerDelegate, UIPageVie
     
     func updateTabUI(for index: Int) {
         UIView.animate(withDuration: 0.25) {
-            self.racieConcernLbl.backgroundColor = index == 0 ? .systemGray5 : .backGroundClr
+            self.racieConcernLbl.backgroundColor = index == 0 ? .backGroundClr : .systemGray5
             self.raciedConcernLbl.backgroundColor = index == 0 ? .systemGray5 : .backGroundClr
             self.raciedConcernListBtn.tintColor = index == 0 ? .black : .backGroundClr
             self.racieConcernBtn.tintColor = index == 1 ? .black : .backGroundClr

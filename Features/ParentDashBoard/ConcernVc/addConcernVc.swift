@@ -231,15 +231,15 @@ class addConcernVc: UIViewController, DeleteImge,UITextViewDelegate {
         
         let description = descrptionTextView.text ?? ""
 
-        if description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            
-            CustomAlert().showAlert(
-                title: "",
-                message: AlertstringFile.Enter_description,
-                on: self
-            )
-            
-        } else {
+//        if description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+//            
+//            CustomAlert().showAlert(
+//                title: "",
+//                message: AlertstringFile.Enter_description,
+//                on: self
+//            )
+//            
+//        } else {
             
             alert.showAlertCancel(
                 title: "Raise concern".translated(),
@@ -317,7 +317,7 @@ class addConcernVc: UIViewController, DeleteImge,UITextViewDelegate {
                     print("Cancelled")
                 }
             )
-        }
+//        }
 
         
     }
