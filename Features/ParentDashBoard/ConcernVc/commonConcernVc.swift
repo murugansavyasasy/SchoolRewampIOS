@@ -22,16 +22,31 @@ class commonConcernVc: UIViewController, UIPageViewControllerDelegate, UIPageVie
     var page1 = UIViewController()
     var page2 = UIViewController()
     var titleLbl = ""
-    
+    var is_comefromNoti : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         toolbarTitle.configureAsBackTitle(firstLine: UserDefaultFileManager.get_child_Details()?.name ?? "",secondLine: "\(UserDefaultFileManager.get_child_Details()?.standard_name ?? "") - \(UserDefaultFileManager.get_child_Details()?.section_name ?? "")")
         menuNameLbl.text = MenuStringFile.selectedMenuName
         setupPageViewController()
         loadPages([page1, page2])
-        if let firstPage = pages.first {
-            pageViewController.setViewControllers([firstPage], direction: .forward, animated: true, completion: nil)
-        }
+        
+        // MARK: - Initial Page
+           let initialIndex = is_comefromNoti ? 1 : 0
+
+           if initialIndex < pages.count {
+               pageViewController.setViewControllers(
+                   [pages[initialIndex]],
+                   direction: .forward,
+                   animated: false,
+                   completion: nil
+               )
+
+               updateTabUI(for: initialIndex)
+           }
+        
+//        if let firstPage = pages.first {
+//            pageViewController.setViewControllers([firstPage], direction: .forward, animated: true, completion: nil)
+//        }
         for view in pageViewController.view.subviews {
             if let scrollView = view as? UIScrollView {
                 scrollView.isScrollEnabled = false  // disable swipe

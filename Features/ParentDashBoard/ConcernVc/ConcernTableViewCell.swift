@@ -121,18 +121,21 @@ class ConcernTableViewCell: UITableViewCell, UITextViewDelegate{
     
  
 
+    
     private func aknowlegeFlow(index: Int) {
-
+        
         guard let viewController = viewController else {
             return
         }
-
+        
         let alert = UIAlertController(
-            title: "Add acknowledgement",
+            title: "Acknowledge",
             message: "\n\n\n",
             preferredStyle: .alert
         )
-
+        
+        // MARK: - Text View
+        
         let textView = UITextView(
             frame: CGRect(
                 x: 15,
@@ -141,52 +144,64 @@ class ConcernTableViewCell: UITableViewCell, UITextViewDelegate{
                 height: 90
             )
         )
-
+        
         textView.font = UIFont.systemFont(ofSize: 16)
+        
         textView.layer.borderWidth = 1
         textView.layer.cornerRadius = 8
         textView.layer.borderColor = UIColor.lightGray.cgColor
+        
+        // TextView settings
+        textView.isEditable = true
+        textView.isSelectable = true
+        textView.isScrollEnabled = true
+        textView.keyboardType = .default
+        textView.returnKeyType = .done
+        
         textView.addDoneButton()
+        
         // Placeholder
         textView.text = acknowledgementPlaceholder
         textView.textColor = .lightGray
-
+        
         textView.delegate = self
-
+        
         alert.view.addSubview(textView)
-
+        
         // MARK: - Cancel
-
+        
         alert.addAction(
             UIAlertAction(
                 title: "Cancel",
                 style: .cancel
             )
         )
-
+        
         // MARK: - Confirm
-
+        
         alert.addAction(
             UIAlertAction(
                 title: "Confirm",
                 style: .default
             ) { [weak self] _ in
-
+                
                 guard let self = self else {
                     return
                 }
-
+                
                 // Get actual text
-                let actionText = textView.text == self.acknowledgementPlaceholder
-                    ? ""
-                    : textView.text.trimmingCharacters(
+                let actionText: String
+                
+                if textView.text == self.acknowledgementPlaceholder {
+                    actionText = ""
+                } else {
+                    actionText = textView.text.trimmingCharacters(
                         in: .whitespacesAndNewlines
                     )
-
-                print("Action Taken: \(actionText)")
-
+                }
+                
                 self.AknowledgeDiscription = actionText
-
+                
                 self.deleteDelegate?.AknowledgeConcernData(
                     index: index,
                     Aknowledgediscreption: actionText,
@@ -194,35 +209,40 @@ class ConcernTableViewCell: UITableViewCell, UITextViewDelegate{
                 )
             }
         )
-
+        
+        // MARK: - Present Alert
+        
         viewController.present(
             alert,
             animated: true
-        ) {
-            textView.becomeFirstResponder()
-        }
+        )
     }
-    
+
+    // MARK: - UITextViewDelegate
+
     func textViewDidBeginEditing(_ textView: UITextView) {
-
+        
+        // Remove placeholder when user taps TextView
         if textView.text == acknowledgementPlaceholder {
-
             textView.text = ""
             textView.textColor = .label
         }
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
-
-        if textView.text.trimmingCharacters(
-            in: .whitespacesAndNewlines
-        ).isEmpty {
-
+        
+        // Restore placeholder when empty
+        if textView.text
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .isEmpty {
+            
             textView.text = acknowledgementPlaceholder
             textView.textColor = .lightGray
         }
     }
     
+
+
     @IBAction func acknowledgeBtnAct(_ sender: UIButton) {
         if sender.currentTitle == "Acknowledged"{
             aknowlegeFlow(index: sender.tag)

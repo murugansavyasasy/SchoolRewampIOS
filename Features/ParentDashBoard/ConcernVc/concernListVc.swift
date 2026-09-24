@@ -16,8 +16,8 @@ class concernListVc: UIViewController, DeleteConcerndata {
         }else{
             
             alert.showAlertCancel(
-                title: "Concern".translated(),
-                message: "Are you sure you want to aknowledge this concern?".translated(),
+                title: "Confirm Acknowledge".translated(),
+                message: "Are you sure you want to submit?".translated(),
                 actionLbl1: "OK".translated(),
                 actionLbl2: "Cancel".translated(),
                 on: self,
@@ -75,11 +75,14 @@ class concernListVc: UIViewController, DeleteConcerndata {
         )
     }
     
+    @IBOutlet weak var topconst: NSLayoutConstraint!
+    @IBOutlet weak var headerCons: NSLayoutConstraint!
     @IBOutlet weak var nodataStack: UIStackView!
     @IBOutlet weak var noEventLbl: UILabel!
     @IBOutlet weak var noEventImg: UIImageView!
     @IBOutlet weak var toolBarLbl: UILabel!
-    @IBOutlet weak var toolbarHeight: NSLayoutConstraint!
+   
+    @IBOutlet weak var headerView: BottomRoundedView!
     @IBOutlet weak var tabelview: UITableView!
     private var allConcerns: [Concern] = []
     private var filteredConcerns: [Concern] = []
@@ -87,6 +90,7 @@ class concernListVc: UIViewController, DeleteConcerndata {
     private var activeFilter: ConcernStatus? = nil // nil = "All"
     private var  alert = CustomAlert()
     var loginAsType : Int?
+//    var is_comfromnotification : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -96,7 +100,13 @@ class concernListVc: UIViewController, DeleteConcerndata {
         setupTableView()
         getConcernList()
         if loginAsType == 2{
-            toolbarHeight.constant = 0
+//            headerView.isHidden = true
+            headerCons.constant = 0
+            topconst.constant = -20
+        }else{
+            headerCons.constant = 120
+            topconst.constant = 10
+            toolBarLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         }
     }
 

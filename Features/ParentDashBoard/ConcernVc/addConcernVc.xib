@@ -19,12 +19,16 @@
                 <outlet property="concernDropdownView" destination="Liw-lM-TPa" id="rC1-7m-3u0"/>
                 <outlet property="concernTypeFulStack" destination="1xO-m5-15z" id="CJq-aN-Vjr"/>
                 <outlet property="descrptionTextView" destination="sNV-Ud-mmY" id="wzG-re-Gwm"/>
+                <outlet property="discreptionsLbl" destination="W8Y-2C-n8L" id="Rif-JE-fOZ"/>
+                <outlet property="headerStackView" destination="SuI-nq-9Ep" id="abg-5z-aGz"/>
                 <outlet property="headerview" destination="dxN-6d-oBr" id="w6i-Kb-ohK"/>
                 <outlet property="managmentBtnName" destination="L6P-4N-nT7" id="8wc-eK-K5e"/>
+                <outlet property="parentViewTop" destination="sGj-Kl-pot" id="WN1-k4-o2c"/>
                 <outlet property="principalBtnName" destination="2Dh-In-ahX" id="fjj-cI-RIh"/>
                 <outlet property="selectConcerTypeLbl" destination="xSY-at-gNv" id="nv4-iA-4S1"/>
                 <outlet property="selectImgPdfview" destination="7E0-X1-DV3" id="8nV-tu-hcp"/>
                 <outlet property="submitBtnName" destination="wEK-br-z18" id="ENh-5z-Txf"/>
+                <outlet property="toolbarLbl" destination="F3I-lJ-yK4" id="mFM-to-lRy"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -34,13 +38,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="SuI-nq-9Ep">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="0.0"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="169"/>
                     <subviews>
-                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dxN-6d-oBr" customClass="BottomRoundedView" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="169" width="393" height="0.0"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dxN-6d-oBr" customClass="BottomRoundedView" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="169"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JHT-PH-rMe">
-                                    <rect key="frame" x="5" y="-43.333333333333329" width="383" height="23.333333333333332"/>
+                                    <rect key="frame" x="5" y="125.66666666666667" width="383" height="23.333333333333329"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9qj-gb-6HZ">
                                             <rect key="frame" x="0.0" y="0.0" width="35" height="23.333333333333332"/>
@@ -77,10 +81,10 @@
                     </subviews>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u8O-is-t4Z">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="784"/>
+                    <rect key="frame" x="0.0" y="189" width="393" height="595"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gfV-cP-DWh">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="784"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="595"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EAg-En-6Ay">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="575"/>
@@ -335,9 +339,9 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="u8O-is-t4Z" secondAttribute="trailing" id="P1v-z2-bsd"/>
                 <constraint firstItem="u8O-is-t4Z" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Qba-Os-yMn"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="u8O-is-t4Z" secondAttribute="bottom" id="RhK-TU-t2D"/>
-                <constraint firstItem="u8O-is-t4Z" firstAttribute="top" secondItem="SuI-nq-9Ep" secondAttribute="top" id="Scq-kR-3Jg"/>
                 <constraint firstItem="SuI-nq-9Ep" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Sym-XK-aeT"/>
                 <constraint firstItem="SuI-nq-9Ep" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="eBR-rf-3ZB"/>
+                <constraint firstItem="u8O-is-t4Z" firstAttribute="top" secondItem="SuI-nq-9Ep" secondAttribute="bottom" constant="20" id="sGj-Kl-pot"/>
                 <constraint firstItem="JHT-PH-rMe" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="7.6666666666666856" id="tv0-M6-7VI"/>
                 <constraint firstItem="SuI-nq-9Ep" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="v9i-3g-fRq"/>
             </constraints>

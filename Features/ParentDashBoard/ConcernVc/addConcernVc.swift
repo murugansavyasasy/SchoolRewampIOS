@@ -14,6 +14,10 @@ class addConcernVc: UIViewController, DeleteImge,UITextViewDelegate {
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
+    @IBOutlet weak var toolbarLbl: UILabel!
+    @IBOutlet weak var parentViewTop: NSLayoutConstraint!
+    @IBOutlet weak var headerStackView: UIStackView!
+    @IBOutlet weak var discreptionsLbl: LocalizationLabel!
     @IBOutlet weak var headerview: BottomRoundedView!
     @IBOutlet weak var addPhotoLbl: LocalizationLabel!
     @IBOutlet weak var submitBtnName: UIButton!
@@ -122,7 +126,17 @@ class addConcernVc: UIViewController, DeleteImge,UITextViewDelegate {
             RaiseFullStackView.isHidden = true
             concernTypeFulStack.isHidden = true
             headerview.isHidden = false
+            headerStackView.isHidden = false
+            toolbarLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        }else{
+            
+            RaiseFullStackView.isHidden = false
+            concernTypeFulStack.isHidden = false
+            headerview.isHidden = true
+            headerStackView.isHidden = true
+            parentViewTop.constant = -18
         }
+        discreptionsLbl.setRequiredText(CommonStringFile.Description.translated())
         setAttributedText(for: addPhotoLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
         setupPlaceholder()
          managmentBtnName.isSelected = true
