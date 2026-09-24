@@ -13,6 +13,7 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate, refrech {
         Refresh(id: transData[index].id ?? "")
     }
     
+    @IBOutlet weak var viewPaymentProofView: UIView!
     @IBOutlet weak var transLabel: UILabel!
     @IBOutlet weak var transBtnName: UIButton!
     @IBOutlet weak var createBtn: UIButton!
@@ -89,12 +90,19 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate, refrech {
         tableOuterView.isHidden = true
         NodataImage.isHidden = true
         NoDataLbl.isHidden = true
+      viewPaymentProofView.isHidden = true
         popupWebViews = []
         setupWebView()
         loadFeeURL()
     }
 
 
+    @IBAction func paymentProofBtnAct(_ sender: proofButton) {
+        
+        let vc = paymentProofVc()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
     func setupWebView() {
 
                webView.navigationDelegate = self
@@ -175,6 +183,7 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate, refrech {
             case 0:
                 isreceptSelect = false
                 self.refreshBtn.isHidden = false
+                self.viewPaymentProofView.isHidden = true
                 self.webOuterView.isHidden = false
                 self.tableOuterView.isHidden = true
             case 1:
@@ -183,16 +192,18 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate, refrech {
                 self.webOuterView.isHidden = true
                 self.tableOuterView.isHidden = false
                 LoadingView.isHidden = true
+                self.viewPaymentProofView.isHidden = true
                 ActivityIndicator.stopAnimating()
+                feeDetailTableView.reloadData()
                 Get_Fee_Invoice_Api()
             case 2:
                 isreceptSelect = false
                 self.refreshBtn.isHidden = true
                 self.webOuterView.isHidden = true
                 self.tableOuterView.isHidden = false
+                self.viewPaymentProofView.isHidden = false
                 LoadingView.isHidden = true
                 ActivityIndicator.stopAnimating()
-                //                       feeDetailTableView.reloadData()
                 Get_transDetails()
             default:
                 break
@@ -217,11 +228,22 @@ class FeeDetails: UIViewController,WKNavigationDelegate, WKUIDelegate, refrech {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let success):
-                    self.feeDetailsList = success.data ?? []
-                    self.NodataImage.isHidden = success.status ?? true
-                    self.NoDataLbl.isHidden = success.status ?? true
-                    self.NoDataLbl.text = success.message ?? ""
-                    self.feeDetailTableView.reloadData()
+                    
+                    if success.status ?? false{
+                        self.feeDetailsList = success.data ?? []
+                        self.NodataImage.isHidden = success.status ?? true
+                        self.NoDataLbl.isHidden = success.status ?? true
+                        self.NoDataLbl.text = success.message ?? ""
+                        self.feeDetailTableView.reloadData()
+                    }else{
+                        self.NodataImage.isHidden = success.status ?? true
+                        self.NoDataLbl.isHidden = success.status ?? true
+                        self.NoDataLbl.text = success.message ?? ""
+                        self.feeDetailsList = []
+                        self.feeDetailTableView.reloadData()
+                        
+                    }
+                   
                 case .failure(let failure):
                     self.NodataImage.isHidden = false
                     self.NoDataLbl.isHidden = false
@@ -487,3 +509,225 @@ struct FeeDetailModel {
     var fileSize: String
 }
 
+class proofButton: UIButton {
+
+   private let iconContainer = UIView()
+   private let iconImageView = UIImageView()
+
+   private let viewLabel = UILabel()
+   private let titleLabelView = UILabel()
+
+   private let textStackView = UIStackView()
+
+   override init(frame: CGRect) {
+       super.init(frame: frame)
+       setupUI()
+   }
+
+   required init?(coder: NSCoder) {
+       super.init(coder: coder)
+       setupUI()
+   }
+
+   private func setupUI() {
+
+       guard iconContainer.superview == nil else {
+           return
+       }
+
+       // MARK: Button
+
+       translatesAutoresizingMaskIntoConstraints = false
+       isUserInteractionEnabled = true
+
+       backgroundColor = .primery
+
+       layer.cornerRadius = 28
+       layer.borderWidth = 1
+       layer.borderColor = UIColor.systemBlue.cgColor
+
+       layer.shadowColor = UIColor.systemBlue.cgColor
+       layer.shadowOpacity = 0.15
+       layer.shadowRadius = 10
+       layer.shadowOffset = CGSize(width: 0, height: 4)
+       layer.masksToBounds = false
+
+       // MARK: Icon Container
+
+       iconContainer.translatesAutoresizingMaskIntoConstraints = false
+       iconContainer.backgroundColor =
+           UIColor.systemBlue.withAlphaComponent(0.12)
+
+       iconContainer.layer.cornerRadius = 20
+       iconContainer.isUserInteractionEnabled = false
+
+       addSubview(iconContainer)
+
+       // MARK: Icon
+
+       iconImageView.translatesAutoresizingMaskIntoConstraints = false
+       iconImageView.image = UIImage(named: "Daily Collection")
+       iconImageView.tintColor = .white
+       iconImageView.contentMode = .scaleAspectFit
+       iconImageView.isUserInteractionEnabled = false
+
+       iconContainer.addSubview(iconImageView)
+
+       // MARK: View Label
+
+       viewLabel.translatesAutoresizingMaskIntoConstraints = false
+       viewLabel.text = "View".translated()
+
+       // SAME FONT SIZE
+       viewLabel.font = .systemFont(
+           ofSize: 12,
+           weight: .bold
+       )
+
+       viewLabel.textColor = .white
+       viewLabel.textAlignment = .center
+       viewLabel.isUserInteractionEnabled = false
+
+       // MARK: Payment Proof Label
+
+       titleLabelView.translatesAutoresizingMaskIntoConstraints = false
+       titleLabelView.text = "Payment proof".translated()
+
+       // SAME FONT SIZE
+       titleLabelView.font = .systemFont(
+           ofSize: 12,
+           weight: .bold
+       )
+
+       titleLabelView.textColor = .white
+       titleLabelView.textAlignment = .center
+       titleLabelView.isUserInteractionEnabled = false
+
+       // MARK: Text Stack
+
+       textStackView.translatesAutoresizingMaskIntoConstraints = false
+
+       textStackView.axis = .vertical
+       textStackView.alignment = .center
+       textStackView.distribution = .fill
+       textStackView.spacing = 2
+
+       textStackView.isUserInteractionEnabled = false
+
+       textStackView.addArrangedSubview(viewLabel)
+       textStackView.addArrangedSubview(titleLabelView)
+
+       addSubview(textStackView)
+
+       // MARK: Constraints
+
+       NSLayoutConstraint.activate([
+
+           // Button
+           heightAnchor.constraint(
+               equalToConstant: 54
+           ),
+
+           widthAnchor.constraint(
+               equalToConstant: 170
+           ),
+
+           // --------------------------------
+           // Icon
+           // --------------------------------
+
+           iconContainer.leadingAnchor.constraint(
+               equalTo: leadingAnchor,
+               constant: 5
+           ),
+
+           iconContainer.centerYAnchor.constraint(
+               equalTo: centerYAnchor
+           ),
+
+           iconContainer.widthAnchor.constraint(
+               equalToConstant: 40
+           ),
+
+           iconContainer.heightAnchor.constraint(
+               equalToConstant: 40
+           ),
+
+           iconImageView.centerXAnchor.constraint(
+               equalTo: iconContainer.centerXAnchor
+           ),
+
+           iconImageView.centerYAnchor.constraint(
+               equalTo: iconContainer.centerYAnchor
+           ),
+
+           iconImageView.widthAnchor.constraint(
+               equalToConstant: 22
+           ),
+
+           iconImageView.heightAnchor.constraint(
+               equalToConstant: 22
+           ),
+
+           // --------------------------------
+           // Text Stack
+           // --------------------------------
+
+           textStackView.leadingAnchor.constraint(
+               equalTo: iconContainer.trailingAnchor,
+               constant: 12
+           ),
+
+           textStackView.trailingAnchor.constraint(
+               equalTo: trailingAnchor,
+               constant: -8
+           ),
+
+           textStackView.centerYAnchor.constraint(
+               equalTo: centerYAnchor
+           )
+       ])
+
+       // MARK: Touch
+
+       addTarget(
+           self,
+           action: #selector(touchDown),
+           for: .touchDown
+       )
+
+       addTarget(
+           self,
+           action: #selector(touchUp),
+           for: [
+               .touchUpInside,
+               .touchUpOutside,
+               .touchCancel
+           ]
+       )
+   }
+
+   @objc private func touchDown() {
+
+       UIView.animate(withDuration: 0.15) {
+
+           self.transform = CGAffineTransform(
+               scaleX: 0.95,
+               y: 0.95
+           )
+       }
+   }
+
+   @objc private func touchUp() {
+
+       UIView.animate(
+           withDuration: 0.25,
+           delay: 0,
+           usingSpringWithDamping: 0.5,
+           initialSpringVelocity: 5
+       ) {
+
+           self.transform = .identity
+       }
+   }
+}

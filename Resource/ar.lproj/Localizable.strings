@@ -1522,6 +1522,62 @@
 "View Created Test List" = "عرض قائمة الاختبارات المُنشأة";
 "School Selection" = "اختيار المدرسة";
 
+
+"Raise concern" = "رفع الاستفسار";
+"Are you sure you want to raise this concern?" = "هل أنت متأكد أنك تريد رفع هذا الاستفسار؟";
+"Raise" = "رفع";
+"Cancel" = "إلغاء";
+"Managment" = "الإدارة";
+"Principal" = "المدير";
+"Class Teacher" = "معلم الصف";
+"Raise To" = "رفع إلى";
+"Concern Type" = "نوع الاستفسار";
+"Raise Concern" = "رفع الاستفسار";
+"Raised Concern List" = "قائمة الاستفسارات المرفوعة";
+"Concern" = "الاستفسار";
+"Are you sure you want to aknowledge this concern?" = "هل أنت متأكد أنك تريد تأكيد استلام هذا الاستفسار؟";
+"Concern Deletion" = "حذف الاستفسار";
+"Are you sure you want to delete?" = "هل أنت متأكد أنك تريد الحذف؟";
+"• ACTION TAKEN BY:" = "• تم اتخاذ الإجراء بواسطة:";
+"• ACTION TAKEN ON:" = "• تم اتخاذ الإجراء بتاريخ:";
+"• DETAILS:" = "• التفاصيل:";
+"• Action Taken Details" = "• تفاصيل الإجراء المتخذ";
+"• ACKNOWLEDGED BY:" = "• تم تأكيد الاستلام بواسطة:";
+"• ACKNOWLEDGED  ON:" = "• تم تأكيد الاستلام بتاريخ:";
+"• REMARKS :" = "• الملاحظات:";
+"• Acknowledgement Details" = "• تفاصيل تأكيد الاستلام";
+"All" = "الكل";
+"Pending" = "قيد الانتظار";
+"Approved" = "تمت الموافقة";
+"Rejected" = "مرفوض";
+"proof" = "إثبات";
+"Validate By :" = "تم التحقق بواسطة:";
+"Proof" = "الإثبات";
+"Created On :" = "تاريخ الإنشاء:";
+"ACTUAL AMOUNT" = "المبلغ الفعلي";
+"PENDING" = "قيد الانتظار";
+"PAID" = "مدفوع";
+"Reason:" = "السبب:";
+"AMOUNT" = "المبلغ";
+"TRANSACTION ID" = "معرّف المعاملة";
+"DATE" = "التاريخ";
+"REF NUMBER" = "الرقم المرجعي";
+"PAYER" = "الدافع";
+"PAYEE" = "المستفيد";
+"PAYMENT STATUS" = "حالة الدفع";
+"TIME" = "الوقت";
+"Status" = "الحالة";
+"Validated By" = "تم التحقق بواسطة";
+"Validated On" = "تم التحقق بتاريخ";
+"Payment ID" = "معرّف الدفع";
+"Created" = "تم الإنشاء";
+"Remarks" = "الملاحظات";
+"AMOUNT BREAKDOWN" = "تفاصيل المبلغ";
+"Total Fee " = "إجمالي الرسوم ";
+"User Entered" = "المبلغ الذي أدخله المستخدم";
+"Proof  Detected Amount" = "المبلغ المكتشف من الإثبات";
+"FEE BREAKDOWN" = "تفاصيل الرسوم";
+
 //After removing Ta,Th,Hi
 "Parent Portal" = "بوابة أولياء الأمور";
 "Fees" = "الرسوم";
@@ -1586,6 +1642,9 @@
 "Let's Go" = "هيا بنا";
 "Today's Event" = "فعالية اليوم";
 "Close" = "إغلاق";
+"Coscholastic" = "الأنشطة المصاحبة للمناهج الدراسية";
+"Co-Scholastic" = "الأنشطة المصاحبة للمناهج الدراسية";
+
 //MARK: Flavour strings
 "WELCOME_STRING" = "Welcome to School Chimes";
 "REPORT_BUG_STRING" = "Dear School Chimes Team";

@@ -64,13 +64,15 @@ class MenuRedirectHandler {
         MenuImage(id: 204, name: "Approve Staff Leave Request"),
         MenuImage(id: 203, name: "Apply Leave"),
         MenuImage(id: 205, name: "Live Bus Tracking"),
-        MenuImage(id: 206, name: "DailyWeekly Test")
+        MenuImage(id: 206, name: "DailyWeekly Test"),
+        MenuImage(id: 207, name: "Parent Concerns")
+        
         
     ]
     
     var receiverItems : [String] = [ MenuStringFile.Communication,ReceiverMenuItems.Homework ,ReceiverMenuItems.ExamTest,ReceiverMenuItems.ExamMarks,ReceiverMenuItems.ImagePdf,ReceiverMenuItems.Video,ReceiverMenuItems.NoticeBoard,ReceiverMenuItems.Assignment,ReceiverMenuItems.OnlineMeeting,ReceiverMenuItems.AttendanceReport,ReceiverMenuItems.EventsHolidays,ReceiverMenuItems.RequestLeave,ReceiverMenuItems.FeeDetails,ReceiverMenuItems.InteractionWithStaff,ReceiverMenuItems.QuizExam,ReceiverMenuItems.LSRW,ReceiverMenuItems.ClassTimetable,ReceiverMenuItems.CertificateRequest,ReceiverMenuItems.PTM,ReceiverMenuItems.Map]
     
-    var receiverImageItems : [String] = ["Communication","Homework" ,"ExamTest","Exam Marks","ImagePdf","Video","Notice Board","receiver_assignment","online_meeting","attendance_report","Events","Request Leave","Fee Details","Interaction with Staff","QuizExam","LSRW","Class Timetable","Certificate Request","PTM","MySchoolBus","DailyWeekly Test"]
+    var receiverImageItems : [String] = ["Communication","Homework" ,"ExamTest","Exam Marks","ImagePdf","Video","Notice Board","receiver_assignment","online_meeting","attendance_report","Events","Request Leave","Fee Details","Interaction with Staff","QuizExam","LSRW","Class Timetable","Certificate Request","PTM","MySchoolBus","DailyWeekly Test","Parent Concerns"]
     
     //MARK: COMMONPAGE FOR MULTIPLE SCHOOL LIST PAGE
     func SchoolListVc(from viewController: UIViewController) {
@@ -448,10 +450,11 @@ class MenuRedirectHandler {
         viewContorller.present(vc, animated: true)
     }
     
-    func resiverconcernListVc(from viewContorller: UIViewController){
+    func resiverconcernListVc(from viewContorller: UIViewController,is_comefromNoti:Bool){
         let vc = commonConcernVc(nibName: nil, bundle: nil)
         vc.page1 = addConcernVc()
         vc.page2 = concernListVc()
+        vc.is_comefromNoti = is_comefromNoti
         vc.modalPresentationStyle = .fullScreen
         viewContorller.present(vc, animated: true)
         

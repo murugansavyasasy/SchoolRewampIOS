@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="25098" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="25073"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -13,16 +13,22 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="addConcernVc" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
             <connections>
                 <outlet property="RaiseFullStackView" destination="EdB-ot-3ad" id="Q8Z-5K-Q6b"/>
+                <outlet property="addPhotoLbl" destination="2Yw-un-EUW" id="OTY-6n-Li5"/>
                 <outlet property="classteacherBtnName" destination="DQz-46-Q2c" id="GMZ-hz-3Yj"/>
                 <outlet property="collectionViewHeght" destination="e5h-CQ-hSp" id="fV1-7z-8x4"/>
                 <outlet property="concernDropdownView" destination="Liw-lM-TPa" id="rC1-7m-3u0"/>
                 <outlet property="concernTypeFulStack" destination="1xO-m5-15z" id="CJq-aN-Vjr"/>
                 <outlet property="descrptionTextView" destination="sNV-Ud-mmY" id="wzG-re-Gwm"/>
+                <outlet property="discreptionsLbl" destination="W8Y-2C-n8L" id="Rif-JE-fOZ"/>
+                <outlet property="headerStackView" destination="SuI-nq-9Ep" id="abg-5z-aGz"/>
+                <outlet property="headerview" destination="dxN-6d-oBr" id="w6i-Kb-ohK"/>
                 <outlet property="managmentBtnName" destination="L6P-4N-nT7" id="8wc-eK-K5e"/>
+                <outlet property="parentViewTop" destination="sGj-Kl-pot" id="WN1-k4-o2c"/>
                 <outlet property="principalBtnName" destination="2Dh-In-ahX" id="fjj-cI-RIh"/>
                 <outlet property="selectConcerTypeLbl" destination="xSY-at-gNv" id="nv4-iA-4S1"/>
                 <outlet property="selectImgPdfview" destination="7E0-X1-DV3" id="8nV-tu-hcp"/>
-                <outlet property="toolBarHeight" destination="wkb-ln-S76" id="diR-Ru-0pI"/>
+                <outlet property="submitBtnName" destination="wEK-br-z18" id="ENh-5z-Txf"/>
+                <outlet property="toolbarLbl" destination="F3I-lJ-yK4" id="mFM-to-lRy"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -31,50 +37,54 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dxN-6d-oBr" customClass="BottomRoundedView" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="0.0"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="SuI-nq-9Ep">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="169"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JHT-PH-rMe">
-                            <rect key="frame" x="5" y="-43.333333333333336" width="383" height="23.333333333333332"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dxN-6d-oBr" customClass="BottomRoundedView" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="169"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9qj-gb-6HZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="35" height="23.333333333333332"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="35" id="duG-HL-8WX"/>
-                                    </constraints>
-                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                    <state key="normal" image="chevron.backward" catalog="system">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="BackBtnAct:" destination="-1" eventType="touchUpInside" id="oku-MK-tnr"/>
-                                    </connections>
-                                </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ActionTaken" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F3I-lJ-yK4">
-                                    <rect key="frame" x="35" y="1.3333333333333357" width="348" height="20.333333333333332"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
+                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JHT-PH-rMe">
+                                    <rect key="frame" x="5" y="125.66666666666667" width="383" height="23.333333333333329"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9qj-gb-6HZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="35" height="23.333333333333332"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="35" id="duG-HL-8WX"/>
+                                            </constraints>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" image="chevron.backward" catalog="system">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="BackBtnAct:" destination="-1" eventType="touchUpInside" id="oku-MK-tnr"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ActionTaken" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F3I-lJ-yK4">
+                                            <rect key="frame" x="35" y="1.6666666666666572" width="348" height="20.333333333333332"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
                             </subviews>
-                        </stackView>
+                            <color key="backgroundColor" name="BackGroundClr"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="JHT-PH-rMe" secondAttribute="bottom" constant="20" id="13n-uV-sHD"/>
+                                <constraint firstItem="JHT-PH-rMe" firstAttribute="leading" secondItem="dxN-6d-oBr" secondAttribute="leading" constant="5" id="F1M-kQ-Me8"/>
+                                <constraint firstAttribute="trailing" secondItem="JHT-PH-rMe" secondAttribute="trailing" constant="5" id="Sr1-Nl-IUh"/>
+                            </constraints>
+                        </view>
                     </subviews>
-                    <color key="backgroundColor" name="BackGroundClr"/>
-                    <constraints>
-                        <constraint firstAttribute="bottom" secondItem="JHT-PH-rMe" secondAttribute="bottom" constant="20" id="13n-uV-sHD"/>
-                        <constraint firstItem="JHT-PH-rMe" firstAttribute="leading" secondItem="dxN-6d-oBr" secondAttribute="leading" constant="5" id="F1M-kQ-Me8"/>
-                        <constraint firstAttribute="trailing" secondItem="JHT-PH-rMe" secondAttribute="trailing" constant="5" id="Sr1-Nl-IUh"/>
-                        <constraint firstAttribute="height" id="wkb-ln-S76"/>
-                    </constraints>
-                </view>
+                </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u8O-is-t4Z">
-                    <rect key="frame" x="0.0" y="30" width="393" height="754"/>
+                    <rect key="frame" x="0.0" y="189" width="393" height="595"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gfV-cP-DWh">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="754"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="595"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EAg-En-6Ay">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="575"/>
@@ -85,7 +95,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="1xO-m5-15z">
                                                     <rect key="frame" x="0.0" y="0.0" width="373" height="72"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Concern Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1vJ-oz-Abv">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Concern Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1vJ-oz-Abv" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="373" height="17"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                             <nil key="textColor"/>
@@ -135,7 +145,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="EdB-ot-3ad">
                                                     <rect key="frame" x="0.0" y="102" width="373" height="44"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Raise To" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zt6-bK-OUp">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Raise To" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zt6-bK-OUp" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="373" height="17"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                             <nil key="textColor"/>
@@ -153,7 +163,7 @@
                                                                                 <constraint firstAttribute="height" constant="25" id="5zb-s9-aHE"/>
                                                                                 <constraint firstAttribute="width" constant="25" id="u9D-R3-gJf"/>
                                                                             </constraints>
-                                                                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <color key="tintColor" name="PrimeryColor"/>
                                                                             <state key="normal" title="Button"/>
                                                                             <buttonConfiguration key="configuration" style="plain" image="largecircle.fill.circle" catalog="system"/>
                                                                             <connections>
@@ -177,6 +187,7 @@
                                                                                 <constraint firstAttribute="width" constant="25" id="US7-9F-N44"/>
                                                                                 <constraint firstAttribute="height" constant="25" id="zvZ-nH-c5M"/>
                                                                             </constraints>
+                                                                            <color key="tintColor" name="PrimeryColor"/>
                                                                             <state key="normal" title="Button"/>
                                                                             <buttonConfiguration key="configuration" style="plain" image="circle" catalog="system"/>
                                                                             <connections>
@@ -200,6 +211,7 @@
                                                                                 <constraint firstAttribute="width" constant="25" id="FA8-0d-CBV"/>
                                                                                 <constraint firstAttribute="height" constant="25" id="RKc-6M-2gE"/>
                                                                             </constraints>
+                                                                            <color key="tintColor" name="PrimeryColor"/>
                                                                             <state key="normal" title="Button"/>
                                                                             <buttonConfiguration key="configuration" style="plain" image="circle" catalog="system"/>
                                                                             <connections>
@@ -221,7 +233,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Uj3-5P-lwf">
                                                     <rect key="frame" x="0.0" y="176" width="373" height="137"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W8Y-2C-n8L">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W8Y-2C-n8L" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="373" height="17"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                             <nil key="textColor"/>
@@ -251,7 +263,7 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SLg-6A-1iS">
                                                             <rect key="frame" x="0.0" y="0.0" width="373" height="20"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Photos (Optional?)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Yw-un-EUW">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Attachments (Optional?)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Yw-un-EUW" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="373" height="20"/>
                                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                                     <nil key="textColor"/>
@@ -324,13 +336,14 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="dxN-6d-oBr" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="3QA-e0-bxH"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="u8O-is-t4Z" secondAttribute="trailing" id="P1v-z2-bsd"/>
                 <constraint firstItem="u8O-is-t4Z" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Qba-Os-yMn"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="u8O-is-t4Z" secondAttribute="bottom" id="RhK-TU-t2D"/>
-                <constraint firstItem="dxN-6d-oBr" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="cuH-dT-xUt"/>
-                <constraint firstItem="u8O-is-t4Z" firstAttribute="top" secondItem="dxN-6d-oBr" secondAttribute="bottom" constant="30" id="r7K-NQ-t6b"/>
-                <constraint firstItem="dxN-6d-oBr" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="zw0-Ps-2TG"/>
+                <constraint firstItem="SuI-nq-9Ep" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Sym-XK-aeT"/>
+                <constraint firstItem="SuI-nq-9Ep" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="eBR-rf-3ZB"/>
+                <constraint firstItem="u8O-is-t4Z" firstAttribute="top" secondItem="SuI-nq-9Ep" secondAttribute="bottom" constant="20" id="sGj-Kl-pot"/>
+                <constraint firstItem="JHT-PH-rMe" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="7.6666666666666856" id="tv0-M6-7VI"/>
+                <constraint firstItem="SuI-nq-9Ep" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="v9i-3g-fRq"/>
             </constraints>
             <point key="canvasLocation" x="35.877862595419849" y="117.60563380281691"/>
         </view>
@@ -338,15 +351,15 @@
     <resources>
         <image name="a" width="128" height="128"/>
         <image name="attachment (1)" width="24" height="24"/>
-        <image name="chevron.backward" catalog="system" width="97" height="128"/>
-        <image name="circle" catalog="system" width="128" height="123"/>
+        <image name="chevron.backward" catalog="system" width="93" height="128"/>
+        <image name="circle" catalog="system" width="128" height="128"/>
         <image name="down-arrow" width="512" height="512"/>
-        <image name="largecircle.fill.circle" catalog="system" width="128" height="123"/>
+        <image name="largecircle.fill.circle" catalog="system" width="128" height="128"/>
         <namedColor name="BackGroundClr">
-            <color red="0.41999998688697815" green="0.70999997854232788" blue="0.3449999988079071" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.21600000560283661" green="0.49000000953674316" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="PrimeryColor">
-            <color red="0.41899999976158142" green="0.70800000429153442" blue="0.34599998593330383" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -7,14 +7,21 @@
 
 import UIKit
 
-class addConcernVc: UIViewController, DeleteImge {
+class addConcernVc: UIViewController, DeleteImge,UITextViewDelegate {
     func deleteImage(index: Int) {
         attachments.remove(at: index)
         
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
-    @IBOutlet weak var toolBarHeight: NSLayoutConstraint!
+    @IBOutlet weak var toolbarLbl: UILabel!
+    @IBOutlet weak var parentViewTop: NSLayoutConstraint!
+    @IBOutlet weak var headerStackView: UIStackView!
+    @IBOutlet weak var discreptionsLbl: LocalizationLabel!
+    @IBOutlet weak var headerview: BottomRoundedView!
+    @IBOutlet weak var addPhotoLbl: LocalizationLabel!
+    @IBOutlet weak var submitBtnName: UIButton!
+  
     
     @IBOutlet weak var RaiseFullStackView: UIStackView!
     @IBOutlet weak var concernTypeFulStack: UIStackView!
@@ -33,11 +40,13 @@ class addConcernVc: UIViewController, DeleteImge {
     var dropDownData : [concernData]?
     var dropDownList = [String]()
     var selectedConcernListId : String?
+    var selectedActionId : String?
     var selectedRole: String = "management"
     var vimeoUploader: VimeoUploader?
     var alert = CustomAlert()
     var loginAsType : Int?
     var selectedStudentID :String?
+    var placeholderLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUi()
@@ -50,47 +59,90 @@ class addConcernVc: UIViewController, DeleteImge {
     }
     @IBAction func checkBtnUpdate(_ sender: UIButton) {
         
-        // Select only the tapped button
-        if sender == managmentBtnName {
-                selectedRole = "management"
-            } else if sender == principalBtnName {
-                selectedRole = "principal"
-            } else if sender == classteacherBtnName {
-                selectedRole = "class_teacher"
-            }
+        // Update selected role
+           if sender == managmentBtnName {
+               selectedRole = "management"
+               
+           } else if sender == principalBtnName {
+               selectedRole = "principal"
+               
+           } else if sender == classteacherBtnName {
+               selectedRole = "class_teacher"
+           }
+
+           // Select only the tapped button
+           managmentBtnName.isSelected = (sender == managmentBtnName)
+           principalBtnName.isSelected = (sender == principalBtnName)
+           classteacherBtnName.isSelected = (sender == classteacherBtnName)
+
+           // Update radio button images
            updateRadioButtons()
+       }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        
+        placeholderLabel.isHidden = !textView.text.isEmpty
     }
     
-  
-    func updateRadioButtons() {
-        let selectedImage = UIImage(systemName: "largecircle.fill.circle")
-        let unselectedImage = UIImage(systemName: "circle")
-        
-        classteacherBtnName.setImage(
-            classteacherBtnName.isSelected ? selectedImage : unselectedImage,
-            for: .normal
-        )
-        
-        principalBtnName.setImage(
-            principalBtnName.isSelected ? selectedImage : unselectedImage,
-            for: .normal
-        )
-        
-        managmentBtnName.setImage(
-            managmentBtnName.isSelected ? selectedImage : unselectedImage,
-            for: .normal
-        )
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
+    }
+    
+ 
+
+       func updateRadioButtons() {
+
+           let selectedImage = UIImage(systemName: "largecircle.fill.circle")
+           let unselectedImage = UIImage(systemName: "circle")
+
+           managmentBtnName.setImage(
+               managmentBtnName.isSelected ? selectedImage : unselectedImage,
+               for: .normal
+           )
+
+           principalBtnName.setImage(
+               principalBtnName.isSelected ? selectedImage : unselectedImage,
+               for: .normal
+           )
+
+           classteacherBtnName.setImage(
+               classteacherBtnName.isSelected ? selectedImage : unselectedImage,
+               for: .normal
+           )
+       }
+    
+    func setupPlaceholder() {
+        placeholderLabel = UILabel()
+        placeholderLabel.text = "Description your concern".translated()
+        placeholderLabel.font = descrptionTextView.font
+        placeholderLabel.textColor = .lightGray
+        placeholderLabel.positionAsPlaceholder(in: descrptionTextView)
+        descrptionTextView.addSubview(placeholderLabel)
+        placeholderLabel.isHidden = !descrptionTextView.text.isEmpty
     }
     func setupUi(){
         // Management selected by default
         if loginAsType == 1{
             RaiseFullStackView.isHidden = true
             concernTypeFulStack.isHidden = true
-            toolBarHeight.constant = 169
+            headerview.isHidden = false
+            headerStackView.isHidden = false
+            toolbarLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        }else{
+            
+            RaiseFullStackView.isHidden = false
+            concernTypeFulStack.isHidden = false
+            headerview.isHidden = true
+            headerStackView.isHidden = true
+            parentViewTop.constant = -18
         }
+        discreptionsLbl.setRequiredText(CommonStringFile.Description.translated())
+        setAttributedText(for: addPhotoLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
+        setupPlaceholder()
          managmentBtnName.isSelected = true
          classteacherBtnName.isSelected = false
          principalBtnName.isSelected = false
+        descrptionTextView.delegate = self
         descrptionTextView.layer.cornerRadius = 10
         descrptionTextView.layer.borderWidth = 1
         descrptionTextView.layer.borderColor = UIColor.gray.cgColor
@@ -101,7 +153,8 @@ class addConcernVc: UIViewController, DeleteImge {
         let concernTap = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
         concernDropdownView.addGestureRecognizer(concernTap)
         imageSelection()
-        
+        submitBtnName.setTitle("Submit".translated(), for: .normal)
+        descrptionTextView.addDoneButton()
     }
     func imageSelection(){
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
@@ -204,10 +257,10 @@ class addConcernVc: UIViewController, DeleteImge {
         } else {
             
             alert.showAlertCancel(
-                title: "Raise concern",
-                message: "Are you sure you want to raise this concern?",
-                actionLbl1: "Raise",
-                actionLbl2: "Cancel",
+                title: "Raise concern".translated(),
+                message: "Are you sure you want to raise this concern?".translated(),
+                actionLbl1: "Raise".translated(),
+                actionLbl2: "Cancel".translated(),
                 on: self,
                 onOk: { [weak self] in
                     
@@ -260,7 +313,7 @@ class addConcernVc: UIViewController, DeleteImge {
                             DispatchQueue.main.async {
                                 
                                 if self.loginAsType == 1 {
-                                    self.ActionTaken_api(with: uploadedFiles, concern_type_id: self.selectedConcernListId ?? "", student_id: self.selectedStudentID ?? "", descrptionTextView: description)
+                                    self.ActionTaken_api(with: uploadedFiles, concern_type_id: self.selectedActionId ?? "", student_id: self.selectedStudentID ?? "", descrptionTextView: description)
                                 }else{
                                     self.submit_concern_api(
                                         with: uploadedFiles,

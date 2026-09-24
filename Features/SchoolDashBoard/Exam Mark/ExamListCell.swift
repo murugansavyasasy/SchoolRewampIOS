@@ -24,9 +24,22 @@ class ExamListCell: UITableViewCell {
     var onHeightChange: (() -> Void)?
     var expandedRow: IndexPath?
     var isExpanded = false
-    var subjectList: [SubjectExamData] = [] {
-           didSet { tableview.reloadData() }
-       }
+    var subjectList: [SubjectExamData] = []
+    var coscholasticList : [coscholastic] = []
+    
+    private var sections: [ExamSection] {
+        var result: [ExamSection] = []
+
+        if !subjectList.isEmpty {
+            result.append(.subjects)
+        }
+
+        if !coscholasticList.isEmpty {
+            result.append(.coscholastic)
+        }
+
+        return result
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -107,27 +120,50 @@ class ExamListCell: UITableViewCell {
 
 extension ExamListCell: UITableViewDataSource, UITableViewDelegate {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        sections.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch sections[section] {
+        case .subjects:
+            return "Subjects".translated()
+        case .coscholastic:
+            return "Coscholastic".translated()
+        }
+    }
+    
     func tableView(_ tableView: UITableView,numberOfRowsInSection section: Int) -> Int {
-        return subjectList.count
+        
+        switch sections[section] {
+        case .subjects:
+            return subjectList.count
+        case .coscholastic:
+            return coscholasticList.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
+        switch sections[indexPath.section] {
+            
+        case .subjects:
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.Exam_ExamListTV, for: indexPath) as! Exam_ExamListTV
-
+            
             cell.separatorview.isHidden = indexPath.row == subjectList.count - 1
             cell.subjectNameLbl.text = subjectList[indexPath.row].subject_name
             cell.Activities = subjectList[indexPath.row].activities ?? []
             cell.configureExpansionState(expandedRow == indexPath)
-
+            
             // INNER EXPAND: toggle just the affected cells directly, then
             // ask the table view to re-measure (no reloadRows, no dequeue).
             cell.onExpand = { [weak self, weak tableView] in
                 guard let self = self, let tableView = tableView else { return }
-
+                
                 let old = self.expandedRow
                 self.expandedRow = (old == indexPath) ? nil : indexPath
-
+                
                 if let tapped = tableView.cellForRow(at: indexPath) as? Exam_ExamListTV {
                     tapped.configureExpansionState(self.expandedRow == indexPath)
                 }
@@ -135,16 +171,42 @@ extension ExamListCell: UITableViewDataSource, UITableViewDelegate {
                    let oldCell = tableView.cellForRow(at: old) as? Exam_ExamListTV {
                     oldCell.configureExpansionState(false)
                 }
-
+                
                 tableView.performBatchUpdates(nil) { _ in
                     // Only after the batch update settles do we know the
                     // inner table's real contentSize.
                     self.updateInnerHeight()
                 }
             }
+            
+            return cell
+            
+        case .coscholastic:
+
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: CellConfingName.Exam_ExamListTV,
+                for: indexPath
+            ) as! Exam_ExamListTV
+
+            let data = coscholasticList[indexPath.row]
+
+            cell.onExpand = nil
+            cell.configureExpansionState(false)
+            cell.Activities = []
+
+            cell.subjectNameLbl.text = data.name
+
+            cell.ArrowBtn.setImage(
+                UIImage(systemName: "circle.fill"),
+                for: .normal
+            )
+
+            cell.separatorview.isHidden =
+                indexPath.row == coscholasticList.count - 1
 
             return cell
         }
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension

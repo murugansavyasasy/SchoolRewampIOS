@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeeBreakdownCardCell" rowHeight="800" id="KGk-i7-Jjw" customClass="FeeBreakdownCardCell" customModule="paymentProofDesign" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="800"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="393" height="800"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FEE BREAKDOWN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SEC-HDR-LBL">
+                        <rect key="frame" x="20" y="12" width="353" height="15"/>
+                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="12"/>
+                        <color key="textColor" red="0.60392156862745094" green="0.6588235294117647" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o0H-k9-sve" userLabel="Card Background View">
+                        <rect key="frame" x="16" y="33" width="361" height="755"/>
+                        <subviews>
+                            <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="sTG-CNT-STK" userLabel="Content Stack View">
+                                <rect key="frame" x="16" y="16" width="329" height="723"/>
+                                <subviews>
+                                    <!-- 1. Term Fees Category Stack -->
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="term-cat-stk">
+                                        <rect key="frame" x="0.0" y="0.0" width="329" height="160"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="term-hdr-view" userLabel="Term Header View">
+                                                <rect key="frame" x="0.0" y="0.0" width="329" height="38"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="term-icon-box">
+                                                        <rect key="frame" x="0.0" y="0.0" width="38" height="38"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="📚" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="term-icon-lbl">
+                                                                <rect key="frame" x="8" y="8" width="22" height="22"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" red="0.92941176470588238" green="0.95686274509803915" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="38" id="term-icon-w"/>
+                                                            <constraint firstAttribute="height" constant="38" id="term-icon-h"/>
+                                                            <constraint firstItem="term-icon-lbl" firstAttribute="centerX" secondItem="term-icon-box" secondAttribute="centerX" id="term-icon-cx"/>
+                                                            <constraint firstItem="term-icon-lbl" firstAttribute="centerY" secondItem="term-icon-box" secondAttribute="centerY" id="term-icon-cy"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Term Fees" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="term-title-lbl">
+                                                        <rect key="frame" x="50" y="9.3333333333333357" width="79.666666666666686" height="19.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                        <color key="textColor" red="0.058823529411764705" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.up" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="term-chv-img">
+                                                        <rect key="frame" x="315" y="14.333333333333334" width="14" height="9.6666666666666661"/>
+                                                        <color key="tintColor" red="0.11764705882352941" green="0.47058823529411764" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="14" id="term-chv-w"/>
+                                                            <constraint firstAttribute="height" constant="14" id="term-chv-h"/>
+                                                        </constraints>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="600.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="term-amt-lbl">
+                                                        <rect key="frame" x="242.66666666666671" y="9.3333333333333357" width="64.333333333333343" height="19.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                        <color key="textColor" red="0.058823529411764705" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="term-btn">
+                                                        <rect key="frame" x="0.0" y="0.0" width="329" height="38"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain"/>
+                                                        <connections>
+                                                            <action selector="termHeaderTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="term-act"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="term-hdr-h"/>
+                                                    <constraint firstItem="term-icon-box" firstAttribute="leading" secondItem="term-hdr-view" secondAttribute="leading" id="term-ic-l"/>
+                                                    <constraint firstItem="term-icon-box" firstAttribute="top" secondItem="term-hdr-view" secondAttribute="top" id="term-ic-t"/>
+                                                    <constraint firstItem="term-icon-box" firstAttribute="bottom" secondItem="term-hdr-view" secondAttribute="bottom" id="term-ic-b"/>
+                                                    <constraint firstItem="term-title-lbl" firstAttribute="leading" secondItem="term-icon-box" secondAttribute="trailing" constant="12" id="term-t-l"/>
+                                                    <constraint firstItem="term-title-lbl" firstAttribute="centerY" secondItem="term-hdr-view" secondAttribute="centerY" id="term-t-cy"/>
+                                                    <constraint firstItem="term-chv-img" firstAttribute="trailing" secondItem="term-hdr-view" secondAttribute="trailing" id="term-c-r"/>
+                                                    <constraint firstItem="term-chv-img" firstAttribute="centerY" secondItem="term-hdr-view" secondAttribute="centerY" id="term-c-cy"/>
+                                                    <constraint firstItem="term-amt-lbl" firstAttribute="trailing" secondItem="term-chv-img" secondAttribute="leading" constant="-8" id="term-a-r"/>
+                                                    <constraint firstItem="term-amt-lbl" firstAttribute="centerY" secondItem="term-hdr-view" secondAttribute="centerY" id="term-a-cy"/>
+                                                    <constraint firstItem="term-title-lbl" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="term-amt-lbl" secondAttribute="leading" constant="-8" id="term-t-r"/>
+                                                    <constraint firstItem="term-btn" firstAttribute="leading" secondItem="term-hdr-view" secondAttribute="leading" id="term-b-l"/>
+                                                    <constraint firstItem="term-btn" firstAttribute="trailing" secondItem="term-hdr-view" secondAttribute="trailing" id="term-b-r"/>
+                                                    <constraint firstItem="term-btn" firstAttribute="top" secondItem="term-hdr-view" secondAttribute="top" id="term-b-t"/>
+                                                    <constraint firstItem="term-btn" firstAttribute="bottom" secondItem="term-hdr-view" secondAttribute="bottom" id="term-b-b"/>
+                                                </constraints>
+                                            </view>
+                                            <!-- Term Detail Sub-Rows Stack -->
+                                            <stackView hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="term-dtl-stk"/>
+                                            <!-- Bottom Separator for Term Fees -->
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="term-bot-sep">
+                                                <rect key="frame" x="0.0" y="159.33333333333334" width="329" height="0.66666666666665719"/>
+                                                <color key="backgroundColor" red="0.94117647058823528" green="0.95686274509803915" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="0.75" id="term-bot-h"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+
+                                    <!-- 2. Other Fees Category Stack -->
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="oth-cat-stk">
+                                        <rect key="frame" x="0.0" y="176" width="329" height="38"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oth-hdr-view" userLabel="Other Header View">
+                                                <rect key="frame" x="0.0" y="0.0" width="329" height="38"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oth-icon-box">
+                                                        <rect key="frame" x="0.0" y="0.0" width="38" height="38"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="📄" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oth-icon-lbl">
+                                                                <rect key="frame" x="8" y="8" width="22" height="22"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" red="0.92941176470588238" green="0.95686274509803915" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="38" id="oth-icon-w"/>
+                                                            <constraint firstAttribute="height" constant="38" id="oth-icon-h"/>
+                                                            <constraint firstItem="oth-icon-lbl" firstAttribute="centerX" secondItem="oth-icon-box" secondAttribute="centerX" id="oth-icon-cx"/>
+                                                            <constraint firstItem="oth-icon-lbl" firstAttribute="centerY" secondItem="oth-icon-box" secondAttribute="centerY" id="oth-icon-cy"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other Fees" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oth-title-lbl">
+                                                        <rect key="frame" x="50" y="9.3333333333333144" width="85" height="19.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                        <color key="textColor" red="0.058823529411764705" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="oth-chv-img">
+                                                        <rect key="frame" x="315" y="17" width="14" height="4.3333333333333321"/>
+                                                        <color key="tintColor" red="0.58039215686274503" green="0.63921568627450975" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="14" id="oth-chv-w"/>
+                                                            <constraint firstAttribute="height" constant="14" id="oth-chv-h"/>
+                                                        </constraints>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="132.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oth-amt-lbl">
+                                                        <rect key="frame" x="246" y="9.3333333333333144" width="61" height="19.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                        <color key="textColor" red="0.058823529411764705" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oth-btn">
+                                                        <rect key="frame" x="0.0" y="0.0" width="329" height="38"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain"/>
+                                                        <connections>
+                                                            <action selector="othersHeaderTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="oth-act"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="oth-hdr-h"/>
+                                                    <constraint firstItem="oth-icon-box" firstAttribute="leading" secondItem="oth-hdr-view" secondAttribute="leading" id="oth-ic-l"/>
+                                                    <constraint firstItem="oth-icon-box" firstAttribute="top" secondItem="oth-hdr-view" secondAttribute="top" id="oth-ic-t"/>
+                                                    <constraint firstItem="oth-icon-box" firstAttribute="bottom" secondItem="oth-hdr-view" secondAttribute="bottom" id="oth-ic-b"/>
+                                                    <constraint firstItem="oth-title-lbl" firstAttribute="leading" secondItem="oth-icon-box" secondAttribute="trailing" constant="12" id="oth-t-l"/>
+                                                    <constraint firstItem="oth-title-lbl" firstAttribute="centerY" secondItem="oth-hdr-view" secondAttribute="centerY" id="oth-t-cy"/>
+                                                    <constraint firstItem="oth-chv-img" firstAttribute="trailing" secondItem="oth-hdr-view" secondAttribute="trailing" id="oth-c-r"/>
+                                                    <constraint firstItem="oth-chv-img" firstAttribute="centerY" secondItem="oth-hdr-view" secondAttribute="centerY" id="oth-c-cy"/>
+                                                    <constraint firstItem="oth-amt-lbl" firstAttribute="trailing" secondItem="oth-chv-img" secondAttribute="leading" constant="-8" id="oth-a-r"/>
+                                                    <constraint firstItem="oth-amt-lbl" firstAttribute="centerY" secondItem="oth-hdr-view" secondAttribute="centerY" id="oth-a-cy"/>
+                                                    <constraint firstItem="oth-title-lbl" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="oth-amt-lbl" secondAttribute="leading" constant="-8" id="oth-t-r"/>
+                                                    <constraint firstItem="oth-btn" firstAttribute="leading" secondItem="oth-hdr-view" secondAttribute="leading" id="oth-b-l"/>
+                                                    <constraint firstItem="oth-btn" firstAttribute="trailing" secondItem="oth-hdr-view" secondAttribute="trailing" id="oth-b-r"/>
+                                                    <constraint firstItem="oth-btn" firstAttribute="top" secondItem="oth-hdr-view" secondAttribute="top" id="oth-b-t"/>
+                                                    <constraint firstItem="oth-btn" firstAttribute="bottom" secondItem="oth-hdr-view" secondAttribute="bottom" id="oth-b-b"/>
+                                                </constraints>
+                                            </view>
+                                            <!-- Others Detail Stack View -->
+                                            <stackView hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="oth-dtl-stk"/>
+                                            <!-- Bottom Separator for Other Fees -->
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oth-bot-sep">
+                                                <rect key="frame" x="0.0" y="37.333333333333314" width="329" height="0.6666666666666643"/>
+                                                <color key="backgroundColor" red="0.94117647058823528" green="0.95686274509803915" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="0.75" id="oth-bot-h"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+
+                                    <!-- 3. Carryover Category Stack (Container for dynamic carryover cards) -->
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="cry-cat-stk"/>
+
+
+                                    <!-- 4. Transport Category Stack -->
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="trn-cat-stk">
+                                        <rect key="frame" x="0.0" y="284" width="329" height="38"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="trn-hdr-view" userLabel="Transport Header View">
+                                                <rect key="frame" x="0.0" y="0.0" width="329" height="38"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="trn-icon-box">
+                                                        <rect key="frame" x="0.0" y="0.0" width="38" height="38"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🚌" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="trn-icon-lbl">
+                                                                <rect key="frame" x="8" y="8" width="22" height="22"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" red="0.92941176470588238" green="0.95686274509803915" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="38" id="trn-icon-w"/>
+                                                            <constraint firstAttribute="height" constant="38" id="trn-icon-h"/>
+                                                            <constraint firstItem="trn-icon-lbl" firstAttribute="centerX" secondItem="trn-icon-box" secondAttribute="centerX" id="trn-icon-cx"/>
+                                                            <constraint firstItem="trn-icon-lbl" firstAttribute="centerY" secondItem="trn-icon-box" secondAttribute="centerY" id="trn-icon-cy"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transport" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="trn-title-lbl">
+                                                        <rect key="frame" x="50" y="9.3333333333333144" width="75.666666666666686" height="19.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                        <color key="textColor" red="0.058823529411764705" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="trn-chv-img">
+                                                        <rect key="frame" x="315" y="17" width="14" height="4.3333333333333321"/>
+                                                        <color key="tintColor" red="0.58039215686274503" green="0.63921568627450975" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="14" id="trn-chv-w"/>
+                                                            <constraint firstAttribute="height" constant="14" id="trn-chv-h"/>
+                                                        </constraints>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="10,000.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="trn-amt-lbl">
+                                                        <rect key="frame" x="219" y="9.3333333333333144" width="88" height="19.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                        <color key="textColor" red="0.058823529411764705" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="trn-btn">
+                                                        <rect key="frame" x="0.0" y="0.0" width="329" height="38"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain"/>
+                                                        <connections>
+                                                            <action selector="transportHeaderTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="trn-act"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="trn-hdr-h"/>
+                                                    <constraint firstItem="trn-icon-box" firstAttribute="leading" secondItem="trn-hdr-view" secondAttribute="leading" id="trn-ic-l"/>
+                                                    <constraint firstItem="trn-icon-box" firstAttribute="top" secondItem="trn-hdr-view" secondAttribute="top" id="trn-ic-t"/>
+                                                    <constraint firstItem="trn-icon-box" firstAttribute="bottom" secondItem="trn-hdr-view" secondAttribute="bottom" id="trn-ic-b"/>
+                                                    <constraint firstItem="trn-title-lbl" firstAttribute="leading" secondItem="trn-icon-box" secondAttribute="trailing" constant="12" id="trn-t-l"/>
+                                                    <constraint firstItem="trn-title-lbl" firstAttribute="centerY" secondItem="trn-hdr-view" secondAttribute="centerY" id="trn-t-cy"/>
+                                                    <constraint firstItem="trn-chv-img" firstAttribute="trailing" secondItem="trn-hdr-view" secondAttribute="trailing" id="trn-c-r"/>
+                                                    <constraint firstItem="trn-chv-img" firstAttribute="centerY" secondItem="trn-hdr-view" secondAttribute="centerY" id="trn-c-cy"/>
+                                                    <constraint firstItem="trn-amt-lbl" firstAttribute="trailing" secondItem="trn-chv-img" secondAttribute="leading" constant="-8" id="trn-a-r"/>
+                                                    <constraint firstItem="trn-amt-lbl" firstAttribute="centerY" secondItem="trn-hdr-view" secondAttribute="centerY" id="trn-a-cy"/>
+                                                    <constraint firstItem="trn-title-lbl" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="trn-amt-lbl" secondAttribute="leading" constant="-8" id="trn-t-r"/>
+                                                    <constraint firstItem="trn-btn" firstAttribute="leading" secondItem="trn-hdr-view" secondAttribute="leading" id="trn-b-l"/>
+                                                    <constraint firstItem="trn-btn" firstAttribute="trailing" secondItem="trn-hdr-view" secondAttribute="trailing" id="trn-b-r"/>
+                                                    <constraint firstItem="trn-btn" firstAttribute="top" secondItem="trn-hdr-view" secondAttribute="top" id="trn-b-t"/>
+                                                    <constraint firstItem="trn-btn" firstAttribute="bottom" secondItem="trn-hdr-view" secondAttribute="bottom" id="trn-b-b"/>
+                                                </constraints>
+                                            </view>
+                                            <!-- Transport Detail Stack View -->
+                                            <stackView hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="trn-dtl-stk"/>
+                                            <!-- Bottom Separator for Transport -->
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="trn-bot-sep">
+                                                <rect key="frame" x="0.0" y="37.333333333333314" width="329" height="0.6666666666666643"/>
+                                                <color key="backgroundColor" red="0.94117647058823528" green="0.95686274509803915" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="0.75" id="trn-bot-h"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+
+                                    <!-- 5. Hostel Category Stack -->
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="hst-cat-stk">
+                                        <rect key="frame" x="0.0" y="338" width="329" height="38"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hst-hdr-view" userLabel="Hostel Header View">
+                                                <rect key="frame" x="0.0" y="0.0" width="329" height="38"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hst-icon-box">
+                                                        <rect key="frame" x="0.0" y="0.0" width="38" height="38"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🏠" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hst-icon-lbl">
+                                                                <rect key="frame" x="8" y="8" width="22" height="22"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" red="0.92941176470588238" green="0.95686274509803915" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="38" id="hst-icon-w"/>
+                                                            <constraint firstAttribute="height" constant="38" id="hst-icon-h"/>
+                                                            <constraint firstItem="hst-icon-lbl" firstAttribute="centerX" secondItem="hst-icon-box" secondAttribute="centerX" id="hst-icon-cx"/>
+                                                            <constraint firstItem="hst-icon-lbl" firstAttribute="centerY" secondItem="hst-icon-box" secondAttribute="centerY" id="hst-icon-cy"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hostel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hst-title-lbl">
+                                                        <rect key="frame" x="50" y="9.3333333333333144" width="50.666666666666657" height="19.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                        <color key="textColor" red="0.058823529411764705" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="hst-chv-img">
+                                                        <rect key="frame" x="315" y="17" width="14" height="4.3333333333333321"/>
+                                                        <color key="tintColor" red="0.58039215686274503" green="0.63921568627450975" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="14" id="hst-chv-w"/>
+                                                            <constraint firstAttribute="height" constant="14" id="hst-chv-h"/>
+                                                        </constraints>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="100.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hst-amt-lbl">
+                                                        <rect key="frame" x="246.66666666666669" y="9.3333333333333144" width="60.333333333333314" height="19.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                        <color key="textColor" red="0.058823529411764705" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hst-btn">
+                                                        <rect key="frame" x="0.0" y="0.0" width="329" height="38"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain"/>
+                                                        <connections>
+                                                            <action selector="hostelHeaderTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="hst-act"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="hst-hdr-h"/>
+                                                    <constraint firstItem="hst-icon-box" firstAttribute="leading" secondItem="hst-hdr-view" secondAttribute="leading" id="hst-ic-l"/>
+                                                    <constraint firstItem="hst-icon-box" firstAttribute="top" secondItem="hst-hdr-view" secondAttribute="top" id="hst-ic-t"/>
+                                                    <constraint firstItem="hst-icon-box" firstAttribute="bottom" secondItem="hst-hdr-view" secondAttribute="bottom" id="hst-ic-b"/>
+                                                    <constraint firstItem="hst-title-lbl" firstAttribute="leading" secondItem="hst-icon-box" secondAttribute="trailing" constant="12" id="hst-t-l"/>
+                                                    <constraint firstItem="hst-title-lbl" firstAttribute="centerY" secondItem="hst-hdr-view" secondAttribute="centerY" id="hst-t-cy"/>
+                                                    <constraint firstItem="hst-chv-img" firstAttribute="trailing" secondItem="hst-hdr-view" secondAttribute="trailing" id="hst-c-r"/>
+                                                    <constraint firstItem="hst-chv-img" firstAttribute="centerY" secondItem="hst-hdr-view" secondAttribute="centerY" id="hst-c-cy"/>
+                                                    <constraint firstItem="hst-amt-lbl" firstAttribute="trailing" secondItem="hst-chv-img" secondAttribute="leading" constant="-8" id="hst-a-r"/>
+                                                    <constraint firstItem="hst-amt-lbl" firstAttribute="centerY" secondItem="hst-hdr-view" secondAttribute="centerY" id="hst-a-cy"/>
+                                                    <constraint firstItem="hst-title-lbl" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="hst-amt-lbl" secondAttribute="leading" constant="-8" id="hst-t-r"/>
+                                                    <constraint firstItem="hst-btn" firstAttribute="leading" secondItem="hst-hdr-view" secondAttribute="leading" id="hst-b-l"/>
+                                                    <constraint firstItem="hst-btn" firstAttribute="trailing" secondItem="hst-hdr-view" secondAttribute="trailing" id="hst-b-r"/>
+                                                    <constraint firstItem="hst-btn" firstAttribute="top" secondItem="hst-hdr-view" secondAttribute="top" id="hst-b-t"/>
+                                                    <constraint firstItem="hst-btn" firstAttribute="bottom" secondItem="hst-hdr-view" secondAttribute="bottom" id="hst-b-b"/>
+                                                </constraints>
+                                            </view>
+                                            <!-- Hostel Detail Stack View -->
+                                            <stackView hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hst-dtl-stk"/>
+                                            <!-- Bottom Separator for Hostel -->
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hst-bot-sep">
+                                                <rect key="frame" x="0.0" y="37.333333333333314" width="329" height="0.6666666666666643"/>
+                                                <color key="backgroundColor" red="0.94117647058823528" green="0.95686274509803915" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="0.75" id="hst-bot-h"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+
+                                    <!-- 6. Quantity Fees Category Stack -->
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="qty-cat-stk">
+                                        <rect key="frame" x="0.0" y="392" width="329" height="38"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qty-hdr-view" userLabel="Quantity Header View">
+                                                <rect key="frame" x="0.0" y="0.0" width="329" height="38"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qty-icon-box">
+                                                        <rect key="frame" x="0.0" y="0.0" width="38" height="38"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🔢" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qty-icon-lbl">
+                                                                <rect key="frame" x="8" y="9" width="22" height="20.333333333333332"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                        <color key="backgroundColor" red="0.92941176470588238" green="0.95686274509803915" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="38" id="qty-icon-w"/>
+                                                            <constraint firstAttribute="height" constant="38" id="qty-icon-h"/>
+                                                            <constraint firstItem="qty-icon-lbl" firstAttribute="centerX" secondItem="qty-icon-box" secondAttribute="centerX" id="qty-icon-cx"/>
+                                                            <constraint firstItem="qty-icon-lbl" firstAttribute="centerY" secondItem="qty-icon-box" secondAttribute="centerY" id="qty-icon-cy"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quantity Fees" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qty-title-lbl">
+                                                        <rect key="frame" x="50" y="9.3333333333333144" width="107" height="19.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                        <color key="textColor" red="0.058823529411764705" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="qty-chv-img">
+                                                        <rect key="frame" x="315" y="17" width="14" height="4.3333333333333321"/>
+                                                        <color key="tintColor" red="0.58039215686274503" green="0.63921568627450975" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="14" id="qty-chv-w"/>
+                                                            <constraint firstAttribute="height" constant="14" id="qty-chv-h"/>
+                                                        </constraints>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="4.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qty-amt-lbl">
+                                                        <rect key="frame" x="264.66666666666669" y="9.3333333333333144" width="42.333333333333314" height="19.333333333333332"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                        <color key="textColor" red="0.058823529411764705" green="0.090196078431372548" blue="0.16470588235294117" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qty-btn">
+                                                        <rect key="frame" x="0.0" y="0.0" width="329" height="38"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain"/>
+                                                        <connections>
+                                                            <action selector="quantityHeaderTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="qty-act"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="38" id="qty-hdr-h"/>
+                                                    <constraint firstItem="qty-icon-box" firstAttribute="leading" secondItem="qty-hdr-view" secondAttribute="leading" id="qty-ic-l"/>
+                                                    <constraint firstItem="qty-icon-box" firstAttribute="top" secondItem="qty-hdr-view" secondAttribute="top" id="qty-ic-t"/>
+                                                    <constraint firstItem="qty-icon-box" firstAttribute="bottom" secondItem="qty-hdr-view" secondAttribute="bottom" id="qty-ic-b"/>
+                                                    <constraint firstItem="qty-title-lbl" firstAttribute="leading" secondItem="qty-icon-box" secondAttribute="trailing" constant="12" id="qty-t-l"/>
+                                                    <constraint firstItem="qty-title-lbl" firstAttribute="centerY" secondItem="qty-hdr-view" secondAttribute="centerY" id="qty-t-cy"/>
+                                                    <constraint firstItem="qty-chv-img" firstAttribute="trailing" secondItem="qty-hdr-view" secondAttribute="trailing" id="qty-c-r"/>
+                                                    <constraint firstItem="qty-chv-img" firstAttribute="centerY" secondItem="qty-hdr-view" secondAttribute="centerY" id="qty-c-cy"/>
+                                                    <constraint firstItem="qty-amt-lbl" firstAttribute="trailing" secondItem="qty-chv-img" secondAttribute="leading" constant="-8" id="qty-a-r"/>
+                                                    <constraint firstItem="qty-amt-lbl" firstAttribute="centerY" secondItem="qty-hdr-view" secondAttribute="centerY" id="qty-a-cy"/>
+                                                    <constraint firstItem="qty-title-lbl" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="qty-amt-lbl" secondAttribute="leading" constant="-8" id="qty-t-r"/>
+                                                    <constraint firstItem="qty-btn" firstAttribute="leading" secondItem="qty-hdr-view" secondAttribute="leading" id="qty-b-l"/>
+                                                    <constraint firstItem="qty-btn" firstAttribute="trailing" secondItem="qty-hdr-view" secondAttribute="trailing" id="qty-b-r"/>
+                                                    <constraint firstItem="qty-btn" firstAttribute="top" secondItem="qty-hdr-view" secondAttribute="top" id="qty-b-t"/>
+                                                    <constraint firstItem="qty-btn" firstAttribute="bottom" secondItem="qty-hdr-view" secondAttribute="bottom" id="qty-b-b"/>
+                                                </constraints>
+                                            </view>
+                                            <!-- Quantity Detail Stack View -->
+                                            <stackView hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qty-dtl-stk"/>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="sTG-CNT-STK" firstAttribute="leading" secondItem="o0H-k9-sve" secondAttribute="leading" constant="16" id="7e0-9y-1uD"/>
+                            <constraint firstItem="sTG-CNT-STK" firstAttribute="top" secondItem="o0H-k9-sve" secondAttribute="top" constant="16" id="8lO-2q-u6L"/>
+                            <constraint firstAttribute="trailing" secondItem="sTG-CNT-STK" secondAttribute="trailing" constant="16" id="dZl-3c-1b7"/>
+                            <constraint firstAttribute="bottom" secondItem="sTG-CNT-STK" secondAttribute="bottom" constant="16" id="i9k-3c-P0b"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="SEC-HDR-LBL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="1Y9-hN-0fK"/>
+                    <constraint firstItem="SEC-HDR-LBL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="4Fj-1m-77J"/>
+                    <constraint firstAttribute="trailing" secondItem="SEC-HDR-LBL" secondAttribute="trailing" constant="20" id="B6d-Yy-d9Y"/>
+                    <constraint firstItem="o0H-k9-sve" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="3W0-7a-9k8"/>
+                    <constraint firstAttribute="trailing" secondItem="o0H-k9-sve" secondAttribute="trailing" constant="16" id="C7Y-9q-1m9"/>
+                    <constraint firstItem="o0H-k9-sve" firstAttribute="top" secondItem="SEC-HDR-LBL" secondAttribute="bottom" constant="6" id="V9y-5h-t8J"/>
+                    <constraint firstAttribute="bottom" secondItem="o0H-k9-sve" secondAttribute="bottom" constant="12" id="d3O-6u-Z2j"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="cardBackgroundView" destination="o0H-k9-sve" id="XkI-oA-mZ1"/>
+                <outlet property="contentStackView" destination="sTG-CNT-STK" id="B6d-Yy-d9X"/>
+
+                <outlet property="termCategoryStackView" destination="term-cat-stk" id="tcs-out"/>
+                <outlet property="termAmountLabel" destination="term-amt-lbl" id="tal-out"/>
+                <outlet property="termChevronImageView" destination="term-chv-img" id="tci-out"/>
+                <outlet property="termDetailStackView" destination="term-dtl-stk" id="tds-out"/>
+                <outlet property="termBottomSeparatorView" destination="term-bot-sep" id="tbs-out"/>
+
+                <outlet property="othersCategoryStackView" destination="oth-cat-stk" id="ocs-out"/>
+                <outlet property="othersAmountLabel" destination="oth-amt-lbl" id="oal-out"/>
+                <outlet property="othersChevronImageView" destination="oth-chv-img" id="oci-out"/>
+                <outlet property="othersDetailStackView" destination="oth-dtl-stk" id="ods-out"/>
+                <outlet property="othersBottomSeparatorView" destination="oth-bot-sep" id="obs-out"/>
+
+                <outlet property="carryoverCategoryStackView" destination="cry-cat-stk" id="ccs-out"/>
+
+                <outlet property="transportCategoryStackView" destination="trn-cat-stk" id="trcs-out"/>
+                <outlet property="transportAmountLabel" destination="trn-amt-lbl" id="tral-out"/>
+                <outlet property="transportChevronImageView" destination="trn-chv-img" id="trci-out"/>
+                <outlet property="transportDetailStackView" destination="trn-dtl-stk" id="trds-out"/>
+                <outlet property="transportBottomSeparatorView" destination="trn-bot-sep" id="trbs-out"/>
+
+                <outlet property="hostelCategoryStackView" destination="hst-cat-stk" id="hcs-out"/>
+                <outlet property="hostelAmountLabel" destination="hst-amt-lbl" id="hal-out"/>
+                <outlet property="hostelChevronImageView" destination="hst-chv-img" id="hci-out"/>
+                <outlet property="hostelDetailStackView" destination="hst-dtl-stk" id="hds-out"/>
+                <outlet property="hostelBottomSeparatorView" destination="hst-bot-sep" id="hbs-out"/>
+
+                <outlet property="quantityCategoryStackView" destination="qty-cat-stk" id="qcs-out"/>
+                <outlet property="quantityAmountLabel" destination="qty-amt-lbl" id="qal-out"/>
+                <outlet property="quantityChevronImageView" destination="qty-chv-img" id="qci-out"/>
+                <outlet property="quantityDetailStackView" destination="qty-dtl-stk" id="qds-out"/>
+            </connections>
+            <point key="canvasLocation" x="129.7709923664122" y="19.718309859154932"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="chevron.down" catalog="system" width="128" height="70"/>
+        <image name="chevron.up" catalog="system" width="128" height="70"/>
+    </resources>
+</document>

@@ -6,11 +6,14 @@
 //
 
 import UIKit
-
+protocol ProfileUpdateDelegate: AnyObject {
+    func updateProfile(index: Int)
+}
 class ReportStudentTVC: UITableViewCell {
     
+    @IBOutlet weak var profileCamerBtnName: UIButton!
+    @IBOutlet weak var profileBtnName: UIButton!
     @IBOutlet weak var standerdLbl: UILabel!
-    @IBOutlet weak var idCardImg: UIImageView!
     @IBOutlet weak var emailBtn: UIButton!
     @IBOutlet weak var smsBtn: UIButton!
     @IBOutlet weak var mobleNo: UIButton!
@@ -35,7 +38,7 @@ class ReportStudentTVC: UITableViewCell {
     @IBOutlet weak var CallBtn: UIButton!
     @IBOutlet weak var SmsNewBtn: UIButton!
     @IBOutlet weak var EmailNewBtn: UIButton!
-    
+    var delegate : ProfileUpdateDelegate?
     var smsNumber = ""
     var Email = ""
     override func awakeFromNib() {
@@ -85,6 +88,12 @@ class ReportStudentTVC: UITableViewCell {
         }
         
     }
+    @IBAction func profileActBtn(_ sender: UIButton) {
+        delegate?.updateProfile(index: sender.tag)
+    }
+    
+    
+
     func confic(){
         
         //MARK: Label Font

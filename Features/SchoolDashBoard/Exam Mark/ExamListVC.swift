@@ -27,6 +27,7 @@ class ExamListVC: UIViewController, UISearchBarDelegate {
     var ExamList : [StaffExamData] = []
     var FilteredExamList : [StaffExamData] = []
     var SubjectList : [SubjectExamData] = []
+    var coscholasticList : [coscholastic] = []
     var selectedExam : StaffExamData?
     var apiCalledForIndex: IndexPath?
     var academicYearId : Int?
@@ -111,7 +112,7 @@ class ExamListVC: UIViewController, UISearchBarDelegate {
         let param:[String:Any] = ["exam_id": examId , "section_id":standard?.sectionId ?? ""]
         
         APIService.shared.makeApi(
-            url: ServiceUrl.exam_get_subject_wise_activities,
+            url: ServiceUrl.new_exam_get_subject_activities,
             parameters: param,
             type: ApitTypeSringFile.GET,
             token: staffDetails?.access_token ?? "", isBaseUrl: false
@@ -124,8 +125,8 @@ class ExamListVC: UIViewController, UISearchBarDelegate {
                 case .success(let response):
                     
                     if response.status == true{
-                        self.SubjectList = response.data ?? []
-                        
+                        self.SubjectList = response.data?.first?.subjects ?? []
+                        self.coscholasticList = response.data?.first?.co_scholastic ?? []
                         // Reload only the expanded row
                         self.tv.beginUpdates()
                         self.tv.reloadRows(at: [reloadIndex], with: .automatic)
@@ -173,6 +174,7 @@ class ExamListVC: UIViewController, UISearchBarDelegate {
         let vc = ExamImgUploadVC()
         vc.SelectedExam = selectedExam
         vc.section_id = standard?.sectionId ?? ""
+        vc.Standard_id = standard?.standardId ?? ""
         vc.academicYearId = academicYearId
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
@@ -238,6 +240,7 @@ extension ExamListVC: UITableViewDelegate, UITableViewDataSource {
         let isExpanded = (expandedRow == indexPath)
         if isExpanded {
             cell.subjectList = self.SubjectList
+            cell.coscholasticList = self.coscholasticList
         }
 
         // Bubble: whenever ExamListCell's own content height changes

@@ -16,10 +16,10 @@ class concernListVc: UIViewController, DeleteConcerndata {
         }else{
             
             alert.showAlertCancel(
-                title: "Concern",
-                message: "Are you sure you want to aknowledge this concern?",
-                actionLbl1: "OK",
-                actionLbl2: "Cancel",
+                title: "Confirm Acknowledge".translated(),
+                message: "Are you sure you want to submit?".translated(),
+                actionLbl1: "OK".translated(),
+                actionLbl2: "Cancel".translated(),
                 on: self,
                 onOk: { [weak self] in
                     
@@ -45,7 +45,7 @@ class concernListVc: UIViewController, DeleteConcerndata {
             
             let vc = addConcernVc()
             vc.loginAsType = 1
-            vc.selectedConcernListId = filteredConcerns[index].id
+            vc.selectedActionId = filteredConcerns[index].id
             vc.selectedStudentID = filteredConcerns[index].studentId
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
@@ -58,10 +58,10 @@ class concernListVc: UIViewController, DeleteConcerndata {
     
     func deleteConcernData(index: Int) {
         alert.showAlertCancel(
-            title: "Concern Deletion",
-            message: "Are you sure you want to delete?",
-            actionLbl1: "OK",
-            actionLbl2: "Cancel",
+            title: "Concern Deletion".translated(),
+            message: "Are you sure you want to delete this concern? This action cannnot be undone".translated(),
+            actionLbl1: "OK".translated(),
+            actionLbl2: "Cancel".translated(),
             on: self,
             onOk: { [weak self] in
                 
@@ -75,8 +75,14 @@ class concernListVc: UIViewController, DeleteConcerndata {
         )
     }
     
+    @IBOutlet weak var topconst: NSLayoutConstraint!
+    @IBOutlet weak var headerCons: NSLayoutConstraint!
+    @IBOutlet weak var nodataStack: UIStackView!
+    @IBOutlet weak var noEventLbl: UILabel!
+    @IBOutlet weak var noEventImg: UIImageView!
     @IBOutlet weak var toolBarLbl: UILabel!
-    @IBOutlet weak var toolbarHeight: NSLayoutConstraint!
+   
+    @IBOutlet weak var headerView: BottomRoundedView!
     @IBOutlet weak var tabelview: UITableView!
     private var allConcerns: [Concern] = []
     private var filteredConcerns: [Concern] = []
@@ -84,17 +90,25 @@ class concernListVc: UIViewController, DeleteConcerndata {
     private var activeFilter: ConcernStatus? = nil // nil = "All"
     private var  alert = CustomAlert()
     var loginAsType : Int?
+//    var is_comfromnotification : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupTableView()
-        getConcernList()
-      
-        if loginAsType == 2{
-            toolbarHeight.constant = 0
-        }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        setupTableView()
+        getConcernList()
+        if loginAsType == 2{
+//            headerView.isHidden = true
+            headerCons.constant = 0
+            topconst.constant = -20
+        }else{
+            headerCons.constant = 120
+            topconst.constant = 10
+            toolBarLbl.configureAsBackTitle(firstLine: MenuStringFile.selectedMenuName, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        }
+    }
 
     @IBAction func backBtnAct(_ sender: UIButton) {
         
@@ -120,7 +134,7 @@ class concernListVc: UIViewController, DeleteConcerndata {
     private func ActionDetailsInfo(mark: Concern) {
        
         let actionTaken_by = mark.actionTakenBy
-        let action_taken_on = mark.actionTakenOn
+        let action_taken_on = mark.formattedACtOn
         let description = mark.actionTaken
       
         let message = """
@@ -130,18 +144,18 @@ class concernListVc: UIViewController, DeleteConcerndata {
         """
         
         let alert = UIAlertController(
-            title: "• Action Taken Details",
+            title: "• Action Taken Details".translated(),
             message: message,
             preferredStyle: .alert
         )
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK".translated(), style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
     
     private func AknowledgeDetailsInfo(mark: Concern) {
         
         let ACKNOWLEDGED_by = mark.acknowledgedBy
-        let ACKNOWLEDGED_on = mark.acknowledgedOn
+        let ACKNOWLEDGED_on = mark.formattedAcknowledgedOn
         let acknowledgement = mark.acknowledgement
       
         let message = """
@@ -151,35 +165,35 @@ class concernListVc: UIViewController, DeleteConcerndata {
         """
         
         let alert = UIAlertController(
-            title: "• Acknowledgement Details",
+            title: "• Acknowledgement Details".translated(),
             message: message,
             preferredStyle: .alert
         )
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK".translated(), style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
    
     func postaknowleged(concernId:String,studentId:String,discreption:String){
         APIService.shared.makeApi(
             url: ServiceUrl.admin_api_parent_concern_action_taken,
-            parameters: ["concern_id":concernId,"student_id":studentId,"action_taken":discreption,"action": "acknowledge"],
-            type: ApitTypeSringFile.POST,
-            token: loginAsType == 2 ? UserDefaultFileManager.get_child_Details()?.access_token ?? "" : UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
-        ) { [weak self] (result: Result<ConcernResponse, Error>) in
+            parameters: ["concern_id":concernId,"student_id":studentId,"description":discreption,"action": "acknowledge"],
+            type: ApitTypeSringFile.PUT,
+            token:  UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true
+        ) { [weak self] (result: Result<CommonApiSuc, Error>) in
             DispatchQueue.main.async {
 
                 guard let self = self else { return }
 
                 switch result {
                 case .success(let response):
-                    if response.status{
-                        CustomAlert.showAlertWithOkAction(title:AlertstringFile.Success , message: response.message, on: self, okAction: {
+                    if response.status ?? false{
+                        CustomAlert.showAlertWithOkAction(title:AlertstringFile.Success , message: response.message ?? "", on: self, okAction: {
                             
                             self.getConcernList()
                         })
                     }else{
                         
-                        self.alert.showAlert(title: AlertstringFile.Oops, message: response.message, on: self)
+                        self.alert.showAlert(title: AlertstringFile.Oops, message: response.message ?? "", on: self)
                     }
                 case .failure(let error):
                     self.alert.showAlert(title: AlertstringFile.Oops, message: error.localizedDescription, on: self)
@@ -197,18 +211,20 @@ class concernListVc: UIViewController, DeleteConcerndata {
             token: loginAsType == 2 ? UserDefaultFileManager.get_child_Details()?.access_token ?? "" : UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: false
         ) { [weak self] (result: Result<ConcernResponse, Error>) in
             DispatchQueue.main.async {
-
                 guard let self = self else { return }
-
                 switch result {
                 case .success(let response):
                     if response.status{
                         self.filteredConcerns = response.data
+                        self.nodataStack.isHidden = true
+                        self.tabelview.isHidden = false
                         self.tabelview.reloadData()
                     }else{
-                        
-                        self.filteredConcerns = []
-                        self.tabelview.reloadData()
+
+                        self.nodataStack.isHidden = false
+                        self.tabelview.isHidden = true
+                        self.noEventLbl.text = response.message
+
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -223,7 +239,7 @@ class concernListVc: UIViewController, DeleteConcerndata {
             url: ServiceUrl.admin_api_parent_concern_delete,
             parameters: ["id": id],
             type: ApitTypeSringFile.PUT,
-            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: false
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "", isBaseUrl: true
         ) { [weak self] (result: Result<CommonApiSuc, Error>) in
             DispatchQueue.main.async {
 

@@ -657,6 +657,45 @@ class BusTrakingVC: UIViewController, MLNMapViewDelegate, RecentMoveDelegate {
     }
     
     // MARK: — Fetch Road Route
+    
+ 
+//    func fetchRoadRoute() {
+//
+//        guard !stops.isEmpty else { return }
+//
+//        let path = stops.compactMap { stop -> String? in
+//
+//            guard let lon = stop.longitude,
+//                  let lat = stop.latitude else {
+//                return nil
+//            }
+//
+//            let cleanLon = lon
+//                .replacingOccurrences(of: "° E", with: "")
+//                .trimmingCharacters(in: .whitespacesAndNewlines)
+//
+//            let cleanLat = lat
+//                .replacingOccurrences(of: "° N", with: "")
+//                .trimmingCharacters(in: .whitespacesAndNewlines)
+//
+//            guard !cleanLon.isEmpty,
+//                  !cleanLat.isEmpty,
+//                  cleanLon != "--",
+//                  cleanLat != "--" else {
+//                return nil
+//            }
+//
+//            return "\(cleanLon),\(cleanLat)"
+//        }
+//        .joined(separator: ";")
+//
+//        guard !path.isEmpty else { return }
+//
+//        print("OSRM Path: \(path)")
+//    }
+  
+
+    
     func fetchRoadRoute() {
     
         guard !stops.isEmpty else { return }

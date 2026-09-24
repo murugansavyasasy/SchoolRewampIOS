@@ -23,6 +23,8 @@ class MarksCell: UICollectionViewCell {
     weak var delegate: MarksCellDelegate?
     weak var parentVC: EnterMarkVC?
     private var naButton: UIButton?
+    var isCoScholastic: Bool = false
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         markTxt.delegate = self
@@ -30,9 +32,7 @@ class MarksCell: UICollectionViewCell {
         markTxt.cornerRadius(6)
         markTxt.placeholder = "--"
         markTxt.font = .systemFont(ofSize: 15)
-        markTxt.keyboardType = .decimalPad
-        
-        markTxt.inputAccessoryView = buildAccessoryView()
+        markTxt.keyboardType = isCoScholastic ? .default : .decimalPad
     }
     
     private func buildAccessoryView() -> UIView {
@@ -72,7 +72,7 @@ class MarksCell: UICollectionViewCell {
         leftStack.distribution = .fill
         
         let doneButton = UIButton(type: .system)
-        doneButton.setTitle("Done", for: .normal)
+        doneButton.setTitle("Done".translated(), for: .normal)
         doneButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
         doneButton.addTarget(markTxt,
                              action: #selector(UITextField.resignFirstResponder),
@@ -197,7 +197,18 @@ class MarksCell: UICollectionViewCell {
         tittleLbl.textColor = .label
     }
     
-    func configure(mark: String,channgeMark: String? = nil,rowIndex: Int,columnIndex: Int,alignment: NSTextAlignment = .center,parentVC: EnterMarkVC?,hasFlaggedIssue: Bool = false,is_edit: Bool,maxMark: Int = 0) {
+    func configure(
+        mark: String,
+        channgeMark: String? = nil,
+        rowIndex: Int,
+        columnIndex: Int,
+        alignment: NSTextAlignment = .center,
+        parentVC: EnterMarkVC?,
+        hasFlaggedIssue: Bool = false,
+        is_edit: Bool,
+        maxMark: Int = 0,
+        isCoScholastic: Bool = false
+    ) {
         
         self.rowIndex = rowIndex
         self.columnIndex = columnIndex
@@ -209,6 +220,8 @@ class MarksCell: UICollectionViewCell {
         markTxt.isHidden = false
         markTxt.text = mark
         markTxt.textAlignment = alignment
+        markTxt.keyboardType = isCoScholastic ? .default : .decimalPad
+       
         markTxt.font = UIFont.systemFont(ofSize: 15)
         markTxt.cornerRadius(6)
         markTxt.isEnabled = is_edit
@@ -228,12 +241,14 @@ class MarksCell: UICollectionViewCell {
             return
         }
         
-        if let markValue = Int(mark),
+        if !isCoScholastic,
+           let markValue = Int(mark),
            !mark.isEmpty,
            markValue > maxMark {
             applyHighlight(color: .orange,infoColor: .systemRed)
             return
         }
+        
         markTxt.inputAccessoryView = buildAccessoryView()
     }
     
@@ -313,37 +328,94 @@ extension MarksCell: UITextFieldDelegate {
         let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
     }
     
-    func textField(_ textField: UITextField,
-                   shouldChangeCharactersIn range: NSRange,
-                   replacementString string: String) -> Bool {
-        
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+
+        let isCoScholastic =
+            parentVC?.subjectColumns[columnIndex].isCo_scholastic == true
+
+        // Allow all characters for Co-Scholastic
+        if isCoScholastic {
+            let currentText = textField.text ?? ""
+
+            guard let textRange = Range(range, in: currentText) else {
+                return true
+            }
+
+            let updatedText = currentText.replacingCharacters(
+                in: textRange,
+                with: string
+            )
+
+            let subjectName =
+                parentVC?.subjectColumns[columnIndex].subjectName ?? ""
+
+            delegate?.updateMark(
+                row: rowIndex,
+                column: columnIndex,
+                value: updatedText,
+                reson: "",
+                subjectName: subjectName
+            )
+
+            return true
+        }
+
+        // Normal marks: allow only numbers and decimal
         if !string.isEmpty {
             let allowed = CharacterSet(charactersIn: "0123456789.")
             let set = CharacterSet(charactersIn: string)
-            if !allowed.isSuperset(of: set) { return false }
+
+            if !allowed.isSuperset(of: set) {
+                return false
+            }
         }
-        
+
         let currentText = textField.text ?? ""
-        guard let textRange = Range(range, in: currentText) else { return true }
-        let updatedText = currentText.replacingCharacters(in: textRange, with: string)
-        
+
+        guard let textRange = Range(range, in: currentText) else {
+            return true
+        }
+
+        let updatedText = currentText.replacingCharacters(
+            in: textRange,
+            with: string
+        )
+
         var reason = ""
         var isValid = true
-        
+
         if let max = parentVC?.subjectColumns[columnIndex].maxMarks,
            let entered = Int(updatedText),
            entered > max {
+
             isValid = false
             reason = "Maximum mark exceeded".translated()
         }
-        
+
         if updatedText == "AB" {
             reason = "Absent".translated()
         }
-        applyValidationUI(mark: updatedText,maxMark: parentVC?.subjectColumns[columnIndex].maxMarks ?? 0)
-        let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
-        delegate?.updateMark(row: rowIndex,column: columnIndex,value: updatedText,reson: reason,subjectName: subjectName)
-        
+
+        applyValidationUI(
+            mark: updatedText,
+            maxMark: parentVC?.subjectColumns[columnIndex].maxMarks ?? 0
+        )
+
+        let subjectName =
+            parentVC?.subjectColumns[columnIndex].subjectName ?? ""
+
+        delegate?.updateMark(
+            row: rowIndex,
+            column: columnIndex,
+            value: updatedText,
+            reson: reason,
+            subjectName: subjectName
+        )
+
         return true
     }
     

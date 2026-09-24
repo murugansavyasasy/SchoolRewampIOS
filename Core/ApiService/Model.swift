@@ -771,6 +771,7 @@ struct StudentData: Codable {
     let section_name: String
     let father_name: String
     let class_teacher: String
+    let is_profile_edit: Bool
 }
 // MARK:  Event Holiday
 
@@ -958,6 +959,7 @@ struct LeaveInfo: Codable {
     var mobile_no: String?
     var email: String?
     var address: String?
+    var created_by_own: Bool?
 }
 
 struct FlexibleString: Codable {
@@ -2502,7 +2504,7 @@ struct ProfileData: Codable {
         case bankDetails = "Bank Details"
         case photoPath = "PhotoPath"
         case documents = "Documents"
-        case transportDetails = "Transport Details"
+        case transportDetails = "TransportDetails"
     }
 }
 
@@ -2755,6 +2757,7 @@ struct AttendanceStudentListResponse: Codable {
 
 struct AttendanceStudentListData: Codable {
     let is_edit: Bool?
+    let total_strength: String?
     let attd_details: [AttendanceStudentListDetails]?
 }
 
@@ -2856,7 +2859,12 @@ struct StaffExamData: Codable {
 struct SubjectWiseExamResponse: Codable {
     let status: Bool?
     let message: String?
-    let data: [SubjectExamData]?
+    let data: [exanmData]?
+}
+
+struct exanmData: Codable {
+    let subjects : [SubjectExamData]?
+    let co_scholastic : [coscholastic]?
 }
 
 struct SubjectExamData: Codable {
@@ -2881,6 +2889,16 @@ struct RubricData: Codable {
     let rubric_id: String?
     let rubric_name: String?
     let max_mark: String?
+    
+    // UI State
+    var isChecked: Bool? = false
+    var selectedAIOption: String? = nil
+}
+
+struct coscholastic: Codable {
+    let id: String?
+    let name: String?
+    let type: String?
     
     // UI State
     var isChecked: Bool? = false
@@ -3697,6 +3715,9 @@ struct HeaderColumnConfig: Codable {
     let activityName: String?
     let maxMarks: Int?
     var rubrics: [RubricMark]?
+    let isCo_scholastic: Bool?
+    let isRemarks: Bool?
+    var childColumns: [ColumnConfig]?
 }
 struct RubricMark: Codable {
     let id: String?
@@ -3714,6 +3735,8 @@ struct ColumnConfig: Codable {
     let maxMarks: Int?
     let isRubric: Bool
     let rubricId: String?
+    let isCo_scholastic: Bool?
+    let isRemarks: Bool?
 }
 
 struct MarkDetailsResponse: Codable {
@@ -3733,6 +3756,8 @@ struct StudentMark: Codable {
     let admission_no: String?
     let gender: String?
     var marks: [SubjectMarks]?
+    var co_scholastic: [co_scholasticMarks]?
+    var remarks: [Remarks]?
 }
 
 struct SubjectMarks: Codable {
@@ -3766,6 +3791,37 @@ struct RubricActivityMark: Codable {
     var change_mark: String?
     var isReview: Bool?
     var reason: String?
+}
+
+struct co_scholasticMarks : Codable{
+    let id: String?
+    let name: String?
+    var mark: String?
+    let is_edit: Bool?
+    let selected_name: String?
+    
+    // Local UI properties
+    var change_mark: String?
+    var isReview: Bool?
+    var reason: String?
+}
+
+struct Remarks: Codable {
+    let reference_type: String?
+    var mark: String?
+    let is_edit: Bool?
+}
+
+struct CommonRemarksResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [CommonRemarks]?
+}
+
+struct CommonRemarks: Codable {
+    let id : String?
+    let academic_remarks : String?
+    let behavioural_remarks : String?
 }
 
 struct analysisRespSuc : Codable{

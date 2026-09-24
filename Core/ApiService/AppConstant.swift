@@ -69,6 +69,7 @@ struct ServiceUrl{
     static let api_fee_report_detailed_pending_report = "fee/api/fee-report/detailed-pending-report"
     static let api_fee_report_detailed_class_wise_pending_report = "fee/api/fee-report/detailed-class-wise-pending-report"
     static let  api_get_student_report = "admin/api/get-student-report"
+    static let  admin_api_student_profile_update_profile = "admin/api/student-profile/update-profile"
     static let  api_school_event_get_event = "admin/api/school-event/get-event"
     static let admin_api_school_event_report = "admin/api/school-event/report"
     static let  admin_api_school_event_categories = "admin/api/school-event/categories"
@@ -177,7 +178,8 @@ struct ServiceUrl{
     static let admin_api_student_profile_list = "admin/api/student-profile/list"
     static let admin_api_staff_profile_list = "admin/api/staff-profile/list"
     static let admin_api_student_profile_pre_submission = "admin/api/student-profile/pre-submission"
-    static let fee_api_fee_details_student_invoice = "fee/api/fee-details/student-invoice"
+    static let fee_api_fee_details_student_invoice = "fee/api/fee-details/student-invoice"  
+    static let fee_api_fee_details_payment_proof = "fee/api/fee-details/payment-proof"
     static let fee_api_fee_details_invoice_details = "fee/api/fee-details/invoice-details"
     static let lms_api_quiz_pick_from_qbank = "lms/api/quiz/pick-from-qbank"
     static let comm_api_interaction_staff_ans_question = "comm/api/interaction/staff-ans-question"
@@ -192,14 +194,15 @@ struct ServiceUrl{
     static let dashboard_api_reviews_add = "dashboard/api/reviews/add"
     static let ptm_api_ptm_schedule_datewise_booked_slots = "ptm/api/ptm-schedule/datewise-booked-slots"
     static let exam_api_exam_get_staff_wise_exam = "exam/api/new-exam/get-staffwise-exam"
-    static let exam_get_subject_wise_activities = "exam/api/new-exam/get-subjectwise-activities"
+    static let new_exam_get_subject_activities = "exam/api/new-exam/get-subject-activities"
     static let ocr_api_upload_marks = "ocr/api/upload-marks"
     static let lms_api_quiz_delete = "lms/api/quiz/delete"
     static let lms_api_quiz_update = "lms/api/quiz/update"
     static let lms_api_quiz_delete_question = "lms/api/quiz/delete-question"
     static let update_notification_call_log = "comm/api/voice/update-notification-call-log"
-    static let exam_api_new_exam_get_mark_to_upload = "exam/api/new-exam/get-mark-to-upload"
-    static let exam_api_exam_upload_marks = "exam/api/new-exam/upload-mark"
+    static let exam_api_new_exam_get_marks_to_upload_details = "exam/api/new-exam/get-marks-to-upload-details"
+    static let exam_api_exam_upload_exam_mark = "exam/api/new-exam/upload-exam-mark"
+    static let exam_api_exam_new_common_remarks = "exam/api/exam-new/common-remarks"
     static let hostel_attendance_hostel_list = "stud-attd/api/hostel-attendance/hostel-list"
     static let hostel_attendance_room_details = "stud-attd/api/hostel-attendance/room-details"
     static let hostel_attendance_students_for_hostel_attd = "stud-attd/api/hostel-attendance/students-for-hostel-attd"
@@ -300,6 +303,8 @@ struct Menu_id{
     static let leaveReq = 18
     static let Upload_Marks = 41
     static let Raiseconcern = 207
+    static let student_report = 35
+    
 }
 
 struct TargetTypes{

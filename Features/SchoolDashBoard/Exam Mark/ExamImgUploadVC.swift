@@ -50,6 +50,7 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
     var is_aiViewCliked : Bool = false
     var SelectedExam : StaffExamData?
     var section_id : String?
+    var Standard_id : String?
     private var selectedImageData: Data?
     private var selectedImage: UIImage?
     var academicYearId: Int?
@@ -270,6 +271,7 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
         let vc = ExamActivitySelectionVC()
         vc.ExamID = SelectedExam?.id ?? ""
         vc.section_Id = section_id ?? ""
+        vc.standard_Id = Standard_id ?? ""
         vc.academicYearId = academicYearId
         vc.isAIFlow = false
         vc.SelectedExam = SelectedExam
@@ -333,7 +335,9 @@ class ExamImgUploadVC: UIViewController, UIImagePickerControllerDelegate & UINav
                         vc.ExamID = self.SelectedExam?.id ?? ""
                         vc.isAIFlow = true
                         vc.selectedColoumns = self.selectedColumns
+                        vc.academicYearId = self.academicYearId
                         vc.section_Id = self.section_id ?? ""
+                        vc.standard_Id = self.Standard_id ?? ""
                         vc.convertedRecords = self.convertedRecords
                         vc.SelectedExam = self.SelectedExam
                         vc.modalPresentationStyle = .fullScreen

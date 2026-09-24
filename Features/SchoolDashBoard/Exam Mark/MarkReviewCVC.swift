@@ -77,7 +77,7 @@ class MarkReviewCVC: UICollectionViewCell {
         for rubric in rubrics {
             let box = makeRubricBox(
                 name: rubric.displayName ?? rubric.name ?? "",
-                maxMark: rubric.max_mark ?? "0"
+                maxMark: rubric.max_mark
             )
             subColumnsStack.addArrangedSubview(box)
         }
@@ -90,7 +90,7 @@ class MarkReviewCVC: UICollectionViewCell {
         }
     }
 
-    private func makeRubricBox(name: String, maxMark: String) -> UIView {
+    private func makeRubricBox(name: String, maxMark: String?) -> UIView {
         let container = UIView()
         container.layer.borderWidth = 0.5
         container.layer.borderColor = UIColor.separator.cgColor
@@ -105,12 +105,20 @@ class MarkReviewCVC: UICollectionViewCell {
         nameLbl.minimumScaleFactor = 0.8
 
         let maxLbl = UILabel()
-        maxLbl.text = "Max: \(maxMark)"
+        maxLbl.text = "Max: \(maxMark ?? "")"
         maxLbl.font = .systemFont(ofSize: 10)
         maxLbl.textAlignment = .center
         maxLbl.textColor = .secondaryLabel
 
-        let vStack = UIStackView(arrangedSubviews: [nameLbl, maxLbl])
+        let topSpacer = UILabel()
+            topSpacer.text = ""
+        
+        var labelArray = [nameLbl]
+        if maxMark != nil {
+            labelArray.append(maxLbl)
+        }
+        
+        let vStack = UIStackView(arrangedSubviews: labelArray)
         vStack.axis = .vertical
         vStack.alignment = .fill
         vStack.spacing = 2

@@ -11,8 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterPopover" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
             <connections>
-                <outlet property="applyBtn" destination="5wM-hW-8LD" id="xfs-1q-nnW"/>
-                <outlet property="clearBtn" destination="W4d-s4-x7e" id="Te3-fT-J6C"/>
+                <outlet property="applyBtn" destination="5wM-hW-8LD" id="OAc-Hd-T3g"/>
+                <outlet property="clearBtn" destination="W4d-s4-x7e" id="8gV-vY-mId"/>
                 <outlet property="verticalstackView" destination="G1G-Ba-mBB" id="nKK-BO-Ger"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outletCollection property="horizontalstackViews" destination="aD2-sX-40G" collectionClass="NSMutableArray" id="hs1-aD-001"/>

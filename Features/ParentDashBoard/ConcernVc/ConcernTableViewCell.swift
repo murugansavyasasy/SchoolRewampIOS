@@ -7,7 +7,7 @@ protocol DeleteConcerndata: AnyObject{
     
     func addactionconcerndata(index: Int,Is_viewAction : Bool)
 }
-class ConcernTableViewCell: UITableViewCell{
+class ConcernTableViewCell: UITableViewCell, UITextViewDelegate{
     
     
     @IBOutlet weak var actionTakenDescreptionLbl: UILabel!
@@ -62,6 +62,7 @@ class ConcernTableViewCell: UITableViewCell{
     weak var viewController: UIViewController?
     weak var deleteDelegate: DeleteConcerndata?
     var AknowledgeDiscription : String?
+    private let acknowledgementPlaceholder = "Enter acknowledgement description"
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
@@ -107,8 +108,7 @@ class ConcernTableViewCell: UITableViewCell{
     
     
     @IBAction func actionTakenBtn(_ sender: UIButton) {
-        if sender.currentTitle == "Action Taken" {
-            print("Action Taken button clicked")
+        if sender.currentTitle == "Take Action" {
             deleteDelegate?.addactionconcerndata(index: sender.tag, Is_viewAction: false)
         }
         
@@ -119,54 +119,130 @@ class ConcernTableViewCell: UITableViewCell{
     }
     
     
-    func aknowlegeFlow(index:Index){
+ 
+
+    
+    private func aknowlegeFlow(index: Int) {
         
         guard let viewController = viewController else {
             return
         }
         
         let alert = UIAlertController(
-            title: "Add aknowledgement discreption",
+            title: "Acknowledge",
             message: "\n\n\n",
             preferredStyle: .alert
         )
         
+        // MARK: - Text View
+        
         let textView = UITextView(
-            frame: CGRect(x: 15, y: 50, width: 240, height: 80)
+            frame: CGRect(
+                x: 15,
+                y: 55,
+                width: 240,
+                height: 90
+            )
         )
         
         textView.font = UIFont.systemFont(ofSize: 16)
+        
         textView.layer.borderWidth = 1
         textView.layer.cornerRadius = 8
         textView.layer.borderColor = UIColor.lightGray.cgColor
         
+        // TextView settings
+        textView.isEditable = true
+        textView.isSelectable = true
+        textView.isScrollEnabled = true
+        textView.keyboardType = .default
+        textView.returnKeyType = .done
+        
+        textView.addDoneButton()
+        
+        // Placeholder
+        textView.text = acknowledgementPlaceholder
+        textView.textColor = .lightGray
+        
+        textView.delegate = self
+        
         alert.view.addSubview(textView)
         
-        // Cancel
-        alert.addAction(UIAlertAction(
-            title: "Cancel",
-            style: .cancel
-        ))
+        // MARK: - Cancel
         
-        // OK
-        alert.addAction(UIAlertAction(
-            title: "Confirm",
-            style: .default
-        ) { _ in
-            
-            let actionText = textView.text ?? ""
-            
-            print("Action Taken:", actionText)
-            self.AknowledgeDiscription = actionText
-            
-            self.deleteDelegate?.AknowledgeConcernData(index:index, Aknowledgediscreption: actionText, Is_viewAknowledgemeny: false)
-            // API call here
-        })
+        alert.addAction(
+            UIAlertAction(
+                title: "Cancel",
+                style: .cancel
+            )
+        )
         
-        viewController.present(alert, animated: true)
+        // MARK: - Confirm
+        
+        alert.addAction(
+            UIAlertAction(
+                title: "Confirm",
+                style: .default
+            ) { [weak self] _ in
+                
+                guard let self = self else {
+                    return
+                }
+                
+                // Get actual text
+                let actionText: String
+                
+                if textView.text == self.acknowledgementPlaceholder {
+                    actionText = ""
+                } else {
+                    actionText = textView.text.trimmingCharacters(
+                        in: .whitespacesAndNewlines
+                    )
+                }
+                
+                self.AknowledgeDiscription = actionText
+                
+                self.deleteDelegate?.AknowledgeConcernData(
+                    index: index,
+                    Aknowledgediscreption: actionText,
+                    Is_viewAknowledgemeny: false
+                )
+            }
+        )
+        
+        // MARK: - Present Alert
+        
+        viewController.present(
+            alert,
+            animated: true
+        )
+    }
+
+    // MARK: - UITextViewDelegate
+
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        
+        // Remove placeholder when user taps TextView
+        if textView.text == acknowledgementPlaceholder {
+            textView.text = ""
+            textView.textColor = .label
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        
+        // Restore placeholder when empty
+        if textView.text
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .isEmpty {
+            
+            textView.text = acknowledgementPlaceholder
+            textView.textColor = .lightGray
+        }
     }
     
-    
+
+
     @IBAction func acknowledgeBtnAct(_ sender: UIButton) {
         if sender.currentTitle == "Acknowledged"{
             aknowlegeFlow(index: sender.tag)
@@ -203,7 +279,7 @@ class ConcernTableViewCell: UITableViewCell{
         // Avatar circle
         avatarContainerView.layer.cornerRadius = 24
         avatarContainerView.layer.masksToBounds = true
-        avatarContainerView.backgroundColor = UIColor(red: 124/255, green: 58/255, blue: 237/255, alpha: 1.0) // Violet
+        avatarContainerView.backgroundColor = UIColor.primery
         
         // Status badge pill
         statusPillView.layer.cornerRadius = 12
@@ -277,56 +353,105 @@ class ConcernTableViewCell: UITableViewCell{
         isAcknowledged: Bool,
         isAction: Bool
     ) {
-
+        
+        // MARK: - Acknowledge Button
+        
+        if loginasTye == 2 {
+            
+            // Always show Acknowledge button
+            acknowledgeButton.isHidden = false
+            
+            if isAcknowledged{
+                acknowledgeButton.setTitle(
+                    "View Acknowledge",
+                    for: .normal
+                )
+                
+                acknowledgeButton.backgroundColor = .white
+                acknowledgeButton.setTitleColor(.systemBlue, for: .normal)
+                acknowledgeButton.layer.borderWidth = 1
+                acknowledgeButton.layer.borderColor = UIColor.systemBlue.cgColor
+                
+            }else{
+                
+                acknowledgeButton.isHidden = true
+            }
+            if isAction{
+                // MARK: - Action Taken Button
+                
+                // Always show Action Taken button
+                actionTakenButton.isHidden = false
+                
+                
+                actionTakenButton.setTitle(
+                    "View Action Taken",
+                    for: .normal
+                )
+                
+                actionTakenButton.backgroundColor = .white
+                actionTakenButton.setTitleColor(.systemOrange, for: .normal)
+                actionTakenButton.layer.borderWidth = 1
+                actionTakenButton.layer.borderColor = UIColor.systemOrange.cgColor
+                
+                
+                return
+            }
+            else{
+                
+                actionTakenButton.isHidden = true
+                return
+            }
+        }
+        
+        
+        // MARK: - Other Login Types
+        
         if isAcknowledged {
-
             acknowledgeButton.setTitle(
                 "Acknowledged",
                 for: .normal
             )
-
+            
             acknowledgeButton.backgroundColor = .systemGreen
             acknowledgeButton.setTitleColor(.white, for: .normal)
             acknowledgeButton.layer.borderWidth = 0
-
+            
         } else {
-
             acknowledgeButton.setTitle(
                 "View Acknowledge",
                 for: .normal
             )
-
+            
             acknowledgeButton.backgroundColor = .white
             acknowledgeButton.setTitleColor(.systemBlue, for: .normal)
             acknowledgeButton.layer.borderWidth = 1
             acknowledgeButton.layer.borderColor = UIColor.systemBlue.cgColor
         }
-
-
+        
+        
         if isAction {
-
             actionTakenButton.setTitle(
-                "Action Taken",
+                "Take Action",
                 for: .normal
             )
-
+            
             actionTakenButton.backgroundColor = .systemOrange
             actionTakenButton.setTitleColor(.white, for: .normal)
             actionTakenButton.layer.borderWidth = 0
-
+            
         } else {
-
             actionTakenButton.setTitle(
                 "View Action Taken",
                 for: .normal
             )
-
+            
             actionTakenButton.backgroundColor = .white
             actionTakenButton.setTitleColor(.systemOrange, for: .normal)
             actionTakenButton.layer.borderWidth = 1
             actionTakenButton.layer.borderColor = UIColor.systemOrange.cgColor
         }
     }
+    
     func setBorderAndCornerRadius(for view: UIView, cornerRadius: CGFloat = 8.0, borderWidth: CGFloat = 1.0, borderColor: UIColor = .lightGray) {
         view.layer.cornerRadius = cornerRadius
         view.layer.borderWidth = borderWidth
@@ -347,7 +472,7 @@ class ConcernTableViewCell: UITableViewCell{
         parentAttachments = concern.filePath
         actionAttachments = concern.actionFilePath
         configureButtons(isAcknowledged: concern.is_acknowledged,isAction: concern.is_action)
-        actionTakenDescreptionLbl.text = concern.acknowledgement
+        actionTakenDescreptionLbl.text = concern.actionTaken
         if loginasTye == 1 {
             removeButton.isHidden = true
         } else {

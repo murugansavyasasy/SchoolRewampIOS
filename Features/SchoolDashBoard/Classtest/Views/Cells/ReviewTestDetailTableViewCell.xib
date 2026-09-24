@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="25098" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="25073"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -80,10 +81,10 @@
                                             <constraint firstAttribute="width" constant="80" id="remw"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
-                                        <color key="tintColor" red="0.92156862750000001" green="0.3411764706" blue="0.3411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="1" green="0.21960784310000001" blue="0.23529411759999999" alpha="0.69002444727891155" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
-                                        <state key="normal" title="Remove" image="trash" catalog="system">
-                                            <color key="titleColor" red="0.92156862750000001" green="0.3411764706" blue="0.3411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Remove" image="trash.fill" catalog="system">
+                                            <color key="titleColor" red="1" green="0.21960784310000001" blue="0.23529411759999999" alpha="0.67532950680272108" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="removeButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="actRemove"/>
@@ -103,15 +104,15 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="dateInner">
                                                 <rect key="frame" x="8" y="4" width="74.666666666666671" height="34"/>
                                                 <subviews>
-                                                    <label opaque="NO" contentMode="left" ambiguous="YES" text="DATE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dateTitle" userLabel="DateTitle" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="74.666666666666671" height="19"/>
+                                                    <label opaque="NO" contentMode="left" verticalHuggingPriority="249" text="DATE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dateTitle" userLabel="DateTitle" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="74.666666666666671" height="18.666666666666668"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
-                                                        <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" contentMode="left" ambiguous="YES" text="Not set" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dateValue" userLabel="DateValue">
-                                                        <rect key="frame" x="0.0" y="20" width="74.666666666666671" height="14"/>
-                                                        <fontDescription key="fontDescription" pointSize="12"/>
+                                                    <label opaque="NO" contentMode="left" text="Not set" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dateValue" userLabel="DateValue">
+                                                        <rect key="frame" x="0.0" y="19.666666666666671" width="74.666666666666671" height="14.333333333333336"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <color key="textColor" red="0.1019607843" green="0.10980392160000001" blue="0.16078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -131,15 +132,15 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="maxInner">
                                                 <rect key="frame" x="8" y="4" width="74.666666666666671" height="34"/>
                                                 <subviews>
-                                                    <label opaque="NO" contentMode="left" ambiguous="YES" text="MAX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="maxTitle" userLabel="MaxTitle" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="74.666666666666671" height="19"/>
+                                                    <label opaque="NO" contentMode="left" verticalHuggingPriority="249" text="MAX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="maxTitle" userLabel="MaxTitle" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="74.666666666666671" height="18.666666666666668"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
-                                                        <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" contentMode="left" ambiguous="YES" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="maxValue" userLabel="MaxValue">
-                                                        <rect key="frame" x="0.0" y="20" width="74.666666666666671" height="14"/>
-                                                        <fontDescription key="fontDescription" pointSize="12"/>
+                                                    <label opaque="NO" contentMode="left" text="100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="maxValue" userLabel="MaxValue">
+                                                        <rect key="frame" x="0.0" y="19.666666666666671" width="74.666666666666671" height="14.333333333333336"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <color key="textColor" red="0.1019607843" green="0.10980392160000001" blue="0.16078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -159,15 +160,15 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="minInner">
                                                 <rect key="frame" x="8" y="4" width="74.666666666666671" height="34"/>
                                                 <subviews>
-                                                    <label opaque="NO" contentMode="left" ambiguous="YES" text="MIN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="minTitle" userLabel="MinTitle" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="74.666666666666671" height="19"/>
+                                                    <label opaque="NO" contentMode="left" verticalHuggingPriority="249" text="MIN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="minTitle" userLabel="MinTitle" customClass="LocalizationLabel" customModule="SRI_KALAIVANI_VIDHAYALA" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="74.666666666666671" height="18.666666666666668"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
-                                                        <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" contentMode="left" ambiguous="YES" text="35" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="minValue" userLabel="MinValue">
-                                                        <rect key="frame" x="0.0" y="20" width="74.666666666666671" height="14"/>
-                                                        <fontDescription key="fontDescription" pointSize="12"/>
+                                                    <label opaque="NO" contentMode="left" text="35" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="minValue" userLabel="MinValue">
+                                                        <rect key="frame" x="0.0" y="19.666666666666671" width="74.666666666666671" height="14.333333333333336"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <color key="textColor" red="0.1019607843" green="0.10980392160000001" blue="0.16078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -175,10 +176,10 @@
                                             </stackView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="minInner" firstAttribute="bottom" secondItem="minBox" secondAttribute="bottom" constant="-4" id="nib"/>
-                                            <constraint firstItem="minInner" firstAttribute="leading" secondItem="minBox" secondAttribute="leading" constant="8" id="nil"/>
-                                            <constraint firstItem="minInner" firstAttribute="trailing" secondItem="minBox" secondAttribute="trailing" constant="-8" id="nir"/>
-                                            <constraint firstItem="minInner" firstAttribute="top" secondItem="minBox" secondAttribute="top" constant="4" id="nit"/>
+                                            <constraint firstItem="minInner" firstAttribute="bottom" secondItem="minBox" secondAttribute="bottom" constant="-4" id="mnb"/>
+                                            <constraint firstItem="minInner" firstAttribute="leading" secondItem="minBox" secondAttribute="leading" constant="8" id="mnl"/>
+                                            <constraint firstItem="minInner" firstAttribute="trailing" secondItem="minBox" secondAttribute="trailing" constant="-8" id="mnr"/>
+                                            <constraint firstItem="minInner" firstAttribute="top" secondItem="minBox" secondAttribute="top" constant="4" id="mnt"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -198,12 +199,12 @@
                                                     <constraint firstAttribute="height" constant="11" id="syth"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
-                                                <color key="textColor" red="0.3921568627" green="0.4549019608" blue="0.5450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" systemColor="systemGrayColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" contentMode="left" text="No details" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="syllabusValue" userLabel="SyllabusValue">
                                                 <rect key="frame" x="0.0" y="12" width="268" height="55"/>
-                                                <fontDescription key="fontDescription" pointSize="13"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <color key="textColor" red="0.1019607843" green="0.10980392160000001" blue="0.16078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -249,9 +250,12 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="trash" catalog="system" width="117" height="128"/>
+        <image name="trash.fill" catalog="system" width="113" height="128"/>
         <namedColor name="PrimeryColor">
             <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

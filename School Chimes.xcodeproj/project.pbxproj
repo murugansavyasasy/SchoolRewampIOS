@@ -155,7 +155,6 @@
 		1827E5E62F90C12000B33B20 /* EditLessonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF43B612E02A09200F28A16 /* EditLessonVC.swift */; };
 		1827E5E72F90C12000B33B20 /* SuccesseRatusTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845AB86E2EC1F89C003C22E1 /* SuccesseRatusTVC.swift */; };
 		1827E5E82F90C12000B33B20 /* HostelRoomTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1841DE952F56FF1C00B88801 /* HostelRoomTvCell.swift */; };
-		1827E5ED2F90C12000B33B20 /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */; };
 		1827E5EE2F90C12000B33B20 /* LSRWSubmisionListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845CAC862E54B06C000FA540 /* LSRWSubmisionListVC.swift */; };
 		1827E5EF2F90C12000B33B20 /* QuizSubmisionTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48A6962E754AA7004E10C7 /* QuizSubmisionTvCell.swift */; };
 		1827E5F02F90C12000B33B20 /* SchoolStrengthCvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCE90D2E9E3AB6002C8068 /* SchoolStrengthCvcell.swift */; };
@@ -180,7 +179,6 @@
 		1827E6042F90C12000B33B20 /* CertificateCv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA861C342E38ABA900859726 /* CertificateCv.swift */; };
 		1827E6052F90C12000B33B20 /* ScheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB5EA52D11330E00AD0C87 /* ScheduleExamVC.swift */; };
 		1827E6062F90C12000B33B20 /* SubmitedStudentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8480477B2E02DF6E0042BC5D /* SubmitedStudentTVC.swift */; };
-		1827E6072F90C12000B33B20 /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C502E66D3FF00B4B8EB /* UserDetailsTVC.swift */; };
 		1827E6082F90C12000B33B20 /* SenderAssignmentTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849AD0402D1A858D002DEC07 /* SenderAssignmentTextViewController.swift */; };
 		1827E6092F90C12000B33B20 /* CompletedTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB97D02D3E31FF00EBF9F4 /* CompletedTVcell.swift */; };
 		1827E60A2F90C12000B33B20 /* PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466E83C2D6ED0CB004F4EFC /* PopupVC.swift */; };
@@ -200,7 +198,6 @@
 		1827E6182F90C12000B33B20 /* OTPVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848CC1682D899E4000CD0255 /* OTPVc.swift */; };
 		1827E6192F90C12000B33B20 /* CellConfingName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFF9DE2CCC89CF00C11C26 /* CellConfingName.swift */; };
 		1827E61A2F90C12000B33B20 /* SwitchRollTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EF9D202E7A7B7E00F57838 /* SwitchRollTVC.swift */; };
-		1827E61B2F90C12000B33B20 /* AttendanceMarkingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7014CF2E7D76CD00B3C012 /* AttendanceMarkingVC.swift */; };
 		1827E61C2F90C12000B33B20 /* ChatTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84395FEC2D1002A900FC3242 /* ChatTVCell.swift */; };
 		1827E61D2F90C12000B33B20 /* OutpassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6CD89F2E3DEEC500C146AB /* OutpassVC.swift */; };
 		1827E61E2F90C12000B33B20 /* Colornames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441887B2CC90E98006483C3 /* Colornames.swift */; };
@@ -501,9 +498,7 @@
 		1827E75D2F90C12000B33B20 /* NoticeCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8480A4102E31F4CB009A7DED /* NoticeCVC.swift */; };
 		1827E75E2F90C12000B33B20 /* RatingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8EA2CDC83860006068E /* RatingTableViewCell.swift */; };
 		1827E75F2F90C12000B33B20 /* EventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840658372CFD8D4E00080CF6 /* EventsVC.swift */; };
-		1827E7602F90C12000B33B20 /* StudentHistryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849978402CEF1FE5007D45BA /* StudentHistryVC.swift */; };
 		1827E7612F90C12000B33B20 /* GatePassTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B1908E2F713A84007E4F6F /* GatePassTvcell.swift */; };
-		1827E7622F90C12000B33B20 /* AttendenceTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */; };
 		1827E7632F90C12000B33B20 /* RatingTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8EC2CDC83860006068E /* RatingTypeTableViewCell.swift */; };
 		1827E7642F90C12000B33B20 /* LessonPlanTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845347FA2E5C64B600D47393 /* LessonPlanTVC.swift */; };
 		1827E7652F90C12000B33B20 /* PreviewImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848BEEE12CFF093100581A55 /* PreviewImageVC.swift */; };
@@ -529,7 +524,6 @@
 		1827E77B2F90C12000B33B20 /* AdminRequestsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1841DF1D2F584C5200B88801 /* AdminRequestsViewController.xib */; };
 		1827E77C2F90C12000B33B20 /* quizCellTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84174DEE2E6B5F6A00AC7092 /* quizCellTv.xib */; };
 		1827E77D2F90C12000B33B20 /* ReportBugVcViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EFFAE92CCFA4A100C11C26 /* ReportBugVcViewController.xib */; };
-		1827E77E2F90C12000B33B20 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */; };
 		1827E77F2F90C12000B33B20 /* VoiceMessageVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAF2EFFAAFB008B71FF /* VoiceMessageVc.xib */; };
 		1827E7812F90C12000B33B20 /* CommonPagenationVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AA72EFFAAFB008B71FF /* CommonPagenationVc.xib */; };
 		1827E7822F90C12000B33B20 /* ScheduleCallVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAB2EFFAAFB008B71FF /* ScheduleCallVC.xib */; };
@@ -563,7 +557,6 @@
 		1827E7A02F90C12000B33B20 /* locationAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 847D1CA52DBB68B200A274D2 /* locationAnimation.json */; };
 		1827E7A32F90C12000B33B20 /* DetailedDayRowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B0AB02F6D47AB002C81A0 /* DetailedDayRowCell.xib */; };
 		1827E7A42F90C12000B33B20 /* OutpassRequestsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B0AB42F6D47AB002C81A0 /* OutpassRequestsCell.xib */; };
-		1827E7A52F90C12000B33B20 /* AttendenceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */; };
 		1827E7A62F90C12000B33B20 /* StaffLeaveReqTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185465132F42E7FB008B1551 /* StaffLeaveReqTvCell.xib */; };
 		1827E7A72F90C12000B33B20 /* SchoolTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8622CDB787A0006068E /* SchoolTVCell.xib */; };
 		1827E7A82F90C12000B33B20 /* Poppins-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84385F692CF8516E0020E94D /* Poppins-Bold.otf */; };
@@ -593,11 +586,9 @@
 		1827E7C02F90C12000B33B20 /* MarkAttendanceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1841DF092F58467800B88801 /* MarkAttendanceViewController.xib */; };
 		1827E7C12F90C12000B33B20 /* StudentAttendanceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1841DF0B2F58467800B88801 /* StudentAttendanceCell.xib */; };
 		1827E7C22F90C12000B33B20 /* BaseAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84A5BE4A2C19719900E32496 /* BaseAssets.xcassets */; };
-		1827E7C32F90C12000B33B20 /* StudentHistryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849978412CEF1FE5007D45BA /* StudentHistryVC.xib */; };
 		1827E7C42F90C12000B33B20 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 84A5BE4D2C19719900E32496 /* Base */; };
 		1827E7C52F90C12000B33B20 /* loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACC8E2DA5076800326D52 /* loader.json */; };
 		1827E7C62F90C12000B33B20 /* AssignmentSummitionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848E4F612DF6A874006F6658 /* AssignmentSummitionVC.xib */; };
-		1827E7C72F90C12000B33B20 /* AttendanceMarkingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA7014D02E7D76CD00B3C012 /* AttendanceMarkingVC.xib */; };
 		1827E7C82F90C12000B33B20 /* shareAndDownloadVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0C22F322CFE0046B966 /* shareAndDownloadVc.xib */; };
 		1827E7C92F90C12000B33B20 /* ImageShowCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0C52F322CFE0046B966 /* ImageShowCVCell.xib */; };
 		1827E7CA2F90C12000B33B20 /* ImageShowVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0C72F322CFE0046B966 /* ImageShowVc.xib */; };
@@ -605,7 +596,6 @@
 		1827E7CC2F90C12000B33B20 /* outpassRequestTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185CC0C62F74EB49002640CE /* outpassRequestTVcell.xib */; };
 		1827E7CD2F90C12000B33B20 /* VideoPlayerCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0C92F322CFE0046B966 /* VideoPlayerCVC.xib */; };
 		1827E7CE2F90C12000B33B20 /* PtmNavigationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAE495892E89AF960099DF24 /* PtmNavigationVC.xib */; };
-		1827E7CF2F90C12000B33B20 /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C512E66D3FF00B4B8EB /* UserDetailsTVC.xib */; };
 		1827E7D02F90C12000B33B20 /* StatsticTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B09C12F6C25A0002C81A0 /* StatsticTvCell.xib */; };
 		1827E7D12F90C12000B33B20 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8442A9502CDE83C80006068E /* Localizable.strings */; };
 		1827E7D22F90C12000B33B20 /* PopoverViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C08C672EB396E9009F657B /* PopoverViewVC.xib */; };
@@ -933,6 +923,22 @@
 		182B0B232F6E5A0B002C81A0 /* AttendanceSessionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B0B1D2F6E5A0B002C81A0 /* AttendanceSessionHeader.swift */; };
 		182B0B242F6E5A0B002C81A0 /* AttendanceStudentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182B0B1F2F6E5A0B002C81A0 /* AttendanceStudentCell.swift */; };
 		1834ED2F2F483B3C0006969F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1834ED2E2F483B3C0006969F /* GoogleService-Info.plist */; };
+		18365761304FCBE0003AED35 /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836575C304FCBE0003AED35 /* UserDetailsTVC.swift */; };
+		18365762304FCBE0003AED35 /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836575E304FCBE0003AED35 /* UpdateProfileVC.swift */; };
+		18365763304FCBE0003AED35 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836575F304FCBE0003AED35 /* UpdateProfileVC.xib */; };
+		18365764304FCBE0003AED35 /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836575D304FCBE0003AED35 /* UserDetailsTVC.xib */; };
+		18365765304FCBE0003AED35 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836575F304FCBE0003AED35 /* UpdateProfileVC.xib */; };
+		18365766304FCBE0003AED35 /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836575D304FCBE0003AED35 /* UserDetailsTVC.xib */; };
+		18365767304FCBE0003AED35 /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836575C304FCBE0003AED35 /* UserDetailsTVC.swift */; };
+		18365768304FCBE0003AED35 /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836575E304FCBE0003AED35 /* UpdateProfileVC.swift */; };
+		18365769304FCBE0003AED35 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836575F304FCBE0003AED35 /* UpdateProfileVC.xib */; };
+		1836576A304FCBE0003AED35 /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836575D304FCBE0003AED35 /* UserDetailsTVC.xib */; };
+		1836576B304FCBE0003AED35 /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836575C304FCBE0003AED35 /* UserDetailsTVC.swift */; };
+		1836576C304FCBE0003AED35 /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836575E304FCBE0003AED35 /* UpdateProfileVC.swift */; };
+		1836576D304FCBE0003AED35 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836575F304FCBE0003AED35 /* UpdateProfileVC.xib */; };
+		1836576E304FCBE0003AED35 /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836575D304FCBE0003AED35 /* UserDetailsTVC.xib */; };
+		1836576F304FCBE0003AED35 /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836575C304FCBE0003AED35 /* UserDetailsTVC.swift */; };
+		18365770304FCBE0003AED35 /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836575E304FCBE0003AED35 /* UpdateProfileVC.swift */; };
 		1837C7F12F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1837C7EE2F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.xib */; };
 		1837C7F22F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1837C7ED2F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.swift */; };
 		183E69CA2FADB0840092D411 /* whereismybusVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183E69C92FADB0840092D411 /* whereismybusVc.xib */; };
@@ -1061,7 +1067,6 @@
 		1868A4102FAC762E00831144 /* EditLessonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF43B612E02A09200F28A16 /* EditLessonVC.swift */; };
 		1868A4112FAC762E00831144 /* SuccesseRatusTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845AB86E2EC1F89C003C22E1 /* SuccesseRatusTVC.swift */; };
 		1868A4122FAC762E00831144 /* HostelRoomTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1841DE952F56FF1C00B88801 /* HostelRoomTvCell.swift */; };
-		1868A4172FAC762E00831144 /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */; };
 		1868A4182FAC762E00831144 /* LSRWSubmisionListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845CAC862E54B06C000FA540 /* LSRWSubmisionListVC.swift */; };
 		1868A4192FAC762E00831144 /* QuizSubmisionTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48A6962E754AA7004E10C7 /* QuizSubmisionTvCell.swift */; };
 		1868A41A2FAC762E00831144 /* SchoolStrengthCvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCE90D2E9E3AB6002C8068 /* SchoolStrengthCvcell.swift */; };
@@ -1086,7 +1091,6 @@
 		1868A42E2FAC762E00831144 /* CertificateCv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA861C342E38ABA900859726 /* CertificateCv.swift */; };
 		1868A42F2FAC762E00831144 /* ScheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB5EA52D11330E00AD0C87 /* ScheduleExamVC.swift */; };
 		1868A4302FAC762E00831144 /* SubmitedStudentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8480477B2E02DF6E0042BC5D /* SubmitedStudentTVC.swift */; };
-		1868A4312FAC762E00831144 /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C502E66D3FF00B4B8EB /* UserDetailsTVC.swift */; };
 		1868A4322FAC762E00831144 /* SenderAssignmentTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849AD0402D1A858D002DEC07 /* SenderAssignmentTextViewController.swift */; };
 		1868A4332FAC762E00831144 /* CompletedTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB97D02D3E31FF00EBF9F4 /* CompletedTVcell.swift */; };
 		1868A4342FAC762E00831144 /* PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466E83C2D6ED0CB004F4EFC /* PopupVC.swift */; };
@@ -1106,7 +1110,6 @@
 		1868A4422FAC762E00831144 /* OTPVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848CC1682D899E4000CD0255 /* OTPVc.swift */; };
 		1868A4432FAC762E00831144 /* CellConfingName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFF9DE2CCC89CF00C11C26 /* CellConfingName.swift */; };
 		1868A4442FAC762E00831144 /* SwitchRollTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EF9D202E7A7B7E00F57838 /* SwitchRollTVC.swift */; };
-		1868A4452FAC762E00831144 /* AttendanceMarkingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7014CF2E7D76CD00B3C012 /* AttendanceMarkingVC.swift */; };
 		1868A4462FAC762E00831144 /* ChatTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84395FEC2D1002A900FC3242 /* ChatTVCell.swift */; };
 		1868A4472FAC762E00831144 /* OutpassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6CD89F2E3DEEC500C146AB /* OutpassVC.swift */; };
 		1868A4482FAC762E00831144 /* Colornames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441887B2CC90E98006483C3 /* Colornames.swift */; };
@@ -1407,9 +1410,7 @@
 		1868A5872FAC762E00831144 /* NoticeCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8480A4102E31F4CB009A7DED /* NoticeCVC.swift */; };
 		1868A5882FAC762E00831144 /* RatingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8EA2CDC83860006068E /* RatingTableViewCell.swift */; };
 		1868A5892FAC762E00831144 /* EventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840658372CFD8D4E00080CF6 /* EventsVC.swift */; };
-		1868A58A2FAC762E00831144 /* StudentHistryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849978402CEF1FE5007D45BA /* StudentHistryVC.swift */; };
 		1868A58B2FAC762E00831144 /* GatePassTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B1908E2F713A84007E4F6F /* GatePassTvcell.swift */; };
-		1868A58C2FAC762E00831144 /* AttendenceTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */; };
 		1868A58D2FAC762E00831144 /* RatingTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8EC2CDC83860006068E /* RatingTypeTableViewCell.swift */; };
 		1868A58E2FAC762E00831144 /* LessonPlanTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845347FA2E5C64B600D47393 /* LessonPlanTVC.swift */; };
 		1868A58F2FAC762E00831144 /* PreviewImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848BEEE12CFF093100581A55 /* PreviewImageVC.swift */; };
@@ -1436,7 +1437,6 @@
 		1868A5A62FAC762E00831144 /* AdminRequestsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1841DF1D2F584C5200B88801 /* AdminRequestsViewController.xib */; };
 		1868A5A72FAC762E00831144 /* quizCellTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84174DEE2E6B5F6A00AC7092 /* quizCellTv.xib */; };
 		1868A5A82FAC762E00831144 /* ReportBugVcViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EFFAE92CCFA4A100C11C26 /* ReportBugVcViewController.xib */; };
-		1868A5A92FAC762E00831144 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */; };
 		1868A5AA2FAC762E00831144 /* VoiceMessageVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAF2EFFAAFB008B71FF /* VoiceMessageVc.xib */; };
 		1868A5AC2FAC762E00831144 /* CommonPagenationVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AA72EFFAAFB008B71FF /* CommonPagenationVc.xib */; };
 		1868A5AD2FAC762E00831144 /* ScheduleCallVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAB2EFFAAFB008B71FF /* ScheduleCallVC.xib */; };
@@ -1470,7 +1470,6 @@
 		1868A5CB2FAC762E00831144 /* locationAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 847D1CA52DBB68B200A274D2 /* locationAnimation.json */; };
 		1868A5CE2FAC762E00831144 /* DetailedDayRowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B0AB02F6D47AB002C81A0 /* DetailedDayRowCell.xib */; };
 		1868A5CF2FAC762E00831144 /* OutpassRequestsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B0AB42F6D47AB002C81A0 /* OutpassRequestsCell.xib */; };
-		1868A5D02FAC762E00831144 /* AttendenceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */; };
 		1868A5D12FAC762E00831144 /* StaffLeaveReqTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185465132F42E7FB008B1551 /* StaffLeaveReqTvCell.xib */; };
 		1868A5D22FAC762E00831144 /* SchoolTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8622CDB787A0006068E /* SchoolTVCell.xib */; };
 		1868A5D32FAC762E00831144 /* Poppins-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84385F692CF8516E0020E94D /* Poppins-Bold.otf */; };
@@ -1500,11 +1499,9 @@
 		1868A5EB2FAC762E00831144 /* MarkAttendanceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1841DF092F58467800B88801 /* MarkAttendanceViewController.xib */; };
 		1868A5EC2FAC762E00831144 /* StudentAttendanceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1841DF0B2F58467800B88801 /* StudentAttendanceCell.xib */; };
 		1868A5ED2FAC762E00831144 /* BaseAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84A5BE4A2C19719900E32496 /* BaseAssets.xcassets */; };
-		1868A5EE2FAC762E00831144 /* StudentHistryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849978412CEF1FE5007D45BA /* StudentHistryVC.xib */; };
 		1868A5EF2FAC762E00831144 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 84A5BE4D2C19719900E32496 /* Base */; };
 		1868A5F02FAC762E00831144 /* loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACC8E2DA5076800326D52 /* loader.json */; };
 		1868A5F12FAC762E00831144 /* AssignmentSummitionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848E4F612DF6A874006F6658 /* AssignmentSummitionVC.xib */; };
-		1868A5F22FAC762E00831144 /* AttendanceMarkingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA7014D02E7D76CD00B3C012 /* AttendanceMarkingVC.xib */; };
 		1868A5F32FAC762E00831144 /* shareAndDownloadVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0C22F322CFE0046B966 /* shareAndDownloadVc.xib */; };
 		1868A5F42FAC762E00831144 /* ImageShowCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0C52F322CFE0046B966 /* ImageShowCVCell.xib */; };
 		1868A5F52FAC762E00831144 /* ImageShowVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0C72F322CFE0046B966 /* ImageShowVc.xib */; };
@@ -1512,7 +1509,6 @@
 		1868A5F72FAC762E00831144 /* outpassRequestTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185CC0C62F74EB49002640CE /* outpassRequestTVcell.xib */; };
 		1868A5F82FAC762E00831144 /* VideoPlayerCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0C92F322CFE0046B966 /* VideoPlayerCVC.xib */; };
 		1868A5F92FAC762E00831144 /* PtmNavigationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAE495892E89AF960099DF24 /* PtmNavigationVC.xib */; };
-		1868A5FA2FAC762E00831144 /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C512E66D3FF00B4B8EB /* UserDetailsTVC.xib */; };
 		1868A5FB2FAC762E00831144 /* StatsticTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B09C12F6C25A0002C81A0 /* StatsticTvCell.xib */; };
 		1868A5FC2FAC762E00831144 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8442A9502CDE83C80006068E /* Localizable.strings */; };
 		1868A5FD2FAC762E00831144 /* PopoverViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C08C672EB396E9009F657B /* PopoverViewVC.xib */; };
@@ -1881,7 +1877,6 @@
 		186E5F0C2FE91EB800BAF454 /* EditLessonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF43B612E02A09200F28A16 /* EditLessonVC.swift */; };
 		186E5F0D2FE91EB800BAF454 /* SuccesseRatusTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845AB86E2EC1F89C003C22E1 /* SuccesseRatusTVC.swift */; };
 		186E5F0E2FE91EB800BAF454 /* HostelRoomTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1841DE952F56FF1C00B88801 /* HostelRoomTvCell.swift */; };
-		186E5F132FE91EB800BAF454 /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */; };
 		186E5F142FE91EB800BAF454 /* LSRWSubmisionListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845CAC862E54B06C000FA540 /* LSRWSubmisionListVC.swift */; };
 		186E5F152FE91EB800BAF454 /* QuizSubmisionTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA48A6962E754AA7004E10C7 /* QuizSubmisionTvCell.swift */; };
 		186E5F162FE91EB800BAF454 /* SchoolStrengthCvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BCE90D2E9E3AB6002C8068 /* SchoolStrengthCvcell.swift */; };
@@ -1906,7 +1901,6 @@
 		186E5F2A2FE91EB800BAF454 /* CertificateCv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA861C342E38ABA900859726 /* CertificateCv.swift */; };
 		186E5F2B2FE91EB800BAF454 /* ScheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB5EA52D11330E00AD0C87 /* ScheduleExamVC.swift */; };
 		186E5F2C2FE91EB800BAF454 /* SubmitedStudentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8480477B2E02DF6E0042BC5D /* SubmitedStudentTVC.swift */; };
-		186E5F2D2FE91EB800BAF454 /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C502E66D3FF00B4B8EB /* UserDetailsTVC.swift */; };
 		186E5F2E2FE91EB800BAF454 /* SenderAssignmentTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849AD0402D1A858D002DEC07 /* SenderAssignmentTextViewController.swift */; };
 		186E5F2F2FE91EB800BAF454 /* CompletedTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB97D02D3E31FF00EBF9F4 /* CompletedTVcell.swift */; };
 		186E5F302FE91EB800BAF454 /* PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466E83C2D6ED0CB004F4EFC /* PopupVC.swift */; };
@@ -1926,7 +1920,6 @@
 		186E5F3E2FE91EB800BAF454 /* OTPVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848CC1682D899E4000CD0255 /* OTPVc.swift */; };
 		186E5F3F2FE91EB800BAF454 /* CellConfingName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFF9DE2CCC89CF00C11C26 /* CellConfingName.swift */; };
 		186E5F402FE91EB800BAF454 /* SwitchRollTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EF9D202E7A7B7E00F57838 /* SwitchRollTVC.swift */; };
-		186E5F412FE91EB800BAF454 /* AttendanceMarkingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7014CF2E7D76CD00B3C012 /* AttendanceMarkingVC.swift */; };
 		186E5F422FE91EB800BAF454 /* ChatTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84395FEC2D1002A900FC3242 /* ChatTVCell.swift */; };
 		186E5F432FE91EB800BAF454 /* OutpassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6CD89F2E3DEEC500C146AB /* OutpassVC.swift */; };
 		186E5F442FE91EB800BAF454 /* Colornames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441887B2CC90E98006483C3 /* Colornames.swift */; };
@@ -2233,9 +2226,7 @@
 		186E60892FE91EB800BAF454 /* NoticeCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8480A4102E31F4CB009A7DED /* NoticeCVC.swift */; };
 		186E608A2FE91EB800BAF454 /* RatingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8EA2CDC83860006068E /* RatingTableViewCell.swift */; };
 		186E608B2FE91EB800BAF454 /* EventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840658372CFD8D4E00080CF6 /* EventsVC.swift */; };
-		186E608C2FE91EB800BAF454 /* StudentHistryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849978402CEF1FE5007D45BA /* StudentHistryVC.swift */; };
 		186E608D2FE91EB800BAF454 /* GatePassTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B1908E2F713A84007E4F6F /* GatePassTvcell.swift */; };
-		186E608E2FE91EB800BAF454 /* AttendenceTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */; };
 		186E608F2FE91EB800BAF454 /* RatingTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8EC2CDC83860006068E /* RatingTypeTableViewCell.swift */; };
 		186E60902FE91EB800BAF454 /* LessonPlanTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845347FA2E5C64B600D47393 /* LessonPlanTVC.swift */; };
 		186E60912FE91EB800BAF454 /* PreviewImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848BEEE12CFF093100581A55 /* PreviewImageVC.swift */; };
@@ -2262,7 +2253,6 @@
 		186E60A82FE91EB800BAF454 /* AdminRequestsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1841DF1D2F584C5200B88801 /* AdminRequestsViewController.xib */; };
 		186E60A92FE91EB800BAF454 /* quizCellTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84174DEE2E6B5F6A00AC7092 /* quizCellTv.xib */; };
 		186E60AA2FE91EB800BAF454 /* ReportBugVcViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EFFAE92CCFA4A100C11C26 /* ReportBugVcViewController.xib */; };
-		186E60AB2FE91EB800BAF454 /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */; };
 		186E60AC2FE91EB800BAF454 /* VoiceMessageVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AAF2EFFAAFB008B71FF /* VoiceMessageVc.xib */; };
 		186E60AE2FE91EB800BAF454 /* StopTimelineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1880E9EE2FD14BF40025EB96 /* StopTimelineCell.xib */; };
 		186E60AF2FE91EB800BAF454 /* CommonPagenationVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18887AA72EFFAAFB008B71FF /* CommonPagenationVc.xib */; };
@@ -2298,7 +2288,6 @@
 		186E60CF2FE91EB800BAF454 /* locationAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 847D1CA52DBB68B200A274D2 /* locationAnimation.json */; };
 		186E60D12FE91EB800BAF454 /* DetailedDayRowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B0AB02F6D47AB002C81A0 /* DetailedDayRowCell.xib */; };
 		186E60D22FE91EB800BAF454 /* OutpassRequestsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B0AB42F6D47AB002C81A0 /* OutpassRequestsCell.xib */; };
-		186E60D32FE91EB800BAF454 /* AttendenceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */; };
 		186E60D42FE91EB800BAF454 /* StaffLeaveReqTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185465132F42E7FB008B1551 /* StaffLeaveReqTvCell.xib */; };
 		186E60D52FE91EB800BAF454 /* SchoolTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8622CDB787A0006068E /* SchoolTVCell.xib */; };
 		186E60D62FE91EB800BAF454 /* Poppins-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84385F692CF8516E0020E94D /* Poppins-Bold.otf */; };
@@ -2330,11 +2319,9 @@
 		186E60F02FE91EB800BAF454 /* StudentAttendanceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1841DF0B2F58467800B88801 /* StudentAttendanceCell.xib */; };
 		186E60F12FE91EB800BAF454 /* BaseAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84A5BE4A2C19719900E32496 /* BaseAssets.xcassets */; };
 		186E60F22FE91EB800BAF454 /* whereismybusVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 183E69C92FADB0840092D411 /* whereismybusVc.xib */; };
-		186E60F32FE91EB800BAF454 /* StudentHistryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849978412CEF1FE5007D45BA /* StudentHistryVC.xib */; };
 		186E60F42FE91EB800BAF454 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 84A5BE4D2C19719900E32496 /* Base */; };
 		186E60F52FE91EB800BAF454 /* loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACC8E2DA5076800326D52 /* loader.json */; };
 		186E60F62FE91EB800BAF454 /* AssignmentSummitionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848E4F612DF6A874006F6658 /* AssignmentSummitionVC.xib */; };
-		186E60F72FE91EB800BAF454 /* AttendanceMarkingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA7014D02E7D76CD00B3C012 /* AttendanceMarkingVC.xib */; };
 		186E60F82FE91EB800BAF454 /* shareAndDownloadVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0C22F322CFE0046B966 /* shareAndDownloadVc.xib */; };
 		186E60F92FE91EB800BAF454 /* ImageShowCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0C52F322CFE0046B966 /* ImageShowCVCell.xib */; };
 		186E60FA2FE91EB800BAF454 /* ImageShowVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0C72F322CFE0046B966 /* ImageShowVc.xib */; };
@@ -2342,7 +2329,6 @@
 		186E60FC2FE91EB800BAF454 /* outpassRequestTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185CC0C62F74EB49002640CE /* outpassRequestTVcell.xib */; };
 		186E60FD2FE91EB800BAF454 /* VideoPlayerCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA43D0C92F322CFE0046B966 /* VideoPlayerCVC.xib */; };
 		186E60FE2FE91EB800BAF454 /* PtmNavigationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAE495892E89AF960099DF24 /* PtmNavigationVC.xib */; };
-		186E60FF2FE91EB800BAF454 /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C512E66D3FF00B4B8EB /* UserDetailsTVC.xib */; };
 		186E61002FE91EB800BAF454 /* StatsticTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 182B09C12F6C25A0002C81A0 /* StatsticTvCell.xib */; };
 		186E61012FE91EB800BAF454 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8442A9502CDE83C80006068E /* Localizable.strings */; };
 		186E61022FE91EB800BAF454 /* PopoverViewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C08C672EB396E9009F657B /* PopoverViewVC.xib */; };
@@ -2806,8 +2792,6 @@
 		84017F822E4494D6006CB477 /* certificateHstryCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84017F7F2E4494D6006CB477 /* certificateHstryCvCell.swift */; };
 		84017F852E44B1BD006CB477 /* CertificatePreviewVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84017F842E44B1BD006CB477 /* CertificatePreviewVc.xib */; };
 		84017F862E44B1BD006CB477 /* CertificatePreviewVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84017F832E44B1BD006CB477 /* CertificatePreviewVc.swift */; };
-		840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */; };
-		840658052CFD6B2200080CF6 /* AttendenceTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */; };
 		840658392CFD8D4E00080CF6 /* EventsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840658382CFD8D4E00080CF6 /* EventsVC.xib */; };
 		8406583A2CFD8D4E00080CF6 /* EventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840658372CFD8D4E00080CF6 /* EventsVC.swift */; };
 		840658432CFD9C3400080CF6 /* AttachmentCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840658422CFD9C3400080CF6 /* AttachmentCVCell.xib */; };
@@ -2895,134 +2879,6 @@
 		842FBABE2D0BEDBF007C0B51 /* ReportStudentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FBAB62D0BEDBF007C0B51 /* ReportStudentTVC.swift */; };
 		842FBABF2D0BEDBF007C0B51 /* ReportStudentListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FBAB42D0BEDBF007C0B51 /* ReportStudentListVC.swift */; };
 		842FDC202D854AD800DCE4FF /* HOTCODE_COMMON_API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */; };
-		842FE119304AFABB006C5D12 /* ExamActivitySelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE103304AFABB006C5D12 /* ExamActivitySelectionVC.xib */; };
-		842FE11A304AFABB006C5D12 /* ExamImgUploadVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE105304AFABB006C5D12 /* ExamImgUploadVC.xib */; };
-		842FE11B304AFABB006C5D12 /* Exam_ClassListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE0FD304AFABB006C5D12 /* Exam_ClassListTV.xib */; };
-		842FE11C304AFABB006C5D12 /* Exam_ExamListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE0FF304AFABB006C5D12 /* Exam_ExamListTV.xib */; };
-		842FE11D304AFABB006C5D12 /* ExamActivitiesCV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE101304AFABB006C5D12 /* ExamActivitiesCV.xib */; };
-		842FE11E304AFABB006C5D12 /* EnterMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE0FB304AFABB006C5D12 /* EnterMarkVC.xib */; };
-		842FE11F304AFABB006C5D12 /* ExamListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE107304AFABB006C5D12 /* ExamListCell.xib */; };
-		842FE120304AFABB006C5D12 /* MarksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE111304AFABB006C5D12 /* MarksCell.xib */; };
-		842FE121304AFABB006C5D12 /* ActivitiesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE0F9304AFABB006C5D12 /* ActivitiesTVCell.xib */; };
-		842FE122304AFABB006C5D12 /* SubjectsTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE117304AFABB006C5D12 /* SubjectsTVCell.xib */; };
-		842FE123304AFABB006C5D12 /* ExamListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE109304AFABB006C5D12 /* ExamListHeader.xib */; };
-		842FE124304AFABB006C5D12 /* staffExamMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE115304AFABB006C5D12 /* staffExamMarkVC.xib */; };
-		842FE125304AFABB006C5D12 /* MarkReviewCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE10F304AFABB006C5D12 /* MarkReviewCVC.xib */; };
-		842FE126304AFABB006C5D12 /* ExamListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE10B304AFABB006C5D12 /* ExamListVC.xib */; };
-		842FE127304AFABB006C5D12 /* FilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE10D304AFABB006C5D12 /* FilterPopover.xib */; };
-		842FE128304AFABB006C5D12 /* MarksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE113304AFABB006C5D12 /* MarksTableViewCell.xib */; };
-		842FE129304AFABB006C5D12 /* FilterPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE10C304AFABB006C5D12 /* FilterPopover.swift */; };
-		842FE12A304AFABB006C5D12 /* ExamListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE106304AFABB006C5D12 /* ExamListCell.swift */; };
-		842FE12B304AFABB006C5D12 /* SubjectsTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE116304AFABB006C5D12 /* SubjectsTVCell.swift */; };
-		842FE12C304AFABB006C5D12 /* ExamListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE10A304AFABB006C5D12 /* ExamListVC.swift */; };
-		842FE12D304AFABB006C5D12 /* MarksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE112304AFABB006C5D12 /* MarksTableViewCell.swift */; };
-		842FE12E304AFABB006C5D12 /* ExamListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE108304AFABB006C5D12 /* ExamListHeader.swift */; };
-		842FE12F304AFABB006C5D12 /* MarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE110304AFABB006C5D12 /* MarksCell.swift */; };
-		842FE130304AFABB006C5D12 /* ExamActivitySelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE102304AFABB006C5D12 /* ExamActivitySelectionVC.swift */; };
-		842FE131304AFABB006C5D12 /* EnterMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE0FA304AFABB006C5D12 /* EnterMarkVC.swift */; };
-		842FE132304AFABB006C5D12 /* staffExamMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE114304AFABB006C5D12 /* staffExamMarkVC.swift */; };
-		842FE133304AFABB006C5D12 /* ExamActivitiesCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE100304AFABB006C5D12 /* ExamActivitiesCV.swift */; };
-		842FE134304AFABB006C5D12 /* ActivitiesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE0F8304AFABB006C5D12 /* ActivitiesTVCell.swift */; };
-		842FE135304AFABB006C5D12 /* MarkReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE10E304AFABB006C5D12 /* MarkReviewCVC.swift */; };
-		842FE136304AFABB006C5D12 /* Exam_ClassListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE0FC304AFABB006C5D12 /* Exam_ClassListTV.swift */; };
-		842FE137304AFABB006C5D12 /* Exam_ExamListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE0FE304AFABB006C5D12 /* Exam_ExamListTV.swift */; };
-		842FE138304AFABB006C5D12 /* ExamImgUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE104304AFABB006C5D12 /* ExamImgUploadVC.swift */; };
-		842FE139304AFABB006C5D12 /* ExamActivitySelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE103304AFABB006C5D12 /* ExamActivitySelectionVC.xib */; };
-		842FE13A304AFABB006C5D12 /* ExamImgUploadVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE105304AFABB006C5D12 /* ExamImgUploadVC.xib */; };
-		842FE13B304AFABB006C5D12 /* Exam_ClassListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE0FD304AFABB006C5D12 /* Exam_ClassListTV.xib */; };
-		842FE13C304AFABB006C5D12 /* Exam_ExamListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE0FF304AFABB006C5D12 /* Exam_ExamListTV.xib */; };
-		842FE13D304AFABB006C5D12 /* ExamActivitiesCV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE101304AFABB006C5D12 /* ExamActivitiesCV.xib */; };
-		842FE13E304AFABB006C5D12 /* EnterMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE0FB304AFABB006C5D12 /* EnterMarkVC.xib */; };
-		842FE13F304AFABB006C5D12 /* ExamListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE107304AFABB006C5D12 /* ExamListCell.xib */; };
-		842FE140304AFABB006C5D12 /* MarksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE111304AFABB006C5D12 /* MarksCell.xib */; };
-		842FE141304AFABB006C5D12 /* ActivitiesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE0F9304AFABB006C5D12 /* ActivitiesTVCell.xib */; };
-		842FE142304AFABB006C5D12 /* SubjectsTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE117304AFABB006C5D12 /* SubjectsTVCell.xib */; };
-		842FE143304AFABB006C5D12 /* ExamListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE109304AFABB006C5D12 /* ExamListHeader.xib */; };
-		842FE144304AFABB006C5D12 /* staffExamMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE115304AFABB006C5D12 /* staffExamMarkVC.xib */; };
-		842FE145304AFABB006C5D12 /* MarkReviewCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE10F304AFABB006C5D12 /* MarkReviewCVC.xib */; };
-		842FE146304AFABB006C5D12 /* ExamListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE10B304AFABB006C5D12 /* ExamListVC.xib */; };
-		842FE147304AFABB006C5D12 /* FilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE10D304AFABB006C5D12 /* FilterPopover.xib */; };
-		842FE148304AFABB006C5D12 /* MarksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE113304AFABB006C5D12 /* MarksTableViewCell.xib */; };
-		842FE149304AFABB006C5D12 /* FilterPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE10C304AFABB006C5D12 /* FilterPopover.swift */; };
-		842FE14A304AFABB006C5D12 /* ExamListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE106304AFABB006C5D12 /* ExamListCell.swift */; };
-		842FE14B304AFABB006C5D12 /* SubjectsTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE116304AFABB006C5D12 /* SubjectsTVCell.swift */; };
-		842FE14C304AFABB006C5D12 /* ExamListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE10A304AFABB006C5D12 /* ExamListVC.swift */; };
-		842FE14D304AFABB006C5D12 /* MarksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE112304AFABB006C5D12 /* MarksTableViewCell.swift */; };
-		842FE14E304AFABB006C5D12 /* ExamListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE108304AFABB006C5D12 /* ExamListHeader.swift */; };
-		842FE14F304AFABB006C5D12 /* MarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE110304AFABB006C5D12 /* MarksCell.swift */; };
-		842FE150304AFABB006C5D12 /* ExamActivitySelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE102304AFABB006C5D12 /* ExamActivitySelectionVC.swift */; };
-		842FE151304AFABB006C5D12 /* EnterMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE0FA304AFABB006C5D12 /* EnterMarkVC.swift */; };
-		842FE152304AFABB006C5D12 /* staffExamMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE114304AFABB006C5D12 /* staffExamMarkVC.swift */; };
-		842FE153304AFABB006C5D12 /* ExamActivitiesCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE100304AFABB006C5D12 /* ExamActivitiesCV.swift */; };
-		842FE154304AFABB006C5D12 /* ActivitiesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE0F8304AFABB006C5D12 /* ActivitiesTVCell.swift */; };
-		842FE155304AFABB006C5D12 /* MarkReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE10E304AFABB006C5D12 /* MarkReviewCVC.swift */; };
-		842FE156304AFABB006C5D12 /* Exam_ClassListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE0FC304AFABB006C5D12 /* Exam_ClassListTV.swift */; };
-		842FE157304AFABB006C5D12 /* Exam_ExamListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE0FE304AFABB006C5D12 /* Exam_ExamListTV.swift */; };
-		842FE158304AFABB006C5D12 /* ExamImgUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE104304AFABB006C5D12 /* ExamImgUploadVC.swift */; };
-		842FE159304AFABB006C5D12 /* ExamActivitySelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE103304AFABB006C5D12 /* ExamActivitySelectionVC.xib */; };
-		842FE15A304AFABB006C5D12 /* ExamImgUploadVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE105304AFABB006C5D12 /* ExamImgUploadVC.xib */; };
-		842FE15B304AFABB006C5D12 /* Exam_ClassListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE0FD304AFABB006C5D12 /* Exam_ClassListTV.xib */; };
-		842FE15C304AFABB006C5D12 /* Exam_ExamListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE0FF304AFABB006C5D12 /* Exam_ExamListTV.xib */; };
-		842FE15D304AFABB006C5D12 /* ExamActivitiesCV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE101304AFABB006C5D12 /* ExamActivitiesCV.xib */; };
-		842FE15E304AFABB006C5D12 /* EnterMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE0FB304AFABB006C5D12 /* EnterMarkVC.xib */; };
-		842FE15F304AFABB006C5D12 /* ExamListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE107304AFABB006C5D12 /* ExamListCell.xib */; };
-		842FE160304AFABB006C5D12 /* MarksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE111304AFABB006C5D12 /* MarksCell.xib */; };
-		842FE161304AFABB006C5D12 /* ActivitiesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE0F9304AFABB006C5D12 /* ActivitiesTVCell.xib */; };
-		842FE162304AFABB006C5D12 /* SubjectsTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE117304AFABB006C5D12 /* SubjectsTVCell.xib */; };
-		842FE163304AFABB006C5D12 /* ExamListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE109304AFABB006C5D12 /* ExamListHeader.xib */; };
-		842FE164304AFABB006C5D12 /* staffExamMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE115304AFABB006C5D12 /* staffExamMarkVC.xib */; };
-		842FE165304AFABB006C5D12 /* MarkReviewCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE10F304AFABB006C5D12 /* MarkReviewCVC.xib */; };
-		842FE166304AFABB006C5D12 /* ExamListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE10B304AFABB006C5D12 /* ExamListVC.xib */; };
-		842FE167304AFABB006C5D12 /* FilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE10D304AFABB006C5D12 /* FilterPopover.xib */; };
-		842FE168304AFABB006C5D12 /* MarksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE113304AFABB006C5D12 /* MarksTableViewCell.xib */; };
-		842FE169304AFABB006C5D12 /* FilterPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE10C304AFABB006C5D12 /* FilterPopover.swift */; };
-		842FE16A304AFABB006C5D12 /* ExamListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE106304AFABB006C5D12 /* ExamListCell.swift */; };
-		842FE16B304AFABB006C5D12 /* SubjectsTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE116304AFABB006C5D12 /* SubjectsTVCell.swift */; };
-		842FE16C304AFABB006C5D12 /* ExamListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE10A304AFABB006C5D12 /* ExamListVC.swift */; };
-		842FE16D304AFABB006C5D12 /* MarksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE112304AFABB006C5D12 /* MarksTableViewCell.swift */; };
-		842FE16E304AFABB006C5D12 /* ExamListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE108304AFABB006C5D12 /* ExamListHeader.swift */; };
-		842FE16F304AFABB006C5D12 /* MarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE110304AFABB006C5D12 /* MarksCell.swift */; };
-		842FE170304AFABB006C5D12 /* ExamActivitySelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE102304AFABB006C5D12 /* ExamActivitySelectionVC.swift */; };
-		842FE171304AFABB006C5D12 /* EnterMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE0FA304AFABB006C5D12 /* EnterMarkVC.swift */; };
-		842FE172304AFABB006C5D12 /* staffExamMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE114304AFABB006C5D12 /* staffExamMarkVC.swift */; };
-		842FE173304AFABB006C5D12 /* ExamActivitiesCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE100304AFABB006C5D12 /* ExamActivitiesCV.swift */; };
-		842FE174304AFABB006C5D12 /* ActivitiesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE0F8304AFABB006C5D12 /* ActivitiesTVCell.swift */; };
-		842FE175304AFABB006C5D12 /* MarkReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE10E304AFABB006C5D12 /* MarkReviewCVC.swift */; };
-		842FE176304AFABB006C5D12 /* Exam_ClassListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE0FC304AFABB006C5D12 /* Exam_ClassListTV.swift */; };
-		842FE177304AFABB006C5D12 /* Exam_ExamListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE0FE304AFABB006C5D12 /* Exam_ExamListTV.swift */; };
-		842FE178304AFABB006C5D12 /* ExamImgUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE104304AFABB006C5D12 /* ExamImgUploadVC.swift */; };
-		842FE179304AFABB006C5D12 /* FilterPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE10C304AFABB006C5D12 /* FilterPopover.swift */; };
-		842FE17A304AFABB006C5D12 /* ExamListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE106304AFABB006C5D12 /* ExamListCell.swift */; };
-		842FE17B304AFABB006C5D12 /* SubjectsTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE116304AFABB006C5D12 /* SubjectsTVCell.swift */; };
-		842FE17C304AFABB006C5D12 /* ExamListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE10A304AFABB006C5D12 /* ExamListVC.swift */; };
-		842FE17D304AFABB006C5D12 /* MarksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE112304AFABB006C5D12 /* MarksTableViewCell.swift */; };
-		842FE17E304AFABB006C5D12 /* ExamListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE108304AFABB006C5D12 /* ExamListHeader.swift */; };
-		842FE17F304AFABB006C5D12 /* MarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE110304AFABB006C5D12 /* MarksCell.swift */; };
-		842FE180304AFABB006C5D12 /* ExamActivitySelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE102304AFABB006C5D12 /* ExamActivitySelectionVC.swift */; };
-		842FE181304AFABB006C5D12 /* EnterMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE0FA304AFABB006C5D12 /* EnterMarkVC.swift */; };
-		842FE182304AFABB006C5D12 /* staffExamMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE114304AFABB006C5D12 /* staffExamMarkVC.swift */; };
-		842FE183304AFABB006C5D12 /* ExamActivitiesCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE100304AFABB006C5D12 /* ExamActivitiesCV.swift */; };
-		842FE184304AFABB006C5D12 /* ActivitiesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE0F8304AFABB006C5D12 /* ActivitiesTVCell.swift */; };
-		842FE185304AFABB006C5D12 /* MarkReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE10E304AFABB006C5D12 /* MarkReviewCVC.swift */; };
-		842FE186304AFABB006C5D12 /* Exam_ClassListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE0FC304AFABB006C5D12 /* Exam_ClassListTV.swift */; };
-		842FE187304AFABB006C5D12 /* Exam_ExamListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE0FE304AFABB006C5D12 /* Exam_ExamListTV.swift */; };
-		842FE188304AFABB006C5D12 /* ExamImgUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FE104304AFABB006C5D12 /* ExamImgUploadVC.swift */; };
-		842FE189304AFABB006C5D12 /* ExamActivitySelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE103304AFABB006C5D12 /* ExamActivitySelectionVC.xib */; };
-		842FE18A304AFABB006C5D12 /* ExamImgUploadVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE105304AFABB006C5D12 /* ExamImgUploadVC.xib */; };
-		842FE18B304AFABB006C5D12 /* Exam_ClassListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE0FD304AFABB006C5D12 /* Exam_ClassListTV.xib */; };
-		842FE18C304AFABB006C5D12 /* Exam_ExamListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE0FF304AFABB006C5D12 /* Exam_ExamListTV.xib */; };
-		842FE18D304AFABB006C5D12 /* ExamActivitiesCV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE101304AFABB006C5D12 /* ExamActivitiesCV.xib */; };
-		842FE18E304AFABB006C5D12 /* EnterMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE0FB304AFABB006C5D12 /* EnterMarkVC.xib */; };
-		842FE18F304AFABB006C5D12 /* ExamListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE107304AFABB006C5D12 /* ExamListCell.xib */; };
-		842FE190304AFABB006C5D12 /* MarksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE111304AFABB006C5D12 /* MarksCell.xib */; };
-		842FE191304AFABB006C5D12 /* ActivitiesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE0F9304AFABB006C5D12 /* ActivitiesTVCell.xib */; };
-		842FE192304AFABB006C5D12 /* SubjectsTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE117304AFABB006C5D12 /* SubjectsTVCell.xib */; };
-		842FE193304AFABB006C5D12 /* ExamListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE109304AFABB006C5D12 /* ExamListHeader.xib */; };
-		842FE194304AFABB006C5D12 /* staffExamMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE115304AFABB006C5D12 /* staffExamMarkVC.xib */; };
-		842FE195304AFABB006C5D12 /* MarkReviewCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE10F304AFABB006C5D12 /* MarkReviewCVC.xib */; };
-		842FE196304AFABB006C5D12 /* ExamListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE10B304AFABB006C5D12 /* ExamListVC.xib */; };
-		842FE197304AFABB006C5D12 /* FilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE10D304AFABB006C5D12 /* FilterPopover.xib */; };
-		842FE198304AFABB006C5D12 /* MarksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE113304AFABB006C5D12 /* MarksTableViewCell.xib */; };
 		842FE3ED304B0078006C5D12 /* TotalMarkTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE3E8304B0078006C5D12 /* TotalMarkTvCell.xib */; };
 		842FE3EF304B0078006C5D12 /* ViewDetailsVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE3D6304B0078006C5D12 /* ViewDetailsVc.xib */; };
 		842FE3F0304B0078006C5D12 /* MarkListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FE3DA304B0078006C5D12 /* MarkListVC.xib */; };
@@ -3216,10 +3072,6 @@
 		8442A9702CDE8B2C0006068E /* LangTvCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A96D2CDE8B2C0006068E /* LangTvCellTableViewCell.swift */; };
 		84443FA82F76542800DC70F1 /* OutpassRequestsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84443FA62F76542800DC70F1 /* OutpassRequestsVC.swift */; };
 		84443FA92F76542800DC70F1 /* OutpassRequestsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84443FA72F76542800DC70F1 /* OutpassRequestsVC.xib */; };
-		84444C522E66D3FF00B4B8EB /* UserDetailsTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C512E66D3FF00B4B8EB /* UserDetailsTVC.xib */; };
-		84444C532E66D3FF00B4B8EB /* UserDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C502E66D3FF00B4B8EB /* UserDetailsTVC.swift */; };
-		84444C562E66EE3B00B4B8EB /* UpdateProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */; };
-		84444C572E66EE3B00B4B8EB /* UpdateProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */; };
 		8449D8D42ED4647300822FAC /* normal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8449D8D32ED4647300822FAC /* normal.mp3 */; };
 		844DEDE42E549A0B0016A347 /* CreateQuizQutionVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844DEDE22E549A0B0016A347 /* CreateQuizQutionVc.swift */; };
 		844DEDE52E549A0B0016A347 /* CreateQuizQutionVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844DEDE32E549A0B0016A347 /* CreateQuizQutionVc.xib */; };
@@ -3344,8 +3196,6 @@
 		849970CF2CF8752400800B07 /* WaveView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 849970C72CF8752400800B07 /* WaveView .swift */; };
 		849970D02CF8752400800B07 /* HistoryTC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849970C32CF8752400800B07 /* HistoryTC.swift */; };
 		849970D12CF8752400800B07 /* ComunicationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849970BF2CF8752400800B07 /* ComunicationVC.swift */; };
-		849978432CEF1FE5007D45BA /* StudentHistryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849978412CEF1FE5007D45BA /* StudentHistryVC.xib */; };
-		849978462CEF1FE5007D45BA /* StudentHistryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849978402CEF1FE5007D45BA /* StudentHistryVC.swift */; };
 		849ACFFE2D1A8369002DEC07 /* ReciverAttendanceReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849ACFF92D1A8369002DEC07 /* ReciverAttendanceReportVC.swift */; };
 		849AD0002D1A8369002DEC07 /* ReciverAttendanceReportVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849ACFFA2D1A8369002DEC07 /* ReciverAttendanceReportVC.xib */; };
 		849AD0202D1A8402002DEC07 /* LessonPlanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849AD01A2D1A8402002DEC07 /* LessonPlanVC.swift */; };
@@ -3401,6 +3251,166 @@
 		84AA10DC2F4D77B7000B366F /* BusStopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AA10C92F4D77B7000B366F /* BusStopTableViewCell.swift */; };
 		84AC7F0F2E3C8EED0022BD63 /* SideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AC7F0D2E3C8EED0022BD63 /* SideMenuVC.swift */; };
 		84AC7F102E3C8EED0022BD63 /* SideMenuVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AC7F0E2E3C8EED0022BD63 /* SideMenuVC.xib */; };
+		84AD1AC4304EE43F006596A1 /* StudentHistryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1ABF304EE43F006596A1 /* StudentHistryVC.swift */; };
+		84AD1AC5304EE43F006596A1 /* AttendanceMarkingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AC1304EE43F006596A1 /* AttendanceMarkingVC.swift */; };
+		84AD1AC6304EE43F006596A1 /* AttendenceTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1ABE304EE43F006596A1 /* AttendenceTVC.swift */; };
+		84AD1AC7304EE43F006596A1 /* AttendenceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1ABD304EE43F006596A1 /* AttendenceTVC.xib */; };
+		84AD1AC8304EE43F006596A1 /* AttendanceMarkingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AC2304EE43F006596A1 /* AttendanceMarkingVC.xib */; };
+		84AD1AC9304EE43F006596A1 /* StudentHistryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AC0304EE43F006596A1 /* StudentHistryVC.xib */; };
+		84AD1ACA304EE43F006596A1 /* AttendenceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1ABD304EE43F006596A1 /* AttendenceTVC.xib */; };
+		84AD1ACB304EE43F006596A1 /* AttendanceMarkingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AC2304EE43F006596A1 /* AttendanceMarkingVC.xib */; };
+		84AD1ACC304EE43F006596A1 /* StudentHistryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AC0304EE43F006596A1 /* StudentHistryVC.xib */; };
+		84AD1ACD304EE43F006596A1 /* StudentHistryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1ABF304EE43F006596A1 /* StudentHistryVC.swift */; };
+		84AD1ACE304EE43F006596A1 /* AttendanceMarkingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AC1304EE43F006596A1 /* AttendanceMarkingVC.swift */; };
+		84AD1ACF304EE43F006596A1 /* AttendenceTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1ABE304EE43F006596A1 /* AttendenceTVC.swift */; };
+		84AD1AD0304EE43F006596A1 /* AttendenceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1ABD304EE43F006596A1 /* AttendenceTVC.xib */; };
+		84AD1AD1304EE43F006596A1 /* AttendanceMarkingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AC2304EE43F006596A1 /* AttendanceMarkingVC.xib */; };
+		84AD1AD2304EE43F006596A1 /* StudentHistryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AC0304EE43F006596A1 /* StudentHistryVC.xib */; };
+		84AD1AD3304EE43F006596A1 /* StudentHistryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1ABF304EE43F006596A1 /* StudentHistryVC.swift */; };
+		84AD1AD4304EE43F006596A1 /* AttendanceMarkingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AC1304EE43F006596A1 /* AttendanceMarkingVC.swift */; };
+		84AD1AD5304EE43F006596A1 /* AttendenceTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1ABE304EE43F006596A1 /* AttendenceTVC.swift */; };
+		84AD1AD6304EE43F006596A1 /* AttendenceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1ABD304EE43F006596A1 /* AttendenceTVC.xib */; };
+		84AD1AD7304EE43F006596A1 /* AttendanceMarkingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AC2304EE43F006596A1 /* AttendanceMarkingVC.xib */; };
+		84AD1AD8304EE43F006596A1 /* StudentHistryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AC0304EE43F006596A1 /* StudentHistryVC.xib */; };
+		84AD1AD9304EE43F006596A1 /* StudentHistryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1ABF304EE43F006596A1 /* StudentHistryVC.swift */; };
+		84AD1ADA304EE43F006596A1 /* AttendanceMarkingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AC1304EE43F006596A1 /* AttendanceMarkingVC.swift */; };
+		84AD1ADB304EE43F006596A1 /* AttendenceTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1ABE304EE43F006596A1 /* AttendenceTVC.swift */; };
+		84AD1AFF304EE45B006596A1 /* staffExamMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1ADD304EE45B006596A1 /* staffExamMarkVC.xib */; };
+		84AD1B00304EE45B006596A1 /* Exam_ClassListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1ADF304EE45B006596A1 /* Exam_ClassListTV.xib */; };
+		84AD1B01304EE45B006596A1 /* FilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AFB304EE45B006596A1 /* FilterPopover.xib */; };
+		84AD1B02304EE45B006596A1 /* ExamListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE9304EE45B006596A1 /* ExamListCell.xib */; };
+		84AD1B03304EE45B006596A1 /* ExamImgUploadVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AEB304EE45B006596A1 /* ExamImgUploadVC.xib */; };
+		84AD1B04304EE45B006596A1 /* RemarksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AFD304EE45B006596A1 /* RemarksCell.xib */; };
+		84AD1B05304EE45B006596A1 /* ExamListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE5304EE45B006596A1 /* ExamListHeader.xib */; };
+		84AD1B06304EE45B006596A1 /* ExamActivitiesCV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE7304EE45B006596A1 /* ExamActivitiesCV.xib */; };
+		84AD1B07304EE45B006596A1 /* MarkReviewCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF5304EE45B006596A1 /* MarkReviewCVC.xib */; };
+		84AD1B08304EE45B006596A1 /* MarksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF9304EE45B006596A1 /* MarksCell.xib */; };
+		84AD1B09304EE45B006596A1 /* SubjectsTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AEF304EE45B006596A1 /* SubjectsTVCell.xib */; };
+		84AD1B0A304EE45B006596A1 /* EnterMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF3304EE45B006596A1 /* EnterMarkVC.xib */; };
+		84AD1B0B304EE45B006596A1 /* MarksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF7304EE45B006596A1 /* MarksTableViewCell.xib */; };
+		84AD1B0C304EE45B006596A1 /* ExamListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE3304EE45B006596A1 /* ExamListVC.xib */; };
+		84AD1B0D304EE45B006596A1 /* ActivitiesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF1304EE45B006596A1 /* ActivitiesTVCell.xib */; };
+		84AD1B0E304EE45B006596A1 /* ExamActivitySelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AED304EE45B006596A1 /* ExamActivitySelectionVC.xib */; };
+		84AD1B0F304EE45B006596A1 /* Exam_ExamListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE1304EE45B006596A1 /* Exam_ExamListTV.xib */; };
+		84AD1B10304EE45B006596A1 /* MarksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF6304EE45B006596A1 /* MarksTableViewCell.swift */; };
+		84AD1B11304EE45B006596A1 /* ExamActivitySelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AEC304EE45B006596A1 /* ExamActivitySelectionVC.swift */; };
+		84AD1B12304EE45B006596A1 /* SubjectsTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AEE304EE45B006596A1 /* SubjectsTVCell.swift */; };
+		84AD1B13304EE45B006596A1 /* FilterPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AFA304EE45B006596A1 /* FilterPopover.swift */; };
+		84AD1B14304EE45B006596A1 /* RemarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AFC304EE45B006596A1 /* RemarksCell.swift */; };
+		84AD1B15304EE45B006596A1 /* ActivitiesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF0304EE45B006596A1 /* ActivitiesTVCell.swift */; };
+		84AD1B16304EE45B006596A1 /* EnterMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF2304EE45B006596A1 /* EnterMarkVC.swift */; };
+		84AD1B17304EE45B006596A1 /* ExamListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE8304EE45B006596A1 /* ExamListCell.swift */; };
+		84AD1B18304EE45B006596A1 /* ExamImgUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AEA304EE45B006596A1 /* ExamImgUploadVC.swift */; };
+		84AD1B19304EE45B006596A1 /* staffExamMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1ADC304EE45B006596A1 /* staffExamMarkVC.swift */; };
+		84AD1B1A304EE45B006596A1 /* ExamActivitiesCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE6304EE45B006596A1 /* ExamActivitiesCV.swift */; };
+		84AD1B1B304EE45B006596A1 /* MarkReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF4304EE45B006596A1 /* MarkReviewCVC.swift */; };
+		84AD1B1C304EE45B006596A1 /* MarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF8304EE45B006596A1 /* MarksCell.swift */; };
+		84AD1B1D304EE45B006596A1 /* Exam_ClassListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1ADE304EE45B006596A1 /* Exam_ClassListTV.swift */; };
+		84AD1B1E304EE45B006596A1 /* Exam_ExamListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE0304EE45B006596A1 /* Exam_ExamListTV.swift */; };
+		84AD1B1F304EE45B006596A1 /* ExamListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE4304EE45B006596A1 /* ExamListHeader.swift */; };
+		84AD1B20304EE45B006596A1 /* ExamListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE2304EE45B006596A1 /* ExamListVC.swift */; };
+		84AD1B21304EE45B006596A1 /* MarksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF6304EE45B006596A1 /* MarksTableViewCell.swift */; };
+		84AD1B22304EE45B006596A1 /* ExamActivitySelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AEC304EE45B006596A1 /* ExamActivitySelectionVC.swift */; };
+		84AD1B23304EE45B006596A1 /* SubjectsTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AEE304EE45B006596A1 /* SubjectsTVCell.swift */; };
+		84AD1B24304EE45B006596A1 /* FilterPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AFA304EE45B006596A1 /* FilterPopover.swift */; };
+		84AD1B25304EE45B006596A1 /* RemarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AFC304EE45B006596A1 /* RemarksCell.swift */; };
+		84AD1B26304EE45B006596A1 /* ActivitiesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF0304EE45B006596A1 /* ActivitiesTVCell.swift */; };
+		84AD1B27304EE45B006596A1 /* EnterMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF2304EE45B006596A1 /* EnterMarkVC.swift */; };
+		84AD1B28304EE45B006596A1 /* ExamListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE8304EE45B006596A1 /* ExamListCell.swift */; };
+		84AD1B29304EE45B006596A1 /* ExamImgUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AEA304EE45B006596A1 /* ExamImgUploadVC.swift */; };
+		84AD1B2A304EE45B006596A1 /* staffExamMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1ADC304EE45B006596A1 /* staffExamMarkVC.swift */; };
+		84AD1B2B304EE45B006596A1 /* ExamActivitiesCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE6304EE45B006596A1 /* ExamActivitiesCV.swift */; };
+		84AD1B2C304EE45B006596A1 /* MarkReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF4304EE45B006596A1 /* MarkReviewCVC.swift */; };
+		84AD1B2D304EE45B006596A1 /* MarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF8304EE45B006596A1 /* MarksCell.swift */; };
+		84AD1B2E304EE45B006596A1 /* Exam_ClassListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1ADE304EE45B006596A1 /* Exam_ClassListTV.swift */; };
+		84AD1B2F304EE45B006596A1 /* Exam_ExamListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE0304EE45B006596A1 /* Exam_ExamListTV.swift */; };
+		84AD1B30304EE45B006596A1 /* ExamListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE4304EE45B006596A1 /* ExamListHeader.swift */; };
+		84AD1B31304EE45B006596A1 /* ExamListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE2304EE45B006596A1 /* ExamListVC.swift */; };
+		84AD1B32304EE45B006596A1 /* staffExamMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1ADD304EE45B006596A1 /* staffExamMarkVC.xib */; };
+		84AD1B33304EE45B006596A1 /* Exam_ClassListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1ADF304EE45B006596A1 /* Exam_ClassListTV.xib */; };
+		84AD1B34304EE45B006596A1 /* FilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AFB304EE45B006596A1 /* FilterPopover.xib */; };
+		84AD1B35304EE45B006596A1 /* ExamListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE9304EE45B006596A1 /* ExamListCell.xib */; };
+		84AD1B36304EE45B006596A1 /* ExamImgUploadVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AEB304EE45B006596A1 /* ExamImgUploadVC.xib */; };
+		84AD1B37304EE45B006596A1 /* RemarksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AFD304EE45B006596A1 /* RemarksCell.xib */; };
+		84AD1B38304EE45B006596A1 /* ExamListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE5304EE45B006596A1 /* ExamListHeader.xib */; };
+		84AD1B39304EE45B006596A1 /* ExamActivitiesCV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE7304EE45B006596A1 /* ExamActivitiesCV.xib */; };
+		84AD1B3A304EE45B006596A1 /* MarkReviewCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF5304EE45B006596A1 /* MarkReviewCVC.xib */; };
+		84AD1B3B304EE45B006596A1 /* MarksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF9304EE45B006596A1 /* MarksCell.xib */; };
+		84AD1B3C304EE45B006596A1 /* SubjectsTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AEF304EE45B006596A1 /* SubjectsTVCell.xib */; };
+		84AD1B3D304EE45B006596A1 /* EnterMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF3304EE45B006596A1 /* EnterMarkVC.xib */; };
+		84AD1B3E304EE45B006596A1 /* MarksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF7304EE45B006596A1 /* MarksTableViewCell.xib */; };
+		84AD1B3F304EE45B006596A1 /* ExamListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE3304EE45B006596A1 /* ExamListVC.xib */; };
+		84AD1B40304EE45B006596A1 /* ActivitiesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF1304EE45B006596A1 /* ActivitiesTVCell.xib */; };
+		84AD1B41304EE45B006596A1 /* ExamActivitySelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AED304EE45B006596A1 /* ExamActivitySelectionVC.xib */; };
+		84AD1B42304EE45B006596A1 /* Exam_ExamListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE1304EE45B006596A1 /* Exam_ExamListTV.xib */; };
+		84AD1B43304EE45B006596A1 /* MarksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF6304EE45B006596A1 /* MarksTableViewCell.swift */; };
+		84AD1B44304EE45B006596A1 /* ExamActivitySelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AEC304EE45B006596A1 /* ExamActivitySelectionVC.swift */; };
+		84AD1B45304EE45B006596A1 /* SubjectsTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AEE304EE45B006596A1 /* SubjectsTVCell.swift */; };
+		84AD1B46304EE45B006596A1 /* FilterPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AFA304EE45B006596A1 /* FilterPopover.swift */; };
+		84AD1B47304EE45B006596A1 /* RemarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AFC304EE45B006596A1 /* RemarksCell.swift */; };
+		84AD1B48304EE45B006596A1 /* ActivitiesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF0304EE45B006596A1 /* ActivitiesTVCell.swift */; };
+		84AD1B49304EE45B006596A1 /* EnterMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF2304EE45B006596A1 /* EnterMarkVC.swift */; };
+		84AD1B4A304EE45B006596A1 /* ExamListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE8304EE45B006596A1 /* ExamListCell.swift */; };
+		84AD1B4B304EE45B006596A1 /* ExamImgUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AEA304EE45B006596A1 /* ExamImgUploadVC.swift */; };
+		84AD1B4C304EE45B006596A1 /* staffExamMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1ADC304EE45B006596A1 /* staffExamMarkVC.swift */; };
+		84AD1B4D304EE45B006596A1 /* ExamActivitiesCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE6304EE45B006596A1 /* ExamActivitiesCV.swift */; };
+		84AD1B4E304EE45B006596A1 /* MarkReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF4304EE45B006596A1 /* MarkReviewCVC.swift */; };
+		84AD1B4F304EE45B006596A1 /* MarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF8304EE45B006596A1 /* MarksCell.swift */; };
+		84AD1B50304EE45B006596A1 /* Exam_ClassListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1ADE304EE45B006596A1 /* Exam_ClassListTV.swift */; };
+		84AD1B51304EE45B006596A1 /* Exam_ExamListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE0304EE45B006596A1 /* Exam_ExamListTV.swift */; };
+		84AD1B52304EE45B006596A1 /* ExamListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE4304EE45B006596A1 /* ExamListHeader.swift */; };
+		84AD1B53304EE45B006596A1 /* ExamListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE2304EE45B006596A1 /* ExamListVC.swift */; };
+		84AD1B54304EE45B006596A1 /* staffExamMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1ADD304EE45B006596A1 /* staffExamMarkVC.xib */; };
+		84AD1B55304EE45B006596A1 /* Exam_ClassListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1ADF304EE45B006596A1 /* Exam_ClassListTV.xib */; };
+		84AD1B56304EE45B006596A1 /* FilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AFB304EE45B006596A1 /* FilterPopover.xib */; };
+		84AD1B57304EE45B006596A1 /* ExamListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE9304EE45B006596A1 /* ExamListCell.xib */; };
+		84AD1B58304EE45B006596A1 /* ExamImgUploadVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AEB304EE45B006596A1 /* ExamImgUploadVC.xib */; };
+		84AD1B59304EE45B006596A1 /* RemarksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AFD304EE45B006596A1 /* RemarksCell.xib */; };
+		84AD1B5A304EE45B006596A1 /* ExamListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE5304EE45B006596A1 /* ExamListHeader.xib */; };
+		84AD1B5B304EE45B006596A1 /* ExamActivitiesCV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE7304EE45B006596A1 /* ExamActivitiesCV.xib */; };
+		84AD1B5C304EE45B006596A1 /* MarkReviewCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF5304EE45B006596A1 /* MarkReviewCVC.xib */; };
+		84AD1B5D304EE45B006596A1 /* MarksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF9304EE45B006596A1 /* MarksCell.xib */; };
+		84AD1B5E304EE45B006596A1 /* SubjectsTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AEF304EE45B006596A1 /* SubjectsTVCell.xib */; };
+		84AD1B5F304EE45B006596A1 /* EnterMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF3304EE45B006596A1 /* EnterMarkVC.xib */; };
+		84AD1B60304EE45B006596A1 /* MarksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF7304EE45B006596A1 /* MarksTableViewCell.xib */; };
+		84AD1B61304EE45B006596A1 /* ExamListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE3304EE45B006596A1 /* ExamListVC.xib */; };
+		84AD1B62304EE45B006596A1 /* ActivitiesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF1304EE45B006596A1 /* ActivitiesTVCell.xib */; };
+		84AD1B63304EE45B006596A1 /* ExamActivitySelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AED304EE45B006596A1 /* ExamActivitySelectionVC.xib */; };
+		84AD1B64304EE45B006596A1 /* Exam_ExamListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE1304EE45B006596A1 /* Exam_ExamListTV.xib */; };
+		84AD1B65304EE45B006596A1 /* staffExamMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1ADD304EE45B006596A1 /* staffExamMarkVC.xib */; };
+		84AD1B66304EE45B006596A1 /* Exam_ClassListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1ADF304EE45B006596A1 /* Exam_ClassListTV.xib */; };
+		84AD1B67304EE45B006596A1 /* FilterPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AFB304EE45B006596A1 /* FilterPopover.xib */; };
+		84AD1B68304EE45B006596A1 /* ExamListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE9304EE45B006596A1 /* ExamListCell.xib */; };
+		84AD1B69304EE45B006596A1 /* ExamImgUploadVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AEB304EE45B006596A1 /* ExamImgUploadVC.xib */; };
+		84AD1B6A304EE45B006596A1 /* RemarksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AFD304EE45B006596A1 /* RemarksCell.xib */; };
+		84AD1B6B304EE45B006596A1 /* ExamListHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE5304EE45B006596A1 /* ExamListHeader.xib */; };
+		84AD1B6C304EE45B006596A1 /* ExamActivitiesCV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE7304EE45B006596A1 /* ExamActivitiesCV.xib */; };
+		84AD1B6D304EE45B006596A1 /* MarkReviewCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF5304EE45B006596A1 /* MarkReviewCVC.xib */; };
+		84AD1B6E304EE45B006596A1 /* MarksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF9304EE45B006596A1 /* MarksCell.xib */; };
+		84AD1B6F304EE45B006596A1 /* SubjectsTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AEF304EE45B006596A1 /* SubjectsTVCell.xib */; };
+		84AD1B70304EE45B006596A1 /* EnterMarkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF3304EE45B006596A1 /* EnterMarkVC.xib */; };
+		84AD1B71304EE45B006596A1 /* MarksTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF7304EE45B006596A1 /* MarksTableViewCell.xib */; };
+		84AD1B72304EE45B006596A1 /* ExamListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE3304EE45B006596A1 /* ExamListVC.xib */; };
+		84AD1B73304EE45B006596A1 /* ActivitiesTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AF1304EE45B006596A1 /* ActivitiesTVCell.xib */; };
+		84AD1B74304EE45B006596A1 /* ExamActivitySelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AED304EE45B006596A1 /* ExamActivitySelectionVC.xib */; };
+		84AD1B75304EE45B006596A1 /* Exam_ExamListTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84AD1AE1304EE45B006596A1 /* Exam_ExamListTV.xib */; };
+		84AD1B76304EE45B006596A1 /* MarksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF6304EE45B006596A1 /* MarksTableViewCell.swift */; };
+		84AD1B77304EE45B006596A1 /* ExamActivitySelectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AEC304EE45B006596A1 /* ExamActivitySelectionVC.swift */; };
+		84AD1B78304EE45B006596A1 /* SubjectsTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AEE304EE45B006596A1 /* SubjectsTVCell.swift */; };
+		84AD1B79304EE45B006596A1 /* FilterPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AFA304EE45B006596A1 /* FilterPopover.swift */; };
+		84AD1B7A304EE45B006596A1 /* RemarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AFC304EE45B006596A1 /* RemarksCell.swift */; };
+		84AD1B7B304EE45B006596A1 /* ActivitiesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF0304EE45B006596A1 /* ActivitiesTVCell.swift */; };
+		84AD1B7C304EE45B006596A1 /* EnterMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF2304EE45B006596A1 /* EnterMarkVC.swift */; };
+		84AD1B7D304EE45B006596A1 /* ExamListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE8304EE45B006596A1 /* ExamListCell.swift */; };
+		84AD1B7E304EE45B006596A1 /* ExamImgUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AEA304EE45B006596A1 /* ExamImgUploadVC.swift */; };
+		84AD1B7F304EE45B006596A1 /* staffExamMarkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1ADC304EE45B006596A1 /* staffExamMarkVC.swift */; };
+		84AD1B80304EE45B006596A1 /* ExamActivitiesCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE6304EE45B006596A1 /* ExamActivitiesCV.swift */; };
+		84AD1B81304EE45B006596A1 /* MarkReviewCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF4304EE45B006596A1 /* MarkReviewCVC.swift */; };
+		84AD1B82304EE45B006596A1 /* MarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AF8304EE45B006596A1 /* MarksCell.swift */; };
+		84AD1B83304EE45B006596A1 /* Exam_ClassListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1ADE304EE45B006596A1 /* Exam_ClassListTV.swift */; };
+		84AD1B84304EE45B006596A1 /* Exam_ExamListTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE0304EE45B006596A1 /* Exam_ExamListTV.swift */; };
+		84AD1B85304EE45B006596A1 /* ExamListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE4304EE45B006596A1 /* ExamListHeader.swift */; };
+		84AD1B86304EE45B006596A1 /* ExamListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD1AE2304EE45B006596A1 /* ExamListVC.swift */; };
 		84ADC9B92E98C3900092CCAD /* TargetCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ADC9B72E98C3900092CCAD /* TargetCvCell.swift */; };
 		84ADC9BA2E98C3900092CCAD /* TargetCvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84ADC9B82E98C3900092CCAD /* TargetCvCell.xib */; };
 		84ADF9582EF2AD96007C3374 /* NewPlayQuizVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84ADF9572EF2AD96007C3374 /* NewPlayQuizVC.xib */; };
@@ -3608,8 +3618,6 @@
 		FA6CD8A22E3DEEC500C146AB /* OutpassVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6CD8A02E3DEEC500C146AB /* OutpassVC.xib */; };
 		FA6DF7F82E3CDF5700E70BEC /* LeaveHistoryTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6DF7F62E3CDF5700E70BEC /* LeaveHistoryTV.swift */; };
 		FA6DF7F92E3CDF5700E70BEC /* LeaveHistoryTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6DF7F72E3CDF5700E70BEC /* LeaveHistoryTV.xib */; };
-		FA7014D12E7D76CD00B3C012 /* AttendanceMarkingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA7014D02E7D76CD00B3C012 /* AttendanceMarkingVC.xib */; };
-		FA7014D22E7D76CD00B3C012 /* AttendanceMarkingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7014CF2E7D76CD00B3C012 /* AttendanceMarkingVC.swift */; };
 		FA7A64122D64995900D43031 /* LessonDashboardTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7A64102D64995900D43031 /* LessonDashboardTv.swift */; };
 		FA7A64132D64995900D43031 /* LessonDashboardTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA7A64112D64995900D43031 /* LessonDashboardTv.xib */; };
 		FA7C7BAF2E55B55B009BD4CF /* CreateSlotsBottomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7C7BAD2E55B55B009BD4CF /* CreateSlotsBottomVC.swift */; };
@@ -3788,6 +3796,10 @@
 		182B0B1F2F6E5A0B002C81A0 /* AttendanceStudentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceStudentCell.swift; sourceTree = "<group>"; };
 		182B0B202F6E5A0B002C81A0 /* AttendanceStudentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceStudentCell.xib; sourceTree = "<group>"; };
 		1834ED2E2F483B3C0006969F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1836575C304FCBE0003AED35 /* UserDetailsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsTVC.swift; sourceTree = "<group>"; };
+		1836575D304FCBE0003AED35 /* UserDetailsTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDetailsTVC.xib; sourceTree = "<group>"; };
+		1836575E304FCBE0003AED35 /* UpdateProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileVC.swift; sourceTree = "<group>"; };
+		1836575F304FCBE0003AED35 /* UpdateProfileVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateProfileVC.xib; sourceTree = "<group>"; };
 		1837C7ED2F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dailyAttendaceDateTvCell.swift; sourceTree = "<group>"; };
 		1837C7EE2F6BBC56009F2BB9 /* dailyAttendaceDateTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = dailyAttendaceDateTvCell.xib; sourceTree = "<group>"; };
 		183E69C82FADB0840092D411 /* whereismybusVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = whereismybusVc.swift; sourceTree = "<group>"; };
@@ -3991,8 +4003,6 @@
 		84017F802E4494D6006CB477 /* certificateHstryCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = certificateHstryCvCell.xib; sourceTree = "<group>"; };
 		84017F832E44B1BD006CB477 /* CertificatePreviewVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificatePreviewVc.swift; sourceTree = "<group>"; };
 		84017F842E44B1BD006CB477 /* CertificatePreviewVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CertificatePreviewVc.xib; sourceTree = "<group>"; };
-		840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendenceTVC.swift; sourceTree = "<group>"; };
-		840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendenceTVC.xib; sourceTree = "<group>"; };
 		840658372CFD8D4E00080CF6 /* EventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsVC.swift; sourceTree = "<group>"; };
 		840658382CFD8D4E00080CF6 /* EventsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventsVC.xib; sourceTree = "<group>"; };
 		840658412CFD9C3400080CF6 /* AttachmentCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCVCell.swift; sourceTree = "<group>"; };
@@ -4078,38 +4088,6 @@
 		842FBAB62D0BEDBF007C0B51 /* ReportStudentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStudentTVC.swift; sourceTree = "<group>"; };
 		842FBAB72D0BEDBF007C0B51 /* ReportStudentTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportStudentTVC.xib; sourceTree = "<group>"; };
 		842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HOTCODE_COMMON_API.swift; sourceTree = "<group>"; };
-		842FE0F8304AFABB006C5D12 /* ActivitiesTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesTVCell.swift; sourceTree = "<group>"; };
-		842FE0F9304AFABB006C5D12 /* ActivitiesTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivitiesTVCell.xib; sourceTree = "<group>"; };
-		842FE0FA304AFABB006C5D12 /* EnterMarkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterMarkVC.swift; sourceTree = "<group>"; };
-		842FE0FB304AFABB006C5D12 /* EnterMarkVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EnterMarkVC.xib; sourceTree = "<group>"; };
-		842FE0FC304AFABB006C5D12 /* Exam_ClassListTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exam_ClassListTV.swift; sourceTree = "<group>"; };
-		842FE0FD304AFABB006C5D12 /* Exam_ClassListTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Exam_ClassListTV.xib; sourceTree = "<group>"; };
-		842FE0FE304AFABB006C5D12 /* Exam_ExamListTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exam_ExamListTV.swift; sourceTree = "<group>"; };
-		842FE0FF304AFABB006C5D12 /* Exam_ExamListTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Exam_ExamListTV.xib; sourceTree = "<group>"; };
-		842FE100304AFABB006C5D12 /* ExamActivitiesCV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamActivitiesCV.swift; sourceTree = "<group>"; };
-		842FE101304AFABB006C5D12 /* ExamActivitiesCV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamActivitiesCV.xib; sourceTree = "<group>"; };
-		842FE102304AFABB006C5D12 /* ExamActivitySelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamActivitySelectionVC.swift; sourceTree = "<group>"; };
-		842FE103304AFABB006C5D12 /* ExamActivitySelectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamActivitySelectionVC.xib; sourceTree = "<group>"; };
-		842FE104304AFABB006C5D12 /* ExamImgUploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamImgUploadVC.swift; sourceTree = "<group>"; };
-		842FE105304AFABB006C5D12 /* ExamImgUploadVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamImgUploadVC.xib; sourceTree = "<group>"; };
-		842FE106304AFABB006C5D12 /* ExamListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamListCell.swift; sourceTree = "<group>"; };
-		842FE107304AFABB006C5D12 /* ExamListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamListCell.xib; sourceTree = "<group>"; };
-		842FE108304AFABB006C5D12 /* ExamListHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamListHeader.swift; sourceTree = "<group>"; };
-		842FE109304AFABB006C5D12 /* ExamListHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamListHeader.xib; sourceTree = "<group>"; };
-		842FE10A304AFABB006C5D12 /* ExamListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamListVC.swift; sourceTree = "<group>"; };
-		842FE10B304AFABB006C5D12 /* ExamListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamListVC.xib; sourceTree = "<group>"; };
-		842FE10C304AFABB006C5D12 /* FilterPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPopover.swift; sourceTree = "<group>"; };
-		842FE10D304AFABB006C5D12 /* FilterPopover.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterPopover.xib; sourceTree = "<group>"; };
-		842FE10E304AFABB006C5D12 /* MarkReviewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkReviewCVC.swift; sourceTree = "<group>"; };
-		842FE10F304AFABB006C5D12 /* MarkReviewCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkReviewCVC.xib; sourceTree = "<group>"; };
-		842FE110304AFABB006C5D12 /* MarksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarksCell.swift; sourceTree = "<group>"; };
-		842FE111304AFABB006C5D12 /* MarksCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarksCell.xib; sourceTree = "<group>"; };
-		842FE112304AFABB006C5D12 /* MarksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarksTableViewCell.swift; sourceTree = "<group>"; };
-		842FE113304AFABB006C5D12 /* MarksTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarksTableViewCell.xib; sourceTree = "<group>"; };
-		842FE114304AFABB006C5D12 /* staffExamMarkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = staffExamMarkVC.swift; sourceTree = "<group>"; };
-		842FE115304AFABB006C5D12 /* staffExamMarkVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = staffExamMarkVC.xib; sourceTree = "<group>"; };
-		842FE116304AFABB006C5D12 /* SubjectsTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectsTVCell.swift; sourceTree = "<group>"; };
-		842FE117304AFABB006C5D12 /* SubjectsTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubjectsTVCell.xib; sourceTree = "<group>"; };
 		842FE3D5304B0078006C5D12 /* ViewDetailsVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDetailsVc.swift; sourceTree = "<group>"; };
 		842FE3D6304B0078006C5D12 /* ViewDetailsVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewDetailsVc.xib; sourceTree = "<group>"; };
 		842FE3D7304B0078006C5D12 /* RubricDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RubricDetailViewController.swift; sourceTree = "<group>"; };
@@ -4196,10 +4174,6 @@
 		8442AA732CDF6B220006068E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		84443FA62F76542800DC70F1 /* OutpassRequestsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutpassRequestsVC.swift; sourceTree = "<group>"; };
 		84443FA72F76542800DC70F1 /* OutpassRequestsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OutpassRequestsVC.xib; sourceTree = "<group>"; };
-		84444C502E66D3FF00B4B8EB /* UserDetailsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsTVC.swift; sourceTree = "<group>"; };
-		84444C512E66D3FF00B4B8EB /* UserDetailsTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDetailsTVC.xib; sourceTree = "<group>"; };
-		84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileVC.swift; sourceTree = "<group>"; };
-		84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateProfileVC.xib; sourceTree = "<group>"; };
 		8449D8D32ED4647300822FAC /* normal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = normal.mp3; sourceTree = "<group>"; };
 		844DEDE22E549A0B0016A347 /* CreateQuizQutionVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateQuizQutionVc.swift; sourceTree = "<group>"; };
 		844DEDE32E549A0B0016A347 /* CreateQuizQutionVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateQuizQutionVc.xib; sourceTree = "<group>"; };
@@ -4324,8 +4298,6 @@
 		849970C52CF8752400800B07 /* TextHistoryTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextHistoryTVCell.swift; sourceTree = "<group>"; };
 		849970C62CF8752400800B07 /* TextHistoryTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextHistoryTVCell.xib; sourceTree = "<group>"; };
 		849970C72CF8752400800B07 /* WaveView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaveView .swift"; sourceTree = "<group>"; };
-		849978402CEF1FE5007D45BA /* StudentHistryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentHistryVC.swift; sourceTree = "<group>"; };
-		849978412CEF1FE5007D45BA /* StudentHistryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudentHistryVC.xib; sourceTree = "<group>"; };
 		849ACFF92D1A8369002DEC07 /* ReciverAttendanceReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReciverAttendanceReportVC.swift; sourceTree = "<group>"; };
 		849ACFFA2D1A8369002DEC07 /* ReciverAttendanceReportVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReciverAttendanceReportVC.xib; sourceTree = "<group>"; };
 		849AD01A2D1A8402002DEC07 /* LessonPlanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonPlanVC.swift; sourceTree = "<group>"; };
@@ -4385,6 +4357,46 @@
 		84AA10CC2F4D77B7000B366F /* BusTrakingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BusTrakingVC.xib; sourceTree = "<group>"; };
 		84AC7F0D2E3C8EED0022BD63 /* SideMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuVC.swift; sourceTree = "<group>"; };
 		84AC7F0E2E3C8EED0022BD63 /* SideMenuVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideMenuVC.xib; sourceTree = "<group>"; };
+		84AD1ABD304EE43F006596A1 /* AttendenceTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendenceTVC.xib; sourceTree = "<group>"; };
+		84AD1ABE304EE43F006596A1 /* AttendenceTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendenceTVC.swift; sourceTree = "<group>"; };
+		84AD1ABF304EE43F006596A1 /* StudentHistryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentHistryVC.swift; sourceTree = "<group>"; };
+		84AD1AC0304EE43F006596A1 /* StudentHistryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudentHistryVC.xib; sourceTree = "<group>"; };
+		84AD1AC1304EE43F006596A1 /* AttendanceMarkingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceMarkingVC.swift; sourceTree = "<group>"; };
+		84AD1AC2304EE43F006596A1 /* AttendanceMarkingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceMarkingVC.xib; sourceTree = "<group>"; };
+		84AD1ADC304EE45B006596A1 /* staffExamMarkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = staffExamMarkVC.swift; sourceTree = "<group>"; };
+		84AD1ADD304EE45B006596A1 /* staffExamMarkVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = staffExamMarkVC.xib; sourceTree = "<group>"; };
+		84AD1ADE304EE45B006596A1 /* Exam_ClassListTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exam_ClassListTV.swift; sourceTree = "<group>"; };
+		84AD1ADF304EE45B006596A1 /* Exam_ClassListTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Exam_ClassListTV.xib; sourceTree = "<group>"; };
+		84AD1AE0304EE45B006596A1 /* Exam_ExamListTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exam_ExamListTV.swift; sourceTree = "<group>"; };
+		84AD1AE1304EE45B006596A1 /* Exam_ExamListTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Exam_ExamListTV.xib; sourceTree = "<group>"; };
+		84AD1AE2304EE45B006596A1 /* ExamListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamListVC.swift; sourceTree = "<group>"; };
+		84AD1AE3304EE45B006596A1 /* ExamListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamListVC.xib; sourceTree = "<group>"; };
+		84AD1AE4304EE45B006596A1 /* ExamListHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamListHeader.swift; sourceTree = "<group>"; };
+		84AD1AE5304EE45B006596A1 /* ExamListHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamListHeader.xib; sourceTree = "<group>"; };
+		84AD1AE6304EE45B006596A1 /* ExamActivitiesCV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamActivitiesCV.swift; sourceTree = "<group>"; };
+		84AD1AE7304EE45B006596A1 /* ExamActivitiesCV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamActivitiesCV.xib; sourceTree = "<group>"; };
+		84AD1AE8304EE45B006596A1 /* ExamListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamListCell.swift; sourceTree = "<group>"; };
+		84AD1AE9304EE45B006596A1 /* ExamListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamListCell.xib; sourceTree = "<group>"; };
+		84AD1AEA304EE45B006596A1 /* ExamImgUploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamImgUploadVC.swift; sourceTree = "<group>"; };
+		84AD1AEB304EE45B006596A1 /* ExamImgUploadVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamImgUploadVC.xib; sourceTree = "<group>"; };
+		84AD1AEC304EE45B006596A1 /* ExamActivitySelectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamActivitySelectionVC.swift; sourceTree = "<group>"; };
+		84AD1AED304EE45B006596A1 /* ExamActivitySelectionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamActivitySelectionVC.xib; sourceTree = "<group>"; };
+		84AD1AEE304EE45B006596A1 /* SubjectsTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectsTVCell.swift; sourceTree = "<group>"; };
+		84AD1AEF304EE45B006596A1 /* SubjectsTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubjectsTVCell.xib; sourceTree = "<group>"; };
+		84AD1AF0304EE45B006596A1 /* ActivitiesTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesTVCell.swift; sourceTree = "<group>"; };
+		84AD1AF1304EE45B006596A1 /* ActivitiesTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivitiesTVCell.xib; sourceTree = "<group>"; };
+		84AD1AF2304EE45B006596A1 /* EnterMarkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterMarkVC.swift; sourceTree = "<group>"; };
+		84AD1AF3304EE45B006596A1 /* EnterMarkVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EnterMarkVC.xib; sourceTree = "<group>"; };
+		84AD1AF4304EE45B006596A1 /* MarkReviewCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkReviewCVC.swift; sourceTree = "<group>"; };
+		84AD1AF5304EE45B006596A1 /* MarkReviewCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkReviewCVC.xib; sourceTree = "<group>"; };
+		84AD1AF6304EE45B006596A1 /* MarksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarksTableViewCell.swift; sourceTree = "<group>"; };
+		84AD1AF7304EE45B006596A1 /* MarksTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarksTableViewCell.xib; sourceTree = "<group>"; };
+		84AD1AF8304EE45B006596A1 /* MarksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarksCell.swift; sourceTree = "<group>"; };
+		84AD1AF9304EE45B006596A1 /* MarksCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarksCell.xib; sourceTree = "<group>"; };
+		84AD1AFA304EE45B006596A1 /* FilterPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPopover.swift; sourceTree = "<group>"; };
+		84AD1AFB304EE45B006596A1 /* FilterPopover.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterPopover.xib; sourceTree = "<group>"; };
+		84AD1AFC304EE45B006596A1 /* RemarksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemarksCell.swift; sourceTree = "<group>"; };
+		84AD1AFD304EE45B006596A1 /* RemarksCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RemarksCell.xib; sourceTree = "<group>"; };
 		84ADC9B72E98C3900092CCAD /* TargetCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetCvCell.swift; sourceTree = "<group>"; };
 		84ADC9B82E98C3900092CCAD /* TargetCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TargetCvCell.xib; sourceTree = "<group>"; };
 		84ADF9562EF2AD96007C3374 /* NewPlayQuizVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPlayQuizVC.swift; sourceTree = "<group>"; };
@@ -4592,8 +4604,6 @@
 		FA6CD8A02E3DEEC500C146AB /* OutpassVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OutpassVC.xib; sourceTree = "<group>"; };
 		FA6DF7F62E3CDF5700E70BEC /* LeaveHistoryTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveHistoryTV.swift; sourceTree = "<group>"; };
 		FA6DF7F72E3CDF5700E70BEC /* LeaveHistoryTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeaveHistoryTV.xib; sourceTree = "<group>"; };
-		FA7014CF2E7D76CD00B3C012 /* AttendanceMarkingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceMarkingVC.swift; sourceTree = "<group>"; };
-		FA7014D02E7D76CD00B3C012 /* AttendanceMarkingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceMarkingVC.xib; sourceTree = "<group>"; };
 		FA7A64102D64995900D43031 /* LessonDashboardTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDashboardTv.swift; sourceTree = "<group>"; };
 		FA7A64112D64995900D43031 /* LessonDashboardTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonDashboardTv.xib; sourceTree = "<group>"; };
 		FA7C7BAD2E55B55B009BD4CF /* CreateSlotsBottomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSlotsBottomVC.swift; sourceTree = "<group>"; };
@@ -4692,7 +4702,7 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		18364E31304EB699003AED35 /* paymentProof */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = paymentProof; sourceTree = "<group>"; };
+		183658FC30500CF3003AED35 /* paymentProof */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = paymentProof; sourceTree = "<group>"; };
 		186E62522FEA59E700BAF454 /* Classtest */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Classtest; sourceTree = "<group>"; };
 		186F4AD5304BE22700AC7E58 /* ExamAnaylze */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ExamAnaylze; sourceTree = "<group>"; };
 		186F4B22304BE46000AC7E58 /* ConcernVc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ConcernVc; sourceTree = "<group>"; };
@@ -4943,6 +4953,17 @@
 			path = NetworkMoniter;
 			sourceTree = "<group>";
 		};
+		18365760304FCBE0003AED35 /* ProfilepageVc */ = {
+			isa = PBXGroup;
+			children = (
+				1836575C304FCBE0003AED35 /* UserDetailsTVC.swift */,
+				1836575D304FCBE0003AED35 /* UserDetailsTVC.xib */,
+				1836575E304FCBE0003AED35 /* UpdateProfileVC.swift */,
+				1836575F304FCBE0003AED35 /* UpdateProfileVC.xib */,
+			);
+			path = ProfilepageVc;
+			sourceTree = "<group>";
+		};
 		183E69C72FADB0580092D411 /* WhereIsBus */ = {
 			isa = PBXGroup;
 			children = (
@@ -5057,7 +5078,7 @@
 		187A0B452F10E9AA008CF5B7 /* FeeDetail */ = {
 			isa = PBXGroup;
 			children = (
-				18364E31304EB699003AED35 /* paymentProof */,
+				183658FC30500CF3003AED35 /* paymentProof */,
 				1868A8112FACA13700831144 /* PaymentHistoryCell.swift */,
 				1868A8122FACA13700831144 /* PaymentHistoryCell.xib */,
 				187A0B3F2F10E9AA008CF5B7 /* FeeDetails.swift */,
@@ -5749,45 +5770,6 @@
 			path = StudentReport;
 			sourceTree = "<group>";
 		};
-		842FE118304AFABB006C5D12 /* Exam Mark */ = {
-			isa = PBXGroup;
-			children = (
-				842FE0F8304AFABB006C5D12 /* ActivitiesTVCell.swift */,
-				842FE0F9304AFABB006C5D12 /* ActivitiesTVCell.xib */,
-				842FE0FA304AFABB006C5D12 /* EnterMarkVC.swift */,
-				842FE0FB304AFABB006C5D12 /* EnterMarkVC.xib */,
-				842FE0FC304AFABB006C5D12 /* Exam_ClassListTV.swift */,
-				842FE0FD304AFABB006C5D12 /* Exam_ClassListTV.xib */,
-				842FE0FE304AFABB006C5D12 /* Exam_ExamListTV.swift */,
-				842FE0FF304AFABB006C5D12 /* Exam_ExamListTV.xib */,
-				842FE100304AFABB006C5D12 /* ExamActivitiesCV.swift */,
-				842FE101304AFABB006C5D12 /* ExamActivitiesCV.xib */,
-				842FE102304AFABB006C5D12 /* ExamActivitySelectionVC.swift */,
-				842FE103304AFABB006C5D12 /* ExamActivitySelectionVC.xib */,
-				842FE104304AFABB006C5D12 /* ExamImgUploadVC.swift */,
-				842FE105304AFABB006C5D12 /* ExamImgUploadVC.xib */,
-				842FE106304AFABB006C5D12 /* ExamListCell.swift */,
-				842FE107304AFABB006C5D12 /* ExamListCell.xib */,
-				842FE108304AFABB006C5D12 /* ExamListHeader.swift */,
-				842FE109304AFABB006C5D12 /* ExamListHeader.xib */,
-				842FE10A304AFABB006C5D12 /* ExamListVC.swift */,
-				842FE10B304AFABB006C5D12 /* ExamListVC.xib */,
-				842FE10C304AFABB006C5D12 /* FilterPopover.swift */,
-				842FE10D304AFABB006C5D12 /* FilterPopover.xib */,
-				842FE10E304AFABB006C5D12 /* MarkReviewCVC.swift */,
-				842FE10F304AFABB006C5D12 /* MarkReviewCVC.xib */,
-				842FE110304AFABB006C5D12 /* MarksCell.swift */,
-				842FE111304AFABB006C5D12 /* MarksCell.xib */,
-				842FE112304AFABB006C5D12 /* MarksTableViewCell.swift */,
-				842FE113304AFABB006C5D12 /* MarksTableViewCell.xib */,
-				842FE114304AFABB006C5D12 /* staffExamMarkVC.swift */,
-				842FE115304AFABB006C5D12 /* staffExamMarkVC.xib */,
-				842FE116304AFABB006C5D12 /* SubjectsTVCell.swift */,
-				842FE117304AFABB006C5D12 /* SubjectsTVCell.xib */,
-			);
-			path = "Exam Mark";
-			sourceTree = "<group>";
-		};
 		842FE3E9304B0078006C5D12 /* MarkCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -6117,19 +6099,6 @@
 			path = Communication;
 			sourceTree = "<group>";
 		};
-		849978422CEF1FE5007D45BA /* Attendance */ = {
-			isa = PBXGroup;
-			children = (
-				840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */,
-				840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */,
-				849978402CEF1FE5007D45BA /* StudentHistryVC.swift */,
-				849978412CEF1FE5007D45BA /* StudentHistryVC.xib */,
-				FA7014CF2E7D76CD00B3C012 /* AttendanceMarkingVC.swift */,
-				FA7014D02E7D76CD00B3C012 /* AttendanceMarkingVC.xib */,
-			);
-			path = Attendance;
-			sourceTree = "<group>";
-		};
 		849ACFFD2D1A8369002DEC07 /* ReciverAttendanceReport */ = {
 			isa = PBXGroup;
 			children = (
@@ -6434,7 +6403,7 @@
 				1841DE902F56F8B700B88801 /* HostelAttendace */,
 				18DA6EB72F56A24E00381972 /* ApplyLeave */,
 				18887AB02EFFAAFB008B71FF /* Message */,
-				842FE118304AFABB006C5D12 /* Exam Mark */,
+				84AD1AFE304EE45B006596A1 /* Exam Mark */,
 				84DE94992E5324F7008E1BF4 /* Quiz */,
 				188870362EEAEAC6008B71FF /* SenderLSRW */,
 				FA2A3FB72DB0CA6C0000AF55 /* Sender Attachment */,
@@ -6455,7 +6424,7 @@
 				18926D342D041D54002BBB97 /* ImportantInfo */,
 				FAFF9DD12D6C7B7A00498368 /* PTM */,
 				84EFF9D02CCC7C8800C11C26 /* HomePage */,
-				849978422CEF1FE5007D45BA /* Attendance */,
+				84AD1AC3304EE43F006596A1 /* Attendance */,
 				849970C82CF8752400800B07 /* Communication */,
 				840658362CFD8D1B00080CF6 /* Event */,
 				842FBABA2D0BEDBF007C0B51 /* StudentReport */,
@@ -6496,6 +6465,60 @@
 				84A2717A2CEDAB9F0033EB02 /* Image_PdfVC */,
 			);
 			path = ParentDashBoard;
+			sourceTree = "<group>";
+		};
+		84AD1AC3304EE43F006596A1 /* Attendance */ = {
+			isa = PBXGroup;
+			children = (
+				84AD1ABD304EE43F006596A1 /* AttendenceTVC.xib */,
+				84AD1ABE304EE43F006596A1 /* AttendenceTVC.swift */,
+				84AD1ABF304EE43F006596A1 /* StudentHistryVC.swift */,
+				84AD1AC0304EE43F006596A1 /* StudentHistryVC.xib */,
+				84AD1AC1304EE43F006596A1 /* AttendanceMarkingVC.swift */,
+				84AD1AC2304EE43F006596A1 /* AttendanceMarkingVC.xib */,
+			);
+			path = Attendance;
+			sourceTree = "<group>";
+		};
+		84AD1AFE304EE45B006596A1 /* Exam Mark */ = {
+			isa = PBXGroup;
+			children = (
+				84AD1ADC304EE45B006596A1 /* staffExamMarkVC.swift */,
+				84AD1ADD304EE45B006596A1 /* staffExamMarkVC.xib */,
+				84AD1ADE304EE45B006596A1 /* Exam_ClassListTV.swift */,
+				84AD1ADF304EE45B006596A1 /* Exam_ClassListTV.xib */,
+				84AD1AE0304EE45B006596A1 /* Exam_ExamListTV.swift */,
+				84AD1AE1304EE45B006596A1 /* Exam_ExamListTV.xib */,
+				84AD1AE2304EE45B006596A1 /* ExamListVC.swift */,
+				84AD1AE3304EE45B006596A1 /* ExamListVC.xib */,
+				84AD1AE4304EE45B006596A1 /* ExamListHeader.swift */,
+				84AD1AE5304EE45B006596A1 /* ExamListHeader.xib */,
+				84AD1AE6304EE45B006596A1 /* ExamActivitiesCV.swift */,
+				84AD1AE7304EE45B006596A1 /* ExamActivitiesCV.xib */,
+				84AD1AE8304EE45B006596A1 /* ExamListCell.swift */,
+				84AD1AE9304EE45B006596A1 /* ExamListCell.xib */,
+				84AD1AEA304EE45B006596A1 /* ExamImgUploadVC.swift */,
+				84AD1AEB304EE45B006596A1 /* ExamImgUploadVC.xib */,
+				84AD1AEC304EE45B006596A1 /* ExamActivitySelectionVC.swift */,
+				84AD1AED304EE45B006596A1 /* ExamActivitySelectionVC.xib */,
+				84AD1AEE304EE45B006596A1 /* SubjectsTVCell.swift */,
+				84AD1AEF304EE45B006596A1 /* SubjectsTVCell.xib */,
+				84AD1AF0304EE45B006596A1 /* ActivitiesTVCell.swift */,
+				84AD1AF1304EE45B006596A1 /* ActivitiesTVCell.xib */,
+				84AD1AF2304EE45B006596A1 /* EnterMarkVC.swift */,
+				84AD1AF3304EE45B006596A1 /* EnterMarkVC.xib */,
+				84AD1AF4304EE45B006596A1 /* MarkReviewCVC.swift */,
+				84AD1AF5304EE45B006596A1 /* MarkReviewCVC.xib */,
+				84AD1AF6304EE45B006596A1 /* MarksTableViewCell.swift */,
+				84AD1AF7304EE45B006596A1 /* MarksTableViewCell.xib */,
+				84AD1AF8304EE45B006596A1 /* MarksCell.swift */,
+				84AD1AF9304EE45B006596A1 /* MarksCell.xib */,
+				84AD1AFA304EE45B006596A1 /* FilterPopover.swift */,
+				84AD1AFB304EE45B006596A1 /* FilterPopover.xib */,
+				84AD1AFC304EE45B006596A1 /* RemarksCell.swift */,
+				84AD1AFD304EE45B006596A1 /* RemarksCell.xib */,
+			);
+			path = "Exam Mark";
 			sourceTree = "<group>";
 		};
 		84ADC9B62E97EABD0092CCAD /* TargetsListCells */ = {
@@ -6739,17 +6762,6 @@
 			path = DatePicker;
 			sourceTree = "<group>";
 		};
-		84EFF4942CE388B800E39BEA /* ProfilepageVc */ = {
-			isa = PBXGroup;
-			children = (
-				84444C502E66D3FF00B4B8EB /* UserDetailsTVC.swift */,
-				84444C512E66D3FF00B4B8EB /* UserDetailsTVC.xib */,
-				84444C542E66EE3B00B4B8EB /* UpdateProfileVC.swift */,
-				84444C552E66EE3B00B4B8EB /* UpdateProfileVC.xib */,
-			);
-			path = ProfilepageVc;
-			sourceTree = "<group>";
-		};
 		84EFF9CB2CCBBC8B00C11C26 /* CreatePassword */ = {
 			isa = PBXGroup;
 			children = (
@@ -6784,7 +6796,6 @@
 			children = (
 				FA43D0E32F322D5A0046B966 /* NotificationCall */,
 				84EFF9EA2CCCAF3000C11C26 /* SettingsVc */,
-				84EFF4942CE388B800E39BEA /* ProfilepageVc */,
 				8494B6622CD1EC47004B0746 /* TapBarVc */,
 				84EFF9EF2CCCAFDD00C11C26 /* HelpVc */,
 			);
@@ -6794,6 +6805,7 @@
 		84EFF9EA2CCCAF3000C11C26 /* SettingsVc */ = {
 			isa = PBXGroup;
 			children = (
+				18365760304FCBE0003AED35 /* ProfilepageVc */,
 				8442A8F32CDC83860006068E /* Rate Us */,
 				8442A9692CDE8AE80006068E /* LanguageVC */,
 				8442A90B2CDC8B2D0006068E /* FAQ Page */,
@@ -7158,7 +7170,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				18364E31304EB699003AED35 /* paymentProof */,
+				183658FC30500CF3003AED35 /* paymentProof */,
 				186E62522FEA59E700BAF454 /* Classtest */,
 				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186F4B22304BE46000AC7E58 /* ConcernVc */,
@@ -7202,7 +7214,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				18364E31304EB699003AED35 /* paymentProof */,
+				183658FC30500CF3003AED35 /* paymentProof */,
 				186E62522FEA59E700BAF454 /* Classtest */,
 				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186F4B22304BE46000AC7E58 /* ConcernVc */,
@@ -7246,7 +7258,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				18364E31304EB699003AED35 /* paymentProof */,
+				183658FC30500CF3003AED35 /* paymentProof */,
 				186E62522FEA59E700BAF454 /* Classtest */,
 				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186F4B22304BE46000AC7E58 /* ConcernVc */,
@@ -7308,7 +7320,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				18364E31304EB699003AED35 /* paymentProof */,
+				183658FC30500CF3003AED35 /* paymentProof */,
 				186E62522FEA59E700BAF454 /* Classtest */,
 				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186F4B22304BE46000AC7E58 /* ConcernVc */,
@@ -7446,26 +7458,9 @@
 			files = (
 				1827E7792F90C12000B33B20 /* CreateQuizQutionVc.xib in Resources */,
 				1827E77A2F90C12000B33B20 /* RequestItemCell.xib in Resources */,
-				842FE119304AFABB006C5D12 /* ExamActivitySelectionVC.xib in Resources */,
-				842FE11A304AFABB006C5D12 /* ExamImgUploadVC.xib in Resources */,
-				842FE11B304AFABB006C5D12 /* Exam_ClassListTV.xib in Resources */,
-				842FE11C304AFABB006C5D12 /* Exam_ExamListTV.xib in Resources */,
-				842FE11D304AFABB006C5D12 /* ExamActivitiesCV.xib in Resources */,
-				842FE11E304AFABB006C5D12 /* EnterMarkVC.xib in Resources */,
-				842FE11F304AFABB006C5D12 /* ExamListCell.xib in Resources */,
-				842FE120304AFABB006C5D12 /* MarksCell.xib in Resources */,
-				842FE121304AFABB006C5D12 /* ActivitiesTVCell.xib in Resources */,
-				842FE122304AFABB006C5D12 /* SubjectsTVCell.xib in Resources */,
-				842FE123304AFABB006C5D12 /* ExamListHeader.xib in Resources */,
-				842FE124304AFABB006C5D12 /* staffExamMarkVC.xib in Resources */,
-				842FE125304AFABB006C5D12 /* MarkReviewCVC.xib in Resources */,
-				842FE126304AFABB006C5D12 /* ExamListVC.xib in Resources */,
-				842FE127304AFABB006C5D12 /* FilterPopover.xib in Resources */,
-				842FE128304AFABB006C5D12 /* MarksTableViewCell.xib in Resources */,
 				1827E77B2F90C12000B33B20 /* AdminRequestsViewController.xib in Resources */,
 				1827E77C2F90C12000B33B20 /* quizCellTv.xib in Resources */,
 				1827E77D2F90C12000B33B20 /* ReportBugVcViewController.xib in Resources */,
-				1827E77E2F90C12000B33B20 /* UpdateProfileVC.xib in Resources */,
 				1827E77F2F90C12000B33B20 /* VoiceMessageVc.xib in Resources */,
 				1880E9EF2FD14BF40025EB96 /* StopTimelineCell.xib in Resources */,
 				1827E7812F90C12000B33B20 /* CommonPagenationVc.xib in Resources */,
@@ -7502,7 +7497,6 @@
 				1827E7A02F90C12000B33B20 /* locationAnimation.json in Resources */,
 				1827E7A32F90C12000B33B20 /* DetailedDayRowCell.xib in Resources */,
 				1827E7A42F90C12000B33B20 /* OutpassRequestsCell.xib in Resources */,
-				1827E7A52F90C12000B33B20 /* AttendenceTVC.xib in Resources */,
 				1827E7A62F90C12000B33B20 /* StaffLeaveReqTvCell.xib in Resources */,
 				1827E7A72F90C12000B33B20 /* SchoolTVCell.xib in Resources */,
 				1827E7A82F90C12000B33B20 /* Poppins-Bold.otf in Resources */,
@@ -7537,11 +7531,9 @@
 				1827E7C12F90C12000B33B20 /* StudentAttendanceCell.xib in Resources */,
 				1827E7C22F90C12000B33B20 /* BaseAssets.xcassets in Resources */,
 				183E69CF2FADB0840092D411 /* whereismybusVc.xib in Resources */,
-				1827E7C32F90C12000B33B20 /* StudentHistryVC.xib in Resources */,
 				1827E7C42F90C12000B33B20 /* Base in Resources */,
 				1827E7C52F90C12000B33B20 /* loader.json in Resources */,
 				1827E7C62F90C12000B33B20 /* AssignmentSummitionVC.xib in Resources */,
-				1827E7C72F90C12000B33B20 /* AttendanceMarkingVC.xib in Resources */,
 				1827E7C82F90C12000B33B20 /* shareAndDownloadVc.xib in Resources */,
 				1827E7C92F90C12000B33B20 /* ImageShowCVCell.xib in Resources */,
 				1827E7CA2F90C12000B33B20 /* ImageShowVc.xib in Resources */,
@@ -7550,13 +7542,29 @@
 				1827E7CC2F90C12000B33B20 /* outpassRequestTVcell.xib in Resources */,
 				1827E7CD2F90C12000B33B20 /* VideoPlayerCVC.xib in Resources */,
 				1827E7CE2F90C12000B33B20 /* PtmNavigationVC.xib in Resources */,
-				1827E7CF2F90C12000B33B20 /* UserDetailsTVC.xib in Resources */,
 				1827E7D02F90C12000B33B20 /* StatsticTvCell.xib in Resources */,
 				1827E7D12F90C12000B33B20 /* Localizable.strings in Resources */,
 				1827E7D22F90C12000B33B20 /* PopoverViewVC.xib in Resources */,
 				1827E7D32F90C12000B33B20 /* WeekDaysNameCollectionViewCell.xib in Resources */,
 				1827E7D42F90C12000B33B20 /* EventHistoryVC.xib in Resources */,
 				1827E7D52F90C12000B33B20 /* CreatePasswordVc.xib in Resources */,
+				84AD1B65304EE45B006596A1 /* staffExamMarkVC.xib in Resources */,
+				84AD1B66304EE45B006596A1 /* Exam_ClassListTV.xib in Resources */,
+				84AD1B67304EE45B006596A1 /* FilterPopover.xib in Resources */,
+				84AD1B68304EE45B006596A1 /* ExamListCell.xib in Resources */,
+				84AD1B69304EE45B006596A1 /* ExamImgUploadVC.xib in Resources */,
+				84AD1B6A304EE45B006596A1 /* RemarksCell.xib in Resources */,
+				84AD1B6B304EE45B006596A1 /* ExamListHeader.xib in Resources */,
+				84AD1B6C304EE45B006596A1 /* ExamActivitiesCV.xib in Resources */,
+				84AD1B6D304EE45B006596A1 /* MarkReviewCVC.xib in Resources */,
+				84AD1B6E304EE45B006596A1 /* MarksCell.xib in Resources */,
+				84AD1B6F304EE45B006596A1 /* SubjectsTVCell.xib in Resources */,
+				84AD1B70304EE45B006596A1 /* EnterMarkVC.xib in Resources */,
+				84AD1B71304EE45B006596A1 /* MarksTableViewCell.xib in Resources */,
+				84AD1B72304EE45B006596A1 /* ExamListVC.xib in Resources */,
+				84AD1B73304EE45B006596A1 /* ActivitiesTVCell.xib in Resources */,
+				84AD1B74304EE45B006596A1 /* ExamActivitySelectionVC.xib in Resources */,
+				84AD1B75304EE45B006596A1 /* Exam_ExamListTV.xib in Resources */,
 				1827E7D62F90C12000B33B20 /* SideMenuVC.xib in Resources */,
 				1827E7D72F90C12000B33B20 /* LoginVc.xib in Resources */,
 				1827E7D82F90C12000B33B20 /* LangTvCellTableViewCell.xib in Resources */,
@@ -7623,6 +7631,9 @@
 				1827E8082F90C12000B33B20 /* SessionAnalysisCell.xib in Resources */,
 				1827E8092F90C12000B33B20 /* TodayAttendanceCell.xib in Resources */,
 				1827E80A2F90C12000B33B20 /* WeeklyTrendCell.xib in Resources */,
+				84AD1AD0304EE43F006596A1 /* AttendenceTVC.xib in Resources */,
+				84AD1AD1304EE43F006596A1 /* AttendanceMarkingVC.xib in Resources */,
+				84AD1AD2304EE43F006596A1 /* StudentHistryVC.xib in Resources */,
 				1827E80B2F90C12000B33B20 /* LICENSE in Resources */,
 				1827E80C2F90C12000B33B20 /* DropDownCell.xib in Resources */,
 				1827E80D2F90C12000B33B20 /* README.md in Resources */,
@@ -7835,6 +7846,8 @@
 				1827E8EF2F90C12000B33B20 /* AttendanceHeaderView.xib in Resources */,
 				1827E8F02F90C12000B33B20 /* OverallSummaryCell.xib in Resources */,
 				1827E8F12F90C12000B33B20 /* IntractwithStudentVc.xib in Resources */,
+				18365763304FCBE0003AED35 /* UpdateProfileVC.xib in Resources */,
+				18365764304FCBE0003AED35 /* UserDetailsTVC.xib in Resources */,
 				1827E8F22F90C12000B33B20 /* ActivateCoupenTVC.xib in Resources */,
 				1827E8F32F90C12000B33B20 /* QuizCompletedVc.xib in Resources */,
 				1827E8F42F90C12000B33B20 /* CoupenDetailTVC.xib in Resources */,
@@ -7880,26 +7893,9 @@
 			files = (
 				1868A5A42FAC762E00831144 /* CreateQuizQutionVc.xib in Resources */,
 				1868A5A52FAC762E00831144 /* RequestItemCell.xib in Resources */,
-				842FE139304AFABB006C5D12 /* ExamActivitySelectionVC.xib in Resources */,
-				842FE13A304AFABB006C5D12 /* ExamImgUploadVC.xib in Resources */,
-				842FE13B304AFABB006C5D12 /* Exam_ClassListTV.xib in Resources */,
-				842FE13C304AFABB006C5D12 /* Exam_ExamListTV.xib in Resources */,
-				842FE13D304AFABB006C5D12 /* ExamActivitiesCV.xib in Resources */,
-				842FE13E304AFABB006C5D12 /* EnterMarkVC.xib in Resources */,
-				842FE13F304AFABB006C5D12 /* ExamListCell.xib in Resources */,
-				842FE140304AFABB006C5D12 /* MarksCell.xib in Resources */,
-				842FE141304AFABB006C5D12 /* ActivitiesTVCell.xib in Resources */,
-				842FE142304AFABB006C5D12 /* SubjectsTVCell.xib in Resources */,
-				842FE143304AFABB006C5D12 /* ExamListHeader.xib in Resources */,
-				842FE144304AFABB006C5D12 /* staffExamMarkVC.xib in Resources */,
-				842FE145304AFABB006C5D12 /* MarkReviewCVC.xib in Resources */,
-				842FE146304AFABB006C5D12 /* ExamListVC.xib in Resources */,
-				842FE147304AFABB006C5D12 /* FilterPopover.xib in Resources */,
-				842FE148304AFABB006C5D12 /* MarksTableViewCell.xib in Resources */,
 				1868A5A62FAC762E00831144 /* AdminRequestsViewController.xib in Resources */,
 				1868A5A72FAC762E00831144 /* quizCellTv.xib in Resources */,
 				1868A5A82FAC762E00831144 /* ReportBugVcViewController.xib in Resources */,
-				1868A5A92FAC762E00831144 /* UpdateProfileVC.xib in Resources */,
 				1868A5AA2FAC762E00831144 /* VoiceMessageVc.xib in Resources */,
 				1880E9F32FD14BF40025EB96 /* StopTimelineCell.xib in Resources */,
 				1868A5AC2FAC762E00831144 /* CommonPagenationVc.xib in Resources */,
@@ -7936,7 +7932,6 @@
 				1868A5CB2FAC762E00831144 /* locationAnimation.json in Resources */,
 				1868A5CE2FAC762E00831144 /* DetailedDayRowCell.xib in Resources */,
 				1868A5CF2FAC762E00831144 /* OutpassRequestsCell.xib in Resources */,
-				1868A5D02FAC762E00831144 /* AttendenceTVC.xib in Resources */,
 				1868A5D12FAC762E00831144 /* StaffLeaveReqTvCell.xib in Resources */,
 				1868A5D22FAC762E00831144 /* SchoolTVCell.xib in Resources */,
 				1868A5D32FAC762E00831144 /* Poppins-Bold.otf in Resources */,
@@ -7971,11 +7966,9 @@
 				1868A5EC2FAC762E00831144 /* StudentAttendanceCell.xib in Resources */,
 				1868A5ED2FAC762E00831144 /* BaseAssets.xcassets in Resources */,
 				183E69CC2FADB0840092D411 /* whereismybusVc.xib in Resources */,
-				1868A5EE2FAC762E00831144 /* StudentHistryVC.xib in Resources */,
 				1868A5EF2FAC762E00831144 /* Base in Resources */,
 				1868A5F02FAC762E00831144 /* loader.json in Resources */,
 				1868A5F12FAC762E00831144 /* AssignmentSummitionVC.xib in Resources */,
-				1868A5F22FAC762E00831144 /* AttendanceMarkingVC.xib in Resources */,
 				1868A5F32FAC762E00831144 /* shareAndDownloadVc.xib in Resources */,
 				1868A5F42FAC762E00831144 /* ImageShowCVCell.xib in Resources */,
 				1868A5F52FAC762E00831144 /* ImageShowVc.xib in Resources */,
@@ -7984,13 +7977,29 @@
 				1868A5F72FAC762E00831144 /* outpassRequestTVcell.xib in Resources */,
 				1868A5F82FAC762E00831144 /* VideoPlayerCVC.xib in Resources */,
 				1868A5F92FAC762E00831144 /* PtmNavigationVC.xib in Resources */,
-				1868A5FA2FAC762E00831144 /* UserDetailsTVC.xib in Resources */,
 				1868A5FB2FAC762E00831144 /* StatsticTvCell.xib in Resources */,
 				1868A5FC2FAC762E00831144 /* Localizable.strings in Resources */,
 				1868A5FD2FAC762E00831144 /* PopoverViewVC.xib in Resources */,
 				1868A5FE2FAC762E00831144 /* WeekDaysNameCollectionViewCell.xib in Resources */,
 				1868A5FF2FAC762E00831144 /* EventHistoryVC.xib in Resources */,
 				1868A6002FAC762E00831144 /* CreatePasswordVc.xib in Resources */,
+				84AD1AFF304EE45B006596A1 /* staffExamMarkVC.xib in Resources */,
+				84AD1B00304EE45B006596A1 /* Exam_ClassListTV.xib in Resources */,
+				84AD1B01304EE45B006596A1 /* FilterPopover.xib in Resources */,
+				84AD1B02304EE45B006596A1 /* ExamListCell.xib in Resources */,
+				84AD1B03304EE45B006596A1 /* ExamImgUploadVC.xib in Resources */,
+				84AD1B04304EE45B006596A1 /* RemarksCell.xib in Resources */,
+				84AD1B05304EE45B006596A1 /* ExamListHeader.xib in Resources */,
+				84AD1B06304EE45B006596A1 /* ExamActivitiesCV.xib in Resources */,
+				84AD1B07304EE45B006596A1 /* MarkReviewCVC.xib in Resources */,
+				84AD1B08304EE45B006596A1 /* MarksCell.xib in Resources */,
+				84AD1B09304EE45B006596A1 /* SubjectsTVCell.xib in Resources */,
+				84AD1B0A304EE45B006596A1 /* EnterMarkVC.xib in Resources */,
+				84AD1B0B304EE45B006596A1 /* MarksTableViewCell.xib in Resources */,
+				84AD1B0C304EE45B006596A1 /* ExamListVC.xib in Resources */,
+				84AD1B0D304EE45B006596A1 /* ActivitiesTVCell.xib in Resources */,
+				84AD1B0E304EE45B006596A1 /* ExamActivitySelectionVC.xib in Resources */,
+				84AD1B0F304EE45B006596A1 /* Exam_ExamListTV.xib in Resources */,
 				1868A6012FAC762E00831144 /* SideMenuVC.xib in Resources */,
 				1868A6022FAC762E00831144 /* LoginVc.xib in Resources */,
 				1868A6032FAC762E00831144 /* LangTvCellTableViewCell.xib in Resources */,
@@ -8057,6 +8066,9 @@
 				1868A6332FAC762E00831144 /* SessionAnalysisCell.xib in Resources */,
 				1868A6342FAC762E00831144 /* TodayAttendanceCell.xib in Resources */,
 				1868A6352FAC762E00831144 /* WeeklyTrendCell.xib in Resources */,
+				84AD1ACA304EE43F006596A1 /* AttendenceTVC.xib in Resources */,
+				84AD1ACB304EE43F006596A1 /* AttendanceMarkingVC.xib in Resources */,
+				84AD1ACC304EE43F006596A1 /* StudentHistryVC.xib in Resources */,
 				1868A6362FAC762E00831144 /* LICENSE in Resources */,
 				1868A6372FAC762E00831144 /* DropDownCell.xib in Resources */,
 				1868A6382FAC762E00831144 /* README.md in Resources */,
@@ -8269,6 +8281,8 @@
 				1868A71A2FAC762E00831144 /* AttendanceHeaderView.xib in Resources */,
 				1868A71B2FAC762E00831144 /* OverallSummaryCell.xib in Resources */,
 				1868A71C2FAC762E00831144 /* IntractwithStudentVc.xib in Resources */,
+				1836576D304FCBE0003AED35 /* UpdateProfileVC.xib in Resources */,
+				1836576E304FCBE0003AED35 /* UserDetailsTVC.xib in Resources */,
 				1868A71D2FAC762E00831144 /* ActivateCoupenTVC.xib in Resources */,
 				1868A71E2FAC762E00831144 /* QuizCompletedVc.xib in Resources */,
 				1868A71F2FAC762E00831144 /* CoupenDetailTVC.xib in Resources */,
@@ -8314,26 +8328,9 @@
 			files = (
 				186E60A62FE91EB800BAF454 /* CreateQuizQutionVc.xib in Resources */,
 				186E60A72FE91EB800BAF454 /* RequestItemCell.xib in Resources */,
-				842FE189304AFABB006C5D12 /* ExamActivitySelectionVC.xib in Resources */,
-				842FE18A304AFABB006C5D12 /* ExamImgUploadVC.xib in Resources */,
-				842FE18B304AFABB006C5D12 /* Exam_ClassListTV.xib in Resources */,
-				842FE18C304AFABB006C5D12 /* Exam_ExamListTV.xib in Resources */,
-				842FE18D304AFABB006C5D12 /* ExamActivitiesCV.xib in Resources */,
-				842FE18E304AFABB006C5D12 /* EnterMarkVC.xib in Resources */,
-				842FE18F304AFABB006C5D12 /* ExamListCell.xib in Resources */,
-				842FE190304AFABB006C5D12 /* MarksCell.xib in Resources */,
-				842FE191304AFABB006C5D12 /* ActivitiesTVCell.xib in Resources */,
-				842FE192304AFABB006C5D12 /* SubjectsTVCell.xib in Resources */,
-				842FE193304AFABB006C5D12 /* ExamListHeader.xib in Resources */,
-				842FE194304AFABB006C5D12 /* staffExamMarkVC.xib in Resources */,
-				842FE195304AFABB006C5D12 /* MarkReviewCVC.xib in Resources */,
-				842FE196304AFABB006C5D12 /* ExamListVC.xib in Resources */,
-				842FE197304AFABB006C5D12 /* FilterPopover.xib in Resources */,
-				842FE198304AFABB006C5D12 /* MarksTableViewCell.xib in Resources */,
 				186E60A82FE91EB800BAF454 /* AdminRequestsViewController.xib in Resources */,
 				186E60A92FE91EB800BAF454 /* quizCellTv.xib in Resources */,
 				186E60AA2FE91EB800BAF454 /* ReportBugVcViewController.xib in Resources */,
-				186E60AB2FE91EB800BAF454 /* UpdateProfileVC.xib in Resources */,
 				186E60AC2FE91EB800BAF454 /* VoiceMessageVc.xib in Resources */,
 				186E60AE2FE91EB800BAF454 /* StopTimelineCell.xib in Resources */,
 				186E60AF2FE91EB800BAF454 /* CommonPagenationVc.xib in Resources */,
@@ -8370,7 +8367,6 @@
 				186E60CF2FE91EB800BAF454 /* locationAnimation.json in Resources */,
 				186E60D12FE91EB800BAF454 /* DetailedDayRowCell.xib in Resources */,
 				186E60D22FE91EB800BAF454 /* OutpassRequestsCell.xib in Resources */,
-				186E60D32FE91EB800BAF454 /* AttendenceTVC.xib in Resources */,
 				186E60D42FE91EB800BAF454 /* StaffLeaveReqTvCell.xib in Resources */,
 				186E60D52FE91EB800BAF454 /* SchoolTVCell.xib in Resources */,
 				186E60D62FE91EB800BAF454 /* Poppins-Bold.otf in Resources */,
@@ -8405,11 +8401,9 @@
 				186E60F02FE91EB800BAF454 /* StudentAttendanceCell.xib in Resources */,
 				186E60F12FE91EB800BAF454 /* BaseAssets.xcassets in Resources */,
 				186E60F22FE91EB800BAF454 /* whereismybusVc.xib in Resources */,
-				186E60F32FE91EB800BAF454 /* StudentHistryVC.xib in Resources */,
 				186E60F42FE91EB800BAF454 /* Base in Resources */,
 				186E60F52FE91EB800BAF454 /* loader.json in Resources */,
 				186E60F62FE91EB800BAF454 /* AssignmentSummitionVC.xib in Resources */,
-				186E60F72FE91EB800BAF454 /* AttendanceMarkingVC.xib in Resources */,
 				186E60F82FE91EB800BAF454 /* shareAndDownloadVc.xib in Resources */,
 				186E60F92FE91EB800BAF454 /* ImageShowCVCell.xib in Resources */,
 				186E60FA2FE91EB800BAF454 /* ImageShowVc.xib in Resources */,
@@ -8418,13 +8412,29 @@
 				186E60FC2FE91EB800BAF454 /* outpassRequestTVcell.xib in Resources */,
 				186E60FD2FE91EB800BAF454 /* VideoPlayerCVC.xib in Resources */,
 				186E60FE2FE91EB800BAF454 /* PtmNavigationVC.xib in Resources */,
-				186E60FF2FE91EB800BAF454 /* UserDetailsTVC.xib in Resources */,
 				186E61002FE91EB800BAF454 /* StatsticTvCell.xib in Resources */,
 				186E61012FE91EB800BAF454 /* Localizable.strings in Resources */,
 				186E61022FE91EB800BAF454 /* PopoverViewVC.xib in Resources */,
 				186E61032FE91EB800BAF454 /* WeekDaysNameCollectionViewCell.xib in Resources */,
 				186E61042FE91EB800BAF454 /* EventHistoryVC.xib in Resources */,
 				186E61052FE91EB800BAF454 /* CreatePasswordVc.xib in Resources */,
+				84AD1B32304EE45B006596A1 /* staffExamMarkVC.xib in Resources */,
+				84AD1B33304EE45B006596A1 /* Exam_ClassListTV.xib in Resources */,
+				84AD1B34304EE45B006596A1 /* FilterPopover.xib in Resources */,
+				84AD1B35304EE45B006596A1 /* ExamListCell.xib in Resources */,
+				84AD1B36304EE45B006596A1 /* ExamImgUploadVC.xib in Resources */,
+				84AD1B37304EE45B006596A1 /* RemarksCell.xib in Resources */,
+				84AD1B38304EE45B006596A1 /* ExamListHeader.xib in Resources */,
+				84AD1B39304EE45B006596A1 /* ExamActivitiesCV.xib in Resources */,
+				84AD1B3A304EE45B006596A1 /* MarkReviewCVC.xib in Resources */,
+				84AD1B3B304EE45B006596A1 /* MarksCell.xib in Resources */,
+				84AD1B3C304EE45B006596A1 /* SubjectsTVCell.xib in Resources */,
+				84AD1B3D304EE45B006596A1 /* EnterMarkVC.xib in Resources */,
+				84AD1B3E304EE45B006596A1 /* MarksTableViewCell.xib in Resources */,
+				84AD1B3F304EE45B006596A1 /* ExamListVC.xib in Resources */,
+				84AD1B40304EE45B006596A1 /* ActivitiesTVCell.xib in Resources */,
+				84AD1B41304EE45B006596A1 /* ExamActivitySelectionVC.xib in Resources */,
+				84AD1B42304EE45B006596A1 /* Exam_ExamListTV.xib in Resources */,
 				186E61062FE91EB800BAF454 /* SideMenuVC.xib in Resources */,
 				186E61072FE91EB800BAF454 /* LoginVc.xib in Resources */,
 				186E61082FE91EB800BAF454 /* LangTvCellTableViewCell.xib in Resources */,
@@ -8491,6 +8501,9 @@
 				186E61392FE91EB800BAF454 /* SessionAnalysisCell.xib in Resources */,
 				186E613A2FE91EB800BAF454 /* TodayAttendanceCell.xib in Resources */,
 				186E613B2FE91EB800BAF454 /* WeeklyTrendCell.xib in Resources */,
+				84AD1AD6304EE43F006596A1 /* AttendenceTVC.xib in Resources */,
+				84AD1AD7304EE43F006596A1 /* AttendanceMarkingVC.xib in Resources */,
+				84AD1AD8304EE43F006596A1 /* StudentHistryVC.xib in Resources */,
 				186E613C2FE91EB800BAF454 /* LICENSE in Resources */,
 				186E613D2FE91EB800BAF454 /* DropDownCell.xib in Resources */,
 				186E613E2FE91EB800BAF454 /* README.md in Resources */,
@@ -8703,6 +8716,8 @@
 				186E621F2FE91EB800BAF454 /* AttendanceHeaderView.xib in Resources */,
 				186E62202FE91EB800BAF454 /* OverallSummaryCell.xib in Resources */,
 				186E62212FE91EB800BAF454 /* IntractwithStudentVc.xib in Resources */,
+				18365765304FCBE0003AED35 /* UpdateProfileVC.xib in Resources */,
+				18365766304FCBE0003AED35 /* UserDetailsTVC.xib in Resources */,
 				186E62222FE91EB800BAF454 /* ActivateCoupenTVC.xib in Resources */,
 				186E62232FE91EB800BAF454 /* QuizCompletedVc.xib in Resources */,
 				186E62242FE91EB800BAF454 /* CoupenDetailTVC.xib in Resources */,
@@ -8758,7 +8773,6 @@
 				1841DF272F584C5200B88801 /* AdminRequestsViewController.xib in Resources */,
 				84174DEF2E6B5F6A00AC7092 /* quizCellTv.xib in Resources */,
 				84EFFAEA2CCFA4A100C11C26 /* ReportBugVcViewController.xib in Resources */,
-				84444C562E66EE3B00B4B8EB /* UpdateProfileVC.xib in Resources */,
 				18887AB62EFFAAFB008B71FF /* VoiceMessageVc.xib in Resources */,
 				18887AB72EFFAAFB008B71FF /* CommonPagenationVc.xib in Resources */,
 				18887AB82EFFAAFB008B71FF /* ScheduleCallVC.xib in Resources */,
@@ -8772,6 +8786,23 @@
 				84F90FDA2EB241A3005CF3A4 /* ReportAttCell.xib in Resources */,
 				18D718B72D0D477900E9EDA3 /* Map Location.gif in Resources */,
 				84B57EBA2D1437EC00E0EA29 /* EventResiverVC.xib in Resources */,
+				84AD1B54304EE45B006596A1 /* staffExamMarkVC.xib in Resources */,
+				84AD1B55304EE45B006596A1 /* Exam_ClassListTV.xib in Resources */,
+				84AD1B56304EE45B006596A1 /* FilterPopover.xib in Resources */,
+				84AD1B57304EE45B006596A1 /* ExamListCell.xib in Resources */,
+				84AD1B58304EE45B006596A1 /* ExamImgUploadVC.xib in Resources */,
+				84AD1B59304EE45B006596A1 /* RemarksCell.xib in Resources */,
+				84AD1B5A304EE45B006596A1 /* ExamListHeader.xib in Resources */,
+				84AD1B5B304EE45B006596A1 /* ExamActivitiesCV.xib in Resources */,
+				84AD1B5C304EE45B006596A1 /* MarkReviewCVC.xib in Resources */,
+				84AD1B5D304EE45B006596A1 /* MarksCell.xib in Resources */,
+				84AD1B5E304EE45B006596A1 /* SubjectsTVCell.xib in Resources */,
+				84AD1B5F304EE45B006596A1 /* EnterMarkVC.xib in Resources */,
+				84AD1B60304EE45B006596A1 /* MarksTableViewCell.xib in Resources */,
+				84AD1B61304EE45B006596A1 /* ExamListVC.xib in Resources */,
+				84AD1B62304EE45B006596A1 /* ActivitiesTVCell.xib in Resources */,
+				84AD1B63304EE45B006596A1 /* ExamActivitySelectionVC.xib in Resources */,
+				84AD1B64304EE45B006596A1 /* Exam_ExamListTV.xib in Resources */,
 				18D718B82D0D477900E9EDA3 /* deleteTV.xib in Resources */,
 				849AD0212D1A8402002DEC07 /* LessonPlanVC.xib in Resources */,
 				18886D0E2EE6B4FA008B71FF /* MsgCellTv.xib in Resources */,
@@ -8794,7 +8825,6 @@
 				1834ED2F2F483B3C0006969F /* GoogleService-Info.plist in Resources */,
 				182B0AB92F6D47AB002C81A0 /* DetailedDayRowCell.xib in Resources */,
 				182B0ABA2F6D47AB002C81A0 /* OutpassRequestsCell.xib in Resources */,
-				840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */,
 				185465152F42E7FB008B1551 /* StaffLeaveReqTvCell.xib in Resources */,
 				8442A86F2CDB787A0006068E /* SchoolTVCell.xib in Resources */,
 				84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */,
@@ -8824,11 +8854,9 @@
 				1841DF122F58467800B88801 /* MarkAttendanceViewController.xib in Resources */,
 				1841DF132F58467800B88801 /* StudentAttendanceCell.xib in Resources */,
 				84A5BE4B2C19719900E32496 /* BaseAssets.xcassets in Resources */,
-				849978432CEF1FE5007D45BA /* StudentHistryVC.xib in Resources */,
 				84A5BE4E2C19719900E32496 /* Base in Resources */,
 				841ACC8F2DA5076800326D52 /* loader.json in Resources */,
 				848E4F622DF6A874006F6658 /* AssignmentSummitionVC.xib in Resources */,
-				FA7014D12E7D76CD00B3C012 /* AttendanceMarkingVC.xib in Resources */,
 				FA43D0CB2F322CFE0046B966 /* shareAndDownloadVc.xib in Resources */,
 				FA43D0CC2F322CFE0046B966 /* ImageShowCVCell.xib in Resources */,
 				FA43D0CD2F322CFE0046B966 /* ImageShowVc.xib in Resources */,
@@ -8836,27 +8864,10 @@
 				185CC0C92F74EB49002640CE /* outpassRequestTVcell.xib in Resources */,
 				FA43D0CE2F322CFE0046B966 /* VideoPlayerCVC.xib in Resources */,
 				FAE4958A2E89AF960099DF24 /* PtmNavigationVC.xib in Resources */,
-				84444C522E66D3FF00B4B8EB /* UserDetailsTVC.xib in Resources */,
 				182B09C22F6C25A0002C81A0 /* StatsticTvCell.xib in Resources */,
 				8442A9522CDE83C80006068E /* Localizable.strings in Resources */,
 				84C08C692EB396E9009F657B /* PopoverViewVC.xib in Resources */,
 				842FE4AD304B13CB006C5D12 /* ParentClassTestVc.xib in Resources */,
-				842FE159304AFABB006C5D12 /* ExamActivitySelectionVC.xib in Resources */,
-				842FE15A304AFABB006C5D12 /* ExamImgUploadVC.xib in Resources */,
-				842FE15B304AFABB006C5D12 /* Exam_ClassListTV.xib in Resources */,
-				842FE15C304AFABB006C5D12 /* Exam_ExamListTV.xib in Resources */,
-				842FE15D304AFABB006C5D12 /* ExamActivitiesCV.xib in Resources */,
-				842FE15E304AFABB006C5D12 /* EnterMarkVC.xib in Resources */,
-				842FE15F304AFABB006C5D12 /* ExamListCell.xib in Resources */,
-				842FE160304AFABB006C5D12 /* MarksCell.xib in Resources */,
-				842FE161304AFABB006C5D12 /* ActivitiesTVCell.xib in Resources */,
-				842FE162304AFABB006C5D12 /* SubjectsTVCell.xib in Resources */,
-				842FE163304AFABB006C5D12 /* ExamListHeader.xib in Resources */,
-				842FE164304AFABB006C5D12 /* staffExamMarkVC.xib in Resources */,
-				842FE165304AFABB006C5D12 /* MarkReviewCVC.xib in Resources */,
-				842FE166304AFABB006C5D12 /* ExamListVC.xib in Resources */,
-				842FE167304AFABB006C5D12 /* FilterPopover.xib in Resources */,
-				842FE168304AFABB006C5D12 /* MarksTableViewCell.xib in Resources */,
 				187CF5BF2D13F009001422CE /* WeekDaysNameCollectionViewCell.xib in Resources */,
 				849F313F2D00631600BACEC7 /* EventHistoryVC.xib in Resources */,
 				848CC17F2D8A999A00CD0255 /* CreatePasswordVc.xib in Resources */,
@@ -9035,6 +9046,9 @@
 				842FE44C304B0078006C5D12 /* ViewDetailsVc.xib in Resources */,
 				842FE44D304B0078006C5D12 /* MarkListVC.xib in Resources */,
 				842FE44E304B0078006C5D12 /* ExamMarkTvCell.xib in Resources */,
+				84AD1AC7304EE43F006596A1 /* AttendenceTVC.xib in Resources */,
+				84AD1AC8304EE43F006596A1 /* AttendanceMarkingVC.xib in Resources */,
+				84AD1AC9304EE43F006596A1 /* StudentHistryVC.xib in Resources */,
 				842FE44F304B0078006C5D12 /* ExamMarkTV.xib in Resources */,
 				842FE451304B0078006C5D12 /* ExameMarVC.xib in Resources */,
 				842FE452304B0078006C5D12 /* ExammarkFooterView.xib in Resources */,
@@ -9124,6 +9138,8 @@
 				84127AEA2E03C8F00092159D /* CaterogyCvCell.xib in Resources */,
 				84127AEC2E03C8F00092159D /* ReedimHistoryVc.xib in Resources */,
 				FA43D0AA2F322CDB0046B966 /* WhatsNewCVC.xib in Resources */,
+				18365769304FCBE0003AED35 /* UpdateProfileVC.xib in Resources */,
+				1836576A304FCBE0003AED35 /* UserDetailsTVC.xib in Resources */,
 				FA43D0B82F322CE30046B966 /* SchoolListTVC.xib in Resources */,
 				FA43D0B92F322CE30046B966 /* SchoolListVC.xib in Resources */,
 				842ACE122F56A00000954404 /* ExamPermamenceTVC.xib in Resources */,
@@ -9421,7 +9437,6 @@
 				1827E5E62F90C12000B33B20 /* EditLessonVC.swift in Sources */,
 				1827E5E72F90C12000B33B20 /* SuccesseRatusTVC.swift in Sources */,
 				1827E5E82F90C12000B33B20 /* HostelRoomTvCell.swift in Sources */,
-				1827E5ED2F90C12000B33B20 /* UpdateProfileVC.swift in Sources */,
 				1827E5EE2F90C12000B33B20 /* LSRWSubmisionListVC.swift in Sources */,
 				1827E5EF2F90C12000B33B20 /* QuizSubmisionTvCell.swift in Sources */,
 				1827E5F02F90C12000B33B20 /* SchoolStrengthCvcell.swift in Sources */,
@@ -9446,7 +9461,6 @@
 				1827E6042F90C12000B33B20 /* CertificateCv.swift in Sources */,
 				1827E6052F90C12000B33B20 /* ScheduleExamVC.swift in Sources */,
 				1827E6062F90C12000B33B20 /* SubmitedStudentTVC.swift in Sources */,
-				1827E6072F90C12000B33B20 /* UserDetailsTVC.swift in Sources */,
 				1827E6082F90C12000B33B20 /* SenderAssignmentTextViewController.swift in Sources */,
 				1827E6092F90C12000B33B20 /* CompletedTVcell.swift in Sources */,
 				1827E60A2F90C12000B33B20 /* PopupVC.swift in Sources */,
@@ -9466,7 +9480,6 @@
 				1827E6182F90C12000B33B20 /* OTPVc.swift in Sources */,
 				1827E6192F90C12000B33B20 /* CellConfingName.swift in Sources */,
 				1827E61A2F90C12000B33B20 /* SwitchRollTVC.swift in Sources */,
-				1827E61B2F90C12000B33B20 /* AttendanceMarkingVC.swift in Sources */,
 				1827E61C2F90C12000B33B20 /* ChatTVCell.swift in Sources */,
 				1827E61D2F90C12000B33B20 /* OutpassVC.swift in Sources */,
 				1827E61E2F90C12000B33B20 /* Colornames.swift in Sources */,
@@ -9546,22 +9559,6 @@
 				842FE409304B0078006C5D12 /* ExamMarkTV.swift in Sources */,
 				842FE40A304B0078006C5D12 /* MarkListVC.swift in Sources */,
 				1827E6562F90C12000B33B20 /* PunchHistoryListVC.swift in Sources */,
-				842FE129304AFABB006C5D12 /* FilterPopover.swift in Sources */,
-				842FE12A304AFABB006C5D12 /* ExamListCell.swift in Sources */,
-				842FE12B304AFABB006C5D12 /* SubjectsTVCell.swift in Sources */,
-				842FE12C304AFABB006C5D12 /* ExamListVC.swift in Sources */,
-				842FE12D304AFABB006C5D12 /* MarksTableViewCell.swift in Sources */,
-				842FE12E304AFABB006C5D12 /* ExamListHeader.swift in Sources */,
-				842FE12F304AFABB006C5D12 /* MarksCell.swift in Sources */,
-				842FE130304AFABB006C5D12 /* ExamActivitySelectionVC.swift in Sources */,
-				842FE131304AFABB006C5D12 /* EnterMarkVC.swift in Sources */,
-				842FE132304AFABB006C5D12 /* staffExamMarkVC.swift in Sources */,
-				842FE133304AFABB006C5D12 /* ExamActivitiesCV.swift in Sources */,
-				842FE134304AFABB006C5D12 /* ActivitiesTVCell.swift in Sources */,
-				842FE135304AFABB006C5D12 /* MarkReviewCVC.swift in Sources */,
-				842FE136304AFABB006C5D12 /* Exam_ClassListTV.swift in Sources */,
-				842FE137304AFABB006C5D12 /* Exam_ExamListTV.swift in Sources */,
-				842FE138304AFABB006C5D12 /* ExamImgUploadVC.swift in Sources */,
 				1827E6572F90C12000B33B20 /* ReciverEventTVC.swift in Sources */,
 				1827E6582F90C12000B33B20 /* CreateLocationViewController.swift in Sources */,
 				1827E6592F90C12000B33B20 /* QuizListTvCell.swift in Sources */,
@@ -9639,6 +9636,23 @@
 				1827E6A62F90C12000B33B20 /* AssignmentReport.swift in Sources */,
 				1827E6A72F90C12000B33B20 /* PaymentHistoryTVC.swift in Sources */,
 				1827E6A82F90C12000B33B20 /* ClassTableViewCell.swift in Sources */,
+				84AD1B76304EE45B006596A1 /* MarksTableViewCell.swift in Sources */,
+				84AD1B77304EE45B006596A1 /* ExamActivitySelectionVC.swift in Sources */,
+				84AD1B78304EE45B006596A1 /* SubjectsTVCell.swift in Sources */,
+				84AD1B79304EE45B006596A1 /* FilterPopover.swift in Sources */,
+				84AD1B7A304EE45B006596A1 /* RemarksCell.swift in Sources */,
+				84AD1B7B304EE45B006596A1 /* ActivitiesTVCell.swift in Sources */,
+				84AD1B7C304EE45B006596A1 /* EnterMarkVC.swift in Sources */,
+				84AD1B7D304EE45B006596A1 /* ExamListCell.swift in Sources */,
+				84AD1B7E304EE45B006596A1 /* ExamImgUploadVC.swift in Sources */,
+				84AD1B7F304EE45B006596A1 /* staffExamMarkVC.swift in Sources */,
+				84AD1B80304EE45B006596A1 /* ExamActivitiesCV.swift in Sources */,
+				84AD1B81304EE45B006596A1 /* MarkReviewCVC.swift in Sources */,
+				84AD1B82304EE45B006596A1 /* MarksCell.swift in Sources */,
+				84AD1B83304EE45B006596A1 /* Exam_ClassListTV.swift in Sources */,
+				84AD1B84304EE45B006596A1 /* Exam_ExamListTV.swift in Sources */,
+				84AD1B85304EE45B006596A1 /* ExamListHeader.swift in Sources */,
+				84AD1B86304EE45B006596A1 /* ExamListVC.swift in Sources */,
 				1827E6A92F90C12000B33B20 /* scetionCvcell.swift in Sources */,
 				1827E6AA2F90C12000B33B20 /* LessonDashboardTv.swift in Sources */,
 				1827E6AB2F90C12000B33B20 /* PtmCV.swift in Sources */,
@@ -9738,6 +9752,8 @@
 				1827E70B2F90C12000B33B20 /* SparkView.swift in Sources */,
 				1827E70D2F90C12000B33B20 /* TimetableVC.swift in Sources */,
 				1827E70E2F90C12000B33B20 /* SparkViewAnimator.swift in Sources */,
+				18365761304FCBE0003AED35 /* UserDetailsTVC.swift in Sources */,
+				18365762304FCBE0003AED35 /* UpdateProfileVC.swift in Sources */,
 				1827E70F2F90C12000B33B20 /* DPDUIView+Extension.swift in Sources */,
 				1827E7102F90C12000B33B20 /* DropDown.swift in Sources */,
 				1827E7112F90C12000B33B20 /* StudentFinancialTVC.swift in Sources */,
@@ -9815,11 +9831,12 @@
 				1827E75C2F90C12000B33B20 /* SplashVC.swift in Sources */,
 				842FE498304B0E7B006C5D12 /* SenderSideHomeWorkViewController.swift in Sources */,
 				1827E75D2F90C12000B33B20 /* NoticeCVC.swift in Sources */,
+				84AD1AD3304EE43F006596A1 /* StudentHistryVC.swift in Sources */,
+				84AD1AD4304EE43F006596A1 /* AttendanceMarkingVC.swift in Sources */,
+				84AD1AD5304EE43F006596A1 /* AttendenceTVC.swift in Sources */,
 				1827E75E2F90C12000B33B20 /* RatingTableViewCell.swift in Sources */,
 				1827E75F2F90C12000B33B20 /* EventsVC.swift in Sources */,
-				1827E7602F90C12000B33B20 /* StudentHistryVC.swift in Sources */,
 				1827E7612F90C12000B33B20 /* GatePassTvcell.swift in Sources */,
-				1827E7622F90C12000B33B20 /* AttendenceTVC.swift in Sources */,
 				1827E7632F90C12000B33B20 /* RatingTypeTableViewCell.swift in Sources */,
 				1827E7642F90C12000B33B20 /* LessonPlanTVC.swift in Sources */,
 				1827E7652F90C12000B33B20 /* PreviewImageVC.swift in Sources */,
@@ -9900,7 +9917,6 @@
 				1868A4102FAC762E00831144 /* EditLessonVC.swift in Sources */,
 				1868A4112FAC762E00831144 /* SuccesseRatusTVC.swift in Sources */,
 				1868A4122FAC762E00831144 /* HostelRoomTvCell.swift in Sources */,
-				1868A4172FAC762E00831144 /* UpdateProfileVC.swift in Sources */,
 				1868A4182FAC762E00831144 /* LSRWSubmisionListVC.swift in Sources */,
 				1868A4192FAC762E00831144 /* QuizSubmisionTvCell.swift in Sources */,
 				1868A41A2FAC762E00831144 /* SchoolStrengthCvcell.swift in Sources */,
@@ -9925,7 +9941,6 @@
 				1868A42E2FAC762E00831144 /* CertificateCv.swift in Sources */,
 				1868A42F2FAC762E00831144 /* ScheduleExamVC.swift in Sources */,
 				1868A4302FAC762E00831144 /* SubmitedStudentTVC.swift in Sources */,
-				1868A4312FAC762E00831144 /* UserDetailsTVC.swift in Sources */,
 				1868A4322FAC762E00831144 /* SenderAssignmentTextViewController.swift in Sources */,
 				1868A4332FAC762E00831144 /* CompletedTVcell.swift in Sources */,
 				1868A4342FAC762E00831144 /* PopupVC.swift in Sources */,
@@ -9945,7 +9960,6 @@
 				1868A4422FAC762E00831144 /* OTPVc.swift in Sources */,
 				1868A4432FAC762E00831144 /* CellConfingName.swift in Sources */,
 				1868A4442FAC762E00831144 /* SwitchRollTVC.swift in Sources */,
-				1868A4452FAC762E00831144 /* AttendanceMarkingVC.swift in Sources */,
 				1868A4462FAC762E00831144 /* ChatTVCell.swift in Sources */,
 				1868A4472FAC762E00831144 /* OutpassVC.swift in Sources */,
 				1868A4482FAC762E00831144 /* Colornames.swift in Sources */,
@@ -10025,22 +10039,6 @@
 				842FE447304B0078006C5D12 /* ExamMarkTV.swift in Sources */,
 				842FE448304B0078006C5D12 /* MarkListVC.swift in Sources */,
 				1868A4802FAC762E00831144 /* PunchHistoryListVC.swift in Sources */,
-				842FE149304AFABB006C5D12 /* FilterPopover.swift in Sources */,
-				842FE14A304AFABB006C5D12 /* ExamListCell.swift in Sources */,
-				842FE14B304AFABB006C5D12 /* SubjectsTVCell.swift in Sources */,
-				842FE14C304AFABB006C5D12 /* ExamListVC.swift in Sources */,
-				842FE14D304AFABB006C5D12 /* MarksTableViewCell.swift in Sources */,
-				842FE14E304AFABB006C5D12 /* ExamListHeader.swift in Sources */,
-				842FE14F304AFABB006C5D12 /* MarksCell.swift in Sources */,
-				842FE150304AFABB006C5D12 /* ExamActivitySelectionVC.swift in Sources */,
-				842FE151304AFABB006C5D12 /* EnterMarkVC.swift in Sources */,
-				842FE152304AFABB006C5D12 /* staffExamMarkVC.swift in Sources */,
-				842FE153304AFABB006C5D12 /* ExamActivitiesCV.swift in Sources */,
-				842FE154304AFABB006C5D12 /* ActivitiesTVCell.swift in Sources */,
-				842FE155304AFABB006C5D12 /* MarkReviewCVC.swift in Sources */,
-				842FE156304AFABB006C5D12 /* Exam_ClassListTV.swift in Sources */,
-				842FE157304AFABB006C5D12 /* Exam_ExamListTV.swift in Sources */,
-				842FE158304AFABB006C5D12 /* ExamImgUploadVC.swift in Sources */,
 				1868A4812FAC762E00831144 /* ReciverEventTVC.swift in Sources */,
 				1868A4822FAC762E00831144 /* CreateLocationViewController.swift in Sources */,
 				1868A4832FAC762E00831144 /* QuizListTvCell.swift in Sources */,
@@ -10118,6 +10116,23 @@
 				1868A4D02FAC762E00831144 /* AssignmentReport.swift in Sources */,
 				1868A4D12FAC762E00831144 /* PaymentHistoryTVC.swift in Sources */,
 				1868A4D22FAC762E00831144 /* ClassTableViewCell.swift in Sources */,
+				84AD1B10304EE45B006596A1 /* MarksTableViewCell.swift in Sources */,
+				84AD1B11304EE45B006596A1 /* ExamActivitySelectionVC.swift in Sources */,
+				84AD1B12304EE45B006596A1 /* SubjectsTVCell.swift in Sources */,
+				84AD1B13304EE45B006596A1 /* FilterPopover.swift in Sources */,
+				84AD1B14304EE45B006596A1 /* RemarksCell.swift in Sources */,
+				84AD1B15304EE45B006596A1 /* ActivitiesTVCell.swift in Sources */,
+				84AD1B16304EE45B006596A1 /* EnterMarkVC.swift in Sources */,
+				84AD1B17304EE45B006596A1 /* ExamListCell.swift in Sources */,
+				84AD1B18304EE45B006596A1 /* ExamImgUploadVC.swift in Sources */,
+				84AD1B19304EE45B006596A1 /* staffExamMarkVC.swift in Sources */,
+				84AD1B1A304EE45B006596A1 /* ExamActivitiesCV.swift in Sources */,
+				84AD1B1B304EE45B006596A1 /* MarkReviewCVC.swift in Sources */,
+				84AD1B1C304EE45B006596A1 /* MarksCell.swift in Sources */,
+				84AD1B1D304EE45B006596A1 /* Exam_ClassListTV.swift in Sources */,
+				84AD1B1E304EE45B006596A1 /* Exam_ExamListTV.swift in Sources */,
+				84AD1B1F304EE45B006596A1 /* ExamListHeader.swift in Sources */,
+				84AD1B20304EE45B006596A1 /* ExamListVC.swift in Sources */,
 				1868A4D32FAC762E00831144 /* scetionCvcell.swift in Sources */,
 				1868A4D42FAC762E00831144 /* LessonDashboardTv.swift in Sources */,
 				1868A4D52FAC762E00831144 /* PtmCV.swift in Sources */,
@@ -10217,6 +10232,8 @@
 				1868A5352FAC762E00831144 /* SparkView.swift in Sources */,
 				1868A5372FAC762E00831144 /* TimetableVC.swift in Sources */,
 				1868A5382FAC762E00831144 /* SparkViewAnimator.swift in Sources */,
+				1836576F304FCBE0003AED35 /* UserDetailsTVC.swift in Sources */,
+				18365770304FCBE0003AED35 /* UpdateProfileVC.swift in Sources */,
 				1868A5392FAC762E00831144 /* DPDUIView+Extension.swift in Sources */,
 				1868A53A2FAC762E00831144 /* DropDown.swift in Sources */,
 				1868A53B2FAC762E00831144 /* StudentFinancialTVC.swift in Sources */,
@@ -10294,11 +10311,12 @@
 				1868A5862FAC762E00831144 /* SplashVC.swift in Sources */,
 				842FE49A304B0E7B006C5D12 /* SenderSideHomeWorkViewController.swift in Sources */,
 				1868A5872FAC762E00831144 /* NoticeCVC.swift in Sources */,
+				84AD1ACD304EE43F006596A1 /* StudentHistryVC.swift in Sources */,
+				84AD1ACE304EE43F006596A1 /* AttendanceMarkingVC.swift in Sources */,
+				84AD1ACF304EE43F006596A1 /* AttendenceTVC.swift in Sources */,
 				1868A5882FAC762E00831144 /* RatingTableViewCell.swift in Sources */,
 				1868A5892FAC762E00831144 /* EventsVC.swift in Sources */,
-				1868A58A2FAC762E00831144 /* StudentHistryVC.swift in Sources */,
 				1868A58B2FAC762E00831144 /* GatePassTvcell.swift in Sources */,
-				1868A58C2FAC762E00831144 /* AttendenceTVC.swift in Sources */,
 				1868A58D2FAC762E00831144 /* RatingTypeTableViewCell.swift in Sources */,
 				1868A58E2FAC762E00831144 /* LessonPlanTVC.swift in Sources */,
 				1868A58F2FAC762E00831144 /* PreviewImageVC.swift in Sources */,
@@ -10379,7 +10397,6 @@
 				186E5F0C2FE91EB800BAF454 /* EditLessonVC.swift in Sources */,
 				186E5F0D2FE91EB800BAF454 /* SuccesseRatusTVC.swift in Sources */,
 				186E5F0E2FE91EB800BAF454 /* HostelRoomTvCell.swift in Sources */,
-				186E5F132FE91EB800BAF454 /* UpdateProfileVC.swift in Sources */,
 				186E5F142FE91EB800BAF454 /* LSRWSubmisionListVC.swift in Sources */,
 				186E5F152FE91EB800BAF454 /* QuizSubmisionTvCell.swift in Sources */,
 				186E5F162FE91EB800BAF454 /* SchoolStrengthCvcell.swift in Sources */,
@@ -10404,7 +10421,6 @@
 				186E5F2A2FE91EB800BAF454 /* CertificateCv.swift in Sources */,
 				186E5F2B2FE91EB800BAF454 /* ScheduleExamVC.swift in Sources */,
 				186E5F2C2FE91EB800BAF454 /* SubmitedStudentTVC.swift in Sources */,
-				186E5F2D2FE91EB800BAF454 /* UserDetailsTVC.swift in Sources */,
 				186E5F2E2FE91EB800BAF454 /* SenderAssignmentTextViewController.swift in Sources */,
 				186E5F2F2FE91EB800BAF454 /* CompletedTVcell.swift in Sources */,
 				186E5F302FE91EB800BAF454 /* PopupVC.swift in Sources */,
@@ -10424,7 +10440,6 @@
 				186E5F3E2FE91EB800BAF454 /* OTPVc.swift in Sources */,
 				186E5F3F2FE91EB800BAF454 /* CellConfingName.swift in Sources */,
 				186E5F402FE91EB800BAF454 /* SwitchRollTVC.swift in Sources */,
-				186E5F412FE91EB800BAF454 /* AttendanceMarkingVC.swift in Sources */,
 				186E5F422FE91EB800BAF454 /* ChatTVCell.swift in Sources */,
 				186E5F432FE91EB800BAF454 /* OutpassVC.swift in Sources */,
 				186E5F442FE91EB800BAF454 /* Colornames.swift in Sources */,
@@ -10504,22 +10519,6 @@
 				842FE419304B0078006C5D12 /* ExamMarkTV.swift in Sources */,
 				842FE41A304B0078006C5D12 /* MarkListVC.swift in Sources */,
 				186E5F7E2FE91EB800BAF454 /* PunchHistoryListVC.swift in Sources */,
-				842FE179304AFABB006C5D12 /* FilterPopover.swift in Sources */,
-				842FE17A304AFABB006C5D12 /* ExamListCell.swift in Sources */,
-				842FE17B304AFABB006C5D12 /* SubjectsTVCell.swift in Sources */,
-				842FE17C304AFABB006C5D12 /* ExamListVC.swift in Sources */,
-				842FE17D304AFABB006C5D12 /* MarksTableViewCell.swift in Sources */,
-				842FE17E304AFABB006C5D12 /* ExamListHeader.swift in Sources */,
-				842FE17F304AFABB006C5D12 /* MarksCell.swift in Sources */,
-				842FE180304AFABB006C5D12 /* ExamActivitySelectionVC.swift in Sources */,
-				842FE181304AFABB006C5D12 /* EnterMarkVC.swift in Sources */,
-				842FE182304AFABB006C5D12 /* staffExamMarkVC.swift in Sources */,
-				842FE183304AFABB006C5D12 /* ExamActivitiesCV.swift in Sources */,
-				842FE184304AFABB006C5D12 /* ActivitiesTVCell.swift in Sources */,
-				842FE185304AFABB006C5D12 /* MarkReviewCVC.swift in Sources */,
-				842FE186304AFABB006C5D12 /* Exam_ClassListTV.swift in Sources */,
-				842FE187304AFABB006C5D12 /* Exam_ExamListTV.swift in Sources */,
-				842FE188304AFABB006C5D12 /* ExamImgUploadVC.swift in Sources */,
 				186E5F7F2FE91EB800BAF454 /* ReciverEventTVC.swift in Sources */,
 				186E5F802FE91EB800BAF454 /* CreateLocationViewController.swift in Sources */,
 				186E5F812FE91EB800BAF454 /* QuizListTvCell.swift in Sources */,
@@ -10597,6 +10596,23 @@
 				186E5FCE2FE91EB800BAF454 /* AssignmentReport.swift in Sources */,
 				186E5FCF2FE91EB800BAF454 /* PaymentHistoryTVC.swift in Sources */,
 				186E5FD02FE91EB800BAF454 /* ClassTableViewCell.swift in Sources */,
+				84AD1B21304EE45B006596A1 /* MarksTableViewCell.swift in Sources */,
+				84AD1B22304EE45B006596A1 /* ExamActivitySelectionVC.swift in Sources */,
+				84AD1B23304EE45B006596A1 /* SubjectsTVCell.swift in Sources */,
+				84AD1B24304EE45B006596A1 /* FilterPopover.swift in Sources */,
+				84AD1B25304EE45B006596A1 /* RemarksCell.swift in Sources */,
+				84AD1B26304EE45B006596A1 /* ActivitiesTVCell.swift in Sources */,
+				84AD1B27304EE45B006596A1 /* EnterMarkVC.swift in Sources */,
+				84AD1B28304EE45B006596A1 /* ExamListCell.swift in Sources */,
+				84AD1B29304EE45B006596A1 /* ExamImgUploadVC.swift in Sources */,
+				84AD1B2A304EE45B006596A1 /* staffExamMarkVC.swift in Sources */,
+				84AD1B2B304EE45B006596A1 /* ExamActivitiesCV.swift in Sources */,
+				84AD1B2C304EE45B006596A1 /* MarkReviewCVC.swift in Sources */,
+				84AD1B2D304EE45B006596A1 /* MarksCell.swift in Sources */,
+				84AD1B2E304EE45B006596A1 /* Exam_ClassListTV.swift in Sources */,
+				84AD1B2F304EE45B006596A1 /* Exam_ExamListTV.swift in Sources */,
+				84AD1B30304EE45B006596A1 /* ExamListHeader.swift in Sources */,
+				84AD1B31304EE45B006596A1 /* ExamListVC.swift in Sources */,
 				186E5FD12FE91EB800BAF454 /* scetionCvcell.swift in Sources */,
 				186E5FD22FE91EB800BAF454 /* LessonDashboardTv.swift in Sources */,
 				186E5FD32FE91EB800BAF454 /* PtmCV.swift in Sources */,
@@ -10696,6 +10712,8 @@
 				186E60342FE91EB800BAF454 /* SparkView.swift in Sources */,
 				186E60362FE91EB800BAF454 /* TimetableVC.swift in Sources */,
 				186E60372FE91EB800BAF454 /* SparkViewAnimator.swift in Sources */,
+				18365767304FCBE0003AED35 /* UserDetailsTVC.swift in Sources */,
+				18365768304FCBE0003AED35 /* UpdateProfileVC.swift in Sources */,
 				186E60382FE91EB800BAF454 /* DPDUIView+Extension.swift in Sources */,
 				186E60392FE91EB800BAF454 /* DropDown.swift in Sources */,
 				186E603A2FE91EB800BAF454 /* StudentFinancialTVC.swift in Sources */,
@@ -10773,11 +10791,12 @@
 				186E60882FE91EB800BAF454 /* SplashVC.swift in Sources */,
 				842FE495304B0E7B006C5D12 /* SenderSideHomeWorkViewController.swift in Sources */,
 				186E60892FE91EB800BAF454 /* NoticeCVC.swift in Sources */,
+				84AD1AD9304EE43F006596A1 /* StudentHistryVC.swift in Sources */,
+				84AD1ADA304EE43F006596A1 /* AttendanceMarkingVC.swift in Sources */,
+				84AD1ADB304EE43F006596A1 /* AttendenceTVC.swift in Sources */,
 				186E608A2FE91EB800BAF454 /* RatingTableViewCell.swift in Sources */,
 				186E608B2FE91EB800BAF454 /* EventsVC.swift in Sources */,
-				186E608C2FE91EB800BAF454 /* StudentHistryVC.swift in Sources */,
 				186E608D2FE91EB800BAF454 /* GatePassTvcell.swift in Sources */,
-				186E608E2FE91EB800BAF454 /* AttendenceTVC.swift in Sources */,
 				186E608F2FE91EB800BAF454 /* RatingTypeTableViewCell.swift in Sources */,
 				186E60902FE91EB800BAF454 /* LessonPlanTVC.swift in Sources */,
 				186E60912FE91EB800BAF454 /* PreviewImageVC.swift in Sources */,
@@ -10865,7 +10884,6 @@
 				FAF43B642E02A09200F28A16 /* EditLessonVC.swift in Sources */,
 				845AB8712EC1F89C003C22E1 /* SuccesseRatusTVC.swift in Sources */,
 				1841DE992F56FF1C00B88801 /* HostelRoomTvCell.swift in Sources */,
-				84444C572E66EE3B00B4B8EB /* UpdateProfileVC.swift in Sources */,
 				845CAC892E54B06C000FA540 /* LSRWSubmisionListVC.swift in Sources */,
 				FA48A6992E754AA7004E10C7 /* QuizSubmisionTvCell.swift in Sources */,
 				84BCE90F2E9E3AB6002C8068 /* SchoolStrengthCvcell.swift in Sources */,
@@ -10890,7 +10908,6 @@
 				FA861C362E38ABA900859726 /* CertificateCv.swift in Sources */,
 				84BB5EA82D11330E00AD0C87 /* ScheduleExamVC.swift in Sources */,
 				8480477D2E02DF6E0042BC5D /* SubmitedStudentTVC.swift in Sources */,
-				84444C532E66D3FF00B4B8EB /* UserDetailsTVC.swift in Sources */,
 				849AD0522D1A858D002DEC07 /* SenderAssignmentTextViewController.swift in Sources */,
 				84FB97D22D3E31FF00EBF9F4 /* CompletedTVcell.swift in Sources */,
 				8466E83F2D6ED0CB004F4EFC /* PopupVC.swift in Sources */,
@@ -10910,7 +10927,6 @@
 				848CC16B2D899E4000CD0255 /* OTPVc.swift in Sources */,
 				84EFF9DF2CCC89CF00C11C26 /* CellConfingName.swift in Sources */,
 				84EF9D232E7A7B7E00F57838 /* SwitchRollTVC.swift in Sources */,
-				FA7014D22E7D76CD00B3C012 /* AttendanceMarkingVC.swift in Sources */,
 				84395FEE2D1002A900FC3242 /* ChatTVCell.swift in Sources */,
 				FA6CD8A12E3DEEC500C146AB /* OutpassVC.swift in Sources */,
 				8441887C2CC90E98006483C3 /* Colornames.swift in Sources */,
@@ -10990,22 +11006,6 @@
 				842FE466304B0078006C5D12 /* ExamMarkTV.swift in Sources */,
 				842FE467304B0078006C5D12 /* MarkListVC.swift in Sources */,
 				18D718A22D0D477900E9EDA3 /* PunchHistoryListVC.swift in Sources */,
-				842FE169304AFABB006C5D12 /* FilterPopover.swift in Sources */,
-				842FE16A304AFABB006C5D12 /* ExamListCell.swift in Sources */,
-				842FE16B304AFABB006C5D12 /* SubjectsTVCell.swift in Sources */,
-				842FE16C304AFABB006C5D12 /* ExamListVC.swift in Sources */,
-				842FE16D304AFABB006C5D12 /* MarksTableViewCell.swift in Sources */,
-				842FE16E304AFABB006C5D12 /* ExamListHeader.swift in Sources */,
-				842FE16F304AFABB006C5D12 /* MarksCell.swift in Sources */,
-				842FE170304AFABB006C5D12 /* ExamActivitySelectionVC.swift in Sources */,
-				842FE171304AFABB006C5D12 /* EnterMarkVC.swift in Sources */,
-				842FE172304AFABB006C5D12 /* staffExamMarkVC.swift in Sources */,
-				842FE173304AFABB006C5D12 /* ExamActivitiesCV.swift in Sources */,
-				842FE174304AFABB006C5D12 /* ActivitiesTVCell.swift in Sources */,
-				842FE175304AFABB006C5D12 /* MarkReviewCVC.swift in Sources */,
-				842FE176304AFABB006C5D12 /* Exam_ClassListTV.swift in Sources */,
-				842FE177304AFABB006C5D12 /* Exam_ExamListTV.swift in Sources */,
-				842FE178304AFABB006C5D12 /* ExamImgUploadVC.swift in Sources */,
 				846CF73B2E2F5654000361CE /* ReciverEventTVC.swift in Sources */,
 				18D718A32D0D477900E9EDA3 /* CreateLocationViewController.swift in Sources */,
 				84D32C982D55CE2300A420A9 /* QuizListTvCell.swift in Sources */,
@@ -11083,6 +11083,23 @@
 				848047712E02A7D90042BC5D /* AssignmentReport.swift in Sources */,
 				842ACE232F56A0C000954404 /* PaymentHistoryTVC.swift in Sources */,
 				FA43D0DF2F322D510046B966 /* ClassTableViewCell.swift in Sources */,
+				84AD1B43304EE45B006596A1 /* MarksTableViewCell.swift in Sources */,
+				84AD1B44304EE45B006596A1 /* ExamActivitySelectionVC.swift in Sources */,
+				84AD1B45304EE45B006596A1 /* SubjectsTVCell.swift in Sources */,
+				84AD1B46304EE45B006596A1 /* FilterPopover.swift in Sources */,
+				84AD1B47304EE45B006596A1 /* RemarksCell.swift in Sources */,
+				84AD1B48304EE45B006596A1 /* ActivitiesTVCell.swift in Sources */,
+				84AD1B49304EE45B006596A1 /* EnterMarkVC.swift in Sources */,
+				84AD1B4A304EE45B006596A1 /* ExamListCell.swift in Sources */,
+				84AD1B4B304EE45B006596A1 /* ExamImgUploadVC.swift in Sources */,
+				84AD1B4C304EE45B006596A1 /* staffExamMarkVC.swift in Sources */,
+				84AD1B4D304EE45B006596A1 /* ExamActivitiesCV.swift in Sources */,
+				84AD1B4E304EE45B006596A1 /* MarkReviewCVC.swift in Sources */,
+				84AD1B4F304EE45B006596A1 /* MarksCell.swift in Sources */,
+				84AD1B50304EE45B006596A1 /* Exam_ClassListTV.swift in Sources */,
+				84AD1B51304EE45B006596A1 /* Exam_ExamListTV.swift in Sources */,
+				84AD1B52304EE45B006596A1 /* ExamListHeader.swift in Sources */,
+				84AD1B53304EE45B006596A1 /* ExamListVC.swift in Sources */,
 				FA43D0E02F322D510046B966 /* scetionCvcell.swift in Sources */,
 				FA7A64122D64995900D43031 /* LessonDashboardTv.swift in Sources */,
 				FAAC9F482E4B006600203F04 /* PtmCV.swift in Sources */,
@@ -11182,6 +11199,8 @@
 				84C82A062D086A490024A46A /* SparkView.swift in Sources */,
 				8420316E2D390CED003C4076 /* TimetableVC.swift in Sources */,
 				84C82A072D086A490024A46A /* SparkViewAnimator.swift in Sources */,
+				1836576B304FCBE0003AED35 /* UserDetailsTVC.swift in Sources */,
+				1836576C304FCBE0003AED35 /* UpdateProfileVC.swift in Sources */,
 				188EBD912ED5632F00BEA524 /* DPDUIView+Extension.swift in Sources */,
 				188EBD922ED5632F00BEA524 /* DropDown.swift in Sources */,
 				842ACE0B2F569F6500954404 /* StudentFinancialTVC.swift in Sources */,
@@ -11259,11 +11278,12 @@
 				84E614242ED02B85003DBCE1 /* SplashVC.swift in Sources */,
 				842FE49C304B0E7B006C5D12 /* SenderSideHomeWorkViewController.swift in Sources */,
 				8480A4122E31F4CB009A7DED /* NoticeCVC.swift in Sources */,
+				84AD1AC4304EE43F006596A1 /* StudentHistryVC.swift in Sources */,
+				84AD1AC5304EE43F006596A1 /* AttendanceMarkingVC.swift in Sources */,
+				84AD1AC6304EE43F006596A1 /* AttendenceTVC.swift in Sources */,
 				8442A8F72CDC83860006068E /* RatingTableViewCell.swift in Sources */,
 				8406583A2CFD8D4E00080CF6 /* EventsVC.swift in Sources */,
-				849978462CEF1FE5007D45BA /* StudentHistryVC.swift in Sources */,
 				18B190902F713A84007E4F6F /* GatePassTvcell.swift in Sources */,
-				840658052CFD6B2200080CF6 /* AttendenceTVC.swift in Sources */,
 				8442A8F82CDC83860006068E /* RatingTypeTableViewCell.swift in Sources */,
 				845347FC2E5C64B600D47393 /* LessonPlanTVC.swift in Sources */,
 				848BEEE42CFF093100581A55 /* PreviewImageVC.swift in Sources */,
