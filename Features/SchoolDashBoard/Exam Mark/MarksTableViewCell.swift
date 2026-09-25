@@ -193,6 +193,44 @@ extension MarksTableViewCell: UICollectionViewDataSource, UICollectionViewDelega
             return cell
         }
         
+        // MARK: - Attendance
+        if column.isAttendance == true {
+
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "MarksCell",
+                for: indexPath
+            ) as! MarksCell
+            
+            cell.isAttendance = true
+
+            let referenceType = column.activityId ?? ""
+
+            let attendance = student.attendance_details?.first {
+                $0.reference_type == referenceType
+            }
+
+            cell.configure(
+                mark: attendance?.mark ?? "",
+                channgeMark: nil,
+                rowIndex: studentIndex,
+                columnIndex: indexPath.item,
+                alignment: .center,
+                parentVC: parentVC,
+                hasFlaggedIssue: false,
+                is_edit: attendance?.is_edit ?? true,
+                maxMark: 0,
+                isCoScholastic: false,
+                isAttendance: true
+            )
+
+            cell.delegate = self
+
+            cell.markTxt.tag =
+                (studentIndex * 1000) + indexPath.item
+
+            return cell
+        }
+        
         // MARK: - Co-Scholastic
         if column.isCo_scholastic == true {
 
