@@ -614,7 +614,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
         case 206 :
             MenuRedirect.resiverClassTestVc(from: self)
         case 207:
-            MenuRedirect.resiverconcernListVc(from: self)
+            MenuRedirect.resiverconcernListVc(from: self, is_comefromNoti: comeFormNotification)
             
         default:
             let alert = UIAlertController(

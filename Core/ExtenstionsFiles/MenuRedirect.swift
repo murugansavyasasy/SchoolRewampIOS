@@ -450,10 +450,11 @@ class MenuRedirectHandler {
         viewContorller.present(vc, animated: true)
     }
     
-    func resiverconcernListVc(from viewContorller: UIViewController){
+    func resiverconcernListVc(from viewContorller: UIViewController,is_comefromNoti:Bool){
         let vc = commonConcernVc(nibName: nil, bundle: nil)
         vc.page1 = addConcernVc()
         vc.page2 = concernListVc()
+        vc.is_comefromNoti = is_comefromNoti
         vc.modalPresentationStyle = .fullScreen
         viewContorller.present(vc, animated: true)
         
