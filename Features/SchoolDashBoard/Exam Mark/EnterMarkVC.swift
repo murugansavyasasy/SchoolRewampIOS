@@ -163,7 +163,8 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                                 isRubric: true,
                                 rubricId: rubricId,
                                 isCo_scholastic: false,
-                                isRemarks: false
+                                isRemarks: false,
+                                isAttendance: false
                             )
                         )
                     }
@@ -181,7 +182,8 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                             maxMarks: Int(activity.max_mark ?? "0"),
                             rubrics: rubricConfigs,
                             isCo_scholastic: false,
-                            isRemarks: false
+                            isRemarks: false,
+                            isAttendance: false
                         )
                     )
                     
@@ -196,7 +198,8 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                             maxMarks: Int(activity.max_mark ?? "0"),
                             rubrics: nil,
                             isCo_scholastic: false,
-                            isRemarks: false
+                            isRemarks: false,
+                            isAttendance: false
                         )
                     )
                     
@@ -211,7 +214,8 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                             isRubric: false,
                             rubricId: nil,
                             isCo_scholastic: false,
-                            isRemarks: false
+                            isRemarks: false,
+                            isAttendance: false
                         )
                     )
                 }
@@ -249,7 +253,8 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                     maxMarks: nil,
                     rubrics: coScholasticRubrics,
                     isCo_scholastic: true,
-                    isRemarks: false
+                    isRemarks: false,
+                    isAttendance: false
                 )
             )
 
@@ -267,7 +272,8 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                         isRubric: false,
                         rubricId: nil,
                         isCo_scholastic: true,
-                        isRemarks: false
+                        isRemarks: false,
+                        isAttendance: false
                     )
                 )
             }
@@ -305,7 +311,8 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                     maxMarks: nil,
                     rubrics: remarkRubrics,
                     isCo_scholastic: false,
-                    isRemarks: true
+                    isRemarks: true,
+                    isAttendance: false
                 )
             )
 
@@ -323,7 +330,66 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                         isRubric: false,
                         rubricId: nil,
                         isCo_scholastic: false,
-                        isRemarks: true
+                        isRemarks: true,
+                        isAttendance: false
+                    )
+                )
+            }
+        }
+        
+        //MARK: Attendance Details
+        
+        let attendanceColumns = (firstStudent.attendance_details ?? []).compactMap {
+            item -> RubricMark? in
+
+            guard let referenceType = item.reference_type,
+                  !referenceType.isEmpty else {
+                return nil
+            }
+
+            return RubricMark(
+                id: referenceType,
+                name: referenceType,
+                max_mark: nil,
+                subjectName: "Attendance",
+                displayName: referenceType
+            )
+        }
+
+        if !attendanceColumns.isEmpty {
+
+            // Parent header
+            headerColumns.append(
+                HeaderColumnConfig(
+                    displayName: "Attendance",
+                    subjectName: nil,
+                    subjectId: nil,
+                    activityId: nil,
+                    activityName: nil,
+                    maxMarks: nil,
+                    rubrics: attendanceColumns,
+                    isCo_scholastic: false,
+                    isRemarks: false,
+                    isAttendance: true
+                )
+            )
+
+            // Child columns
+            for attendance in attendanceColumns {
+
+                subjectColumns.append(
+                    ColumnConfig(
+                        displayName: attendance.displayName,
+                        subjectName: "Attendance",
+                        subjectId: nil,
+                        activityId: attendance.id,
+                        activityName: attendance.name,
+                        maxMarks: nil,
+                        isRubric: false,
+                        rubricId: nil,
+                        isCo_scholastic: false,
+                        isRemarks: false,
+                        isAttendance: true
                     )
                 )
             }
@@ -899,11 +965,25 @@ class EnterMarkVC: UIViewController, MarksCellDelegate {
                     ])
                 }
                 
+                // MARK: - Attendance
+
+                        var attendanceArray: [[String: Any]] = []
+
+                        for attendance in student.attendance_details ?? [] {
+
+                            attendanceArray.append([
+                                "reference_type": attendance.reference_type ?? "",
+                                "mark": attendance.mark ?? ""
+                            ])
+                        }
+
+                
                 uploadDetails.append([
                     "student_id": studentId,
                     "marks": studentMarks,
                     "co_scholastic": coScholasticArray,
-                    "remarks": remarksArray
+                    "remarks": remarksArray,
+                    "attendance_details": attendanceArray
                 ])
             }
             
@@ -1187,6 +1267,68 @@ extension EnterMarkVC {
 
             if trimmed == original {
 
+                editedMarks[studentId]?.removeValue(forKey: key)
+
+                if editedMarks[studentId]?.isEmpty == true {
+                    editedMarks.removeValue(forKey: studentId)
+                }
+
+            } else {
+
+                editedMarks[studentId]?[key] = trimmed
+            }
+
+            return
+        }
+        
+        // MARK: - Attendance
+        
+        if col.isAttendance == true {
+
+            guard let referenceType = col.activityId else {
+                return
+            }
+
+            guard var attendance = studentRecords[row].attendance_details else {
+                return
+            }
+
+            guard let itemIndex = attendance.firstIndex(
+                where: { $0.reference_type == referenceType }
+            ) else {
+                return
+            }
+
+            let original = attendance[itemIndex].mark ?? ""
+
+            // Update current student
+            attendance[itemIndex].mark = trimmed
+            studentRecords[row].attendance_details = attendance
+
+            // Update allStudents too
+            if let allIndex = allStudents.firstIndex(
+                where: { $0.student_id == studentId }
+            ) {
+                if var allAttendance = allStudents[allIndex].attendance_details,
+                   let allItemIndex = allAttendance.firstIndex(
+                       where: { $0.reference_type == referenceType }
+                   ) {
+
+                    allAttendance[allItemIndex].mark = trimmed
+                    allStudents[allIndex].attendance_details = allAttendance
+                }
+            }
+
+            // Track edited Attendance
+            let key = "AT:\(referenceType)"
+
+            if editedMarks[studentId] == nil {
+                editedMarks[studentId] = [:]
+            }
+
+            if trimmed == original {
+
+                // Value was changed back to its original value
                 editedMarks[studentId]?.removeValue(forKey: key)
 
                 if editedMarks[studentId]?.isEmpty == true {

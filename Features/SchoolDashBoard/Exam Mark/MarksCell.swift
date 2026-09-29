@@ -24,6 +24,7 @@ class MarksCell: UICollectionViewCell {
     weak var parentVC: EnterMarkVC?
     private var naButton: UIButton?
     var isCoScholastic: Bool = false
+    var isAttendance: Bool = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -56,14 +57,25 @@ class MarksCell: UICollectionViewCell {
         //        naButton.isHidden = !(parentVC?.uploadTest ?? false)
         self.naButton = naButton
         
-        let buttons: [UIButton] = [
-            abButton,
-            naButton,
-            createKeyButton(imageName: "arrow.up", action: #selector(upTapped)),
-            createKeyButton(imageName: "arrow.down", action: #selector(downTapped)),
-            createKeyButton(imageName: "arrow.left", action: #selector(leftTapped)),
-            createKeyButton(imageName: "arrow.right", action: #selector(rightTapped))
-        ]
+        var buttons: [UIButton] = []
+        
+        if isAttendance {
+            buttons = [
+                createKeyButton(imageName: "arrow.up", action: #selector(upTapped)),
+                createKeyButton(imageName: "arrow.down", action: #selector(downTapped)),
+                createKeyButton(imageName: "arrow.left", action: #selector(leftTapped)),
+                createKeyButton(imageName: "arrow.right", action: #selector(rightTapped))
+            ]
+        }else {
+            buttons = [
+                abButton,
+                naButton,
+                createKeyButton(imageName: "arrow.up", action: #selector(upTapped)),
+                createKeyButton(imageName: "arrow.down", action: #selector(downTapped)),
+                createKeyButton(imageName: "arrow.left", action: #selector(leftTapped)),
+                createKeyButton(imageName: "arrow.right", action: #selector(rightTapped))
+            ]
+        }
         
         let leftStack = UIStackView(arrangedSubviews: buttons)
         leftStack.axis = .horizontal
@@ -207,7 +219,8 @@ class MarksCell: UICollectionViewCell {
         hasFlaggedIssue: Bool = false,
         is_edit: Bool,
         maxMark: Int = 0,
-        isCoScholastic: Bool = false
+        isCoScholastic: Bool = false,
+        isAttendance: Bool = false
     ) {
         
         self.rowIndex = rowIndex
@@ -241,11 +254,11 @@ class MarksCell: UICollectionViewCell {
             return
         }
         
-        if !isCoScholastic,
+        if !isCoScholastic && !isAttendance,
            let markValue = Int(mark),
            !mark.isEmpty,
            markValue > maxMark {
-            applyHighlight(color: .orange,infoColor: .systemRed)
+            applyHighlight(color: .orange, infoColor: .systemRed)
             return
         }
         
@@ -284,8 +297,8 @@ class MarksCell: UICollectionViewCell {
             return
         }
         
-        let entered = Int(trimmed) ?? 0
-        if entered > maxMark {
+        let entered = Double(trimmed) ?? 0
+        if entered > Double(maxMark) {
             showErrorUI()
         } else {
             showNormalUI()
@@ -312,33 +325,44 @@ class MarksCell: UICollectionViewCell {
     }
 }
 extension MarksCell: UITextFieldDelegate {
-    
+
     func textFieldDidEndEditing(_ textField: UITextField) {
+
         let value = textField.text ?? ""
         var reason = ""
         var isValid = true
-        
-        if let maxStr = parentVC?.subjectColumns[columnIndex].maxMarks,
-           let entered = Int(value),
-           entered > maxStr {
+
+        let column = parentVC?.subjectColumns[columnIndex]
+        let isAttendance = column?.isAttendance == true
+
+        // Maximum mark validation only for normal marks
+        if !isAttendance,
+           let maxStr = column?.maxMarks,
+           let entered = Double(value),
+           entered > Double(maxStr) {
+
             isValid = false
             reason = "Maximum mark exceeded".translated()
         }
-        
-        let subjectName = parentVC?.subjectColumns[columnIndex].subjectName ?? ""
+
+        let subjectName = column?.subjectName ?? ""
+
     }
-    
+
     func textField(
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {
 
-        let isCoScholastic =
-            parentVC?.subjectColumns[columnIndex].isCo_scholastic == true
+        let column = parentVC?.subjectColumns[columnIndex]
 
-        // Allow all characters for Co-Scholastic
+        let isCoScholastic = column?.isCo_scholastic == true
+        let isAttendance = column?.isAttendance == true
+
+        // Co-Scholastic: allow all characters
         if isCoScholastic {
+
             let currentText = textField.text ?? ""
 
             guard let textRange = Range(range, in: currentText) else {
@@ -350,8 +374,7 @@ extension MarksCell: UITextFieldDelegate {
                 with: string
             )
 
-            let subjectName =
-                parentVC?.subjectColumns[columnIndex].subjectName ?? ""
+            let subjectName = column?.subjectName ?? ""
 
             delegate?.updateMark(
                 row: rowIndex,
@@ -364,8 +387,9 @@ extension MarksCell: UITextFieldDelegate {
             return true
         }
 
-        // Normal marks: allow only numbers and decimal
+        // Normal marks + Attendance: numbers and decimal only
         if !string.isEmpty {
+
             let allowed = CharacterSet(charactersIn: "0123456789.")
             let set = CharacterSet(charactersIn: string)
 
@@ -388,25 +412,30 @@ extension MarksCell: UITextFieldDelegate {
         var reason = ""
         var isValid = true
 
-        if let max = parentVC?.subjectColumns[columnIndex].maxMarks,
-           let entered = Int(updatedText),
-           entered > max {
+        // Maximum mark validation ONLY for normal marks
+        if !isAttendance,
+           let maxMark = column?.maxMarks,
+           let entered = Double(updatedText),
+           entered > Double(maxMark) {
 
             isValid = false
             reason = "Maximum mark exceeded".translated()
         }
 
-        if updatedText == "AB" {
+        // AB is only applicable to normal marks
+        if !isAttendance && updatedText == "AB" {
             reason = "Absent".translated()
         }
 
-        applyValidationUI(
-            mark: updatedText,
-            maxMark: parentVC?.subjectColumns[columnIndex].maxMarks ?? 0
-        )
+        // Apply max-mark UI only for normal marks
+        if !isAttendance {
+            applyValidationUI(
+                mark: updatedText,
+                maxMark: column?.maxMarks ?? 0
+            )
+        }
 
-        let subjectName =
-            parentVC?.subjectColumns[columnIndex].subjectName ?? ""
+        let subjectName = column?.subjectName ?? ""
 
         delegate?.updateMark(
             row: rowIndex,
@@ -418,7 +447,7 @@ extension MarksCell: UITextFieldDelegate {
 
         return true
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

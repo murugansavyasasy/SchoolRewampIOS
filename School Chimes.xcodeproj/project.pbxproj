@@ -979,6 +979,14 @@
 		1841DF412F594B3000B88801 /* MesstimeTabelVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1841DF3D2F594B3000B88801 /* MesstimeTabelVC.xib */; };
 		1841DF462F59582B00B88801 /* MessTimeTabelTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1841DF422F59582A00B88801 /* MessTimeTabelTvCell.swift */; };
 		1841DF472F59582B00B88801 /* MessTimeTabelTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1841DF432F59582A00B88801 /* MessTimeTabelTvCell.xib */; };
+		184CE106306A6FF400A24D22 /* festivalVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184CE104306A6FF400A24D22 /* festivalVc.swift */; };
+		184CE107306A6FF400A24D22 /* festivalVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 184CE105306A6FF400A24D22 /* festivalVc.xib */; };
+		184CE108306A6FF400A24D22 /* festivalVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 184CE105306A6FF400A24D22 /* festivalVc.xib */; };
+		184CE109306A6FF400A24D22 /* festivalVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184CE104306A6FF400A24D22 /* festivalVc.swift */; };
+		184CE10A306A6FF400A24D22 /* festivalVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184CE104306A6FF400A24D22 /* festivalVc.swift */; };
+		184CE10B306A6FF400A24D22 /* festivalVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 184CE105306A6FF400A24D22 /* festivalVc.xib */; };
+		184CE10C306A6FF400A24D22 /* festivalVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 184CE105306A6FF400A24D22 /* festivalVc.xib */; };
+		184CE10D306A6FF400A24D22 /* festivalVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184CE104306A6FF400A24D22 /* festivalVc.swift */; };
 		185465152F42E7FB008B1551 /* StaffLeaveReqTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185465132F42E7FB008B1551 /* StaffLeaveReqTvCell.xib */; };
 		1854651A2F431080008B1551 /* StaffDetailsPreviewVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185465192F431080008B1551 /* StaffDetailsPreviewVc.xib */; };
 		1854651B2F431080008B1551 /* StaffDetailsPreviewVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185465182F431080008B1551 /* StaffDetailsPreviewVc.swift */; };
@@ -3832,6 +3840,8 @@
 		1841DF3D2F594B3000B88801 /* MesstimeTabelVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MesstimeTabelVC.xib; sourceTree = "<group>"; };
 		1841DF422F59582A00B88801 /* MessTimeTabelTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessTimeTabelTvCell.swift; sourceTree = "<group>"; };
 		1841DF432F59582A00B88801 /* MessTimeTabelTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessTimeTabelTvCell.xib; sourceTree = "<group>"; };
+		184CE104306A6FF400A24D22 /* festivalVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = festivalVc.swift; sourceTree = "<group>"; };
+		184CE105306A6FF400A24D22 /* festivalVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = festivalVc.xib; sourceTree = "<group>"; };
 		185465132F42E7FB008B1551 /* StaffLeaveReqTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StaffLeaveReqTvCell.xib; sourceTree = "<group>"; };
 		185465182F431080008B1551 /* StaffDetailsPreviewVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffDetailsPreviewVc.swift; sourceTree = "<group>"; };
 		185465192F431080008B1551 /* StaffDetailsPreviewVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StaffDetailsPreviewVc.xib; sourceTree = "<group>"; };
@@ -6717,6 +6727,8 @@
 				8497570C2D2BA575006A27FD /* SelectRecipient */,
 				FA43D0BE2F322CFA0046B966 /* BirthdayVc */,
 				FA43D0CA2F322CFE0046B966 /* ImageViewer */,
+				184CE104306A6FF400A24D22 /* festivalVc.swift */,
+				184CE105306A6FF400A24D22 /* festivalVc.xib */,
 			);
 			path = CommonScreens;
 			sourceTree = "<group>";
@@ -7760,6 +7772,7 @@
 				1827E8922F90C12000B33B20 /* schoolchimes_tone.wav in Resources */,
 				1827E8932F90C12000B33B20 /* SettingsViewController.xib in Resources */,
 				1827E8952F90C12000B33B20 /* BirthDayWishVC.xib in Resources */,
+				184CE10C306A6FF400A24D22 /* festivalVc.xib in Resources */,
 				1827E8962F90C12000B33B20 /* ImageSelection.xib in Resources */,
 				1827E8972F90C12000B33B20 /* HostelRoomTvCell.xib in Resources */,
 				1827E8982F90C12000B33B20 /* LanguageVc.xib in Resources */,
@@ -8195,6 +8208,7 @@
 				1868A6BD2FAC762E00831144 /* schoolchimes_tone.wav in Resources */,
 				1868A6BE2FAC762E00831144 /* SettingsViewController.xib in Resources */,
 				1868A6C02FAC762E00831144 /* BirthDayWishVC.xib in Resources */,
+				184CE10B306A6FF400A24D22 /* festivalVc.xib in Resources */,
 				1868A6C12FAC762E00831144 /* ImageSelection.xib in Resources */,
 				1868A6C22FAC762E00831144 /* HostelRoomTvCell.xib in Resources */,
 				1868A6C32FAC762E00831144 /* LanguageVc.xib in Resources */,
@@ -8630,6 +8644,7 @@
 				186E61C22FE91EB800BAF454 /* schoolchimes_tone.wav in Resources */,
 				186E61C32FE91EB800BAF454 /* SettingsViewController.xib in Resources */,
 				186E61C52FE91EB800BAF454 /* BirthDayWishVC.xib in Resources */,
+				184CE107306A6FF400A24D22 /* festivalVc.xib in Resources */,
 				186E61C62FE91EB800BAF454 /* ImageSelection.xib in Resources */,
 				186E61C72FE91EB800BAF454 /* HostelRoomTvCell.xib in Resources */,
 				186E61C82FE91EB800BAF454 /* LanguageVc.xib in Resources */,
@@ -8986,6 +9001,7 @@
 				1880E9E72FD14BB30025EB96 /* RouteHeaderCell.xib in Resources */,
 				FA0EDF132E4A1752008EC30D /* NewPtmVC.xib in Resources */,
 				842ACE1E2F56A05500954404 /* TeacherRemarkTVC.xib in Resources */,
+				184CE108306A6FF400A24D22 /* festivalVc.xib in Resources */,
 				846E7FAC2E2785CC00BC954B /* AudioPlayerTVC.xib in Resources */,
 				843C9F662D8D6BCB00443ED2 /* Main.storyboard in Resources */,
 				1841DE6F2F56E86400B88801 /* ApplyLeaveReqVC.xib in Resources */,
@@ -9808,6 +9824,7 @@
 				1827E7452F90C12000B33B20 /* CustomAlert.swift in Sources */,
 				1827E7462F90C12000B33B20 /* interactTvcell.swift in Sources */,
 				1827E7472F90C12000B33B20 /* WhatsNewCVC.swift in Sources */,
+				184CE10D306A6FF400A24D22 /* festivalVc.swift in Sources */,
 				1827E7482F90C12000B33B20 /* WhatsNewVc.swift in Sources */,
 				1827E7492F90C12000B33B20 /* LessonEditTV.swift in Sources */,
 				1827E74A2F90C12000B33B20 /* RiminderTimePicker.swift in Sources */,
@@ -10288,6 +10305,7 @@
 				1868A56F2FAC762E00831144 /* CustomAlert.swift in Sources */,
 				1868A5702FAC762E00831144 /* interactTvcell.swift in Sources */,
 				1868A5712FAC762E00831144 /* WhatsNewCVC.swift in Sources */,
+				184CE10A306A6FF400A24D22 /* festivalVc.swift in Sources */,
 				1868A5722FAC762E00831144 /* WhatsNewVc.swift in Sources */,
 				1868A5732FAC762E00831144 /* LessonEditTV.swift in Sources */,
 				1868A5742FAC762E00831144 /* RiminderTimePicker.swift in Sources */,
@@ -10768,6 +10786,7 @@
 				186E60712FE91EB800BAF454 /* CustomAlert.swift in Sources */,
 				186E60722FE91EB800BAF454 /* interactTvcell.swift in Sources */,
 				186E60732FE91EB800BAF454 /* WhatsNewCVC.swift in Sources */,
+				184CE106306A6FF400A24D22 /* festivalVc.swift in Sources */,
 				186E60742FE91EB800BAF454 /* WhatsNewVc.swift in Sources */,
 				186E60752FE91EB800BAF454 /* LessonEditTV.swift in Sources */,
 				186E60762FE91EB800BAF454 /* RiminderTimePicker.swift in Sources */,
@@ -11255,6 +11274,7 @@
 				84EFF9992CCBA7E800C11C26 /* CustomAlert.swift in Sources */,
 				84127DBB2E13EB260092159D /* interactTvcell.swift in Sources */,
 				FA43D0AC2F322CDB0046B966 /* WhatsNewCVC.swift in Sources */,
+				184CE109306A6FF400A24D22 /* festivalVc.swift in Sources */,
 				FA43D0AD2F322CDB0046B966 /* WhatsNewVc.swift in Sources */,
 				FAF43B682E02A12A00F28A16 /* LessonEditTV.swift in Sources */,
 				84C499392E33AD52007BCB62 /* RiminderTimePicker.swift in Sources */,
@@ -11367,7 +11387,7 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.3;
+				CURRENT_PROJECT_VERSION = 4.4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -11393,7 +11413,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.4;
+				MARKETING_VERSION = 3.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -11413,11 +11433,102 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.3;
+				CURRENT_PROJECT_VERSION = 4.4;
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "SRI SUDHA DHONE";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need access to Face ID for authentication.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show it on the map.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show it on the map.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow to microphone access";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "We need access to create reminders for you.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = SplashVC;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 3.5;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		1868A7442FAC762E00831144 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = FA81631A2F3314B000ADA8F3 /* Flavours */;
+			baseConfigurationReferenceRelativePath = SRIKALAIVANIVIDHYALAYA/SRIKALAIVANIVIDHYALAYA.xcconfig;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4.4;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = VPA36TGVRS;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "SRI KALAIVANI VIDHYALAYA";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need access to Face ID for authentication.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show it on the map.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show it on the map.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow to microphone access";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "We need access to create reminders for you.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = SplashVC;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 3.4;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1868A7452FAC762E00831144 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = FA81631A2F3314B000ADA8F3 /* Flavours */;
+			baseConfigurationReferenceRelativePath = SRIKALAIVANIVIDHYALAYA/SRIKALAIVANIVIDHYALAYA.xcconfig;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4.4;
+				DEVELOPMENT_TEAM = VPA36TGVRS;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "SRI KALAIVANI VIDHYALAYA";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
@@ -11448,97 +11559,6 @@
 			};
 			name = Release;
 		};
-		1868A7442FAC762E00831144 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = FA81631A2F3314B000ADA8F3 /* Flavours */;
-			baseConfigurationReferenceRelativePath = SRIKALAIVANIVIDHYALAYA/SRIKALAIVANIVIDHYALAYA.xcconfig;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.3;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = VPA36TGVRS;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "SRI KALAIVANI VIDHYALAYA";
-				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
-				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need access to Face ID for authentication.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show it on the map.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show it on the map.";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow to microphone access";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
-				INFOPLIST_KEY_NSRemindersUsageDescription = "We need access to create reminders for you.";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = SplashVC;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 3.3;
-				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		1868A7452FAC762E00831144 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = FA81631A2F3314B000ADA8F3 /* Flavours */;
-			baseConfigurationReferenceRelativePath = SRIKALAIVANIVIDHYALAYA/SRIKALAIVANIVIDHYALAYA.xcconfig;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.3;
-				DEVELOPMENT_TEAM = VPA36TGVRS;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "SRI KALAIVANI VIDHYALAYA";
-				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan documents.";
-				INFOPLIST_KEY_NSContactsUsageDescription = "We need access to fetch your email accounts";
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "We need access to Face ID for authentication.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show it on the map.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show it on the map.";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow to microphone access";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
-				INFOPLIST_KEY_NSRemindersUsageDescription = "We need access to create reminders for you.";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = SplashVC;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 3.3;
-				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		186E62492FE91EB800BAF454 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = FA81631A2F3314B000ADA8F3 /* Flavours */;
@@ -11549,7 +11569,7 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.7;
+				CURRENT_PROJECT_VERSION = 4.8;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -11575,7 +11595,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.6;
+				MARKETING_VERSION = 3.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -11595,7 +11615,7 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4.7;
+				CURRENT_PROJECT_VERSION = 4.8;
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
@@ -11620,7 +11640,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.6;
+				MARKETING_VERSION = 3.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -11832,7 +11852,7 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5.0;
+				CURRENT_PROJECT_VERSION = 5.1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -11857,7 +11877,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.6;
+				MARKETING_VERSION = 3.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -11876,7 +11896,7 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5.0;
+				CURRENT_PROJECT_VERSION = 5.1;
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
@@ -11900,7 +11920,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.6;
+				MARKETING_VERSION = 3.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

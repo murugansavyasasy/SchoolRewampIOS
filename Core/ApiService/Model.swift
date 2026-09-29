@@ -3717,6 +3717,7 @@ struct HeaderColumnConfig: Codable {
     var rubrics: [RubricMark]?
     let isCo_scholastic: Bool?
     let isRemarks: Bool?
+    let isAttendance: Bool?
     var childColumns: [ColumnConfig]?
 }
 struct RubricMark: Codable {
@@ -3737,6 +3738,7 @@ struct ColumnConfig: Codable {
     let rubricId: String?
     let isCo_scholastic: Bool?
     let isRemarks: Bool?
+    let isAttendance: Bool?
 }
 
 struct MarkDetailsResponse: Codable {
@@ -3758,6 +3760,7 @@ struct StudentMark: Codable {
     var marks: [SubjectMarks]?
     var co_scholastic: [co_scholasticMarks]?
     var remarks: [Remarks]?
+    var attendance_details : [ExamAttendanceDetails]?
 }
 
 struct SubjectMarks: Codable {
@@ -3810,6 +3813,13 @@ struct Remarks: Codable {
     let reference_type: String?
     var mark: String?
     let is_edit: Bool?
+}
+
+struct ExamAttendanceDetails: Codable {
+    
+    let reference_type : String?
+    var mark : String?
+    let is_edit : Bool?
 }
 
 struct CommonRemarksResponse: Codable {
