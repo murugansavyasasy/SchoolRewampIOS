@@ -103,6 +103,7 @@ class ExameMarVC: UIViewController {
             }
         }
     }
+    
     func markListApi(exam_id: String,type: String) {
         if #available(iOS 15.0, *) {
             showActivityLoader()
@@ -144,21 +145,27 @@ class ExameMarVC: UIViewController {
         }
     }
     
-    func View_Marks_Action(index:Int){
-        
-        if user_inputs.clearTempData(){
-            let parms = [ "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",
-                          "activity": "VIEW_EXAM_SCHUDLE",
-                          "user_type": 1,
-                          "menu_id": Menu_id.staffSelectedMenuId] as [String : Any]
-            self.paketApiCall(params:parms)
+    func View_Marks_Action(exam: ExamItem) {
+
+        if user_inputs.clearTempData() {
+
+            let parms = [
+                "mobile_number": UserDefaultFileManager.get_child_Details()?.whatsapp_number ?? "",
+                "activity": "VIEW_EXAM_SCHUDLE",
+                "user_type": 1,
+                "menu_id": Menu_id.staffSelectedMenuId
+            ] as [String: Any]
+
+            self.paketApiCall(params: parms)
         }
-        
-        guard let examID = FilteredExamList?[index].report_id else { return }
+
+        guard let examID = exam.report_id else { return }
+
         let vc = MarkListVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-        vc.ExamTitle = FilteredExamList?[index].reportName
+        vc.ExamTitle = exam.reportName
         vc.examId = String(examID)
+
         present(vc, animated: false)
     }
     
@@ -179,7 +186,132 @@ class ExameMarVC: UIViewController {
         present(vc, animated: true)
     }
 
+    func updateReadStatusApi(
+        report_id: Int,
+        view_type: String,
+        completion: @escaping (Bool) -> Void
+    ) {
 
+        APIService.shared.makeApi(
+            url: ServiceUrl.update_report_view_status,
+            parameters: [
+                "report_id": report_id,
+                "view_type": view_type
+            ],
+            type: ApitTypeSringFile.PUT,
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? "",
+            isBaseUrl: false
+        ) { [weak self] (result: Result<reportViewStatusResponse, Error>) in
+
+            guard let self = self else { return }
+
+            DispatchQueue.main.async {
+
+                switch result {
+
+                case .success(let success):
+
+                    if success.status == true {
+
+                        // Update local model after successful API response.
+                        self.updateLocalViewedStatus(
+                            report_id: report_id,
+                            view_type: view_type
+                        )
+
+                        completion(true)
+
+                    } else {
+
+                        print("Failed:", success.message ?? "")
+                        completion(false)
+                    }
+
+                case .failure(let error):
+
+                    print("API Error:", error)
+                    completion(false)
+                }
+            }
+        }
+    }
+    
+    func updateLocalViewedStatus(report_id: Int, view_type: String) {
+
+        if let index = examList?.firstIndex(where: {
+            $0.report_id == report_id
+        }) {
+
+            if view_type == "mark" {
+                examList?[index].mark_viewed = true
+            } else if view_type == "report" {
+                examList?[index].report_viewed = true
+            }
+        }
+
+        if let index = FilteredExamList?.firstIndex(where: {
+            $0.report_id == report_id
+        }) {
+
+            if view_type == "mark" {
+                FilteredExamList?[index].mark_viewed = true
+            } else if view_type == "report" {
+                FilteredExamList?[index].report_viewed = true
+            }
+        }
+
+        cv.reloadData()
+    }
+    
+    func handleViewMarks(exam: ExamItem) {
+
+        guard let reportID = exam.report_id else { return }
+
+        if exam.mark_viewed == true {
+            View_Marks_Action(exam: exam)
+            return
+        }
+
+        updateReadStatusApi(
+            report_id: reportID,
+            view_type: "mark"
+        ) { [weak self] success in
+
+            guard let self = self else { return }
+
+            self.View_Marks_Action(exam: exam)
+        }
+    }
+    
+    func handleViewProgress(exam: ExamItem) {
+
+        guard let reportID = exam.report_id else { return }
+
+        let openProgress = { [weak self] in
+
+            guard let self = self else { return }
+
+            self.markListApi(
+                exam_id: String(reportID),
+                type: exam.type ?? ""
+            )
+        }
+
+        // Already viewed. Skip update API.
+        if exam.report_viewed == true {
+            openProgress()
+            return
+        }
+
+        // Update read status.
+        updateReadStatusApi(
+            report_id: reportID,
+            view_type: "report"
+        ) { _ in
+
+            openProgress()
+        }
+    }
 }
 
 
@@ -199,12 +331,21 @@ extension ExameMarVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         cell.ExamLbl.text = exam?.reportName
         cell.viewMarksBtn.isHidden = !(exam?.mark_sent ?? false)
         cell.viewProgressBtn.isHidden = !(exam?.report_sent ?? false)
-        cell.onViewMark = { [weak self] in
-            self?.View_Marks_Action(index: indexPath.row)
-        }
+        
+        cell.viewMarksNewImg.isHidden =
+            !(exam?.mark_sent ?? false) || (exam?.mark_viewed ?? false)
 
+        cell.viewProgressNewImg.isHidden =
+            !(exam?.report_sent ?? false) || (exam?.report_viewed ?? false)
+        
+        cell.onViewMark = { [weak self] in
+            guard let self = self, let exam = exam else { return }
+            self.handleViewMarks(exam: exam)
+        }
+        
         cell.OnViewProgress = { [weak self] in
-            self?.markListApi(exam_id: String(exam?.report_id ?? 0), type: exam?.type ?? "")
+            guard let self = self, let exam = exam else { return }
+            self.handleViewProgress(exam: exam)
         }
         
         return cell

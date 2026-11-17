@@ -350,6 +350,18 @@ struct linkdata: Codable {
     let link: String?
 }
 
+struct reportViewStatusResponse : Codable {
+    let status : Bool?
+    let message : String?
+    let data : [reportViewStatusData]?
+}
+
+struct reportViewStatusData: Codable {
+    let report_id: Int?
+    let view_type: String?
+    let mark_viewed: Bool?
+}
+
 struct SecondCommonApiSuc: Codable {
     let status: Bool?
     let message: String?
@@ -1620,7 +1632,8 @@ struct ExamItem: Codable {
     var report_sent: Bool?
     var mark_sent: Bool?
     var type : String?
-    
+    var mark_viewed: Bool?
+    var report_viewed: Bool?
   
 }
 //MARK: ExamMarks
