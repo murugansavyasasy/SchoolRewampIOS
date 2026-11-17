@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "NewBadge_WhiteBorder.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

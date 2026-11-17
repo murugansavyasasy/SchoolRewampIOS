@@ -135,6 +135,7 @@ struct ServiceUrl{
     
     static let exam_api_exam_list = "exam/api/exam/list"
     static let get_report_status = "exam/api/new-exam/get-report-status"
+    static let update_report_view_status = "exam/api/new-exam/update-report-view-status"
     static let exam_api_exam_view_marks = "exam/api/new-exam/get-mark-details"
     static let exam_api_get_progress_card = "exam/api/new-exam/get-student-progresscard"
     static let interaction_classes_for_chat = "comm/api/interaction/classes-for-chat"

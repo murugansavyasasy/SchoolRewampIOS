@@ -15,6 +15,8 @@ class ExamMarkCV: UICollectionViewCell {
     @IBOutlet weak var ExamLbl: UILabel!
     @IBOutlet weak var bgImgview: UIImageView!
     @IBOutlet weak var cellView: UIView!
+    @IBOutlet weak var viewMarksNewImg: UIImageView!
+    @IBOutlet weak var viewProgressNewImg: UIImageView!
     
     var onViewMark : ( () -> Void)?
     var OnViewProgress : ( () -> Void)?
