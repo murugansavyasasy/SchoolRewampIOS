@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23504"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="OneViewSummaryCell" rowHeight="170" id="wKL-sj-QVG" customClass="OneViewSummaryCell" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="170"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wKL-sj-QVG" id="AyD-aU-uRV">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="170"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Sqk-po-3tB">
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pending" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rwc-Cf-eJO">
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                    <color key="textColor" red="0.392157" green="0.454902" blue="0.545098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="₹10,500.00" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="YES" minimumScaleFactor="0.6" translatesAutoresizingMaskIntoConstraints="NO" id="IqN-92-keB">
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
+                                    <color key="textColor" red="0.117647" green="0.160784" blue="0.231373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="71.43% paid" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nh4-T6-SdT">
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <color key="textColor" red="0.392157" green="0.454902" blue="0.545098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.7" translatesAutoresizingMaskIntoConstraints="NO" id="ywD-ek-iHB">
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="6" id="2vK-ea-wSt"/>
+                                    </constraints>
+                                    <color key="progressTintColor" red="0.145098" green="0.388235" blue="0.921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="trackTintColor" red="0.886275" green="0.909804" blue="0.941176" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius"><integer key="value" value="3"/></userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </progressView>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ada-6B-3Jh">
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="YMa-3T-6y1">
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T1N-kL-BDD">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.392157" green="0.454902" blue="0.545098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="₹42,000.00" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="YES" minimumScaleFactor="0.6" translatesAutoresizingMaskIntoConstraints="NO" id="4zZ-LB-pYr">
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                    <color key="textColor" red="0.117647" green="0.160784" blue="0.231373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Vii-qX-Cfv">
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paid" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NBN-Dp-6GV">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.392157" green="0.454902" blue="0.545098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="₹30,000.00" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="YES" minimumScaleFactor="0.6" translatesAutoresizingMaskIntoConstraints="NO" id="Jtk-wV-FWn">
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                    <color key="textColor" red="0.117647" green="0.160784" blue="0.231373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="h9K-Or-o2l">
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discount" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PCo-1t-wVk">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.392157" green="0.454902" blue="0.545098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="₹1,500.00" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="YES" minimumScaleFactor="0.6" translatesAutoresizingMaskIntoConstraints="NO" id="rlM-km-rEl">
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                    <color key="textColor" red="0.117647" green="0.160784" blue="0.231373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="Sqk-po-3tB" firstAttribute="top" secondItem="AyD-aU-uRV" secondAttribute="top" constant="14" id="sAJ-do-H73"/>
+                        <constraint firstItem="AyD-aU-uRV" firstAttribute="bottom" secondItem="Sqk-po-3tB" secondAttribute="bottom" constant="14" id="G67-a0-KQT"/>
+                        <constraint firstItem="Sqk-po-3tB" firstAttribute="leading" secondItem="AyD-aU-uRV" secondAttribute="leadingMargin" constant="0" id="jPx-ME-PgX"/>
+                        <constraint firstItem="AyD-aU-uRV" firstAttribute="trailingMargin" secondItem="Sqk-po-3tB" secondAttribute="trailing" constant="0" id="oON-9c-sYk"/>
+                    </constraints>
+                </tableViewCellContentView>
+            <color key="backgroundColor" red="1.000000" green="1.000000" blue="1.000000" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="captionLabel" destination="Rwc-Cf-eJO" id="4QC-Pz-Ss4"/>
+                <outlet property="valueLabel" destination="IqN-92-keB" id="I05-H0-bZx"/>
+                <outlet property="noteLabel" destination="nh4-T6-SdT" id="1VJ-g7-3nr"/>
+                <outlet property="progressView" destination="ywD-ek-iHB" id="Peu-6r-lDj"/>
+                <outlet property="statsStack" destination="Ada-6B-3Jh" id="YZp-1T-2dP"/>
+                <outlet property="stat1TitleLabel" destination="T1N-kL-BDD" id="Ohv-RK-Ofs"/>
+                <outlet property="stat1ValueLabel" destination="4zZ-LB-pYr" id="Cft-q6-4FH"/>
+                <outlet property="stat2TitleLabel" destination="NBN-Dp-6GV" id="cQw-xR-Nq4"/>
+                <outlet property="stat2ValueLabel" destination="Jtk-wV-FWn" id="TBF-Gl-Cpu"/>
+                <outlet property="stat3TitleLabel" destination="PCo-1t-wVk" id="3cF-OK-IYI"/>
+                <outlet property="stat3ValueLabel" destination="rlM-km-rEl" id="ERC-bj-uGC"/>
+            </connections>
+            <point key="canvasLocation" x="0.0" y="0.0"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+
+    </resources>
+</document>

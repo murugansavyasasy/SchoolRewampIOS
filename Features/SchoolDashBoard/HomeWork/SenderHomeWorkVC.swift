@@ -84,6 +84,7 @@ class SenderHomeWorkVC: UIViewController, SelectedId {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        showPageAds(menuId: Menu_id.homeWorkMenuId, scrollView: Cv)   // internal ads above the history list (DashboardAds.swift)
         setupViews()
         registerCVCells()
         searchBar.delegate = self

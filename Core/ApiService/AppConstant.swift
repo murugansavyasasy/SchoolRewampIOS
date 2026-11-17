@@ -22,6 +22,7 @@ struct ServiceUrl{
     static let app_api_auth_logout       = "app/api/auth/logout"
     static let get_dashboard_details    = "dashboard/api/dashboard/menus"
     static let dashboard_api_dashboard_menu_counts    = "dashboard/api/dashboard/menu-counts"
+    static let dashboard_api_dashboard_get_ads = "dashboard/api/dashboard/get-ads"
     static let recipient_get_group_list   = "comm/api/recipient/get-group-list"
     static let recipient_get_standards    = "comm/api/recipient/get-standards"
     static let recipient_get_student_list = "comm/api/recipient/get-student-list"
@@ -68,6 +69,7 @@ struct ServiceUrl{
     static let api_fee_report_daily_collection = "fee/api/fee-report/daily-collection"
     static let api_fee_report_detailed_pending_report = "fee/api/fee-report/detailed-pending-report"
     static let api_fee_report_detailed_class_wise_pending_report = "fee/api/fee-report/detailed-class-wise-pending-report"
+    static let fee_api_fee_report_discount_report = "fee/api/fee-report/discount-report"
     static let  api_get_student_report = "admin/api/get-student-report"
     static let  admin_api_student_profile_update_profile = "admin/api/student-profile/update-profile"
     static let  api_school_event_get_event = "admin/api/school-event/get-event"
@@ -180,6 +182,8 @@ struct ServiceUrl{
     static let admin_api_student_profile_pre_submission = "admin/api/student-profile/pre-submission"
     static let fee_api_fee_details_student_invoice = "fee/api/fee-details/student-invoice"  
     static let fee_api_fee_details_payment_proof = "fee/api/fee-details/payment-proof"
+    // Staff: fee payment proofs of one student (Student Report → student)
+    static let fee_api_fee_details_student_fee_details = "fee/api/fee-details/student-fee-details"
     static let fee_api_fee_details_invoice_details = "fee/api/fee-details/invoice-details"
     static let lms_api_quiz_pick_from_qbank = "lms/api/quiz/pick-from-qbank"
     static let comm_api_interaction_staff_ans_question = "comm/api/interaction/staff-ans-question"
@@ -244,6 +248,7 @@ struct ServiceUrl{
     
     static let admin_api_parent_concern_delete = "admin/api/parent-concern/delete"
     static let admin_api_parent_concern_action_taken = "admin/api/parent-concern/action-taken"
+    static let discount_count_type_list = "fee/api/fee-report/discount-type-list"
    
 
 }
@@ -304,6 +309,8 @@ struct Menu_id{
     static let Upload_Marks = 41
     static let Raiseconcern = 207
     static let student_report = 35
+    /// Principal-only "Discount" report. Change here if the backend assigns a different menu id.
+    static let discountReport = 208
     
 }
 

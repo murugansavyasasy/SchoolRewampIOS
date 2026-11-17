@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23504"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StudentFeeDetailsVC" customModuleProvider="target">
+            <connections>
+                <outlet property="titleLabel" destination="XnU-mf-beV" id="hkS-I1-owg"/>
+                <outlet property="subtitleLabel" destination="QQs-A2-5jg" id="IQU-DB-L3l"/>
+                <outlet property="tableView" destination="4Xx-fb-d3c" id="yRq-Wg-pJI"/>
+                <outlet property="emptyLabel" destination="Ra1-xF-zzw" id="jFG-hJ-BlS"/>
+                <outlet property="spinner" destination="2sg-LU-IG1" id="rzZ-Iy-nE8"/>
+                <outlet property="view" destination="w0A-xn-lk9" id="7Yl-Wa-cN8"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="w0A-xn-lk9">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" customClass="BottomRoundedView" customModuleProvider="target" userLabel="Header View" id="EVt-xI-tUI">
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="v7D-Dl-idb">
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z2j-os-hz2">
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="35" id="m2t-dt-dHN"/>
+                                        <constraint firstAttribute="height" constant="35" id="NxM-bO-8BZ"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                    <color key="tintColor" red="1.000000" green="1.000000" blue="1.000000" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <state key="normal" image="chevron.backward" catalog="system"><preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/></state>
+                                    <connections>
+                                        <action selector="backAct:" destination="-1" eventType="touchUpInside" id="HrN-7H-TZn"/>
+                                    </connections>
+                                </button>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="J0K-7C-pKT">
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XnU-mf-beV">
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                            <color key="textColor" red="1.000000" green="1.000000" blue="1.000000" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class - Section" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QQs-A2-5jg">
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" red="1.000000" green="1.000000" blue="1.000000" alpha="0.85" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" name="BackGroundClr"/>
+                    <constraints>
+                        <constraint firstItem="v7D-Dl-idb" firstAttribute="leading" secondItem="EVt-xI-tUI" secondAttribute="leading" constant="10" id="3r2-tj-z8Z"/>
+                        <constraint firstItem="EVt-xI-tUI" firstAttribute="trailing" secondItem="v7D-Dl-idb" secondAttribute="trailing" constant="10" id="ZDQ-EL-wAh"/>
+                        <constraint firstItem="EVt-xI-tUI" firstAttribute="bottom" secondItem="v7D-Dl-idb" secondAttribute="bottom" constant="18" id="72u-7W-GyK"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="4Xx-fb-d3c">
+                    <color key="backgroundColor" red="0.964706" green="0.972549" blue="0.984314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="BPj-we-dT1"/>
+                        <outlet property="delegate" destination="-1" id="LTN-KH-uEV"/>
+                    </connections>
+                </tableView>
+                <label opaque="NO" hidden="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No fee details found for this student." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ra1-xF-zzw">
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.392157" green="0.454902" blue="0.545098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="2sg-LU-IG1">
+                </activityIndicatorView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="jOJ-jV-8MU"/>
+            <color key="backgroundColor" red="0.964706" green="0.972549" blue="0.984314" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="v7D-Dl-idb" firstAttribute="top" secondItem="jOJ-jV-8MU" secondAttribute="top" constant="10" id="1GN-nN-y4s"/>
+                <constraint firstItem="EVt-xI-tUI" firstAttribute="top" secondItem="w0A-xn-lk9" secondAttribute="top" constant="0" id="bxN-MM-Bmw"/>
+                <constraint firstItem="EVt-xI-tUI" firstAttribute="leading" secondItem="w0A-xn-lk9" secondAttribute="leading" constant="0" id="298-9a-rDZ"/>
+                <constraint firstItem="w0A-xn-lk9" firstAttribute="trailing" secondItem="EVt-xI-tUI" secondAttribute="trailing" constant="0" id="aFy-EF-LKO"/>
+                <constraint firstItem="4Xx-fb-d3c" firstAttribute="top" secondItem="EVt-xI-tUI" secondAttribute="bottom" constant="4" id="3F5-OX-P2W"/>
+                <constraint firstItem="4Xx-fb-d3c" firstAttribute="leading" secondItem="w0A-xn-lk9" secondAttribute="leading" constant="0" id="33K-YM-4dJ"/>
+                <constraint firstItem="w0A-xn-lk9" firstAttribute="trailing" secondItem="4Xx-fb-d3c" secondAttribute="trailing" constant="0" id="3gt-pJ-Ac2"/>
+                <constraint firstItem="w0A-xn-lk9" firstAttribute="bottom" secondItem="4Xx-fb-d3c" secondAttribute="bottom" constant="0" id="6Sg-Mc-YRZ"/>
+                <constraint firstItem="Ra1-xF-zzw" firstAttribute="centerY" secondItem="4Xx-fb-d3c" secondAttribute="centerY" constant="0" id="02U-A7-85B"/>
+                <constraint firstItem="Ra1-xF-zzw" firstAttribute="leading" secondItem="w0A-xn-lk9" secondAttribute="leading" constant="32" id="DPb-p5-Otp"/>
+                <constraint firstItem="w0A-xn-lk9" firstAttribute="trailing" secondItem="Ra1-xF-zzw" secondAttribute="trailing" constant="32" id="Rmh-7Z-1A0"/>
+                <constraint firstItem="2sg-LU-IG1" firstAttribute="centerX" secondItem="4Xx-fb-d3c" secondAttribute="centerX" constant="0" id="rWx-pc-D5I"/>
+                <constraint firstItem="2sg-LU-IG1" firstAttribute="centerY" secondItem="4Xx-fb-d3c" secondAttribute="centerY" constant="0" id="MlD-7y-kwa"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="chevron.backward" catalog="system" width="128" height="128"/>
+        <namedColor name="BackGroundClr">
+            <color red="0.215686" green="0.490196" blue="0.956863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

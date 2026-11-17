@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomDashboard" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="adBannerView" destination="AdS-bn-v01" id="AdS-ot-o01"/>
                 <outlet property="MenuCollection" destination="8j8-rO-HUO" id="fxD-PA-a2w"/>
                 <outlet property="headerView" destination="wzN-GC-JgT" id="Ehe-VX-mgz"/>
                 <outlet property="menuButton" destination="yII-3C-CKd" id="sdD-x7-lhI"/>
@@ -158,6 +159,13 @@
                                         <outlet property="delegate" destination="-1" id="jWe-ER-buT"/>
                                     </connections>
                                 </searchBar>
+                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" customClass="DashboardAdBannerView" customModuleProvider="target" id="AdS-bn-v01" userLabel="Ad Banner">
+                                    <rect key="frame" x="0.0" y="120" width="393" height="116"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="116" id="AdS-hc-c01"/>
+                                    </constraints>
+                                </view>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="8j8-rO-HUO">
                                     <rect key="frame" x="0.0" y="119.99999999999997" width="393" height="465.66666666666663"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

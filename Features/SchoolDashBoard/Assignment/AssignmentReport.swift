@@ -59,6 +59,7 @@ class AssignmentReport: UIViewController, SelectedId {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        showPageAds(menuId: Menu_id.isAssaignment, scrollView: reportTable)   // internal ads above the history list (DashboardAds.swift)
         setupUI()
         getacadmicYr()
     }

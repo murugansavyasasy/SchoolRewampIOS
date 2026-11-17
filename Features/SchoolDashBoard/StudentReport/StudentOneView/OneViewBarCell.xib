@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23504"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="OneViewBarCell" rowHeight="72" id="3m7-UX-5kv" customClass="OneViewBarCell" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="72"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3m7-UX-5kv" id="bSO-ZC-Lfb">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="72"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="5Fu-JS-lEI">
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="xBw-se-SPm">
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="English" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qr2-u2-yiB">
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                            <color key="textColor" red="0.117647" green="0.160784" blue="0.231373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="88/100  A" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Iu-d1-myn">
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                            <color key="textColor" red="0.062745" green="0.725490" blue="0.505882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" customClass="OneViewBarView" customModuleProvider="target" id="xxq-Dx-ar3">
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="8" id="Afl-db-hlr"/>
+                                    </constraints>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unit Test 1 40/50  ·  Quarterly 70/100" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vVZ-l6-QJ8">
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" red="0.392157" green="0.454902" blue="0.545098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="5Fu-JS-lEI" firstAttribute="top" secondItem="bSO-ZC-Lfb" secondAttribute="top" constant="12" id="TpK-VQ-Jub"/>
+                        <constraint firstItem="bSO-ZC-Lfb" firstAttribute="bottom" secondItem="5Fu-JS-lEI" secondAttribute="bottom" constant="12" id="wrI-TT-3cB"/>
+                        <constraint firstItem="5Fu-JS-lEI" firstAttribute="leading" secondItem="bSO-ZC-Lfb" secondAttribute="leadingMargin" constant="0" id="GZo-u7-hD3"/>
+                        <constraint firstItem="bSO-ZC-Lfb" firstAttribute="trailingMargin" secondItem="5Fu-JS-lEI" secondAttribute="trailing" constant="0" id="sbW-Tx-jW2"/>
+                    </constraints>
+                </tableViewCellContentView>
+            <color key="backgroundColor" red="1.000000" green="1.000000" blue="1.000000" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="titleLabel" destination="qr2-u2-yiB" id="lFl-Bq-btf"/>
+                <outlet property="valueLabel" destination="4Iu-d1-myn" id="goO-TO-gfO"/>
+                <outlet property="barView" destination="xxq-Dx-ar3" id="JQC-Es-5cv"/>
+                <outlet property="subtitleLabel" destination="vVZ-l6-QJ8" id="N58-z5-GIQ"/>
+            </connections>
+            <point key="canvasLocation" x="0.0" y="0.0"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+
+    </resources>
+</document>

@@ -53,6 +53,7 @@ class AttachHistroyVC: UIViewController, SelectedId {
     var filterSchoolId: String? = MenuStringFile.All_Schools.translated()
     override func viewDidLoad() {
         super.viewDidLoad()
+        showPageAds(menuId: Menu_id.AttachmentMenuId, scrollView: tv)   // internal ads above the history list (DashboardAds.swift)
         localData.editToken = ""
         headerView.layer.cornerRadius = 20
         headerView.layer.masksToBounds = true

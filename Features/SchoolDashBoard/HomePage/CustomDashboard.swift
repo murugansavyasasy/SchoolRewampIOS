@@ -1,9 +1,4 @@
-//
-//  CustomDashboard.swift
-//  School Chimes
-//
-//  Created by Chandhru on 01/08/25.
-//
+
 import UIKit
 
 @available(iOS 14.0, *)
@@ -38,6 +33,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
     @IBOutlet weak var pagecontroller: UIPageControl!
     @IBOutlet weak var recentActiveMenuCollection: UICollectionView!
     @IBOutlet weak var MenuCollection: UICollectionView!
+    @IBOutlet weak var adBannerView: DashboardAdBannerView!
     
     // MARK: - Properties
     var recentMenuItems: [MenuDetail]?
@@ -64,6 +60,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadDashboardAds()
         // Register cells
         recentActiveMenuCollection.register(UINib(nibName: CellConfingName.TopCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.TopCVCell)
         MenuCollection.register(UINib(nibName: CellConfingName.CustomMenuCVC, bundle: nil), forCellWithReuseIdentifier: CellConfingName.CustomMenuCVC)
@@ -235,7 +232,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                 switch result {
                 case .success(let response):
                     if response.status == true, let details = response.data?.first {
-                        self.menu_details = details.menus
+                        self.menu_details = self.addDiscountMenuIfPrincipal(details.menus)
                     
 //                        self.menu_details?.append(
 //                            MenuDetail(id: 207, name: "Parent Concerns", description: "Used to apply leave")
@@ -255,7 +252,9 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                             DispatchQueue.main.async {
                                 let vc = BirthDayWishVC(nibName: nil, bundle: nil)
                                 vc.nameLbl_text = self.staffDetails?.name ?? ""
-                                vc.modalPresentationStyle = .formSheet
+                                vc.schoolName = self.staffDetails?.school_name ?? ""
+                                vc.modalPresentationStyle = .overCurrentContext
+                                vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
                                 self.present(vc, animated: true)}}
                     } else {
                         self.menu_details = []
@@ -681,7 +680,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         MenuStringFile.selectedMenuName = menuName
         // MENU IDs that need navigateOrSchoolList check
         let needSchoolCheck: Set<Int> = [
-            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 18, 41,202,203,204,205,206,207
+            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 18, 41,202,203,204,205,206,207, Menu_id.discountReport
         ]
         Menu_id.staffSelectedMenuId = menuId
         // All actions with explicit self
@@ -723,8 +722,9 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             202: { self.MenuRedirect.HostelManagment(from: self) },
             204: { self.MenuRedirect.StaffLeaveRequest(from: self) },
             205: { self.MenuRedirect.buslist(from: self, loginasType: self.loginAsType ?? 0, is_ownbustraking: self.staffDetails?.gps_type == "dhundhoo" ? false : true) },
-            206 : { self.MenuRedirect.createClasstestVc(from: self) },
-            207:{self.MenuRedirect.senderconcernListVc(from: self)}
+            206 : { self.MenuRedirect.createClasstestVc(from: self)},
+            207:{self.MenuRedirect.senderconcernListVc(from: self)},
+            Menu_id.discountReport:{self.MenuRedirect.senderDiscountReportNavigate(from: self)}
             
         ]
  
@@ -758,6 +758,23 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     // MARK: - Helpers
+    /// "Discount" report menu — shown only on the principal (p2) side.
+    /// If the server already sends this menu id it is used as is; otherwise it is added at the end.
+    func addDiscountMenuIfPrincipal(_ menus: [MenuDetail]?) -> [MenuDetail]? {
+        let role = staffDetails?.priority_level ?? staff_roll
+        guard role == PriorityType.is_principal else {
+            return menus?.filter { $0.id != Menu_id.discountReport }
+        }
+        var list = menus ?? []
+        if !list.contains(where: { $0.id == Menu_id.discountReport }) {
+            list.append(MenuDetail(id: Menu_id.discountReport,
+                                   name: "Discount".translated(),
+                                   unread_count: 0,
+                                   description: "Discounts and subsidies given to students".translated()))
+        }
+        return list
+    }
+
     func navigateOrSchoolList(_ defaultAction: () -> Void) {
         if checkMutipleSchool() {
             MenuRedirect.SchoolListVc(from: self)
@@ -944,4 +961,15 @@ extension CustomDashboard: UISearchBarDelegate {
     }
 }
 
-
+// MARK: - Internal ads (dashboard/api/dashboard/get-ads)
+@available(iOS 14.0, *)
+extension CustomDashboard {
+    /// Shows the ad banner above the menus; it stays hidden when ads are off,
+    /// the call fails or the user closed it during this session.
+    func loadDashboardAds() {
+        adBannerView?.isHidden = true
+        DashboardAdsService.load(token: staffDetails?.access_token ?? "",menuId: 0) { [weak self] ads in
+            self?.adBannerView?.show(ads)
+        }
+    }
+}

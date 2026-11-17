@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23504"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="OneViewTabCell" id="mdk-A0-Y5O" customClass="OneViewTabCell" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="100" height="36"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="cpQ-BT-dnf">
+                <rect key="frame" x="0.0" y="0.0" width="100" height="36"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" userLabel="Pill" id="sMK-52-cvw">
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="1" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Xx-1r-8M7">
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                <color key="textColor" red="0.117647" green="0.160784" blue="0.231373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1.000000" green="1.000000" blue="1.000000" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="9Xx-1r-8M7" firstAttribute="top" secondItem="sMK-52-cvw" secondAttribute="top" constant="8" id="eXk-R1-uMY"/>
+                            <constraint firstItem="sMK-52-cvw" firstAttribute="bottom" secondItem="9Xx-1r-8M7" secondAttribute="bottom" constant="8" id="wyk-Ek-nQn"/>
+                            <constraint firstItem="9Xx-1r-8M7" firstAttribute="leading" secondItem="sMK-52-cvw" secondAttribute="leading" constant="16" id="Y3x-Ju-3ab"/>
+                            <constraint firstItem="sMK-52-cvw" firstAttribute="trailing" secondItem="9Xx-1r-8M7" secondAttribute="trailing" constant="16" id="BXn-6B-baV"/>
+                            <constraint firstAttribute="height" constant="36" id="dWZ-qC-XfM"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius"><integer key="value" value="18"/></userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="sMK-52-cvw" firstAttribute="top" secondItem="cpQ-BT-dnf" secondAttribute="top" constant="0" id="LGI-rZ-Ztu"/>
+                    <constraint firstItem="cpQ-BT-dnf" firstAttribute="bottom" secondItem="sMK-52-cvw" secondAttribute="bottom" constant="0" id="xcg-7V-wyf"/>
+                    <constraint firstItem="sMK-52-cvw" firstAttribute="leading" secondItem="cpQ-BT-dnf" secondAttribute="leading" constant="0" id="ORo-D3-tKT"/>
+                    <constraint firstItem="cpQ-BT-dnf" firstAttribute="trailing" secondItem="sMK-52-cvw" secondAttribute="trailing" constant="0" id="eta-Tz-okG"/>
+                </constraints>
+            </view>
+            <size key="customSize" width="100" height="36"/>
+            <connections>
+                <outlet property="pillView" destination="sMK-52-cvw" id="ddc-4D-tjt"/>
+                <outlet property="titleLabel" destination="9Xx-1r-8M7" id="erf-54-YMr"/>
+            </connections>
+            <point key="canvasLocation" x="0.0" y="0.0"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+
+    </resources>
+</document>

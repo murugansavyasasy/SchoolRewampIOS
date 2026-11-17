@@ -72,6 +72,7 @@ class NoticeBoardVc: UIViewController,UISearchBarDelegate, SelectNotice, Selecte
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        showPageAds(menuId: Menu_id.noticeboardMenuId, scrollView: collectionView)   // internal ads above the history list (DashboardAds.swift)
 
         searchBar.searchTextField.addDoneButton()
         if let staffToken = staffdetails?.access_token {

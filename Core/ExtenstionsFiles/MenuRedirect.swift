@@ -65,7 +65,8 @@ class MenuRedirectHandler {
         MenuImage(id: 203, name: "Apply Leave"),
         MenuImage(id: 205, name: "Live Bus Tracking"),
         MenuImage(id: 206, name: "DailyWeekly Test"),
-        MenuImage(id: 207, name: "Parent Concerns")
+        MenuImage(id: 207, name: "Parent Concerns"),
+        MenuImage(id: Menu_id.discountReport, name: "finance")
         
         
     ]
@@ -189,6 +190,12 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     
+    func senderDiscountReportNavigate(from viewController: UIViewController) {
+        let vc = DiscountReportVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
+
     func senderFeePendingNavigate(from viewController: UIViewController) {
         if #available(iOS 15.0, *) {
             let vc = PendingFeeReportViewController(nibName: nil, bundle: nil)

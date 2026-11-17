@@ -61,6 +61,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var MenuCollection: UICollectionView!
+    @IBOutlet weak var adBannerView: DashboardAdBannerView!
     let transitionDelegate = TransitioningDelegate()
     // MARK: - Properties
     var recentMenuItems: [MenuDetail]?
@@ -84,6 +85,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadDashboardAds()
             
             // Register cells
             recentActiveMenuCollection.register(UINib(nibName: "TopCVCell", bundle: nil), forCellWithReuseIdentifier: "TopCVCell")
@@ -233,6 +235,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                             DispatchQueue.main.async {
                                 let vc = BirthDayWishVC(nibName: nil, bundle: nil)
                                 vc.nameLbl_text = self.childDetails?.name ?? ""
+                                vc.schoolName = self.childDetails?.school_name ?? ""
                                 vc.modalPresentationStyle = .overCurrentContext
                                 vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
                                 self.present(vc, animated: true)
@@ -692,5 +695,18 @@ extension CustomParentDashboardVC: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+    }
+}
+
+// MARK: - Internal ads (dashboard/api/dashboard/get-ads)
+@available(iOS 14.0, *)
+extension CustomParentDashboardVC {
+    /// Shows the ad banner above the menus; it stays hidden when ads are off,
+    /// the call fails or the user closed it during this session.
+    func loadDashboardAds() {
+        adBannerView?.isHidden = true
+        DashboardAdsService.load(token: childDetails?.access_token ?? "") { [weak self] ads in
+            self?.adBannerView?.show(ads)
+        }
     }
 }

@@ -32,243 +32,243 @@ class StudentReportDashboardVC: UIViewController, UITableViewDelegate, UITableVi
         reportTable.delegate = self
         reportTable.dataSource = self
 
-        loadDummyData()
+//        loadDummyData()
     }
-    private func loadDummyData() {
-
-        studentNameLbl.text = "Arun Kumar"
-        classLbl.text = "Class 10 - A"
-
-        reportData = FeeData1(
-
-            summary: FeeSummary(
-                total_amount: 90000,
-                total_paid: 55000,
-                total_discount: 2000,
-                total_pending: 33000,
-                paymentProgress: 61
-            ),
-
-            transport_fee: TransportFee(
-                actual_amount: 12000,
-                paid_amount: 6000,
-                discount_amount: 0,
-                pending_amount: 6000,
-                route_name: "Route 5",
-                stop_name: "Anna Nagar",
-                vehicle_no: "TN 01 AB 1234",
-                paid_details: nil
-            ),
-
-            hostel_fee: TermFee(
-                id: 4,
-                fee_name: "Hostel Fee",
-                term_name: nil,
-                term_id: nil,
-                actual_amount: 15000,
-                paid_amount: 5000,
-                discount_amount: 0,
-                pending_amount: 10000,
-                status: .pending,
-                hostel_name: "SSS Boys Hostel",
-                room_no: "2",
-                bed_no: "B2",
-                isExpand: false,
-                breakDown: nil,
-                paid_details: nil
-            ),
-
-            paymentHistory: [
-                PaymentHistory(
-                    paymentId: "TXN001",
-                    paid_date: "10 Jan 2026",
-                    pending_amount: 40000,
-                    paid_amount: 20000,
-                    amount_given: 20000,
-                    discount_amount: 0,
-                    in_progress: 0,
-                    payment_mode: "UPI"
-                ),
-                PaymentHistory(
-                    paymentId: "TXN002",
-                    paid_date: "12 Feb 2026",
-                    pending_amount: 25000,
-                    paid_amount: 15000,
-                    amount_given: 15000,
-                    discount_amount: 0,
-                    in_progress: 0,
-                    payment_mode: "Card"
-                )
-            ],
-
-            quantity_fees: TermFee(
-                id: 5,
-                fee_name: "Book Fee",
-                term_name: "Term 1",
-                term_id: 1,
-                actual_amount: 8000,
-                paid_amount: 4000,
-                discount_amount: 0,
-                pending_amount: 4000,
-                status: .pending,
-                hostel_name: nil,
-                room_no: nil,
-                bed_no: nil,
-                isExpand: false,
-                breakDown: nil,
-                paid_details: nil
-            ),
-
-            other_fees: TermFee(
-                id: 2,
-                fee_name: "Other Fees",
-                term_name: "Miscellaneous",
-                term_id: nil,
-                actual_amount: 6000,
-                paid_amount: 2000,
-                discount_amount: 0,
-                pending_amount: 4000,
-                status: .pending,
-                hostel_name: nil,
-                room_no :nil,
-                bed_no: nil,
-                isExpand: false,
-                breakDown: [
-                    CarryoverBreakdown(
-                        fee_group_type_id: 1,
-                        fee_group_type_name: "Sports",
-                        fee_id: 10,
-                        fee_name: "Sports Fee",
-                        m_feeamount: 2000,
-                        discount_amount:300,
-                        paid_amount: 2000,
-                        pending_amount: 0,
-                        due_date: "15 Jan 2026",
-                        status: .paid
-                    ),
-                    CarryoverBreakdown(
-                        fee_group_type_id: 2,
-                        fee_group_type_name: "Cultural",
-                        fee_id: 11,
-                        fee_name: "Cultural Fee",
-                        m_feeamount: 2000,
-                        discount_amount:300,
-                        paid_amount: 0,
-                        pending_amount: 2000,
-                        due_date: "15 Feb 2026",
-                        status: .pending
-                    )
-                ],
-                paid_details: nil
-            ),
-
-            carryover_fees: TermFee(
-                id: 3,
-                fee_name: "Previous Year Due",
-                term_name: "2024",
-                term_id: nil,
-                actual_amount: 5000,
-                paid_amount: 1000,
-                discount_amount: 0,
-                pending_amount: 4000,
-                status: .pending,
-                hostel_name: nil,
-                room_no: nil,
-                bed_no: nil,
-                isExpand: false,
-                breakDown: nil,
-                paid_details: nil
-            ),
-
-            term_fees: TermFee(
-                id: 1,
-                fee_name: "Tuition Fee",
-                term_name: "Term 1",
-                term_id: 1,
-                actual_amount: 20000,
-                paid_amount: 10000,
-                discount_amount: 0,
-                pending_amount: 10000,
-                status: .pending,
-                hostel_name: nil,
-                room_no: nil,
-                bed_no: nil,
-                isExpand: false,
-                breakDown: [
-                    CarryoverBreakdown(
-                        fee_group_type_id: 1,
-                        fee_group_type_name: "Installment 1",
-                        fee_id: 1,
-                        fee_name: "Admission Fee",
-                        m_feeamount: 5000,
-                        discount_amount:300,
-                        paid_amount: 5000,
-                        pending_amount: 0,
-                        due_date: "10 Jan 2026",
-                        status: .paid
-                    ),
-                    CarryoverBreakdown(
-                        fee_group_type_id: 2,
-                        fee_group_type_name: "Installment 2",
-                        fee_id: 2,
-                        fee_name: "Lab Fee",
-                        m_feeamount: 5000,
-                        discount_amount:300,
-                        paid_amount: 3000,
-                        pending_amount: 2000,
-                        due_date: "10 Feb 2026",
-                        status: .pending
-                    )
-                ],
-                paid_details: nil
-            ),
-
-            Academic_Performance: AcademicPerformance(
-                overallPercentage: 87.5,
-                grade: "A",
-                gpa: 8.9,
-                attendancePercentage: 92,
-                classRank: 5,
-                totalStudents: 40
-            ),
-
-            ExamPerformance: ExamPerformance(
-                improvementPercentage: 8.5,
-                highestScore: 96,
-                highestExamName: "Quarterly",
-                exams: [
-                    ExamScore(examName: "Unit Test 1", score: 82),
-                    ExamScore(examName: "Quarterly", score: 96)
-                ]
-            ),
-
-            SubjectWisePerformance: SubjectWisePerformance(
-                strongestSubject: "Mathematics",
-                weakestSubject: "Physics",
-                subjects: [
-                    SubjectPerformance(subjectName: "Maths", marks: 95, grade: "A+"),
-                    SubjectPerformance(subjectName: "Physics", marks: 70, grade: "B"),
-                    SubjectPerformance(subjectName: "Chemistry", marks: 88, grade: "A"),
-                    SubjectPerformance(subjectName: "Biology", marks: 82, grade: "A"),
-                    SubjectPerformance(subjectName: "English", marks: 90, grade: "A+")
-                ]
-            ),
-
-            AttendanceOverview: AttendanceOverview(
-                attendancePercentage: 92,
-                presentDays: 180,
-                absentDays: 10,
-                leaveDays: 5,
-                weeklyAttendance: [
-                    DayAttendance(dayName: "Mon", date: 1, status: .present),
-                    DayAttendance(dayName: "Tue", date: 2, status: .present),
-                    DayAttendance(dayName: "Wed", date: 3, status: .absent)
-                ]
-            )
-        )
-
-        reportTable.reloadData()
-    }
+//    private func loadDummyData() {
+//
+//        studentNameLbl.text = "Arun Kumar"
+//        classLbl.text = "Class 10 - A"
+//
+//        reportData = FeeData1(
+//
+//            summary: FeeSummary(
+//                total_amount: 90000,
+//                total_paid: 55000,
+//                total_discount: 2000,
+//                total_pending: 33000,
+//                paymentProgress: 61
+//            ),
+//
+//            transport_fee: TransportFee(
+//                actual_amount: 12000,
+//                paid_amount: 6000,
+//                discount_amount: 0,
+//                pending_amount: 6000,
+//                route_name: "Route 5",
+//                stop_name: "Anna Nagar",
+//                vehicle_no: "TN 01 AB 1234",
+//                paid_details: nil
+//            ),
+//
+//            hostel_fee: TermFee(
+//                id: 4,
+//                fee_name: "Hostel Fee",
+//                term_name: nil,
+//                term_id: nil,
+//                actual_amount: 15000,
+//                paid_amount: 5000,
+//                discount_amount: 0,
+//                pending_amount: 10000,
+//                status: .pending,
+//                hostel_name: "SSS Boys Hostel",
+//                room_no: "2",
+//                bed_no: "B2",
+//                isExpand: false,
+//                breakDown: nil,
+//                paid_details: nil
+//            ),
+//
+//            paymentHistory: [
+//                PaymentHistory(
+//                    paymentId: "TXN001",
+//                    paid_date: "10 Jan 2026",
+//                    pending_amount: 40000,
+//                    paid_amount: 20000,
+//                    amount_given: 20000,
+//                    discount_amount: 0,
+//                    in_progress: 0,
+//                    payment_mode: "UPI"
+//                ),
+//                PaymentHistory(
+//                    paymentId: "TXN002",
+//                    paid_date: "12 Feb 2026",
+//                    pending_amount: 25000,
+//                    paid_amount: 15000,
+//                    amount_given: 15000,
+//                    discount_amount: 0,
+//                    in_progress: 0,
+//                    payment_mode: "Card"
+//                )
+//            ],
+//
+//            quantity_fees: TermFee(
+//                id: 5,
+//                fee_name: "Book Fee",
+//                term_name: "Term 1",
+//                term_id: 1,
+//                actual_amount: 8000,
+//                paid_amount: 4000,
+//                discount_amount: 0,
+//                pending_amount: 4000,
+//                status: .pending,
+//                hostel_name: nil,
+//                room_no: nil,
+//                bed_no: nil,
+//                isExpand: false,
+//                breakDown: nil,
+//                paid_details: nil
+//            ),
+//
+//            other_fees: TermFee(
+//                id: 2,
+//                fee_name: "Other Fees",
+//                term_name: "Miscellaneous",
+//                term_id: nil,
+//                actual_amount: 6000,
+//                paid_amount: 2000,
+//                discount_amount: 0,
+//                pending_amount: 4000,
+//                status: .pending,
+//                hostel_name: nil,
+//                room_no :nil,
+//                bed_no: nil,
+//                isExpand: false,
+//                breakDown: [
+//                    CarryoverBreakdown(
+//                        fee_group_type_id: 1,
+//                        fee_group_type_name: "Sports",
+//                        fee_id: 10,
+//                        fee_name: "Sports Fee",
+//                        m_feeamount: 2000,
+//                        discount_amount:300,
+//                        paid_amount: 2000,
+//                        pending_amount: 0,
+//                        due_date: "15 Jan 2026",
+//                        status: .paid
+//                    ),
+//                    CarryoverBreakdown(
+//                        fee_group_type_id: 2,
+//                        fee_group_type_name: "Cultural",
+//                        fee_id: 11,
+//                        fee_name: "Cultural Fee",
+//                        m_feeamount: 2000,
+//                        discount_amount:300,
+//                        paid_amount: 0,
+//                        pending_amount: 2000,
+//                        due_date: "15 Feb 2026",
+//                        status: .pending
+//                    )
+//                ],
+//                paid_details: nil
+//            ),
+//
+//            carryover_fees: TermFee(
+//                id: 3,
+//                fee_name: "Previous Year Due",
+//                term_name: "2024",
+//                term_id: nil,
+//                actual_amount: 5000,
+//                paid_amount: 1000,
+//                discount_amount: 0,
+//                pending_amount: 4000,
+//                status: .pending,
+//                hostel_name: nil,
+//                room_no: nil,
+//                bed_no: nil,
+//                isExpand: false,
+//                breakDown: nil,
+//                paid_details: nil
+//            ),
+//
+//            term_fees: TermFee(
+//                id: 1,
+//                fee_name: "Tuition Fee",
+//                term_name: "Term 1",
+//                term_id: 1,
+//                actual_amount: 20000,
+//                paid_amount: 10000,
+//                discount_amount: 0,
+//                pending_amount: 10000,
+//                status: .pending,
+//                hostel_name: nil,
+//                room_no: nil,
+//                bed_no: nil,
+//                isExpand: false,
+//                breakDown: [
+//                    CarryoverBreakdown(
+//                        fee_group_type_id: 1,
+//                        fee_group_type_name: "Installment 1",
+//                        fee_id: 1,
+//                        fee_name: "Admission Fee",
+//                        m_feeamount: 5000,
+//                        discount_amount:300,
+//                        paid_amount: 5000,
+//                        pending_amount: 0,
+//                        due_date: "10 Jan 2026",
+//                        status: .paid
+//                    ),
+//                    CarryoverBreakdown(
+//                        fee_group_type_id: 2,
+//                        fee_group_type_name: "Installment 2",
+//                        fee_id: 2,
+//                        fee_name: "Lab Fee",
+//                        m_feeamount: 5000,
+//                        discount_amount:300,
+//                        paid_amount: 3000,
+//                        pending_amount: 2000,
+//                        due_date: "10 Feb 2026",
+//                        status: .pending
+//                    )
+//                ],
+//                paid_details: nil
+//            ),
+//
+//            Academic_Performance: AcademicPerformance(
+//                overallPercentage: 87.5,
+//                grade: "A",
+//                gpa: 8.9,
+//                attendancePercentage: 92,
+//                classRank: 5,
+//                totalStudents: 40
+//            ),
+//
+//            ExamPerformance: ExamPerformance(
+//                improvementPercentage: 8.5,
+//                highestScore: 96,
+//                highestExamName: "Quarterly",
+//                exams: [
+//                    ExamScore(examName: "Unit Test 1", score: 82),
+//                    ExamScore(examName: "Quarterly", score: 96)
+//                ]
+//            ),
+//
+//            SubjectWisePerformance: SubjectWisePerformance(
+//                strongestSubject: "Mathematics",
+//                weakestSubject: "Physics",
+//                subjects: [
+//                    SubjectPerformance(subjectName: "Maths", marks: 95, grade: "A+"),
+//                    SubjectPerformance(subjectName: "Physics", marks: 70, grade: "B"),
+//                    SubjectPerformance(subjectName: "Chemistry", marks: 88, grade: "A"),
+//                    SubjectPerformance(subjectName: "Biology", marks: 82, grade: "A"),
+//                    SubjectPerformance(subjectName: "English", marks: 90, grade: "A+")
+//                ]
+//            ),
+//
+//            AttendanceOverview: AttendanceOverview(
+//                attendancePercentage: 92,
+//                presentDays: 180,
+//                absentDays: 10,
+//                leaveDays: 5,
+//                weeklyAttendance: [
+//                    DayAttendance(dayName: "Mon", date: 1, status: .present),
+//                    DayAttendance(dayName: "Tue", date: 2, status: .present),
+//                    DayAttendance(dayName: "Wed", date: 3, status: .absent)
+//                ]
+//            )
+//        )
+//
+//        reportTable.reloadData()
+//    }
 
     @IBAction func backBtn(_ sender: UIButton) {
         dismiss(animated: true)

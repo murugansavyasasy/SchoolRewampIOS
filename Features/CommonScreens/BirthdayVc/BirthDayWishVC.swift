@@ -9,6 +9,7 @@ import UIKit
 
 class BirthDayWishVC: UIViewController {
 
+    @IBOutlet weak var schoolnameLbl: UILabel!
     @IBOutlet weak var dateLbl: UILabel!
     private var confettiLayer: CAEmitterLayer?
     private var isAnimating = true
@@ -20,6 +21,7 @@ class BirthDayWishVC: UIViewController {
     @IBOutlet weak var childView: UIView!
     var nameLbl_text:String = ""
     var birth_day : String = ""
+    var schoolName : String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         self.definesPresentationContext = true
@@ -30,7 +32,7 @@ class BirthDayWishVC: UIViewController {
         profileImgView.layer.borderWidth = 7
         profileImgView.layer.borderColor = UIColor.primery.cgColor
         nameLbl.text = nameLbl_text
-        
+        schoolnameLbl.text =   "-" + schoolName + " "
         let formatter = DateFormatter()
         formatter.dateFormat = "dd,MMM yyyy"
         formatter.locale = Locale(identifier: "en_US_POSIX")

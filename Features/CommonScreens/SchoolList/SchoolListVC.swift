@@ -245,6 +245,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             case 206 :  MenuRedirect.createClasstestVc(from: self)
                 
             case 207 : self.MenuRedirect.senderconcernListVc(from: self)
+            case Menu_id.discountReport: MenuRedirect.senderDiscountReportNavigate(from: self)
                 
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
