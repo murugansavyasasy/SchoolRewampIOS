@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="25098" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="25073"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -17,6 +17,7 @@
                 <outlet property="historyTable" destination="uPs-Nu-uB3" id="l9U-h8-e4Z"/>
                 <outlet property="noDataLbl" destination="50H-9F-Thd" id="oyA-da-EmS"/>
                 <outlet property="nodataImg" destination="q5m-lf-7nQ" id="5Aj-1x-7YQ"/>
+                <outlet property="searchBar" destination="0if-Uh-uV8" id="FNo-Fp-Zeu"/>
                 <outlet property="searchBtn" destination="Od1-xZ-9Ln" id="ZAD-wV-uXc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -33,7 +34,7 @@
                             <rect key="frame" x="10" y="128" width="373" height="35"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vP3-m0-E2D">
-                                    <rect key="frame" x="0.0" y="0.0" width="318" height="35"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="373" height="35"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M9u-Xu-VnP">
                                             <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
@@ -53,15 +54,15 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z5v-KD-xhw">
-                                            <rect key="frame" x="35" y="0.0" width="283" height="35"/>
+                                            <rect key="frame" x="35" y="0.0" width="338" height="35"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </stackView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Od1-xZ-9Ln">
-                                    <rect key="frame" x="338" y="0.0" width="35" height="35"/>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Od1-xZ-9Ln">
+                                    <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="35" id="Vcz-7p-L9K"/>
                                         <constraint firstAttribute="width" constant="35" id="wBn-i6-Vrh"/>
@@ -110,6 +111,13 @@
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cNI-ex-vb4">
                             <rect key="frame" x="0.0" y="10" width="393" height="591"/>
                             <subviews>
+                                <searchBar hidden="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="0if-Uh-uV8">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="xUW-9d-7Ra"/>
+                                    </constraints>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="uPs-Nu-uB3">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="591"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -149,14 +157,14 @@
         </view>
     </objects>
     <resources>
-        <image name="chevron.backward" catalog="system" width="97" height="128"/>
-        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
+        <image name="chevron.backward" catalog="system" width="93" height="128"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="121"/>
         <image name="noEvents" width="1159" height="771"/>
         <namedColor name="PrimeryColor">
-            <color red="0.23899999260902405" green="0.50999999046325684" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.41899999976158142" green="0.70800000429153442" blue="0.34599998593330383" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

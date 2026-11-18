@@ -250,6 +250,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }
+            // Internal ads on selected staff menus (DashboardAds.swift)
+            StaffAdMenus.showIfNeeded(menuId: Menu_id.staffSelectedMenuId, from: self)
             
         }else{
             if segmentName.selectedSegmentIndex == 1{

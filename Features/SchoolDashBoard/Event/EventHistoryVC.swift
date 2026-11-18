@@ -28,9 +28,9 @@ class EventHistoryVC: UIViewController, SelectedId {
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var backBtn: UILabel!
     @IBOutlet weak var searchBtn: UIButton!
-    @IBOutlet weak var searchView: UIView!
-    @IBOutlet weak var schoolName: UILabel!
-    @IBOutlet weak var schoolDropDown: UIView!
+//    @IBOutlet weak var searchView: UIView!
+//    @IBOutlet weak var schoolName: UILabel!
+//    @IBOutlet weak var schoolDropDown: UIView!
     @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var nodataImg: UIImageView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -64,7 +64,7 @@ class EventHistoryVC: UIViewController, SelectedId {
         historyTable.register(UINib(nibName: "ReciverEventTVC", bundle: nil), forCellReuseIdentifier: "ReciverEventTVC")
         historyTable.delegate = self
         historyTable.dataSource = self
-        searchBar.placeholder = CommonStringFile.Search.translated()
+//        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.backgroundImage = UIImage()
         searchBar.barTintColor = .clear
         searchBar.backgroundColor = .clear
@@ -83,46 +83,46 @@ class EventHistoryVC: UIViewController, SelectedId {
                 .first?
                 .school_name
             token = staffToken
-            schoolName.text = "All"
+//            schoolName.text = "All"
         }
         if checkMutipleSchool() {
-            schoolDropDown.isHidden = true
+//            schoolDropDown.isHidden = true
             schoolList = school_details?.compactMap { $0.school_name }
             schoolList?.insert("All", at: 0)
             self.dropDown.dataSource = self.schoolList ?? []
         } else {
-            schoolDropDown.isHidden = true
-            searchView.isHidden = true
+//            schoolDropDown.isHidden = true
+//            searchView.isHidden = true
         }
-        schoolDropDown.setShadow(cornerRadius: 4)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
-        schoolDropDown.isUserInteractionEnabled = true
-        schoolDropDown.addGestureRecognizer(tapGesture)
+//        schoolDropDown.setShadow(cornerRadius: 4)
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(catagoryTapped))
+//        schoolDropDown.isUserInteractionEnabled = true
+//        schoolDropDown.addGestureRecognizer(tapGesture)
         
     }
-    @objc func catagoryTapped() {
-        print("Category View Tapped")
-        dropDown.anchorView = schoolDropDown
-        dropDown.show()
-        dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)
-        dropDown.selectionAction = { [self] (index: Int, item: String) in
-            schoolName.text = item
-            
-            if item == "All" {
-                filterUsingSchoolId("All")
-            }else{
-                if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
-                    token = selectedSchool.access_token
-                    localData.editToken = selectedSchool.access_token
-                    filterUsingSchoolId(selectedSchool.school_id ?? "All")
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                        
-                    }
-                }
-            }
-        }
-    }
+//    @objc func catagoryTapped() {
+//        print("Category View Tapped")
+////        dropDown.anchorView = schoolDropDown
+//        dropDown.show()
+//        dropDown.bottomOffset = CGPoint(x: 0, y: schoolDropDown.bounds.height)
+//        dropDown.selectionAction = { [self] (index: Int, item: String) in
+//            schoolName.text = item
+//            
+//            if item == "All" {
+//                filterUsingSchoolId("All")
+//            }else{
+//                if let selectedSchool = school_details?.first(where: { $0.school_name == item }) {
+//                    token = selectedSchool.access_token
+//                    localData.editToken = selectedSchool.access_token
+//                    filterUsingSchoolId(selectedSchool.school_id ?? "All")
+//                    
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+//                        
+//                    }
+//                }
+//            }
+//        }
+//    }
     
     
     func filterUsingSchoolId(_ schoolId: String) {
@@ -170,7 +170,7 @@ class EventHistoryVC: UIViewController, SelectedId {
     }
     func searchHide(hide: Bool) {
         searchBar?.isHidden = !hide
-        searchView?.isHidden = !hide
+//        searchView?.isHidden = !hide
         if hide {
             searchBar?.becomeFirstResponder()
             
@@ -186,7 +186,7 @@ class EventHistoryVC: UIViewController, SelectedId {
         let icon = sender.isSelected ? "magnifyingglass.circle.fill" : "magnifyingglass"
         sender.setImage(UIImage(systemName: icon), for: .normal)
         searchBar?.isHidden = !sender.isSelected
-        searchView?.isHidden = !sender.isSelected && schoolDropDown.isHidden
+//        searchView?.isHidden = !sender.isSelected && schoolDropDown.isHidden
         if sender.isSelected {
             searchBar?.becomeFirstResponder()
         } else {
@@ -241,7 +241,7 @@ class EventHistoryVC: UIViewController, SelectedId {
                     self.noDataLbl.isHidden = hasData
                     self.noDataLbl.text = response.message
                     self.nodataImg.isHidden = hasData
-                    self.searchBtn.isHidden = !hasData
+//                    self.searchBtn.isHidden = !hasData
                     self.historyTable.reloadData()
                     self.scrollToClickedMessage()
                 case .failure(let error):

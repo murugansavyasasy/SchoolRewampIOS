@@ -167,6 +167,25 @@ final class DashboardAdBannerView: UIView {
 
     deinit { timer?.invalidate() }
 
+    private var lastWidth: CGFloat = 0
+
+    /// The banner can be created before the page knows its final width; when the width
+    /// changes, re-size the ad cells so exactly one ad fills the frame (no next ad peeking in).
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        guard contentView != nil, collectionView != nil else { return }
+        contentView.layoutIfNeeded()
+        let width = collectionView.bounds.width
+        guard width > 0, abs(width - lastWidth) > 0.5 else { return }
+        lastWidth = width
+        collectionView.collectionViewLayout.invalidateLayout()
+        let page = pageControl.currentPage
+        if page < ads.count {
+            collectionView.layoutIfNeeded()
+            collectionView.setContentOffset(CGPoint(x: CGFloat(page) * width, y: 0), animated: false)
+        }
+    }
+
     private func loadLayout() {
         Bundle.main.loadNibNamed("DashboardAdBannerView", owner: self, options: nil)
         contentView.frame = bounds
@@ -310,49 +329,175 @@ extension DashboardAdBannerView: UICollectionViewDataSource, UICollectionViewDel
 //
 // One line in a page's viewDidLoad:
 //     showPageAds(menuId: Menu_id.noticeboardMenuId)
-// The banner sits above the page's main scroll view content and scrolls with it.
+// The banner stays fixed at the top of the page's main list area; the list scrolls underneath it.
 // The page's own XIB and constraints are not changed. Same rules as the dashboard:
-// hidden when the API says no, when there are no ads, or for 24 h after the user closes it.
+// hidden when the API says no, when there are no ads, or (per page) after the user closes it.
 
 final class AdBannerPlacement {
-    private weak var scrollView: UIScrollView?
     let banner = DashboardAdBannerView(frame: .zero)
     private var heightConstraint: NSLayoutConstraint!
-    private var addedInset: CGFloat = 0
     private let gap: CGFloat = 8
 
-    init(scrollView: UIScrollView) {
-        self.scrollView = scrollView
+    // Header mode: the banner sits right under the page's header bar and the
+    // page content below the header is moved down by the banner's height.
+    private var shiftedConstraints: [(NSLayoutConstraint, CGFloat)] = []
+    /// Fills the space under the header with the page content's own colour, so the ad
+    /// looks like part of the page and not part of the (blue) header / toolbar.
+    private let backing = UIView()
+    /// The content view under the header (used to find cards that overlap the header by design).
+    private weak var contentView: UIView?
+
+    // Scroll mode (fallback): the banner is pinned to the top of a list and
+    // the list content starts below it.
+    private weak var scrollView: UIScrollView?
+    private var topConstraint: NSLayoutConstraint?
+    private var addedInset: CGFloat = 0
+
+    /// Under the header bar of `root` (the page's main view). Returns nil when the page
+    /// has no header bar with content hanging below it.
+    init?(underHeaderOf page: UIView) {
+        // The header may sit directly in the page view, or inside one full-screen
+        // container view (e.g. parent Homework); look up to 3 levels down.
+        guard let found = AdBannerPlacement.findHeader(in: page) else { return nil }
+        let (root, header, below) = found
+        shiftedConstraints = below.map { ($0, $0.constant) }
+        // The content view that sits under the header (e.g. the white list area).
+        let content = below.compactMap { c -> UIView? in
+            let other = (c.firstItem === header ? c.secondItem : c.firstItem) as? UIView
+            return other === header ? nil : other
+        }.first
+        contentView = content
+        backing.translatesAutoresizingMaskIntoConstraints = false
+        backing.backgroundColor = AdBannerPlacement.solidColor(of: content) ?? AdBannerPlacement.solidColor(of: root) ?? .systemBackground
+        backing.isHidden = true
         banner.translatesAutoresizingMaskIntoConstraints = false
         banner.isHidden = true
-        scrollView.addSubview(banner)
+        root.insertSubview(backing, belowSubview: header)
+        root.insertSubview(banner, aboveSubview: backing)
         heightConstraint = banner.heightAnchor.constraint(equalToConstant: 100)
         NSLayoutConstraint.activate([
-            banner.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor),
-            banner.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor),
-            banner.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: -gap),
+            backing.topAnchor.constraint(equalTo: header.bottomAnchor),
+            backing.leadingAnchor.constraint(equalTo: root.leadingAnchor),
+            backing.trailingAnchor.constraint(equalTo: root.trailingAnchor),
+            backing.bottomAnchor.constraint(equalTo: banner.bottomAnchor),
+            banner.topAnchor.constraint(equalTo: header.bottomAnchor, constant: gap),
+            banner.leadingAnchor.constraint(equalTo: root.safeAreaLayoutGuide.leadingAnchor),
+            banner.trailingAnchor.constraint(equalTo: root.safeAreaLayoutGuide.trailingAnchor),
             heightConstraint
         ])
         banner.onClose = { [weak self] in self?.setSpace(0) }
     }
 
+    /// Fixed at the top of a list; the list content starts below it.
+    init(scrollView: UIScrollView) {
+        self.scrollView = scrollView
+        banner.translatesAutoresizingMaskIntoConstraints = false
+        banner.isHidden = true
+        banner.backgroundColor = AdBannerPlacement.pageColor(for: scrollView)
+        heightConstraint = banner.heightAnchor.constraint(equalToConstant: 100)
+        if let host = scrollView.superview {
+            host.insertSubview(banner, aboveSubview: scrollView)
+            let top = banner.topAnchor.constraint(equalTo: scrollView.topAnchor)
+            topConstraint = top
+            NSLayoutConstraint.activate([
+                top,
+                banner.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+                banner.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+                heightConstraint
+            ])
+        }
+        banner.onClose = { [weak self] in self?.setSpace(0) }
+    }
+
     func show(_ ads: [DashboardAd]) {
+        guard banner.superview != nil else { return }
+        if let scroll = scrollView { topConstraint?.constant = scroll.adjustedContentInset.top - addedInset }
         banner.show(ads)
         setSpace(ads.isEmpty ? 0 : heightConstraint.constant)
     }
 
-    /// Makes room above the page content for the banner (or gives it back).
+    /// Makes room for the banner (or gives the space back after close / no ads).
     private func setSpace(_ height: CGFloat) {
-        guard let scroll = scrollView else { return }
         let wanted = height > 0 ? height + gap : 0
+        if !shiftedConstraints.isEmpty {
+            let host = banner.superview
+            backing.isHidden = wanted == 0
+            // Some pages pull their first card up over the header (negative top, e.g. Attendance).
+            // Under the ad that card would cover the ad's bottom, so move it clear as well.
+            let overlap = wanted > 0 ? overlapAboveContent() : 0
+            let extra = overlap > 0 ? overlap + gap : 0
+            UIView.animate(withDuration: 0.25) {
+                for (c, original) in self.shiftedConstraints { c.constant = original + wanted + extra }
+                host?.layoutIfNeeded()
+            }
+            return
+        }
+        guard let scroll = scrollView else { return }
         let delta = wanted - addedInset
         guard delta != 0 else { return }
         let wasAtTop = scroll.contentOffset.y <= -scroll.adjustedContentInset.top + 1
         addedInset = wanted
         UIView.animate(withDuration: 0.25) {
             scroll.contentInset.top += delta
+            scroll.verticalScrollIndicatorInsets.top += delta
             if wasAtTop { scroll.contentOffset.y = -scroll.adjustedContentInset.top }
+            scroll.superview?.layoutIfNeeded()
         }
+    }
+
+    /// Finds the header bar and the constraints that hang page content below it.
+    private static func findHeader(in page: UIView) -> (UIView, UIView, [NSLayoutConstraint])? {
+        var host = page
+        for _ in 0..<3 {
+            if let header = header(in: host) {
+                let below = host.constraints.filter { c in
+                    (c.firstItem === header && c.firstAttribute == .bottom && c.secondAttribute == .top && (c.secondItem as? UIView)?.superview === host) ||
+                    (c.secondItem === header && c.secondAttribute == .bottom && c.firstAttribute == .top && (c.firstItem as? UIView)?.superview === host)
+                }
+                if !below.isEmpty { return (host, header, below) }
+            }
+            // Step into a single container that fills the whole page.
+            let fills = host.subviews.filter {
+                !$0.isHidden && !($0 is UIScrollView) &&
+                $0.frame.height >= host.bounds.height * 0.8 && $0.frame.width >= host.bounds.width - 1
+            }
+            guard fills.count == 1 else { return nil }
+            host = fills[0]
+        }
+        return nil
+    }
+
+    /// The page's header bar: the app's rounded / wave header, else a top bar that starts at y = 0.
+    private static func header(in root: UIView) -> UIView? {
+        root.layoutIfNeeded()
+        if let h = root.subviews.first(where: { $0 is BottomRoundedView || $0 is HeaderWaveView }), !h.isHidden { return h }
+        return root.subviews.first { v in
+            !v.isHidden && v.frame.minY <= 1 && v.frame.height > 40 && v.frame.height < root.bounds.height * 0.35
+                && v.frame.width >= root.bounds.width - 1
+        }
+    }
+
+    /// How far the content's own cards stick out above its top edge (0 when none do).
+    private func overlapAboveContent() -> CGFloat {
+        guard let content = contentView else { return 0 }
+        content.superview?.layoutIfNeeded()
+        let top = content.subviews.filter { !$0.isHidden && $0.alpha > 0 }.map { $0.frame.minY }.min() ?? 0
+        return max(0, -top)
+    }
+
+    /// The view's own background colour when it is solid (not clear / see-through).
+    private static func solidColor(of view: UIView?) -> UIColor? {
+        guard let c = view?.backgroundColor, c.cgColor.alpha > 0.99 else { return nil }
+        return c
+    }
+
+    private static func pageColor(for scroll: UIScrollView) -> UIColor {
+        var v: UIView? = scroll
+        while let view = v {
+            if let c = view.backgroundColor, c.cgColor.alpha > 0.99 { return c }
+            v = view.superview
+        }
+        return .systemBackground
     }
 }
 
@@ -367,14 +512,78 @@ extension UIViewController {
     func showPageAds(menuId: Int,
                      scrollView: UIScrollView? = nil,
                      token: String = UserDefaultFileManager.get_staff_Details()?.access_token ?? "") {
-        guard objc_getAssociatedObject(self, &UIViewController.adPlacementKey) == nil,
-              let scroll = scrollView ?? view.subviews.first(where: { type(of: $0) == UIScrollView.self }) as? UIScrollView
-        else { return }
-        let placement = AdBannerPlacement(scrollView: scroll)
+        guard objc_getAssociatedObject(self, &UIViewController.adPlacementKey) == nil else { return }
+        let placement: AdBannerPlacement
+        if let underHeader = AdBannerPlacement(underHeaderOf: view) {
+            placement = underHeader          // usual case: right under the blue header
+        } else if let scroll = scrollView ?? view.adsMainScrollView() {
+            placement = AdBannerPlacement(scrollView: scroll)
+        } else { return }
         placement.banner.menuId = menuId
         objc_setAssociatedObject(self, &UIViewController.adPlacementKey, placement, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         DashboardAdsService.load(token: token, menuId: menuId) { [weak placement] ads in
             placement?.show(ads)
         }
+    }
+}
+
+// MARK: - Reusable: ads on a menu screen that was just opened (parent side uses this for every menu)
+
+extension UIView {
+    /// The main vertical list or scroll area of a screen: the biggest scroll view that scrolls
+    /// up and down (horizontal carousels, text views and tiny scroll views are skipped).
+    func adsMainScrollView() -> UIScrollView? {
+        var best: UIScrollView?
+        var bestArea: CGFloat = 0
+        func isHorizontalList(_ s: UIScrollView) -> Bool {
+            guard let layout = (s as? UICollectionView)?.collectionViewLayout as? UICollectionViewFlowLayout else { return false }
+            return layout.scrollDirection == .horizontal
+        }
+        func visit(_ v: UIView) {
+            // Paging scrollers (tab / page containers) are skipped but searched inside.
+            if let s = v as? UIScrollView, !(s is UITextView), !s.isHidden, !s.isPagingEnabled,
+               s.bounds.height >= 200, !isHorizontalList(s) {
+                let area = s.bounds.width * s.bounds.height
+                if area > bestArea { best = s; bestArea = area }
+                return   // don't look inside the scroll view's own cells
+            }
+            v.subviews.forEach(visit)
+        }
+        visit(self)
+        return best
+    }
+}
+
+extension UIViewController {
+    /// Call right after presenting a menu screen. When the screen is on screen,
+    /// the ad banner is placed above its main list (if it has one).
+    func showAdsOnOpenedMenu(menuId: Int, token: String) {
+        guard let opened = presentedViewController else { return }
+        let target = (opened as? UINavigationController)?.visibleViewController ?? opened
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak target] in
+            guard let screen = target, screen.viewIfLoaded?.window != nil else { return }
+            screen.showPageAds(menuId: menuId, token: token)
+        }
+    }
+}
+
+// MARK: - Staff menus that show the ad banner
+
+enum StaffAdMenus {
+    /// Mark attendance, Lesson plan, Quiz, PTM (26 and 5), Daily collection, Fee pending,
+    /// Punch attendance (geo), Approve student leave, Upload exam marks.
+    static let ids: Set<Int> = [
+        Menu_id.attendance, Menu_id.LessonPlan, Menu_id.quiz, Menu_id.ptm, 5,
+        Menu_id.dailyCollection, Menu_id.feependingreport, Menu_id.geoMatricAttendace,
+        Menu_id.leaveReq, Menu_id.Upload_Marks
+    ]
+
+    /// Call right after a staff menu screen was presented from `presenter`.
+    static func showIfNeeded(menuId: Int, from presenter: UIViewController) {
+        guard ids.contains(menuId) else { return }
+        // Not on the school picker: the ad goes on the menu screen opened after it.
+        if presenter.presentedViewController is SchoolListVC { return }
+        presenter.showAdsOnOpenedMenu(menuId: menuId,
+                                      token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "")
     }
 }

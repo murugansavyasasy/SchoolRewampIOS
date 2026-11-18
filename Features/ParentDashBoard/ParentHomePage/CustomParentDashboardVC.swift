@@ -634,6 +634,11 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
             present(alert, animated: true)
             return
         }
+        // Internal ads on every parent menu screen except the ones listed below (DashboardAds.swift)
+        let noAdMenus: Set<Int> = [6]   // 6 = Class timetable
+        if !noAdMenus.contains(menuId) {
+            showAdsOnOpenedMenu(menuId: menuId, token: childDetails?.access_token ?? "")
+        }
     }
 
     

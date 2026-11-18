@@ -754,7 +754,8 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         }else{
             action()
         }
-        
+        // Internal ads on selected staff menus (DashboardAds.swift)
+        StaffAdMenus.showIfNeeded(menuId: menuId, from: self)
     }
     
     // MARK: - Helpers
