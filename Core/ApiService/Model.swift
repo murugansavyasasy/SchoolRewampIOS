@@ -326,9 +326,28 @@ struct MenuCountDetail: Codable {
 
 struct MenuData: Codable {
     let is_birthday : Bool?
+    /// ⚠️ UNDER DEVELOPMENT — the dashboard API does not send this node yet.
+    /// See the global note in DashboardPopupScheduler.swift.
+    let is_festival : Bool?
+    let festival_details: FestivalDetail
     let contact_details: ContactDetails?
     let frequently_used: [MenuDetail]?
     let menus: [MenuDetail]?
+}
+
+/// Festival banner shown by `FestivalWishVC`:
+/// `{ "date": "2026-11-24", "name": "Tuesday holiday", "content": "", "url": "" }`
+/// Every field is optional — the popup hides whatever the API leaves empty and
+/// falls back to a common image when `url` is empty.
+struct FestivalDetail: Codable {
+    /// Festival date in `yyyy-MM-dd`.
+    let date: String?
+    /// Festival title.
+    let name: String?
+    /// Festival description.
+    let content: String?
+    /// Festival image url.
+    let url: String?
 }
 
 //MARK: All SENDINg API COMMON MODEL :

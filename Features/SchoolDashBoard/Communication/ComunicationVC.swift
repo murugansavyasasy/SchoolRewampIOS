@@ -312,6 +312,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
             user_inputs.schedule_date = [today_date]
             user_inputs.start_time = ""
             user_inputs.end_time = ""
+//            moveToRecipientForVoice()
             recienpient_validation(isVoice: true)
             return
         }
@@ -348,8 +349,32 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, UICollectionVie
         }
         user_inputs.start_time = fromTimeText
         user_inputs.end_time = toTimeText
+//        moveToRecipientForVoice()
         recienpient_validation(isVoice: true)
     }
+    
+    // MARK: AFTER 10 PM VOICE CONSENT
+    /// A recorded/forwarded voice moves on to the recipient page only once the sender enables the
+    /// consent toggle, accepting that the school management is responsible for an after 10 PM voice.
+//    private func moveToRecipientForVoice() {
+//        alert.showAlertCancelWithToggle(
+//            title: AlertstringFile.Confirm_title,
+//            message: AlertstringFile.are_yousure_youWant_to_send_voiceMessage,
+//            toggleText: AlertstringFile.send_voice_after_10_pm_question,
+//            warningText: AlertstringFile.after_10_pm_voice_responsibility_note,
+//            actionLbl1: AlertstringFile.Proceed,
+//            actionLbl2: AlertstringFile.Cancel,
+//            on: self,
+//            onOk: { [weak self] allow10pmCall in
+//                // Sent as-is in the voice params: true when the sender enabled the toggle.
+//                user_inputs.allow_10pm_call = allow10pmCall
+//                self?.recienpient_validation(isVoice: true)
+//            },
+//            onNo: {
+//                print("❌ User canceled the after 10 PM voice message.")
+//            }
+//        )
+//    }
     
     
     

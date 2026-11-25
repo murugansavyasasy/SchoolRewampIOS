@@ -89,7 +89,9 @@ class send_voicemeassageStringFile {
     static var file_name = "file_name"
     static var circular_type = "circular_type"
     static var academic_year_id = "academic_year_id"
-  
+    /// `true` when the sender enabled the after 10 PM consent toggle.
+    static var allow_10pm_call = "allow_10pm_call"
+
 }
 
 class homeWorkViewStringFile {

@@ -22,6 +22,9 @@ class BirthDayWishVC: UIViewController {
     var nameLbl_text:String = ""
     var birth_day : String = ""
     var schoolName : String = ""
+    /// Called after the popup has been dismissed. Used by the dashboards to
+    /// chain the festival popup behind the birthday popup.
+    var onDismiss: (() -> Void)?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.definesPresentationContext = true
@@ -48,7 +51,9 @@ class BirthDayWishVC: UIViewController {
         
     }
     @objc func dismissVC() {
-        self.dismiss(animated: true)
+        self.dismiss(animated: true) { [weak self] in
+            self?.onDismiss?()
+        }
     }
     @IBAction func celebrateBtn(_ sender: UIButton) {
         isAnimating = true

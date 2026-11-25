@@ -231,16 +231,7 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                         self.get_MenuCount()
                         user_inputs.menuList = self.menu_details.compactMap{$0.name}
                         
-                        if details.is_birthday ?? false{
-                            DispatchQueue.main.async {
-                                let vc = BirthDayWishVC(nibName: nil, bundle: nil)
-                                vc.nameLbl_text = self.childDetails?.name ?? ""
-                                vc.schoolName = self.childDetails?.school_name ?? ""
-                                vc.modalPresentationStyle = .overCurrentContext
-                                vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-                                self.present(vc, animated: true)
-                            }
-                        }
+                        self.presentCelebrationPopupsIfNeeded(details: details)
                     } else {
                         self.MenuCollection.reloadData()
                     }
@@ -252,6 +243,60 @@ class CustomParentDashboardVC: UIViewController, UICollectionViewDelegate, UICol
                 }
             }
         }
+    }
+
+    // MARK: - Celebration Popups (Birthday / Festival)
+    //
+    // ⚠️ GLOBAL NOTE: the festival nodes (`is_festival` / `festival_details`) are
+    // still UNDER DEVELOPMENT — the API returns `is_festival = false`, so the
+    // festival popup stays dormant and the live dashboard is unchanged.
+    // Slot rules, the kill switch and the full note live in
+    // DashboardPopupScheduler.swift:
+    //   • Birthday popup → Morning & Evening only
+    //   • Festival popup → Morning, Afternoon & Evening (never at night)
+    //   • Each popup shows at most once per slot per day
+    //   • Birthday first, festival right after it is closed, when both fall today
+    private func presentCelebrationPopupsIfNeeded(details: MenuData) {
+        let scheduler = DashboardPopupScheduler.shared
+
+        let showBirthday = (details.is_birthday ?? false) && scheduler.canShow(.birthday)
+        let showFestival = FestivalPopupConfig.isEnabled
+            && (details.is_festival ?? false)
+            && scheduler.canShow(.festival)
+
+        guard showBirthday || showFestival else { return }
+
+        if showBirthday {
+            presentBirthdayPopup { [weak self] in
+                guard showFestival else { return }
+                self?.presentFestivalPopup(with: details.festival_details)
+            }
+        } else {
+            presentFestivalPopup(with: details.festival_details)
+        }
+    }
+
+    private func presentBirthdayPopup(completion: (() -> Void)? = nil) {
+        DashboardPopupScheduler.shared.markShown(.birthday)
+        let vc = BirthDayWishVC(nibName: nil, bundle: nil)
+        vc.nameLbl_text = childDetails?.name ?? ""
+        vc.schoolName = childDetails?.school_name ?? ""
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        vc.onDismiss = completion
+        present(vc, animated: true)
+    }
+
+    private func presentFestivalPopup(with festival: FestivalDetail?) {
+        DashboardPopupScheduler.shared.markShown(.festival)
+        let vc = FestivalWishVC()
+        vc.titleText = festival?.name ?? ""
+        vc.dateText = festival?.date ?? ""
+        vc.descriptionText = festival?.content ?? ""
+        vc.imageUrlString = festival?.url ?? ""
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        present(vc, animated: true)
     }
 
     func Global_variabel() {

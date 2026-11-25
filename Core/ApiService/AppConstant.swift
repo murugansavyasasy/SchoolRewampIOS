@@ -376,6 +376,8 @@ struct user_inputs {
     static var title = ""
     static var description = ""
     static var is_emergency: Bool = false
+    /// Sender's choice on the after 10 PM voice consent toggle.
+    static var allow_10pm_call: Bool = false
     static var schedule_date: [String] = []
     static var selectedImgData: [Data] = [] // ✅ replaced [UIImage]
     static var selectedImgUrls: [FilePath] = []

@@ -115,7 +115,7 @@ struct StudentFeeRow {
     let title: String
     let subtitle: String
     let amounts: String           // "Fee ₹… · Paid ₹… · Discount ₹…"
-    let status: StudentFeeRowStatus
+    let status: StudentFeeRowStatus?   // nil hides the status pill
     let pendingCaption: String
     let pending: String
     let breakdown: [(String, String)]
@@ -208,14 +208,17 @@ struct StudentFeeDetails {
         }
 
         func row(_ r: FeeRecord, title: String, subtitle: [String?], feeKeys: [String], feeWord: String = "Fee",
-                 extra: [(String, String)] = []) -> StudentFeeRow {
+                 extra: [(String, String)] = [], showsUnpaidStatus: Bool = true) -> StudentFeeRow {
             let a = amounts(r, feeKeys: feeKeys)
+            let status = StudentFeeRowStatus(raw: r.text("status", "payment_status"),
+                                             paid: FeeAmount.value(a.paid), pending: FeeAmount.value(a.pending))
+            // Rows that hide unpaid statuses ("Partially paid" / "Pending") show only "Paid".
+            var isPaid: Bool { if case .paid = status { return true } else { return false } }
             return StudentFeeRow(
                 title: title,
                 subtitle: subtitle.compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: "  ·  "),
                 amounts: amountLine(fee: a.fee, paid: a.paid, discount: a.discount, feeWord: feeWord),
-                status: StudentFeeRowStatus(raw: r.text("status", "payment_status"),
-                                            paid: FeeAmount.value(a.paid), pending: FeeAmount.value(a.pending)),
+                status: (showsUnpaidStatus || isPaid) ? status : nil,
                 pendingCaption: pendingWord,
                 pending: a.pending ?? "-",
                 breakdown: extra + breakdown(r))
@@ -274,7 +277,7 @@ struct StudentFeeDetails {
             return row(c, title: c.text("fee_type", "fee_name") ?? "Previous Year Pending Fee".translated(),
                        subtitle: [c.text("year_name", "fee_group_type_name"), c.text("fee_category_name")],
                        feeKeys: ["actual_amount", "pending_carried_over", "fee_amount"],
-                       feeWord: oldShape ? "Carried over" : "Fee", extra: items)
+                       feeWord: oldShape ? "Carried over" : "Fee", extra: items, showsUnpaidStatus: false)
         })
 
         // Quantity

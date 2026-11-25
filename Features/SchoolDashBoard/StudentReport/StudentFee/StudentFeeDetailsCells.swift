@@ -56,9 +56,10 @@ final class StudentFeeRowCell: UITableViewCell {
 
     func configure(_ row: StudentFeeRow, expanded: Bool) {
         titleLabel.text = row.title
-        statusLabel.text = row.status.title
-        statusLabel.textColor = row.status.color
-        statusLabel.backgroundColor = row.status.color.withAlphaComponent(0.14)
+        statusLabel.isHidden = row.status == nil
+        statusLabel.text = row.status?.title
+        statusLabel.textColor = row.status?.color
+        statusLabel.backgroundColor = row.status?.color.withAlphaComponent(0.14)
         subtitleLabel.text = row.subtitle
         subtitleLabel.isHidden = row.subtitle.isEmpty
         amountsLabel.text = row.amounts

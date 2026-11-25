@@ -653,17 +653,29 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         return cell
     }
     // Tapping a student opens that student's fee details (staff view).
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        guard let student = filterStudent?[indexPath.row] else { return }
-        let vc = StudentOneViewVC(nibName: nil, bundle: nil)
-        vc.studentId = student.id
-        vc.studentName = student.name
-        vc.academicYearId = String(academicId)
-        vc.classSection = student.class_name + " - " + student.section_name
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: true)
+//        guard let student = filterStudent?[indexPath.row] else { return }
+//        let vc = StudentOneViewVC(nibName: nil, bundle: nil)
+//        vc.studentId = student.id
+//        vc.studentName = student.name
+//        vc.academicYearId = String(academicId)
+//        vc.classSection = student.class_name + " - " + student.section_name
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
+//    }
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: true)
+//        guard let student = filterStudent?[indexPath.row] else { return }
+//        let vc = StudentFeeDetailsVC(nibName: nil, bundle: nil)
+//        vc.studentId = student.id
+//        vc.studentName = student.name
+//        vc.accidmaicYrId = String(academicId)
+//        vc.classSection = student.class_name + " - " + student.section_name
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
+//    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }

@@ -49,6 +49,8 @@ class LocationViewController: UIViewController {
     var childVC: LocationReportVC?
     let add_location_enabel = UserDefaultFileManager.get_staff_Details()?.biometric_enable
     private var lastIsInsideAllowedArea: Bool?
+    /// Set once the boundary check has decided which punch state to show
+    private var hasAppliedBoundaryUI = false
     var staff = "staff"
     var urlss : String?
     var staffDetails: [GetStaffDetails]?
@@ -334,7 +336,12 @@ class LocationViewController: UIViewController {
             // Start location updates
             DispatchQueue.main.async { [self] in
                 ViewAnimator.hideFade(LocationErrorStack)
-                ViewAnimator.showFade(punchStack)
+                // Keep the punch card hidden until the boundary check answers, otherwise the
+                // "Tap to Punch" card flashes on screen before the out of boundary message replaces it.
+                if !hasAppliedBoundaryUI {
+                    punchStack.isHidden = true
+                    punchStack.alpha = 0
+                }
                 call_locationManager()
             }
         @unknown default:
@@ -532,9 +539,10 @@ extension LocationViewController:CLLocationManagerDelegate{
                                 break
                             }
                         }
-                        if self.lastIsInsideAllowedArea != isInsideAllowedArea {
+                        if self.lastIsInsideAllowedArea != isInsideAllowedArea || !self.hasAppliedBoundaryUI {
                             self.lastIsInsideAllowedArea = isInsideAllowedArea
                             DispatchQueue.main.async {
+                                self.hasAppliedBoundaryUI = true
                                 self.updatePunchUI(isInside: isInsideAllowedArea)
                             }
                         }
@@ -548,6 +556,9 @@ extension LocationViewController:CLLocationManagerDelegate{
             case .failure(let error):
                 DispatchQueue.main.async {
                     print("API Error: \(error.localizedDescription)")
+                    // The punch card stays hidden until this check answers, so surface the failure
+                    // instead of leaving the user on an empty screen.
+                    self.errorLocation(alertMessage: MenuStringFile.Something_went_wrong.translated())
                 }
             }
         }
@@ -585,6 +596,7 @@ extension LocationViewController:CLLocationManagerDelegate{
     
     
     private func errorLocation(alertMessage: String) {
+        hasAppliedBoundaryUI = true
         addLocationEnabel(Show: add_location_enabel ?? false)
         ViewAnimator.hideFade(TaptoPunchBtn)
         ViewAnimator.showFade(punchStack)

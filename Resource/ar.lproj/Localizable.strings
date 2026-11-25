@@ -990,7 +990,7 @@
 "SH: Second Half (afternoon session)" = "SH: النصف الثاني (الفترة المسائية)";
 "CHECK-IN" = "تسجيل الدخول";
 "CHECK-OUT" = "تسجيل الخروج";
-"HOURS" = "الساعات";
+"DURATION" = "الساعات";
 "Not yet in" = "لم يسجل الدخول بعد";
 "min" = "دقيقة";
 "from last year" = "من العام الماضي";

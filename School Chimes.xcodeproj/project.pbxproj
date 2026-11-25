@@ -2700,6 +2700,14 @@
 		188272172F63C5F8000E0901 /* LeaveReqDateTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188272132F63C5F8000E0901 /* LeaveReqDateTvCell.xib */; };
 		188272342F680F18000E0901 /* HostelListTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188272302F680F18000E0901 /* HostelListTvCell.swift */; };
 		188272352F680F18000E0901 /* HostelListTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188272312F680F18000E0901 /* HostelListTvCell.xib */; };
+		1883435930B54F790060471C /* DashboardPopupScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1883435830B54F790060471C /* DashboardPopupScheduler.swift */; };
+		1883435A30B54F790060471C /* DashboardPopupScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1883435830B54F790060471C /* DashboardPopupScheduler.swift */; };
+		1883435B30B54F790060471C /* DashboardPopupScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1883435830B54F790060471C /* DashboardPopupScheduler.swift */; };
+		1883435C30B54F790060471C /* DashboardPopupScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1883435830B54F790060471C /* DashboardPopupScheduler.swift */; };
+		1883435F30B54F910060471C /* FestivalWishVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1883435E30B54F910060471C /* FestivalWishVC.swift */; };
+		1883436030B54F910060471C /* FestivalWishVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1883435E30B54F910060471C /* FestivalWishVC.swift */; };
+		1883436130B54F910060471C /* FestivalWishVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1883435E30B54F910060471C /* FestivalWishVC.swift */; };
+		1883436230B54F910060471C /* FestivalWishVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1883435E30B54F910060471C /* FestivalWishVC.swift */; };
 		18886D0D2EE6B4FA008B71FF /* MsgCellTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18886D0B2EE6B4FA008B71FF /* MsgCellTv.swift */; };
 		18886D0E2EE6B4FA008B71FF /* MsgCellTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18886D0C2EE6B4FA008B71FF /* MsgCellTv.xib */; };
 		188870372EEAEAC6008B71FF /* LSRWPerformenceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1888701D2EEAEAC6008B71FF /* LSRWPerformenceTVC.xib */; };
@@ -3921,6 +3929,8 @@
 		188272132F63C5F8000E0901 /* LeaveReqDateTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeaveReqDateTvCell.xib; sourceTree = "<group>"; };
 		188272302F680F18000E0901 /* HostelListTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostelListTvCell.swift; sourceTree = "<group>"; };
 		188272312F680F18000E0901 /* HostelListTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HostelListTvCell.xib; sourceTree = "<group>"; };
+		1883435830B54F790060471C /* DashboardPopupScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPopupScheduler.swift; sourceTree = "<group>"; };
+		1883435E30B54F910060471C /* FestivalWishVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FestivalWishVC.swift; sourceTree = "<group>"; };
 		18886D0B2EE6B4FA008B71FF /* MsgCellTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgCellTv.swift; sourceTree = "<group>"; };
 		18886D0C2EE6B4FA008B71FF /* MsgCellTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MsgCellTv.xib; sourceTree = "<group>"; };
 		1888701C2EEAEAC6008B71FF /* LSRWPerformenceTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWPerformenceTVC.swift; sourceTree = "<group>"; };
@@ -4742,8 +4752,8 @@
 		186F4AD5304BE22700AC7E58 /* ExamAnaylze */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ExamAnaylze; sourceTree = "<group>"; };
 		186F4B22304BE46000AC7E58 /* ConcernVc */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ConcernVc; sourceTree = "<group>"; };
 		5DFEE0012FF0A00100C0FFEE /* StudentFee */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = StudentFee; sourceTree = "<group>"; };
-		5DFEE0042FF0A00100C0FFEE /* DashboardAds */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = DashboardAds; sourceTree = "<group>"; };
 		5DFEE0032FF0A00100C0FFEE /* StudentOneView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = StudentOneView; sourceTree = "<group>"; };
+		5DFEE0042FF0A00100C0FFEE /* DashboardAds */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = DashboardAds; sourceTree = "<group>"; };
 		842FE3CB304B0078006C5D12 /* Cells */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Cells; sourceTree = "<group>"; };
 		842FE3CD304B0078006C5D12 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
 		842FE3D4304B0078006C5D12 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
@@ -4963,6 +4973,7 @@
 				84CAE5BA2D5DEF7B0091C671 /* ColourManager.swift */,
 				84A5BE932C197CF500E32496 /* UIViewX.swift */,
 				8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */,
+				1883435830B54F790060471C /* DashboardPopupScheduler.swift */,
 			);
 			path = ExtenstionsFiles;
 			sourceTree = "<group>";
@@ -5237,6 +5248,14 @@
 				FA861C352E38ABA900859726 /* CertificateCv.xib */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		1883435D30B54F910060471C /* FestivalVc */ = {
+			isa = PBXGroup;
+			children = (
+				1883435E30B54F910060471C /* FestivalWishVC.swift */,
+			);
+			path = FestivalVc;
 			sourceTree = "<group>";
 		};
 		188870362EEAEAC6008B71FF /* SenderLSRW */ = {
@@ -6772,6 +6791,7 @@
 				8497570C2D2BA575006A27FD /* SelectRecipient */,
 				FA43D0BE2F322CFA0046B966 /* BirthdayVc */,
 				FA43D0CA2F322CFE0046B966 /* ImageViewer */,
+				1883435D30B54F910060471C /* FestivalVc */,
 			);
 			path = CommonScreens;
 			sourceTree = "<group>";
@@ -7231,8 +7251,8 @@
 				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186F4B22304BE46000AC7E58 /* ConcernVc */,
 				5DFEE0012FF0A00100C0FFEE /* StudentFee */,
-				5DFEE0042FF0A00100C0FFEE /* DashboardAds */,
 				5DFEE0032FF0A00100C0FFEE /* StudentOneView */,
+				5DFEE0042FF0A00100C0FFEE /* DashboardAds */,
 				842FE3CB304B0078006C5D12 /* Cells */,
 				842FE3CD304B0078006C5D12 /* Models */,
 				842FE3D4304B0078006C5D12 /* Views */,
@@ -7278,8 +7298,8 @@
 				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186F4B22304BE46000AC7E58 /* ConcernVc */,
 				5DFEE0012FF0A00100C0FFEE /* StudentFee */,
-				5DFEE0042FF0A00100C0FFEE /* DashboardAds */,
 				5DFEE0032FF0A00100C0FFEE /* StudentOneView */,
+				5DFEE0042FF0A00100C0FFEE /* DashboardAds */,
 				842FE3CB304B0078006C5D12 /* Cells */,
 				842FE3CD304B0078006C5D12 /* Models */,
 				842FE3D4304B0078006C5D12 /* Views */,
@@ -7325,8 +7345,8 @@
 				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186F4B22304BE46000AC7E58 /* ConcernVc */,
 				5DFEE0012FF0A00100C0FFEE /* StudentFee */,
-				5DFEE0042FF0A00100C0FFEE /* DashboardAds */,
 				5DFEE0032FF0A00100C0FFEE /* StudentOneView */,
+				5DFEE0042FF0A00100C0FFEE /* DashboardAds */,
 				842FE3CB304B0078006C5D12 /* Cells */,
 				842FE3CD304B0078006C5D12 /* Models */,
 				842FE3D4304B0078006C5D12 /* Views */,
@@ -7390,8 +7410,8 @@
 				186F4AD5304BE22700AC7E58 /* ExamAnaylze */,
 				186F4B22304BE46000AC7E58 /* ConcernVc */,
 				5DFEE0012FF0A00100C0FFEE /* StudentFee */,
-				5DFEE0042FF0A00100C0FFEE /* DashboardAds */,
 				5DFEE0032FF0A00100C0FFEE /* StudentOneView */,
+				5DFEE0042FF0A00100C0FFEE /* DashboardAds */,
 				842FE3CB304B0078006C5D12 /* Cells */,
 				842FE3CD304B0078006C5D12 /* Models */,
 				842FE3D4304B0078006C5D12 /* Views */,
@@ -9569,6 +9589,7 @@
 				1827E61E2F90C12000B33B20 /* Colornames.swift in Sources */,
 				1827E61F2F90C12000B33B20 /* HelpVc.swift in Sources */,
 				1827E6202F90C12000B33B20 /* LogoutViewController.swift in Sources */,
+				1883435A30B54F790060471C /* DashboardPopupScheduler.swift in Sources */,
 				1827E6212F90C12000B33B20 /* PreviewTargetTVC.swift in Sources */,
 				1827E6222F90C12000B33B20 /* HostelDashBoardVc.swift in Sources */,
 				1827E6232F90C12000B33B20 /* CVCell.swift in Sources */,
@@ -9648,6 +9669,7 @@
 				1827E6592F90C12000B33B20 /* QuizListTvCell.swift in Sources */,
 				1827E65A2F90C12000B33B20 /* SlotListVC.swift in Sources */,
 				1827E65B2F90C12000B33B20 /* LocationTableViewCell.swift in Sources */,
+				1883435F30B54F910060471C /* FestivalWishVC.swift in Sources */,
 				1827E65C2F90C12000B33B20 /* AddLocationHistory.swift in Sources */,
 				1827E65D2F90C12000B33B20 /* SessionStatusCell.swift in Sources */,
 				1827E65E2F90C12000B33B20 /* StaffChatTV.swift in Sources */,
@@ -10052,6 +10074,7 @@
 				1868A4482FAC762E00831144 /* Colornames.swift in Sources */,
 				1868A4492FAC762E00831144 /* HelpVc.swift in Sources */,
 				1868A44A2FAC762E00831144 /* LogoutViewController.swift in Sources */,
+				1883435C30B54F790060471C /* DashboardPopupScheduler.swift in Sources */,
 				1868A44B2FAC762E00831144 /* PreviewTargetTVC.swift in Sources */,
 				1868A44C2FAC762E00831144 /* HostelDashBoardVc.swift in Sources */,
 				1868A44D2FAC762E00831144 /* CVCell.swift in Sources */,
@@ -10131,6 +10154,7 @@
 				1868A4832FAC762E00831144 /* QuizListTvCell.swift in Sources */,
 				1868A4842FAC762E00831144 /* SlotListVC.swift in Sources */,
 				1868A4852FAC762E00831144 /* LocationTableViewCell.swift in Sources */,
+				1883436030B54F910060471C /* FestivalWishVC.swift in Sources */,
 				1868A4862FAC762E00831144 /* AddLocationHistory.swift in Sources */,
 				1868A4872FAC762E00831144 /* SessionStatusCell.swift in Sources */,
 				1868A4882FAC762E00831144 /* StaffChatTV.swift in Sources */,
@@ -10535,6 +10559,7 @@
 				186E5F442FE91EB800BAF454 /* Colornames.swift in Sources */,
 				186E5F452FE91EB800BAF454 /* HelpVc.swift in Sources */,
 				186E5F462FE91EB800BAF454 /* LogoutViewController.swift in Sources */,
+				1883435930B54F790060471C /* DashboardPopupScheduler.swift in Sources */,
 				186E5F472FE91EB800BAF454 /* PreviewTargetTVC.swift in Sources */,
 				186E5F482FE91EB800BAF454 /* HostelDashBoardVc.swift in Sources */,
 				186E5F492FE91EB800BAF454 /* CVCell.swift in Sources */,
@@ -10614,6 +10639,7 @@
 				186E5F812FE91EB800BAF454 /* QuizListTvCell.swift in Sources */,
 				186E5F822FE91EB800BAF454 /* SlotListVC.swift in Sources */,
 				186E5F832FE91EB800BAF454 /* LocationTableViewCell.swift in Sources */,
+				1883436130B54F910060471C /* FestivalWishVC.swift in Sources */,
 				186E5F842FE91EB800BAF454 /* AddLocationHistory.swift in Sources */,
 				186E5F852FE91EB800BAF454 /* SessionStatusCell.swift in Sources */,
 				186E5F862FE91EB800BAF454 /* StaffChatTV.swift in Sources */,
@@ -11025,6 +11051,7 @@
 				8441887C2CC90E98006483C3 /* Colornames.swift in Sources */,
 				84EFF9F32CCCAFF800C11C26 /* HelpVc.swift in Sources */,
 				8442A9052CDC8A820006068E /* LogoutViewController.swift in Sources */,
+				1883435B30B54F790060471C /* DashboardPopupScheduler.swift in Sources */,
 				84BCE7DF2E9E1868002C8068 /* PreviewTargetTVC.swift in Sources */,
 				1841DE932F56F8B700B88801 /* HostelDashBoardVc.swift in Sources */,
 				84127AC92E03C8F00092159D /* CVCell.swift in Sources */,
@@ -11104,6 +11131,7 @@
 				84D32C982D55CE2300A420A9 /* QuizListTvCell.swift in Sources */,
 				FAED58552E4B4E6E00497026 /* SlotListVC.swift in Sources */,
 				18D718A62D0D477900E9EDA3 /* LocationTableViewCell.swift in Sources */,
+				1883436230B54F910060471C /* FestivalWishVC.swift in Sources */,
 				18D718A72D0D477900E9EDA3 /* AddLocationHistory.swift in Sources */,
 				182B0B0D2F6D48B4002C81A0 /* SessionStatusCell.swift in Sources */,
 				FAA47BD92E97E714002C3B5C /* StaffChatTV.swift in Sources */,
@@ -11928,7 +11956,7 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5.2;
+				CURRENT_PROJECT_VERSION = 5.3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -11953,7 +11981,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.8;
+				MARKETING_VERSION = 3.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -11972,7 +12000,7 @@
 				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5.2;
+				CURRENT_PROJECT_VERSION = 5.3;
 				DEVELOPMENT_TEAM = VPA36TGVRS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
@@ -11996,7 +12024,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.8;
+				MARKETING_VERSION = 3.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(PRODUCT_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

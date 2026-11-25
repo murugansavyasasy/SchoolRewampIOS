@@ -232,7 +232,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                 switch result {
                 case .success(let response):
                     if response.status == true, let details = response.data?.first {
-                        self.menu_details = self.addDiscountMenuIfPrincipal(details.menus)
+                        self.menu_details = response.data?.first?.menus
                     
 //                        self.menu_details?.append(
 //                            MenuDetail(id: 207, name: "Parent Concerns", description: "Used to apply leave")
@@ -248,14 +248,8 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
                         self.recentActiveMenuCollection.isHidden = details.frequently_used?.isEmpty ?? true
                         self.recentActiveMenuCollection.reloadData()
                         user_inputs.menuList = self.menu_details?.compactMap{$0.name} ?? []
-                        if details.is_birthday ?? false{
-                            DispatchQueue.main.async {
-                                let vc = BirthDayWishVC(nibName: nil, bundle: nil)
-                                vc.nameLbl_text = self.staffDetails?.name ?? ""
-                                vc.schoolName = self.staffDetails?.school_name ?? ""
-                                vc.modalPresentationStyle = .overCurrentContext
-                                vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-                                self.present(vc, animated: true)}}
+                        self.presentCelebrationPopupsIfNeeded(details: details)
+
                     } else {
                         self.menu_details = []
                         self.MenuCollection.reloadData()
@@ -270,6 +264,60 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         }
     }
     
+    // MARK: - Celebration Popups (Birthday / Festival)
+    //
+    // ⚠️ GLOBAL NOTE: the festival nodes (`is_festival` / `festival_details`) are
+    // still UNDER DEVELOPMENT — the API returns `is_festival = false`, so the
+    // festival popup stays dormant and the live dashboard is unchanged.
+    // Slot rules, the kill switch and the full note live in
+    // DashboardPopupScheduler.swift:
+    //   • Birthday popup → Morning & Evening only
+    //   • Festival popup → Morning, Afternoon & Evening (never at night)
+    //   • Each popup shows at most once per slot per day
+    //   • Birthday first, festival right after it is closed, when both fall today
+    private func presentCelebrationPopupsIfNeeded(details: MenuData) {
+        let scheduler = DashboardPopupScheduler.shared
+
+        let showBirthday = (details.is_birthday ?? false) && scheduler.canShow(.birthday)
+        let showFestival = FestivalPopupConfig.isEnabled
+            && (details.is_festival ?? false)
+            && scheduler.canShow(.festival)
+
+        guard showBirthday || showFestival else { return }
+
+        if showBirthday {
+            presentBirthdayPopup { [weak self] in
+                guard showFestival else { return }
+                self?.presentFestivalPopup(with: details.festival_details)
+            }
+        } else {
+            presentFestivalPopup(with: details.festival_details)
+        }
+    }
+
+    private func presentBirthdayPopup(completion: (() -> Void)? = nil) {
+        DashboardPopupScheduler.shared.markShown(.birthday)
+        let vc = BirthDayWishVC(nibName: nil, bundle: nil)
+        vc.nameLbl_text = staffDetails?.name ?? ""
+        vc.schoolName = staffDetails?.school_name ?? ""
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        vc.onDismiss = completion
+        present(vc, animated: true)
+    }
+
+    private func presentFestivalPopup(with festival: FestivalDetail?) {
+        DashboardPopupScheduler.shared.markShown(.festival)
+        let vc = FestivalWishVC()
+        vc.titleText = festival?.name ?? ""
+        vc.dateText = festival?.date ?? ""
+        vc.descriptionText = festival?.content ?? ""
+        vc.imageUrlString = festival?.url ?? ""
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        present(vc, animated: true)
+    }
+
     func get_MenuCount() {
         APIService.shared.makeApi(
             url: ServiceUrl.dashboard_api_dashboard_menu_counts,
@@ -680,7 +728,7 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
         MenuStringFile.selectedMenuName = menuName
         // MENU IDs that need navigateOrSchoolList check
         let needSchoolCheck: Set<Int> = [
-            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 18, 41,202,203,204,205,206,207, Menu_id.discountReport
+            1, 2, 3, 5, 8, 14, 15, 17, 19, 20, 21, 26, 27, 29, 31, 33, 35, 18, 41,202,203,204,205,206,207, /*Menu_id.discountReport*/
         ]
         Menu_id.staffSelectedMenuId = menuId
         // All actions with explicit self
@@ -723,8 +771,8 @@ class CustomDashboard: UIViewController, UICollectionViewDelegate, UICollectionV
             204: { self.MenuRedirect.StaffLeaveRequest(from: self) },
             205: { self.MenuRedirect.buslist(from: self, loginasType: self.loginAsType ?? 0, is_ownbustraking: self.staffDetails?.gps_type == "dhundhoo" ? false : true) },
             206 : { self.MenuRedirect.createClasstestVc(from: self)},
-            207:{self.MenuRedirect.senderconcernListVc(from: self)},
-            Menu_id.discountReport:{self.MenuRedirect.senderDiscountReportNavigate(from: self)}
+            207:{self.MenuRedirect.senderconcernListVc(from: self)}
+//            Menu_id.discountReport:{self.MenuRedirect.senderDiscountReportNavigate(from: self)}
             
         ]
  

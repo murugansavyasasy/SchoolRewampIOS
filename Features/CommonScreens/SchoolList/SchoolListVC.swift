@@ -772,7 +772,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 send_voicemeassageStringFile.end_time :user_inputs.end_time,
                 send_voicemeassageStringFile.file_name : user_inputs.file_name,
                 send_voicemeassageStringFile.circular_type : circular_type.school,
-                send_voicemeassageStringFile.academic_year_id: selectedAcadimicYearId ?? 0
+                send_voicemeassageStringFile.academic_year_id: selectedAcadimicYearId ?? 0,
+                send_voicemeassageStringFile.allow_10pm_call : user_inputs.allow_10pm_call
                 
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "", isBaseUrl: true ){ [self] (
                 result : Result<CommonApiSuc,

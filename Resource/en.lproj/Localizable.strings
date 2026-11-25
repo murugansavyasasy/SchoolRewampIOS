@@ -989,7 +989,7 @@
 "SH: Second Half (afternoon session)" = "SH: Second Half (afternoon session)";
 "CHECK-IN" = "CHECK-IN";
 "CHECK-OUT" = "CHECK-OUT";
-"HOURS" = "HOURS";
+"DURATION" = "DURATION";
 "Not yet in" = "Not yet in";
 "min" = "min";
 "from last year" = "from last year";

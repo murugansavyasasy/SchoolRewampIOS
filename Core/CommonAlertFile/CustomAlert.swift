@@ -39,6 +39,42 @@ class CustomAlert{
     }
     
     
+    /// Confirmation alert that carries an opt-in toggle below the message.
+    /// The warning text appears at the bottom of the popup while the toggle is on. The confirm
+    /// button stays available whether the toggle is on or off.
+    /// - Parameter onOk: receives the toggle state (`true` when the user enabled it).
+    func showAlertCancelWithToggle(
+        title: String,
+        message: String,
+        toggleText: String,
+        warningText: String,
+        actionLbl1: String,
+        actionLbl2: String,
+        on viewController: UIViewController,
+        onOk: @escaping (Bool) -> Void,
+        onNo: @escaping () -> Void
+    ) {
+        let alert = UIAlertController(title: title.translated(), message: message.translated(), preferredStyle: .alert)
+        
+        let contentVC = ToggleConsentViewController(
+            toggleText: toggleText.translated(),
+            warningText: warningText.translated()
+        )
+        alert.setValue(contentVC, forKey: "contentViewController")
+        
+        let okAction = UIAlertAction(title: actionLbl1.translated(), style: .default) { _ in
+            onOk(contentVC.isToggleOn)
+        }
+        alert.addAction(okAction)
+
+        let noAction = UIAlertAction(title: actionLbl2.translated(), style: .cancel) { _ in
+            onNo()
+        }
+        alert.addAction(noAction)
+
+        viewController.present(alert, animated: true, completion: nil)
+    }
+    
     static func showAlertWithOkAction(title: String, message: String, on viewController: UIViewController, okAction: (() -> Void)? = nil) {
         let alert = UIAlertController(title: title.translated(), message: message.translated(), preferredStyle: .alert)
         
@@ -141,5 +177,102 @@ class CustomAlert{
         }))
         
         viewController.present(alert, animated: true)
+    }
+}
+
+/// Content shown inside `CustomAlert.showAlertCancelWithToggle`: a consent switch with a warning
+/// that slides in underneath it once the switch is turned on.
+private final class ToggleConsentViewController: UIViewController {
+
+    private let toggleText: String
+    private let warningText: String
+    private let defaultWidth: CGFloat = 250
+    /// Side inset that lines the toggle row up with the alert's own title and message labels
+    private let horizontalInset: CGFloat = 24
+    
+    private let stackView = UIStackView()
+    private let warningLabel = UILabel()
+    private let toggle = UISwitch()
+
+    /// Current state of the consent switch.
+    var isToggleOn: Bool { toggle.isOn }
+
+    init(toggleText: String, warningText: String) {
+        self.toggleText = toggleText
+        self.warningText = warningText
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let toggleLabel = UILabel()
+        toggleLabel.text = toggleText
+        toggleLabel.numberOfLines = 0
+        toggleLabel.font = .systemFont(ofSize: 13)
+        toggleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        
+        toggle.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        toggle.setContentHuggingPriority(.required, for: .horizontal)
+        toggle.setContentCompressionResistancePriority(.required, for: .horizontal)
+        toggle.addTarget(self, action: #selector(toggleChanged(_:)), for: .valueChanged)
+        
+        let toggleRow = UIStackView(arrangedSubviews: [toggleLabel, toggle])
+        toggleRow.axis = .horizontal
+        toggleRow.alignment = .center
+        toggleRow.spacing = 8
+        
+        warningLabel.text = warningText
+        warningLabel.numberOfLines = 0
+        warningLabel.font = .systemFont(ofSize: 12)
+        warningLabel.textColor = .systemRed
+        warningLabel.isHidden = true
+        warningLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.addArrangedSubview(toggleRow)
+        stackView.addArrangedSubview(warningLabel)
+        view.addSubview(stackView)
+        
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: view.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalInset),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalInset)
+        ])
+        
+        updatePreferredContentSize()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updatePreferredContentSize()
+    }
+    
+    @objc private func toggleChanged(_ sender: UISwitch) {
+        warningLabel.isHidden = !sender.isOn
+        UIView.animate(withDuration: 0.2) {
+            self.updatePreferredContentSize()
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func updatePreferredContentSize() {
+        let width = view.bounds.width > 0 ? view.bounds.width : defaultWidth
+        let height = stackView.systemLayoutSizeFitting(
+            CGSize(width: max(width - (horizontalInset * 2), 0), height: UIView.layoutFittingCompressedSize.height),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        ).height
+        
+        // Guard against the layout pass that setting this value triggers
+        guard abs(preferredContentSize.height - height) > 0.5 else { return }
+        preferredContentSize = CGSize(width: width, height: height)
     }
 }
